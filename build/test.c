@@ -3753,7 +3753,7 @@ void crashSetBuffers2(u16 *buffer1, u16 *buffer2)
 
 
 extern stagesetup *_fileNameLoadToBank();
-f32                g_scale_1_0_item_related = 1.0f;
+f32                g_g_DoorScale = 1.0f;
 char              *setup_text_pointers[]    = {
     NULL,
     NULL,
@@ -3990,7 +3990,7 @@ void                 proplvreset2(s32 stageID)
         bnoprop = tokenFind(1, "-noprop") == 0;
     }
 
-    g_scale_1_0_item_related = 1.0f;
+    g_g_DoorScale = 1.0f;
 
     // for each itme
     itementries_1 = PitemZ_entries;
@@ -4348,7 +4348,7 @@ void                 proplvreset2(s32 stageID)
                                 }
                             break;
                         case PROPDEF_DOOR_SCALE: // switch 1
-                            g_scale_1_0_item_related = ((GlobalDoorScaleRecord *)prop)->Scale / 65536.0f;
+                            g_g_DoorScale = ((GlobalDoorScaleRecord *)prop)->Scale / 65536.0f;
                             break;
                         case PROPDEF_COLLECTABLE: // switch 1
                             if ((bnoprop != 0) && ((prop->flags2 & phi_s4_2) == 0))

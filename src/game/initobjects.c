@@ -11,7 +11,7 @@ struct object_animation_controller g_InitialUnknownAnimController = {&monAnim34,
 struct object_animation_controller g_InitialTaserAnimController = {&monAnim35Taser, 0, 0xFFFF, 0, 0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1.0};
 
 f32 unused_8002a3bc = 0.0f;
-f32 scale_1_0_item_related = 1.0f;
+f32 g_DoorScale = 1.0f;
 
 // forward declarations
 

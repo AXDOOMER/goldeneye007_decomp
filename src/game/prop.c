@@ -2191,7 +2191,7 @@ void sub_GAME_7F00324C(struct BoundPadRecord *arg0, s32 *arg1, s32 *arg2, struct
 }
 
 
-extern f32 scale_1_0_item_related;
+extern f32 g_DoorScale;
 /**
  * 
  * NTSC ADDRESS: 7F003480
@@ -2252,7 +2252,7 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
         }
     }
     
-    if (scale_1_0_item_related != 1.0f)
+    if (g_DoorScale != 1.0f)
     {
         if (portalnum >= 0)
         {
@@ -2261,16 +2261,16 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
             
             temp_f2 = (pad->pos.f[0] * sp180.normal.f[0]) + (pad->pos.f[1] * sp180.normal.f[1]) + (pad->pos.f[2] * sp180.normal.f[2]);
             
-            if (scale_1_0_item_related < 1.0f)
+            if (g_DoorScale < 1.0f)
             {
-                temp_f2 = (temp_f2 - sp180.min) * (1.0f - scale_1_0_item_related);
+                temp_f2 = (temp_f2 - sp180.min) * (1.0f - g_DoorScale);
                 sp170.f[0] = pad->pos.f[0] - (sp180.normal.f[0] * temp_f2);
                 sp170.f[1] = pad->pos.f[1] - (sp180.normal.f[1] * temp_f2);
                 sp170.f[2] = pad->pos.f[2] - (sp180.normal.f[2] * temp_f2);
             }
             else
             {
-                temp_f2 = (temp_f2 - sp180.min) * (scale_1_0_item_related - 1.0f);
+                temp_f2 = (temp_f2 - sp180.min) * (g_DoorScale - 1.0f);
                 sp170.f[0] = pad->pos.f[0] + (sp180.normal.f[0] * temp_f2);
                 sp170.f[1] = pad->pos.f[1] + (sp180.normal.f[1] * temp_f2);
                 sp170.f[2] = pad->pos.f[2] + (sp180.normal.f[2] * temp_f2);
@@ -2283,14 +2283,14 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
                 pad->pos.f[0] = sp170.f[0];
                 pad->pos.f[1] = sp170.f[1];
                 pad->pos.f[2] = sp170.f[2];
-                pad->bbox.xmin *= scale_1_0_item_related;
-                pad->bbox.xmax *= scale_1_0_item_related;
+                pad->bbox.xmin *= g_DoorScale;
+                pad->bbox.xmax *= g_DoorScale;
             }
         }
         else
         {
-            pad->bbox.xmin *= scale_1_0_item_related;
-            pad->bbox.xmax *= scale_1_0_item_related;
+            pad->bbox.xmin *= g_DoorScale;
+            pad->bbox.xmax *= g_DoorScale;
         }
     }
     
@@ -2610,12 +2610,12 @@ glabel proplvreset2
 /* 0387B0 7F003C80 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0387B4 7F003C84 44812000 */  mtc1  $at, $f4
 /* 0387B8 7F003C88 0060F025 */  move  $fp, $v1
-/* 0387BC 7F003C8C 3C018003 */  lui   $at, %hi(scale_1_0_item_related)
+/* 0387BC 7F003C8C 3C018003 */  lui   $at, %hi(g_DoorScale)
 /* 0387C0 7F003C90 3C038004 */  lui   $v1, %hi(PitemZ_entries+0xFF0)
 /* 0387C4 7F003C94 3C028004 */  lui   $v0, %hi(PitemZ_entries)
 /* 0387C8 7F003C98 2442A228 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, -0x5dd8
 /* 0387CC 7F003C9C 2463B218 */  addiu $v1, $v1, %lo(PitemZ_entries+0xFF0)
-/* 0387D0 7F003CA0 E424A3C0 */  swc1  $f4, %lo(scale_1_0_item_related)($at)
+/* 0387D0 7F003CA0 E424A3C0 */  swc1  $f4, %lo(g_DoorScale)($at)
 .L7F003CA4:
 /* 0387D4 7F003CA4 8C4E0000 */  lw    $t6, ($v0)
 /* 0387D8 7F003CA8 2442000C */  addiu $v0, $v0, 0xc
@@ -3132,11 +3132,11 @@ door_scale_expand:
 /* 038F44 7F004414 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 038F48 7F004418 44815000 */  mtc1  $at, $f10
 /* 038F4C 7F00441C 448C3000 */  mtc1  $t4, $f6
-/* 038F50 7F004420 3C018003 */  lui   $at, %hi(scale_1_0_item_related)
+/* 038F50 7F004420 3C018003 */  lui   $at, %hi(g_DoorScale)
 /* 038F54 7F004424 46803220 */  cvt.s.w $f8, $f6
 /* 038F58 7F004428 460A4403 */  div.s $f16, $f8, $f10
 /* 038F5C 7F00442C 100001B3 */  b     other_obj_expand
-/* 038F60 7F004430 E430A3C0 */   swc1  $f16, %lo(scale_1_0_item_related)($at)
+/* 038F60 7F004430 E430A3C0 */   swc1  $f16, %lo(g_DoorScale)($at)
 item_expand:
 /* 038F64 7F004434 8FAF0278 */  lw    $t7, 0x278($sp)
 /* 038F68 7F004438 11E001B0 */  beqz  $t7, other_obj_expand
@@ -4003,12 +4003,12 @@ glabel jpt_8004F02C
 /* 0387F0 7F003C80 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0387F4 7F003C84 44812000 */  mtc1  $at, $f4
 /* 0387F8 7F003C88 0060F025 */  move  $fp, $v1
-/* 0387FC 7F003C8C 3C018003 */  lui   $at, %hi(scale_1_0_item_related) # $at, 0x8003
+/* 0387FC 7F003C8C 3C018003 */  lui   $at, %hi(g_DoorScale) # $at, 0x8003
 /* 038800 7F003C90 3C038004 */  lui   $v1, %hi(PitemZ_entries+0xFF0) # $v1, 0x8004
 /* 038804 7F003C94 3C028004 */  lui   $v0, %hi(PitemZ_entries) # $v0, 0x8004
 /* 038808 7F003C98 2442A258 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, -0x5da8
 /* 03880C 7F003C9C 2463B248 */  addiu $v1, %lo(PitemZ_entries+0xFF0) # addiu $v1, $v1, -0x4db8
-/* 038810 7F003CA0 E424A400 */  swc1  $f4, %lo(scale_1_0_item_related)($at)
+/* 038810 7F003CA0 E424A400 */  swc1  $f4, %lo(g_DoorScale)($at)
 .L7F003CA4:
 /* 038814 7F003CA4 8C4E0000 */  lw    $t6, ($v0)
 /* 038818 7F003CA8 2442000C */  addiu $v0, $v0, 0xc
@@ -4525,11 +4525,11 @@ door_scale_expand:
 /* 038F84 7F004414 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 038F88 7F004418 44815000 */  mtc1  $at, $f10
 /* 038F8C 7F00441C 448C3000 */  mtc1  $t4, $f6
-/* 038F90 7F004420 3C018003 */  lui   $at, %hi(scale_1_0_item_related) # $at, 0x8003
+/* 038F90 7F004420 3C018003 */  lui   $at, %hi(g_DoorScale) # $at, 0x8003
 /* 038F94 7F004424 46803220 */  cvt.s.w $f8, $f6
 /* 038F98 7F004428 460A4403 */  div.s $f16, $f8, $f10
 /* 038F9C 7F00442C 100001B7 */  b     other_obj_expand
-/* 038FA0 7F004430 E430A400 */   swc1  $f16, %lo(scale_1_0_item_related)($at)
+/* 038FA0 7F004430 E430A400 */   swc1  $f16, %lo(g_DoorScale)($at)
 item_expand:
 /* 038FA4 7F004434 8FAF0278 */  lw    $t7, 0x278($sp)
 /* 038FA8 7F004438 11E001B4 */  beqz  $t7, other_obj_expand
@@ -5401,12 +5401,12 @@ glabel proplvreset2
 /* 0365FC 7F003C0C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 036600 7F003C10 44812000 */  mtc1  $at, $f4
 /* 036604 7F003C14 0060F025 */  move  $fp, $v1
-/* 036608 7F003C18 3C018002 */  lui   $at, %hi(scale_1_0_item_related) # $at, 0x8002
+/* 036608 7F003C18 3C018002 */  lui   $at, %hi(g_DoorScale) # $at, 0x8002
 /* 03660C 7F003C1C 3C038003 */  lui   $v1, %hi(PitemZ_entries+0xFF0) # $v1, 0x8003
 /* 036610 7F003C20 3C028003 */  lui   $v0, %hi(PitemZ_entries) # $v0, 0x8003
 /* 036614 7F003C24 24424D88 */  addiu $v0, %lo(PitemZ_entries) # addiu $v0, $v0, 0x4d88
 /* 036618 7F003C28 24635D78 */  addiu $v1, %lo(PitemZ_entries+0xFF0) # addiu $v1, $v1, 0x5d78
-/* 03661C 7F003C2C E4245910 */  swc1  $f4, %lo(scale_1_0_item_related)($at)
+/* 03661C 7F003C2C E4245910 */  swc1  $f4, %lo(g_DoorScale)($at)
 .L7F003C30:
 /* 036620 7F003C30 8C4E0000 */  lw    $t6, ($v0)
 /* 036624 7F003C34 2442000C */  addiu $v0, $v0, 0xc
@@ -5923,11 +5923,11 @@ door_scale_expand:
 /* 036D90 7F0043A0 3C014780 */  li    $at, 0x47800000 # 65536.000000
 /* 036D94 7F0043A4 44815000 */  mtc1  $at, $f10
 /* 036D98 7F0043A8 448C3000 */  mtc1  $t4, $f6
-/* 036D9C 7F0043AC 3C018002 */  lui   $at, %hi(scale_1_0_item_related) # $at, 0x8002
+/* 036D9C 7F0043AC 3C018002 */  lui   $at, %hi(g_DoorScale) # $at, 0x8002
 /* 036DA0 7F0043B0 46803220 */  cvt.s.w $f8, $f6
 /* 036DA4 7F0043B4 460A4403 */  div.s $f16, $f8, $f10
 /* 036DA8 7F0043B8 100001B5 */  b     other_obj_expand
-/* 036DAC 7F0043BC E4305910 */   swc1  $f16, %lo(scale_1_0_item_related)($at)
+/* 036DAC 7F0043BC E4305910 */   swc1  $f16, %lo(g_DoorScale)($at)
 item_expand:
 /* 036DB0 7F0043C0 8FAF0278 */  lw    $t7, 0x278($sp)
 /* 036DB4 7F0043C4 11E001B2 */  beqz  $t7, other_obj_expand
