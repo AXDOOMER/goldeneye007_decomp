@@ -3967,4 +3967,10 @@ struct criteria_deposit {
     struct criteria_deposit *next;
 };
 
+struct PortalMetric {
+    struct coord3d normal;
+    f32 min;
+    f32 max;
+};
+
 #endif

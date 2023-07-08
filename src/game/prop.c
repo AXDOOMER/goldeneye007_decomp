@@ -11,6 +11,7 @@
 #include "matrixmath.h"
 #include "objecthandler.h"
 #include "prop.h"
+#include "bg.h"
 
 /**
  * EU .bss 0x80068480

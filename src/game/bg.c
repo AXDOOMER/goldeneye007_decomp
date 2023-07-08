@@ -367,9 +367,6 @@ void sub_GAME_7F0B6368(s32 room);
 Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index);
 Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index);
 
-// second parameter is almost certainly a struct
-void sub_GAME_7F0B96CC(f32 arg0, f32 *arg1);
-s32 sub_GAME_7F0B993C(f32 arg0);
 Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 // end forward declarations
@@ -11868,14 +11865,14 @@ glabel sub_GAME_7F0B96CC
  * 
  * Address 0x7F0B993C.
  */
-s32 sub_GAME_7F0B993C(f32 arg0)
+s32 sub_GAME_7F0B993C(s32 arg0)
 {
-    // probably a struct here.
-    f32 fp[6];
+    struct PortalMetric metric;
+    s32 padding;
 
-    sub_GAME_7F0B96CC(arg0, &fp[1]);
+    sub_GAME_7F0B96CC(arg0, &metric);
 
-    if (((fp[1] * fp[1]) + (fp[3] * fp[3])) < 0.999f)
+    if (((metric.normal.f[0] * metric.normal.f[0]) + (metric.normal.f[2] * metric.normal.f[2])) < 0.999f)
     {
         return 0;
     }
