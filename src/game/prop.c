@@ -2190,7 +2190,257 @@ void sub_GAME_7F00324C(struct BoundPadRecord *arg0, s32 *arg1, s32 *arg2, struct
 }
 
 #ifdef NONMATCHING
-void setupDoor(void) {
+// 98.79% https://decomp.me/scratch/LA12K 
+void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
+{
+    s32 padding; // no sp
+    s32 modelnum;
+    struct BoundPadRecord *pad;
+    StandTile *sp1C8_stan;
+    PropRecord *prop;
+    struct coord3d sp1B8;
+    s32 portalnum; //sp1b4
+    s32 sp1B0;
+    s32 sp1AC;
+    struct coord3d sp1A0;
+    struct coord3d sp194;
+    struct PortalMetric sp180;
+    struct ModelRoData_BoundingBoxRecord *temp_v0;
+    struct coord3d sp170;
+    StandTile *sp16C;
+    Mtxf sp12C;
+    f32 temp_f2; // no sp
+    ModelFileHeader *sp124;
+    struct coord3d sp118;                           /* compiler-managed */
+    StandTile *sp114_stan;
+    Mtxf spD4;
+    struct coord3d spC8;
+    Mtxf sp88;    
+    struct coord3d sp7C;
+    struct bbox bb2;
+    f32 xscale;
+    f32 yscale;
+    f32 zscale;
+    f32 scale;
+    //StandTile *stan;
+    s32 padding2;
+
+    modelnum = door->obj;
+    
+    portalnum = -1;
+    sp1B0 = -1;
+    sp1AC = -1;
+
+    modelLoad(modelnum);
+
+    pad = &(g_CurrentSetup.boundpads[door->pad]);
+    
+    if ((door->flags & 0x10000000) || (door->flags & 0x40000000))
+    {
+        sub_GAME_7F00324C(pad, &sp1B0, &sp1AC, &sp1A0, &sp194);
+        
+        if ((door->flags & 0x10000000) && (sp1B0 >= 0) && (sp1AC >= 0))
+        {
+            portalnum = sub_GAME_7F0B9CC8(sp1B0, sp1AC, &sp1A0, &sp194);
+        }
+    }
+    
+    if (scale_1_0_item_related != 1.0f)
+    {
+        if (portalnum >= 0)
+        {
+            sub_GAME_7F0B96CC(portalnum, &sp180);
+            sp180.min *= get_room_data_float2();
+            
+            temp_f2 = (pad->pos.f[0] * sp180.normal.f[0]) + (pad->pos.f[1] * sp180.normal.f[1]) + (pad->pos.f[2] * sp180.normal.f[2]);
+            
+            if (scale_1_0_item_related < 1.0f)
+            {
+                temp_f2 = (temp_f2 - sp180.min) * (1.0f - scale_1_0_item_related);
+                sp170.f[0] = pad->pos.f[0] - (sp180.normal.f[0] * temp_f2);
+                sp170.f[1] = pad->pos.f[1] - (sp180.normal.f[1] * temp_f2);
+                sp170.f[2] = pad->pos.f[2] - (sp180.normal.f[2] * temp_f2);
+            }
+            else
+            {
+                temp_f2 = (temp_f2 - sp180.min) * (scale_1_0_item_related - 1.0f);
+                sp170.f[0] = pad->pos.f[0] + (sp180.normal.f[0] * temp_f2);
+                sp170.f[1] = pad->pos.f[1] + (sp180.normal.f[1] * temp_f2);
+                sp170.f[2] = pad->pos.f[2] + (sp180.normal.f[2] * temp_f2);
+            }
+            
+            sp16C = pad->stan;
+            if (walkTilesBetweenPoints_NoCallback(&sp16C, pad->pos.f[0], pad->pos.f[2], sp170.f[0], sp170.f[2]) != 0)
+            {
+                pad->stan = sp16C;
+                pad->pos.f[0] = sp170.f[0];
+                pad->pos.f[1] = sp170.f[1];
+                pad->pos.f[2] = sp170.f[2];
+                pad->bbox.xmin *= scale_1_0_item_related;
+                pad->bbox.xmax *= scale_1_0_item_related;
+            }
+        }
+        else
+        {
+            pad->bbox.xmin *= scale_1_0_item_related;
+            pad->bbox.xmax *= scale_1_0_item_related;
+        }
+    }
+    
+    if (sub_GAME_7F056850((PadRecord *)pad, pad->stan, 0.0f, &sp1B8, &sp1C8_stan) != 0)
+    {
+        matrix_4x4_7F059908(&sp12C, 0, 0, 0, -pad->look.f[0], -pad->look.f[1], -pad->look.f[2], pad->up.f[0], pad->up.f[1], pad->up.f[2]);
+        sp124 = PitemZ_entries[modelnum].header;
+        sp114_stan = sp1C8_stan;
+
+        bb2.zmax = pad->bbox.xmin;
+        bb2.zmin = pad->bbox.xmax; //78
+        bb2.ymax = pad->bbox.ymin; //74
+        bb2.ymin = pad->bbox.ymax; //70
+        bb2.xmax = pad->bbox.zmin; //6c
+        bb2.xmin = pad->bbox.zmax; //68
+
+        matrix_4x4_set_rotation_around_x(1.5707964f, &spD4);
+        matrix_4x4_set_rotation_around_z(1.5707964f, &sp88);
+        matrix_4x4_multiply_in_place(&sp88, &spD4);
+        matrix_4x4_multiply_in_place(&sp12C, &spD4);
+        sub_GAME_7F001BD4(pad, &sp118);
+
+        temp_v0 = (struct ModelRoData_BoundingBoxRecord *)sp124->RootNode->Child->Data;
+
+        xscale = (bb2.ymin - bb2.ymax) / (temp_v0->Bounds.xmax - temp_v0->Bounds.xmin);
+        yscale = (bb2.xmin - bb2.xmax) / (temp_v0->Bounds.ymax - temp_v0->Bounds.ymin);
+        zscale = (bb2.zmin - bb2.zmax) / (temp_v0->Bounds.zmax - temp_v0->Bounds.zmin);
+        
+        if ((xscale <= 0.000001f) || (yscale <= 0.000001f) || (zscale <= 0.000001f))
+        {
+            xscale = 
+                yscale = 
+                zscale = 1.0f;
+        }
+
+        matrix_column_1_scalar_multiply(xscale, spD4.m[0]);
+        matrix_column_2_scalar_multiply(yscale, spD4.m[0]);
+        matrix_column_3_scalar_multiply_2(zscale, spD4.m[0]);
+        
+        spC8.f[0] = sp118.f[0];
+        spC8.f[1] = sp118.f[1];
+        spC8.f[2] = sp118.f[2];
+        
+        if (!(door->flags2 & 1))
+        {
+            if (walkTilesBetweenPoints_NoCallback(&sp114_stan, sp1B8.f[0], sp1B8.f[2], sp118.f[0], sp118.f[2]) != 0)
+            {
+                sp1C8_stan = sp114_stan;
+            }
+            else
+            {
+                sp118.f[0] = sp1B8.f[0];
+                sp118.f[2] = sp1B8.f[2];
+                
+                if (!(door->flags & 0x1000))
+                {
+                    //
+                }
+            }
+        }
+        else
+        {
+            sp118.f[0] = sp1B8.f[0];
+            sp118.f[1] = sp1B8.f[1];
+            sp118.f[2] = sp1B8.f[2];
+        }
+
+        if ((door->doorType == 4) || (door->doorType == 8))
+        {
+            sp7C.f[0] = pad->look.f[0] * (bb2.xmin - bb2.xmax);
+            sp7C.f[1] = pad->look.f[1] * (bb2.xmin - bb2.xmax);
+            sp7C.f[2] = pad->look.f[2] * (bb2.xmin - bb2.xmax);
+        }
+        else
+        {
+            sp7C.f[0] = pad->up.f[0] * (bb2.ymax - bb2.ymin);
+            sp7C.f[1] = pad->up.f[1] * (bb2.ymax - bb2.ymin);
+            sp7C.f[2] = pad->up.f[2] * (bb2.ymax - bb2.ymin);
+        }
+
+        // These values are stored in the setup files as integers, but at
+		// runtime they are floats. Hence reading a "float" as an integer,
+		// converting it to a float and writing it back to the same property.
+		door->maxFrac = *(s32 *) &door->maxFrac / 65536.0f;
+		door->perimFrac = *(s32 *) &door->perimFrac / 65536.0f;
+		door->accel = (*(s32 *) &door->accel) / 65536.0f;
+		door->decel = (*(s32 *) &door->decel) / 65536.0f;
+		door->maxSpeed = (*(s32 *) &door->maxSpeed) / 65536.0f; 
+        
+        prop = doorInit(door, &sp118, &spD4, sp1C8_stan, &sp7C, &spC8);
+        if (door->flags & 0x10000000)
+        {
+            door->portalNumber = portalnum;
+            if ((portalnum >= 0) && (door->openPosition == 0.0f))
+            {
+                doorDeactivatePortal(door);
+            }
+        }
+        
+        prop->rooms[0] = prop->stan->room;
+        chrpropRegisterRoom(prop, prop->stan->room);
+        prop->rooms[1] = 0xFFU;
+        prop->rooms[2] = 0xFFU;
+
+        if ((door->flags & 0x10000000) || (door->flags & 0x40000000))
+        {
+            if (sp1B0 != prop->stan->room)
+            {
+                if (sp1B0 >= 0)
+                {
+                    prop->rooms[1] = sp1B0;
+                    chrpropRegisterRoom(prop, sp1B0);
+                }
+            }
+            else if (sp1AC >= 0)
+            {
+                prop->rooms[1] = sp1AC;
+                chrpropRegisterRoom(prop, sp1AC);
+            }
+            
+            if (prop->rooms[1] != 0xff && sp1AC)
+            {
+                // problelm area
+                //if(sp1AC == sp1B0);
+                //if (1);
+            }
+        }
+        
+        if (door->model != NULL)
+        {
+            scale = xscale;
+            
+            if (scale < yscale)
+            {
+                scale = yscale;
+            }
+
+            if (scale < zscale)
+            {
+                scale = zscale;
+            }
+            
+            modelSetScale(door->model, door->model->scale * scale);
+        }
+        
+        chrpropActivate(prop);
+        chrpropEnable(prop);
+
+        if (door->linkedDoorOffset != 0)
+        {
+            door->linkedDoor = (struct DoorRecord *)setupGetPtrToCommandByIndex(door->linkedDoorOffset + arg2);
+        }
+    }
+    else
+    {
+        door->prop = NULL;
+    }
 
 }
 #else
