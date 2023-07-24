@@ -1248,10 +1248,10 @@ glabel video_related_8
 /* 003C34 70003034 15C100F2 */  bne   $t6, $at, .L70003400
 /* 003C38 70003038 00000000 */   nop   
 /* 003C3C 7000303C 8DAD114C */  lw    $t5, %lo(g_viColorOutputMode)($t5)
-/* 003C40 70003040 3C018005 */  lui   $at, 0x8005
+/* 003C40 70003040 3C018005 */  lui   $at, %hi(g_ViModePtrs)
 /* 003C44 70003044 002C0821 */  addu  $at, $at, $t4
 /* 003C48 70003048 11A00019 */  beqz  $t5, .L700030B0
-/* 003C4C 7000304C AC391FA0 */   sw    $t9, 0x1fa0($at)
+/* 003C4C 7000304C AC391FA0 */   sw    $t9, %lo(g_ViModePtrs)($at)
 /* 003C50 70003050 001FC080 */  sll   $t8, $ra, 2
 /* 003C54 70003054 031FC021 */  addu  $t8, $t8, $ra
 /* 003C58 70003058 3C0F8005 */  lui   $t7, %hi(g_ViModes) # $t7, 0x8005
