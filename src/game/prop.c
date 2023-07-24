@@ -2458,6 +2458,7 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
 
 
 #ifdef NONMATCHING
+// https://decomp.me/scratch/lwIUY 68.9%
 void proplvreset2(void) {
 
 }

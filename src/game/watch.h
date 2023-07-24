@@ -141,7 +141,11 @@ u16 get_mTrack2Vol(void);
 void set_mTrack2Vol(u16 param_1);
 void sub_GAME_7F0A91A0(u16 arg0);
 void cur_player_set_control_type(int type);
-void init_watch_at_start_of_stage(int a);
+
+// Do not declare a public prototype for this method. lvlStageLoad is expecting
+// this to be defined with no arguments, but the actual method is defined with
+// one argument.
+//void init_watch_at_start_of_stage(int a);
 
 Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning);
 void sub_GAME_7F0A69A8(void);
