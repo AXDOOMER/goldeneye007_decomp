@@ -284,6 +284,8 @@ void viVsyncRelated(void)
  * 3E98 70003298
  * Some code (and defines) based on n64devkit\ultra\usr\src\pr\demos\blockmonkey\block.c
  * 
+ * https://decomp.me/scratch/0yXle 98.52%
+ * 
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
@@ -492,11 +494,9 @@ void video_related_8(void)
     g_ViFrontIndex = (g_ViFrontIndex + 1) % NUM_VIDEO_SETTINGS;
     g_ViBackIndex = (g_ViBackIndex + 1) % NUM_VIDEO_SETTINGS;
 
-    // first li 44, needs to be signed. (sizeof(VideoSettings) == 44)
-    g_ViFrontData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViFrontIndex * (s32)sizeof(VideoSettings)));
-    g_ViBackData = (VideoSettings*)((u8*)&g_ViDataArray + (g_ViBackIndex * (s32)sizeof(VideoSettings)));
+    g_ViFrontData = g_ViDataArray + g_ViFrontIndex;
+	g_ViBackData = g_ViDataArray + g_ViBackIndex;
     
-    // second li 44, can be signed or unsigned.
     bcopy(settings, g_ViBackData, sizeof(VideoSettings));
     g_ViBackData->framebuf = cfb_16[g_ViBackIndex];
 }
