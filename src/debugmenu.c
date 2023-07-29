@@ -214,89 +214,33 @@ void debmenu7000AF84(s32 x1, s32 y1, s32 x2, s32 y2) {
 }
 #endif
 
-#ifdef NONMATCHING
-#ifndef LEFTOVERDEBUG
+
 void debmenu7000AF98(s32 height)
 {
-    s32 x; s32 y;
+#ifdef LEFTOVERDEBUG
+    s32 x;
+    s32 y;
 
-    for (y = 33, height = height + 33;  y != 0; y--, height--)
+    for (y = 34, height += y - 1; y--; height-- )
     {
-        if ((height >= 0) && (height < 35)) {
+        if ((height >= 0) && (height < 35))
+        {
             for ( x = 0; x != 80; x++)
             {
                 debmenu7000AF84(x, height, x, y);
             }
-            
-        } else {
+        }
+        else
+        {
             for (x = 0; x != 80; x++)
             {
                 debmenuWriteCharAtPos(x, y, 0);
-            }
-            
+            }            
         }
     }
-}
 #endif
-#else
-#ifndef LEFTOVERDEBUG
-s32 debmenu7000AF98(s32 height) {
+}
 
-}
-#else
-GLOBAL_ASM(
-.text
-glabel debmenu7000AF98
-/* 00BB98 7000AF98 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 00BB9C 7000AF9C AFB30020 */  sw    $s3, 0x20($sp)
-/* 00BBA0 7000AFA0 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 00BBA4 7000AFA4 AFB10018 */  sw    $s1, 0x18($sp)
-/* 00BBA8 7000AFA8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 00BBAC 7000AFAC AFB00014 */  sw    $s0, 0x14($sp)
-/* 00BBB0 7000AFB0 24110021 */  li    $s1, 33
-/* 00BBB4 7000AFB4 24120050 */  li    $s2, 80
-/* 00BBB8 7000AFB8 24930021 */  addiu $s3, $a0, 0x21
-.L7000AFBC:
-/* 00BBBC 7000AFBC 0660000D */  bltz  $s3, .L7000AFF4
-/* 00BBC0 7000AFC0 2A610023 */   slti  $at, $s3, 0x23
-/* 00BBC4 7000AFC4 1020000B */  beqz  $at, .L7000AFF4
-/* 00BBC8 7000AFC8 00008025 */   move  $s0, $zero
-/* 00BBCC 7000AFCC 02002025 */  move  $a0, $s0
-.L7000AFD0:
-/* 00BBD0 7000AFD0 02602825 */  move  $a1, $s3
-/* 00BBD4 7000AFD4 02003025 */  move  $a2, $s0
-/* 00BBD8 7000AFD8 0C002BE1 */  jal   debmenu7000AF84
-/* 00BBDC 7000AFDC 02203825 */   move  $a3, $s1
-/* 00BBE0 7000AFE0 26100001 */  addiu $s0, $s0, 1
-/* 00BBE4 7000AFE4 5612FFFA */  bnel  $s0, $s2, .L7000AFD0
-/* 00BBE8 7000AFE8 02002025 */   move  $a0, $s0
-/* 00BBEC 7000AFEC 1000000A */  b     .L7000B018
-/* 00BBF0 7000AFF0 02201025 */   move  $v0, $s1
-.L7000AFF4:
-/* 00BBF4 7000AFF4 00008025 */  move  $s0, $zero
-/* 00BBF8 7000AFF8 02002025 */  move  $a0, $s0
-.L7000AFFC:
-/* 00BBFC 7000AFFC 02202825 */  move  $a1, $s1
-/* 00BC00 7000B000 0C002B74 */  jal   debmenuWriteCharAtPos
-/* 00BC04 7000B004 00003025 */   move  $a2, $zero
-/* 00BC08 7000B008 26100001 */  addiu $s0, $s0, 1
-/* 00BC0C 7000B00C 5612FFFB */  bnel  $s0, $s2, .L7000AFFC
-/* 00BC10 7000B010 02002025 */   move  $a0, $s0
-/* 00BC14 7000B014 02201025 */  move  $v0, $s1
-.L7000B018:
-/* 00BC18 7000B018 2673FFFF */  addiu $s3, $s3, -1
-/* 00BC1C 7000B01C 1620FFE7 */  bnez  $s1, .L7000AFBC
-/* 00BC20 7000B020 2631FFFF */   addiu $s1, $s1, -1
-/* 00BC24 7000B024 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 00BC28 7000B028 8FB00014 */  lw    $s0, 0x14($sp)
-/* 00BC2C 7000B02C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 00BC30 7000B030 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 00BC34 7000B034 8FB30020 */  lw    $s3, 0x20($sp)
-/* 00BC38 7000B038 03E00008 */  jr    $ra
-/* 00BC3C 7000B03C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-#endif
 
 void debmenuSetPos(s32 x, s32 y) {
     #ifdef LEFTOVERDEBUG
