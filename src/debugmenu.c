@@ -308,104 +308,140 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
 
 //hacky hack for DEBUGMENU until properly decompiled
 #if !defined(DEBUGMENU) && defined(LEFTOVERDEBUG)
-u32 percentage = 0xFF; // Static?
+
 #endif
 #ifdef DEBUGMENU
-u32 get_random_value(void);
+// https://decomp.me/scratch/h34zw 96.2%
 // very close gSPTextureRectangle has some reordering issues
 Gfx *debmenuDraw(Gfx *gdl)
 {
-    #if defined(LEFTOVERDEBUG)
-	s32 x;
+#if defined(LEFTOVERDEBUG)
+
 	s32 y;
 	s32 appliedpaletteindex;
 	s32 available;
 	s32 needed;
 	Gfx *gdl2;
-	static u32 percentage = 255;
+	static s32 percentage = 255;
+
 	// Calculate how much space is needed in the display list
 	// based on the number of characters to draw and the number
 	// of times the colours will be changed.
 	gdl2 = gdl;
 	appliedpaletteindex = -1;
-	for (y = 0; y < 35; y++) {
-		for (x = 0; x < 80; x++) {
+
+	for (y = 0; y < 35; y++)
+    {
+        s32 x;
+		for (x = 0; x < 80; x++)
+        {
 			u32 c = g_DebugMenuTextBuffer[x][y].chr;
 			s32 paletteindex = g_DebugMenuTextBuffer[x][y].color;
-			if (c != '\0') {
-				if (paletteindex != appliedpaletteindex) {
+
+			if (c != '\0')
+            {
+				if (paletteindex != appliedpaletteindex)
+                {
 					gdl2 += 2;
 					appliedpaletteindex = paletteindex;
 				}
-				if (1);
-				gdl2 += 3;
+                
+				if (1)
+                {
+				    gdl2 += 3;
+                }                
 			}
 		}
 	}
+    
 	// Make sure there'll be a least 256 GBI commands free (2KB)
 	available = dynGetFreeGfx(gdl) - 256 * sizeof(Gfx);
 	needed = (u32)gdl2 - (u32)gdl;
+
 	if (needed <= 0) { // shouldn't be possible
 		return gdl;
 	}
+
+    if(1)
 	{
-		s32 x;
 		s32 appliedpaletteindex = -1;
+        
 		// Write a "percentage" (out of 255) into a global variable
 		// which shows how much of the displaylist will be committed,
-		// provided 2KB is kept free.
-		if (available <= 0) {
+		// provided 2KB is kept free.        
+		if (available <= 0)
+        {
 			// There's already less than 2KB free in the display list
 			percentage = 0;
-		} else if (needed > available) {
+		}
+        else if (needed > available)
+        {
 			// The display list would end with less than 2KB free,
 			// so calculate the percentage
 			percentage = available * 255 / needed;
-		} else {
+		}
+        else
+        {
 			// The display list would end with at least 2KB free,
 			// so the displaylist can be committed in full
 			percentage = 256;
 		}
+        
 		gSPDisplayList(gdl++, g_DebugMenuTextureDisplayList);
-		// Build the display list for real this time.
+
+        // Build the display list for real this time.
 		// Regardless of the availability checks above, just stop when
 		// there's less than 1KB of free space... sort of. It still writes
 		// the colour change commands, but the debug HUD doesn't exactly
 		// draw rainbows so it's no big deal.
-		for (y = 0; y < 35; y++) {
-			for (x = 0; x < 80; x++) {
+		for (y = 0; y < 35; y++)
+        {
+            s32 x;
+			for (x = 0; x < 80; x++)
+            {
 				u32 c = g_DebugMenuTextBuffer[x][y].chr;
 				s32 paletteindex = g_DebugMenuTextBuffer[x][y].color;
-				if (c != '\0') {
-					if (paletteindex != appliedpaletteindex) {
-						*gdl = g_DHudFgGbiPtrs[paletteindex]; gdl++;
-						*gdl = g_DHudBgGbiPtrs[paletteindex]; gdl++;
+
+				if (c != '\0')
+                {
+                    if (paletteindex != appliedpaletteindex)
+                    {
+                        *gdl = g_DHudFgGbiPtrs[paletteindex];
+                        gdl++;
+						*gdl = g_DHudBgGbiPtrs[paletteindex];
+                        gdl++;
 						appliedpaletteindex = paletteindex;
 					}
-                #ifndef DEBUGMENU
-                    if ((randomGetNext() & 0xFF) < percentage) {
-                #else
-                    if(1) {
-                #endif
-				    	if (dynGetFreeGfx(gdl) >= 1024) {
+
+#ifndef DEBUGMENU
+                    if ((randomGetNext() & 0xFF) < percentage)
+#else
+                    if(1)
+#endif
+                    {
+				    	if (dynGetFreeGfx(gdl) >= 1024)
+                        {
 				    		gSPTextureRectangle(gdl++,
-				    				// Screen coords to draw at
-				    				x * 4 * 4,
-				    				y * 7 * 4,
-				    				x * 4 * 4 + 4 * 4,
-				    				y * 7 * 4 + 7 * 4,
-				    				0,
-				    				// Sprite X and Y positions
-				    				((c - ' ') % 32) * 4 * 32,
-				    				((s32)(c - ' ') >> 5) * 7 * 32,
-				    				1024, 1024);
+                                // Screen coords to draw at
+                                x * 4 * 4,
+                                y * 7 * 4,
+                                x * 4 * 4 + 4 * 4,
+                                y * 7 * 4 + 7 * 4,
+                                G_TX_RENDERTILE,
+                                // Sprite X and Y positions
+                                ((c - ' ') % 32) * 4 * 32,
+                                ((s32)(c - ' ') >> 5) * 7 * 32,
+                                1024,
+                                1024);
 				    	}
                     }
 				}
 			}
 		}
 	}
-    #endif
+    
+#endif // defined(LEFTOVERDEBUG)
+    
     return gdl;
 }
 
@@ -413,6 +449,9 @@ Gfx *debmenuDraw(Gfx *gdl)
 #else
 
 #ifndef VERSION_EU
+
+u32 percentage = 0xFF; // Static?
+
 GLOBAL_ASM(
 .text
 glabel debmenuDraw
