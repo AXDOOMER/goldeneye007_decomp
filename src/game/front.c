@@ -35,6 +35,7 @@
 #include "dyn.h"
 #include "assets/obseg/text/LtitleE.h"
 #include "textrelated.h"
+#include "matrixmath.h"
 
 struct BriefingDataSomething
 {
@@ -1407,6 +1408,8 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 halig
 
 #ifdef NONMATCHING
 /**
+ * https://decomp.me/scratch/hx7ye 99.27%
+ * 
  * decomp notes:
  * compiles: yes
  * stack resize: match
@@ -1718,512 +1721,108 @@ void interface_menu01_nintendo(void)
 }
 
 
-
-
-#ifdef NONMATCHING
-s32 constructor_menu01_nintendo(s32 arg0)
+Gfx *constructor_menu01_nintendo(Gfx *DL)
 {
-    s32 sp138;
-    s32 sp134;
-    s32 sp130;
-    s32 sp12C;
-    s32 sp128;
-    s32 spE0;
-    s32 sp90;
-    s32 sp50;
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_s0;
-    s8 temp_v1;
-    void *temp_t0;
-    void *temp_t6;
-    void *phi_t6;
-    void *phi_t0;
-    s8 phi_v1;
-    s8 phi_v1_2;
-    s32 phi_s1;
-    s32 phi_s0;
+    struct unk_joint_list sp128;
+    s32 padding;
+    s32 var_v1;
+    Mtxf spE0;
+    s32 i;
+    
+    sp128 = D_8002AB08;
 
-    phi_t6 = &D_8002AB08;
-    phi_t0 = &sp128;
-loop_1:
-    temp_t6 = phi_t6 + 0xc;
-    temp_t0 = phi_t0 + 0xc;
-    temp_t0->unk-C = (s32) *phi_t6;
-    temp_t0->unk-8 = (s32) temp_t6->unk-8;
-    temp_t0->unk-4 = (s32) temp_t6->unk-4;
-    phi_t6 = temp_t6;
-    phi_t0 = temp_t0;
-    if (temp_t6 != (&D_8002AB08 + 0x3c))
-    {
-        goto loop_1;
-    }
-    temp_t0->unk0 = (s32) temp_t6->unk0;
-    temp_ret = insert_imageDL();
-    temp_ret->unk0 = 0xbc000002;
-    temp_ret->unk4 = 0x80000040;
-    temp_ret->unk8 = 0x3860010;
-    temp_ret->unkC = &ninlogolight+0x8;
-    arg0 = (s32) (temp_ret + 0x18);
-    temp_ret->unk10 = 0x3880010;
-    temp_ret->unk14 = &ninlogolight;
-    temp_v1 = 0xff - ((s32) ((g_MenuTimer * 0xff) + 0xfffe8f72) / 0x64);
-    phi_v1 = temp_v1;
-    if (temp_v1 >= 0x100)
-    {
-        phi_v1 = (u8)0xff;
-    }
-    phi_v1_2 = phi_v1;
-    if (phi_v1 < 0)
-    {
-        phi_v1_2 = (u8)0;
-    }
-    ninlogolight.unk6 = (s8) phi_v1_2;
-    ninlogolight.unk5 = (s8) phi_v1_2;
-    ninlogolight.unk4 = (s8) phi_v1_2;
-    ninlogolight.unk2 = (s8) phi_v1_2;
-    ninlogolight.unk1 = (s8) phi_v1_2;
-    ninlogolight.unk0 = (s8) phi_v1_2;
-    ninLogoRotRate = (f32) (ninLogoRotRate + D_80051A04);
-    matrix_4x4_set_rotation_around_y(ninLogoRotRate, &ninlogolight, &sp90);
-    matrix_scalar_multiply_3(ninLogoScale, &sp90);
-    ninLogoScale = (f32) (ninLogoScale * D_80051A0C);
-    if (D_80051A08 < ninLogoScale)
-    {
-        ninLogoScale = (f32) D_80051A08;
-    }
-    matrix_4x4_7F059694(&spE0, 0.0f, 0.0f, 0x457a0000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    matrix_4x4_multiply_in_place(&spE0, &sp90);
-    matrix_4x4_copy(&sp90, &spE0);
-    temp_ret_2 = dynAllocate(logoinst->unk8->unkE << 6);
-    sp138 = temp_ret_2;
-    matrix_4x4_copy(&spE0, temp_ret_2);
-    logoinst->unkC = sp138;
-    sub_GAME_7F06EFC4(logoinst);
-    sp130 = 3;
-    sp12C = 0;
-    sp134 = arg0;
-    subdraw(&sp128, logoinst);
-    arg0 = sp134;
-    phi_s1 = 0;
-    phi_s0 = 0;
-    if (logoinst->unk8->unkE > 0)
-    {
-loop_9:
-        matrix_4x4_copy(logoinst->unkC + phi_s1, &sp50);
-        matrix_4x4_f32_to_s32(&sp50, logoinst->unkC + (phi_s0 << 6));
-        temp_s0 = phi_s0 + 1;
-        phi_s1 = phi_s1 + 0x40;
-        phi_s0 = temp_s0;
-        if (temp_s0 < logoinst->unk8->unkE)
-        {
-            goto loop_9;
-        }
-    }
-    return arg0;
-}
+    DL = insert_imageDL(DL);
+
+    // Lights macro? These need to be on one line.
+    gSPNumLights(DL++, 1); \
+    gSPLight(DL++, &ninlogolight.l[0], 1); \
+    gSPLight(DL++, &ninlogolight, 2);
+
+#if defined(VERSION_EU)    
+    // 0x100000000 − 0xFFFECD34 = 0x132CC (78540 decimal)
+    var_v1 = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFECD34) / 83);
 #else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051A04
-.word 0x3C8EFA35 /* 0.017453292;*/
-glabel D_80051A08
-.word 0x3F8CCCCD /* 1.1;*/
-glabel D_80051A0C
-.word 0x3F8A35E7 /* 1.07977;*/
-.text
-glabel constructor_menu01_nintendo
-/* 03F8C8 7F00AD98 27BDFE98 */  addiu $sp, $sp, -0x168
-/* 03F8CC 7F00AD9C AFB20034 */  sw    $s2, 0x34($sp)
-/* 03F8D0 7F00ADA0 3C0E8003 */  lui   $t6, %hi(D_8002AB08)
-/* 03F8D4 7F00ADA4 27B20128 */  addiu $s2, $sp, 0x128
-/* 03F8D8 7F00ADA8 25CEAB08 */  addiu $t6, %lo(D_8002AB08) # addiu $t6, $t6, -0x54f8
-/* 03F8DC 7F00ADAC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 03F8E0 7F00ADB0 AFB30038 */  sw    $s3, 0x38($sp)
-/* 03F8E4 7F00ADB4 AFB10030 */  sw    $s1, 0x30($sp)
-/* 03F8E8 7F00ADB8 AFB0002C */  sw    $s0, 0x2c($sp)
-/* 03F8EC 7F00ADBC 25D9003C */  addiu $t9, $t6, 0x3c
-/* 03F8F0 7F00ADC0 02404025 */  move  $t0, $s2
-.L7F00ADC4:
-/* 03F8F4 7F00ADC4 8DC10000 */  lw    $at, ($t6)
-/* 03F8F8 7F00ADC8 25CE000C */  addiu $t6, $t6, 0xc
-/* 03F8FC 7F00ADCC 2508000C */  addiu $t0, $t0, 0xc
-/* 03F900 7F00ADD0 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 03F904 7F00ADD4 8DC1FFF8 */  lw    $at, -8($t6)
-/* 03F908 7F00ADD8 AD01FFF8 */  sw    $at, -8($t0)
-/* 03F90C 7F00ADDC 8DC1FFFC */  lw    $at, -4($t6)
-/* 03F910 7F00ADE0 15D9FFF8 */  bne   $t6, $t9, .L7F00ADC4
-/* 03F914 7F00ADE4 AD01FFFC */   sw    $at, -4($t0)
-/* 03F918 7F00ADE8 8DC10000 */  lw    $at, ($t6)
-/* 03F91C 7F00ADEC 0FC07034 */  jal   insert_imageDL
-/* 03F920 7F00ADF0 AD010000 */   sw    $at, ($t0)
-/* 03F924 7F00ADF4 3C09BC00 */  lui   $t1, (0xBC000002 >> 16) # lui $t1, 0xbc00
-/* 03F928 7F00ADF8 3C0A8000 */  lui   $t2, (0x80000040 >> 16) # lui $t2, 0x8000
-/* 03F92C 7F00ADFC 3C0B0386 */  lui   $t3, (0x03860010 >> 16) # lui $t3, 0x386
-/* 03F930 7F00AE00 3C0C8003 */  lui   $t4, %hi(ninlogolight+0x8)
-/* 03F934 7F00AE04 258CA990 */  addiu $t4, %lo(ninlogolight+0x8) # addiu $t4, $t4, -0x5670
-/* 03F938 7F00AE08 356B0010 */  ori   $t3, (0x03860010 & 0xFFFF) # ori $t3, $t3, 0x10
-/* 03F93C 7F00AE0C 354A0040 */  ori   $t2, (0x80000040 & 0xFFFF) # ori $t2, $t2, 0x40
-/* 03F940 7F00AE10 35290002 */  ori   $t1, (0xBC000002 & 0xFFFF) # ori $t1, $t1, 2
-/* 03F944 7F00AE14 AC490000 */  sw    $t1, ($v0)
-/* 03F948 7F00AE18 AC4A0004 */  sw    $t2, 4($v0)
-/* 03F94C 7F00AE1C AC4B0008 */  sw    $t3, 8($v0)
-/* 03F950 7F00AE20 AC4C000C */  sw    $t4, 0xc($v0)
-/* 03F954 7F00AE24 244D0018 */  addiu $t5, $v0, 0x18
-/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(ninlogolight)
-/* 03F95C 7F00AE2C AFAD0168 */  sw    $t5, 0x168($sp)
-/* 03F960 7F00AE30 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(ninlogolight) # addiu $a0, $a0, -0x5678
-/* 03F968 7F00AE38 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
-/* 03F96C 7F00AE3C AC580010 */  sw    $t8, 0x10($v0)
-/* 03F970 7F00AE40 AC440014 */  sw    $a0, 0x14($v0)
-/* 03F974 7F00AE44 3C0F8003 */  lui   $t7, %hi(g_MenuTimer)
-/* 03F978 7F00AE48 8DEFA8CC */  lw    $t7, %lo(g_MenuTimer)($t7)
-/* 03F97C 7F00AE4C 240500FF */  li    $a1, 255
-/* 03F980 7F00AE50 3C01FFFE */  lui   $at, (0xFFFE8F72 >> 16) # lui $at, 0xfffe
-/* 03F984 7F00AE54 01E50019 */  multu $t7, $a1
-/* 03F988 7F00AE58 34218F72 */  ori   $at, (0xFFFE8F72 & 0xFFFF) # ori $at, $at, 0x8f72
-/* 03F98C 7F00AE5C 3C028007 */  lui   $v0, %hi(ninLogoRotRate)
-/* 03F990 7F00AE60 24429614 */  addiu $v0, %lo(ninLogoRotRate) # addiu $v0, $v0, -0x69ec
-/* 03F994 7F00AE64 0000C812 */  mflo  $t9
-/* 03F998 7F00AE68 03217021 */  addu  $t6, $t9, $at
-/* 03F99C 7F00AE6C 24010064 */  li    $at, 100
-/* 03F9A0 7F00AE70 01C1001A */  div   $zero, $t6, $at
-/* 03F9A4 7F00AE74 00004012 */  mflo  $t0
-/* 03F9A8 7F00AE78 00A81823 */  subu  $v1, $a1, $t0
-/* 03F9AC 7F00AE7C 28610100 */  slti  $at, $v1, 0x100
-/* 03F9B0 7F00AE80 14200002 */  bnez  $at, .L7F00AE8C
-/* 03F9B4 7F00AE84 00000000 */   nop
-/* 03F9B8 7F00AE88 240300FF */  li    $v1, 255
-.L7F00AE8C:
-/* 03F9BC 7F00AE8C 04610002 */  bgez  $v1, .L7F00AE98
-/* 03F9C0 7F00AE90 3C018005 */   lui   $at, %hi(D_80051A04)
-/* 03F9C4 7F00AE94 00001825 */  move  $v1, $zero
-.L7F00AE98:
-/* 03F9C8 7F00AE98 A0830006 */  sb    $v1, 6($a0)
-/* 03F9CC 7F00AE9C A0830005 */  sb    $v1, 5($a0)
-/* 03F9D0 7F00AEA0 A0830004 */  sb    $v1, 4($a0)
-/* 03F9D4 7F00AEA4 A0830002 */  sb    $v1, 2($a0)
-/* 03F9D8 7F00AEA8 A0830001 */  sb    $v1, 1($a0)
-/* 03F9DC 7F00AEAC A0830000 */  sb    $v1, ($a0)
-/* 03F9E0 7F00AEB0 C4261A04 */  lwc1  $f6, %lo(D_80051A04)($at)
-/* 03F9E4 7F00AEB4 C4440000 */  lwc1  $f4, ($v0)
-/* 03F9E8 7F00AEB8 27B10090 */  addiu $s1, $sp, 0x90
-/* 03F9EC 7F00AEBC 02202825 */  move  $a1, $s1
-/* 03F9F0 7F00AEC0 46062200 */  add.s $f8, $f4, $f6
-/* 03F9F4 7F00AEC4 E4480000 */  swc1  $f8, ($v0)
-/* 03F9F8 7F00AEC8 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
-/* 03F9FC 7F00AECC C44C0000 */   lwc1  $f12, ($v0)
-/* 03FA00 7F00AED0 3C108007 */  lui   $s0, %hi(ninLogoScale)
-/* 03FA04 7F00AED4 26109618 */  addiu $s0, %lo(ninLogoScale) # addiu $s0, $s0, -0x69e8
-/* 03FA08 7F00AED8 C60C0000 */  lwc1  $f12, ($s0)
-/* 03FA0C 7F00AEDC 0FC162EE */  jal   matrix_scalar_multiply_3
-/* 03FA10 7F00AEE0 02202825 */   move  $a1, $s1
-/* 03FA14 7F00AEE4 3C018005 */  lui   $at, %hi(D_80051A08)
-/* 03FA18 7F00AEE8 C4201A08 */  lwc1  $f0, %lo(D_80051A08)($at)
-/* 03FA1C 7F00AEEC 3C018005 */  lui   $at, %hi(D_80051A0C)
-/* 03FA20 7F00AEF0 C4301A0C */  lwc1  $f16, %lo(D_80051A0C)($at)
-/* 03FA24 7F00AEF4 C60A0000 */  lwc1  $f10, ($s0)
-/* 03FA28 7F00AEF8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 03FA2C 7F00AEFC 44813000 */  mtc1  $at, $f6
-/* 03FA30 7F00AF00 46105482 */  mul.s $f18, $f10, $f16
-/* 03FA34 7F00AF04 3C07457A */  lui   $a3, 0x457a
-/* 03FA38 7F00AF08 E6120000 */  swc1  $f18, ($s0)
-/* 03FA3C 7F00AF0C C6040000 */  lwc1  $f4, ($s0)
-/* 03FA40 7F00AF10 4604003C */  c.lt.s $f0, $f4
-/* 03FA44 7F00AF14 00000000 */  nop
-/* 03FA48 7F00AF18 45020003 */  bc1fl .L7F00AF28
-/* 03FA4C 7F00AF1C 44800000 */   mtc1  $zero, $f0
-/* 03FA50 7F00AF20 E6000000 */  swc1  $f0, ($s0)
-/* 03FA54 7F00AF24 44800000 */  mtc1  $zero, $f0
-.L7F00AF28:
-/* 03FA58 7F00AF28 27B000E0 */  addiu $s0, $sp, 0xe0
-/* 03FA5C 7F00AF2C 02002025 */  move  $a0, $s0
-/* 03FA60 7F00AF30 44050000 */  mfc1  $a1, $f0
-/* 03FA64 7F00AF34 44060000 */  mfc1  $a2, $f0
-/* 03FA68 7F00AF38 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 03FA6C 7F00AF3C E7A00010 */  swc1  $f0, 0x10($sp)
-/* 03FA70 7F00AF40 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 03FA74 7F00AF44 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 03FA78 7F00AF48 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 03FA7C 7F00AF4C 0FC165A5 */  jal   matrix_4x4_7F059694
-/* 03FA80 7F00AF50 E7A00024 */   swc1  $f0, 0x24($sp)
-/* 03FA84 7F00AF54 02002025 */  move  $a0, $s0
-/* 03FA88 7F00AF58 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 03FA8C 7F00AF5C 02202825 */   move  $a1, $s1
-/* 03FA90 7F00AF60 02202025 */  move  $a0, $s1
-/* 03FA94 7F00AF64 0FC16008 */  jal   matrix_4x4_copy
-/* 03FA98 7F00AF68 02002825 */   move  $a1, $s0
-/* 03FA9C 7F00AF6C 3C138003 */  lui   $s3, %hi(logoinst)
-/* 03FAA0 7F00AF70 2673A958 */  addiu $s3, %lo(logoinst) # addiu $s3, $s3, -0x56a8
-/* 03FAA4 7F00AF74 8E690000 */  lw    $t1, ($s3)
-/* 03FAA8 7F00AF78 AFB00128 */  sw    $s0, 0x128($sp)
-/* 03FAAC 7F00AF7C 8D2A0008 */  lw    $t2, 8($t1)
-/* 03FAB0 7F00AF80 8544000E */  lh    $a0, 0xe($t2)
-/* 03FAB4 7F00AF84 00045980 */  sll   $t3, $a0, 6
-/* 03FAB8 7F00AF88 0FC2F5C5 */  jal   dynAllocate
-/* 03FABC 7F00AF8C 01602025 */   move  $a0, $t3
-/* 03FAC0 7F00AF90 AFA20138 */  sw    $v0, 0x138($sp)
-/* 03FAC4 7F00AF94 02002025 */  move  $a0, $s0
-/* 03FAC8 7F00AF98 0FC16008 */  jal   matrix_4x4_copy
-/* 03FACC 7F00AF9C 00402825 */   move  $a1, $v0
-/* 03FAD0 7F00AFA0 8FAC0138 */  lw    $t4, 0x138($sp)
-/* 03FAD4 7F00AFA4 8E6D0000 */  lw    $t5, ($s3)
-/* 03FAD8 7F00AFA8 ADAC000C */  sw    $t4, 0xc($t5)
-/* 03FADC 7F00AFAC 0FC1BBF1 */  jal   sub_GAME_7F06EFC4
-/* 03FAE0 7F00AFB0 8E640000 */   lw    $a0, ($s3)
-/* 03FAE4 7F00AFB4 8FAF0168 */  lw    $t7, 0x168($sp)
-/* 03FAE8 7F00AFB8 24180003 */  li    $t8, 3
-/* 03FAEC 7F00AFBC AFB80130 */  sw    $t8, 0x130($sp)
-/* 03FAF0 7F00AFC0 AFA0012C */  sw    $zero, 0x12c($sp)
-/* 03FAF4 7F00AFC4 02402025 */  move  $a0, $s2
-/* 03FAF8 7F00AFC8 8E650000 */  lw    $a1, ($s3)
-/* 03FAFC 7F00AFCC 0FC1D1A1 */  jal   subdraw
-/* 03FB00 7F00AFD0 AFAF0134 */   sw    $t7, 0x134($sp)
-/* 03FB04 7F00AFD4 8FB90134 */  lw    $t9, 0x134($sp)
-/* 03FB08 7F00AFD8 8E620000 */  lw    $v0, ($s3)
-/* 03FB0C 7F00AFDC 00008025 */  move  $s0, $zero
-/* 03FB10 7F00AFE0 AFB90168 */  sw    $t9, 0x168($sp)
-/* 03FB14 7F00AFE4 8C4E0008 */  lw    $t6, 8($v0)
-/* 03FB18 7F00AFE8 00008825 */  move  $s1, $zero
-/* 03FB1C 7F00AFEC 27B20050 */  addiu $s2, $sp, 0x50
-/* 03FB20 7F00AFF0 85C8000E */  lh    $t0, 0xe($t6)
-/* 03FB24 7F00AFF4 59000014 */  blezl $t0, .L7F00B048
-/* 03FB28 7F00AFF8 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 03FB2C 7F00AFFC 8C49000C */  lw    $t1, 0xc($v0)
-.L7F00B000:
-/* 03FB30 7F00B000 02402825 */  move  $a1, $s2
-/* 03FB34 7F00B004 0FC16008 */  jal   matrix_4x4_copy
-/* 03FB38 7F00B008 01312021 */   addu  $a0, $t1, $s1
-/* 03FB3C 7F00B00C 8E6A0000 */  lw    $t2, ($s3)
-/* 03FB40 7F00B010 00106180 */  sll   $t4, $s0, 6
-/* 03FB44 7F00B014 02402025 */  move  $a0, $s2
-/* 03FB48 7F00B018 8D4B000C */  lw    $t3, 0xc($t2)
-/* 03FB4C 7F00B01C 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 03FB50 7F00B020 016C2821 */   addu  $a1, $t3, $t4
-/* 03FB54 7F00B024 8E620000 */  lw    $v0, ($s3)
-/* 03FB58 7F00B028 26100001 */  addiu $s0, $s0, 1
-/* 03FB5C 7F00B02C 26310040 */  addiu $s1, $s1, 0x40
-/* 03FB60 7F00B030 8C4D0008 */  lw    $t5, 8($v0)
-/* 03FB64 7F00B034 85B8000E */  lh    $t8, 0xe($t5)
-/* 03FB68 7F00B038 0218082A */  slt   $at, $s0, $t8
-/* 03FB6C 7F00B03C 5420FFF0 */  bnezl $at, .L7F00B000
-/* 03FB70 7F00B040 8C49000C */   lw    $t1, 0xc($v0)
-/* 03FB74 7F00B044 8FBF003C */  lw    $ra, 0x3c($sp)
-.L7F00B048:
-/* 03FB78 7F00B048 8FA20168 */  lw    $v0, 0x168($sp)
-/* 03FB7C 7F00B04C 8FB0002C */  lw    $s0, 0x2c($sp)
-/* 03FB80 7F00B050 8FB10030 */  lw    $s1, 0x30($sp)
-/* 03FB84 7F00B054 8FB20034 */  lw    $s2, 0x34($sp)
-/* 03FB88 7F00B058 8FB30038 */  lw    $s3, 0x38($sp)
-/* 03FB8C 7F00B05C 03E00008 */  jr    $ra
-/* 03FB90 7F00B060 27BD0168 */   addiu $sp, $sp, 0x168
-)
+    // 0x100000000 − 0xFFFE8F72 = 0x1708E (94350 decimal)
+    var_v1 = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFE8F72) / 100);
 #endif
+    if (var_v1 >= 0x100)
+    {
+        var_v1 = 0xff;
+    }
+    if (var_v1 < 0)
+    {
+        var_v1 = 0;
+    }
+
+    ninlogolight.a.l.colc[2] = var_v1;
+    ninlogolight.a.l.colc[1] = var_v1;
+    ninlogolight.a.l.colc[0] = var_v1;
+    ninlogolight.a.l.col[2] = var_v1;
+    ninlogolight.a.l.col[1] = var_v1;
+    ninlogolight.a.l.col[0] = var_v1;
 
 #if defined(VERSION_EU)
-
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051A04
-.word 0x3cab92a7 /* 0.0209439527243 */
-glabel D_80051A08
-.word 0x3F8CCCCD /* 1.1;*/
-glabel D_80051A0C
-.word 0x3f8c5931 /* 1.09647190571 */
-.text
-glabel constructor_menu01_nintendo
-/* 03F8C8 7F00AD98 27BDFE98 */  addiu $sp, $sp, -0x168
-/* 03F8CC 7F00AD9C AFB20034 */  sw    $s2, 0x34($sp)
-/* 03F8D0 7F00ADA0 3C0E8003 */  lui   $t6, %hi(D_8002AB08)
-/* 03F8D4 7F00ADA4 27B20128 */  addiu $s2, $sp, 0x128
-/* 03F8D8 7F00ADA8 25CEAB08 */  addiu $t6, %lo(D_8002AB08) # addiu $t6, $t6, -0x54f8
-/* 03F8DC 7F00ADAC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 03F8E0 7F00ADB0 AFB30038 */  sw    $s3, 0x38($sp)
-/* 03F8E4 7F00ADB4 AFB10030 */  sw    $s1, 0x30($sp)
-/* 03F8E8 7F00ADB8 AFB0002C */  sw    $s0, 0x2c($sp)
-/* 03F8EC 7F00ADBC 25D9003C */  addiu $t9, $t6, 0x3c
-/* 03F8F0 7F00ADC0 02404025 */  move  $t0, $s2
-.L7F00ADC4:
-/* 03F8F4 7F00ADC4 8DC10000 */  lw    $at, ($t6)
-/* 03F8F8 7F00ADC8 25CE000C */  addiu $t6, $t6, 0xc
-/* 03F8FC 7F00ADCC 2508000C */  addiu $t0, $t0, 0xc
-/* 03F900 7F00ADD0 AD01FFF4 */  sw    $at, -0xc($t0)
-/* 03F904 7F00ADD4 8DC1FFF8 */  lw    $at, -8($t6)
-/* 03F908 7F00ADD8 AD01FFF8 */  sw    $at, -8($t0)
-/* 03F90C 7F00ADDC 8DC1FFFC */  lw    $at, -4($t6)
-/* 03F910 7F00ADE0 15D9FFF8 */  bne   $t6, $t9, .L7F00ADC4
-/* 03F914 7F00ADE4 AD01FFFC */   sw    $at, -4($t0)
-/* 03F918 7F00ADE8 8DC10000 */  lw    $at, ($t6)
-/* 03F91C 7F00ADEC 0FC07034 */  jal   insert_imageDL
-/* 03F920 7F00ADF0 AD010000 */   sw    $at, ($t0)
-/* 03F924 7F00ADF4 3C09BC00 */  lui   $t1, (0xBC000002 >> 16) # lui $t1, 0xbc00
-/* 03F928 7F00ADF8 3C0A8000 */  lui   $t2, (0x80000040 >> 16) # lui $t2, 0x8000
-/* 03F92C 7F00ADFC 3C0B0386 */  lui   $t3, (0x03860010 >> 16) # lui $t3, 0x386
-/* 03F930 7F00AE00 3C0C8003 */  lui   $t4, %hi(ninlogolight+0x8)
-/* 03F934 7F00AE04 258CA990 */  addiu $t4, %lo(ninlogolight+0x8) # addiu $t4, $t4, -0x5670
-/* 03F938 7F00AE08 356B0010 */  ori   $t3, (0x03860010 & 0xFFFF) # ori $t3, $t3, 0x10
-/* 03F93C 7F00AE0C 354A0040 */  ori   $t2, (0x80000040 & 0xFFFF) # ori $t2, $t2, 0x40
-/* 03F940 7F00AE10 35290002 */  ori   $t1, (0xBC000002 & 0xFFFF) # ori $t1, $t1, 2
-/* 03F944 7F00AE14 AC490000 */  sw    $t1, ($v0)
-/* 03F948 7F00AE18 AC4A0004 */  sw    $t2, 4($v0)
-/* 03F94C 7F00AE1C AC4B0008 */  sw    $t3, 8($v0)
-/* 03F950 7F00AE20 AC4C000C */  sw    $t4, 0xc($v0)
-/* 03F954 7F00AE24 244D0018 */  addiu $t5, $v0, 0x18
-/* 03F958 7F00AE28 3C048003 */  lui   $a0, %hi(ninlogolight)
-/* 03F95C 7F00AE2C AFAD0168 */  sw    $t5, 0x168($sp)
-/* 03F960 7F00AE30 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 03F964 7F00AE34 2484A988 */  addiu $a0, %lo(ninlogolight) # addiu $a0, $a0, -0x5678
-/* 03F968 7F00AE38 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
-/* 03F96C 7F00AE3C AC580010 */  sw    $t8, 0x10($v0)
-/* 03F970 7F00AE40 AC440014 */  sw    $a0, 0x14($v0)
-/* 03F974 7F00AE44 3C0F8003 */  lui   $t7, %hi(g_MenuTimer)
-/* 03F978 7F00AE48 8DEFA8CC */  lw    $t7, %lo(g_MenuTimer)($t7)
-/* 03F97C 7F00AE4C 240500FF */  li    $a1, 255
-/* 03F980 7F00AE50 3C01FFFE */  lui   $at, (0xFFFEcd34 >> 16) # lui $at, 0xfffe
-/* 03F984 7F00AE54 01E50019 */  multu $t7, $a1
-/* 03F988 7F00AE58 3421cd34 */  ori   $at, (0xFFFEcd34 & 0xFFFF) # ori $at, $at, 0xcd34
-/* 03F98C 7F00AE5C 3C028007 */  lui   $v0, %hi(ninLogoRotRate)
-/* 03F990 7F00AE60 24429614 */  addiu $v0, %lo(ninLogoRotRate) # addiu $v0, $v0, -0x69ec
-/* 03F994 7F00AE64 0000C812 */  mflo  $t9
-/* 03F998 7F00AE68 03217021 */  addu  $t6, $t9, $at
-/* 03F99C 7F00AE6C 24010064 */  li    $at, 0x53
-/* 03F9A0 7F00AE70 01C1001A */  div   $zero, $t6, $at
-/* 03F9A4 7F00AE74 00004012 */  mflo  $t0
-/* 03F9A8 7F00AE78 00A81823 */  subu  $v1, $a1, $t0
-/* 03F9AC 7F00AE7C 28610100 */  slti  $at, $v1, 0x100
-/* 03F9B0 7F00AE80 14200002 */  bnez  $at, .L7F00AE8C
-/* 03F9B4 7F00AE84 00000000 */   nop
-/* 03F9B8 7F00AE88 240300FF */  li    $v1, 255
-.L7F00AE8C:
-/* 03F9BC 7F00AE8C 04610002 */  bgez  $v1, .L7F00AE98
-/* 03F9C0 7F00AE90 3C018005 */   lui   $at, %hi(D_80051A04)
-/* 03F9C4 7F00AE94 00001825 */  move  $v1, $zero
-.L7F00AE98:
-/* 03F9C8 7F00AE98 A0830006 */  sb    $v1, 6($a0)
-/* 03F9CC 7F00AE9C A0830005 */  sb    $v1, 5($a0)
-/* 03F9D0 7F00AEA0 A0830004 */  sb    $v1, 4($a0)
-/* 03F9D4 7F00AEA4 A0830002 */  sb    $v1, 2($a0)
-/* 03F9D8 7F00AEA8 A0830001 */  sb    $v1, 1($a0)
-/* 03F9DC 7F00AEAC A0830000 */  sb    $v1, ($a0)
-/* 03F9E0 7F00AEB0 C4261A04 */  lwc1  $f6, %lo(D_80051A04)($at)
-/* 03F9E4 7F00AEB4 C4440000 */  lwc1  $f4, ($v0)
-/* 03F9E8 7F00AEB8 27B10090 */  addiu $s1, $sp, 0x90
-/* 03F9EC 7F00AEBC 02202825 */  move  $a1, $s1
-/* 03F9F0 7F00AEC0 46062200 */  add.s $f8, $f4, $f6
-/* 03F9F4 7F00AEC4 E4480000 */  swc1  $f8, ($v0)
-/* 03F9F8 7F00AEC8 0FC1617F */  jal   matrix_4x4_set_rotation_around_y
-/* 03F9FC 7F00AECC C44C0000 */   lwc1  $f12, ($v0)
-/* 03FA00 7F00AED0 3C108007 */  lui   $s0, %hi(ninLogoScale)
-/* 03FA04 7F00AED4 26109618 */  addiu $s0, %lo(ninLogoScale) # addiu $s0, $s0, -0x69e8
-/* 03FA08 7F00AED8 C60C0000 */  lwc1  $f12, ($s0)
-/* 03FA0C 7F00AEDC 0FC162EE */  jal   matrix_scalar_multiply_3
-/* 03FA10 7F00AEE0 02202825 */   move  $a1, $s1
-/* 03FA14 7F00AEE4 3C018005 */  lui   $at, %hi(D_80051A08)
-/* 03FA18 7F00AEE8 C4201A08 */  lwc1  $f0, %lo(D_80051A08)($at)
-/* 03FA1C 7F00AEEC 3C018005 */  lui   $at, %hi(D_80051A0C)
-/* 03FA20 7F00AEF0 C4301A0C */  lwc1  $f16, %lo(D_80051A0C)($at)
-/* 03FA24 7F00AEF4 C60A0000 */  lwc1  $f10, ($s0)
-/* 03FA28 7F00AEF8 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 03FA2C 7F00AEFC 44813000 */  mtc1  $at, $f6
-/* 03FA30 7F00AF00 46105482 */  mul.s $f18, $f10, $f16
-/* 03FA34 7F00AF04 3C07457A */  lui   $a3, 0x457a
-/* 03FA38 7F00AF08 E6120000 */  swc1  $f18, ($s0)
-/* 03FA3C 7F00AF0C C6040000 */  lwc1  $f4, ($s0)
-/* 03FA40 7F00AF10 4604003C */  c.lt.s $f0, $f4
-/* 03FA44 7F00AF14 00000000 */  nop
-/* 03FA48 7F00AF18 45020003 */  bc1fl .L7F00AF28
-/* 03FA4C 7F00AF1C 44800000 */   mtc1  $zero, $f0
-/* 03FA50 7F00AF20 E6000000 */  swc1  $f0, ($s0)
-/* 03FA54 7F00AF24 44800000 */  mtc1  $zero, $f0
-.L7F00AF28:
-/* 03FA58 7F00AF28 27B000E0 */  addiu $s0, $sp, 0xe0
-/* 03FA5C 7F00AF2C 02002025 */  move  $a0, $s0
-/* 03FA60 7F00AF30 44050000 */  mfc1  $a1, $f0
-/* 03FA64 7F00AF34 44060000 */  mfc1  $a2, $f0
-/* 03FA68 7F00AF38 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 03FA6C 7F00AF3C E7A00010 */  swc1  $f0, 0x10($sp)
-/* 03FA70 7F00AF40 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 03FA74 7F00AF44 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 03FA78 7F00AF48 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 03FA7C 7F00AF4C 0FC165A5 */  jal   matrix_4x4_7F059694
-/* 03FA80 7F00AF50 E7A00024 */   swc1  $f0, 0x24($sp)
-/* 03FA84 7F00AF54 02002025 */  move  $a0, $s0
-/* 03FA88 7F00AF58 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 03FA8C 7F00AF5C 02202825 */   move  $a1, $s1
-/* 03FA90 7F00AF60 02202025 */  move  $a0, $s1
-/* 03FA94 7F00AF64 0FC16008 */  jal   matrix_4x4_copy
-/* 03FA98 7F00AF68 02002825 */   move  $a1, $s0
-/* 03FA9C 7F00AF6C 3C138003 */  lui   $s3, %hi(logoinst)
-/* 03FAA0 7F00AF70 2673A958 */  addiu $s3, %lo(logoinst) # addiu $s3, $s3, -0x56a8
-/* 03FAA4 7F00AF74 8E690000 */  lw    $t1, ($s3)
-/* 03FAA8 7F00AF78 AFB00128 */  sw    $s0, 0x128($sp)
-/* 03FAAC 7F00AF7C 8D2A0008 */  lw    $t2, 8($t1)
-/* 03FAB0 7F00AF80 8544000E */  lh    $a0, 0xe($t2)
-/* 03FAB4 7F00AF84 00045980 */  sll   $t3, $a0, 6
-/* 03FAB8 7F00AF88 0FC2F5C5 */  jal   dynAllocate
-/* 03FABC 7F00AF8C 01602025 */   move  $a0, $t3
-/* 03FAC0 7F00AF90 AFA20138 */  sw    $v0, 0x138($sp)
-/* 03FAC4 7F00AF94 02002025 */  move  $a0, $s0
-/* 03FAC8 7F00AF98 0FC16008 */  jal   matrix_4x4_copy
-/* 03FACC 7F00AF9C 00402825 */   move  $a1, $v0
-/* 03FAD0 7F00AFA0 8FAC0138 */  lw    $t4, 0x138($sp)
-/* 03FAD4 7F00AFA4 8E6D0000 */  lw    $t5, ($s3)
-/* 03FAD8 7F00AFA8 ADAC000C */  sw    $t4, 0xc($t5)
-/* 03FADC 7F00AFAC 0FC1BBF1 */  jal   sub_GAME_7F06EFC4
-/* 03FAE0 7F00AFB0 8E640000 */   lw    $a0, ($s3)
-/* 03FAE4 7F00AFB4 8FAF0168 */  lw    $t7, 0x168($sp)
-/* 03FAE8 7F00AFB8 24180003 */  li    $t8, 3
-/* 03FAEC 7F00AFBC AFB80130 */  sw    $t8, 0x130($sp)
-/* 03FAF0 7F00AFC0 AFA0012C */  sw    $zero, 0x12c($sp)
-/* 03FAF4 7F00AFC4 02402025 */  move  $a0, $s2
-/* 03FAF8 7F00AFC8 8E650000 */  lw    $a1, ($s3)
-/* 03FAFC 7F00AFCC 0FC1D1A1 */  jal   subdraw
-/* 03FB00 7F00AFD0 AFAF0134 */   sw    $t7, 0x134($sp)
-/* 03FB04 7F00AFD4 8FB90134 */  lw    $t9, 0x134($sp)
-/* 03FB08 7F00AFD8 8E620000 */  lw    $v0, ($s3)
-/* 03FB0C 7F00AFDC 00008025 */  move  $s0, $zero
-/* 03FB10 7F00AFE0 AFB90168 */  sw    $t9, 0x168($sp)
-/* 03FB14 7F00AFE4 8C4E0008 */  lw    $t6, 8($v0)
-/* 03FB18 7F00AFE8 00008825 */  move  $s1, $zero
-/* 03FB1C 7F00AFEC 27B20050 */  addiu $s2, $sp, 0x50
-/* 03FB20 7F00AFF0 85C8000E */  lh    $t0, 0xe($t6)
-/* 03FB24 7F00AFF4 59000014 */  blezl $t0, .L7F00B048
-/* 03FB28 7F00AFF8 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 03FB2C 7F00AFFC 8C49000C */  lw    $t1, 0xc($v0)
-.L7F00B000:
-/* 03FB30 7F00B000 02402825 */  move  $a1, $s2
-/* 03FB34 7F00B004 0FC16008 */  jal   matrix_4x4_copy
-/* 03FB38 7F00B008 01312021 */   addu  $a0, $t1, $s1
-/* 03FB3C 7F00B00C 8E6A0000 */  lw    $t2, ($s3)
-/* 03FB40 7F00B010 00106180 */  sll   $t4, $s0, 6
-/* 03FB44 7F00B014 02402025 */  move  $a0, $s2
-/* 03FB48 7F00B018 8D4B000C */  lw    $t3, 0xc($t2)
-/* 03FB4C 7F00B01C 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 03FB50 7F00B020 016C2821 */   addu  $a1, $t3, $t4
-/* 03FB54 7F00B024 8E620000 */  lw    $v0, ($s3)
-/* 03FB58 7F00B028 26100001 */  addiu $s0, $s0, 1
-/* 03FB5C 7F00B02C 26310040 */  addiu $s1, $s1, 0x40
-/* 03FB60 7F00B030 8C4D0008 */  lw    $t5, 8($v0)
-/* 03FB64 7F00B034 85B8000E */  lh    $t8, 0xe($t5)
-/* 03FB68 7F00B038 0218082A */  slt   $at, $s0, $t8
-/* 03FB6C 7F00B03C 5420FFF0 */  bnezl $at, .L7F00B000
-/* 03FB70 7F00B040 8C49000C */   lw    $t1, 0xc($v0)
-/* 03FB74 7F00B044 8FBF003C */  lw    $ra, 0x3c($sp)
-.L7F00B048:
-/* 03FB78 7F00B048 8FA20168 */  lw    $v0, 0x168($sp)
-/* 03FB7C 7F00B04C 8FB0002C */  lw    $s0, 0x2c($sp)
-/* 03FB80 7F00B050 8FB10030 */  lw    $s1, 0x30($sp)
-/* 03FB84 7F00B054 8FB20034 */  lw    $s2, 0x34($sp)
-/* 03FB88 7F00B058 8FB30038 */  lw    $s3, 0x38($sp)
-/* 03FB8C 7F00B05C 03E00008 */  jr    $ra
-/* 03FB90 7F00B060 27BD0168 */   addiu $sp, $sp, 0x168
-)
+    ninLogoRotRate += 0.0209439527243f;
+#else
+    ninLogoRotRate += 0.017453292f;
 #endif
 
+    // Not sure if this is actually an `if` block, but the sp90 variable
+    // needs to be declared here for the stack to match.
+    if(1)
+    {
+        Mtxf sp90;
+        
+        matrix_4x4_set_rotation_around_y(ninLogoRotRate, &sp90);
+        matrix_scalar_multiply_3(ninLogoScale, (f32*)&sp90);
+    
+#if defined(VERSION_EU)
+        ninLogoScale *= 1.09647190571f;
+#else
+        ninLogoScale *= 1.07977f;
 #endif
+        if (ninLogoScale > 1.1f)
+        {
+            ninLogoScale = 1.1f;
+        }
+    
+        matrix_4x4_7F059694(&spE0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        matrix_4x4_multiply_in_place(&spE0, &sp90);
+        matrix_4x4_copy(&sp90, &spE0);
+    }
+
+    sp128.unk_matrix = &spE0;
+    
+    sp128.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
+
+    matrix_4x4_copy(&spE0, sp128.mtxlist);
+
+    logoinst->render_pos = (union RenderPosView*)sp128.mtxlist;
+
+    sub_GAME_7F06EFC4(logoinst);
+
+    sp128.unk08 = 3;
+    sp128.unk04 = 0;
+    sp128.gdl = DL;
+
+    subdraw(&sp128, logoinst);
+
+    DL = sp128.gdl;
+
+    for (i=0; i<logoinst->obj->numMatrices; i++)
+    {
+        Mtxf sp50;
+        s32 padding2;
+        
+        // hack: source address steps by sizeof(Mtxf), but can't get that to match
+        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &sp50);
+        matrix_4x4_f32_to_s32(&sp50, &((Mtxf*)logoinst->render_pos)[i]);
+        
+        if(i);
+    }
+
+    return DL;
+}
 
 
 

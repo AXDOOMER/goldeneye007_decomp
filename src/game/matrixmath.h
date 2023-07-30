@@ -43,6 +43,7 @@ void matrix_column_2_scalar_multiply(f32 scalar, f32 *matrix);
 void matrix_column_3_scalar_multiply(f32 scalar, f32 *matrix);
 void matrix_column_3_scalar_multiply_2(f32 scalar, f32 *matrix);
 void matrix_4x4_set_position_and_rotation_around_xyz(struct coord3d *position, struct coord3d * rotation, Mtxf *matrix);
+void matrix_scalar_multiply_3(f32 scalar, f32 *matrix);
 
 // tenative guess
 void sub_GAME_7F058E78(Mtxf *arg0, Mtxf *arg1);
