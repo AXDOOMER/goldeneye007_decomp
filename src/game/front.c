@@ -867,7 +867,7 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL);
 Gfx *constructor_menu17_switchscreens(Gfx *DL);
 Gfx *constructor_menu18_displaycast(Gfx *DL);
 Gfx *constructor_menu19_spectrum(Gfx *DL);
-void disable_all_switches(void *arg0);
+void disable_all_switches(Model *arg0);
 void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode);
 void set_cursor_to_stage_solo(LEVEL_SOLO_SEQUENCE level);
 Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 halign, s32 valign, u8 *arg5, s32 arg6, s32 arg7);
@@ -2044,97 +2044,26 @@ Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
 
 
 
-
-#ifdef NONMATCHING
-void disable_all_switches(void *arg0)
+void disable_all_switches(Model *arg0)
 {
-    s32 temp_s0;
-    void *temp_t7;
-    void *phi_v1;
-    s32 phi_s1;
-    s32 phi_a2;
-    s32 phi_s0;
-    s32 phi_a2_2;
+    s32 i;
+    ModelNode *mnode;
 
-    phi_v1 = arg0->unk8;
-    phi_s1 = 0;
-    phi_a2 = arg0->unk8->unkC;
-    phi_s0 = 0;
-    if (arg0->unk8->unkC > 0)
+    for (i = 0; i < arg0->obj->numSwitches; i++)
     {
-loop_1:
-        temp_t7 = phi_v1->unk8 + phi_s1;
-        phi_a2_2 = phi_a2;
-        phi_v1 = phi_v1;
-        if (*temp_t7 != 0)
+        mnode = arg0->obj->Switches[i];
+
+        if (mnode != NULL && (mnode->Opcode & 0xff) == 0x12)
         {
-            phi_a2_2 = phi_a2;
-            phi_v1 = phi_v1;
-            if (0x12 == (**temp_t7 & 0xff))
-            {
-                *modelGetNodeRwData(arg0, *temp_t7, phi_a2) = 0;
-                phi_a2_2 = arg0->unk8->unkC;
-                phi_v1 = arg0->unk8;
-            }
-        }
-        temp_s0 = phi_s0 + 1;
-        phi_s1 = phi_s1 + 4;
-        phi_a2 = phi_a2_2;
-        phi_s0 = temp_s0;
-        if (temp_s0 < phi_a2_2)
-        {
-            goto loop_1;
+            union ModelRwData *unmrd;
+            struct ModelRwData_SwitchRecord *srecord;
+            
+            unmrd = modelGetNodeRwData(arg0, mnode);
+            srecord = (struct ModelRwData_SwitchRecord *)unmrd;
+            srecord->visible = 0;
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel disable_all_switches
-/* 040254 7F00B724 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 040258 7F00B728 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 04025C 7F00B72C AFB30020 */  sw    $s3, 0x20($sp)
-/* 040260 7F00B730 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 040264 7F00B734 AFB10018 */  sw    $s1, 0x18($sp)
-/* 040268 7F00B738 AFB00014 */  sw    $s0, 0x14($sp)
-/* 04026C 7F00B73C 8C830008 */  lw    $v1, 8($a0)
-/* 040270 7F00B740 00809025 */  move  $s2, $a0
-/* 040274 7F00B744 00008025 */  move  $s0, $zero
-/* 040278 7F00B748 8466000C */  lh    $a2, 0xc($v1)
-/* 04027C 7F00B74C 00008825 */  move  $s1, $zero
-/* 040280 7F00B750 24130012 */  li    $s3, 18
-/* 040284 7F00B754 58C00014 */  blezl $a2, .L7F00B7A8
-/* 040288 7F00B758 8FBF0024 */   lw    $ra, 0x24($sp)
-.L7F00B75C:
-/* 04028C 7F00B75C 8C6E0008 */  lw    $t6, 8($v1)
-/* 040290 7F00B760 01D17821 */  addu  $t7, $t6, $s1
-/* 040294 7F00B764 8DE50000 */  lw    $a1, ($t7)
-/* 040298 7F00B768 50A0000B */  beql  $a1, $zero, .L7F00B798
-/* 04029C 7F00B76C 26100001 */   addiu $s0, $s0, 1
-/* 0402A0 7F00B770 94B80000 */  lhu   $t8, ($a1)
-/* 0402A4 7F00B774 331900FF */  andi  $t9, $t8, 0xff
-/* 0402A8 7F00B778 56790007 */  bnel  $s3, $t9, .L7F00B798
-/* 0402AC 7F00B77C 26100001 */   addiu $s0, $s0, 1
-/* 0402B0 7F00B780 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 0402B4 7F00B784 02402025 */   move  $a0, $s2
-/* 0402B8 7F00B788 AC400000 */  sw    $zero, ($v0)
-/* 0402BC 7F00B78C 8E430008 */  lw    $v1, 8($s2)
-/* 0402C0 7F00B790 8466000C */  lh    $a2, 0xc($v1)
-/* 0402C4 7F00B794 26100001 */  addiu $s0, $s0, 1
-.L7F00B798:
-/* 0402C8 7F00B798 0206082A */  slt   $at, $s0, $a2
-/* 0402CC 7F00B79C 1420FFEF */  bnez  $at, .L7F00B75C
-/* 0402D0 7F00B7A0 26310004 */   addiu $s1, $s1, 4
-/* 0402D4 7F00B7A4 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F00B7A8:
-/* 0402D8 7F00B7A8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0402DC 7F00B7AC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0402E0 7F00B7B0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0402E4 7F00B7B4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0402E8 7F00B7B8 03E00008 */  jr    $ra
-/* 0402EC 7F00B7BC 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
