@@ -1984,274 +1984,64 @@ void interface_menu04_goldeneyelogo(void)
 
 
 
-#ifdef NONMATCHING
-s32 constructor_menu04_goldeneyelogo(s32 arg0)
+Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
 {
-    s32 sp150;
-    s32 sp148;
-    s32 sp144;
-    s32 sp140;
-    s32 spF8;
-    s32 spB0;
-    s32 sp5C;
-    s32 temp_a0;
-    s32 temp_ret;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 temp_s4;
-    s32 temp_v0;
-    s32 temp_v1;
-    void *temp_t1;
-    void *temp_t6;
-    void *phi_t6;
-    void *phi_t1;
-    s32 phi_s1;
-    s32 phi_s0;
+    struct unk_joint_list sp140;
+    s32 padding[2];
+    Mtxf spF8;
+    s32 i;
+    LookAt * temp_v0;
+    Mtxf spB0;
 
-    phi_t6 = &D_8002AB54;
-    phi_t1 = &sp140;
-loop_1:
-    temp_t6 = phi_t6 + 0xc;
-    temp_t1 = phi_t1 + 0xc;
-    temp_t1->unk-C = (s32) *phi_t6;
-    temp_t1->unk-8 = (s32) temp_t6->unk-8;
-    temp_t1->unk-4 = (s32) temp_t6->unk-4;
-    phi_t6 = temp_t6;
-    phi_t1 = temp_t1;
-    if (temp_t6 != (&D_8002AB54 + 0x3c))
-    {
-        goto loop_1;
-    }
-    temp_t1->unk0 = (s32) temp_t6->unk0;
-    temp_s4 = viFillScreen(viSetFillColor(arg0, 0, 0, 0));
-    temp_ret = dynAllocate7F0BD6F8(2);
-    temp_s0 = temp_ret;
-    guLookAtReflect(&spB0, temp_ret, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    temp_v0 = temp_s4;
-    temp_s4 = temp_s4 + 8;
-    temp_v1 = temp_s4;
-    temp_s4 = temp_s4 + 8;
-    temp_v0->unk0 = 0xbc000002;
-    temp_v0->unk4 = 0x80000040;
-    temp_a0 = temp_s4;
-    temp_s4 = temp_s4 + 8;
-    temp_v1->unk0 = 0x3860010;
-    temp_v1->unk4 = &RGBA_8002A978;
-    temp_a0->unk0 = 0x3880010;
-    temp_a0->unk4 = &gelogolight;
-    temp_s4->unk0 = 0x3840010;
-    temp_s4->unk4 = temp_s0;
-    temp_s4 = temp_s4 + 8;
-    temp_s4->unk4 = (s32) (temp_s0 + 0x10);
-    temp_s4->unk0 = 0x3820010;
-    matrix_4x4_7F059694(&spF8, 0.0f, 0.0f, 0x453b8000, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    sp150 = dynAllocate(logoinst->unk8->unkE << 6);
-    matrix_scalar_multiply(D_80051A18, &spF8);
-    matrix_4x4_copy(&spF8, sp150);
-    logoinst->unkC = sp150;
+    sp140 = D_8002AB54;
+
+    DL = viSetFillColor(DL, 0, 0, 0);
+    DL = viFillScreen(DL);
+
+    temp_v0 = (LookAt *)dynAllocate7F0BD6F8(2);
+    guLookAtReflect(&spB0, temp_v0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+    // Lights macro? These need to be on one line.
+    gSPNumLights(DL++, 1); \
+    gSPLight(DL++, &gelogolight.l[0], 1); \
+    gSPLight(DL++, &gelogolight, 2);
+
+    // gSPLookAt macro expands to gSPLookAtX + gSPLookAtY
+    gSPLookAt(DL++, temp_v0);
+
+    matrix_4x4_7F059694(&spF8, 0.0f, 0.0f, 3000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    sp140.unk_matrix = &spF8;
+    sp140.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
+
+    matrix_scalar_multiply(1.2f, spF8.m[0]);
+    matrix_4x4_copy(&spF8, sp140.mtxlist);
+    logoinst->render_pos = (union RenderPosView*)sp140.mtxlist;
+
     sub_GAME_7F06EFC4(logoinst);
-    sp148 = 3;
-    sp144 = 0;
+    
+    sp140.unk08 = 3;
+    sp140.unk04 = 0;
+    sp140.gdl = DL;
+
     subdraw(&sp140, logoinst);
-    phi_s1 = 0;
-    phi_s0 = 0;
-    if (logoinst->unk8->unkE > 0)
+
+    DL = sp140.gdl;
+
+    for (i=0; i<logoinst->obj->numMatrices; i++)
     {
-loop_3:
-        matrix_4x4_copy(logoinst->unkC + phi_s1, &sp5C);
-        matrix_4x4_f32_to_s32(&sp5C, logoinst->unkC + (phi_s0 << 6));
-        temp_s0_2 = phi_s0 + 1;
-        phi_s1 = phi_s1 + 0x40;
-        phi_s0 = temp_s0_2;
-        if (temp_s0_2 < logoinst->unk8->unkE)
-        {
-            goto loop_3;
-        }
+        Mtxf sp50;
+        s32 padding2;
+        
+        // hack: source address steps by sizeof(Mtxf), but can't get that to match
+        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &sp50);
+        matrix_4x4_f32_to_s32(&sp50, &((Mtxf*)logoinst->render_pos)[i]);
+        
+        if(i);
     }
-    return sp14C;
+
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051A18
-.word 0x3F99999A /* 1.2;*/
-.text
-glabel constructor_menu04_goldeneyelogo
-/* 03FFAC 7F00B47C 27BDFE80 */  addiu $sp, $sp, -0x180
-/* 03FFB0 7F00B480 AFB20040 */  sw    $s2, 0x40($sp)
-/* 03FFB4 7F00B484 3C0E8003 */  lui   $t6, %hi(D_8002AB54)
-/* 03FFB8 7F00B488 27B20140 */  addiu $s2, $sp, 0x140
-/* 03FFBC 7F00B48C AFB40048 */  sw    $s4, 0x48($sp)
-/* 03FFC0 7F00B490 25CEAB54 */  addiu $t6, %lo(D_8002AB54) # addiu $t6, $t6, -0x54ac
-/* 03FFC4 7F00B494 0080A025 */  move  $s4, $a0
-/* 03FFC8 7F00B498 AFBF004C */  sw    $ra, 0x4c($sp)
-/* 03FFCC 7F00B49C AFB30044 */  sw    $s3, 0x44($sp)
-/* 03FFD0 7F00B4A0 AFB1003C */  sw    $s1, 0x3c($sp)
-/* 03FFD4 7F00B4A4 AFB00038 */  sw    $s0, 0x38($sp)
-/* 03FFD8 7F00B4A8 25D9003C */  addiu $t9, $t6, 0x3c
-/* 03FFDC 7F00B4AC 02404825 */  move  $t1, $s2
-.L7F00B4B0:
-/* 03FFE0 7F00B4B0 8DC10000 */  lw    $at, ($t6)
-/* 03FFE4 7F00B4B4 25CE000C */  addiu $t6, $t6, 0xc
-/* 03FFE8 7F00B4B8 2529000C */  addiu $t1, $t1, 0xc
-/* 03FFEC 7F00B4BC AD21FFF4 */  sw    $at, -0xc($t1)
-/* 03FFF0 7F00B4C0 8DC1FFF8 */  lw    $at, -8($t6)
-/* 03FFF4 7F00B4C4 AD21FFF8 */  sw    $at, -8($t1)
-/* 03FFF8 7F00B4C8 8DC1FFFC */  lw    $at, -4($t6)
-/* 03FFFC 7F00B4CC 15D9FFF8 */  bne   $t6, $t9, .L7F00B4B0
-/* 040000 7F00B4D0 AD21FFFC */   sw    $at, -4($t1)
-/* 040004 7F00B4D4 8DC10000 */  lw    $at, ($t6)
-/* 040008 7F00B4D8 02802025 */  move  $a0, $s4
-/* 04000C 7F00B4DC 00002825 */  move  $a1, $zero
-/* 040010 7F00B4E0 00003025 */  move  $a2, $zero
-/* 040014 7F00B4E4 00003825 */  move  $a3, $zero
-/* 040018 7F00B4E8 0C0011B4 */  jal   viSetFillColor
-/* 04001C 7F00B4EC AD210000 */   sw    $at, ($t1)
-/* 040020 7F00B4F0 0C000FBE */  jal   viFillScreen
-/* 040024 7F00B4F4 00402025 */   move  $a0, $v0
-/* 040028 7F00B4F8 0040A025 */  move  $s4, $v0
-/* 04002C 7F00B4FC 0FC2F5BE */  jal   dynAllocate7F0BD6F8
-/* 040030 7F00B500 24040002 */   li    $a0, 2
-/* 040034 7F00B504 44800000 */  mtc1  $zero, $f0
-/* 040038 7F00B508 3C01457A */  li    $at, 0x457A0000 # 4000.000000
-/* 04003C 7F00B50C 44812000 */  mtc1  $at, $f4
-/* 040040 7F00B510 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 040044 7F00B514 44813000 */  mtc1  $at, $f6
-/* 040048 7F00B518 44060000 */  mfc1  $a2, $f0
-/* 04004C 7F00B51C 44070000 */  mfc1  $a3, $f0
-/* 040050 7F00B520 00408025 */  move  $s0, $v0
-/* 040054 7F00B524 27A400B0 */  addiu $a0, $sp, 0xb0
-/* 040058 7F00B528 00402825 */  move  $a1, $v0
-/* 04005C 7F00B52C E7A00014 */  swc1  $f0, 0x14($sp)
-/* 040060 7F00B530 E7A00018 */  swc1  $f0, 0x18($sp)
-/* 040064 7F00B534 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 040068 7F00B538 E7A00020 */  swc1  $f0, 0x20($sp)
-/* 04006C 7F00B53C E7A00028 */  swc1  $f0, 0x28($sp)
-/* 040070 7F00B540 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 040074 7F00B544 0C005CDC */  jal   guLookAtReflect
-/* 040078 7F00B548 E7A60024 */   swc1  $f6, 0x24($sp)
-/* 04007C 7F00B54C 02801025 */  move  $v0, $s4
-/* 040080 7F00B550 26940008 */  addiu $s4, $s4, 8
-/* 040084 7F00B554 3C0ABC00 */  lui   $t2, (0xBC000002 >> 16) # lui $t2, 0xbc00
-/* 040088 7F00B558 3C0B8000 */  lui   $t3, (0x80000040 >> 16) # lui $t3, 0x8000
-/* 04008C 7F00B55C 356B0040 */  ori   $t3, (0x80000040 & 0xFFFF) # ori $t3, $t3, 0x40
-/* 040090 7F00B560 354A0002 */  ori   $t2, (0xBC000002 & 0xFFFF) # ori $t2, $t2, 2
-/* 040094 7F00B564 02801825 */  move  $v1, $s4
-/* 040098 7F00B568 26940008 */  addiu $s4, $s4, 8
-/* 04009C 7F00B56C AC4A0000 */  sw    $t2, ($v0)
-/* 0400A0 7F00B570 AC4B0004 */  sw    $t3, 4($v0)
-/* 0400A4 7F00B574 3C0C0386 */  lui   $t4, (0x03860010 >> 16) # lui $t4, 0x386
-/* 0400A8 7F00B578 3C0D8003 */  lui   $t5, %hi(gelogolight + 0x8)
-/* 0400AC 7F00B57C 25ADA978 */  addiu $t5, %lo(gelogolight + 0x8) # addiu $t5, $t5, -0x5688
-/* 0400B0 7F00B580 358C0010 */  ori   $t4, (0x03860010 & 0xFFFF) # ori $t4, $t4, 0x10
-/* 0400B4 7F00B584 02802025 */  move  $a0, $s4
-/* 0400B8 7F00B588 26940008 */  addiu $s4, $s4, 8
-/* 0400BC 7F00B58C AC6C0000 */  sw    $t4, ($v1)
-/* 0400C0 7F00B590 AC6D0004 */  sw    $t5, 4($v1)
-/* 0400C4 7F00B594 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 0400C8 7F00B598 3C0F8003 */  lui   $t7, %hi(gelogolight)
-/* 0400CC 7F00B59C 25EFA970 */  addiu $t7, %lo(gelogolight) # addiu $t7, $t7, -0x5690
-/* 0400D0 7F00B5A0 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
-/* 0400D4 7F00B5A4 02802825 */  move  $a1, $s4
-/* 0400D8 7F00B5A8 AC980000 */  sw    $t8, ($a0)
-/* 0400DC 7F00B5AC AC8F0004 */  sw    $t7, 4($a0)
-/* 0400E0 7F00B5B0 3C190384 */  lui   $t9, (0x03840010 >> 16) # lui $t9, 0x384
-/* 0400E4 7F00B5B4 37390010 */  ori   $t9, (0x03840010 & 0xFFFF) # ori $t9, $t9, 0x10
-/* 0400E8 7F00B5B8 44800000 */  mtc1  $zero, $f0
-/* 0400EC 7F00B5BC ACB90000 */  sw    $t9, ($a1)
-/* 0400F0 7F00B5C0 ACB00004 */  sw    $s0, 4($a1)
-/* 0400F4 7F00B5C4 26940008 */  addiu $s4, $s4, 8
-/* 0400F8 7F00B5C8 02804025 */  move  $t0, $s4
-/* 0400FC 7F00B5CC 3C0E0382 */  lui   $t6, (0x03820010 >> 16) # lui $t6, 0x382
-/* 040100 7F00B5D0 35CE0010 */  ori   $t6, (0x03820010 & 0xFFFF) # ori $t6, $t6, 0x10
-/* 040104 7F00B5D4 26090010 */  addiu $t1, $s0, 0x10
-/* 040108 7F00B5D8 AD090004 */  sw    $t1, 4($t0)
-/* 04010C 7F00B5DC AD0E0000 */  sw    $t6, ($t0)
-/* 040110 7F00B5E0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 040114 7F00B5E4 44814000 */  mtc1  $at, $f8
-/* 040118 7F00B5E8 27B100F8 */  addiu $s1, $sp, 0xf8
-/* 04011C 7F00B5EC 3C07453B */  lui   $a3, (0x453B8000 >> 16) # lui $a3, 0x453b
-/* 040120 7F00B5F0 44050000 */  mfc1  $a1, $f0
-/* 040124 7F00B5F4 44060000 */  mfc1  $a2, $f0
-/* 040128 7F00B5F8 26940008 */  addiu $s4, $s4, 8
-/* 04012C 7F00B5FC 34E78000 */  ori   $a3, (0x453B8000 & 0xFFFF) # ori $a3, $a3, 0x8000
-/* 040130 7F00B600 02202025 */  move  $a0, $s1
-/* 040134 7F00B604 E7A00024 */  swc1  $f0, 0x24($sp)
-/* 040138 7F00B608 E7A0001C */  swc1  $f0, 0x1c($sp)
-/* 04013C 7F00B60C E7A00018 */  swc1  $f0, 0x18($sp)
-/* 040140 7F00B610 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 040144 7F00B614 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 040148 7F00B618 0FC165A5 */  jal   matrix_4x4_7F059694
-/* 04014C 7F00B61C E7A80020 */   swc1  $f8, 0x20($sp)
-/* 040150 7F00B620 3C138003 */  lui   $s3, %hi(logoinst)
-/* 040154 7F00B624 2673A958 */  addiu $s3, %lo(logoinst) # addiu $s3, $s3, -0x56a8
-/* 040158 7F00B628 8E6A0000 */  lw    $t2, ($s3)
-/* 04015C 7F00B62C AFB10140 */  sw    $s1, 0x140($sp)
-/* 040160 7F00B630 8D4B0008 */  lw    $t3, 8($t2)
-/* 040164 7F00B634 8564000E */  lh    $a0, 0xe($t3)
-/* 040168 7F00B638 00046180 */  sll   $t4, $a0, 6
-/* 04016C 7F00B63C 0FC2F5C5 */  jal   dynAllocate
-/* 040170 7F00B640 01802025 */   move  $a0, $t4
-/* 040174 7F00B644 3C018005 */  lui   $at, %hi(D_80051A18)
-/* 040178 7F00B648 AFA20150 */  sw    $v0, 0x150($sp)
-/* 04017C 7F00B64C C42C1A18 */  lwc1  $f12, %lo(D_80051A18)($at)
-/* 040180 7F00B650 0FC1629F */  jal   matrix_scalar_multiply
-/* 040184 7F00B654 02202825 */   move  $a1, $s1
-/* 040188 7F00B658 02202025 */  move  $a0, $s1
-/* 04018C 7F00B65C 0FC16008 */  jal   matrix_4x4_copy
-/* 040190 7F00B660 8FA50150 */   lw    $a1, 0x150($sp)
-/* 040194 7F00B664 8FAD0150 */  lw    $t5, 0x150($sp)
-/* 040198 7F00B668 8E780000 */  lw    $t8, ($s3)
-/* 04019C 7F00B66C AF0D000C */  sw    $t5, 0xc($t8)
-/* 0401A0 7F00B670 0FC1BBF1 */  jal   sub_GAME_7F06EFC4
-/* 0401A4 7F00B674 8E640000 */   lw    $a0, ($s3)
-/* 0401A8 7F00B678 240F0003 */  li    $t7, 3
-/* 0401AC 7F00B67C AFAF0148 */  sw    $t7, 0x148($sp)
-/* 0401B0 7F00B680 AFA00144 */  sw    $zero, 0x144($sp)
-/* 0401B4 7F00B684 AFB4014C */  sw    $s4, 0x14c($sp)
-/* 0401B8 7F00B688 02402025 */  move  $a0, $s2
-/* 0401BC 7F00B68C 0FC1D1A1 */  jal   subdraw
-/* 0401C0 7F00B690 8E650000 */   lw    $a1, ($s3)
-/* 0401C4 7F00B694 8E620000 */  lw    $v0, ($s3)
-/* 0401C8 7F00B698 8FB4014C */  lw    $s4, 0x14c($sp)
-/* 0401CC 7F00B69C 00008025 */  move  $s0, $zero
-/* 0401D0 7F00B6A0 8C590008 */  lw    $t9, 8($v0)
-/* 0401D4 7F00B6A4 00008825 */  move  $s1, $zero
-/* 0401D8 7F00B6A8 27B2005C */  addiu $s2, $sp, 0x5c
-/* 0401DC 7F00B6AC 872E000E */  lh    $t6, 0xe($t9)
-/* 0401E0 7F00B6B0 59C00014 */  blezl $t6, .L7F00B704
-/* 0401E4 7F00B6B4 8FBF004C */   lw    $ra, 0x4c($sp)
-/* 0401E8 7F00B6B8 8C49000C */  lw    $t1, 0xc($v0)
-.L7F00B6BC:
-/* 0401EC 7F00B6BC 02402825 */  move  $a1, $s2
-/* 0401F0 7F00B6C0 0FC16008 */  jal   matrix_4x4_copy
-/* 0401F4 7F00B6C4 01312021 */   addu  $a0, $t1, $s1
-/* 0401F8 7F00B6C8 8E6A0000 */  lw    $t2, ($s3)
-/* 0401FC 7F00B6CC 00106180 */  sll   $t4, $s0, 6
-/* 040200 7F00B6D0 02402025 */  move  $a0, $s2
-/* 040204 7F00B6D4 8D4B000C */  lw    $t3, 0xc($t2)
-/* 040208 7F00B6D8 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 04020C 7F00B6DC 016C2821 */   addu  $a1, $t3, $t4
-/* 040210 7F00B6E0 8E620000 */  lw    $v0, ($s3)
-/* 040214 7F00B6E4 26100001 */  addiu $s0, $s0, 1
-/* 040218 7F00B6E8 26310040 */  addiu $s1, $s1, 0x40
-/* 04021C 7F00B6EC 8C4D0008 */  lw    $t5, 8($v0)
-/* 040220 7F00B6F0 85B8000E */  lh    $t8, 0xe($t5)
-/* 040224 7F00B6F4 0218082A */  slt   $at, $s0, $t8
-/* 040228 7F00B6F8 5420FFF0 */  bnezl $at, .L7F00B6BC
-/* 04022C 7F00B6FC 8C49000C */   lw    $t1, 0xc($v0)
-/* 040230 7F00B700 8FBF004C */  lw    $ra, 0x4c($sp)
-.L7F00B704:
-/* 040234 7F00B704 02801025 */  move  $v0, $s4
-/* 040238 7F00B708 8FB40048 */  lw    $s4, 0x48($sp)
-/* 04023C 7F00B70C 8FB00038 */  lw    $s0, 0x38($sp)
-/* 040240 7F00B710 8FB1003C */  lw    $s1, 0x3c($sp)
-/* 040244 7F00B714 8FB20040 */  lw    $s2, 0x40($sp)
-/* 040248 7F00B718 8FB30044 */  lw    $s3, 0x44($sp)
-/* 04024C 7F00B71C 03E00008 */  jr    $ra
-/* 040250 7F00B720 27BD0180 */   addiu $sp, $sp, 0x180
-)
-#endif
+
 
 
 
