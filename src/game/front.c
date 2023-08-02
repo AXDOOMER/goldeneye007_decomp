@@ -36,6 +36,7 @@
 #include "assets/obseg/text/LtitleE.h"
 #include "textrelated.h"
 #include "matrixmath.h"
+#include "bg.h"
 
 struct BriefingDataSomething
 {
@@ -2094,97 +2095,64 @@ void select_load_bond_picture(Model *objinstance, u32 bondID)
 
 
 
+struct unk_walletbond_struct {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0C;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+};
 
+struct unk_walletbond_struct_b {
+    s32 unk00;
+    struct unk_walletbond_struct *unk04;
+};
 
-
-#ifdef NONMATCHING
-#define WALLETBOND 278
+/**
+ * Address 0x7F00B8AC NTSC
+*/
 void load_walletbond(void)
 {
-    void *temp_v0_2;
-    void *temp_v1;
+    ModelNode *mnode;
+    s32 i;
 
-    if (walletinst == NULL)
+    if (walletinst[0] == NULL)
     {
-        load_object_fill_header(PitemZ_entries[WALLETBOND].header, PitemZ_entries[WALLETBOND].filename, ptr_logo_and_walletbond_DL, 0xA000, 0);
-        modelCalculateRwDataLen(PitemZ_entries[WALLETBOND].header);
-            walletinst  = get_aircraft_obj_instance_controller(PitemZ_entries[WALLETBOND].header);
-            modelSetScale(walletinst, 1.0f);
+        load_object_fill_header(
+            PitemZ_entries[PROP_WALLETBOND].header,
+            (s8*)PitemZ_entries[PROP_WALLETBOND].filename,
+            (u8*)ptr_logo_and_walletbond_DL,
+            0xA000,
+            0);
+        
+        modelCalculateRwDataLen(PitemZ_entries[PROP_WALLETBOND].header);
 
-        temp_v1 = PitemZ_entries[WALLETBOND].header->Switches->unk54;
-        if (temp_v1 != NULL)
+        for (i = 0; i < 4; i++)
         {
-            temp_v0_2 = temp_v1->unk4;
-            bgLoadFromDynamicCCRMLUT(temp_v0_2->unk1C + (temp_v0_2->unk0 & 0xFFFFFF), NULL, 8U);
+            walletinst[i]  = get_aircraft_obj_instance_controller(PitemZ_entries[PROP_WALLETBOND].header);
+            modelSetScale(walletinst[i], 1.0f);
+        }
+
+        mnode = PitemZ_entries[PROP_WALLETBOND].header->Switches[0x15];
+            
+        if (mnode != NULL)
+        {
+            struct unk_walletbond_struct *srecord;
+            struct unk_walletbond_struct_b *b;
+            s32 arg0;
+            
+            b = (struct unk_walletbond_struct_b *)mnode;
+            srecord = b->unk04;
+
+            arg0 = srecord->unk1C + (srecord->unk00 & 0xffffff);
+            bgLoadFromDynamicCCRMLUT(arg0, 0, 8);
         }
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_walletbond
-/* 0403DC 7F00B8AC 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0403E0 7F00B8B0 3C0E8003 */  lui   $t6, %hi(walletinst)
-/* 0403E4 7F00B8B4 8DCEA95C */  lw    $t6, %lo(walletinst)($t6)
-/* 0403E8 7F00B8B8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0403EC 7F00B8BC AFB20030 */  sw    $s2, 0x30($sp)
-/* 0403F0 7F00B8C0 AFB1002C */  sw    $s1, 0x2c($sp)
-/* 0403F4 7F00B8C4 AFB00028 */  sw    $s0, 0x28($sp)
-/* 0403F8 7F00B8C8 15C0002A */  bnez  $t6, .L7F00B974
-/* 0403FC 7F00B8CC F7B40020 */   sdc1  $f20, 0x20($sp)
-/* 040400 7F00B8D0 3C128004 */  lui   $s2, %hi(PitemZ_entries)
-/* 040404 7F00B8D4 2652A228 */  addiu $s2, %lo(PitemZ_entries) # addiu $s2, $s2, -0x5dd8
-/* 040408 7F00B8D8 3C068003 */  lui   $a2, %hi(ptr_logo_and_walletbond_DL)
-/* 04040C 7F00B8DC 8CC6A950 */  lw    $a2, %lo(ptr_logo_and_walletbond_DL)($a2)
-/* 040410 7F00B8E0 8E440D08 */  lw    $a0, 0xd08($s2)
-/* 040414 7F00B8E4 8E450D0C */  lw    $a1, 0xd0c($s2)
-/* 040418 7F00B8E8 3407A000 */  li    $a3, 40960
-/* 04041C 7F00B8EC 0FC1D929 */  jal   load_object_fill_header
-/* 040420 7F00B8F0 AFA00010 */   sw    $zero, 0x10($sp)
-/* 040424 7F00B8F4 0FC1D73D */  jal   modelCalculateRwDataLen
-/* 040428 7F00B8F8 8E440D08 */   lw    $a0, 0xd08($s2)
-/* 04042C 7F00B8FC 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 040430 7F00B900 3C108003 */  lui   $s0, %hi(walletinst)
-/* 040434 7F00B904 3C118003 */  lui   $s1, %hi(walletinst+0x10)
-/* 040438 7F00B908 4481A000 */  mtc1  $at, $f20
-/* 04043C 7F00B90C 2631A96C */  addiu $s1, %lo(walletinst+0x10) # addiu $s1, $s1, -0x5694
-/* 040440 7F00B910 2610A95C */  addiu $s0, %lo(walletinst) # addiu $s0, $s0, -0x56a4
-.L7F00B914:
-/* 040444 7F00B914 0FC1B08F */  jal   get_aircraft_obj_instance_controller
-/* 040448 7F00B918 8E440D08 */   lw    $a0, 0xd08($s2)
-/* 04044C 7F00B91C 4405A000 */  mfc1  $a1, $f20
-/* 040450 7F00B920 AE020000 */  sw    $v0, ($s0)
-/* 040454 7F00B924 0FC1B39E */  jal   modelSetScale
-/* 040458 7F00B928 00402025 */   move  $a0, $v0
-/* 04045C 7F00B92C 26100004 */  addiu $s0, $s0, 4
-/* 040460 7F00B930 1611FFF8 */  bne   $s0, $s1, .L7F00B914
-/* 040464 7F00B934 00000000 */   nop
-/* 040468 7F00B938 8E4F0D08 */  lw    $t7, 0xd08($s2)
-/* 04046C 7F00B93C 3C0100FF */  lui   $at, (0x00FFFFFF >> 16) # lui $at, 0xff
-/* 040470 7F00B940 8DF80008 */  lw    $t8, 8($t7)
-/* 040474 7F00B944 8F030054 */  lw    $v1, 0x54($t8)
-/* 040478 7F00B948 5060000B */  beql  $v1, $zero, .L7F00B978
-/* 04047C 7F00B94C 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 040480 7F00B950 8C620004 */  lw    $v0, 4($v1)
-/* 040484 7F00B954 3421FFFF */  ori   $at, (0x00FFFFFF & 0xFFFF) # ori $at, $at, 0xffff
-/* 040488 7F00B958 00002825 */  move  $a1, $zero
-/* 04048C 7F00B95C 8C480000 */  lw    $t0, ($v0)
-/* 040490 7F00B960 8C59001C */  lw    $t9, 0x1c($v0)
-/* 040494 7F00B964 24060008 */  li    $a2, 8
-/* 040498 7F00B968 01014824 */  and   $t1, $t0, $at
-/* 04049C 7F00B96C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
-/* 0404A0 7F00B970 03292021 */   addu  $a0, $t9, $t1
-.L7F00B974:
-/* 0404A4 7F00B974 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F00B978:
-/* 0404A8 7F00B978 D7B40020 */  ldc1  $f20, 0x20($sp)
-/* 0404AC 7F00B97C 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0404B0 7F00B980 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 0404B4 7F00B984 8FB20030 */  lw    $s2, 0x30($sp)
-/* 0404B8 7F00B988 03E00008 */  jr    $ra
-/* 0404BC 7F00B98C 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
+
 
 
 
