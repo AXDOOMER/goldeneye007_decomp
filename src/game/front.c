@@ -37,6 +37,7 @@
 #include "textrelated.h"
 #include "matrixmath.h"
 #include "bg.h"
+#include "chrai.h"
 
 struct BriefingDataSomething
 {
@@ -359,20 +360,17 @@ struct coord3d goldeneyelogo_pos = { 0 };
 
 struct unk_joint_list D_8002AB54 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-struct coord3d D_8002AB94 = {-900.0f, 800.0f, 0.0f};
-struct coord3d D_8002ABA0 = {1800.0f, 800.0f, 0.0f};
-struct coord3d D_8002ABAC = {-1800.0f, -200.0f, 0.0f};
-struct coord3d D_8002ABB8 = {900.0f, -200.0f, 0.0f};
+struct coord3d D_8002AB94[] = {
+    {-900.0f, 800.0f, 0.0f},
+    {1800.0f, 800.0f, 0.0f},
+    {-1800.0f, -200.0f, 0.0f},
+    {900.0f, -200.0f, 0.0f}
+};
 
 
-f32 folder_option_COPY_left_bound = 0.0f;
-f32 folder_option_COPY_upper_bound = 0.0f;
-f32 folder_option_COPY_right_bound = 0.0f;
-f32 folder_option_COPY_lower_bound = 0.0f;
-f32 folder_option_ERASE_left_bound = 0.0f;
-f32 folder_option_ERASE_upper_bound = 0.0f;
-f32 folder_option_ERASE_right_bound = 0.0f;
-f32 folder_option_ERASE_lower_bound = 0.0f;
+
+struct rectbbox folder_option_COPY_bound = { 0 };
+struct rectbbox folder_option_ERASE_bound = { 0 };
 
 struct mission_folder_setup mission_folder_setup_entries[] = {
     {"1",   TEXT(LTITLE, TITLE_STR_120),                  0, LEVELID_NONE,     0, MISSION_HEADER,   -1, 0},
@@ -2906,8 +2904,8 @@ glabel interface_menu05_fileselect
 /* 040CDC 7F00C1AC 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 040CE0 7F00C1B0 3405B000 */   li    $a1, 45056
 /* 040CE4 7F00C1B4 1040004A */  beqz  $v0, .L7F00C2E0
-/* 040CE8 7F00C1B8 3C028003 */   lui   $v0, %hi(folder_option_COPY_left_bound)
-/* 040CEC 7F00C1BC 2442ABC4 */  addiu $v0, %lo(folder_option_COPY_left_bound) # addiu $v0, $v0, -0x543c
+/* 040CE8 7F00C1B8 3C028003 */   lui   $v0, %hi(folder_option_COPY_bound)
+/* 040CEC 7F00C1BC 2442ABC4 */  addiu $v0, %lo(folder_option_COPY_bound) # addiu $v0, $v0, -0x543c
 /* 040CF0 7F00C1C0 3C018003 */  lui   $at, %hi(cursor_h_pos)
 /* 040CF4 7F00C1C4 C422A908 */  lwc1  $f2, %lo(cursor_h_pos)($at)
 /* 040CF8 7F00C1C8 C4480000 */  lwc1  $f8, ($v0)
@@ -2940,8 +2938,8 @@ glabel interface_menu05_fileselect
 /* 040D64 7F00C234 10000037 */  b     .L7F00C314
 /* 040D68 7F00C238 00000000 */   nop
 .L7F00C23C:
-/* 040D6C 7F00C23C 3C028003 */  lui   $v0, %hi(folder_option_ERASE_left_bound)
-/* 040D70 7F00C240 2442ABD4 */  addiu $v0, %lo(folder_option_ERASE_left_bound) # addiu $v0, $v0, -0x542c
+/* 040D6C 7F00C23C 3C028003 */  lui   $v0, %hi(folder_option_ERASE_bound)
+/* 040D70 7F00C240 2442ABD4 */  addiu $v0, %lo(folder_option_ERASE_bound) # addiu $v0, $v0, -0x542c
 /* 040D74 7F00C244 C4440000 */  lwc1  $f4, ($v0)
 /* 040D78 7F00C248 4602203E */  c.le.s $f4, $f2
 /* 040D7C 7F00C24C 00000000 */  nop
@@ -3444,8 +3442,8 @@ glabel interface_menu05_fileselect
 /* 040CDC 7F00C1AC 0C0030EB */  jal   joyGetButtonsPressedThisFrame
 /* 040CE0 7F00C1B0 3405B000 */   li    $a1, 45056
 /* 040CE4 7F00C1B4 1040004A */  beqz  $v0, .L7F00C2E0
-/* 040CE8 7F00C1B8 3C028003 */   lui   $v0, %hi(folder_option_COPY_left_bound)
-/* 040CEC 7F00C1BC 2442ABC4 */  addiu $v0, %lo(folder_option_COPY_left_bound) # addiu $v0, $v0, -0x543c
+/* 040CE8 7F00C1B8 3C028003 */   lui   $v0, %hi(folder_option_COPY_bound)
+/* 040CEC 7F00C1BC 2442ABC4 */  addiu $v0, %lo(folder_option_COPY_bound) # addiu $v0, $v0, -0x543c
 /* 040CF0 7F00C1C0 3C018003 */  lui   $at, %hi(cursor_h_pos)
 /* 040CF4 7F00C1C4 C422A908 */  lwc1  $f2, %lo(cursor_h_pos)($at)
 /* 040CF8 7F00C1C8 C4480000 */  lwc1  $f8, ($v0)
@@ -3478,8 +3476,8 @@ glabel interface_menu05_fileselect
 /* 040D64 7F00C234 10000037 */  b     .L7F00C314
 /* 040D68 7F00C238 00000000 */   nop
 .L7F00C23C:
-/* 040D6C 7F00C23C 3C028003 */  lui   $v0, %hi(folder_option_ERASE_left_bound)
-/* 040D70 7F00C240 2442ABD4 */  addiu $v0, %lo(folder_option_ERASE_left_bound) # addiu $v0, $v0, -0x542c
+/* 040D6C 7F00C23C 3C028003 */  lui   $v0, %hi(folder_option_ERASE_bound)
+/* 040D70 7F00C240 2442ABD4 */  addiu $v0, %lo(folder_option_ERASE_bound) # addiu $v0, $v0, -0x542c
 /* 040D74 7F00C244 C4440000 */  lwc1  $f4, ($v0)
 /* 040D78 7F00C248 4602203E */  c.le.s $f4, $f2
 /* 040D7C 7F00C24C 00000000 */  nop
@@ -4626,8 +4624,8 @@ glabel constructor_menu05_fileselect
 /* 041904 7F00CDD4 AFAE0014 */   sw    $t6, 0x14($sp)
 /* 041908 7F00CDD8 8FB20100 */  lw    $s2, 0x100($sp)
 /* 04190C 7F00CDDC 8FAB00F4 */  lw    $t3, 0xf4($sp)
-/* 041910 7F00CDE0 3C158003 */  lui   $s5, %hi(folder_option_COPY_left_bound)
-/* 041914 7F00CDE4 26B5ABC4 */  addiu $s5, %lo(folder_option_COPY_left_bound) # addiu $s5, $s5, -0x543c
+/* 041910 7F00CDE0 3C158003 */  lui   $s5, %hi(folder_option_COPY_bound)
+/* 041914 7F00CDE4 26B5ABC4 */  addiu $s5, %lo(folder_option_COPY_bound) # addiu $s5, $s5, -0x543c
 /* 041918 7F00CDE8 024B6821 */  addu  $t5, $s2, $t3
 /* 04191C 7F00CDEC 448D2000 */  mtc1  $t5, $f4
 /* 041920 7F00CDF0 AFA201B8 */  sw    $v0, 0x1b8($sp)
@@ -4682,11 +4680,11 @@ glabel constructor_menu05_fileselect
 /* 0419E0 7F00CEB0 44810000 */  mtc1  $at, $f0
 /* 0419E4 7F00CEB4 012B6821 */  addu  $t5, $t1, $t3
 /* 0419E8 7F00CEB8 448D4000 */  mtc1  $t5, $f8
-/* 0419EC 7F00CEBC 3C138003 */  lui   $s3, %hi(folder_option_ERASE_left_bound)
+/* 0419EC 7F00CEBC 3C138003 */  lui   $s3, %hi(folder_option_ERASE_bound)
 /* 0419F0 7F00CEC0 3C014361 */  li    $at, 0x43610000 # 225.000000
 /* 0419F4 7F00CEC4 468042A0 */  cvt.s.w $f10, $f8
 /* 0419F8 7F00CEC8 44818000 */  mtc1  $at, $f16
-/* 0419FC 7F00CECC 2673ABD4 */  addiu $s3, %lo(folder_option_ERASE_left_bound) # addiu $s3, $s3, -0x542c
+/* 0419FC 7F00CECC 2673ABD4 */  addiu $s3, %lo(folder_option_ERASE_bound) # addiu $s3, $s3, -0x542c
 /* 041A00 7F00CED0 3C118009 */  lui   $s1, %hi(mainfolderimages)
 /* 041A04 7F00CED4 3C018005 */  lui   $at, %hi(D_80051A28)
 /* 041A08 7F00CED8 2631D128 */  addiu $s1, %lo(mainfolderimages) # addiu $s1, $s1, -0x2ed8

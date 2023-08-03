@@ -358,6 +358,14 @@ typedef union
             f32            f[8];
         };
     }rect4f;
+
+    struct rectbbox
+    {
+        f32 left;
+        f32 up;
+        f32 right;
+        f32 down;
+    };
     #pragma endregion
 #pragma endregion
 
