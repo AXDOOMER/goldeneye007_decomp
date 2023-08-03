@@ -180,7 +180,7 @@ void osCreateScheduler (OSSched * sc, void * stack, u8 mode, u32 numFields)
     osSetEventMesg(OS_EVENT_PRENMI, &sc->interruptQ, (OSMesg)PRE_NMI_MSG);
     osViSetEvent(&sc->interruptQ, (OSMesg)VIDEO_MSG, numFields);
     osCreateLog();
-    osCreateThread(sc->thread, SCHED_THREAD_ID, &__scMain, sc, set_stack_entry(&sp_shed, 0x200), SCHED_THREAD_PRIORITY);
+    osCreateThread(sc->thread, SCHED_THREAD_ID, &__scMain, sc, setSPToEnd(&sp_shed, sizeof(sp_shed)), SCHED_THREAD_PRIORITY);
     osStartThread(sc->thread);
 }
 
