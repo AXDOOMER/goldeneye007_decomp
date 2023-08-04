@@ -154,16 +154,16 @@ void bossInitMainthreadData(void)
     romCreateMesgQueue();
     tlbmanageEstablishManagementTable();
     image_entries_load();
-    mempInitDebugNoticeList();
+    mempInit();
     memaInit();
-    bgInitDebugNoticeList();
-    viInitDebugNoticeList();
+    bgInit();
+    viInit();
     viInitVideoSettings();
     indycommInit();
     g_DebugAndUpdateStageFlag = rmonGetToken();
-    obInitDebugNoticeList();
-    rspInitDebugNoticeList();
-    dynInitDebugNoticeList();
+    obInit();
+    rspInit();
+    dynInit();
     joyInit();
     osCreateMesgQueue(&bossmq, &bossmsg, 1);
 
@@ -186,8 +186,8 @@ void bossInitMainthreadData(void)
         g_DebugAndUpdateStageFlag = 1;
     }
 
-    stanInitDebugNoticeList();
-    gameInitDebugNoticeList();
+    stanInit();
+    gameInit();
 
     if (g_DebugAndUpdateStageFlag != 0)
     {
@@ -203,8 +203,8 @@ void bossInitMainthreadData(void)
     mempCheckMemflagTokens(temp_s0, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)temp_s0));
     mempResetBank(MEMPOOL_PERMANENT);
     init_LnameX();
-    lvInitDebugNoticeList();
-    bossInitDebugNoticeList();
+    lvInit();
+    bossInit();
     textrelatedInit_REMOVED();
     debmenu7000ADA8();
     default_player_perspective_and_height();
@@ -712,6 +712,6 @@ s32 bossGetDebugParseFlag(void) {
  * 75C0    700069C0
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
-void bossInitDebugNoticeList(void) {
+void bossInit(void) {
     debTryAdd(&g_BossDebugNoticeEntry, "boss_c_debug");
 }

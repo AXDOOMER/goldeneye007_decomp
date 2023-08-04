@@ -8,7 +8,7 @@
 //D:8004EAE0
 s32 D_8004EAE0[] = {0, 0, 0, 0};
 
-void gameInitDebugNoticeList(void) {
+void gameInit(void) {
     debTryAdd(&D_8004EAE0, "game_c_debug");
 }
 

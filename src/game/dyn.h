@@ -8,7 +8,7 @@
 */
 #define ALIGN16_a(val)        (((val) + 0xf | 0xf) ^ 0xf)
 
-void dynInitDebugNoticeList(void);
+void dynInit(void);
 void dynInitMemory(void);
 Gfx *dynGetMasterDisplayList(void);
 s32 dynGetFreeGfx2(Gfx *gdl);

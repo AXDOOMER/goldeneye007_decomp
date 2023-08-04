@@ -40,7 +40,7 @@ char membars_string1[] = ">>>>>>>>>>>>>>>>>>>>>>>>>";
 char membars_string2[] = "=========================";
 char membars_string3[] = "-------------------------";
 
-void dynInitDebugNoticeList(void) {
+void dynInit(void) {
     debTryAdd(&D_800482E0, "dyn_c_debug");
 }
 

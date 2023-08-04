@@ -230,7 +230,7 @@ void sub_GAME_7F0BD8FC(s32 arg0)
     D_800483C0 = arg0;
 }
 
-void lvInitDebugNoticeList(void)
+void lvInit(void)
 {
     s32 size;
 

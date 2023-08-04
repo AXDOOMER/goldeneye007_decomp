@@ -110,7 +110,7 @@ void resource_load_from_indy(u8 *ptrdata, s32 bytes,  fileentry *srcfile,  resou
 
 
 #ifdef NONMATCHING
-void obInitDebugNoticeList(void)
+void obInit(void)
 {
     s32 i;
  
@@ -132,7 +132,7 @@ glabel aOb_c_debug
 /*"ob_c_debug"*/
 .word 0x6F625F63, 0x5F646562, 0x75670000
 .text
-glabel obInitDebugNoticeList
+glabel obInit
 /* 0F1758 7F0BCC28 27BDFFE8 */  addiu $sp, $sp, -0x18
 /* 0F175C 7F0BCC2C AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F1760 7F0BCC30 3C048004 */  lui   $a0, %hi(ob_c_debug_notice_list_entry)
