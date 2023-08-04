@@ -125,7 +125,7 @@ void *LnameX_lookuptable[45][2] = {
     {"LmiscP", "LmiscJ"}};           /* Cheat options */
 #endif
 
-LEVELID get_textbank_number_for_stagenum(LEVELID level)
+LEVELID langGetLangBankIndexFromStagenum(LEVELID level)
 {
     LEVELID return_id;
 
@@ -223,7 +223,7 @@ LEVELID get_textbank_number_for_stagenum(LEVELID level)
 }
 
 
-void init_LnameX(void) {
+void langInit(void) {
     s32 i;
 
     if (j_text_trigger) {
@@ -249,127 +249,17 @@ void init_LnameX(void) {
 
 
 
+void langTick(void) {
+    s32 i;
 
-
-#ifdef NONMATCHING
-void something_with_LnameJ(void)
-{
-    ushort uVar1;
-    ushort *puVar2;
-    int iVar3;
-    
-    iVar3 = 0;
-    if (j_text_trigger != 0) {
-        do {
-            puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
-            if (*puVar2 >> 0xe == 0) {
-                uVar1 = puVar2[1];
-            }
-            else {
-                *(byte *)puVar2 = ((byte)(*puVar2 >> 0xe) - 1) * '@' | *(byte *)puVar2 & 0x3f;
-                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
-                uVar1 = puVar2[1];
-            }
-            if (uVar1 >> 0xe == 0) {
-                uVar1 = puVar2[2];
-            }
-            else {
-                *(byte *)(puVar2 + 1) =
-                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 1) & 0x3f;
-                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
-                uVar1 = puVar2[2];
-            }
-            if (uVar1 >> 0xe == 0) {
-                uVar1 = puVar2[3];
-            }
-            else {
-                *(byte *)(puVar2 + 2) =
-                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 2) & 0x3f;
-                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
-                uVar1 = puVar2[3];
-            }
-            iVar3 += 8;
-            if (uVar1 >> 0xe != 0) {
-                *(byte *)(puVar2 + 3) =
-                     ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 3) & 0x3f;
-            }
-        } while (iVar3 != 0xf8);
+    if (j_text_trigger) {
+		for (i = 0; i < 0x7c; i++) {
+		if (g_JpnCacheCacheItems[i].ttl) {
+			g_JpnCacheCacheItems[i].ttl--;
+		}
+		}
     }
-    return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_LnameJ
-/* 0F6470 7F0C1940 3C0E8005 */  lui   $t6, %hi(j_text_trigger) 
-/* 0F6474 7F0C1944 8DCE84D0 */  lw    $t6, %lo(j_text_trigger)($t6)
-/* 0F6478 7F0C1948 00001825 */  move  $v1, $zero
-/* 0F647C 7F0C194C 240600F8 */  li    $a2, 248
-/* 0F6480 7F0C1950 11C00035 */  beqz  $t6, .L7F0C1A28
-/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(g_JpnCacheCacheItems)
-/* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(g_JpnCacheCacheItems) # addiu $a1, $a1, -0x3908
-/* 0F648C 7F0C195C 8CAF0000 */  lw    $t7, ($a1)
-.L7F0C1960:
-/* 0F6490 7F0C1960 01E31021 */  addu  $v0, $t7, $v1
-/* 0F6494 7F0C1964 94440000 */  lhu   $a0, ($v0)
-/* 0F6498 7F0C1968 0004C382 */  srl   $t8, $a0, 0xe
-/* 0F649C 7F0C196C 5300000A */  beql  $t8, $zero, .L7F0C1998
-/* 0F64A0 7F0C1970 94440002 */   lhu   $a0, 2($v0)
-/* 0F64A4 7F0C1974 904A0000 */  lbu   $t2, ($v0)
-/* 0F64A8 7F0C1978 2719FFFF */  addiu $t9, $t8, -1
-/* 0F64AC 7F0C197C 00194980 */  sll   $t1, $t9, 6
-/* 0F64B0 7F0C1980 314BFF3F */  andi  $t3, $t2, 0xff3f
-/* 0F64B4 7F0C1984 012B6025 */  or    $t4, $t1, $t3
-/* 0F64B8 7F0C1988 A04C0000 */  sb    $t4, ($v0)
-/* 0F64BC 7F0C198C 8CAD0000 */  lw    $t5, ($a1)
-/* 0F64C0 7F0C1990 01A31021 */  addu  $v0, $t5, $v1
-/* 0F64C4 7F0C1994 94440002 */  lhu   $a0, 2($v0)
-.L7F0C1998:
-/* 0F64C8 7F0C1998 00047382 */  srl   $t6, $a0, 0xe
-/* 0F64CC 7F0C199C 51C0000A */  beql  $t6, $zero, .L7F0C19C8
-/* 0F64D0 7F0C19A0 94440004 */   lhu   $a0, 4($v0)
-/* 0F64D4 7F0C19A4 90480002 */  lbu   $t0, 2($v0)
-/* 0F64D8 7F0C19A8 25CFFFFF */  addiu $t7, $t6, -1
-/* 0F64DC 7F0C19AC 000FC980 */  sll   $t9, $t7, 6
-/* 0F64E0 7F0C19B0 310AFF3F */  andi  $t2, $t0, 0xff3f
-/* 0F64E4 7F0C19B4 032A4825 */  or    $t1, $t9, $t2
-/* 0F64E8 7F0C19B8 A0490002 */  sb    $t1, 2($v0)
-/* 0F64EC 7F0C19BC 8CAB0000 */  lw    $t3, ($a1)
-/* 0F64F0 7F0C19C0 01631021 */  addu  $v0, $t3, $v1
-/* 0F64F4 7F0C19C4 94440004 */  lhu   $a0, 4($v0)
-.L7F0C19C8:
-/* 0F64F8 7F0C19C8 00046382 */  srl   $t4, $a0, 0xe
-/* 0F64FC 7F0C19CC 5180000A */  beql  $t4, $zero, .L7F0C19F8
-/* 0F6500 7F0C19D0 94440006 */   lhu   $a0, 6($v0)
-/* 0F6504 7F0C19D4 90580004 */  lbu   $t8, 4($v0)
-/* 0F6508 7F0C19D8 258DFFFF */  addiu $t5, $t4, -1
-/* 0F650C 7F0C19DC 000D7980 */  sll   $t7, $t5, 6
-/* 0F6510 7F0C19E0 3308FF3F */  andi  $t0, $t8, 0xff3f
-/* 0F6514 7F0C19E4 01E8C825 */  or    $t9, $t7, $t0
-/* 0F6518 7F0C19E8 A0590004 */  sb    $t9, 4($v0)
-/* 0F651C 7F0C19EC 8CAA0000 */  lw    $t2, ($a1)
-/* 0F6520 7F0C19F0 01431021 */  addu  $v0, $t2, $v1
-/* 0F6524 7F0C19F4 94440006 */  lhu   $a0, 6($v0)
-.L7F0C19F8:
-/* 0F6528 7F0C19F8 24630008 */  addiu $v1, $v1, 8
-/* 0F652C 7F0C19FC 00044B82 */  srl   $t1, $a0, 0xe
-/* 0F6530 7F0C1A00 11200007 */  beqz  $t1, .L7F0C1A20
-/* 0F6534 7F0C1A04 00000000 */   nop   
-/* 0F6538 7F0C1A08 904E0006 */  lbu   $t6, 6($v0)
-/* 0F653C 7F0C1A0C 252BFFFF */  addiu $t3, $t1, -1
-/* 0F6540 7F0C1A10 000B6980 */  sll   $t5, $t3, 6
-/* 0F6544 7F0C1A14 31D8FF3F */  andi  $t8, $t6, 0xff3f
-/* 0F6548 7F0C1A18 01B87825 */  or    $t7, $t5, $t8
-/* 0F654C 7F0C1A1C A04F0006 */  sb    $t7, 6($v0)
-.L7F0C1A20:
-/* 0F6550 7F0C1A20 5466FFCF */  bnel  $v1, $a2, .L7F0C1960
-/* 0F6554 7F0C1A24 8CAF0000 */   lw    $t7, ($a1)
-.L7F0C1A28:
-/* 0F6558 7F0C1A28 03E00008 */  jr    $ra
-/* 0F655C 7F0C1A2C 00000000 */   nop   
-)
-#endif
-
 
 
 extern u8 _efontchardataSegmentRomStart;
@@ -450,13 +340,13 @@ struct jpncharpixels *langGetJpnCharPixels(s32 codepoint)
 }
 
 
-void briefingLoadToBank(u32 id)
+void langLoadToAddr(u32 id)
 {
     g_LangBanks[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,MEMPOOL_STAGE);
 }
 
 
-void briefingLoadToAddr(int id,u8 *target,int size)
+void langLoadToBank(int id,u8 *target,int size)
 {
     g_LangBanks[id] = _fileNameLoadToAddr(LnameX_lookuptable[id][j_text_trigger],1,target,size);
 }
