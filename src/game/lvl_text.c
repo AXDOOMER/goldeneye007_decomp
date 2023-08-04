@@ -8,10 +8,11 @@
 //CODE.bss:8008C640
 s32 g_LangBanks[45];
 
+
 //CODE.bss:8008C6F4
 u8* ptr_char_data_buf;
 //CODE.bss:8008C6F8
-u8* ptr_char_registry;
+ struct  jpncacheitem *ptr_char_registry;
 
 
 #ifdef LANG_JP
@@ -222,21 +223,19 @@ LEVELID get_textbank_number_for_stagenum(LEVELID level)
 }
 
 
-#ifdef NONMATCHING
-https://decomp.me/scratch/izavf
 void init_LnameX(void) {
     s32 i;
 
     if (j_text_trigger != 0) {
         ptr_char_data_buf = mempAllocBytesInBank(0x2E80, MEMPOOL_PERMANENT);
         ptr_char_registry = mempAllocBytesInBank(0x100, MEMPOOL_PERMANENT);
-        for(i = 0;i != 0x3E;i++) {
-            ptr_char_registry[i] &= 0xFF3F;
-            ptr_char_registry[i] |= 0x3FFF;
+        for(i = 0;i != 124;i++) {
+            ptr_char_registry[i].ttl =0;
+            ptr_char_registry[i].codepoint =-1;
         }
     }
 
-	for (i = 0; i < ARRAYCOUNT(g_LangBanks); i++) {
+	for (i = 0; i < 45; i++) {
 		g_LangBanks[i] = 0;
 	}
     g_LangBanks[LGUN] = _fileNameLoadToBank(LnameX_lookuptable[LGUN][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
@@ -247,164 +246,6 @@ void init_LnameX(void) {
     g_LangBanks[LOPTIONS] = _fileNameLoadToBank(LnameX_lookuptable[LOPTIONS][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
     g_LangBanks[LMISC] = _fileNameLoadToBank(LnameX_lookuptable[LMISC][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_LnameX
-/* 0F621C 7F0C16EC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0F6220 7F0C16F0 AFB20020 */  sw    $s2, 0x20($sp)
-/* 0F6224 7F0C16F4 3C128005 */  lui   $s2, %hi(j_text_trigger)
-/* 0F6228 7F0C16F8 265284D0 */  addiu $s2, %lo(j_text_trigger) # addiu $s2, $s2, -0x7b30
-/* 0F622C 7F0C16FC 8E480000 */  lw    $t0, ($s2)
-/* 0F6230 7F0C1700 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0F6234 7F0C1704 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 0F6238 7F0C1708 11000039 */  beqz  $t0, .L7F0C17F0
-/* 0F623C 7F0C170C AFB00018 */   sw    $s0, 0x18($sp)
-/* 0F6240 7F0C1710 24042E80 */  li    $a0, 11904
-/* 0F6244 7F0C1714 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0F6248 7F0C1718 24050006 */   li    $a1, 6
-/* 0F624C 7F0C171C 3C018009 */  lui   $at, %hi(ptr_char_data_buf)
-/* 0F6250 7F0C1720 AC22C6F4 */  sw    $v0, %lo(ptr_char_data_buf)($at)
-/* 0F6254 7F0C1724 24040100 */  li    $a0, 256
-/* 0F6258 7F0C1728 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0F625C 7F0C172C 24050006 */   li    $a1, 6
-/* 0F6260 7F0C1730 3C048009 */  lui   $a0, %hi(ptr_char_registry)
-/* 0F6264 7F0C1734 2484C6F8 */  addiu $a0, %lo(ptr_char_registry) # addiu $a0, $a0, -0x3908
-/* 0F6268 7F0C1738 AC820000 */  sw    $v0, ($a0)
-/* 0F626C 7F0C173C 00001825 */  move  $v1, $zero
-/* 0F6270 7F0C1740 240500F8 */  li    $a1, 248
-.L7F0C1744:
-/* 0F6274 7F0C1744 8C8E0000 */  lw    $t6, ($a0)
-/* 0F6278 7F0C1748 01C31021 */  addu  $v0, $t6, $v1
-/* 0F627C 7F0C174C 904F0000 */  lbu   $t7, ($v0)
-/* 0F6280 7F0C1750 31F8FF3F */  andi  $t8, $t7, 0xff3f
-/* 0F6284 7F0C1754 A0580000 */  sb    $t8, ($v0)
-/* 0F6288 7F0C1758 8C990000 */  lw    $t9, ($a0)
-/* 0F628C 7F0C175C 03231021 */  addu  $v0, $t9, $v1
-/* 0F6290 7F0C1760 944A0000 */  lhu   $t2, ($v0)
-/* 0F6294 7F0C1764 354B3FFF */  ori   $t3, $t2, 0x3fff
-/* 0F6298 7F0C1768 A44B0000 */  sh    $t3, ($v0)
-/* 0F629C 7F0C176C 8C8C0000 */  lw    $t4, ($a0)
-/* 0F62A0 7F0C1770 01831021 */  addu  $v0, $t4, $v1
-/* 0F62A4 7F0C1774 904D0002 */  lbu   $t5, 2($v0)
-/* 0F62A8 7F0C1778 31AEFF3F */  andi  $t6, $t5, 0xff3f
-/* 0F62AC 7F0C177C A04E0002 */  sb    $t6, 2($v0)
-/* 0F62B0 7F0C1780 8C8F0000 */  lw    $t7, ($a0)
-/* 0F62B4 7F0C1784 01E31021 */  addu  $v0, $t7, $v1
-/* 0F62B8 7F0C1788 94590002 */  lhu   $t9, 2($v0)
-/* 0F62BC 7F0C178C 37293FFF */  ori   $t1, $t9, 0x3fff
-/* 0F62C0 7F0C1790 A4490002 */  sh    $t1, 2($v0)
-/* 0F62C4 7F0C1794 8C8A0000 */  lw    $t2, ($a0)
-/* 0F62C8 7F0C1798 01431021 */  addu  $v0, $t2, $v1
-/* 0F62CC 7F0C179C 904B0004 */  lbu   $t3, 4($v0)
-/* 0F62D0 7F0C17A0 316CFF3F */  andi  $t4, $t3, 0xff3f
-/* 0F62D4 7F0C17A4 A04C0004 */  sb    $t4, 4($v0)
-/* 0F62D8 7F0C17A8 8C8D0000 */  lw    $t5, ($a0)
-/* 0F62DC 7F0C17AC 01A31021 */  addu  $v0, $t5, $v1
-/* 0F62E0 7F0C17B0 944F0004 */  lhu   $t7, 4($v0)
-/* 0F62E4 7F0C17B4 35F83FFF */  ori   $t8, $t7, 0x3fff
-/* 0F62E8 7F0C17B8 A4580004 */  sh    $t8, 4($v0)
-/* 0F62EC 7F0C17BC 8C990000 */  lw    $t9, ($a0)
-/* 0F62F0 7F0C17C0 03231021 */  addu  $v0, $t9, $v1
-/* 0F62F4 7F0C17C4 90490006 */  lbu   $t1, 6($v0)
-/* 0F62F8 7F0C17C8 312AFF3F */  andi  $t2, $t1, 0xff3f
-/* 0F62FC 7F0C17CC A04A0006 */  sb    $t2, 6($v0)
-/* 0F6300 7F0C17D0 8C8B0000 */  lw    $t3, ($a0)
-/* 0F6304 7F0C17D4 01631021 */  addu  $v0, $t3, $v1
-/* 0F6308 7F0C17D8 944D0006 */  lhu   $t5, 6($v0)
-/* 0F630C 7F0C17DC 24630008 */  addiu $v1, $v1, 8
-/* 0F6310 7F0C17E0 35AE3FFF */  ori   $t6, $t5, 0x3fff
-/* 0F6314 7F0C17E4 1465FFD7 */  bne   $v1, $a1, .L7F0C1744
-/* 0F6318 7F0C17E8 A44E0006 */   sh    $t6, 6($v0)
-/* 0F631C 7F0C17EC 8E480000 */  lw    $t0, ($s2)
-.L7F0C17F0:
-/* 0F6320 7F0C17F0 3C018009 */  lui   $at, %hi(g_LangBanks)
-/* 0F6324 7F0C17F4 3C028009 */  lui   $v0, %hi(g_LangBanks+0x4)
-/* 0F6328 7F0C17F8 3C038009 */  lui   $v1, %hi(ptr_char_data_buf)
-/* 0F632C 7F0C17FC 2463C6F4 */  addiu $v1, %lo(ptr_char_data_buf) # addiu $v1, $v1, -0x390c
-/* 0F6330 7F0C1800 2442C644 */  addiu $v0, %lo(g_LangBanks+0x4) # addiu $v0, $v0, -0x39bc
-/* 0F6334 7F0C1804 AC20C640 */  sw    $zero, %lo(g_LangBanks)($at)
-.L7F0C1808:
-/* 0F6338 7F0C1808 24420010 */  addiu $v0, $v0, 0x10
-/* 0F633C 7F0C180C AC40FFF4 */  sw    $zero, -0xc($v0)
-/* 0F6340 7F0C1810 AC40FFF8 */  sw    $zero, -8($v0)
-/* 0F6344 7F0C1814 AC40FFFC */  sw    $zero, -4($v0)
-/* 0F6348 7F0C1818 1443FFFB */  bne   $v0, $v1, .L7F0C1808
-/* 0F634C 7F0C181C AC40FFF0 */   sw    $zero, -0x10($v0)
-/* 0F6350 7F0C1820 3C108005 */  lui   $s0, %hi(LnameX_lookuptable)
-/* 0F6354 7F0C1824 261084D4 */  addiu $s0, %lo(LnameX_lookuptable) # addiu $s0, $s0, -0x7b2c
-/* 0F6358 7F0C1828 00087880 */  sll   $t7, $t0, 2
-/* 0F635C 7F0C182C 020FC021 */  addu  $t8, $s0, $t7
-/* 0F6360 7F0C1830 8F040130 */  lw    $a0, 0x130($t8)
-/* 0F6364 7F0C1834 24050001 */  li    $a1, 1
-/* 0F6368 7F0C1838 24060100 */  li    $a2, 256
-/* 0F636C 7F0C183C 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F6370 7F0C1840 24070006 */   li    $a3, 6
-/* 0F6374 7F0C1844 8E590000 */  lw    $t9, ($s2)
-/* 0F6378 7F0C1848 3C118009 */  lui   $s1, %hi(g_LangBanks)
-/* 0F637C 7F0C184C 2631C640 */  addiu $s1, %lo(g_LangBanks) # addiu $s1, $s1, -0x39c0
-/* 0F6380 7F0C1850 00194880 */  sll   $t1, $t9, 2
-/* 0F6384 7F0C1854 02095021 */  addu  $t2, $s0, $t1
-/* 0F6388 7F0C1858 AE220098 */  sw    $v0, 0x98($s1)
-/* 0F638C 7F0C185C 8D440138 */  lw    $a0, 0x138($t2)
-/* 0F6390 7F0C1860 24050001 */  li    $a1, 1
-/* 0F6394 7F0C1864 24060100 */  li    $a2, 256
-/* 0F6398 7F0C1868 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F639C 7F0C186C 24070006 */   li    $a3, 6
-/* 0F63A0 7F0C1870 8E4B0000 */  lw    $t3, ($s2)
-/* 0F63A4 7F0C1874 AE22009C */  sw    $v0, 0x9c($s1)
-/* 0F63A8 7F0C1878 24050001 */  li    $a1, 1
-/* 0F63AC 7F0C187C 000B6080 */  sll   $t4, $t3, 2
-/* 0F63B0 7F0C1880 020C6821 */  addu  $t5, $s0, $t4
-/* 0F63B4 7F0C1884 8DA40140 */  lw    $a0, 0x140($t5)
-/* 0F63B8 7F0C1888 24060100 */  li    $a2, 256
-/* 0F63BC 7F0C188C 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F63C0 7F0C1890 24070006 */   li    $a3, 6
-/* 0F63C4 7F0C1894 8E4E0000 */  lw    $t6, ($s2)
-/* 0F63C8 7F0C1898 AE2200A0 */  sw    $v0, 0xa0($s1)
-/* 0F63CC 7F0C189C 24050001 */  li    $a1, 1
-/* 0F63D0 7F0C18A0 000E7880 */  sll   $t7, $t6, 2
-/* 0F63D4 7F0C18A4 020FC021 */  addu  $t8, $s0, $t7
-/* 0F63D8 7F0C18A8 8F040148 */  lw    $a0, 0x148($t8)
-/* 0F63DC 7F0C18AC 24060100 */  li    $a2, 256
-/* 0F63E0 7F0C18B0 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F63E4 7F0C18B4 24070006 */   li    $a3, 6
-/* 0F63E8 7F0C18B8 8E590000 */  lw    $t9, ($s2)
-/* 0F63EC 7F0C18BC AE2200A4 */  sw    $v0, 0xa4($s1)
-/* 0F63F0 7F0C18C0 24050001 */  li    $a1, 1
-/* 0F63F4 7F0C18C4 00194880 */  sll   $t1, $t9, 2
-/* 0F63F8 7F0C18C8 02095021 */  addu  $t2, $s0, $t1
-/* 0F63FC 7F0C18CC 8D440150 */  lw    $a0, 0x150($t2)
-/* 0F6400 7F0C18D0 24060100 */  li    $a2, 256
-/* 0F6404 7F0C18D4 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F6408 7F0C18D8 24070006 */   li    $a3, 6
-/* 0F640C 7F0C18DC 8E4B0000 */  lw    $t3, ($s2)
-/* 0F6410 7F0C18E0 AE2200A8 */  sw    $v0, 0xa8($s1)
-/* 0F6414 7F0C18E4 24050001 */  li    $a1, 1
-/* 0F6418 7F0C18E8 000B6080 */  sll   $t4, $t3, 2
-/* 0F641C 7F0C18EC 020C6821 */  addu  $t5, $s0, $t4
-/* 0F6420 7F0C18F0 8DA40158 */  lw    $a0, 0x158($t5)
-/* 0F6424 7F0C18F4 24060100 */  li    $a2, 256
-/* 0F6428 7F0C18F8 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F642C 7F0C18FC 24070006 */   li    $a3, 6
-/* 0F6430 7F0C1900 8E4E0000 */  lw    $t6, ($s2)
-/* 0F6434 7F0C1904 AE2200AC */  sw    $v0, 0xac($s1)
-/* 0F6438 7F0C1908 24050001 */  li    $a1, 1
-/* 0F643C 7F0C190C 000E7880 */  sll   $t7, $t6, 2
-/* 0F6440 7F0C1910 020FC021 */  addu  $t8, $s0, $t7
-/* 0F6444 7F0C1914 8F040160 */  lw    $a0, 0x160($t8)
-/* 0F6448 7F0C1918 24060100 */  li    $a2, 256
-/* 0F644C 7F0C191C 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0F6450 7F0C1920 24070006 */   li    $a3, 6
-/* 0F6454 7F0C1924 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0F6458 7F0C1928 AE2200B0 */  sw    $v0, 0xb0($s1)
-/* 0F645C 7F0C192C 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 0F6460 7F0C1930 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0F6464 7F0C1934 8FB20020 */  lw    $s2, 0x20($sp)
-/* 0F6468 7F0C1938 03E00008 */  jr    $ra
-/* 0F646C 7F0C193C 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
