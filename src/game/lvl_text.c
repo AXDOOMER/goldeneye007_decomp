@@ -10,9 +10,9 @@ s32 g_LangBanks[45];
 
 
 //CODE.bss:8008C6F4
-u8* ptr_char_data_buf;
+struct jpncharpixels* g_JpnCharCachePixels;
 //CODE.bss:8008C6F8
- struct  jpncacheitem *ptr_char_registry;
+struct  jpncacheitem *g_JpnCacheCacheItems;
 
 
 #ifdef LANG_JP
@@ -226,12 +226,12 @@ LEVELID get_textbank_number_for_stagenum(LEVELID level)
 void init_LnameX(void) {
     s32 i;
 
-    if (j_text_trigger != 0) {
-        ptr_char_data_buf = mempAllocBytesInBank(0x2E80, MEMPOOL_PERMANENT);
-        ptr_char_registry = mempAllocBytesInBank(0x100, MEMPOOL_PERMANENT);
+    if (j_text_trigger) {
+        g_JpnCharCachePixels = mempAllocBytesInBank(0x2E80, MEMPOOL_PERMANENT);
+        g_JpnCacheCacheItems = mempAllocBytesInBank(0x100, MEMPOOL_PERMANENT);
         for(i = 0;i != 124;i++) {
-            ptr_char_registry[i].ttl =0;
-            ptr_char_registry[i].codepoint =-1;
+            g_JpnCacheCacheItems[i].ttl =0;
+            g_JpnCacheCacheItems[i].codepoint =-1;
         }
     }
 
@@ -261,13 +261,13 @@ void something_with_LnameJ(void)
     iVar3 = 0;
     if (j_text_trigger != 0) {
         do {
-            puVar2 = (ushort *)(ptr_char_registry + iVar3);
+            puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
             if (*puVar2 >> 0xe == 0) {
                 uVar1 = puVar2[1];
             }
             else {
                 *(byte *)puVar2 = ((byte)(*puVar2 >> 0xe) - 1) * '@' | *(byte *)puVar2 & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
                 uVar1 = puVar2[1];
             }
             if (uVar1 >> 0xe == 0) {
@@ -276,7 +276,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 1) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 1) & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
                 uVar1 = puVar2[2];
             }
             if (uVar1 >> 0xe == 0) {
@@ -285,7 +285,7 @@ void something_with_LnameJ(void)
             else {
                 *(byte *)(puVar2 + 2) =
                      ((byte)(uVar1 >> 0xe) - 1) * '@' | *(byte *)(puVar2 + 2) & 0x3f;
-                puVar2 = (ushort *)(ptr_char_registry + iVar3);
+                puVar2 = (ushort *)(g_JpnCacheCacheItems + iVar3);
                 uVar1 = puVar2[3];
             }
             iVar3 += 8;
@@ -306,8 +306,8 @@ glabel something_with_LnameJ
 /* 0F6478 7F0C1948 00001825 */  move  $v1, $zero
 /* 0F647C 7F0C194C 240600F8 */  li    $a2, 248
 /* 0F6480 7F0C1950 11C00035 */  beqz  $t6, .L7F0C1A28
-/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(ptr_char_registry)
-/* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(ptr_char_registry) # addiu $a1, $a1, -0x3908
+/* 0F6484 7F0C1954 3C058009 */   lui   $a1, %hi(g_JpnCacheCacheItems)
+/* 0F6488 7F0C1958 24A5C6F8 */  addiu $a1, %lo(g_JpnCacheCacheItems) # addiu $a1, $a1, -0x3908
 /* 0F648C 7F0C195C 8CAF0000 */  lw    $t7, ($a1)
 .L7F0C1960:
 /* 0F6490 7F0C1960 01E31021 */  addu  $v0, $t7, $v1
@@ -372,297 +372,87 @@ glabel something_with_LnameJ
 
 
 
+extern u8 _efontchardataSegmentRomStart;
+extern u8 _jfontchardataSegmentRomStart;
+void romCopy(void *target, void *source, u32 size);
 
-
-#ifdef NONMATCHING
-int something_with_LnameX(uint param_1)
+struct jpncharpixels *langGetJpnCharPixels(s32 codepoint)
 {
-    bool bVar1;
-    ushort uVar3;
-    u8 *puVar2;
-    int iVar4;
-    ushort *puVar5;
-    int iVar6;
-    int iVar7;
-    int indexto;
-    int iVar8;
-    int iVar9;
-    int indexfrom;
-    
-    indexto = -1;
-    bVar1 = (param_1 & 0x2000) != 0;
-    iVar7 = 0;
-    iVar4 = 0;
-    iVar9 = -1;
-    puVar5 = (ushort *)ptr_char_registry;
-    do {
-        indexfrom = (int)param_1 >> 1;
-        if ((!bVar1) && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) break;
-        if ((bVar1) &&
-           (((iVar4 + 1 < 0x7c && ((longlong)indexfrom == ((ulonglong)*puVar5 & 0x3fff))) &&
-            ((longlong)indexfrom == ((ulonglong)puVar5[1] & 0x3fff))))) break;
-        uVar3 = *puVar5 >> 0xe;
-        iVar6 = iVar4 + 1;
-        if (uVar3 == 0) {
-            indexto = iVar4;
-        }
-        iVar7 += 2;
-        iVar8 = iVar9;
-        if (((uVar3 == 0) && (puVar5[1] >> 0xe == 0)) && (iVar8 = iVar4, 0x7b < iVar6)) {
-            iVar8 = iVar9;
-        }
-        puVar5 = puVar5 + 1;
-        iVar4 = iVar6;
-        iVar9 = iVar8;
-    } while (iVar6 != 0x7c);
-    if (iVar4 < 0x7c) {
-        if (bVar1) {
-            *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
-            (ptr_char_registry + iVar7)[2] = (ptr_char_registry + iVar7)[2] & 0x3f | 0x80;
-            puVar2 = ptr_char_data_buf + iVar4 * 0x60;
-        }
-        else {
-            *(byte *)puVar5 = *(byte *)puVar5 & 0x3f | 0x80;
-            puVar2 = ptr_char_data_buf + iVar4 * 0x60;
-        }
-    }
-    else {
-        if ((bVar1) || (indexto < 0)) {
-            puVar2 = ptr_char_data_buf;
-            if ((bVar1) && (iVar4 = iVar9 * 2, -1 < iVar9)) {
-                ptr_char_registry[iVar4] = ptr_char_registry[iVar4] & 0x3f | 0x80;
-                (ptr_char_registry + iVar4)[2] = (ptr_char_registry + iVar4)[2] & 0x3f | 0x80;
-                uVar3 = (ushort)indexfrom & 0x3fff;
-                *(ushort *)(ptr_char_registry + iVar4) =
-                     uVar3 | *(ushort *)(ptr_char_registry + iVar4) & 0xc000;
-                *(ushort *)(ptr_char_registry + iVar4 + 2) =
-                     uVar3 | *(ushort *)(ptr_char_registry + iVar4 + 2) & 0xc000;
-                romCopy((char *)(ptr_char_data_buf + iVar9 * 0x60),
-                        (char *)(_efontchardataSegmentRomStart + ((int)(param_1 & 0x1fff) >> 1) * 0x20),
-                        0x80);
-                puVar2 = ptr_char_data_buf + iVar9 * 0x60;
-            }
-        }
-        else {
-            ptr_char_registry[indexto * 2] = ptr_char_registry[indexto * 2] & 0x3f | 0x80;
-            *(ushort *)(ptr_char_registry + indexto * 2) =
-                 (ushort)indexfrom & 0x3fff | *(ushort *)(ptr_char_registry + indexto * 2) & 0xc000;
-            romCopy((char *)(ptr_char_data_buf + indexto * 0x60),
-                    (char *)(_jfontchardataSegmentRomStart + indexfrom * 0x18),0x60);
-            puVar2 = ptr_char_data_buf + indexto * 0x60;
-        }
-    }
-    return (int)puVar2;
+	s32 i;
+	s32 freeindexsingle = -1;
+	s32 freeindexmulti = -1;
+	s32 multibyte = 0;
+
+
+	if (codepoint & 0x2000) {
+		multibyte = 1;
+	}
+
+
+#define SHIFTAMOUNT 1
+#define TMUL 8
+
+	for (i = 0; i < 0x7C; i++) {
+		if (!multibyte && (codepoint >> SHIFTAMOUNT) == g_JpnCacheCacheItems[i].codepoint) {
+			break;
+		}
+
+		if (multibyte && i + 1 < 0x7C
+				&& (codepoint >> SHIFTAMOUNT) == g_JpnCacheCacheItems[i].codepoint
+				&& (codepoint >> SHIFTAMOUNT) == g_JpnCacheCacheItems[i + 1].codepoint) {
+			break;
+		}
+
+		if (g_JpnCacheCacheItems[i].ttl == 0) {
+			freeindexsingle = i;
+		}
+
+		if (g_JpnCacheCacheItems[i].ttl == 0 && g_JpnCacheCacheItems[i + 1].ttl == 0 && i + 1 < 0x7C) {
+			freeindexmulti = i;
+		}
+	}
+
+	if (i < 0x7C) {
+		if (!multibyte) {
+			g_JpnCacheCacheItems[i].ttl = 2;
+
+			return &g_JpnCharCachePixels[i * TMUL];
+		} else {
+			g_JpnCacheCacheItems[i + 0].ttl = 2;
+			g_JpnCacheCacheItems[i + 1].ttl = 2;
+
+			return &g_JpnCharCachePixels[TMUL * i];
+		}
+	}
+
+
+	if (!multibyte && freeindexsingle >= 0) {
+		g_JpnCacheCacheItems[freeindexsingle].ttl = 2;
+		g_JpnCacheCacheItems[freeindexsingle].codepoint = codepoint >> 1;
+
+		romCopy(&g_JpnCharCachePixels[freeindexsingle * 8], (romptr_t) &_jfontchardataSegmentRomStart + (codepoint >> SHIFTAMOUNT) * 0x60, 0x60);
+
+		return &g_JpnCharCachePixels[freeindexsingle * 8];
+	}
+
+	if (multibyte && freeindexmulti >= 0) {
+		g_JpnCacheCacheItems[freeindexmulti + 0].ttl = 2;
+		g_JpnCacheCacheItems[freeindexmulti + 1].ttl = 2;
+		g_JpnCacheCacheItems[freeindexmulti + 0].codepoint = codepoint >> 1;
+		g_JpnCacheCacheItems[freeindexmulti + 1].codepoint = codepoint >> 1;
+
+		romCopy(&g_JpnCharCachePixels[freeindexmulti * 8], (romptr_t) &_efontchardataSegmentRomStart + ((codepoint & 0x1fff) >> SHIFTAMOUNT) * 0x80, 0x80);
+
+		return &g_JpnCharCachePixels[freeindexmulti * 8];
+	}
+
+	return &g_JpnCharCachePixels[0];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel something_with_LnameX
-/* 0F6560 7F0C1A30 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0F6564 7F0C1A34 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0F6568 7F0C1A38 308E2000 */  andi  $t6, $a0, 0x2000
-/* 0F656C 7F0C1A3C 00808025 */  move  $s0, $a0
-/* 0F6570 7F0C1A40 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F6574 7F0C1A44 240AFFFF */  li    $t2, -1
-/* 0F6578 7F0C1A48 240BFFFF */  li    $t3, -1
-/* 0F657C 7F0C1A4C 11C00002 */  beqz  $t6, .L7F0C1A58
-/* 0F6580 7F0C1A50 00004025 */   move  $t0, $zero
-/* 0F6584 7F0C1A54 24080001 */  li    $t0, 1
-.L7F0C1A58:
-/* 0F6588 7F0C1A58 3C0C8009 */  lui   $t4, %hi(ptr_char_registry) 
-/* 0F658C 7F0C1A5C 8D8CC6F8 */  lw    $t4, %lo(ptr_char_registry)($t4)
-/* 0F6590 7F0C1A60 00002825 */  move  $a1, $zero
-/* 0F6594 7F0C1A64 00003825 */  move  $a3, $zero
-/* 0F6598 7F0C1A68 2409007C */  li    $t1, 124
-/* 0F659C 7F0C1A6C 01802025 */  move  $a0, $t4
-.L7F0C1A70:
-/* 0F65A0 7F0C1A70 15000006 */  bnez  $t0, .L7F0C1A8C
-/* 0F65A4 7F0C1A74 00000000 */   nop   
-/* 0F65A8 7F0C1A78 94980000 */  lhu   $t8, ($a0)
-/* 0F65AC 7F0C1A7C 00107843 */  sra   $t7, $s0, 1
-/* 0F65B0 7F0C1A80 33193FFF */  andi  $t9, $t8, 0x3fff
-/* 0F65B4 7F0C1A84 51F9001F */  beql  $t7, $t9, .L7F0C1B04
-/* 0F65B8 7F0C1A88 28A1007C */   slti  $at, $a1, 0x7c
-.L7F0C1A8C:
-/* 0F65BC 7F0C1A8C 1100000B */  beqz  $t0, .L7F0C1ABC
-/* 0F65C0 7F0C1A90 94830000 */   lhu   $v1, ($a0)
-/* 0F65C4 7F0C1A94 24AE0001 */  addiu $t6, $a1, 1
-/* 0F65C8 7F0C1A98 29C1007C */  slti  $at, $t6, 0x7c
-/* 0F65CC 7F0C1A9C 10200007 */  beqz  $at, .L7F0C1ABC
-/* 0F65D0 7F0C1AA0 00101043 */   sra   $v0, $s0, 1
-/* 0F65D4 7F0C1AA4 30783FFF */  andi  $t8, $v1, 0x3fff
-/* 0F65D8 7F0C1AA8 54580005 */  bnel  $v0, $t8, .L7F0C1AC0
-/* 0F65DC 7F0C1AAC 00031382 */   srl   $v0, $v1, 0xe
-/* 0F65E0 7F0C1AB0 948F0002 */  lhu   $t7, 2($a0)
-/* 0F65E4 7F0C1AB4 31F93FFF */  andi  $t9, $t7, 0x3fff
-/* 0F65E8 7F0C1AB8 10590011 */  beq   $v0, $t9, .L7F0C1B00
-.L7F0C1ABC:
-/* 0F65EC 7F0C1ABC 00031382 */   srl   $v0, $v1, 0xe
-.L7F0C1AC0:
-/* 0F65F0 7F0C1AC0 14400002 */  bnez  $v0, .L7F0C1ACC
-/* 0F65F4 7F0C1AC4 24A60001 */   addiu $a2, $a1, 1
-/* 0F65F8 7F0C1AC8 00A05025 */  move  $t2, $a1
-.L7F0C1ACC:
-/* 0F65FC 7F0C1ACC 14400009 */  bnez  $v0, .L7F0C1AF4
-/* 0F6600 7F0C1AD0 24E70002 */   addiu $a3, $a3, 2
-/* 0F6604 7F0C1AD4 948E0002 */  lhu   $t6, 2($a0)
-/* 0F6608 7F0C1AD8 28C1007C */  slti  $at, $a2, 0x7c
-/* 0F660C 7F0C1ADC 000EC382 */  srl   $t8, $t6, 0xe
-/* 0F6610 7F0C1AE0 57000005 */  bnezl $t8, .L7F0C1AF8
-/* 0F6614 7F0C1AE4 00C02825 */   move  $a1, $a2
-/* 0F6618 7F0C1AE8 50200003 */  beql  $at, $zero, .L7F0C1AF8
-/* 0F661C 7F0C1AEC 00C02825 */   move  $a1, $a2
-/* 0F6620 7F0C1AF0 00A05825 */  move  $t3, $a1
-.L7F0C1AF4:
-/* 0F6624 7F0C1AF4 00C02825 */  move  $a1, $a2
-.L7F0C1AF8:
-/* 0F6628 7F0C1AF8 14C9FFDD */  bne   $a2, $t1, .L7F0C1A70
-/* 0F662C 7F0C1AFC 24840002 */   addiu $a0, $a0, 2
-.L7F0C1B00:
-/* 0F6630 7F0C1B00 28A1007C */  slti  $at, $a1, 0x7c
-.L7F0C1B04:
-/* 0F6634 7F0C1B04 10200021 */  beqz  $at, .L7F0C1B8C
-/* 0F6638 7F0C1B08 00000000 */   nop   
-/* 0F663C 7F0C1B0C 1500000C */  bnez  $t0, .L7F0C1B40
-/* 0F6640 7F0C1B10 240D0060 */   li    $t5, 96
-/* 0F6644 7F0C1B14 00AD0019 */  multu $a1, $t5
-/* 0F6648 7F0C1B18 908F0000 */  lbu   $t7, ($a0)
-/* 0F664C 7F0C1B1C 31F9FF3F */  andi  $t9, $t7, 0xff3f
-/* 0F6650 7F0C1B20 372E0080 */  ori   $t6, $t9, 0x80
-/* 0F6654 7F0C1B24 A08E0000 */  sb    $t6, ($a0)
-/* 0F6658 7F0C1B28 3C0F8009 */  lui   $t7, %hi(ptr_char_data_buf) 
-/* 0F665C 7F0C1B2C 8DEFC6F4 */  lw    $t7, %lo(ptr_char_data_buf)($t7)
-/* 0F6660 7F0C1B30 0000C012 */  mflo  $t8
-/* 0F6664 7F0C1B34 030F1021 */  addu  $v0, $t8, $t7
-/* 0F6668 7F0C1B38 1000006F */  b     .L7F0C1CF8
-/* 0F666C 7F0C1B3C 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F0C1B40:
-/* 0F6670 7F0C1B40 90990000 */  lbu   $t9, ($a0)
-/* 0F6674 7F0C1B44 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
-/* 0F6678 7F0C1B48 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
-/* 0F667C 7F0C1B4C 332EFF3F */  andi  $t6, $t9, 0xff3f
-/* 0F6680 7F0C1B50 35D80080 */  ori   $t8, $t6, 0x80
-/* 0F6684 7F0C1B54 A0980000 */  sb    $t8, ($a0)
-/* 0F6688 7F0C1B58 8D2F0000 */  lw    $t7, ($t1)
-/* 0F668C 7F0C1B5C 240D0060 */  li    $t5, 96
-/* 0F6690 7F0C1B60 00AD0019 */  multu $a1, $t5
-/* 0F6694 7F0C1B64 01E72021 */  addu  $a0, $t7, $a3
-/* 0F6698 7F0C1B68 90990002 */  lbu   $t9, 2($a0)
-/* 0F669C 7F0C1B6C 332EFF3F */  andi  $t6, $t9, 0xff3f
-/* 0F66A0 7F0C1B70 35D80080 */  ori   $t8, $t6, 0x80
-/* 0F66A4 7F0C1B74 A0980002 */  sb    $t8, 2($a0)
-/* 0F66A8 7F0C1B78 3C198009 */  lui   $t9, %hi(ptr_char_data_buf) 
-/* 0F66AC 7F0C1B7C 8F39C6F4 */  lw    $t9, %lo(ptr_char_data_buf)($t9)
-/* 0F66B0 7F0C1B80 00007812 */  mflo  $t7
-/* 0F66B4 7F0C1B84 1000005B */  b     .L7F0C1CF4
-/* 0F66B8 7F0C1B88 01F91021 */   addu  $v0, $t7, $t9
-.L7F0C1B8C:
-/* 0F66BC 7F0C1B8C 15000025 */  bnez  $t0, .L7F0C1C24
-/* 0F66C0 7F0C1B90 00000000 */   nop   
-/* 0F66C4 7F0C1B94 05400023 */  bltz  $t2, .L7F0C1C24
-/* 0F66C8 7F0C1B98 240D0060 */   li    $t5, 96
-/* 0F66CC 7F0C1B9C 014D0019 */  multu $t2, $t5
-/* 0F66D0 7F0C1BA0 000A3840 */  sll   $a3, $t2, 1
-/* 0F66D4 7F0C1BA4 01871821 */  addu  $v1, $t4, $a3
-/* 0F66D8 7F0C1BA8 906E0000 */  lbu   $t6, ($v1)
-/* 0F66DC 7F0C1BAC 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
-/* 0F66E0 7F0C1BB0 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
-/* 0F66E4 7F0C1BB4 31D8FF3F */  andi  $t8, $t6, 0xff3f
-/* 0F66E8 7F0C1BB8 370F0080 */  ori   $t7, $t8, 0x80
-/* 0F66EC 7F0C1BBC A06F0000 */  sb    $t7, ($v1)
-/* 0F66F0 7F0C1BC0 8D390000 */  lw    $t9, ($t1)
-/* 0F66F4 7F0C1BC4 00004012 */  mflo  $t0
-/* 0F66F8 7F0C1BC8 00101043 */  sra   $v0, $s0, 1
-/* 0F66FC 7F0C1BCC 03271821 */  addu  $v1, $t9, $a3
-/* 0F6700 7F0C1BD0 004D0019 */  multu $v0, $t5
-/* 0F6704 7F0C1BD4 946F0000 */  lhu   $t7, ($v1)
-/* 0F6708 7F0C1BD8 30583FFF */  andi  $t8, $v0, 0x3fff
-/* 0F670C 7F0C1BDC 24060060 */  li    $a2, 96
-/* 0F6710 7F0C1BE0 31F9C000 */  andi  $t9, $t7, 0xc000
-/* 0F6714 7F0C1BE4 03197025 */  or    $t6, $t8, $t9
-/* 0F6718 7F0C1BE8 A46E0000 */  sh    $t6, ($v1)
-/* 0F671C 7F0C1BEC 3C0F8009 */  lui   $t7, %hi(ptr_char_data_buf) 
-/* 0F6720 7F0C1BF0 8DEFC6F4 */  lw    $t7, %lo(ptr_char_data_buf)($t7)
-/* 0F6724 7F0C1BF4 3C190011 */  lui   $t9, %hi(_jfontchardataSegmentRomStart) # $t9, 0x11
-/* 0F6728 7F0C1BF8 27397940 */  addiu $t9, %lo(_jfontchardataSegmentRomStart) # addiu $t9, $t9, 0x7940
-/* 0F672C 7F0C1BFC 0000C012 */  mflo  $t8
-/* 0F6730 7F0C1C00 03192821 */  addu  $a1, $t8, $t9
-/* 0F6734 7F0C1C04 AFA80024 */  sw    $t0, 0x24($sp)
-/* 0F6738 7F0C1C08 0C001707 */  jal   romCopy
-/* 0F673C 7F0C1C0C 010F2021 */   addu  $a0, $t0, $t7
-/* 0F6740 7F0C1C10 3C0E8009 */  lui   $t6, %hi(ptr_char_data_buf) 
-/* 0F6744 7F0C1C14 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0F6748 7F0C1C18 8DCEC6F4 */  lw    $t6, %lo(ptr_char_data_buf)($t6)
-/* 0F674C 7F0C1C1C 10000035 */  b     .L7F0C1CF4
-/* 0F6750 7F0C1C20 010E1021 */   addu  $v0, $t0, $t6
-.L7F0C1C24:
-/* 0F6754 7F0C1C24 11000032 */  beqz  $t0, .L7F0C1CF0
-/* 0F6758 7F0C1C28 3C028009 */   lui   $v0, %hi(ptr_char_data_buf)
-/* 0F675C 7F0C1C2C 05600030 */  bltz  $t3, .L7F0C1CF0
-/* 0F6760 7F0C1C30 000B1840 */   sll   $v1, $t3, 1
-/* 0F6764 7F0C1C34 01831021 */  addu  $v0, $t4, $v1
-/* 0F6768 7F0C1C38 904F0000 */  lbu   $t7, ($v0)
-/* 0F676C 7F0C1C3C 3C098009 */  lui   $t1, %hi(ptr_char_registry) 
-/* 0F6770 7F0C1C40 2529C6F8 */  addiu $t1, %lo(ptr_char_registry) # addiu $t1, $t1, -0x3908
-/* 0F6774 7F0C1C44 31F8FF3F */  andi  $t8, $t7, 0xff3f
-/* 0F6778 7F0C1C48 37190080 */  ori   $t9, $t8, 0x80
-/* 0F677C 7F0C1C4C A0590000 */  sb    $t9, ($v0)
-/* 0F6780 7F0C1C50 8D2E0000 */  lw    $t6, ($t1)
-/* 0F6784 7F0C1C54 240D0060 */  li    $t5, 96
-/* 0F6788 7F0C1C58 016D0019 */  multu $t3, $t5
-/* 0F678C 7F0C1C5C 01C31021 */  addu  $v0, $t6, $v1
-/* 0F6790 7F0C1C60 904F0002 */  lbu   $t7, 2($v0)
-/* 0F6794 7F0C1C64 24060080 */  li    $a2, 128
-/* 0F6798 7F0C1C68 31F8FF3F */  andi  $t8, $t7, 0xff3f
-/* 0F679C 7F0C1C6C 37190080 */  ori   $t9, $t8, 0x80
-/* 0F67A0 7F0C1C70 A0590002 */  sb    $t9, 2($v0)
-/* 0F67A4 7F0C1C74 8D2E0000 */  lw    $t6, ($t1)
-/* 0F67A8 7F0C1C78 00107843 */  sra   $t7, $s0, 1
-/* 0F67AC 7F0C1C7C 31E73FFF */  andi  $a3, $t7, 0x3fff
-/* 0F67B0 7F0C1C80 01C31021 */  addu  $v0, $t6, $v1
-/* 0F67B4 7F0C1C84 94590000 */  lhu   $t9, ($v0)
-/* 0F67B8 7F0C1C88 00004012 */  mflo  $t0
-/* 0F67BC 7F0C1C8C 332EC000 */  andi  $t6, $t9, 0xc000
-/* 0F67C0 7F0C1C90 00EE7825 */  or    $t7, $a3, $t6
-/* 0F67C4 7F0C1C94 A44F0000 */  sh    $t7, ($v0)
-/* 0F67C8 7F0C1C98 8D380000 */  lw    $t8, ($t1)
-/* 0F67CC 7F0C1C9C 03031021 */  addu  $v0, $t8, $v1
-/* 0F67D0 7F0C1CA0 94590002 */  lhu   $t9, 2($v0)
-/* 0F67D4 7F0C1CA4 3C188009 */  lui   $t8, %hi(ptr_char_data_buf) 
-/* 0F67D8 7F0C1CA8 332EC000 */  andi  $t6, $t9, 0xc000
-/* 0F67DC 7F0C1CAC 00EE7825 */  or    $t7, $a3, $t6
-/* 0F67E0 7F0C1CB0 A44F0002 */  sh    $t7, 2($v0)
-/* 0F67E4 7F0C1CB4 8F18C6F4 */  lw    $t8, %lo(ptr_char_data_buf)($t8)
-/* 0F67E8 7F0C1CB8 32191FFF */  andi  $t9, $s0, 0x1fff
-/* 0F67EC 7F0C1CBC 00197043 */  sra   $t6, $t9, 1
-/* 0F67F0 7F0C1CC0 01182021 */  addu  $a0, $t0, $t8
-/* 0F67F4 7F0C1CC4 3C180012 */  lui   $t8, %hi(_efontchardataSegmentRomStart) # $t8, 0x12
-/* 0F67F8 7F0C1CC8 27183040 */  addiu $t8, %lo(_efontchardataSegmentRomStart) # addiu $t8, $t8, 0x3040
-/* 0F67FC 7F0C1CCC 000E79C0 */  sll   $t7, $t6, 7
-/* 0F6800 7F0C1CD0 01F82821 */  addu  $a1, $t7, $t8
-/* 0F6804 7F0C1CD4 0C001707 */  jal   romCopy
-/* 0F6808 7F0C1CD8 AFA80024 */   sw    $t0, 0x24($sp)
-/* 0F680C 7F0C1CDC 3C198009 */  lui   $t9, %hi(ptr_char_data_buf) 
-/* 0F6810 7F0C1CE0 8FA80024 */  lw    $t0, 0x24($sp)
-/* 0F6814 7F0C1CE4 8F39C6F4 */  lw    $t9, %lo(ptr_char_data_buf)($t9)
-/* 0F6818 7F0C1CE8 10000002 */  b     .L7F0C1CF4
-/* 0F681C 7F0C1CEC 01191021 */   addu  $v0, $t0, $t9
-.L7F0C1CF0:
-/* 0F6820 7F0C1CF0 8C42C6F4 */  lw    $v0, %lo(ptr_char_data_buf)($v0)
-.L7F0C1CF4:
-/* 0F6824 7F0C1CF4 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0C1CF8:
-/* 0F6828 7F0C1CF8 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0F682C 7F0C1CFC 27BD0038 */  addiu $sp, $sp, 0x38
-/* 0F6830 7F0C1D00 03E00008 */  jr    $ra
-/* 0F6834 7F0C1D04 00000000 */   nop   
-)
-#endif
 
 
 void briefingLoadToBank(u32 id)
 {
-    g_LangBanks[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,4);
+    g_LangBanks[id] = _fileNameLoadToBank(LnameX_lookuptable[id][j_text_trigger],1,0x100,MEMPOOL_STAGE);
 }
 
 
