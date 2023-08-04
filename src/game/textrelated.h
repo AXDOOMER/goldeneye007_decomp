@@ -33,5 +33,6 @@ Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text, s32 second_font_table, s32
 Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y,   s8 *text, s32 second_font_table, s32 first_font_table, s32 arg6, u32 arg7, s16 view_x, s16 view_y, s32 arga, s32 argb);
 
 Gfx *combiner_bayer_lod_perspective(Gfx *gdl);
+void setTextSpacingInverted(s32 spacing);
 
 #endif

@@ -411,19 +411,9 @@ u32 D_8002AF3C = 0x32;
 u32 D_8002AF40 = 0x32;
 
 
-u32 unknown_folderselect[] = {
-    0,         1,         3,         0,         0,         0,         0,
-    0,         0,         0,         0,         0,         0,         0,
-    0,         0
-};
+struct unk_joint_list unknown_folderselect = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+struct unk_joint_list D_8002AF84 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-u32 D_8002AF84[] = {
-    0,         1,         3,         0,         0,         0,         0,
-    0,         0,         0,         0,         0,         0,         0,
-    0
-};
-
-u32 D_8002AFC0 = 0;
 u32 D_8002AFC4 = 0;
 f32 D_8002AFC8 = 190.0;
 f32 D_8002AFCC = -3300.0;
