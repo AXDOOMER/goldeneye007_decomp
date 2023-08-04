@@ -2,15 +2,16 @@
 #include <bondgame.h>
 #include <memp.h>
 #include "lvl_text.h"
+#include "ob.h"
 
 // bss
 //CODE.bss:8008C640
 s32 g_LangBanks[45];
 
 //CODE.bss:8008C6F4
-s32 ptr_char_data_buf;
+u8* ptr_char_data_buf;
 //CODE.bss:8008C6F8
-s32 ptr_char_registry;
+u8* ptr_char_registry;
 
 
 #ifdef LANG_JP
@@ -222,49 +223,29 @@ LEVELID get_textbank_number_for_stagenum(LEVELID level)
 
 
 #ifdef NONMATCHING
-void init_LnameX(void)
+https://decomp.me/scratch/izavf
+void init_LnameX(void) {
+    s32 i;
 
-{
-    undefined *puVar1;
-    u8 **ppuVar2;
-    int iVar3;
-    
     if (j_text_trigger != 0) {
-        ptr_char_data_buf = mempAllocBytesInBank(0x2e80,'\x06');
-        ptr_char_registry = mempAllocBytesInBank(0x100,'\x06');
-        iVar3 = 0;
-        do {
-            ptr_char_registry[iVar3] = ptr_char_registry[iVar3] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3) = *(ushort *)(ptr_char_registry + iVar3) | 0x3fff;
-            (ptr_char_registry + iVar3)[2] = (ptr_char_registry + iVar3)[2] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3 + 2) = *(ushort *)(ptr_char_registry + iVar3 + 2) | 0x3fff;
-            (ptr_char_registry + iVar3)[4] = (ptr_char_registry + iVar3)[4] & 0x3f;
-            *(ushort *)(ptr_char_registry + iVar3 + 4) = *(ushort *)(ptr_char_registry + iVar3 + 4) | 0x3fff;
-            (ptr_char_registry + iVar3)[6] = (ptr_char_registry + iVar3)[6] & 0x3f;
-            puVar1 = ptr_char_registry + iVar3;
-            iVar3 += 8;
-            *(ushort *)(puVar1 + 6) = *(ushort *)(puVar1 + 6) | 0x3fff;
-        } while (iVar3 != 0xf8);
+        ptr_char_data_buf = mempAllocBytesInBank(0x2E80, MEMPOOL_PERMANENT);
+        ptr_char_registry = mempAllocBytesInBank(0x100, MEMPOOL_PERMANENT);
+        for(i = 0;i != 0x3E;i++) {
+            ptr_char_registry[i] &= 0xFF3F;
+            ptr_char_registry[i] |= 0x3FFF;
+        }
     }
 
-    g_LangBanks = 0;
-    ppuVar2 = (u8 **)g_LangBanks;
-    do {
-        ppuVar2 = ppuVar2 + 4;
-        ppuVar2[1] = NULL;
-        ppuVar2[2] = NULL;
-        ppuVar2[3] = NULL;
-        *ppuVar2 = NULL;
-        ppuVar2 = ppuVar2;
-    } while (ppuVar2 != &ptr_char_data_buf);
-    g_LangBanks[37] = _fileNameLoadToBank((&ptr_LgunX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[38] = _fileNameLoadToBank((&ptr_LtitleX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[39] = _fileNameLoadToBank((&ptr_LmpmenuX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[40] = _fileNameLoadToBank((&ptr_LpropobjX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[41] =  _fileNameLoadToBank((&ptr_LmpweaponsX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[42] = _fileNameLoadToBank((&ptr_LoptionsX)[j_text_trigger],1,0x100,6);
-    g_LangBanks[43] = _fileNameLoadToBank((&ptr_LmiscX)[j_text_trigger],1,0x100,6);
-    return;
+	for (i = 0; i < ARRAYCOUNT(g_LangBanks); i++) {
+		g_LangBanks[i] = 0;
+	}
+    g_LangBanks[LGUN] = _fileNameLoadToBank(LnameX_lookuptable[LGUN][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LTITLE] = _fileNameLoadToBank(LnameX_lookuptable[LTITLE][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LMPMENU] = _fileNameLoadToBank(LnameX_lookuptable[LMPMENU][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LPROPOBJ] = _fileNameLoadToBank(LnameX_lookuptable[LPROPOBJ][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LMPWEAPONS] = _fileNameLoadToBank(LnameX_lookuptable[LMPWEAPONS][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LOPTIONS] = _fileNameLoadToBank(LnameX_lookuptable[LOPTIONS][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
+    g_LangBanks[LMISC] = _fileNameLoadToBank(LnameX_lookuptable[LMISC][j_text_trigger], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_PERMANENT);
 }
 #else
 GLOBAL_ASM(
