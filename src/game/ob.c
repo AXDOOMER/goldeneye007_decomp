@@ -420,7 +420,7 @@ void obBlankResourcesLoadedInBank(u8 bank)
 }
 
 void obBlankResourcesInBank5(void) {
-  obBlankResourcesLoadedInBank(5);
+  obBlankResourcesLoadedInBank(MEMPOOL_ME);
 }
 
 
