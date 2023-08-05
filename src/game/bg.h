@@ -109,7 +109,7 @@ extern bg_room_data * ptr_bgdata_room_fileposition_list;
 extern s_room_info array_room_info[];
 
 
-void bgInitDebugNoticeList(void);
+void bgInit(void);
 
 // sub_GAME_7F033B38 requres arg be s32
 s32 sub_GAME_7F0B8FD0(s32 roomA, u8 roomB);

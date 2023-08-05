@@ -557,6 +557,14 @@ BITFLAG(WEAPONSTATBITFLAG,
 
 #pragma region Constants
 
+#define SP_BOOT_SZ 0x10
+#define SP_RMON_SZ 0x300
+#define SP_IDLE_SZ 0x40
+#define SP_SHED_SZ 0x200
+#define SP_MAIN_SZ 0x8000
+#define SP_AUDI_SZ 0x1000
+#define SP_DEBUG_SZ 0x6B0
+
 /*
 Enums Index by adding 1 to the list from the first value, unless this value
 is not 0, it should not be set for every item

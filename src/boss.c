@@ -154,16 +154,16 @@ void bossInitMainthreadData(void)
     romCreateMesgQueue();
     tlbmanageEstablishManagementTable();
     image_entries_load();
-    mempInitDebugNoticeList();
+    mempInit();
     memaInit();
-    bgInitDebugNoticeList();
-    viInitDebugNoticeList();
+    bgInit();
+    viInit();
     viInitVideoSettings();
     indycommInit();
     g_DebugAndUpdateStageFlag = rmonGetToken();
-    obInitDebugNoticeList();
-    rspInitDebugNoticeList();
-    dynInitDebugNoticeList();
+    obInit();
+    rspInit();
+    dynInit();
     joyInit();
     osCreateMesgQueue(&bossmq, &bossmsg, 1);
 
@@ -186,8 +186,8 @@ void bossInitMainthreadData(void)
         g_DebugAndUpdateStageFlag = 1;
     }
 
-    stanInitDebugNoticeList();
-    gameInitDebugNoticeList();
+    stanInit();
+    gameInit();
 
     if (g_DebugAndUpdateStageFlag != 0)
     {
@@ -201,10 +201,10 @@ void bossInitMainthreadData(void)
 
     temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
     mempCheckMemflagTokens(temp_s0, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)temp_s0));
-    mempResetBank(6);
-    init_LnameX();
-    lvInitDebugNoticeList();
-    bossInitDebugNoticeList();
+    mempResetBank(MEMPOOL_PERMANENT);
+    langInit();
+    lvInit();
+    bossInit();
     textrelatedInit_REMOVED();
     debmenu7000ADA8();
     default_player_perspective_and_height();
@@ -398,14 +398,14 @@ void bossMainloop(void)
             tokenSetString(memallocstringtable[stringIndex].string);
         }
 
-        mempResetBank(4);
-        obBlankResourcesLoadedInBank(4);
+        mempResetBank(MEMPOOL_STAGE);
+        obBlankResourcesLoadedInBank(MEMPOOL_STAGE);
         if (tokenFind(1, "-ma"))
         {
             g_CurentMaMallocValue = (s32) (strtol(tokenFind(1, "-ma"), NULL, 0) * 1024);
         }
 
-        memaReset(mempAllocBytesInBank(g_CurentMaMallocValue, 4), g_CurentMaMallocValue);
+        memaReset(mempAllocBytesInBank(g_CurentMaMallocValue, MEMPOOL_STAGE), g_CurentMaMallocValue);
         reset_play_data_ptrs();
 
         localSelectedNumPlayers = 0;
@@ -628,7 +628,7 @@ void bossMainloop(void)
                     pendingGfx--;
                     break;
 
-                case 5:
+                case OS_SC_PRE_NMI_MSG:
                     pendingGfx = 4U;
                     break;
             }
@@ -636,8 +636,8 @@ void bossMainloop(void)
         
         lvlUnloadStageTextData();
         stop_demo_playback();
-        mempNullNextEntryInBank(4);
-        obBlankResourcesLoadedInBank(4);
+        mempNullNextEntryInBank(MEMPOOL_STAGE);
+        obBlankResourcesLoadedInBank(MEMPOOL_STAGE);
 
 #if defined(VERSION_EU)
         if(1);
@@ -712,6 +712,6 @@ s32 bossGetDebugParseFlag(void) {
  * 75C0    700069C0
  *     V0= p->debug.notice.list entry for boss_c_debug using data at 800241A0
  */
-void bossInitDebugNoticeList(void) {
+void bossInit(void) {
     debTryAdd(&g_BossDebugNoticeEntry, "boss_c_debug");
 }

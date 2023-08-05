@@ -230,7 +230,7 @@ void sub_GAME_7F0BD8FC(s32 arg0)
     D_800483C0 = arg0;
 }
 
-void lvInitDebugNoticeList(void)
+void lvInit(void)
 {
     s32 size;
 
@@ -1533,7 +1533,7 @@ void lvlManageMpGame(void)
     {
         cheat_buttons_mp_related();
         menu_init();
-        something_with_LnameJ();
+        langTick();
     }
     else
     {
@@ -1548,7 +1548,7 @@ void lvlManageMpGame(void)
         update_gray_flying_particles();
         handle_mp_respawn_and_some_things();
         reset_all_music_slots();
-        something_with_LnameJ();
+        langTick();
 
         if ((get_debug_joy2detailedit_flag() != 0) && (D_800483C8 == 0))
         {
@@ -2265,7 +2265,7 @@ glabel lvlManageMpGame
 /* 0F3E70 7F0BF340 00000000 */   nop
 /* 0F3E74 7F0BF344 0FC06987 */  jal   menu_init
 /* 0F3E78 7F0BF348 00000000 */   nop
-/* 0F3E7C 7F0BF34C 0FC30650 */  jal   something_with_LnameJ
+/* 0F3E7C 7F0BF34C 0FC30650 */  jal   langTick
 /* 0F3E80 7F0BF350 00000000 */   nop
 /* 0F3E84 7F0BF354 100000A9 */  b     .L7F0BF5FC
 /* 0F3E88 7F0BF358 00000000 */   nop
@@ -2292,7 +2292,7 @@ glabel lvlManageMpGame
 /* 0F3ED8 7F0BF3A8 00000000 */   nop
 /* 0F3EDC 7F0BF3AC 0FC304F2 */  jal   reset_all_music_slots
 /* 0F3EE0 7F0BF3B0 00000000 */   nop
-/* 0F3EE4 7F0BF3B4 0FC30650 */  jal   something_with_LnameJ
+/* 0F3EE4 7F0BF3B4 0FC30650 */  jal   langTick
 /* 0F3EE8 7F0BF3B8 00000000 */   nop
 /* 0F3EEC 7F0BF3BC 0FC243EE */  jal   get_debug_joy2detailedit_flag
 /* 0F3EF0 7F0BF3C0 00000000 */   nop
@@ -3156,7 +3156,7 @@ glabel lvlManageMpGame
 /* 0F4AE8 7F0BFF78 00000000 */   nop
 /* 0F4AEC 7F0BFF7C 0FC069F4 */  jal   menu_init
 /* 0F4AF0 7F0BFF80 00000000 */   nop
-/* 0F4AF4 7F0BFF84 0FC3097C */  jal   something_with_LnameJ
+/* 0F4AF4 7F0BFF84 0FC3097C */  jal   langTick
 /* 0F4AF8 7F0BFF88 00000000 */   nop
 /* 0F4AFC 7F0BFF8C 100000A9 */  b     .Ljp7F0C0234
 /* 0F4B00 7F0BFF90 00000000 */   nop
@@ -3183,7 +3183,7 @@ glabel lvlManageMpGame
 /* 0F4B50 7F0BFFE0 00000000 */   nop
 /* 0F4B54 7F0BFFE4 0FC3081E */  jal   reset_all_music_slots
 /* 0F4B58 7F0BFFE8 00000000 */   nop
-/* 0F4B5C 7F0BFFEC 0FC3097C */  jal   something_with_LnameJ
+/* 0F4B5C 7F0BFFEC 0FC3097C */  jal   langTick
 /* 0F4B60 7F0BFFF0 00000000 */   nop
 /* 0F4B64 7F0BFFF4 0FC246A6 */  jal   get_debug_joy2detailedit_flag
 /* 0F4B68 7F0BFFF8 00000000 */   nop
@@ -4053,7 +4053,7 @@ glabel lvlManageMpGame
 /* 0F1174 7F0BE784 00000000 */   nop   
 /* 0F1178 7F0BE788 0FC06920 */  jal   menu_init
 /* 0F117C 7F0BE78C 00000000 */   nop   
-/* 0F1180 7F0BE790 0FC30388 */  jal   something_with_LnameJ
+/* 0F1180 7F0BE790 0FC30388 */  jal   langTick
 /* 0F1184 7F0BE794 00000000 */   nop   
 /* 0F1188 7F0BE798 100000A9 */  b     .L7F0BEA40
 /* 0F118C 7F0BE79C 00000000 */   nop   
@@ -4080,7 +4080,7 @@ glabel lvlManageMpGame
 /* 0F11DC 7F0BE7EC 00000000 */   nop   
 /* 0F11E0 7F0BE7F0 0FC3022A */  jal   reset_all_music_slots
 /* 0F11E4 7F0BE7F4 00000000 */   nop   
-/* 0F11E8 7F0BE7F8 0FC30388 */  jal   something_with_LnameJ
+/* 0F11E8 7F0BE7F8 0FC30388 */  jal   langTick
 /* 0F11EC 7F0BE7FC 00000000 */   nop   
 /* 0F11F0 7F0BE800 0FC24116 */  jal   get_debug_joy2detailedit_flag
 /* 0F11F4 7F0BE804 00000000 */   nop   
@@ -4513,7 +4513,7 @@ void lvlUnloadStageTextData(void)
 
     if (g_CurrentStageToLoad != LEVELID_TITLE)
     {
-        langClearBank(get_textbank_number_for_stagenum(g_CurrentStageToLoad));
+        langClearBank(langGetLangBankIndexFromStagenum(g_CurrentStageToLoad));
         set_favorite_weapon_for_every_player();
     }
 

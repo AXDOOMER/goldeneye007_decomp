@@ -55,7 +55,7 @@ extern s32 dword_CODE_bss_8008C5F8;
 extern f32 g_JP_GlobalTimerDelta;
 #endif
 
-void lvInitDebugNoticeList(void);
+void lvInit(void);
 Gfx * lvlRender(Gfx *);
 void lvlSetSelectedDifficulty(DIFFICULTY arg0);
 void lvlManageMpGame(void);

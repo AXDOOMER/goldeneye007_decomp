@@ -643,7 +643,7 @@ s32 D_80044DB0 = 0;
 
 
 
-void bgInitDebugNoticeList(void) {
+void bgInit(void) {
     debTryAdd(&ptr_bg_c_debug_debug_notice_list, "bg_c_debug");
 }
 

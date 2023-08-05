@@ -48,7 +48,7 @@
  * then move bool to bondtypes.h
  */
 typedef s32 bool; /* Boolean (TRUE/FALSE) */
-
+typedef u32 romptr_t;
 struct object_standard;
 struct ChrRecord;
 struct PropRecord;

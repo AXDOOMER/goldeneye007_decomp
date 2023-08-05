@@ -20,22 +20,34 @@
 
 /**
  * @file init.c
- * This file contains the initial non bootstrap code ran. 
- * 
+ * This file contains the initial non bootstrap code ran.
+ *
  * In particular, it:
  *   - unpacks main data payload
  *   - starts idle and rmon loops
  *   - starts main loop
  */
 
+
 #define NUM_FIELDS  1
 
+#define MAXSP 7
 
-u32 unknown_val_80023040 = 0;
-/*D:80023044*/
-u32 unknown_init_val = PI_CLR_INTR;
+#define RZIPLOADADDR 0x70200000
+#define RZIPBUFADDR 0x80300000
 
-u32 cart_hw_address = PI_DOM1_ADDR2;
+#define MAXCODESIZE 0xFFFB0
+
+
+
+/**
+ * These 3 values (likely more as u32 piDeviceType = DEVICE_TYPE_CART could be 4x u8)
+ * piDeviceType is completely unused but the most logical value here
+ * piStatusReg, and piDomAddr are explicitly stored as 32bit values
+*/
+u32 piDeviceType = DEVICE_TYPE_CART;
+u32 piStatusReg = PI_CLR_INTR;
+u32 piDomAddr = PI_DOM1_ADDR2;
 
 union debug_handler_container
 {
@@ -43,8 +55,8 @@ union debug_handler_container
     * it seems to require a container with a known size,
     * which doesn't seem correct ....
     */
-    struct debug_handler_entry rows[7];
-    s32 data[14];
+    struct debug_handler_entry rows[MAXSP];
+    s32 data[MAXSP * 2];
 };
 
 union debug_handler_container debug_handler_table = {
@@ -73,8 +85,10 @@ void mainproc(void *args);
 
 /**
  * 1110	70000510
- * ???	initializes TLB index...
- *	copies compressed 21990 to virtual address 701EE400, using 70200000 to decompress
+ * init - The real main entry point, called from boot.s
+ * Deflates the compressed data segment
+ * Installs the TLB miss handler
+ * Then starts the main thread
  */
 void init(void)
 {
@@ -86,7 +100,7 @@ void init(void)
     u8 *inflateSegmentRomStart;
     s32 i;
     s32 j;
-    
+
     u8 *datazipram;
     s32 inflate_code_size;
     u32 decompress_result;
@@ -98,55 +112,62 @@ void init(void)
 
     csegmentSegmentVaddrStart = get_csegmentSegmentStart();
     cdataSegmentRomStart = get_cdataSegmentRomStart();
-    cdataSegmentRomSize = (u8*)get_cdataSegmentRomEnd() - cdataSegmentRomStart;
+    cdataSegmentRomSize = (u8 *) get_cdataSegmentRomEnd() - cdataSegmentRomStart;
     inflateSegmentRomStart = get_inflateSegmentRomStart();
-    inflateromSize = (u8*)get_inflateSegmentRomEnd() - inflateSegmentRomStart;
+    inflateromSize = (u8 *) get_inflateSegmentRomEnd() - inflateSegmentRomStart;
     copylen = cdataSegmentRomSize + inflateromSize;
-    datazipram = (u8 *)(0x70200000 - cdataSegmentRomSize);
+    datazipram = (u8 *) (RZIPLOADADDR - cdataSegmentRomSize);
     dataziprom = csegmentSegmentVaddrStart;
-    
+
     for (j = copylen - 1; j >= 0; j--)
     {
         datazipram[j] = dataziprom[j];
     }
-    
-    decompress_result = jump_decompressfile(datazipram, csegmentSegmentVaddrStart, 0x80300000);
-    if(decompress_result);
 
-    inflate_code_size = (s32)((u32)&_inflateSegmentRomStart - (u32)&_codeSegmentRomStart);
-    
-    if (inflate_code_size > 0xFFFB0)
+    decompress_result = jump_decompressfile(datazipram, csegmentSegmentVaddrStart, RZIPBUFADDR);
+    if (decompress_result);
+
+    inflate_code_size = (s32) ((u32) &_inflateSegmentRomStart - (u32) &_codeSegmentRomStart);
+    if (inflate_code_size > MAXCODESIZE)
     {
-        osPiRawStartDma(0, &_alt_startSegmentRomStart, &_alt_startSegmentStart, inflate_code_size - 0xFFFB0);
-        while ((osPiGetStatus() & 1)) {}
+        osPiRawStartDma(OS_READ, &_alt_startSegmentRomStart, &_alt_startSegmentStart, inflate_code_size - MAXCODESIZE);
+        while ((osPiGetStatus() & PI_STATUS_DMA_BUSY))
+        {
+        }
     }
-    
+
     osInitialize();
-    set_hardwire_TLB_to_2();
-    
+
+    // This sets up TLB CONTEXT to allow the TLB miss handler to work
+    initTLBPrepareContext();
+
+    // Copy the TLB miss handler to proper place
     src = &resolve_TLBaddress_for_InvalidHit;
     dest = (s32 *) K0BASE;
-    while ( dest < (s32 *) XUT_VEC )
+    while (dest < (s32 *) XUT_VEC)
     {
         *dest++ = *src++;
     }
-    
+
+    // Refresh Cache
     osWritebackDCacheAll();
     osInvalICache((void *) K0BASE, ICACHE_SIZE);
-    
-    for (i=2; i<32; i++)
+
+    // Cleanup TLB
+    for (i = 2; i < NTLBENTRIES + 1; i++)
     {
         osUnmapTLB(i);
     }
 
+    // Setup floating point register
     flags = __osGetFpcCsr();
     flags |= FPCSR_EI; // enable inexact operation
-	flags |= FPCSR_EO; // enable overflow
-	flags |= FPCSR_EZ; // enable division by zero
-	flags |= FPCSR_EV; // enable invalid operation
+    flags |= FPCSR_EO; // enable overflow
+    flags |= FPCSR_EZ; // enable division by zero
+    flags |= FPCSR_EV; // enable invalid operation
     __osSetFpcCsr(flags);
 
-    stack_pointer = set_stack_entry(sp_main, STACKSIZE_MAIN);
+    stack_pointer = setSPToEnd(sp_main, sizeof(sp_main));
     osCreateThread(&mainThread, MAIN_THREAD_ID, &mainproc, NULL, stack_pointer, MAIN_THREAD_PRIORITY);
     osStartThread(&mainThread);
 }
@@ -155,97 +176,103 @@ void init(void)
 
 /**
  * 12F0	700006F0
- * V0= new stack pointer; A0+A1-8
- *	accepts: A0=base address, A1=size
+ * setSPToEnd - set stack pointer to end of stack
+ * @param stack
+ * @param size
+ * @return stack+size-8
  */
-void *set_stack_entry(u8 *stack, u32 size) 
+void *setSPToEnd(u8 *stack, u32 size)
 {
-    return stack+size-8;
+    return stack + size - 8;
 }
 
 /**
  * 12FC	700006FC
- * 1->80023044, 10000000->80023048
+ * piStatusRegReset - set PI status register to trigger a reset
+ * This is unused and is leftover from Indy debug,
  */
-void set_hw_address_and_unknown(void) 
+void piStatusRegReset(void)
 {
-    unknown_init_val = PI_SET_RESET;
-    cart_hw_address = PI_DOM1_ADDR2;
+    piStatusReg = PI_SET_RESET;
+    piDomAddr = PI_DOM1_ADDR2;
 }
 
 /**
  * 1318	70000718
- * A0->SP+0, infinite loop
+ * idleproc - infinite loop
+ * @param arg doesn't matter as this is infinite loop
  */
-void idleproc(void *arg) 
+void idleproc(void *arg)
 {
-	for (;;);
+    for (;;);
 }
 
 /**
  * 1338	70000738
- * Null thread; executes 70000718
+ * idleCreateThread - creates an empty thread;
  */
-void idleCreateThread(void) 
+void idleCreateThread(void)
 {
-    osCreateThread(&idleThread, IDLE_THREAD_ID, idleproc, 0, set_stack_entry(&sp_idle, 0x40), IDLE_THREAD_PRIORITY);
+    osCreateThread(&idleThread, IDLE_THREAD_ID, idleproc, NULL, setSPToEnd(&sp_idle, sizeof(sp_idle)), IDLE_THREAD_PRIORITY);
     osStartThread(&idleThread);
 }
 
 /**
  * 1390	70000790
- * Indi board detection thread; now forcably returns INDI_NOT_DETECTED (1)
+ * rmonCreateThread - remote communication thread
+ * rmonMain now forcably returns INDI_NOT_DETECTED (1)
  */
-void rmonCreateThread(void) 
+void rmonCreateThread(void)
 {
-    osCreateThread(&rmonThread, RMON_THREAD_ID, rmonMain, 0, set_stack_entry(&sp_rmon, 0x300), RMON_THREAD_PRIORITY);
+    osCreateThread(&rmonThread, RMON_THREAD_ID, rmonMain, NULL, setSPToEnd(&sp_rmon, sizeof(sp_rmon)), RMON_THREAD_PRIORITY);
     osStartThread(&rmonThread);
 }
 
 /**
  * 13EC	700007EC
+ * schedulerInitThread - create scheduler thread based on TV type
  */
 void schedulerInitThread(void)
 {
     osCreateMesgQueue(&gfxFrameMsgQ, &gfxFrameMsgBuf, 32);
-    if (osTvType == 2) //OS_TV_MPAL
-    { 
+    if (osTvType == OS_TV_MPAL)
+    {
         osCreateScheduler(&os_scheduler, &shedThread, OS_VI_MPAL_LAN1, NUM_FIELDS);
     }
-    else 
+    else
     {
         osCreateScheduler(&os_scheduler, &shedThread, OS_VI_NTSC_LAN1, NUM_FIELDS);
-	}
+    }
 
-    osScAddClient(&os_scheduler, &gfxClient, &gfxFrameMsgQ, 0);
+    osScAddClient(&os_scheduler, &gfxClient, &gfxFrameMsgQ, NULL);
     sched_cmdQ = osScGetCmdQ(&os_scheduler);
 }
 
 /**
- * 149C	7000089C	datastart main game setup and loop
- *	calls command line parser, debug console setup, etc.
- *	called by 70000510, using 7000D430: A0=8005D640, A1=3, A2=7000089C, A3=0, SP+10=[803B3948], SP+14=0xA
- *	never returns; 7000601C is an infinite loop
+ * 149C	7000089C
+ * mainproc - main game setup and loop
+ * calls command line parser, debug console setup, etc.
+ * @param args
  */
 void mainproc(void *args)
 {
-	idleCreateThread();
-	viDebugRemoved();
-	piCreateManager();
+    idleCreateThread();
+    viDebugRemoved();
+    piCreateManager();
 #ifdef ENABLE_USB
     // make debug print output available as soon as possible.
     // This uses blocking calls, and the PI manager, so can't be called
     // before here.
     usb_initialize();
 #else
-	rmonCreateThread();
+    rmonCreateThread();
 #endif
-	if (tokenReadIo() != 0)
-	{
-		osStopThread(0);
-	}
-	
-    osSetThreadPri(NULL, 0xa);
+    if (tokenReadIo())
+    {
+        osStopThread(RMON_THREAD_ID);
+    }
+
+    osSetThreadPri(RMON_THREAD_ID, MAIN_THREAD_PRIORITY);
     // Timers are initialized via:
     // schedulerInitThread -> osCreateScheduler -> osCreateViManager -> __osTimerServicesInit
     schedulerInitThread();
@@ -258,10 +285,11 @@ void mainproc(void *args)
 }
 
 /**
- * 1508	70000908	V0= p->last entry in copy of debug handler code/name table; fries AT,V1,T0,T1,T6,T9
- *	copies table from 8002304C-80023084 to stack
+ * 1508	70000908
+ * initDebugHandlerTable - setup debug handler table
+ * This is unused and is leftover from Indy debug.
  */
-void setuplastentryofdebughandler(void)
+void initDebugHandlerTable(void)
 {
     union debug_handler_container dhe;
     struct debug_handler_entry *p;
@@ -269,7 +297,7 @@ void setuplastentryofdebughandler(void)
     dhe = debug_handler_table;
 
     p = &dhe.rows[0];
-    
+
     do
     {
         p++;

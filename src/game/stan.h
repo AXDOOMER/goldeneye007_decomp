@@ -41,7 +41,7 @@ extern s32 stanlinelog_flag;
 // Necessary forward declaration
 void noteTileRoomIfDifferentToPrev( StandTile *tile,  StandTile *unused,  struct StandTileWalkCallbackRecord *data);
 
-void stanInitDebugNoticeList(void);
+void stanInit(void);
 
 void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2);
 void sub_GAME_7F0AF630(s32 arg0);

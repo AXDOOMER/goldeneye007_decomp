@@ -2,10 +2,21 @@
 #define _LVL_TEXT_H_
 #include <ultra64.h>
 
+struct jpncharpixels {
+	/*0x00*/ u32 unk00;
+	/*0x04*/ u32 unk04;
+	/*0x08*/ u32 unk08;
+};
+
+struct jpncacheitem {
+	u16 ttl : 2;
+	u16 codepoint : 14;
+};
+
 
 extern s32 j_text_trigger;
 
-void something_with_LnameJ(void);
+void langTick(void);
 u8 * langGet(s32 slotID);
 
 #endif

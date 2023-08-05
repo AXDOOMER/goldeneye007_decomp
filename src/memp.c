@@ -29,7 +29,7 @@ struct s_mempMVALS sdefaultmvals = {
     0,  0x00
 };
 
-void mempInitDebugNoticeList(void)
+void mempInit(void)
 {
     debTryAdd(&ptr_memp_c_debug_debug_notice_list, "memp_c_debug");
 }

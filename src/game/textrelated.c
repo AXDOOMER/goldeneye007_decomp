@@ -1290,7 +1290,7 @@ glabel textRender
 /* 0E2844 7F0ADD14 24040002 */  li    $a0, 2
 /* 0E2848 7F0ADD18 24890080 */  addiu $t1, $a0, 0x80
 .L7F0ADD1C:
-/* 0E284C 7F0ADD1C 0FC3068C */  jal   something_with_LnameX
+/* 0E284C 7F0ADD1C 0FC3068C */  jal   langGetJpnCharPixels
 /* 0E2850 7F0ADD20 AFA9006C */   sw    $t1, 0x6c($sp)
 /* 0E2854 7F0ADD24 8FAC00A0 */  lw    $t4, 0xa0($sp)
 /* 0E2858 7F0ADD28 8FA800C8 */  lw    $t0, 0xc8($sp)
@@ -1497,7 +1497,7 @@ glabel textRender
 /* 0E2844 7F0ADD14 24040002 */  li    $a0, 2
 /* 0E2848 7F0ADD18 24890080 */  addiu $t1, $a0, 0x80
 .L7F0ADD1C:
-/* 0E284C 7F0ADD1C 0FC3068C */  jal   something_with_LnameX
+/* 0E284C 7F0ADD1C 0FC3068C */  jal   langGetJpnCharPixels
 /* 0E2850 7F0ADD20 AFA9006C */   sw    $t1, 0x6c($sp)
 /* 0E2854 7F0ADD24 8FAC00A0 */  lw    $t4, 0xa0($sp)
 /* 0E2858 7F0ADD28 8FA800C8 */  lw    $t0, 0xc8($sp)
@@ -1705,7 +1705,7 @@ glabel textRender
 /* 0DF9C4 7F0ACFD4 24040002 */  li    $a0, 2
 /* 0DF9C8 7F0ACFD8 24890080 */  addiu $t1, $a0, 0x80
 .L7F0ACFDC:
-/* 0DF9CC 7F0ACFDC 0FC303C4 */  jal   something_with_LnameX
+/* 0DF9CC 7F0ACFDC 0FC303C4 */  jal   langGetJpnCharPixels
 /* 0DF9D0 7F0ACFE0 AFA9006C */   sw    $t1, 0x6c($sp)
 /* 0DF9D4 7F0ACFE4 8FAC00A0 */  lw    $t4, 0xa0($sp)
 /* 0DF9D8 7F0ACFE8 8FA800C8 */  lw    $t0, 0xc8($sp)
@@ -2543,7 +2543,7 @@ glabel textRenderGlow
 /* 0E3414 7F0AE8E4 24040002 */  li    $a0, 2
 /* 0E3418 7F0AE8E8 248B0080 */  addiu $t3, $a0, 0x80
 .L7F0AE8EC:
-/* 0E341C 7F0AE8EC 0FC3068C */  jal   something_with_LnameX
+/* 0E341C 7F0AE8EC 0FC3068C */  jal   langGetJpnCharPixels
 /* 0E3420 7F0AE8F0 AFAB0074 */   sw    $t3, 0x74($sp)
 /* 0E3424 7F0AE8F4 8FAC0090 */  lw    $t4, 0x90($sp)
 /* 0E3428 7F0AE8F8 8FAD00B4 */  lw    $t5, 0xb4($sp)
@@ -2727,7 +2727,7 @@ glabel textRenderGlow
 /* 0E3414 7F0AE8E4 24040002 */  li    $a0, 2
 /* 0E3418 7F0AE8E8 248B0080 */  addiu $t3, $a0, 0x80
 .L7F0AE8EC:
-/* 0E341C 7F0AE8EC 0FC3068C */  jal   something_with_LnameX
+/* 0E341C 7F0AE8EC 0FC3068C */  jal   langGetJpnCharPixels
 /* 0E3420 7F0AE8F0 AFAB0074 */   sw    $t3, 0x74($sp)
 /* 0E3424 7F0AE8F4 8FAC0090 */  lw    $t4, 0x90($sp)
 /* 0E3428 7F0AE8F8 8FAD00B4 */  lw    $t5, 0xb4($sp)
@@ -2912,7 +2912,7 @@ glabel textRenderGlow
 /* 0E0594 7F0ADBA4 24040002 */  li    $a0, 2
 /* 0E0598 7F0ADBA8 248B0080 */  addiu $t3, $a0, 0x80
 .L7F0ADBAC:
-/* 0E059C 7F0ADBAC 0FC303C4 */  jal   something_with_LnameX
+/* 0E059C 7F0ADBAC 0FC303C4 */  jal   langGetJpnCharPixels
 /* 0E05A0 7F0ADBB0 AFAB0074 */   sw    $t3, 0x74($sp)
 /* 0E05A4 7F0ADBB4 8FAC0090 */  lw    $t4, 0x90($sp)
 /* 0E05A8 7F0ADBB8 8FAD00B4 */  lw    $t5, 0xb4($sp)
