@@ -3981,4 +3981,10 @@ struct PortalMetric {
     f32 max;
 };
 
+struct FolderSelect {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+};
+
 #endif

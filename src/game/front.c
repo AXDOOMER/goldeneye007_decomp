@@ -38,6 +38,7 @@
 #include "matrixmath.h"
 #include "bg.h"
 #include "chrai.h"
+#include "title.h"
 
 struct BriefingDataSomething
 {
@@ -124,7 +125,7 @@ f32 ninLogoScale;
 //CODE.bss:8006961C
 f32 flt_CODE_bss_8006961C;
 //CODE.bss:80069620
-coord3d dword_CODE_bss_80069620[MAX_PLAYER_COUNT];
+coord3d dword_CODE_bss_80069620[MAX_FOLDER_COUNT];
 
 //CODE.bss:80069650
 u8 cheat_available[CHEAT_MAX];
@@ -403,12 +404,8 @@ struct mission_folder_setup mission_folder_setup_entries[] = {
     {NULL, 0, 0, LEVELID_NONE, -1, MISSION_PART, -1, 0}
 };
 
-u32 unknown_folderselect_constructor = 0x14;
-u32 D_8002AF30 = 0x14;
-u32 D_8002AF34 = 0x14;
-u32 unknown_folderselect_constructor_0 = 0x32;
-u32 D_8002AF3C = 0x32;
-u32 D_8002AF40 = 0x32;
+struct FolderSelect unknown_folderselect_constructor = { 0x14, 0x14, 0x14 };
+struct FolderSelect unknown_folderselect_constructor_0 = { 0x32, 0x32, 0x32 };
 
 
 struct unk_joint_list unknown_folderselect = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};

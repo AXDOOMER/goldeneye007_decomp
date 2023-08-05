@@ -66,8 +66,12 @@ s32 dword_CODE_bss_80069594;
 u32 D_8002A7D0 = 0;
 u8 gunbarrel_mode = 0x3;
 u32 D_8002A7D8 = 0;
+/*
 s32 D_8002A7DC[3] = {0x00, 0x00, 0x00};
 s32 D_8002A7E8[3] = {0xFF, 0xFF, 0xFF};
+*/
+struct FolderSelect D_8002A7DC = { 0x00, 0x00, 0x00 };
+struct FolderSelect D_8002A7E8 = { 0xFF, 0xFF, 0xFF };
 u32 D_8002A7F4 = 0;
 u32 D_8002A7F8 = 0;
 u32 D_8002A7FC = 0;
@@ -139,7 +143,7 @@ Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl)
     return gdl;
 }
 
-Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, s32 arg2[3], s32 arg3[3])
+Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, struct FolderSelect *arg2, struct FolderSelect *arg3)
 {
     gDPSetRenderMode(gdl++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
     gDPSetCycleType(gdl++, G_CYC_1CYCLE);
@@ -152,8 +156,8 @@ Gfx *sub_GAME_7F007CC8(Gfx *gdl, s32 arg1, s32 arg2[3], s32 arg3[3])
 
 Gfx *insert_sniper_sight_eye_intro(Gfx *gdl)
 {
-    s32 sp3C[3] = D_8002A7DC;
-    s32 sp30[3] = D_8002A7E8;
+    struct FolderSelect sp3C = D_8002A7DC;
+    struct FolderSelect sp30 = D_8002A7E8;
 
     gSPDisplayList(gdl++, &fontDL_0x000);
 
@@ -161,7 +165,7 @@ Gfx *insert_sniper_sight_eye_intro(Gfx *gdl)
 
     gDPSetCombineMode(gdl++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM);
 
-    return sub_GAME_7F007CC8(gdl, floorFloat((viGetX() * g_TitleX) / 1280.0f), sp3C, sp30);
+    return sub_GAME_7F007CC8(gdl, floorFloat((viGetX() * g_TitleX) / 1280.0f), &sp3C, &sp30);
 }
 
 Gfx *sub_GAME_7F007E70(Gfx *gdl, u32 alpha)

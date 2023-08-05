@@ -1629,6 +1629,7 @@ typedef enum PLAYER_ID
 } PLAYER_ID;
 
 #define MAX_PLAYER_COUNT 4
+#define MAX_FOLDER_COUNT 4
 
 typedef enum RGBA_ENUM
 {
