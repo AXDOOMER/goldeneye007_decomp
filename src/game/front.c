@@ -2466,365 +2466,284 @@ char* get_ptr_difficulty_name(s32 difficulty)
 
 
 #ifdef NONMATCHING
-void *constructor_menu05_fileselect(void *arg0)
+//
+// https://decomp.me/scratch/fyqOW 99.53%
+//
+// Warning: The declaration of spD0 is likely incorrect, if this if this function is modified
+// make sure to extend spD0 to avoid overflow.
+Gfx *constructor_menu05_fileselect(Gfx *DL)
 {
     s32 sp1B4;
-    s32 sp1A8;
-    s32 sp19C;
-    void *sp158;
-    s32 sp154;
-    s32 sp150;
-    s32 sp14C;
-    s32 sp108;
-    s32 sp100;
-    s32 spFC;
-    s32 spF8;
-    s32 spF4;
-    s32 spF0;
-    s32 spEC;
-    s32 spE4;
-    s32 spD0;
-    s32 spBC;
-    f32 spB0;
-    f32 spAC;
-    f32 spA8;
-    f32 spA4;
-    f32 spA0;
-    f32 sp9C;
-    f32 sp98;
-    f32 sp94;
-    f32 sp90;
-    f32 sp8C;
-    f32 sp88;
-    f32 sp84;
-    void *sp74;
-    f32 temp_f10;
-    f32 temp_f10_2;
-    f32 temp_f18;
-    f32 temp_f6;
-    f32 temp_f6_2;
-    s32 temp_a2;
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_ret_3;
-    s32 temp_ret_4;
-    s32 temp_ret_5;
-    s32 temp_s1;
-    s32 temp_s1_2;
-    s32 temp_s1_3;
-    s32 temp_s1_4;
-    s32 temp_t0;
-    s32 temp_v0;
-    s32 temp_v0_2;
-    u32 temp_s2;
-    void *temp_a0;
-    void *temp_a0_2;
-    void *temp_a1;
-    void *temp_a1_2;
-    void *temp_t2;
-    void *temp_t4;
-    void *temp_t7;
-    void *temp_t9;
-    void *temp_v0_3;
-    void *phi_t9;
-    void *phi_t2;
-    void *phi_s2;
-    s32 phi_s0;
-    s32 phi_s1;
-    void *phi_s0_2;
-    s32 phi_s1_2;
-    s32 phi_s2_2;
-    s32 phi_s1_3;
-    f32 phi_f6;
-    f32 phi_f18;
-    f32 phi_f6_2;
-    f32 phi_f10;
+    struct FolderSelect sp1A8;
+    struct FolderSelect sp19C;
+    s32 j;
+    s32 i;
+    u8 *langp;
+    s32 var_s2_2;
+    struct unk_joint_list sp14C;
+    s32 var_s1_2;
+    Mtxf sp108;
+    f32 temp_f4;
+    struct point2d spFC;
+    struct point2d spF4;
+    LEVEL_SOLO_SEQUENCE spF0;
+    DIFFICULTY spEC;
+    struct coord2d spE4;
+    
+    sp1A8 = unknown_folderselect_constructor;
+    sp19C = unknown_folderselect_constructor_0;
 
-    sp1A8.unk0 = (s32) unknown_folderselect_constructor.unk0;
-    sp1A8.unk4 = (s32) unknown_folderselect_constructor.unk4;
-    sp1A8.unk8 = (s32) unknown_folderselect_constructor.unk8;
-    sp19C.unk0 = (s32) unknown_folderselect_constructor_0.unk0;
-    sp19C.unk4 = (s32) unknown_folderselect_constructor_0.unk4;
-    sp19C.unk8 = (s32) unknown_folderselect_constructor_0.unk8;
-    temp_ret = insert_imageDL(arg0);
-    arg0 = (void *) (temp_ret + 8);
-    temp_v0 = temp_ret;
-    temp_v0->unk0 = 0xfc167e2c;
-    temp_v0->unk4 = 0x33fdf6fb;
-    temp_t7 = arg0;
-    arg0 = (void *) (temp_t7 + 8);
-    temp_t7->unk4 = -0xec;
-    temp_t7->unk0 = &0xFB00000C;
-    temp_ret_2 = sub_GAME_7F007CC8(arg0, (s32) floorFloat(((f32) viGetX() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
-    arg0 = (void *) (temp_ret_2 + 8);
-    temp_v0_2 = temp_ret_2;
-    temp_v0_2->unk4 = 0x1000000;
-    temp_v0_2->unk0 = 0x6000000;
-    temp_t4 = arg0;
-    arg0 = (void *) (temp_t4 + 8);
-    temp_t4->unk4 = &fontDL_0x040;
-    temp_t4->unk0 = 0x6000000;
-    phi_s2 = &D_8002A968;
-loop_1:
-    phi_t9 = &unknown_folderselect;
-    phi_t2 = &sp14C;
-loop_2:
-    temp_t9 = phi_t9;
-    temp_t2 = phi_t2 + 0xc;
-    temp_t2->unk-C = (s32) phi_t9->unk0;
-    temp_t2->unk-8 = (s32) temp_t9->unk-8;
-    temp_t2->unk-4 = (s32) temp_t9->unk-4;
-    phi_t9 = temp_t9;
-    phi_t2 = temp_t2;
-    if (temp_t9 != (&unknown_folderselect + 0x3c))
-    {
-        goto loop_2;
-    }
-    temp_t2->unk0 = (s32) temp_t9->unk0;
-    sp154 = 3;
-    sp150 = 0;
-    sp158 = arg0;
-    subdraw(&sp14C, *phi_s2);
-    arg0 = sp158;
-    phi_s0 = 0;
-    phi_s1 = 0;
-    if ((*phi_s2)->unk8->unkE > 0)
-    {
-loop_4:
-        matrix_4x4_copy(temp_v0_3->unkC + phi_s0, &sp108);
-        matrix_4x4_f32_to_s32(&sp108, (*phi_s2)->unkC + (phi_s1 << 6));
-        temp_v0_3 = *phi_s2;
-        temp_s1 = phi_s1 + 1;
-        phi_s0 = phi_s0 + 0x40;
-        phi_s1 = temp_s1;
-        if (temp_s1 < temp_v0_3->unk8->unkE)
-        {
-            goto loop_4;
-        }
-    }
-    temp_s2 = phi_s2 + -4;
-    phi_s2 = temp_s2;
-    if (temp_s2 >= &walletinst[0])
-    {
-        goto loop_1;
-    }
-    arg0 = microcode_constructor(arg0);
-    setTextSpacingInverted(FALSE);
-    sp74 = &dword_CODE_bss_80069620;
-    sp1B4 = 0;
-loop_7:
-    sub_GAME_7F077FF4(sp74, &spE4);
-    if (sp1B4 == folder_selected_for_deletion)
-    {
-        floorFloat(spE4, sp1B4, &spF0);
-        temp_a2 = (s32) floorFloat(spE8) + 0x19;
-        arg0 = microcode_constructor_related_to_menus(arg0, sp100, temp_a2, sp100 + 0x63, (s32) (temp_a2 + 0x2a), 0x32);
-        floorFloat(spE4);
-        floorFloat(spE8);
-        viGetX();
-        arg0 = textRender(arg0, &sp100, &spFC, langGet(TEXT(LTITLE, TITLE_STR_23)), (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
-        temp_s1_2 = langGet(TEXT(LTITLE, TITLE_STR_24));
-        floorFloat(spE4);
-        floorFloat(spE8);
-        temp_a0 = &spF8;
-        temp_a1 = &spF4;
-        if (folder_selected_for_deletion_choice != 0)
-        {
-            spF4 = 0;
-            spF8 = 0;
-            textMeasure(temp_a0, temp_a1, temp_s1_2, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-            arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
-            viGetX();
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
-        }
-        else
-        {
-            viGetX(temp_a0, temp_a1, temp_s1_2);
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_2, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
-        }
-        temp_s1_3 = langGet(TEXT(LTITLE, TITLE_STR_25));
-        floorFloat(spE4);
-        if (j_text_trigger != 0)
-        {
+    DL = insert_imageDL(DL);
+    
+    gDPSetCombineLERP(DL++, TEXEL0, PRIMITIVE, ENV_ALPHA, PRIMITIVE, 0, 0, 0, PRIMITIVE, TEXEL0, PRIMITIVE, ENV_ALPHA, PRIMITIVE, 0, 0, 0, PRIMITIVE);
+    gDPSetEnvColor(DL++, 0xFF, 0xFF, 0xFF, 0x14);
+    
+    DL = sub_GAME_7F007CC8(DL, (s32) floorFloat(((f32) viGetX() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
 
-        }
-        floorFloat(spE8);
-        temp_a0_2 = &spF8;
-        temp_a1_2 = &spF4;
-        if (folder_selected_for_deletion_choice != 0)
+    /*
+    gSPDisplayList(DL++, 0x01000040);
+    gSPDisplayList(DL++, 0x01000041);
+    */
+    gSPDisplayList(DL++, 0x01000001);
+    gSPDisplayList(DL++, 0x01000040);
+/*
+    {
+        Gfx *_g = (Gfx*)DL++; _g->words.w0 = 0x06000000; _g->words.w1 = xxx;
+    }
+    {
+        Gfx *_g = (Gfx*)DL++; _g->words.w0 = 0x06000000; _g->words.w1 = 0x01000041;
+    }
+*/
+
+    for (j = 3; j >= 0; j--)
+    {
+        // struct copy
+        sp14C = unknown_folderselect;
+        
+        sp14C.unk08 = 3;
+        sp14C.unk04 = 0;
+        sp14C.gdl = DL;
+        subdraw(&sp14C, walletinst[j]);
+        
+        DL = sp14C.gdl;
+
+        for (i=0; i < walletinst[j]->obj->numMatrices; i++)
         {
-            viGetX(temp_a0_2, temp_a1_2, temp_s1_3);
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
-        }
-        else
-        {
-            spF4 = 0;
-            spF8 = 0;
-            textMeasure(temp_a0_2, temp_a1_2, temp_s1_3, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-            arg0 = microcode_constructor_related_to_menus(arg0, sp100 + -1, spFC + -1, (sp100 + spF4) + 3, (s32) (spFC + spF8), 0x32);
-            viGetX();
-            arg0 = textRender(arg0, &sp100, &spFC, temp_s1_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
+            // hack: source address steps by sizeof(Mtxf), but can't get that to match
+            matrix_4x4_copy(&((s8*)walletinst[j]->render_pos)[i*0x40], &sp108);
+            matrix_4x4_f32_to_s32(&sp108, &((Mtxf*)walletinst[j]->render_pos)[i]);
         }
     }
-    else
+    
+    DL = microcode_constructor(DL);
+    setTextSpacingInverted(0);
+
+    for (sp1B4 = 0; sp1B4 < 4; sp1B4++)
     {
-        fileGetHighestStageDifficultyCompletedForFolder(sp1B4, &spF0, &spEC);
-        if (spF0 >= 0)
+        // HACK:
+        char spD0[4]; // this needs to be at least 14 characters.
+        char spBC[18];
+        s32 padding3;
+        struct coord3d * sp74;
+
+        sp74 = &dword_CODE_bss_80069620[sp1B4];
+        
+        sub_GAME_7F077FF4(sp74, &spE4);
+
+        if (sp1B4 == folder_selected_for_deletion)
         {
-            if (spEC >= 0)
+            spFC.p[1] = (s32) floorFloat(spE4.f[0]) - 0x31;
+            spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x19;
+
+            DL = microcode_constructor_related_to_menus(DL, spFC.p[1], spFC.p[0], spFC.p[1] + 0x63, spFC.p[0] + 0x2A, 0x32);
+
+            langp = langGet(0x9C17);
+            spFC.p[1] = (s32) floorFloat(spE4.f[0]) - 0x2F;
+            spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x1E;
+
+            // 0xEBD879FF
+            DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0xEBD879FF, viGetX(), viGetY(), 0, 0);
+
+            langp = langGet(0x9C18);
+            spFC.p[1] = (s32) floorFloat(spE4.f[0]) - 0x2F;
+            spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x32;
+
+            if (folder_selected_for_deletion_choice != 0)
             {
-                temp_ret_3 = get_ptr_difficulty_name(spEC);
-                if (temp_ret_3 != 0)
-                {
-                    strcpy(&spD0, temp_ret_3);
-                    strcat(&spD0, &asc_D_8004F488);
-                    spF4 = 0;
-                    spF8 = 0;
-                    textMeasure(&spF8, &spF4, &spD0, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-                    floorFloat(spE4);
-                    if (spF4 < 0)
-                    {
+                spF4.p[0] = 0;
+                spF4.p[1] = 0;
+                textMeasure(&spF4.p[1], &spF4.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+                DL = microcode_constructor_related_to_menus(DL, spFC.p[1] - 1, spFC.p[0] - 1, spF4.p[0] + spFC.p[1] + 3, spF4.p[1] + spFC.p[0], 0x32);
+                DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
+            }
+            else
+            {
+                DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0xEBD879FF, viGetX(), viGetY(), 0, 0);
+            }
+            
+            langp = langGet(0x9C19);
 
-                    }
-                    floorFloat(spE8);
-                    viGetX();
-                    arg0 = textRender(arg0, &sp100, &spFC, &spD0, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
+            temp_f4 = floorFloat(spE4.f[0]);
+            spFC.p[1] = (((j_text_trigger != 0) ? 0x17 : -1) + (s32) temp_f4) - 1;
+            spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x32;
+            
+            if (folder_selected_for_deletion_choice != 0)
+            {
+                DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0xEBD879FF, viGetX(), viGetY(), 0, 0);
+            }
+            else
+            {
+                spF4.p[0] = 0;
+                spF4.p[1] = 0;
+                textMeasure(&spF4.p[1], &spF4.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+                DL = microcode_constructor_related_to_menus(DL, spFC.p[1] - 1, spFC.p[0] - 1, spF4.p[0] + spFC.p[1] + 3, spF4.p[1] + spFC.p[0], 0x32);
+                DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
+            }
+
+        }
+        else
+        {
+            
+            fileGetHighestStageDifficultyCompletedForFolder(sp1B4, &spF0, &spEC);
+    
+            if ((spF0 >= SP_LEVEL_DAM) && (spEC >= DIFFICULTY_AGENT))
+            {
+                langp = get_ptr_difficulty_name(spEC);
+    
+                if (langp != NULL)
+                {
+                    strcpy((char *)&spD0, langp);
+                    strcat((char *)&spD0, "\n");
+                    
+                    spF4.p[0] = 0;
+                    spF4.p[1] = 0;
+                    
+                    textMeasure(&spF4.p[1], &spF4.p[0], (char *)&spD0, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+                    spFC.p[1] = ((s32) floorFloat(spE4.f[0]) - (spF4.p[0] / 2)) - 1;
+                    spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x15;
+                    DL = textRender(DL, &spFC.p[1], &spFC.p[0], (char *)&spD0, ptrFontZurichBoldChars, ptrFontZurichBold, 0xEBD879FF, viGetX(), viGetY(), 0, 0);
                 }
-                if (spEC != 3)
+                
+                if (spEC != DIFFICULTY_007)
                 {
-                    strcpy(&spBC, langGet(TEXT(LTITLE, TITLE_STR_26));
-                    phi_s0_2 = &mission_folder_setup_entries;
-                    phi_s1_2 = 0;
-                    phi_s2_2 = -1;
-                    phi_s1_3 = 0;
-                    if (D_8002ABE8 != 0)
+                    var_s2_2 = -1;
+                    
+                    strcpy(spBC, langGet(0x9C1A));
+        
+                    for (var_s1_2 = 0; mission_folder_setup_entries[var_s1_2].folder_text_preset != 0; var_s1_2++)
                     {
-loop_24:
-                        if (spF0 == phi_s0_2->unk14)
+                        if (spF0 == mission_folder_setup_entries[var_s1_2].mission_num)
                         {
-                            phi_s2_2 = get_chapter_briefing_entry(phi_s1_2);
-                            phi_s1_3 = phi_s1_2;
-                        }
-                        else
-                        {
-                            temp_s1_4 = phi_s1_2 + 1;
-                            phi_s0_2 = phi_s0_2 + 0x1c;
-                            phi_s1_2 = temp_s1_4;
-                            phi_s2_2 = -1;
-                            phi_s1_3 = temp_s1_4;
-                            if (phi_s0_2->unk20 != 0)
-                            {
-                                goto loop_24;
-                            }
+                            var_s2_2 = get_chapter_briefing_entry(var_s1_2);
+                            break;
                         }
                     }
-                    if (phi_s2_2 >= 0)
+        
+                    if (var_s2_2 >= 0)
                     {
-                        strcat(&spBC, *((((phi_s2_2 * 8) - phi_s2_2) * 4) + &mission_folder_setup_entries));
-                        strcat(&spBC, &a_);
+                        strcat((char *)spBC, (char *)mission_folder_setup_entries[var_s2_2].string_ptr);
+                        strcat((char *)spBC, ".");
                     }
-                    strcat(&spBC, *((((phi_s1_3 * 8) - phi_s1_3) * 4) + &mission_folder_setup_entries));
-                    strcat(&spBC, &asc_D_8004F490);
-                    spF4 = 0;
-                    spF8 = 0;
-                    textMeasure(&spF8, &spF4, &spBC, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-                    floorFloat(spE4);
-                    if (spF4 < 0)
-                    {
-
-                    }
-                    floorFloat(spE8);
-                    viGetX();
-                    arg0 = textRender(arg0, &sp100, &spFC, &spBC, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, viGetY(), 0, 0);
+                    
+                    strcat((char *)spBC, (char *)mission_folder_setup_entries[var_s1_2].string_ptr);
+                    strcat((char *)spBC, "\n");
+                    spF4.p[0] = 0;
+                    spF4.p[1] = 0;
+    
+                    textMeasure(&spF4.p[1], &spF4.p[0], (char *)spBC, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+                    spFC.p[1] = ((s32) floorFloat(spE4.f[0]) - (spF4.p[0] / 2)) - 1;
+                    spFC.p[0] = (s32) floorFloat(spE4.f[1]) + 0x2D;
+        
+                    DL = textRender(DL, &spFC.p[1], &spFC.p[0], (char *)spBC, ptrFontZurichBoldChars, ptrFontZurichBold, 0xEBD879FF, viGetX(), viGetY(), 0, 0);
                 }
             }
         }
     }
-    temp_t0 = sp1B4 + 1;
-    sp74 = (void *) (sp74 + 0xc);
-    sp1B4 = temp_t0;
-    if (temp_t0 != 4)
-    {
-        goto loop_7;
-    }
-    setTextSpacingInverted(FALSE);
-    temp_ret_4 = langGet(TEXT(LTITLE, TITLE_STR_27));
-    spF4 = 0;
-    spF8 = 0;
-    textMeasure(&spF8, &spF4, temp_ret_4, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-    if (spF8 < 0)
-    {
 
-    }
-    viGetX();
-    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
-    folder_option_COPY_left_bound.unk8 = (f32) (sp100 + spF4);
-    temp_ret_5 = langGet(TEXT(LTITLE, TITLE_STR_28));
-    spF4 = 0;
-    spF8 = 0;
-    textMeasure(&spF8, &spF4, temp_ret_5, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-    if (spF8 < 0)
+    if(1)
     {
+        // The above for loops makes a lot of compiler temp variables on the stack,
+        // These need to be declared sometime after the above for loop.
+        struct coord2d spAC;
+        struct coord2d spA4;
+        struct coord2d sp9C;
+        struct coord2d sp94;
+        struct coord2d sp8C;
+        struct coord2d sp84;
+        
+        setTextSpacingInverted(0);
+        
+        langp = langGet(0x9C1B);
+    
+        spF4.p[0] = 0;
+        spF4.p[1] = 0;
+        
+        textMeasure(&spF4.p[1], &spF4.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+        
+        spFC.p[0] = 0x11D - (spF4.p[1] / 2);
+        spFC.p[1] = 0xF7;
+        
+        DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
+        folder_option_COPY_bound.right = (f32) (spF4.p[0] + spFC.p[1]);
+        
+        langp = langGet(0x9C1C);
+        
+        spF4.p[0] = 0;
+        spF4.p[1] = 0;
+        
+        textMeasure(&spF4.p[1], &spF4.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+        
+        spFC.p[1] = 0x165;
+        spFC.p[0] = 0x11D - (spF4.p[1] / 2);
+        
+        DL = textRender(DL, &spFC.p[1], &spFC.p[0], langp, ptrFontZurichBoldChars, ptrFontZurichBold, -1, viGetX(), viGetY(), 0, 0);
+    
+        folder_option_ERASE_bound.right = (f32) (spF4.p[0] + spFC.p[1]);
 
+        spAC.f[0] = 225.0f;
+        spAC.f[1] = 285.0f;
+        
+        spA4.f[0] = (f32) (mainfolderimages + IMG_COPY)->width * 0.5f;
+        spA4.f[1] = (f32) (mainfolderimages + IMG_COPY)->height * 0.5f;
+        
+        likely_generate_DL_for_image_declaration(&DL, mainfolderimages, 4, 0, 0);
+        display_image_at_on_screen_coord(&DL, &spAC.f[0], &spA4.f[0], mainfolderimages->width, mainfolderimages->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) mainfolderimages->level > 0, 0);
+    
+        folder_option_COPY_bound.left = spAC.f[0] - spA4.f[0];
+        folder_option_COPY_bound.up = spAC.f[1] - spA4.f[1];
+        folder_option_COPY_bound.down = spAC.f[1] + spA4.f[1];
+
+        sp9C.f[0] = 335.0f;
+        sp9C.f[1] = 285.0f;
+        
+        sp94.f[0] = (mainfolderimages + IMG_DEL)->width * 0.5f;
+        sp94.f[1] = (mainfolderimages + IMG_DEL)->height * 0.5f;
+    
+        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
+        display_image_at_on_screen_coord(&DL, &sp9C.f[0], &sp94.f[0], (mainfolderimages + IMG_DEL)->width, (mainfolderimages + IMG_DEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_DEL)->level > 0, 0);
+    
+        folder_option_ERASE_bound.left = (f32) (sp9C.f[0] - sp94.f[0]);
+        folder_option_ERASE_bound.up = (f32) (sp9C.f[1] - sp94.f[1]);
+        folder_option_ERASE_bound.down = (f32) (sp9C.f[1] + sp94.f[1]);
+
+        sp8C.f[0] = 110.0f;
+        sp8C.f[1] = 285.0f;
+    
+        sp84.f[0] = (mainfolderimages + IMG_SEL)->width * 0.5f;
+        sp84.f[1] = (mainfolderimages + IMG_SEL)->height * 0.5f;
+        
+        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
+        display_image_at_on_screen_coord(&DL, &sp8C.f[0], &sp84.f[0], (mainfolderimages + IMG_SEL)->width, (mainfolderimages + IMG_SEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_SEL)->level > 0, 0); 
     }
-    viGetX();
-    folder_option_ERASE_left_bound.unk8 = (f32) (sp100 + spF4);
-    arg0 = textRender(arg0, &sp100, &spFC, temp_ret_5, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, -1, viGetY(), 0, 0);
-    spAC = 225.0f;
-    spB0 = (f32) D_80051A28;
-    temp_f10 = (f32) (u32) mainfolderimages->unk4 * 0.5f;
-    spA4 = temp_f10;
-    spA8 = (f32) ((f32) (u32) mainfolderimages->unk5 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &spAC, &spA4, mainfolderimages->unk4, (s32) mainfolderimages->unk5, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk6), 0);
-    folder_option_COPY_left_bound.unk0 = (f32) (spAC - temp_f10);
-    folder_option_COPY_left_bound.unk4 = (f32) (spB0 - spA8);
-    folder_option_COPY_left_bound.unkC = (f32) (spA8 + spB0);
-    sp9C = (f32) D_80051A2C;
-    spA0 = (f32) D_80051A30;
-    temp_f6 = (f32) mainfolderimages->unk10;
-    phi_f6 = temp_f6;
-    if (mainfolderimages->unk10 < 0)
-    {
-        phi_f6 = temp_f6 + M_U32_MAX_VALUE_F;
-    }
-    sp94 = (f32) (phi_f6 * 0.5f);
-    temp_f18 = (f32) mainfolderimages->unk11;
-    phi_f18 = temp_f18;
-    if (mainfolderimages->unk11 < 0)
-    {
-        phi_f18 = temp_f18 + M_U32_MAX_VALUE_F;
-    }
-    sp98 = (f32) (phi_f18 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0xc, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp9C, &sp94, mainfolderimages->unk10, (s32) mainfolderimages->unk11, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk12), 0);
-    folder_option_ERASE_left_bound.unk0 = (f32) (sp9C - sp94);
-    folder_option_ERASE_left_bound.unk4 = (f32) (spA0 - sp98);
-    folder_option_ERASE_left_bound.unkC = (f32) (sp98 + spA0);
-    sp8C = 110.0f;
-    sp90 = (f32) D_80051A34;
-    temp_f6_2 = (f32) mainfolderimages->unk1C;
-    phi_f6_2 = temp_f6_2;
-    if (mainfolderimages->unk1C < 0)
-    {
-        phi_f6_2 = temp_f6_2 + M_U32_MAX_VALUE_F;
-    }
-    sp84 = (f32) (phi_f6_2 * 0.5f);
-    temp_f10_2 = (f32) mainfolderimages->unk1D;
-    phi_f10 = temp_f10_2;
-    if (mainfolderimages->unk1D < 0)
-    {
-        phi_f10 = temp_f10_2 + M_U32_MAX_VALUE_F;
-    }
-    sp88 = (f32) (phi_f10 * 0.5f);
-    likely_generate_DL_for_image_declaration(&arg0, mainfolderimages + 0x18, 4, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &sp8C, &sp84, mainfolderimages->unk1C, (s32) mainfolderimages->unk1D, 0, 0, 1, 0xff, 0xff, 0xff, 0xff, (s32) (0 < mainfolderimages->unk1E), 0);
+    
     if (folder_selected_for_deletion < 0)
     {
-        arg0 = load_draw_selected_icon_folder_select(arg0);
+        DL = load_draw_selected_icon_folder_select(DL);
     }
-    return arg0;
+    
+    return DL;
 }
+
 #else
 const char asc_D_8004F488[] = "\n";
 const char a_[] = ".";
