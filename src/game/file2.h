@@ -32,4 +32,6 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat);
 void fileLoadSettingsForFolder(u32 folder);
 void fileDeleteSaveForFolder(s32 foldernum);
 
+void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty);
+
 #endif
