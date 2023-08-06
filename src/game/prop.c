@@ -4069,7 +4069,7 @@ glabel jpt_8004F02C
 /* 0388E8 7F003D78 00408825 */  move  $s1, $v0
 /* 0388EC 7F003D7C 0FC308A4 */  jal   langGetLangBankIndexFromStagenum
 /* 0388F0 7F003D80 02A02025 */   move  $a0, $s5
-/* 0388F4 7F003D84 0FC30A6E */  jal   langLoadToBank
+/* 0388F4 7F003D84 0FC30A6E */  jal   langLoadToAddr
 /* 0388F8 7F003D88 00402025 */   move  $a0, $v0
 /* 0388FC 7F003D8C 8E2C0000 */  lw    $t4, ($s1)
 /* 038900 7F003D90 3C078007 */  lui   $a3, %hi(g_CurrentSetup+0) # $a3, 0x8007
@@ -5467,7 +5467,7 @@ glabel proplvreset2
 /* 0366F4 7F003D04 00408825 */  move  $s1, $v0
 /* 0366F8 7F003D08 0FC302B0 */  jal   langGetLangBankIndexFromStagenum
 /* 0366FC 7F003D0C 02A02025 */   move  $a0, $s5
-/* 036700 7F003D10 0FC3047A */  jal   langLoadToBank
+/* 036700 7F003D10 0FC3047A */  jal   langLoadToAddr
 /* 036704 7F003D14 00402025 */   move  $a0, $v0
 /* 036708 7F003D18 8E2C0000 */  lw    $t4, ($s1)
 /* 03670C 7F003D1C 3C078006 */  lui   $a3, %hi(g_CurrentSetup+0) # $a3, 0x8006
