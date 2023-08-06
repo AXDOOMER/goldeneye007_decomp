@@ -414,7 +414,7 @@ struct FolderSelect unknown_folderselect_constructor_0 = { 0x32, 0x32, 0x32 };
 struct unk_joint_list unknown_folderselect = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 struct unk_joint_list D_8002AF84 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-u32 D_8002AFC4 = 0;
+f32 D_8002AFC4 = 0;
 f32 D_8002AFC8 = 190.0;
 f32 D_8002AFCC = -3300.0;
 s32 cursor_xpos_table_mission_select[] = {73, 142, 212, 282, 352};
@@ -2851,220 +2851,57 @@ void interface_menu06_modesel(void)
 }
 
 
-
-#ifdef NONMATCHING
-s32 sub_GAME_7F00D5E8(s32 arg0)
+// Address 0x7F00D5E8 NTSC
+Gfx *sub_GAME_7F00D5E8(Gfx *DL)
 {
-    s32 sp11C;
-    s32 sp118;
-    s32 sp114;
-    s32 sp110;
-    s32 sp10C;
-    s32 spC8;
-    s32 sp88;
-    s32 sp48;
+    s32 padding;
     f32 temp_f0;
     f32 temp_f2;
-    s32 temp_ret;
-    s32 temp_s0;
-    void *temp_t8;
-    void *temp_t9;
-    void *temp_v0;
-    void *phi_t9;
-    void *phi_t8;
-    s32 phi_s1;
-    s32 phi_s0;
+    struct unk_joint_list sp10C;
+    s32 i;
+    Mtxf spC8;
+    Mtxf sp88;
+    Mtxf sp48;
 
-    temp_v0 = &D_8002AB94 + (selected_folder_num * 0xc);
-    phi_t9 = &D_8002AF84;
-    phi_t8 = &sp10C;
-loop_1:
-    temp_t9 = phi_t9 + 0xc;
-    temp_t8 = phi_t8 + 0xc;
-    temp_t8->unk-C = (s32) *phi_t9;
-    temp_t8->unk-8 = (s32) temp_t9->unk-8;
-    temp_t8->unk-4 = (s32) temp_t9->unk-4;
-    phi_t9 = temp_t9;
-    phi_t8 = temp_t8;
-    if (temp_t9 != (&D_8002AF84 + 0x3c))
-    {
-        goto loop_1;
-    }
-    temp_t8->unk0 = (s32) temp_t9->unk0;
-    temp_f0 = temp_v0->unk0 + D_8002AFC4;
-    temp_f2 = temp_v0->unk4 + D_8002AFC8;
-    matrix_4x4_7F059694(0, &spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 1.0f);
-    matrix_4x4_set_identity_and_position(&D_8002AB94 + (selected_folder_num * 0xc), &sp88);
-    matrix_scalar_multiply(0x3e800000, &sp88);
+    temp_f0 = D_8002AB94[selected_folder_num].f[0];
+    temp_f2 = D_8002AB94[selected_folder_num].f[1];
+    
+    sp10C = D_8002AF84;
+
+    temp_f0 += D_8002AFC4;
+    temp_f2 += D_8002AFC8;
+    
+    matrix_4x4_7F059694(&spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix_4x4_set_identity_and_position(&D_8002AB94[selected_folder_num], &sp88);
+    matrix_scalar_multiply(0.25f, sp88.m[0]);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
-    temp_ret = dynAllocate(walletinst[0]->unk8->unkE << 6);
-    sp11C = temp_ret;
-    matrix_4x4_copy(&sp88, temp_ret);
-    walletinst[0]->unkC = sp11C;
-    sp114 = 3;
-    sp110 = 0;
-    sp118 = arg0;
+
+    sp10C.unk_matrix = &sp88;
+    
+    sp10C.mtxlist = dynAllocate(walletinst[0]->obj->numMatrices << 6);
+
+    matrix_4x4_copy(&sp88, sp10C.mtxlist);
+
+    walletinst[0]->render_pos = (union RenderPosView*)sp10C.mtxlist;
+
+    sp10C.unk08 = 3;
+    sp10C.unk04 = 0;
+    sp10C.gdl = DL;
+
     subdraw(&sp10C, walletinst[0]);
-    arg0 = sp118;
-    phi_s1 = 0;
-    phi_s0 = 0;
-    if (walletinst[0]->unk8->unkE > 0)
+
+    DL = sp10C.gdl;
+
+    for (i=0; i<walletinst[0]->obj->numMatrices; i++)
     {
-loop_3:
-        matrix_4x4_copy(walletinst[0]->unkC + phi_s1, &sp48);
-        matrix_4x4_f32_to_s32(&sp48, walletinst[0]->unkC + (phi_s0 << 6));
-        temp_s0 = phi_s0 + 1;
-        phi_s1 = phi_s1 + 0x40;
-        phi_s0 = temp_s0;
-        if (temp_s0 < walletinst[0]->unk8->unkE)
-        {
-            goto loop_3;
-        }
+        // hack: source address steps by sizeof(Mtxf), but can't get that to match
+        matrix_4x4_copy(&((s8*)walletinst[0]->render_pos)[i*0x40], &sp48);
+        matrix_4x4_f32_to_s32(&sp48, &((Mtxf*)walletinst[0]->render_pos)[i]);
     }
-    return arg0;
+
+    
+    return DL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F00D5E8
-/* 042118 7F00D5E8 27BDFEA8 */  addiu $sp, $sp, -0x158
-/* 04211C 7F00D5EC AFB20034 */  sw    $s2, 0x34($sp)
-/* 042120 7F00D5F0 3C128003 */  lui   $s2, %hi(selected_folder_num)
-/* 042124 7F00D5F4 2652A8E8 */  addiu $s2, %lo(selected_folder_num) # addiu $s2, $s2, -0x5718
-/* 042128 7F00D5F8 8E4E0000 */  lw    $t6, ($s2)
-/* 04212C 7F00D5FC AFB30038 */  sw    $s3, 0x38($sp)
-/* 042130 7F00D600 2413000C */  li    $s3, 12
-/* 042134 7F00D604 01D30019 */  multu $t6, $s3
-/* 042138 7F00D608 AFB10030 */  sw    $s1, 0x30($sp)
-/* 04213C 7F00D60C 3C118003 */  lui   $s1, %hi(D_8002AB94)
-/* 042140 7F00D610 2631AB94 */  addiu $s1, %lo(D_8002AB94) # addiu $s1, $s1, -0x546c
-/* 042144 7F00D614 3C198003 */  lui   $t9, %hi(D_8002AF84)
-/* 042148 7F00D618 2739AF84 */  addiu $t9, %lo(D_8002AF84) # addiu $t9, $t9, -0x507c
-/* 04214C 7F00D61C 44806000 */  mtc1  $zero, $f12
-/* 042150 7F00D620 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 042154 7F00D624 AFB0002C */  sw    $s0, 0x2c($sp)
-/* 042158 7F00D628 AFA40158 */  sw    $a0, 0x158($sp)
-/* 04215C 7F00D62C 00007812 */  mflo  $t7
-/* 042160 7F00D630 022F1021 */  addu  $v0, $s1, $t7
-/* 042164 7F00D634 C4400000 */  lwc1  $f0, ($v0)
-/* 042168 7F00D638 C4420004 */  lwc1  $f2, 4($v0)
-/* 04216C 7F00D63C 272A003C */  addiu $t2, $t9, 0x3c
-/* 042170 7F00D640 27B8010C */  addiu $t8, $sp, 0x10c
-.L7F00D644:
-/* 042174 7F00D644 8F210000 */  lw    $at, ($t9)
-/* 042178 7F00D648 2739000C */  addiu $t9, $t9, 0xc
-/* 04217C 7F00D64C 2718000C */  addiu $t8, $t8, 0xc
-/* 042180 7F00D650 AF01FFF4 */  sw    $at, -0xc($t8)
-/* 042184 7F00D654 8F21FFF8 */  lw    $at, -8($t9)
-/* 042188 7F00D658 AF01FFF8 */  sw    $at, -8($t8)
-/* 04218C 7F00D65C 8F21FFFC */  lw    $at, -4($t9)
-/* 042190 7F00D660 172AFFF8 */  bne   $t9, $t2, .L7F00D644
-/* 042194 7F00D664 AF01FFFC */   sw    $at, -4($t8)
-/* 042198 7F00D668 8F210000 */  lw    $at, ($t9)
-/* 04219C 7F00D66C 27A400C8 */  addiu $a0, $sp, 0xc8
-/* 0421A0 7F00D670 AF010000 */  sw    $at, ($t8)
-/* 0421A4 7F00D674 3C018003 */  lui   $at, %hi(D_8002AFC4)
-/* 0421A8 7F00D678 C424AFC4 */  lwc1  $f4, %lo(D_8002AFC4)($at)
-/* 0421AC 7F00D67C 3C018003 */  lui   $at, %hi(D_8002AFC8)
-/* 0421B0 7F00D680 C426AFC8 */  lwc1  $f6, %lo(D_8002AFC8)($at)
-/* 0421B4 7F00D684 3C01457A */  li    $at, 0x457A0000 # 4000.000000
-/* 0421B8 7F00D688 44814000 */  mtc1  $at, $f8
-/* 0421BC 7F00D68C 3C018003 */  lui   $at, %hi(D_8002AFCC)
-/* 0421C0 7F00D690 C42AAFCC */  lwc1  $f10, %lo(D_8002AFCC)($at)
-/* 0421C4 7F00D694 46040000 */  add.s $f0, $f0, $f4
-/* 0421C8 7F00D698 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0421CC 7F00D69C 44819000 */  mtc1  $at, $f18
-/* 0421D0 7F00D6A0 46061080 */  add.s $f2, $f2, $f6
-/* 0421D4 7F00D6A4 44050000 */  mfc1  $a1, $f0
-/* 0421D8 7F00D6A8 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0421DC 7F00D6AC 460A4400 */  add.s $f16, $f8, $f10
-/* 0421E0 7F00D6B0 44061000 */  mfc1  $a2, $f2
-/* 0421E4 7F00D6B4 E7A20014 */  swc1  $f2, 0x14($sp)
-/* 0421E8 7F00D6B8 E7AC0024 */  swc1  $f12, 0x24($sp)
-/* 0421EC 7F00D6BC 44078000 */  mfc1  $a3, $f16
-/* 0421F0 7F00D6C0 E7AC001C */  swc1  $f12, 0x1c($sp)
-/* 0421F4 7F00D6C4 E7AC0018 */  swc1  $f12, 0x18($sp)
-/* 0421F8 7F00D6C8 0FC165A5 */  jal   matrix_4x4_7F059694
-/* 0421FC 7F00D6CC E7B20020 */   swc1  $f18, 0x20($sp)
-/* 042200 7F00D6D0 8E4B0000 */  lw    $t3, ($s2)
-/* 042204 7F00D6D4 27B00088 */  addiu $s0, $sp, 0x88
-/* 042208 7F00D6D8 02002825 */  move  $a1, $s0
-/* 04220C 7F00D6DC 01730019 */  multu $t3, $s3
-/* 042210 7F00D6E0 00006012 */  mflo  $t4
-/* 042214 7F00D6E4 022C2021 */  addu  $a0, $s1, $t4
-/* 042218 7F00D6E8 0FC16259 */  jal   matrix_4x4_set_identity_and_position
-/* 04221C 7F00D6EC 00000000 */   nop
-/* 042220 7F00D6F0 3C013E80 */  li    $at, 0x3E800000 # 0.250000
-/* 042224 7F00D6F4 44816000 */  mtc1  $at, $f12
-/* 042228 7F00D6F8 0FC1629F */  jal   matrix_scalar_multiply
-/* 04222C 7F00D6FC 02002825 */   move  $a1, $s0
-/* 042230 7F00D700 27A400C8 */  addiu $a0, $sp, 0xc8
-/* 042234 7F00D704 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 042238 7F00D708 02002825 */   move  $a1, $s0
-/* 04223C 7F00D70C 3C138003 */  lui   $s3, %hi(walletinst)
-/* 042240 7F00D710 2673A95C */  addiu $s3, %lo(walletinst) # addiu $s3, $s3, -0x56a4
-/* 042244 7F00D714 8E6D0000 */  lw    $t5, ($s3)
-/* 042248 7F00D718 AFB0010C */  sw    $s0, 0x10c($sp)
-/* 04224C 7F00D71C 8DAE0008 */  lw    $t6, 8($t5)
-/* 042250 7F00D720 85C4000E */  lh    $a0, 0xe($t6)
-/* 042254 7F00D724 00047980 */  sll   $t7, $a0, 6
-/* 042258 7F00D728 0FC2F5C5 */  jal   dynAllocate
-/* 04225C 7F00D72C 01E02025 */   move  $a0, $t7
-/* 042260 7F00D730 AFA2011C */  sw    $v0, 0x11c($sp)
-/* 042264 7F00D734 02002025 */  move  $a0, $s0
-/* 042268 7F00D738 0FC16008 */  jal   matrix_4x4_copy
-/* 04226C 7F00D73C 00402825 */   move  $a1, $v0
-/* 042270 7F00D740 8FA9011C */  lw    $t1, 0x11c($sp)
-/* 042274 7F00D744 8E680000 */  lw    $t0, ($s3)
-/* 042278 7F00D748 240A0003 */  li    $t2, 3
-/* 04227C 7F00D74C 27A4010C */  addiu $a0, $sp, 0x10c
-/* 042280 7F00D750 AD09000C */  sw    $t1, 0xc($t0)
-/* 042284 7F00D754 8FB90158 */  lw    $t9, 0x158($sp)
-/* 042288 7F00D758 AFAA0114 */  sw    $t2, 0x114($sp)
-/* 04228C 7F00D75C AFA00110 */  sw    $zero, 0x110($sp)
-/* 042290 7F00D760 8E650000 */  lw    $a1, ($s3)
-/* 042294 7F00D764 0FC1D1A1 */  jal   subdraw
-/* 042298 7F00D768 AFB90118 */   sw    $t9, 0x118($sp)
-/* 04229C 7F00D76C 8FB80118 */  lw    $t8, 0x118($sp)
-/* 0422A0 7F00D770 8E620000 */  lw    $v0, ($s3)
-/* 0422A4 7F00D774 00008025 */  move  $s0, $zero
-/* 0422A8 7F00D778 AFB80158 */  sw    $t8, 0x158($sp)
-/* 0422AC 7F00D77C 8C4B0008 */  lw    $t3, 8($v0)
-/* 0422B0 7F00D780 00008825 */  move  $s1, $zero
-/* 0422B4 7F00D784 27B20048 */  addiu $s2, $sp, 0x48
-/* 0422B8 7F00D788 856C000E */  lh    $t4, 0xe($t3)
-/* 0422BC 7F00D78C 59800014 */  blezl $t4, .L7F00D7E0
-/* 0422C0 7F00D790 8FBF003C */   lw    $ra, 0x3c($sp)
-/* 0422C4 7F00D794 8C4D000C */  lw    $t5, 0xc($v0)
-.L7F00D798:
-/* 0422C8 7F00D798 02402825 */  move  $a1, $s2
-/* 0422CC 7F00D79C 0FC16008 */  jal   matrix_4x4_copy
-/* 0422D0 7F00D7A0 01B12021 */   addu  $a0, $t5, $s1
-/* 0422D4 7F00D7A4 8E6E0000 */  lw    $t6, ($s3)
-/* 0422D8 7F00D7A8 00104980 */  sll   $t1, $s0, 6
-/* 0422DC 7F00D7AC 02402025 */  move  $a0, $s2
-/* 0422E0 7F00D7B0 8DCF000C */  lw    $t7, 0xc($t6)
-/* 0422E4 7F00D7B4 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0422E8 7F00D7B8 01E92821 */   addu  $a1, $t7, $t1
-/* 0422EC 7F00D7BC 8E620000 */  lw    $v0, ($s3)
-/* 0422F0 7F00D7C0 26100001 */  addiu $s0, $s0, 1
-/* 0422F4 7F00D7C4 26310040 */  addiu $s1, $s1, 0x40
-/* 0422F8 7F00D7C8 8C480008 */  lw    $t0, 8($v0)
-/* 0422FC 7F00D7CC 850A000E */  lh    $t2, 0xe($t0)
-/* 042300 7F00D7D0 020A082A */  slt   $at, $s0, $t2
-/* 042304 7F00D7D4 5420FFF0 */  bnezl $at, .L7F00D798
-/* 042308 7F00D7D8 8C4D000C */   lw    $t5, 0xc($v0)
-/* 04230C 7F00D7DC 8FBF003C */  lw    $ra, 0x3c($sp)
-.L7F00D7E0:
-/* 042310 7F00D7E0 8FA20158 */  lw    $v0, 0x158($sp)
-/* 042314 7F00D7E4 8FB0002C */  lw    $s0, 0x2c($sp)
-/* 042318 7F00D7E8 8FB10030 */  lw    $s1, 0x30($sp)
-/* 04231C 7F00D7EC 8FB20034 */  lw    $s2, 0x34($sp)
-/* 042320 7F00D7F0 8FB30038 */  lw    $s3, 0x38($sp)
-/* 042324 7F00D7F4 03E00008 */  jr    $ra
-/* 042328 7F00D7F8 27BD0158 */   addiu $sp, $sp, 0x158
-)
-#endif
 
 
 
