@@ -15656,7 +15656,7 @@ s32 load_briefing_text_for_stage(void) {
     //temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
     ptrbriefingdata = _fileNameLoadToAddr(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
     //sp20 = 0x6DE00;
-    briefingLoadToAddr(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
+    langLoadToAddr(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
     pbriefdata = ptrbriefingdata;
     for(i = 0; i!= 0x28;i++)
     {
@@ -15702,11 +15702,11 @@ glabel load_briefing_text_for_stage
 /* 04A0C4 7F015594 AC22978C */  sw    $v0, %lo(ptrbriefingdata)($at)
 /* 04A0C8 7F015598 26100200 */  addiu $s0, $s0, 0x200
 /* 04A0CC 7F01559C AFB80020 */  sw    $t8, 0x20($sp)
-/* 04A0D0 7F0155A0 0FC30578 */  jal   get_textbank_number_for_stagenum
+/* 04A0D0 7F0155A0 0FC30578 */  jal   langGetLangBankIndexFromStagenum
 /* 04A0D4 7F0155A4 8C84ABEC */   lw    $a0, %lo(mission_folder_setup_entries+8)($a0)
 /* 04A0D8 7F0155A8 00402025 */  move  $a0, $v0
 /* 04A0DC 7F0155AC 02002825 */  move  $a1, $s0
-/* 04A0E0 7F0155B0 0FC30759 */  jal   briefingLoadToAddr
+/* 04A0E0 7F0155B0 0FC30759 */  jal   langLoadToBank
 /* 04A0E4 7F0155B4 8FA60020 */   lw    $a2, 0x20($sp)
 /* 04A0E8 7F0155B8 3C038007 */  lui   $v1, %hi(ptrbriefingdata)
 /* 04A0EC 7F0155BC 8C63978C */  lw    $v1, %lo(ptrbriefingdata)($v1)
@@ -15745,7 +15745,7 @@ void init_menu0A_briefing(void)
 
 void update_menu0A_briefing(void)
 {
-  langClearBank(get_textbank_number_for_stagenum(mission_folder_setup_entries[briefingpage].stage_id));
+  langClearBank(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id));
   if (-1 < menu_update) {
     sub_GAME_7F00B990();
   }

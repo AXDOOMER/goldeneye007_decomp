@@ -4022,7 +4022,7 @@ void                 proplvreset2(s32 stageID)
         strcat(ptrsp174, *textptr + 1);
         resource                = _fileNameLoadToBank(ptrsp174, 1, 0x100, 4);
         g_ptrStageSetupFile = resource;
-        briefingLoadToBank(get_textbank_number_for_stagenum(stageID));
+        langLoadToBank(langGetLangBankIndexFromStagenum(stageID));
         g_CurrentSetup.pathwaypoints  = resource->pathwaypoints;
         g_CurrentSetup.waypointgroups = resource->waypointgroups;
         g_CurrentSetup.intro          = resource->intro;
