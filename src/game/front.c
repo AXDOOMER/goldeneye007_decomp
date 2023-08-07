@@ -3091,257 +3091,200 @@ void update_menu07_missionsel(void) {
 
 
 #ifdef NONMATCHING
+
+// https://decomp.me/scratch/ChW6J ~96% (NTSC)
+// https://decomp.me/scratch/BKPn6 (PAL)
+//
+// Address 0x7F00DEB8 NTSC
 void interface_menu07_missionsel(void)
 {
-    s32 temp_s1;
-    s32 temp_s1_2;
-    s32 temp_s2;
-    s32 temp_s2_2;
-    s32 temp_s2_3;
-    s32 temp_s4;
-    s32 temp_s4_2;
-    s32 temp_s4_3;
-    s32 temp_s5;
-    void *temp_t1;
-    void *temp_t3;
-    void *temp_v0;
-    void *temp_v0_2;
-    s32 phi_s4;
-    s32 phi_s2;
-    s32 phi_s2_2;
-    s32 phi_s0;
-    s32 phi_s1;
-    s32 phi_s1_2;
-    s32 phi_s2_3;
-    s32 phi_s4_2;
-    s32 phi_s0_2;
-    s32 phi_s4_3;
-    s32 phi_s4_4;
-    s32 phi_s0_3;
-    s32 phi_s4_5;
-    s32 phi_s2_4;
-    s32 phi_s4_6;
-    s32 phi_s0_4;
-    s32 phi_s2_5;
-    s32 phi_a0;
-    s32 phi_s5;
-
-    viSetFovY(0x42700000);
-    viSetAspect(D_80051A44);
-    viSetZRange(0x42c80000, D_80051A48);
+    s32 var_s4;
+    s32 var_s2;
+    struct ModelRwData_DisplayList_CollisionRecord *temp_s1;
+    s32 temp_a0;
+    s32 i;
+    s32 var_s1;
+    struct ModelRoData_DisplayList_CollisionRecord *temp_s4;
+    ModelNode *mnode;
+    
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     disable_all_switches(walletinst[0]);
-    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
-    set_item_visibility_in_objinstance(walletinst[0], SW_SLIDES, 1);
-    set_item_visibility_in_objinstance(walletinst[0], SW_PICS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x13, 1);
+    set_item_visibility_in_objinstance(walletinst[0], 0x14, 1);
     tab_prev_highlight = 0;
     mission_difficulty_highlighted = -1;
+
     if (isontab3() != 0)
     {
         tab_prev_highlight = 1;
     }
     else
     {
-        phi_s4 = 0;
-loop_3:
-        phi_s4_2 = phi_s4;
-        if (phi_s4 < 4)
+        for (var_s4 = 0; var_s4 < 5; )
         {
-            temp_v0 = &cursor_xpos_table_mission_select + (phi_s4 * 4);
-            phi_s4_2 = phi_s4;
-            if (!(cursor_h_pos < ((f32) (temp_v0->unk4 + temp_v0->unk0) * 0.5f)))
+            if (var_s4 < 4)
             {
-                temp_s4 = phi_s4 + 1;
-                phi_s4 = temp_s4;
-                phi_s4_2 = temp_s4;
-                if (temp_s4 != 5)
+                if(!((cursor_xpos_table_mission_select[var_s4] + cursor_xpos_table_mission_select[var_s4+1]) * 0.5f > cursor_h_pos))
                 {
-                    goto loop_3;
+                    var_s4++;
+                    continue;
+                }
+            }
+            
+            break;
+        }
+
+        for (var_s2 = 0; var_s2 < 4; )
+        {
+            if (var_s2 < 3)
+            {
+                if(!((cursor_ypos_table_mission_select[var_s2] + cursor_ypos_table_mission_select[var_s2+1]) * 0.5f > cursor_v_pos))
+                {
+                    var_s2++;
+                    continue;
+                }
+            }
+
+            break;
+        }
+
+        /****
+        * problem area
+        */
+        for ( ; var_s2 > 0; var_s2--)
+        {
+            for (var_s1 = 0; var_s1 < 4; var_s1++)
+            {
+                // what is this magic
+                if (var_s2 == 5);
+                
+                if (get_highest_unlocked_difficulty_for_level((var_s2 * 5) + var_s1) >= 0)
+                {
+                    break;
+                }
+            }
+            
+            if (var_s1 < 5)
+            {
+                break;
+            }
+
+            //if (var_s2 == 5);
+        }
+
+        for ( ; var_s4 >= 0; var_s4--)
+        {
+            if (get_highest_unlocked_difficulty_for_level((var_s2 * 5) + var_s4) >= 0)
+            {
+                break;
+            }
+        }
+
+        if (var_s4 < 0)
+        {
+            for (var_s4 = 0; var_s4 < 5; var_s4++)
+            {
+                if (get_highest_unlocked_difficulty_for_level((var_s2 * 5) + var_s4) >= 0)
+                {
+                    break;
                 }
             }
         }
-        phi_s2 = 0;
-loop_7:
-        phi_s2_2 = phi_s2;
-        if (phi_s2 < 3)
-        {
-            temp_v0_2 = &cursor_ypos_table_mission_select + (phi_s2 * 4);
-            phi_s2_2 = phi_s2;
-            if (!(cursor_v_pos < ((f32) (temp_v0_2->unk4 + temp_v0_2->unk0) * 0.5f)))
-            {
-                temp_s2 = phi_s2 + 1;
-                phi_s2 = temp_s2;
-                phi_s2_2 = temp_s2;
-                if (temp_s2 != 4)
-                {
-                    goto loop_7;
-                }
-            }
-        }
-        phi_s2_4 = phi_s2_2;
-        if (phi_s2_2 > 0)
-        {
-            phi_s2_3 = phi_s2_2;
-            phi_s5 = (phi_s2_2 * 4) + phi_s2_2;
-loop_12:
-            phi_s0 = phi_s5;
-            phi_s1 = 0;
-loop_13:
-            phi_s1_2 = phi_s1;
-            if (get_highest_unlocked_difficulty_for_level(phi_s0) < 0)
-            {
-                temp_s1 = phi_s1 + 1;
-                phi_s0 = phi_s0 + 1;
-                phi_s1 = temp_s1;
-                phi_s1_2 = temp_s1;
-                if (temp_s1 != 5)
-                {
-                    goto loop_13;
-                }
-            }
-            phi_s2_4 = phi_s2_3;
-            if (phi_s1_2 >= 5)
-            {
-                temp_s2_2 = phi_s2_3 + -1;
-                phi_s2_3 = temp_s2_2;
-                phi_s2_4 = temp_s2_2;
-                phi_s5 = phi_s5 + -5;
-                if (temp_s2_2 > 0)
-                {
-                    goto loop_12;
-                }
-            }
-        }
-        temp_s5 = (phi_s2_4 * 4) + phi_s2_4;
-        phi_s4_4 = phi_s4_2;
-        if (phi_s4_2 >= 0)
-        {
-            phi_s0_2 = temp_s5 + phi_s4_2;
-            phi_s4_3 = phi_s4_2;
-loop_19:
-            phi_s4_4 = phi_s4_3;
-            if (get_highest_unlocked_difficulty_for_level(phi_s0_2) < 0)
-            {
-                temp_s4_2 = phi_s4_3 + -1;
-                phi_s0_2 = phi_s0_2 + -1;
-                phi_s4_3 = temp_s4_2;
-                phi_s4_4 = temp_s4_2;
-                if (temp_s4_2 >= 0)
-                {
-                    goto loop_19;
-                }
-            }
-        }
-        phi_s4_6 = phi_s4_4;
-        if (phi_s4_4 < 0)
-        {
-            phi_s0_3 = temp_s5;
-            phi_s4_5 = 0;
-loop_23:
-            phi_s4_6 = phi_s4_5;
-            if (get_highest_unlocked_difficulty_for_level(phi_s0_3) < 0)
-            {
-                temp_s4_3 = phi_s4_5 + 1;
-                phi_s0_3 = phi_s0_3 + 1;
-                phi_s4_5 = temp_s4_3;
-                phi_s4_6 = temp_s4_3;
-                if (temp_s4_3 != 5)
-                {
-                    goto loop_23;
-                }
-            }
-        }
-        mission_difficulty_highlighted = (s32) (temp_s5 + phi_s4_6);
+        
+        mission_difficulty_highlighted = (var_s2 * 5) + var_s4;
     }
-    if (walletinst[0]->unk8->unk8->unk54 != 0)
+
+    mnode = walletinst[0]->obj->Switches[0x15];
+
+    if (mnode != NULL)
     {
-        temp_s1_2 = modelGetNodeRwData(walletinst[0], walletinst[0]->unk8->unk8->unk54);
-        *temp_s1_2 = dynAllocate7F0BD6C4(walletinst[0]->unk8->unk8->unk54->unk4->unkC);
-        if (walletinst[0]->unk8->unk8->unk54->unk4->unkC > 0)
+        temp_s4 = (struct ModelRoData_DisplayList_CollisionRecord *)mnode->Data;
+
+        temp_s1 = (struct ModelRwData_DisplayList_CollisionRecord *)modelGetNodeRwData(walletinst[0], mnode);
+        temp_s1->Vertices = dynAllocate7F0BD6C4(temp_s4->numVertices);
+
+        for (i = 0; i < temp_s4->numVertices; i++)
         {
-            phi_s0_4 = 0;
-            phi_s2_5 = 0;
-loop_29:
-            temp_t3 = walletinst[0]->unk8->unk8->unk54->unk4->unk8 + phi_s0_4;
-            temp_t1 = *temp_s1_2 + phi_s0_4;
-            temp_t1->unk0 = (s32) temp_t3->unk0;
-            temp_t1->unk4 = (s32) temp_t3->unk4;
-            temp_t1->unk8 = (s32) temp_t3->unk8;
-            temp_t1->unkC = (s32) temp_t3->unkC;
-            phi_a0 = (s32) phi_s2_5 >> 2;
-            if (phi_s2_5 < 0)
+            // struct copy
+            temp_s1->Vertices[i] = temp_s4->Vertices[i];
+
+            temp_a0 = i / 4;
+
+            if (get_highest_unlocked_difficulty_for_level(temp_a0) >= 0)
             {
-                phi_a0 = (s32) (phi_s2_5 + 3) >> 2;
-            }
-            if (get_highest_unlocked_difficulty_for_level(phi_a0) >= 0)
-            {
-                if (sp30 == mission_difficulty_highlighted)
+                if (temp_a0 == mission_difficulty_highlighted)
                 {
-                    (*temp_s1_2 + phi_s0_4)->unkC = (u8)0xff;
-                    (*temp_s1_2 + phi_s0_4)->unkD = (u8)0xff;
-                    (*temp_s1_2 + phi_s0_4)->unkE = (u8)0xff;
-                    (*temp_s1_2 + phi_s0_4)->unkF = (u8)0xf5;
+                    temp_s1->Vertices[i].r = 0xff;
+                    temp_s1->Vertices[i].g = 0xff;
+                    temp_s1->Vertices[i].b = 0xff;
+                    temp_s1->Vertices[i].a = 0xf5;
                 }
                 else
                 {
-                    (*temp_s1_2 + phi_s0_4)->unkC = (u8)0x6e;
-                    (*temp_s1_2 + phi_s0_4)->unkD = (u8)0x6e;
-                    (*temp_s1_2 + phi_s0_4)->unkE = (u8)0x6e;
-                    (*temp_s1_2 + phi_s0_4)->unkF = (u8)0xff;
+                    temp_s1->Vertices[i].r = 0x6e;
+                    temp_s1->Vertices[i].g = 0x6e;
+                    temp_s1->Vertices[i].b = 0x6e;
+                    temp_s1->Vertices[i].a = 0xff;
                 }
             }
             else
             {
-                (*temp_s1_2 + phi_s0_4)->unkC = (u8)0xf;
-                (*temp_s1_2 + phi_s0_4)->unkD = (u8)0xf;
-                (*temp_s1_2 + phi_s0_4)->unkE = (u8)0xf;
-                (*temp_s1_2 + phi_s0_4)->unkF = (u8)0xff;
-            }
-            temp_s2_3 = phi_s2_5 + 1;
-            phi_s0_4 = phi_s0_4 + 0x10;
-            phi_s2_5 = temp_s2_3;
-            if (temp_s2_3 < walletinst[0]->unk8->unk8->unk54->unk4->unkC)
-            {
-                goto loop_29;
+                temp_s1->Vertices[i].r = 0xf;
+                temp_s1->Vertices[i].g = 0xf;
+                temp_s1->Vertices[i].b = 0xf;
+                temp_s1->Vertices[i].a = 0xff;
             }
         }
     }
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
+
+    if (joyGetButtonsPressedThisFrame(0, A_BUTTON | START_BUTTON | Z_TRIG) != 0)
     {
         if (tab_prev_highlight != 0)
         {
             tab_prev_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+            
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
         }
-        else
+        else if (mission_difficulty_highlighted >= 0)
         {
-            if ((void *)0x80070000->unk-687C >= 0)
-            {
-                briefingpage = pull_and_display_text_for_folder_a0((void *)0x80070000->unk-687C);
-                selected_stage = (s32) (0x80030000 + (briefingpage * 0x1c))->unk-5414;
-                tab_next_selected = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-            }
+            briefingpage = pull_and_display_text_for_folder_a0(mission_difficulty_highlighted);
+            selected_stage = mission_folder_setup_entries[briefingpage].stage_id;
+            tab_next_selected = 1;
+            
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
         }
     }
-    else
+    else if (joyGetButtonsPressedThisFrame(0, B_BUTTON) != 0)
     {
-        if (joyGetButtonsPressedThisFrame(PLAYER_1, 0x4000) != 0)
-        {
-            tab_prev_selected = 1;
-            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-        }
+        tab_prev_selected = 1;
+        
+        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
+    
     menu_control_stick_tracking();
+    
     if (tab_next_selected != 0)
     {
-        frontChangeMenu(MENU_DIFFICULTY, FALSE);
-        set_cursor_pos_difficulty(get_highest_unlocked_difficulty_for_level((0x80030000 + (briefingpage * 0x1c))->unk-5408));
-        return;
+        frontChangeMenu(MENU_DIFFICULTY, 0);
+
+#if defined(VERSION_EU)
+        if (j_text_trigger != 0)
+        {
+            set_cursor_pos_difficulty(0);
+        }
+        else
+#endif
+        {
+            set_cursor_pos_difficulty(get_highest_unlocked_difficulty_for_level(mission_folder_setup_entries[briefingpage].mission_num));            
+        }
     }
-    if (tab_prev_selected != 0)
+    else if (tab_prev_selected != 0)
     {
-        frontChangeMenu(MENU_MODE_SELECT, FALSE);
+        frontChangeMenu(MENU_MODE_SELECT, 0);
         setCursorPOSforMode(0);
     }
 }
