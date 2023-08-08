@@ -125,13 +125,13 @@ SECTIONS
    }
    END_SEG(Globalimagetable)
 
-   BEGIN_SEG(Globalimagetablecmdblk, _GlobalimagetableSegmentRomEnd, 0x02000000)
+   BEGIN_SEG(rarewarelogo, _GlobalimagetableSegmentRomEnd, 0x02000000)
    {
-      build/OUTCODE/assets/Globalimagetable_commandblock.o (.data);
+      build/OUTCODE/assets/rarewarelogo.o (.data);
    }
-   END_SEG(Globalimagetablecmdblk)
+   END_SEG(rarewarelogo)
 
-   BEGIN_SEG(romfiles2, _GlobalimagetablecmdblkSegmentRomEnd, _romfiles2SegmentRomStart)
+   BEGIN_SEG(romfiles2, _rarewarelogoSegmentRomEnd, _romfiles2SegmentRomStart)
    {
       build/OUTCODE/assets/romfiles2.o (.data);
    }
