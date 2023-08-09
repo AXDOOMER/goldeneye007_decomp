@@ -226,7 +226,7 @@ s32 dword_CODE_bss_800697A4;
 s32 player_handicap[MAX_PLAYER_COUNT];
 
 //CODE.bss:800697B8
-u32 controlstyle_player[MAX_PLAYER_COUNT];
+s32 controlstyle_player[MAX_PLAYER_COUNT];
 
 //CODE.bss:800697C8
 s32 highlight_players;
@@ -4209,11 +4209,8 @@ void reset_mp_options_for_scenario(MPSCENARIOS scenarioid)
 
 
 
-
-
-#ifdef NONMATCHING
-//come back once i fix player_#_char to be array
-void init_mp_options_for_scenario(u32 numplayers)
+// Address 0x7F010608 NTSC
+void init_mp_options_for_scenario(s32 numplayers)
 {
     s32 i;
 
@@ -4221,122 +4218,34 @@ void init_mp_options_for_scenario(u32 numplayers)
     {
         numplayers = 2;
     }
+    
     selected_num_players = numplayers;
 
-    for (i=0; i < numplayers; i++)
+    for (i=0; i < selected_num_players; i++)
     {
         if (player_char[i] == -1)
         {
             player_char[i] = i;
             player_handicap[i] = 5;
         }
-        if ((numplayers >= 3) && (&controlstyle_player[i] >= CONTROLLER_CONFIG_PLENTY))
+        
+        if ((numplayers >= 3) && (controlstyle_player[i] >= CONTROLLER_CONFIG_PLENTY))
         {
-            &controlstyle_player[i] = CONTROLLER_CONFIG_HONEY;
+            controlstyle_player[i] = CONTROLLER_CONFIG_HONEY;
         }
     }
-    if ((mp_player_counts[scenario].max < numplayers) || (numplayers < mp_player_counts[scenario].min))
+    
+    if ((mp_player_counts[scenario].max < selected_num_players) || (selected_num_players < mp_player_counts[scenario].min))
     {
         reset_mp_options_for_scenario(SCENARIO_NORMAL);
-        numplayers = selected_num_players;
+        
     }
-    if (multi_stage_setups[MP_stage_selected].max_player < numplayers)
+    
+    if (multi_stage_setups[MP_stage_selected].max_player < selected_num_players)
     {
         MP_stage_selected = MP_STAGE_TEMPLE;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_mp_options_for_scenario
-/* 045138 7F010608 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 04513C 7F01060C AFB00018 */  sw    $s0, 0x18($sp)
-/* 045140 7F010610 28810002 */  slti  $at, $a0, 2
-/* 045144 7F010614 00808025 */  move  $s0, $a0
-/* 045148 7F010618 10200002 */  beqz  $at, .L7F010624
-/* 04514C 7F01061C AFBF001C */   sw    $ra, 0x1c($sp)
-/* 045150 7F010620 24100002 */  li    $s0, 2
-.L7F010624:
-/* 045154 7F010624 3C028003 */  lui   $v0, %hi(selected_num_players)
-/* 045158 7F010628 2442B520 */  addiu $v0, %lo(selected_num_players) # addiu $v0, $v0, -0x4ae0
-/* 04515C 7F01062C AC500000 */  sw    $s0, ($v0)
-/* 045160 7F010630 00001825 */  move  $v1, $zero
-/* 045164 7F010634 1A00001C */  blez  $s0, .L7F0106A8
-/* 045168 7F010638 02003025 */   move  $a2, $s0
-/* 04516C 7F01063C 3C058003 */  lui   $a1, %hi(player_char)
-/* 045170 7F010640 3C0A8007 */  lui   $t2, %hi(controlstyle_player)
-/* 045174 7F010644 3C088007 */  lui   $t0, %hi(player_handicap)
-/* 045178 7F010648 250897A8 */  addiu $t0, %lo(player_handicap) # addiu $t0, $t0, -0x6858
-/* 04517C 7F01064C 254A97B8 */  addiu $t2, %lo(controlstyle_player) # addiu $t2, $t2, -0x6848
-/* 045180 7F010650 24A5B524 */  addiu $a1, %lo(player_char) # addiu $a1, $a1, -0x4adc
-/* 045184 7F010654 00002025 */  move  $a0, $zero
-/* 045188 7F010658 24090005 */  li    $t1, 5
-/* 04518C 7F01065C 2407FFFF */  li    $a3, -1
-.L7F010660:
-/* 045190 7F010660 8CAE0000 */  lw    $t6, ($a1)
-/* 045194 7F010664 01047821 */  addu  $t7, $t0, $a0
-/* 045198 7F010668 2A010003 */  slti  $at, $s0, 3
-/* 04519C 7F01066C 14EE0003 */  bne   $a3, $t6, .L7F01067C
-/* 0451A0 7F010670 01441021 */   addu  $v0, $t2, $a0
-/* 0451A4 7F010674 ACA30000 */  sw    $v1, ($a1)
-/* 0451A8 7F010678 ADE90000 */  sw    $t1, ($t7)
-.L7F01067C:
-/* 0451AC 7F01067C 14200006 */  bnez  $at, .L7F010698
-/* 0451B0 7F010680 24630001 */   addiu $v1, $v1, 1
-/* 0451B4 7F010684 8C580000 */  lw    $t8, ($v0)
-/* 0451B8 7F010688 2B010004 */  slti  $at, $t8, 4
-/* 0451BC 7F01068C 54200003 */  bnezl $at, .L7F01069C
-/* 0451C0 7F010690 0066082A */   slt   $at, $v1, $a2
-/* 0451C4 7F010694 AC400000 */  sw    $zero, ($v0)
-.L7F010698:
-/* 0451C8 7F010698 0066082A */  slt   $at, $v1, $a2
-.L7F01069C:
-/* 0451CC 7F01069C 24840004 */  addiu $a0, $a0, 4
-/* 0451D0 7F0106A0 1420FFEF */  bnez  $at, .L7F010660
-/* 0451D4 7F0106A4 24A50004 */   addiu $a1, $a1, 4
-.L7F0106A8:
-/* 0451D8 7F0106A8 3C198003 */  lui   $t9, %hi(scenario)
-/* 0451DC 7F0106AC 8F39B540 */  lw    $t9, %lo(scenario)($t9)
-/* 0451E0 7F0106B0 3C0C8003 */  lui   $t4, %hi(mp_player_counts)
-/* 0451E4 7F0106B4 258CB054 */  addiu $t4, %lo(mp_player_counts) # addiu $t4, $t4, -0x4fac
-/* 0451E8 7F0106B8 00195880 */  sll   $t3, $t9, 2
-/* 0451EC 7F0106BC 016C1021 */  addu  $v0, $t3, $t4
-/* 0451F0 7F0106C0 904D0003 */  lbu   $t5, 3($v0)
-/* 0451F4 7F0106C4 01A6082A */  slt   $at, $t5, $a2
-/* 0451F8 7F0106C8 14200005 */  bnez  $at, .L7F0106E0
-/* 0451FC 7F0106CC 00000000 */   nop
-/* 045200 7F0106D0 904E0002 */  lbu   $t6, 2($v0)
-/* 045204 7F0106D4 00CE082A */  slt   $at, $a2, $t6
-/* 045208 7F0106D8 10200005 */  beqz  $at, .L7F0106F0
-/* 04520C 7F0106DC 00000000 */   nop
-.L7F0106E0:
-/* 045210 7F0106E0 0FC0411A */  jal   reset_mp_options_for_scenario
-/* 045214 7F0106E4 00002025 */   move  $a0, $zero
-/* 045218 7F0106E8 3C068003 */  lui   $a2, %hi(selected_num_players)
-/* 04521C 7F0106EC 8CC6B520 */  lw    $a2, %lo(selected_num_players)($a2)
-.L7F0106F0:
-/* 045220 7F0106F0 3C028003 */  lui   $v0, %hi(MP_stage_selected)
-/* 045224 7F0106F4 2442B534 */  addiu $v0, %lo(MP_stage_selected) # addiu $v0, $v0, -0x4acc
-/* 045228 7F0106F8 8C4F0000 */  lw    $t7, ($v0)
-/* 04522C 7F0106FC 3C198003 */  lui   $t9, %hi(multi_stage_setups+20)
-/* 045230 7F010700 240B0001 */  li    $t3, 1
-/* 045234 7F010704 000FC080 */  sll   $t8, $t7, 2
-/* 045238 7F010708 030FC023 */  subu  $t8, $t8, $t7
-/* 04523C 7F01070C 0018C0C0 */  sll   $t8, $t8, 3
-/* 045240 7F010710 0338C821 */  addu  $t9, $t9, $t8
-/* 045244 7F010714 8F39B088 */  lw    $t9, %lo(multi_stage_setups+20)($t9)
-/* 045248 7F010718 0326082A */  slt   $at, $t9, $a2
-/* 04524C 7F01071C 50200003 */  beql  $at, $zero, .L7F01072C
-/* 045250 7F010720 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 045254 7F010724 AC4B0000 */  sw    $t3, ($v0)
-/* 045258 7F010728 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F01072C:
-/* 04525C 7F01072C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 045260 7F010730 27BD0020 */  addiu $sp, $sp, 0x20
-/* 045264 7F010734 03E00008 */  jr    $ra
-/* 045268 7F010738 00000000 */   nop
-)
-#endif
 
 
 //********************************************************************************************************

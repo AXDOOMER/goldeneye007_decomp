@@ -220,7 +220,7 @@ extern s32 highlight_enemy_damage;
 //CODE.bss:800697A8
 extern s32 player_handicap[];
 //CODE.bss:800697B8
-extern u32 controlstyle_player[];
+extern s32 controlstyle_player[];
 
 
 //CODE.bss:800697C8
