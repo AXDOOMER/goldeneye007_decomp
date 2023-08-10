@@ -49,8 +49,8 @@ struct mp_stage_setup {
 
 struct MP_selectable_chars {
     short text_preset;
-    char gender;
-    char select_photo;
+    u8 gender;
+    u8 select_photo;
     short body;
     short head;
     float pov;
