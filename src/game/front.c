@@ -40,6 +40,7 @@
 #include "chrai.h"
 #include "title.h"
 #include <assets/font_dl.h>
+#include "image.h"
 
 
 
@@ -183,13 +184,7 @@ s32 dword_CODE_bss_80069730[MAX_PLAYER_COUNT];
 bool player_has_selected_char[MAX_PLAYER_COUNT];
 
 //CODE.bss:80069750
-s32 size_mp_select_image_player1;
-//CODE.bss:80069754
-s32 size_mp_select_image_player2;
-//CODE.bss:80069758
-s32 size_mp_select_image_player3;
-//CODE.bss:8006975C
-s32 size_mp_select_image_player4;
+s32 size_mp_select_image_player[MAX_PLAYER_COUNT];
 //CODE.bss:80069760
 s32 dword_CODE_bss_80069760[MAX_PLAYER_COUNT];
 //CODE.bss:80069770
@@ -470,7 +465,7 @@ struct mp_stage_setup multi_stage_setups[] = {
   
 };
 
-u32 num_chars_selectable_mp = 8;
+s32 num_chars_selectable_mp = 8;
 
 #ifdef BUGFIX_R0
 struct MP_selectable_chars mp_chr_setup[] = {
@@ -5040,8 +5035,8 @@ glabel init_menu0f_mpcharsel
 /* 04693C 7F011E0C 3C018007 */  lui   $at, %hi(player_has_selected_char)
 /* 046940 7F011E10 AC209740 */  sw    $zero, %lo(player_has_selected_char)($at)
 /* 046944 7F011E14 8C63B528 */  lw    $v1, %lo(player_char+0x04)($v1)
-/* 046948 7F011E18 3C018007 */  lui   $at, %hi(size_mp_select_image_player1)
-/* 04694C 7F011E1C AC209750 */  sw    $zero, %lo(size_mp_select_image_player1)($at)
+/* 046948 7F011E18 3C018007 */  lui   $at, %hi(size_mp_select_image_player)
+/* 04694C 7F011E1C AC209750 */  sw    $zero, %lo(size_mp_select_image_player)($at)
 /* 046950 7F011E20 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0x4)
 /* 046954 7F011E24 AC239714 */  sw    $v1, %lo(mp_char_cur_select_player+0x4)($at)
 /* 046958 7F011E28 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0x4)
@@ -5052,8 +5047,8 @@ glabel init_menu0f_mpcharsel
 /* 04696C 7F011E3C AC209744 */  sw    $zero, %lo(player_has_selected_char+0x4)($at)
 /* 046970 7F011E40 3C048003 */  lui   $a0, %hi(player_char+0x08)
 /* 046974 7F011E44 8C84B52C */  lw    $a0, %lo(player_char+0x08)($a0)
-/* 046978 7F011E48 3C018007 */  lui   $at, %hi(size_mp_select_image_player2)
-/* 04697C 7F011E4C AC209754 */  sw    $zero, %lo(size_mp_select_image_player2)($at)
+/* 046978 7F011E48 3C018007 */  lui   $at, %hi(size_mp_select_image_player+0x4)
+/* 04697C 7F011E4C AC209754 */  sw    $zero, %lo(size_mp_select_image_player+0x4)($at)
 /* 046980 7F011E50 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0x8)
 /* 046984 7F011E54 AC249718 */  sw    $a0, %lo(mp_char_cur_select_player+0x8)($at)
 /* 046988 7F011E58 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0x8)
@@ -5064,8 +5059,8 @@ glabel init_menu0f_mpcharsel
 /* 04699C 7F011E6C AC209748 */  sw    $zero, %lo(player_has_selected_char+0x8)($at)
 /* 0469A0 7F011E70 3C058003 */  lui   $a1, %hi(player_char+0x0C)
 /* 0469A4 7F011E74 8CA5B530 */  lw    $a1, %lo(player_char+0x0C)($a1)
-/* 0469A8 7F011E78 3C018007 */  lui   $at, %hi(size_mp_select_image_player3)
-/* 0469AC 7F011E7C AC209758 */  sw    $zero, %lo(size_mp_select_image_player3)($at)
+/* 0469A8 7F011E78 3C018007 */  lui   $at, %hi(size_mp_select_image_player+0x8)
+/* 0469AC 7F011E7C AC209758 */  sw    $zero, %lo(size_mp_select_image_player+0x8)($at)
 /* 0469B0 7F011E80 3C018007 */  lui   $at, %hi(mp_char_cur_select_player+0xc)
 /* 0469B4 7F011E84 AC25971C */  sw    $a1, %lo(mp_char_cur_select_player+0xc)($at)
 /* 0469B8 7F011E88 3C018007 */  lui   $at, %hi(mp_char_prev_select_player+0xC)
@@ -5074,9 +5069,9 @@ glabel init_menu0f_mpcharsel
 /* 0469C4 7F011E94 AC20973C */  sw    $zero, %lo(dword_CODE_bss_80069730+0xC)($at)
 /* 0469C8 7F011E98 3C018007 */  lui   $at, %hi(player_has_selected_char+0xC)
 /* 0469CC 7F011E9C AC20974C */  sw    $zero, %lo(player_has_selected_char+0xC)($at)
-/* 0469D0 7F011EA0 3C018007 */  lui   $at, %hi(size_mp_select_image_player4)
+/* 0469D0 7F011EA0 3C018007 */  lui   $at, %hi(size_mp_select_image_player+0xc)
 /* 0469D4 7F011EA4 0FC02E2B */  jal   load_walletbond
-/* 0469D8 7F011EA8 AC20975C */   sw    $zero, %lo(size_mp_select_image_player4)($at)
+/* 0469D8 7F011EA8 AC20975C */   sw    $zero, %lo(size_mp_select_image_player+0xc)($at)
 /* 0469DC 7F011EAC 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 0469E0 7F011EB0 8FB00018 */  lw    $s0, 0x18($sp)
 /* 0469E4 7F011EB4 8FB1001C */  lw    $s1, 0x1c($sp)
@@ -5288,8 +5283,8 @@ glabel interface_menu0F_mpcharsel
 /* 046A88 7F011F58 3C118007 */  lui   $s1, %hi(mp_char_cur_select_player)
 /* 046A8C 7F011F5C 3C128007 */  lui   $s2, %hi(dword_CODE_bss_80069730)
 /* 046A90 7F011F60 3C1E8006 */  lui   $fp, %hi(g_musicSfxBufferPtr)
-/* 046A94 7F011F64 3C178007 */  lui   $s7, %hi(size_mp_select_image_player1)
-/* 046A98 7F011F68 26F79750 */  addiu $s7, %lo(size_mp_select_image_player1) # addiu $s7, $s7, -0x68b0
+/* 046A94 7F011F64 3C178007 */  lui   $s7, %hi(size_mp_select_image_player)
+/* 046A98 7F011F68 26F79750 */  addiu $s7, %lo(size_mp_select_image_player) # addiu $s7, $s7, -0x68b0
 /* 046A9C 7F011F6C 27DE3720 */  addiu $fp, %lo(g_musicSfxBufferPtr) # addiu $fp, $fp, 0x3720
 /* 046AA0 7F011F70 26529730 */  addiu $s2, %lo(dword_CODE_bss_80069730) # addiu $s2, $s2, -0x68d0
 /* 046AA4 7F011F74 26319710 */  addiu $s1, %lo(mp_char_cur_select_player) # addiu $s1, $s1, -0x68f0
@@ -6296,9 +6291,9 @@ glabel constructor_menu0F_mpcharsel
 /* 0473A8 7F012878 256B9730 */  addiu $t3, %lo(dword_CODE_bss_80069730) # addiu $t3, $t3, -0x68d0
 /* 0473AC 7F01287C 254A9710 */  addiu $t2, %lo(mp_char_cur_select_player) # addiu $t2, $t2, -0x68f0
 /* 0473B0 7F012880 25299740 */  addiu $t1, %lo(player_has_selected_char) # addiu $t1, $t1, -0x68c0
-/* 0473B4 7F012884 3C1E8007 */  lui   $fp, %hi(size_mp_select_image_player1)
+/* 0473B4 7F012884 3C1E8007 */  lui   $fp, %hi(size_mp_select_image_player)
 /* 0473B8 7F012888 4481A000 */  mtc1  $at, $f20
-/* 0473BC 7F01288C 27DE9750 */  addiu $fp, %lo(size_mp_select_image_player1) # addiu $fp, $fp, -0x68b0
+/* 0473BC 7F01288C 27DE9750 */  addiu $fp, %lo(size_mp_select_image_player) # addiu $fp, $fp, -0x68b0
 /* 0473C0 7F012890 AFA90088 */  sw    $t1, 0x88($sp)
 /* 0473C4 7F012894 AFAA0080 */  sw    $t2, 0x80($sp)
 /* 0473C8 7F012898 AFAB0074 */  sw    $t3, 0x74($sp)

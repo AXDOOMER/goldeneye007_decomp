@@ -181,13 +181,7 @@ extern s32 dword_CODE_bss_80069730[4];
 //CODE.bss:80069740
 extern s32 player_has_selected_char[];
 //CODE.bss:80069750
-extern s32 size_mp_select_image_player1;
-//CODE.bss:80069754
-extern s32 size_mp_select_image_player2;
-//CODE.bss:80069758
-extern s32 size_mp_select_image_player3;
-//CODE.bss:8006975C
-extern s32 size_mp_select_image_player4;
+extern s32 size_mp_select_image_player[];
 //CODE.bss:80069760
 extern s32 player_handicap[];
 //CODE.bss:80069770
