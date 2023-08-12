@@ -5145,229 +5145,148 @@ Gfx *sub_GAME_7F01231C(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 
 
 #ifdef NONMATCHING
-void constructor_menu0F_mpcharsel(s32 arg0)
+// https://decomp.me/scratch/VJHe2 99.89% (0x6c(sp) -> 0x70(sp)
+
+// Address 0x7F012794 NTSC
+Gfx * constructor_menu0F_mpcharsel(Gfx *DL)
 {
     s32 spE4;
-    s32 spE0;
+    s32 i; // spE0
+    u8 *text;
+    s32 var_s2;
+    s32 var_s7;
+    s32 var_s4;
+    s32 var_v1;
+    s32 padding3;
+    s32 padding4;
+    s32 padding1;
     s32 spBC;
     s32 spB8;
     s32 spB4;
     s32 spB0;
+    s32 padding2;
     s32 spA8;
     s32 spA4;
     s32 spA0;
     s32 sp9C;
-    s32 sp8C;
-    void *sp88;
-    void *sp80;
-    void *sp74;
-    void *sp70;
-    s32 temp_ret;
-    s32 temp_ret_10;
-    s32 temp_ret_11;
-    s32 temp_ret_2;
-    s32 temp_ret_3;
-    s32 temp_ret_4;
-    s32 temp_ret_5;
-    s32 temp_ret_6;
-    s32 temp_ret_7;
-    s32 temp_ret_8;
-    s32 temp_ret_9;
-    s32 temp_s1;
-    s32 temp_s1_2;
-    s32 temp_s1_3;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 temp_s6;
-    s32 temp_t7;
-    s32 temp_t9;
-    s32 phi_s2;
-    s32 phi_s7;
-    void *phi_v0;
-    s32 phi_s4;
-    s32 phi_s1;
-    s32 phi_s0;
-    s32 phi_s1_2;
-    s32 phi_s0_2;
-    s32 phi_s1_3;
-    s32 phi_s0_3;
-    s32 phi_s1_4;
-    s32 phi_s0_4;
-    s32 phi_v1;
-    s32 phi_s1_5;
-    s32 phi_s0_5;
-    s32 phi_v1_2;
-    s32 phi_s1_6;
-    s32 phi_s1_7;
-    s32 phi_v1_3;
-    s32 phi_v1_4;
 
     spE4 = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
-    temp_s1 = temp_ret;
-    phi_v0 = temp_ret;
-    phi_s1_7 = temp_s1;
+
+    DL = viSetFillColor(DL, 0, 0, 0);
+    DL = viFillScreen(DL);
+    DL = sub_GAME_7F00D5E8(DL);
+    DL = microcode_constructor(DL);
+    DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
+
     if (spE4 >= 3)
     {
-        temp_ret_2 = microcode_constructor_related_to_menus(temp_s1, 0xd4, 0x1e, 0xd6, 0x136, 0x80);
-        phi_v0 = temp_ret_2;
-        phi_s1_7 = temp_ret_2;
+        DL = microcode_constructor_related_to_menus(DL, 0xD4, 0x1E, 0xD6, 0x136, 0x80);
     }
-    if (spE4 > 0)
+
+    for (i = 0; i < spE4; i++)
     {
-        sp88 = &has_selected_char_player1;
-        sp80 = &mp_char_cur_select_player;
-        sp74 = &dword_CODE_bss_80069730;
-        sp70 = &mp_char_prev_select_player;
-        spE0 = 0;
-loop_4:
         if (spE4 == 2)
         {
-            if (spE0 > 0)
+            var_s2 = 0x26;
+            var_s4 = 0x15E;
+            
+            if (i > 0)
             {
-                phi_s2 = 0x26;
-                phi_s7 = 0xaa;
-                phi_s4 = 0x15e;
+                var_v1 = 0x8c;
             }
             else
             {
-                phi_s2 = 0x26;
-                phi_s7 = 0 + 0x1e;
-                phi_s4 = 0x15e;
+                var_v1 = 0;
             }
+            var_s7 = var_v1 + 0x1E;
         }
         else
         {
-            if (spE0 >= 2)
+            var_s4 = 0xAF;
+
+            if (i >= 2)
             {
-                phi_v1_4 = 0x8c;
+                var_v1 = 0x8C;
             }
             else
             {
-                phi_v1_4 = 0;
+                var_v1 = 0;
             }
-            if ((spE0 & 1) != 0)
+            var_s7 = var_v1 + 0x1E;
+
+            if (i & 1)
             {
-                phi_v1_3 = 0xaf;
+                var_v1 = 0xAF;
             }
             else
             {
-                phi_v1_3 = 0;
+                var_v1 = 0;
             }
-            phi_s2 = phi_v1_3 + 0x26;
-            phi_s7 = phi_v1_4 + 0x1e;
-            phi_s4 = 0xaf;
+            var_s2 = var_v1 + 0x26;
         }
-        temp_t7 = phi_s2 + phi_s4;
-        temp_s1_2 = phi_v0 + 8;
-        phi_v0->unk0 = (s32) (((((s32) ((f32) (phi_s2 + 6) * 4.0f) & 0xfff) << 0xc) | 0xed000000) | ((s32) ((f32) (phi_s7 + 5) * 4.0f) & 0xfff));
-        sp8C = temp_t7;
-        phi_v0->unk4 = (s32) ((((s32) ((f32) (temp_t7 + -6) * 4.0f) & 0xfff) << 0xc) | ((s32) ((f32) (phi_s7 + 0x87) * 4.0f) & 0xfff));
-        phi_s1 = temp_s1_2;
-        if (*sp88 == 0)
+
+        gDPSetScissor(DL++, G_SC_NON_INTERLACE, (var_s2 + 6), var_s7 + 5, (var_s2 + var_s4 - 6), (var_s7 + 0x87));
+        
+        if ((player_has_selected_char[i] == 0) && (size_mp_select_image_player[i] == 0))
         {
-            phi_s1 = temp_s1_2;
-            if (subroutine_arg0 == 0)
+            
+            text = langGet(0x9C55U);
+            textMeasure(&spBC, &spB8, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+
+            spB4 = ((var_s4 >> 1) + var_s2) - (spB8 >> 1);
+            spB0 = var_s7 + 5;
+            
+            DL = microcode_constructor(DL);
+            DL = write_text_at_abs_coord(DL, &spB4, &spB0, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        }
+
+        text = langGet(mp_chr_setup[mp_char_cur_select_player[i]].text_preset);
+        textMeasure(&spA8, &spA4, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+
+        spA0 = (var_s4 >> 1) + var_s2 - (spA4 >> 1);
+        sp9C = var_s7 + 0x78;
+
+        DL = microcode_constructor(DL);
+        DL = write_text_at_abs_coord(DL, &spA0, &sp9C, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, (var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i], var_s7 + 0x46, mp_char_prev_select_player[i], size_mp_select_image_player[i]);
+
+        if ((player_has_selected_char[i] == 0 && size_mp_select_image_player[i] == 0) || (mp_char_prev_select_player[i] != mp_char_cur_select_player[i]))
+        {
+            if (mp_char_prev_select_player[i] >= 3)
             {
-                temp_ret_3 = langGet(TEXT(LTITLE, TITLE_STR_85));
-                textMeasure(&spBC, &spB8, temp_ret_3, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-                spB4 = (s32) ((((s32) phi_s4 >> 1) + phi_s2) - (spB8 >> 1));
-                viGetX();
-                phi_s1 = write_text_at_abs_coord(microcode_constructor(temp_s1_2), &spB4, &spB0, temp_ret_3, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, viGetY(), 0, 0);
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] - 3, size_mp_select_image_player[i]);
             }
-        }
-        temp_s6 = ((s32) phi_s4 >> 1) + phi_s2;
-        temp_ret_4 = langGet((0x80030000 + (*sp80 * 0xc))->unk-4E68);
-        textMeasure(&spA8, &spA4, temp_ret_4, ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0);
-        sp9C = (s32) (phi_s7 + 0x78);
-        spA0 = (s32) (temp_s6 - (spA4 >> 1));
-        viGetX();
-        temp_s3 = phi_s2 + 0xd;
-        temp_s4 = sp8C + -0xe;
-        temp_ret_5 = sub_GAME_7F01231C(write_text_at_abs_coord(microcode_constructor(phi_s1), &spA0, &sp9C, temp_ret_4, (s32) ptrFontZurichBoldChars, (s32) ptrFontZurichBold, 0xff, viGetY(), 0, 0), temp_s3, temp_s4, temp_s6 - *sp74, (s32) *sp70, (s32) subroutine_arg0);
-        temp_s1_3 = temp_ret_5;
-        if ((*sp88 != 0) || (subroutine_arg0 != 0))
-        {
-            phi_v0 = temp_ret_5;
-            phi_s1_7 = temp_s1_3;
-            if (*sp70 != *sp80)
+            
+            if (mp_char_prev_select_player[i] >= 2)
             {
-block_21:
-                phi_s0 = *sp70;
-                phi_s1_2 = temp_s1_3;
-                phi_v0 = temp_ret_5;
-                if (*sp70 >= 3)
-                {
-                    temp_ret_6 = sub_GAME_7F01231C(temp_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xfc, (s32) (*sp70 + -3), (s32) subroutine_arg0);
-                    phi_s0 = *sp70;
-                    phi_s1_2 = temp_ret_6;
-                    phi_v0 = temp_ret_6;
-                }
-                phi_s0_2 = phi_s0;
-                phi_s1_3 = phi_s1_2;
-                if (phi_s0 >= 2)
-                {
-                    temp_ret_7 = sub_GAME_7F01231C(phi_s1_2, temp_s3, temp_s4, (temp_s6 - *sp74) + -0xa8, (s32) (phi_s0 + -2), (s32) subroutine_arg0);
-                    phi_s0_2 = *sp70;
-                    phi_s1_3 = temp_ret_7;
-                    phi_v0 = temp_ret_7;
-                }
-                phi_s0_3 = phi_s0_2;
-                phi_s1_4 = phi_s1_3;
-                if (phi_s0_2 > 0)
-                {
-                    temp_ret_8 = sub_GAME_7F01231C(phi_s1_3, temp_s3, temp_s4, (temp_s6 - *sp74) + -0x54, (s32) (phi_s0_2 + -1), (s32) subroutine_arg0);
-                    phi_s0_3 = *sp70;
-                    phi_s1_4 = temp_ret_8;
-                    phi_v0 = temp_ret_8;
-                }
-                phi_s0_4 = phi_s0_3;
-                phi_v1 = num_chars_selectable_mp;
-                phi_s1_5 = phi_s1_4;
-                if (phi_s0_3 < (num_chars_selectable_mp + -1))
-                {
-                    temp_ret_9 = sub_GAME_7F01231C(phi_s1_4, temp_s3, temp_s4, (temp_s6 - *sp74) + 0x54, (s32) (phi_s0_3 + 1), (s32) subroutine_arg0);
-                    phi_s0_4 = *sp70;
-                    phi_v1 = num_chars_selectable_mp;
-                    phi_s1_5 = temp_ret_9;
-                    phi_v0 = temp_ret_9;
-                }
-                phi_s0_5 = phi_s0_4;
-                phi_v1_2 = phi_v1;
-                phi_s1_6 = phi_s1_5;
-                if (phi_s0_4 < (phi_v1 + -2))
-                {
-                    temp_ret_10 = sub_GAME_7F01231C(phi_s1_5, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xa8, (s32) (phi_s0_4 + 2), (s32) subroutine_arg0);
-                    phi_s0_5 = *sp70;
-                    phi_v1_2 = num_chars_selectable_mp;
-                    phi_s1_6 = temp_ret_10;
-                    phi_v0 = temp_ret_10;
-                }
-                phi_s1_7 = phi_s1_6;
-                if (phi_s0_5 < (phi_v1_2 + -3))
-                {
-                    temp_ret_11 = sub_GAME_7F01231C(phi_s1_6, temp_s3, temp_s4, (temp_s6 - *sp74) + 0xfc, (s32) (phi_s0_5 + 3), (s32) subroutine_arg0);
-                    phi_v0 = temp_ret_11;
-                    phi_s1_7 = temp_ret_11;
-                }
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] - 2, size_mp_select_image_player[i]);
             }
-        }
-        else
-        {
-            goto block_21;
-        }
-        temp_t9 = spE0 + 1;
-        sp70 = (void *) (sp70 + 4);
-        sp74 = (void *) (sp74 + 4);
-        sp80 = (void *) (sp80 + 4);
-        spE0 = temp_t9;
-        sp88 = (void *) (sp88 + 4);
-        if (temp_t9 != spE4)
-        {
-            goto loop_4;
+            
+            if (mp_char_prev_select_player[i] >= 1)
+            {
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] - 1, size_mp_select_image_player[i]);
+            }
+
+            if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 1)
+            {
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] + 1, size_mp_select_image_player[i]);
+            }
+            
+            if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 2)
+            {
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] + 2, size_mp_select_image_player[i]);
+            }
+            
+            if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 3)
+            {
+                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] + 3, size_mp_select_image_player[i]);
+            }
         }
     }
-    combiner_bayer_lod_perspective(phi_s1_7);
+
+    DL = combiner_bayer_lod_perspective(DL);
+
+    return DL;
 }
 #else
 GLOBAL_ASM(
