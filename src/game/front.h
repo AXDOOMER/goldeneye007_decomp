@@ -39,7 +39,7 @@ struct mp_stage_playercount {
 
 struct mp_stage_setup {
     u16 folder_text_preset;
-    s16 select_screen_text_preset;
+    u16 select_screen_text_preset;
     s32 photo;
     s32 stage_id;
     s32 unlock_after;
