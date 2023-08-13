@@ -6698,433 +6698,130 @@ return;
 
 
 
-
-
-#ifdef NONMATCHING
+// Address 0x7F014D48 NTSC
 void interface_menu14_mpteams(void)
 {
-    s32 phi_s0;
-    s32 phi_a1;
-    s32 phi_a1_2;
-    s32 phi_s0_2;
-
-    viSetFovY(0x42700000);
-    viSetAspect(D_80051AB0);
-    viSetZRange(0x42c80000, D_80051AB4);
+    s32 i;
+    s32 var_a1;
+    
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
-    D_8002B560 = (s32) ((s32) (D_8002B560 + 1) % 0x14);
-    if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x101) != 0) || (joyGetStickXInRange(0, -2, 1) > 0))
+    
+    D_8002B560 = (s32) (D_8002B560 + 1) % 20;
+
+    // 0x101
+    if ((joyGetButtonsPressedThisFrame(0, R_JPAD|R_CBUTTONS)) || (joyGetStickXInRange(0, -2, 1) > 0))
     {
-        if (scenario == 7)
+        if (scenario == SCENARIO_2v1)
         {
-            if ((teamsize & 1) == 0)
+            if (!(teamsize & 1))
             {
                 teamsize = 1;
-                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+                sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
             }
         }
-        else
+        else if (!(teamsize & 1))
         {
-            if ((teamsize & 1) == 0)
-            {
-                teamsize = (s32) (teamsize + 1);
-                sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-            }
+            teamsize += 1;
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
         }
     }
-    else
+    // 0x808
+    else if ((joyGetButtonsPressedThisFrame(0, U_JPAD|U_CBUTTONS)) || (joyGetStickYInRange(0, -2, 1) > 0))
     {
-        if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x808) != 0) || (joyGetStickYInRange(0, -2, 1) > 0))
+        if (scenario == SCENARIO_2v2)
         {
-            if (scenario == 5)
+            if (teamsize & 2)
             {
-                if ((teamsize & 2) != 0)
-                {
-                    teamsize = 1;
-                    sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                }
-            }
-            else
-            {
-                if ((teamsize & 2) != 0)
-                {
-                    teamsize = (s32) (teamsize + -2);
-                    sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                }
+                teamsize = 1;
+                sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
             }
         }
-        else
+        else if (teamsize & 2)
         {
-            if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x202) != 0) || (joyGetStickXInRange(0, -2, 1) < -1))
-            {
-                if (scenario == 5)
-                {
-                    if ((teamsize & 1) != 0)
-                    {
-                        teamsize = 2;
-                        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                    }
-                }
-                else
-                {
-                    if ((teamsize & 1) != 0)
-                    {
-                        teamsize = (s32) (teamsize + -1);
-                        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                    }
-                }
-            }
-            else
-            {
-                if ((joyGetButtonsPressedThisFrame(PLAYER_1, 0x404) != 0) || (joyGetStickYInRange(0, -2, 1) < -1))
-                {
-                    if (scenario == 7)
-                    {
-                        if ((teamsize & 2) == 0)
-                        {
-                            teamsize = 2;
-                            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                        }
-                    }
-                    else
-                    {
-                        if ((teamsize & 2) == 0)
-                        {
-                            teamsize = (s32) (teamsize + 2);
-                            sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
+            teamsize -= 2;
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
         }
     }
+    // 0x202
+    else if ((joyGetButtonsPressedThisFrame(0, L_JPAD|L_CBUTTONS)) || (joyGetStickXInRange(0, -2, 1) < -1))
+    {
+        if (scenario == SCENARIO_2v2)
+        {
+            if (teamsize & 1)
+            {
+                teamsize = 2;
+                sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+            }
+        }
+        else if (teamsize & 1)
+        {
+            teamsize -= 1;
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+        }
+    }
+    // 0x404
+    else if ((joyGetButtonsPressedThisFrame(0, D_JPAD|D_CBUTTONS)) || (joyGetStickYInRange(0, -2, 1) < -1))
+    {
+        if (scenario == SCENARIO_2v1)
+        {
+            if (!(teamsize & 2))
+            {
+                teamsize = 2;
+                sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+            }
+        }
+        else if (!(teamsize & 2))
+        {
+            teamsize += 2;
+            sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
+        }
+    }
+
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     menu_control_stick_tracking();
-    phi_s0 = 0;
-    if (joyGetButtonsPressedThisFrame(PLAYER_1, 0xb000) != 0)
+
+    if (joyGetButtonsPressedThisFrame(0, A_BUTTON|Z_TRIG|START_BUTTON)) // 0xb000
     {
-loop_29:
-        if (scenario == 5)
+        for (i = 0; i < 4; i++)
         {
-            if ((phi_s0 == 0) || (phi_s0 == teamsize))
+            if (scenario == SCENARIO_2v2)
             {
-                phi_a1 = 0;
+                
+                if (i == 0 || i == teamsize)
+                {
+                    var_a1 = 0;
+                }
+                else
+                {
+                    var_a1 = 1;
+                }
+                
+                set_players_team_or_scenario_item_flag(i, var_a1);
             }
             else
             {
-
+                if (i != teamsize)
+                {
+                    var_a1 = 0;
+                }
+                else
+                {
+                    var_a1 = 1;
+                }
+                
+                set_players_team_or_scenario_item_flag(i, var_a1);
             }
-            set_players_team_or_scenario_item_flag(phi_s0, phi_a1);
-            phi_s0_2 = phi_s0 + 1;
         }
-        else
-        {
-            phi_a1_2 = 1;
-            if (phi_s0 != teamsize)
-            {
-                phi_a1_2 = 0;
-            }
-            set_players_team_or_scenario_item_flag(phi_s0, phi_a1_2);
-            phi_s0_2 = phi_s0 + 1;
-        }
-        phi_s0 = phi_s0_2;
-        if (phi_s0_2 != 4)
-        {
-            goto loop_29;
-        }
-        frontChangeMenu(MENU_MP_OPTIONS, FALSE);
-        sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
+        
+        frontChangeMenu(MENU_MP_OPTIONS, 0);
+        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80051AB0
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel D_80051AB4
-.word 0x461C4000 /*10000.0;*/
-
-.text
-glabel interface_menu14_mpteams
-/* 049878 7F014D48 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 04987C 7F014D4C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 049880 7F014D50 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 049884 7F014D54 44816000 */  mtc1  $at, $f12
-/* 049888 7F014D58 AFB10018 */  sw    $s1, 0x18($sp)
-/* 04988C 7F014D5C 0C001151 */  jal   viSetFovY
-/* 049890 7F014D60 AFB00014 */   sw    $s0, 0x14($sp)
-/* 049894 7F014D64 3C018005 */  lui   $at, %hi(D_80051AB0)
-/* 049898 7F014D68 0C001164 */  jal   viSetAspect
-/* 04989C 7F014D6C C42C1AB0 */   lwc1  $f12, %lo(D_80051AB0)($at)
-/* 0498A0 7F014D70 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 0498A4 7F014D74 44816000 */  mtc1  $at, $f12
-/* 0498A8 7F014D78 3C018005 */  lui   $at, %hi(D_80051AB4)
-/* 0498AC 7F014D7C 0C001194 */  jal   viSetZRange
-/* 0498B0 7F014D80 C42E1AB4 */   lwc1  $f14, %lo(D_80051AB4)($at)
-/* 0498B4 7F014D84 0C00114D */  jal   viSetUseZBuf
-/* 0498B8 7F014D88 00002025 */   move  $a0, $zero
-/* 0498BC 7F014D8C 3C028003 */  lui   $v0, %hi(D_8002B560)
-/* 0498C0 7F014D90 2442B560 */  addiu $v0, %lo(D_8002B560) # addiu $v0, $v0, -0x4aa0
-/* 0498C4 7F014D94 8C4E0000 */  lw    $t6, ($v0)
-/* 0498C8 7F014D98 24010014 */  li    $at, 20
-/* 0498CC 7F014D9C 00002025 */  move  $a0, $zero
-/* 0498D0 7F014DA0 25CF0001 */  addiu $t7, $t6, 1
-/* 0498D4 7F014DA4 01E1001A */  div   $zero, $t7, $at
-/* 0498D8 7F014DA8 0000C010 */  mfhi  $t8
-/* 0498DC 7F014DAC AC580000 */  sw    $t8, ($v0)
-/* 0498E0 7F014DB0 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0498E4 7F014DB4 24050101 */   li    $a1, 257
-/* 0498E8 7F014DB8 14400005 */  bnez  $v0, .L7F014DD0
-/* 0498EC 7F014DBC 00002025 */   move  $a0, $zero
-/* 0498F0 7F014DC0 2405FFFE */  li    $a1, -2
-/* 0498F4 7F014DC4 0C00312D */  jal   joyGetStickXInRange
-/* 0498F8 7F014DC8 24060001 */   li    $a2, 1
-/* 0498FC 7F014DCC 18400020 */  blez  $v0, .L7F014E50
-.L7F014DD0:
-/* 049900 7F014DD0 3C198003 */   lui   $t9, %hi(scenario)
-/* 049904 7F014DD4 8F39B540 */  lw    $t9, %lo(scenario)($t9)
-/* 049908 7F014DD8 24010007 */  li    $at, 7
-/* 04990C 7F014DDC 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049910 7F014DE0 1721000F */  bne   $t9, $at, .L7F014E20
-/* 049914 7F014DE4 26319788 */   addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049918 7F014DE8 3C118007 */  lui   $s1, %hi(teamsize)
-/* 04991C 7F014DEC 26319788 */  addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049920 7F014DF0 8E280000 */  lw    $t0, ($s1)
-/* 049924 7F014DF4 240A0001 */  li    $t2, 1
-/* 049928 7F014DF8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04992C 7F014DFC 31090001 */  andi  $t1, $t0, 1
-/* 049930 7F014E00 1520008E */  bnez  $t1, .L7F01503C
-/* 049934 7F014E04 240500C7 */   li    $a1, 199
-/* 049938 7F014E08 AE2A0000 */  sw    $t2, ($s1)
-/* 04993C 7F014E0C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049940 7F014E10 0C002382 */  jal   sndPlaySfx
-/* 049944 7F014E14 00003025 */   move  $a2, $zero
-/* 049948 7F014E18 10000088 */  b     .L7F01503C
-/* 04994C 7F014E1C 00000000 */   nop
-.L7F014E20:
-/* 049950 7F014E20 8E220000 */  lw    $v0, ($s1)
-/* 049954 7F014E24 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049958 7F014E28 240500C7 */  li    $a1, 199
-/* 04995C 7F014E2C 304B0001 */  andi  $t3, $v0, 1
-/* 049960 7F014E30 15600082 */  bnez  $t3, .L7F01503C
-/* 049964 7F014E34 244C0001 */   addiu $t4, $v0, 1
-/* 049968 7F014E38 AE2C0000 */  sw    $t4, ($s1)
-/* 04996C 7F014E3C 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049970 7F014E40 0C002382 */  jal   sndPlaySfx
-/* 049974 7F014E44 00003025 */   move  $a2, $zero
-/* 049978 7F014E48 1000007C */  b     .L7F01503C
-/* 04997C 7F014E4C 00000000 */   nop
-.L7F014E50:
-/* 049980 7F014E50 00002025 */  move  $a0, $zero
-/* 049984 7F014E54 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 049988 7F014E58 24050808 */   li    $a1, 2056
-/* 04998C 7F014E5C 14400005 */  bnez  $v0, .L7F014E74
-/* 049990 7F014E60 00002025 */   move  $a0, $zero
-/* 049994 7F014E64 2405FFFE */  li    $a1, -2
-/* 049998 7F014E68 0C00314A */  jal   joyGetStickYInRange
-/* 04999C 7F014E6C 24060001 */   li    $a2, 1
-/* 0499A0 7F014E70 18400020 */  blez  $v0, .L7F014EF4
-.L7F014E74:
-/* 0499A4 7F014E74 3C0D8003 */   lui   $t5, %hi(scenario)
-/* 0499A8 7F014E78 8DADB540 */  lw    $t5, %lo(scenario)($t5)
-/* 0499AC 7F014E7C 24010005 */  li    $at, 5
-/* 0499B0 7F014E80 3C118007 */  lui   $s1, %hi(teamsize)
-/* 0499B4 7F014E84 15A1000F */  bne   $t5, $at, .L7F014EC4
-/* 0499B8 7F014E88 26319788 */   addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 0499BC 7F014E8C 3C118007 */  lui   $s1, %hi(teamsize)
-/* 0499C0 7F014E90 26319788 */  addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 0499C4 7F014E94 8E2E0000 */  lw    $t6, ($s1)
-/* 0499C8 7F014E98 24180001 */  li    $t8, 1
-/* 0499CC 7F014E9C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0499D0 7F014EA0 31CF0002 */  andi  $t7, $t6, 2
-/* 0499D4 7F014EA4 11E00065 */  beqz  $t7, .L7F01503C
-/* 0499D8 7F014EA8 240500C7 */   li    $a1, 199
-/* 0499DC 7F014EAC AE380000 */  sw    $t8, ($s1)
-/* 0499E0 7F014EB0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0499E4 7F014EB4 0C002382 */  jal   sndPlaySfx
-/* 0499E8 7F014EB8 00003025 */   move  $a2, $zero
-/* 0499EC 7F014EBC 1000005F */  b     .L7F01503C
-/* 0499F0 7F014EC0 00000000 */   nop
-.L7F014EC4:
-/* 0499F4 7F014EC4 8E220000 */  lw    $v0, ($s1)
-/* 0499F8 7F014EC8 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0499FC 7F014ECC 240500C7 */  li    $a1, 199
-/* 049A00 7F014ED0 30590002 */  andi  $t9, $v0, 2
-/* 049A04 7F014ED4 13200059 */  beqz  $t9, .L7F01503C
-/* 049A08 7F014ED8 2448FFFE */   addiu $t0, $v0, -2
-/* 049A0C 7F014EDC AE280000 */  sw    $t0, ($s1)
-/* 049A10 7F014EE0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049A14 7F014EE4 0C002382 */  jal   sndPlaySfx
-/* 049A18 7F014EE8 00003025 */   move  $a2, $zero
-/* 049A1C 7F014EEC 10000053 */  b     .L7F01503C
-/* 049A20 7F014EF0 00000000 */   nop
-.L7F014EF4:
-/* 049A24 7F014EF4 00002025 */  move  $a0, $zero
-/* 049A28 7F014EF8 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 049A2C 7F014EFC 24050202 */   li    $a1, 514
-/* 049A30 7F014F00 14400006 */  bnez  $v0, .L7F014F1C
-/* 049A34 7F014F04 00002025 */   move  $a0, $zero
-/* 049A38 7F014F08 2405FFFE */  li    $a1, -2
-/* 049A3C 7F014F0C 0C00312D */  jal   joyGetStickXInRange
-/* 049A40 7F014F10 24060001 */   li    $a2, 1
-/* 049A44 7F014F14 2841FFFF */  slti  $at, $v0, -1
-/* 049A48 7F014F18 10200020 */  beqz  $at, .L7F014F9C
-.L7F014F1C:
-/* 049A4C 7F014F1C 3C098003 */   lui   $t1, %hi(scenario)
-/* 049A50 7F014F20 8D29B540 */  lw    $t1, %lo(scenario)($t1)
-/* 049A54 7F014F24 24010005 */  li    $at, 5
-/* 049A58 7F014F28 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049A5C 7F014F2C 1521000F */  bne   $t1, $at, .L7F014F6C
-/* 049A60 7F014F30 26319788 */   addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049A64 7F014F34 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049A68 7F014F38 26319788 */  addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049A6C 7F014F3C 8E2A0000 */  lw    $t2, ($s1)
-/* 049A70 7F014F40 240C0002 */  li    $t4, 2
-/* 049A74 7F014F44 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049A78 7F014F48 314B0001 */  andi  $t3, $t2, 1
-/* 049A7C 7F014F4C 1160003B */  beqz  $t3, .L7F01503C
-/* 049A80 7F014F50 240500C7 */   li    $a1, 199
-/* 049A84 7F014F54 AE2C0000 */  sw    $t4, ($s1)
-/* 049A88 7F014F58 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049A8C 7F014F5C 0C002382 */  jal   sndPlaySfx
-/* 049A90 7F014F60 00003025 */   move  $a2, $zero
-/* 049A94 7F014F64 10000035 */  b     .L7F01503C
-/* 049A98 7F014F68 00000000 */   nop
-.L7F014F6C:
-/* 049A9C 7F014F6C 8E220000 */  lw    $v0, ($s1)
-/* 049AA0 7F014F70 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049AA4 7F014F74 240500C7 */  li    $a1, 199
-/* 049AA8 7F014F78 304D0001 */  andi  $t5, $v0, 1
-/* 049AAC 7F014F7C 11A0002F */  beqz  $t5, .L7F01503C
-/* 049AB0 7F014F80 244EFFFF */   addiu $t6, $v0, -1
-/* 049AB4 7F014F84 AE2E0000 */  sw    $t6, ($s1)
-/* 049AB8 7F014F88 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049ABC 7F014F8C 0C002382 */  jal   sndPlaySfx
-/* 049AC0 7F014F90 00003025 */   move  $a2, $zero
-/* 049AC4 7F014F94 10000029 */  b     .L7F01503C
-/* 049AC8 7F014F98 00000000 */   nop
-.L7F014F9C:
-/* 049ACC 7F014F9C 00002025 */  move  $a0, $zero
-/* 049AD0 7F014FA0 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 049AD4 7F014FA4 24050404 */   li    $a1, 1028
-/* 049AD8 7F014FA8 14400006 */  bnez  $v0, .L7F014FC4
-/* 049ADC 7F014FAC 00002025 */   move  $a0, $zero
-/* 049AE0 7F014FB0 2405FFFE */  li    $a1, -2
-/* 049AE4 7F014FB4 0C00314A */  jal   joyGetStickYInRange
-/* 049AE8 7F014FB8 24060001 */   li    $a2, 1
-/* 049AEC 7F014FBC 2841FFFF */  slti  $at, $v0, -1
-/* 049AF0 7F014FC0 1020001E */  beqz  $at, .L7F01503C
-.L7F014FC4:
-/* 049AF4 7F014FC4 3C0F8003 */   lui   $t7, %hi(scenario)
-/* 049AF8 7F014FC8 8DEFB540 */  lw    $t7, %lo(scenario)($t7)
-/* 049AFC 7F014FCC 24010007 */  li    $at, 7
-/* 049B00 7F014FD0 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049B04 7F014FD4 15E1000F */  bne   $t7, $at, .L7F015014
-/* 049B08 7F014FD8 26319788 */   addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049B0C 7F014FDC 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049B10 7F014FE0 26319788 */  addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049B14 7F014FE4 8E380000 */  lw    $t8, ($s1)
-/* 049B18 7F014FE8 24080002 */  li    $t0, 2
-/* 049B1C 7F014FEC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049B20 7F014FF0 33190002 */  andi  $t9, $t8, 2
-/* 049B24 7F014FF4 17200011 */  bnez  $t9, .L7F01503C
-/* 049B28 7F014FF8 240500C7 */   li    $a1, 199
-/* 049B2C 7F014FFC AE280000 */  sw    $t0, ($s1)
-/* 049B30 7F015000 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049B34 7F015004 0C002382 */  jal   sndPlaySfx
-/* 049B38 7F015008 00003025 */   move  $a2, $zero
-/* 049B3C 7F01500C 1000000B */  b     .L7F01503C
-/* 049B40 7F015010 00000000 */   nop
-.L7F015014:
-/* 049B44 7F015014 8E220000 */  lw    $v0, ($s1)
-/* 049B48 7F015018 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049B4C 7F01501C 240500C7 */  li    $a1, 199
-/* 049B50 7F015020 30490002 */  andi  $t1, $v0, 2
-/* 049B54 7F015024 15200005 */  bnez  $t1, .L7F01503C
-/* 049B58 7F015028 244A0002 */   addiu $t2, $v0, 2
-/* 049B5C 7F01502C AE2A0000 */  sw    $t2, ($s1)
-/* 049B60 7F015030 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049B64 7F015034 0C002382 */  jal   sndPlaySfx
-/* 049B68 7F015038 00003025 */   move  $a2, $zero
-.L7F01503C:
-/* 049B6C 7F01503C 3C108003 */  lui   $s0, %hi(walletinst)
-/* 049B70 7F015040 2610A95C */  addiu $s0, %lo(walletinst) # addiu $s0, $s0, -0x56a4
-/* 049B74 7F015044 3C118007 */  lui   $s1, %hi(teamsize)
-/* 049B78 7F015048 26319788 */  addiu $s1, %lo(teamsize) # addiu $s1, $s1, -0x6878
-/* 049B7C 7F01504C 0FC02DC9 */  jal   disable_all_switches
-/* 049B80 7F015050 8E040000 */   lw    $a0, ($s0)
-/* 049B84 7F015054 8E040000 */  lw    $a0, ($s0)
-/* 049B88 7F015058 00002825 */  move  $a1, $zero
-/* 049B8C 7F01505C 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 049B90 7F015060 24060001 */   li    $a2, 1
-/* 049B94 7F015064 8E040000 */  lw    $a0, ($s0)
-/* 049B98 7F015068 2405002A */  li    $a1, 42
-/* 049B9C 7F01506C 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 049BA0 7F015070 24060001 */   li    $a2, 1
-/* 049BA4 7F015074 0FC026E1 */  jal   menu_control_stick_tracking
-/* 049BA8 7F015078 00000000 */   nop
-/* 049BAC 7F01507C 00002025 */  move  $a0, $zero
-/* 049BB0 7F015080 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 049BB4 7F015084 3405B000 */   li    $a1, 45056
-/* 049BB8 7F015088 10400026 */  beqz  $v0, .L7F015124
-/* 049BBC 7F01508C 00008025 */   move  $s0, $zero
-.L7F015090:
-/* 049BC0 7F015090 3C0B8003 */  lui   $t3, %hi(scenario)
-/* 049BC4 7F015094 8D6BB540 */  lw    $t3, %lo(scenario)($t3)
-/* 049BC8 7F015098 24010005 */  li    $at, 5
-/* 049BCC 7F01509C 5561000E */  bnel  $t3, $at, .L7F0150D8
-/* 049BD0 7F0150A0 8E2D0000 */   lw    $t5, ($s1)
-/* 049BD4 7F0150A4 12000005 */  beqz  $s0, .L7F0150BC
-/* 049BD8 7F0150A8 00000000 */   nop
-/* 049BDC 7F0150AC 8E2C0000 */  lw    $t4, ($s1)
-/* 049BE0 7F0150B0 24050001 */  li    $a1, 1
-/* 049BE4 7F0150B4 160C0003 */  bne   $s0, $t4, .L7F0150C4
-/* 049BE8 7F0150B8 00000000 */   nop
-.L7F0150BC:
-/* 049BEC 7F0150BC 10000001 */  b     .L7F0150C4
-/* 049BF0 7F0150C0 00002825 */   move  $a1, $zero
-.L7F0150C4:
-/* 049BF4 7F0150C4 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 049BF8 7F0150C8 02002025 */   move  $a0, $s0
-/* 049BFC 7F0150CC 1000000A */  b     .L7F0150F8
-/* 049C00 7F0150D0 26100001 */   addiu $s0, $s0, 1
-/* 049C04 7F0150D4 8E2D0000 */  lw    $t5, ($s1)
-.L7F0150D8:
-/* 049C08 7F0150D8 24050001 */  li    $a1, 1
-/* 049C0C 7F0150DC 120D0003 */  beq   $s0, $t5, .L7F0150EC
-/* 049C10 7F0150E0 00000000 */   nop
-/* 049C14 7F0150E4 10000001 */  b     .L7F0150EC
-/* 049C18 7F0150E8 00002825 */   move  $a1, $zero
-.L7F0150EC:
-/* 049C1C 7F0150EC 0FC05329 */  jal   set_players_team_or_scenario_item_flag
-/* 049C20 7F0150F0 02002025 */   move  $a0, $s0
-/* 049C24 7F0150F4 26100001 */  addiu $s0, $s0, 1
-.L7F0150F8:
-/* 049C28 7F0150F8 24010004 */  li    $at, 4
-/* 049C2C 7F0150FC 1601FFE4 */  bne   $s0, $at, .L7F015090
-/* 049C30 7F015100 00000000 */   nop
-/* 049C34 7F015104 2404000E */  li    $a0, 14
-/* 049C38 7F015108 0FC06975 */  jal   frontChangeMenu
-/* 049C3C 7F01510C 00002825 */   move  $a1, $zero
-/* 049C40 7F015110 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 049C44 7F015114 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 049C48 7F015118 240500C7 */  li    $a1, 199
-/* 049C4C 7F01511C 0C002382 */  jal   sndPlaySfx
-/* 049C50 7F015120 00003025 */   move  $a2, $zero
-.L7F015124:
-/* 049C54 7F015124 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 049C58 7F015128 8FB00014 */  lw    $s0, 0x14($sp)
-/* 049C5C 7F01512C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 049C60 7F015130 03E00008 */  jr    $ra
-/* 049C64 7F015134 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 
