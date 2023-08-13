@@ -48,7 +48,7 @@ struct mp_stage_setup {
 };
 
 struct MP_selectable_chars {
-    short text_preset;
+    u16 text_preset;
     u8 gender;
     u8 select_photo;
     short body;
@@ -57,8 +57,8 @@ struct MP_selectable_chars {
 };
 
 struct MP_handicap_menu {
-    short text_preset;
-    short padding;
+    u16 text_preset;
+    u16 padding;
     float damage_modifier;
 };
 
