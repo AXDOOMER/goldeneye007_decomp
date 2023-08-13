@@ -63,10 +63,10 @@ struct MP_handicap_menu {
 };
 
 struct MP_controller_configuration_menu {
-    u16 anonymous_0;
+    u16 text_preset;
     //char field_1;
-    char field_2;
-    char field_3;
+    u8 field_2;
+    u8 field_3;
 };
 
 struct MP_sight_aim_settings {
