@@ -6824,139 +6824,103 @@ void interface_menu14_mpteams(void)
 }
 
 
-
+// Address 0x7F015138 NTSC
 #ifdef NONMATCHING
-void constructor_menu14_mpteams(s32 arg0)
+// https://decomp.me/scratch/N4sd9 99.55% 
+// Just down to regalloc. Need a break from this one, not sure how much is fake match improvement.
+Gfx * constructor_menu14_mpteams(Gfx *DL)
 {
     s32 spCC;
+    s32 i;
+    s32 var_v0;
+    s32 temp_s0;
+    s32 temp_s2;
+    s32 var_s0;
+    s32 spB4;
+    s32 temp_s6;
+    u8 *text;
+    s32 var_s2;
     s32 spA4;
     s32 spA0;
     s32 sp9C;
     s32 sp98;
+    s32 padding1;
     s32 sp90;
     s32 sp8C;
     s32 sp88;
     s32 sp84;
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 temp_s5;
-    s32 temp_s6;
-    u32 temp_s2;
-    u32 temp_s4;
-    void *temp_v1;
-    u32 phi_s4;
-    s32 phi_v0;
-    s32 phi_v0_2;
-    void *phi_s5;
-    u32 phi_s0;
-    s32 phi_s1;
-    s32 phi_s5_2;
-    void *phi_s5_3;
-    void *phi_s5_4;
-    void *phi_s5_5;
-    u32 phi_v0_3;
+    s32 padding2;
 
     spCC = get_selected_num_players();
-    temp_ret = microcode_constructor_related_to_menus(microcode_constructor(sub_GAME_7F00D5E8(viFillScreen(viSetFillColor(arg0, 0, 0, 0)))), 0x26, 0xa9, 0x184, 0xab, 0x90);
-    phi_s5_5 = temp_ret;
+
+    DL = viSetFillColor(DL,0,0,0);
+    DL = viFillScreen(DL);
+    DL = sub_GAME_7F00D5E8(DL);
+    DL = microcode_constructor(DL);
+
+    DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
+
     if (spCC >= 3)
     {
-        phi_s5_5 = microcode_constructor_related_to_menus(temp_ret, 0xd4, 0x1e, 0xd6, 0x136, 0x80);
+        DL = microcode_constructor_related_to_menus(DL, 0xD4, 0x1E, 0xD6, 0x136, 0x80);        
     }
-    phi_s5_3 = phi_s5_5;
-    if (spCC > 0)
-    {
-        phi_s4 = 0U;
-        phi_s5 = phi_s5_5;
-loop_4:
-        if (phi_s4 >= 2)
-        {
-            phi_v0_2 = 0x8c;
+
+    for (i = 0; i < spCC; i++)
+    {        
+        var_v0 = (i >= 2) ? 0x8C : 0;
+        temp_s6 = (var_v0) + 0x1E;
+
+        // nonmatching: Problem line.
+        var_v0 = ((i & 1) ? 0xAF : 0) + 0;
+        
+        gDPSetScissor(DL++, G_SC_NON_INTERLACE, (var_v0 + 0x2c), temp_s6 + 5, var_v0 + 0xcf, temp_s6 + 0x87);
+
+        // nonmatching: Problem line ??
+        spB4 = var_v0 + 0x7d;
+
+        if (i == 0)
+        {   
+            text = langGet(0x9C58);
+            textMeasure(&spA4, &spA0, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+            
+            sp98 = temp_s6 + 5;
+            sp9C = spB4 - (spA0 >> 1);
+            
+            DL = write_text_at_abs_coord(DL, &sp9C, &sp98, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
-        else
-        {
-            phi_v0_2 = 0;
-        }
-        temp_s6 = phi_v0_2 + 0x1e;
-        if ((phi_s4 & 1) != 0)
-        {
-            phi_v0 = 0xaf;
-        }
-        else
-        {
-            phi_v0 = 0;
-        }
-        temp_v1 = phi_s5;
-        temp_s2 = (u32) phi_s4 < 1U;
-        temp_s5 = phi_s5 + 8;
-        temp_v1->unk0 = (s32) (((((s32) ((f32) (phi_v0 + 0x2c) * 4.0f) & 0xfff) << 0xc) | 0xed000000) | ((s32) ((f32) (temp_s6 + 5) * 4.0f) & 0xfff));
-        temp_v1->unk4 = (s32) ((((s32) ((f32) (phi_v0 + 0xcf) * 4.0f) & 0xfff) << 0xc) | ((s32) ((f32) (temp_s6 + 0x87) * 4.0f) & 0xfff));
-        phi_s5_2 = temp_s5;
-        if (temp_s2 != 0)
-        {
-            temp_ret_2 = langGet(TEXT(LTITLE, TITLE_STR_88));
-            textMeasure(&spA4, &spA0, temp_ret_2, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
-            sp9C = (s32) ((phi_v0 + 0x7d) - (spA0 >> 1));
-            viGetX();
-            phi_s5_2 = write_text_at_abs_coord(temp_s5, &sp9C, &sp98, temp_ret_2, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, 0xff, viGetY(), 0, 0);
-        }
+
         if (scenario == 5)
         {
-            phi_v0_3 = temp_s2;
-            if (temp_s2 == 0)
-            {
-                phi_v0_3 = (u32) (phi_s4 ^ teamsize) < 1U;
-            }
-            phi_s0 = phi_v0_3;
+            var_s0 = i == 0 || i == teamsize;
         }
         else
         {
-            phi_s0 = 0U < (u32) (phi_s4 ^ teamsize);
+            var_s0 = i != teamsize;
         }
-        if (phi_s0 != 0)
-        {
-            phi_s1 = langGet(TEXT(LTITLE, TITLE_STR_89));
-        }
-        else
-        {
-            phi_s1 = langGet(TEXT(LTITLE, TITLE_STR_90));
-        }
-        if (phi_s0 != 0)
-        {
 
-        }
-        else
+        text = var_s0 ? langGet(0x9C59) : langGet(0x9C5A);
+        var_s2 = var_s0 ? -0xFFFF01 : 0xFFFF;
+        
+        // nonmatching: Basic block, yes or no ??
+        if (1)
         {
-
-        }
-        textMeasure(&sp90, &sp8C, phi_s1, ptrFontZurichBoldChars, (s32) subroutine_arg0, 0);
-        sp88 = (s32) (spB4 - (sp8C >> 1));
-        sp84 = (s32) ((temp_s6 - (sp90 >> 1)) + 0x46);
-        if ((phi_s4 == teamsize) && (phi_s4 == teamsize))
-        {
-            phi_s5_4 = (void *) phi_s5_2;
-            if (D_8002B560 < 0xa)
+            textMeasure(&sp90, &sp8C, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+            
+            sp88 = spB4 - (sp8C >> 1);
+            sp84 = (temp_s6 - (sp90 >> 1)) + 0x46;
+    
+            if ((i != teamsize) || ((i == teamsize) && (D_8002B560 < 0xA)))
             {
-block_26:
-                viGetX();
-                phi_s5_4 = write_text_at_abs_coord(phi_s5_2, &sp88, &sp84, phi_s1, (s32) ptrFontZurichBoldChars, (s32) subroutine_arg0, viGetY(), 0, 0);
-            }
-        }
-        else
-        {
-            goto block_26;
-        }
-        temp_s4 = phi_s4 + 1;
-        phi_s4 = temp_s4;
-        phi_s5 = phi_s5_4;
-        phi_s5_3 = phi_s5_4;
-        if (temp_s4 != spCC)
-        {
-            goto loop_4;
+                DL = write_text_at_abs_coord(DL, &sp88, &sp84, text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
+            }            
         }
     }
-    combiner_bayer_lod_perspective(phi_s5_3);
+    
+    DL = combiner_bayer_lod_perspective(DL);
+
+    return DL;
 }
+
 #else
 GLOBAL_ASM(
 .text
