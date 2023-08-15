@@ -41,6 +41,7 @@
 #include "title.h"
 #include <assets/font_dl.h>
 #include "image.h"
+#include "ob.h"
 
 
 
@@ -7206,90 +7207,36 @@ void set_briefing_page(WATCH_BRIEFING_PAGE page)
 }
 
 
+// Address 0x7F015520 NTSC
+void load_briefing_text_for_stage(void)
+{
+    Gfx *temp_s0;
+    s32 argg;
 
-#ifdef NONMATCHING
-s32 load_briefing_text_for_stage(void) {
-    s32 sp20 = 0x6DE00;
-    //s32 sp20;
-    Gfx *temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
-    s32 i;
-    struct BriefingData *pbriefdata;
+    // what is this
+    temp_s0 = (s32)(ptr_logo_and_walletbond_DL) + (s32)(4096*10);
 
-    //temp_s0 = (s32)ptr_logo_and_walletbond_DL + (s32)0xA000;
-    ptrbriefingdata = _fileNameLoadToAddr(mission_folder_setup_entries[briefingpage].briefing_name_ptr, 1, temp_s0, 0x200);
-    //sp20 = 0x6DE00;
-    langLoadToAddr(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id, temp_s0 + 0x200, sp20));
-    pbriefdata = ptrbriefingdata;
-    for(i = 0; i!= 0x28;i++)
+    // alright
+    argg = 0x200;
+    ptrbriefingdata = _fileNameLoadToAddr(mission_folder_setup_entries[briefingpage].briefing_name_ptr, FILELOADMETHOD_DEFAULT, (u8 *) temp_s0, argg);
+
+    // what is this
+    temp_s0 += argg / 8;
+    
+    // what is this
+    argg *= 879;
+
+    langLoadToBank(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id), (u8 *)temp_s0, argg);
+
+    // what is this
+    for (argg = 0; argg < 10; argg++)
     {
-        if (pbriefdata->objective[i].textid != 0) {
-        break;
+        if (ptrbriefingdata->objective[argg].textid == 0)
+        {
+            break;
         }
     }
-    return i;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_briefing_text_for_stage
-/* 04A050 7F015520 3C0E8003 */  lui   $t6, %hi(briefingpage)
-/* 04A054 7F015524 8DCEA8F8 */  lw    $t6, %lo(briefingpage)($t6)
-/* 04A058 7F015528 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 04A05C 7F01552C AFB00018 */  sw    $s0, 0x18($sp)
-/* 04A060 7F015530 3C108003 */  lui   $s0, %hi(ptr_logo_and_walletbond_DL)
-/* 04A064 7F015534 8E10A950 */  lw    $s0, %lo(ptr_logo_and_walletbond_DL)($s0)
-/* 04A068 7F015538 000E78C0 */  sll   $t7, $t6, 3
-/* 04A06C 7F01553C 01EE7823 */  subu  $t7, $t7, $t6
-/* 04A070 7F015540 3401A000 */  li    $at, 40960
-/* 04A074 7F015544 000F7880 */  sll   $t7, $t7, 2
-/* 04A078 7F015548 3C048003 */  lui   $a0, %hi(mission_folder_setup_entries+24)
-/* 04A07C 7F01554C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 04A080 7F015550 008F2021 */  addu  $a0, $a0, $t7
-/* 04A084 7F015554 02018021 */  addu  $s0, $s0, $at
-/* 04A088 7F015558 02003025 */  move  $a2, $s0
-/* 04A08C 7F01555C 8C84ABFC */  lw    $a0, %lo(mission_folder_setup_entries+24)($a0)
-/* 04A090 7F015560 24050001 */  li    $a1, 1
-/* 04A094 7F015564 0FC2F350 */  jal   _fileNameLoadToAddr
-/* 04A098 7F015568 24070200 */   li    $a3, 512
-/* 04A09C 7F01556C 3C198003 */  lui   $t9, %hi(briefingpage)
-/* 04A0A0 7F015570 8F39A8F8 */  lw    $t9, %lo(briefingpage)($t9)
-/* 04A0A4 7F015574 3C180006 */  lui   $t8, (0x0006DE00 >> 16) # lui $t8, 6
-/* 04A0A8 7F015578 3C048003 */  lui   $a0, %hi(mission_folder_setup_entries+8)
-/* 04A0AC 7F01557C 001940C0 */  sll   $t0, $t9, 3
-/* 04A0B0 7F015580 01194023 */  subu  $t0, $t0, $t9
-/* 04A0B4 7F015584 00084080 */  sll   $t0, $t0, 2
-/* 04A0B8 7F015588 3C018007 */  lui   $at, %hi(ptrbriefingdata)
-/* 04A0BC 7F01558C 3718DE00 */  ori   $t8, (0x0006DE00 & 0xFFFF) # ori $t8, $t8, 0xde00
-/* 04A0C0 7F015590 00882021 */  addu  $a0, $a0, $t0
-/* 04A0C4 7F015594 AC22978C */  sw    $v0, %lo(ptrbriefingdata)($at)
-/* 04A0C8 7F015598 26100200 */  addiu $s0, $s0, 0x200
-/* 04A0CC 7F01559C AFB80020 */  sw    $t8, 0x20($sp)
-/* 04A0D0 7F0155A0 0FC30578 */  jal   langGetLangBankIndexFromStagenum
-/* 04A0D4 7F0155A4 8C84ABEC */   lw    $a0, %lo(mission_folder_setup_entries+8)($a0)
-/* 04A0D8 7F0155A8 00402025 */  move  $a0, $v0
-/* 04A0DC 7F0155AC 02002825 */  move  $a1, $s0
-/* 04A0E0 7F0155B0 0FC30759 */  jal   langLoadToBank
-/* 04A0E4 7F0155B4 8FA60020 */   lw    $a2, 0x20($sp)
-/* 04A0E8 7F0155B8 3C038007 */  lui   $v1, %hi(ptrbriefingdata)
-/* 04A0EC 7F0155BC 8C63978C */  lw    $v1, %lo(ptrbriefingdata)($v1)
-/* 04A0F0 7F0155C0 00001025 */  move  $v0, $zero
-/* 04A0F4 7F0155C4 24040028 */  li    $a0, 40
-.L7F0155C8:
-/* 04A0F8 7F0155C8 94690008 */  lhu   $t1, 8($v1)
-/* 04A0FC 7F0155CC 24420004 */  addiu $v0, $v0, 4
-/* 04A100 7F0155D0 51200004 */  beql  $t1, $zero, .L7F0155E4
-/* 04A104 7F0155D4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 04A108 7F0155D8 1444FFFB */  bne   $v0, $a0, .L7F0155C8
-/* 04A10C 7F0155DC 24630004 */   addiu $v1, $v1, 4
-/* 04A110 7F0155E0 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0155E4:
-/* 04A114 7F0155E4 8FB00018 */  lw    $s0, 0x18($sp)
-/* 04A118 7F0155E8 27BD0028 */  addiu $sp, $sp, 0x28
-/* 04A11C 7F0155EC 03E00008 */  jr    $ra
-/* 04A120 7F0155F0 00000000 */   nop
-)
-#endif
-
 
 //********************************************************************************************************
 //BRIEFING SCREEN
