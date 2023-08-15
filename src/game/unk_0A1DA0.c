@@ -3632,52 +3632,17 @@ glabel sub_GAME_7F0A3F04
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
 void sub_GAME_7F0A4528(Gfx *arg0, s32 arg1) {
+    s32 i;
+    s32 start_index;
 
+    if (1) { start_index = 0; }
+
+    for (i = start_index; (i < UNK_8007A170_MAX ^ 0 ); i++)
+    {
+        sub_GAME_7F0A3F04(&dword_CODE_bss_8007A170[i], arg0, arg1);
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4528
-/* 0D9058 7F0A4528 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0D905C 7F0A452C AFB10018 */  sw    $s1, 0x18($sp)
-/* 0D9060 7F0A4530 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0D9064 7F0A4534 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0D9068 7F0A4538 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0D906C 7F0A453C 3C108008 */  lui   $s0, %hi(dword_CODE_bss_8007A170)
-/* 0D9070 7F0A4540 3C118008 */  lui   $s1, %hi(dword_CODE_bss_8007A170 + 0x370)
-/* 0D9074 7F0A4544 00809025 */  move  $s2, $a0
-/* 0D9078 7F0A4548 00A09825 */  move  $s3, $a1
-/* 0D907C 7F0A454C AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0D9080 7F0A4550 2631A4E0 */  addiu $s1, %lo(dword_CODE_bss_8007A170 + 0x370) # addiu $s1, $s1, -0x5b20
-/* 0D9084 7F0A4554 2610A170 */  addiu $s0, %lo(dword_CODE_bss_8007A170) # addiu $s0, $s0, -0x5e90
-/* 0D9088 7F0A4558 02002025 */  move  $a0, $s0
-.L7F0A455C:
-/* 0D908C 7F0A455C 02402825 */  move  $a1, $s2
-/* 0D9090 7F0A4560 0FC28FC1 */  jal   sub_GAME_7F0A3F04
-/* 0D9094 7F0A4564 02603025 */   move  $a2, $s3
-/* 0D9098 7F0A4568 2610002C */  addiu $s0, $s0, 0x2c
-/* 0D909C 7F0A456C 0211082B */  sltu  $at, $s0, $s1
-/* 0D90A0 7F0A4570 5420FFFA */  bnezl $at, .L7F0A455C
-/* 0D90A4 7F0A4574 02002025 */   move  $a0, $s0
-/* 0D90A8 7F0A4578 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0D90AC 7F0A457C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0D90B0 7F0A4580 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0D90B4 7F0A4584 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0D90B8 7F0A4588 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0D90BC 7F0A458C 03E00008 */  jr    $ra
-/* 0D90C0 7F0A4590 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
-
-
-
-
 
 #ifdef NONMATCHING
 void sub_GAME_7F0A4594(void) {
