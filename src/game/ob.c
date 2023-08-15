@@ -202,28 +202,28 @@ void obLoadBGFileBytesAtOffset(u8 *bgname, u8 *target, s32 offset, s32 len)
 
 #if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
-void _fileIndexLoadToBank(s32 index,s32 param_2,s32 size,u8 bank)
+void *_fileIndexLoadToBank(s32 index, FILELOADMETHOD param_2, s32 size, u8 bank)
 {
-    fileIndexLoadToBank(index, param_2, size, bank);
+    return fileIndexLoadToBank(index, param_2, size, bank);
 }
 #endif
 
 #if defined(LEFTOVERDEBUG)
 /* no VERSION_EU */
-void _fileIndexLoadToAddr(int index,s32 param_2,u8 *ptrdata,int size)
+void *_fileIndexLoadToAddr(int index, FILELOADMETHOD param_2, u8 *ptrdata, int size)
 {
-    fileIndexLoadToAddr(index, param_2, ptrdata, size);
+    return fileIndexLoadToAddr(index, param_2, ptrdata, size);
 }
 #endif
 
-void _fileNameLoadToBank(char *filename, FILELOADMETHOD loadMethod, s32 size, u8 bank)
+void *_fileNameLoadToBank(char *filename, FILELOADMETHOD loadMethod, s32 size, u8 bank)
 {
-    fileIndexLoadToBank(fileGetIndex(filename), loadMethod, size, bank);
+    return fileIndexLoadToBank(fileGetIndex(filename), loadMethod, size, bank);
 }
 
-void _fileNameLoadToAddr(char *filename, FILELOADMETHOD loadMethod, u8 *ptrdata, s32 size)
+void * _fileNameLoadToAddr(char *filename, FILELOADMETHOD loadMethod, u8 *ptrdata, s32 size)
 {
-    fileIndexLoadToAddr(fileGetIndex(filename), loadMethod, ptrdata, size);
+    return fileIndexLoadToAddr(fileGetIndex(filename), loadMethod, ptrdata, size);
 }
 
 #if defined(LEFTOVERDEBUG)

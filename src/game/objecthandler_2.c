@@ -5,7 +5,7 @@
 #include "math_asinfacosf.h"
 #include "math_unk_05A9E0.h"
 #include "chrobjdata.h"
-
+#include "ob.h"
 
 //file split per EU
 #ifdef NONMATCHING
