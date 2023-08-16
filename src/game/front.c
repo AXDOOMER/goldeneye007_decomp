@@ -7229,7 +7229,7 @@ void load_briefing_text_for_stage(void)
     langLoadToBank(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id), (u8 *)temp_s0, argg);
 
     // what is this
-    for (argg = 0; argg < 10; argg++)
+    for (argg = 0; argg < OBJECTIVES_MAX; argg++)
     {
         if (ptrbriefingdata->objective[argg].textid == 0)
         {
@@ -7353,333 +7353,88 @@ void interface_menu0A_briefing(void)
 
 
 
-
-#ifdef NONMATCHING
-u32 * print_objectives_and_status_to_menu(u32 *param_1,int param_2,u8 *param_3,int param_4)
+// Address 0x7F015A08 NTSC
+Gfx *print_objectives_and_status_to_menu(Gfx *DL, s32 arg1, u8 *arg2, s32 arg3)
 {
-  ushort uVar1;
-  u8 *pbVar2;
-  short sVar5;
-  short sVar6;
-  u32 *puVar3;
-  int iVar4;
-  int iVar7;
-  u32 uVar8;
-  int iVar9;
-  u32 uStack24;
-  u32 uStack20;
-  int iStack16;
-  int iStack12;
-  int iStack8;
-  int iStack4;
+    s32 i; // sp9C
+    s32 sp98;
+    s32 sp94;
+    s32 sp90;
+    s32 sp8C;
+    s32 sp88;
+    s32 var_s2;
+    s32 var_fp;
+    u8* text;
+    s32 v1;
+    
+    sp98 = 0;
+    var_fp = 0;
+    i = 0;
+    v1 = 0;
+    
+    for (i = 0; i < OBJECTIVES_MAX; i++)
+    {
+        if (ptrbriefingdata->objective[i].textid != 0 && selected_difficulty >= ptrbriefingdata->objective[i].enabled_difficulty)
+        {
+            v1 = ptrbriefingdata->objective[i].textid;
+            text = langGet(v1);
+            strcpy((u8*)arg2, "a.\n");
+            *arg2 = *arg2 + sp98;
 
-  iStack8 = 0;
-  iVar9 = 0;
-  iStack4 = 0;
-  iVar7 = 0;
-  do {
-    uVar1 = *(ushort *)(ptrbriefingdata + iVar7 + 8);
-    if (uVar1 == 0) {
-      iStack4 += 1;
+            sp94 = 0;
+            sp90 = 0;
+            textMeasure(&sp94, &sp90, (u8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+            
+
+            sp8C = 0x37;
+            sp88 = (sp94 * var_fp) + arg1 + (i*0);
+            DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+
+            sp8C = 0x4B;
+            sp88 = (sp94 * var_fp) + arg1 + (i*0);
+            
+            if (arg3 != 0)
+            {
+                setTextWordWrap(2);
+                sub_GAME_7F0AEB64(0xDC, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
+                setTextWordWrap(0);
+            }
+            else
+            {
+                sub_GAME_7F0AEB64(0x140, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
+            }
+
+            DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)arg2,  ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+
+            if (arg3)
+            {
+                switch (get_status_of_objective(i))
+                {
+                case 1:
+                    text = langGet(0x9C5BU);
+                    var_s2 = 0xFF;
+                    break;
+                default:
+                case 0:
+                case 2:
+                    text = langGet(0x9C5CU);
+                    var_s2 = 0x780000FF;
+                    break;
+                }
+                
+                sp8C = 0x136;
+                sp88 = (sp94 * var_fp) + arg1 + (i*0);
+
+                DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
+            }
+
+            var_fp += sub_GAME_7F0AC0E8(arg2);
+            sp98++;
+        }
     }
-    else {
-      if ((s32)selected_difficulty <
-          (s32)(s32)*(ushort *)(ptrbriefingdata + iVar7 + 10)) {
-        iStack4 += 1;
-      }
-      else {
-        pbVar2 = langGet((u32)uVar1);
-        strcpy((char *)param_3,aA_);
-        *param_3 = *param_3 + (char)iStack8;
-        iStack12 = 0;
-        iStack16 = 0;
-        proc_7F0AE98C(&iStack12,&iStack16,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold,0
-                     );
-        uStack20 = 0x37;
-        uStack24 = iStack12 * iVar9 + param_2;
-        sVar5 = viGetX();
-        sVar6 = viGetY();
-        puVar3 = write_text_at_abs_coord
-                           (param_1,&uStack20,&uStack24,param_3,(int)ptrFontZurichBoldChars,
-                            (int)ptrFontZurichBold,0xff,(int)sVar5,(int)sVar6,0,0);
-        uStack20 = 0x4b;
-        uStack24 = iStack12 * iVar9 + param_2;
-        if (param_4 == 0) {
-          proc_7F0AEB64(0x140,pbVar2,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold);
-        }
-        else {
-          proc_7F0ACB94(2);
-          proc_7F0AEB64(0xdc,pbVar2,param_3,(int)ptrFontZurichBoldChars,(int *)ptrFontZurichBold);
-          proc_7F0ACB94(0);
-        }
-        sVar5 = viGetX();
-        sVar6 = viGetY();
-        param_1 = write_text_at_abs_coord
-                            (puVar3,&uStack20,&uStack24,param_3,(int)ptrFontZurichBoldChars,
-                             (int)ptrFontZurichBold,0xff,(int)sVar5,(int)sVar6,0,0);
-        if (param_4 != 0) {
-          iVar4 = get_status_of_objective((s32)iStack4);
-          if ((iVar4 == 0) || (iVar4 != 1)) {
-            uVar8 = 0x780000ff;
-            pbVar2 = langGet(TEXT(LTITLE, TITLE_STR_92));
-          }
-          else {
-            uVar8 = 0xff;
-            pbVar2 = langGet(TEXT(LTITLE, TITLE_STR_91));
-          }
-          uStack20 = 0x136;
-          uStack24 = iStack12 * iVar9 + param_2;
-          sVar5 = viGetX();
-          sVar6 = viGetY();
-          param_1 = write_text_at_abs_coord
-                              (param_1,&uStack20,&uStack24,pbVar2,(int)ptrFontZurichBoldChars,
-                               (int)ptrFontZurichBold,uVar8,(int)sVar5,(int)sVar6,0,0);
-        }
-        iVar4 = proc_7F0AC0E8((char *)param_3);
-        iVar9 += iVar4;
-        iStack8 += 1;
-        iStack4 += 1;
-      }
-    }
-    iVar7 += 4;
-  } while (iStack4 != 10);
-  return param_1;
+    
+    return DL;
 }
-#else
-const char aA_[] = "a.\n";
-GLOBAL_ASM(
-.text
-glabel print_objectives_and_status_to_menu
-/* 04A538 7F015A08 27BDFF60 */  addiu $sp, $sp, -0xa0
-/* 04A53C 7F015A0C AFB5004C */  sw    $s5, 0x4c($sp)
-/* 04A540 7F015A10 AFB40048 */  sw    $s4, 0x48($sp)
-/* 04A544 7F015A14 AFBE0058 */  sw    $fp, 0x58($sp)
-/* 04A548 7F015A18 AFB60050 */  sw    $s6, 0x50($sp)
-/* 04A54C 7F015A1C AFB30044 */  sw    $s3, 0x44($sp)
-/* 04A550 7F015A20 3C148004 */  lui   $s4, %hi(ptrFontZurichBoldChars)
-/* 04A554 7F015A24 3C158004 */  lui   $s5, %hi(ptrFontZurichBold)
-/* 04A558 7F015A28 00C09825 */  move  $s3, $a2
-/* 04A55C 7F015A2C 0080B025 */  move  $s6, $a0
-/* 04A560 7F015A30 AFBF005C */  sw    $ra, 0x5c($sp)
-/* 04A564 7F015A34 AFB70054 */  sw    $s7, 0x54($sp)
-/* 04A568 7F015A38 AFB20040 */  sw    $s2, 0x40($sp)
-/* 04A56C 7F015A3C AFB1003C */  sw    $s1, 0x3c($sp)
-/* 04A570 7F015A40 AFB00038 */  sw    $s0, 0x38($sp)
-/* 04A574 7F015A44 AFA500A4 */  sw    $a1, 0xa4($sp)
-/* 04A578 7F015A48 AFA700AC */  sw    $a3, 0xac($sp)
-/* 04A57C 7F015A4C AFA00098 */  sw    $zero, 0x98($sp)
-/* 04A580 7F015A50 0000F025 */  move  $fp, $zero
-/* 04A584 7F015A54 26B50EB4 */  addiu $s5, %lo(ptrFontZurichBold) # addiu $s5, $s5, 0xeb4
-/* 04A588 7F015A58 26940EB8 */  addiu $s4, %lo(ptrFontZurichBoldChars) # addiu $s4, $s4, 0xeb8
-/* 04A58C 7F015A5C 00004025 */  move  $t0, $zero
-/* 04A590 7F015A60 00004825 */  move  $t1, $zero
-.L7F015A64:
-/* 04A594 7F015A64 3C0E8007 */  lui   $t6, %hi(ptrbriefingdata)
-/* 04A598 7F015A68 8DCE978C */  lw    $t6, %lo(ptrbriefingdata)($t6)
-/* 04A59C 7F015A6C 3C0F8003 */  lui   $t7, %hi(selected_difficulty)
-/* 04A5A0 7F015A70 01C91021 */  addu  $v0, $t6, $t1
-/* 04A5A4 7F015A74 94430008 */  lhu   $v1, 8($v0)
-/* 04A5A8 7F015A78 506000AE */  beql  $v1, $zero, .L7F015D34
-/* 04A5AC 7F015A7C 25080001 */   addiu $t0, $t0, 1
-/* 04A5B0 7F015A80 8DEFA8FC */  lw    $t7, %lo(selected_difficulty)($t7)
-/* 04A5B4 7F015A84 9458000A */  lhu   $t8, 0xa($v0)
-/* 04A5B8 7F015A88 00602025 */  move  $a0, $v1
-/* 04A5BC 7F015A8C 0000B825 */  move  $s7, $zero
-/* 04A5C0 7F015A90 01F8082A */  slt   $at, $t7, $t8
-/* 04A5C4 7F015A94 542000A7 */  bnezl $at, .L7F015D34
-/* 04A5C8 7F015A98 25080001 */   addiu $t0, $t0, 1
-/* 04A5CC 7F015A9C AFA9006C */  sw    $t1, 0x6c($sp)
-/* 04A5D0 7F015AA0 0FC30776 */  jal   langGet
-/* 04A5D4 7F015AA4 AFA8009C */   sw    $t0, 0x9c($sp)
-/* 04A5D8 7F015AA8 3C058005 */  lui   $a1, %hi(aA_)
-/* 04A5DC 7F015AAC 00408825 */  move  $s1, $v0
-/* 04A5E0 7F015AB0 24A50C50 */  addiu $a1, %lo(aA_) # addiu $a1, $a1, 0xc50
-/* 04A5E4 7F015AB4 0C0029DC */  jal   strcpy
-/* 04A5E8 7F015AB8 02602025 */   move  $a0, $s3
-/* 04A5EC 7F015ABC 92790000 */  lbu   $t9, ($s3)
-/* 04A5F0 7F015AC0 8FAA0098 */  lw    $t2, 0x98($sp)
-/* 04A5F4 7F015AC4 27A40094 */  addiu $a0, $sp, 0x94
-/* 04A5F8 7F015AC8 27A50090 */  addiu $a1, $sp, 0x90
-/* 04A5FC 7F015ACC 032A5821 */  addu  $t3, $t9, $t2
-/* 04A600 7F015AD0 A26B0000 */  sb    $t3, ($s3)
-/* 04A604 7F015AD4 8EAC0000 */  lw    $t4, ($s5)
-/* 04A608 7F015AD8 AFA00094 */  sw    $zero, 0x94($sp)
-/* 04A60C 7F015ADC AFA00090 */  sw    $zero, 0x90($sp)
-/* 04A610 7F015AE0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 04A614 7F015AE4 8E870000 */  lw    $a3, ($s4)
-/* 04A618 7F015AE8 02603025 */  move  $a2, $s3
-/* 04A61C 7F015AEC 0FC2BA63 */  jal   textMeasure
-/* 04A620 7F015AF0 AFAC0010 */   sw    $t4, 0x10($sp)
-/* 04A624 7F015AF4 8FAE0094 */  lw    $t6, 0x94($sp)
-/* 04A628 7F015AF8 8FB800A4 */  lw    $t8, 0xa4($sp)
-/* 04A62C 7F015AFC 240D0037 */  li    $t5, 55
-/* 04A630 7F015B00 01DE0019 */  multu $t6, $fp
-/* 04A634 7F015B04 AFAD008C */  sw    $t5, 0x8c($sp)
-/* 04A638 7F015B08 00007812 */  mflo  $t7
-/* 04A63C 7F015B0C 01F8C821 */  addu  $t9, $t7, $t8
-/* 04A640 7F015B10 03375021 */  addu  $t2, $t9, $s7
-/* 04A644 7F015B14 0C001107 */  jal   viGetX
-/* 04A648 7F015B18 AFAA0088 */   sw    $t2, 0x88($sp)
-/* 04A64C 7F015B1C 00028400 */  sll   $s0, $v0, 0x10
-/* 04A650 7F015B20 00105C03 */  sra   $t3, $s0, 0x10
-/* 04A654 7F015B24 0C00110B */  jal   viGetY
-/* 04A658 7F015B28 01608025 */   move  $s0, $t3
-/* 04A65C 7F015B2C 8E8C0000 */  lw    $t4, ($s4)
-/* 04A660 7F015B30 8EAD0000 */  lw    $t5, ($s5)
-/* 04A664 7F015B34 240E00FF */  li    $t6, 255
-/* 04A668 7F015B38 AFAE0018 */  sw    $t6, 0x18($sp)
-/* 04A66C 7F015B3C 02C02025 */  move  $a0, $s6
-/* 04A670 7F015B40 27A5008C */  addiu $a1, $sp, 0x8c
-/* 04A674 7F015B44 27A60088 */  addiu $a2, $sp, 0x88
-/* 04A678 7F015B48 02603825 */  move  $a3, $s3
-/* 04A67C 7F015B4C AFB0001C */  sw    $s0, 0x1c($sp)
-/* 04A680 7F015B50 AFA20020 */  sw    $v0, 0x20($sp)
-/* 04A684 7F015B54 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04A688 7F015B58 AFA00028 */  sw    $zero, 0x28($sp)
-/* 04A68C 7F015B5C AFAC0010 */  sw    $t4, 0x10($sp)
-/* 04A690 7F015B60 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04A694 7F015B64 AFAD0014 */   sw    $t5, 0x14($sp)
-/* 04A698 7F015B68 8FB80094 */  lw    $t8, 0x94($sp)
-/* 04A69C 7F015B6C 8FAA00A4 */  lw    $t2, 0xa4($sp)
-/* 04A6A0 7F015B70 8FAD00AC */  lw    $t5, 0xac($sp)
-/* 04A6A4 7F015B74 031E0019 */  multu $t8, $fp
-/* 04A6A8 7F015B78 240F004B */  li    $t7, 75
-/* 04A6AC 7F015B7C 0040B025 */  move  $s6, $v0
-/* 04A6B0 7F015B80 AFAF008C */  sw    $t7, 0x8c($sp)
-/* 04A6B4 7F015B84 24040140 */  li    $a0, 320
-/* 04A6B8 7F015B88 02202825 */  move  $a1, $s1
-/* 04A6BC 7F015B8C 02603025 */  move  $a2, $s3
-/* 04A6C0 7F015B90 0000C812 */  mflo  $t9
-/* 04A6C4 7F015B94 032A5821 */  addu  $t3, $t9, $t2
-/* 04A6C8 7F015B98 01776021 */  addu  $t4, $t3, $s7
-/* 04A6CC 7F015B9C 11A0000E */  beqz  $t5, .L7F015BD8
-/* 04A6D0 7F015BA0 AFAC0088 */   sw    $t4, 0x88($sp)
-/* 04A6D4 7F015BA4 0FC2B2E5 */  jal   setTextWordWrap
-/* 04A6D8 7F015BA8 24040002 */   li    $a0, 2
-/* 04A6DC 7F015BAC 8EAE0000 */  lw    $t6, ($s5)
-/* 04A6E0 7F015BB0 240400DC */  li    $a0, 220
-/* 04A6E4 7F015BB4 02202825 */  move  $a1, $s1
-/* 04A6E8 7F015BB8 02603025 */  move  $a2, $s3
-/* 04A6EC 7F015BBC 8E870000 */  lw    $a3, ($s4)
-/* 04A6F0 7F015BC0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
-/* 04A6F4 7F015BC4 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 04A6F8 7F015BC8 0FC2B2E5 */  jal   setTextWordWrap
-/* 04A6FC 7F015BCC 00002025 */   move  $a0, $zero
-/* 04A700 7F015BD0 10000005 */  b     .L7F015BE8
-/* 04A704 7F015BD4 00000000 */   nop
-.L7F015BD8:
-/* 04A708 7F015BD8 8EAF0000 */  lw    $t7, ($s5)
-/* 04A70C 7F015BDC 8E870000 */  lw    $a3, ($s4)
-/* 04A710 7F015BE0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
-/* 04A714 7F015BE4 AFAF0010 */   sw    $t7, 0x10($sp)
-.L7F015BE8:
-/* 04A718 7F015BE8 0C001107 */  jal   viGetX
-/* 04A71C 7F015BEC 00000000 */   nop
-/* 04A720 7F015BF0 00028400 */  sll   $s0, $v0, 0x10
-/* 04A724 7F015BF4 0010C403 */  sra   $t8, $s0, 0x10
-/* 04A728 7F015BF8 0C00110B */  jal   viGetY
-/* 04A72C 7F015BFC 03008025 */   move  $s0, $t8
-/* 04A730 7F015C00 8E990000 */  lw    $t9, ($s4)
-/* 04A734 7F015C04 8EAA0000 */  lw    $t2, ($s5)
-/* 04A738 7F015C08 240B00FF */  li    $t3, 255
-/* 04A73C 7F015C0C AFAB0018 */  sw    $t3, 0x18($sp)
-/* 04A740 7F015C10 02C02025 */  move  $a0, $s6
-/* 04A744 7F015C14 27A5008C */  addiu $a1, $sp, 0x8c
-/* 04A748 7F015C18 27A60088 */  addiu $a2, $sp, 0x88
-/* 04A74C 7F015C1C 02603825 */  move  $a3, $s3
-/* 04A750 7F015C20 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 04A754 7F015C24 AFA20020 */  sw    $v0, 0x20($sp)
-/* 04A758 7F015C28 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04A75C 7F015C2C AFA00028 */  sw    $zero, 0x28($sp)
-/* 04A760 7F015C30 AFB90010 */  sw    $t9, 0x10($sp)
-/* 04A764 7F015C34 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04A768 7F015C38 AFAA0014 */   sw    $t2, 0x14($sp)
-/* 04A76C 7F015C3C 8FAC00AC */  lw    $t4, 0xac($sp)
-/* 04A770 7F015C40 0040B025 */  move  $s6, $v0
-/* 04A774 7F015C44 11800032 */  beqz  $t4, .L7F015D10
-/* 04A778 7F015C48 00000000 */   nop
-/* 04A77C 7F015C4C 0FC15C8E */  jal   get_status_of_objective
-/* 04A780 7F015C50 8FA4009C */   lw    $a0, 0x9c($sp)
-/* 04A784 7F015C54 1040000C */  beqz  $v0, .L7F015C88
-/* 04A788 7F015C58 24010001 */   li    $at, 1
-/* 04A78C 7F015C5C 10410006 */  beq   $v0, $at, .L7F015C78
-/* 04A790 7F015C60 34049C5B */   li    $a0, 40027
-/* 04A794 7F015C64 24010002 */  li    $at, 2
-/* 04A798 7F015C68 50410008 */  beql  $v0, $at, .L7F015C8C
-/* 04A79C 7F015C6C 3C127800 */   lui   $s2, 0x7800
-/* 04A7A0 7F015C70 10000006 */  b     .L7F015C8C
-/* 04A7A4 7F015C74 3C127800 */   lui   $s2, 0x7800
-.L7F015C78:
-/* 04A7A8 7F015C78 0FC30776 */  jal   langGet
-/* 04A7AC 7F015C7C 241200FF */   li    $s2, 255
-/* 04A7B0 7F015C80 10000006 */  b     .L7F015C9C
-/* 04A7B4 7F015C84 00408825 */   move  $s1, $v0
-.L7F015C88:
-/* 04A7B8 7F015C88 3C127800 */  lui   $s2, (0x780000FF >> 16) # lui $s2, 0x7800
-.L7F015C8C:
-/* 04A7BC 7F015C8C 365200FF */  ori   $s2, (0x780000FF & 0xFFFF) # ori $s2, $s2, 0xff
-/* 04A7C0 7F015C90 0FC30776 */  jal   langGet
-/* 04A7C4 7F015C94 34049C5C */   li    $a0, 40028
-/* 04A7C8 7F015C98 00408825 */  move  $s1, $v0
-.L7F015C9C:
-/* 04A7CC 7F015C9C 8FAE0094 */  lw    $t6, 0x94($sp)
-/* 04A7D0 7F015CA0 8FB800A4 */  lw    $t8, 0xa4($sp)
-/* 04A7D4 7F015CA4 240D0136 */  li    $t5, 310
-/* 04A7D8 7F015CA8 01DE0019 */  multu $t6, $fp
-/* 04A7DC 7F015CAC AFAD008C */  sw    $t5, 0x8c($sp)
-/* 04A7E0 7F015CB0 00007812 */  mflo  $t7
-/* 04A7E4 7F015CB4 01F8C821 */  addu  $t9, $t7, $t8
-/* 04A7E8 7F015CB8 03375021 */  addu  $t2, $t9, $s7
-/* 04A7EC 7F015CBC 0C001107 */  jal   viGetX
-/* 04A7F0 7F015CC0 AFAA0088 */   sw    $t2, 0x88($sp)
-/* 04A7F4 7F015CC4 00028400 */  sll   $s0, $v0, 0x10
-/* 04A7F8 7F015CC8 00105C03 */  sra   $t3, $s0, 0x10
-/* 04A7FC 7F015CCC 0C00110B */  jal   viGetY
-/* 04A800 7F015CD0 01608025 */   move  $s0, $t3
-/* 04A804 7F015CD4 8E8C0000 */  lw    $t4, ($s4)
-/* 04A808 7F015CD8 8EAD0000 */  lw    $t5, ($s5)
-/* 04A80C 7F015CDC 02C02025 */  move  $a0, $s6
-/* 04A810 7F015CE0 27A5008C */  addiu $a1, $sp, 0x8c
-/* 04A814 7F015CE4 27A60088 */  addiu $a2, $sp, 0x88
-/* 04A818 7F015CE8 02203825 */  move  $a3, $s1
-/* 04A81C 7F015CEC AFB20018 */  sw    $s2, 0x18($sp)
-/* 04A820 7F015CF0 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 04A824 7F015CF4 AFA20020 */  sw    $v0, 0x20($sp)
-/* 04A828 7F015CF8 AFA00024 */  sw    $zero, 0x24($sp)
-/* 04A82C 7F015CFC AFA00028 */  sw    $zero, 0x28($sp)
-/* 04A830 7F015D00 AFAC0010 */  sw    $t4, 0x10($sp)
-/* 04A834 7F015D04 0FC025D8 */  jal   write_text_at_abs_coord
-/* 04A838 7F015D08 AFAD0014 */   sw    $t5, 0x14($sp)
-/* 04A83C 7F015D0C 0040B025 */  move  $s6, $v0
-.L7F015D10:
-/* 04A840 7F015D10 0FC2B03A */  jal   sub_GAME_7F0AC0E8
-/* 04A844 7F015D14 02602025 */   move  $a0, $s3
-/* 04A848 7F015D18 8FAE0098 */  lw    $t6, 0x98($sp)
-/* 04A84C 7F015D1C 03C2F021 */  addu  $fp, $fp, $v0
-/* 04A850 7F015D20 8FA9006C */  lw    $t1, 0x6c($sp)
-/* 04A854 7F015D24 25CF0001 */  addiu $t7, $t6, 1
-/* 04A858 7F015D28 AFAF0098 */  sw    $t7, 0x98($sp)
-/* 04A85C 7F015D2C 8FA8009C */  lw    $t0, 0x9c($sp)
-/* 04A860 7F015D30 25080001 */  addiu $t0, $t0, 1
-.L7F015D34:
-/* 04A864 7F015D34 2401000A */  li    $at, 10
-/* 04A868 7F015D38 1501FF4A */  bne   $t0, $at, .L7F015A64
-/* 04A86C 7F015D3C 25290004 */   addiu $t1, $t1, 4
-/* 04A870 7F015D40 8FBF005C */  lw    $ra, 0x5c($sp)
-/* 04A874 7F015D44 02C01025 */  move  $v0, $s6
-/* 04A878 7F015D48 8FB60050 */  lw    $s6, 0x50($sp)
-/* 04A87C 7F015D4C 8FB00038 */  lw    $s0, 0x38($sp)
-/* 04A880 7F015D50 8FB1003C */  lw    $s1, 0x3c($sp)
-/* 04A884 7F015D54 8FB20040 */  lw    $s2, 0x40($sp)
-/* 04A888 7F015D58 8FB30044 */  lw    $s3, 0x44($sp)
-/* 04A88C 7F015D5C 8FB40048 */  lw    $s4, 0x48($sp)
-/* 04A890 7F015D60 8FB5004C */  lw    $s5, 0x4c($sp)
-/* 04A894 7F015D64 8FB70054 */  lw    $s7, 0x54($sp)
-/* 04A898 7F015D68 8FBE0058 */  lw    $fp, 0x58($sp)
-/* 04A89C 7F015D6C 03E00008 */  jr    $ra
-/* 04A8A0 7F015D70 27BD00A0 */   addiu $sp, $sp, 0xa0
-)
-#endif
 
 
 
