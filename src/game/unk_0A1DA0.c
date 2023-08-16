@@ -3596,15 +3596,14 @@ glabel sub_GAME_7F0A3F04
 )
 #endif
 
-void sub_GAME_7F0A4528(Gfx *arg0, s32 arg1) {
-    s32 i;
-    s32 start_index;
+void sub_GAME_7F0A4528(Gfx *gdl, s32 arg1) {
+    
+    bondstruct_unk_8007A170 *thing = &dword_CODE_bss_8007A170[0]; \
+    bondstruct_unk_8007A170 *end = dword_CODE_bss_8007A170 + UNK_8007A170_MAX;
 
-    if (1) { start_index = 0; }
-
-    for (i = start_index; (i < UNK_8007A170_MAX ^ 0 ); i++)
+    for (; (thing < end); thing++)
     {
-        sub_GAME_7F0A3F04(&dword_CODE_bss_8007A170[i], arg0, arg1);
+        sub_GAME_7F0A3F04(thing, gdl, arg1);
     }
 }
 
