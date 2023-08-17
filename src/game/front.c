@@ -248,7 +248,7 @@ s32 highlight_aimadjustment;
  * Address 0x800697F0
  * EU .bss 0x80058730
 */
-u32 arrayUnlockedCheats[75];
+u32 arrayUnlockedCheats[CHEAT_INVALID];
 
 
 MENU current_menu = MENU_INVALID;
@@ -678,7 +678,7 @@ s16 solo_target_time_array[20][3] = {
     {0, 0, 360}
 };
 
-u32 totalunlockedcheats = 0;
+s32 totalunlockedcheats = 0;
 u32 D_8002B5E0 = 0;
 
 
@@ -8147,307 +8147,104 @@ void update_menu15_cheat(void)
 }
 
 
-
-#ifdef NONMATCHING
-void interface_menu15_cheat(u32 param_1,u32 param_2)
+// Address 0x7F017C88 NTSC
+void interface_menu15_cheat(void)
 {
-  int iVar1;
-  u32 BVar3;
-  int iVar4;
-  int iVar5;
+    s32 i;
+    
+    viSetFovY(60.0f);
+    viSetAspect(1.3333334f);
+    viSetZRange(100.0f, 10000.0f);
+    viSetUseZBuf(0);
+    
+    MP_menu_selected_option = 0;
 
-  viSetFovY(FOV_Y_F);
-  viSetAspect(menu15_aspect);
-  viSetZRange(100.00000000, menu15_pageheight);
-  viSetUseZBuf(0);
-  MP_menu_selected_option = 0;
-  iVar1 = dword_8002B5E0;
-  if (joyGetButtons(0,Z_TRIG|A_BUTTON) == 0) {
-    tab_prev_highlight = FALSE;
-    tab_next_highlight = FALSE;
-    tab_start_highlight = FALSE;
-    dword_8002B5E0 = 0;
-    BVar3 = isontab3();
-    if (BVar3 == FALSE) {
-      iVar1 = dword_8002B5E0;
-      if (((0xc < totalunlockedcheats) &&
-          (iVar5 = totalunlockedcheats + -0xd, iVar1 = dword_8002B5E0, 0xdb < (int)(float)cursor_h_pos))
-         && (iVar1 = dword_8002B5E0, -1 < iVar5)) {
-        iVar4 = iVar5 * 0x14 + 0x35;
-        do {
-          iVar1 = iVar5 + 0xc;
-          if (iVar4 <= (int)(float)cursor_v_pos) break;
-          iVar5 += -1;
-          iVar4 += -0x14;
-          iVar1 = dword_8002B5E0;
-        } while (-1 < iVar5);
-      }
-      dword_8002B5E0 = iVar1;
-      iVar1 = dword_8002B5E0;
-      if (dword_8002B5E0 == 0) {
-        iVar5 = totalunlockedcheats + -1;
-        if (0xc < totalunlockedcheats) {
-          iVar5 = 0xb;
+    if (joyGetButtons(PLAYER_1, A_BUTTON|Z_TRIG) == 0)
+    {
+        tab_prev_highlight = 0;
+        tab_next_highlight = 0;
+        tab_start_highlight = 0;
+        D_8002B5E0 = 0;
+        
+        if (isontab3())
+        {
+            tab_prev_highlight = 1;
         }
-        iVar1 = dword_8002B5E0;
-        if (-1 < iVar5) {
-          iVar4 = iVar5 * 0x14 + 0x35;
-          do {
-            iVar1 = iVar5;
-            if (iVar4 <= (int)(float)cursor_v_pos) break;
-            iVar5 += -1;
-            iVar4 += -0x14;
-            iVar1 = dword_8002B5E0;
-          } while (-1 < iVar5);
+        else
+        {
+            if (totalunlockedcheats >= 0xD)
+            {
+                i = totalunlockedcheats - 0xD;
+                if ((s32) cursor_h_pos >= 0xDC)
+                {
+                    for (; i >= 0; i--)
+                    {
+                        if ((s32) cursor_v_pos >= (i * 0x14) + 0x35)
+                        {
+                            D_8002B5E0 = i + 0xC;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (D_8002B5E0 == 0)
+            {
+                i = (totalunlockedcheats >= 0xD)
+                    ? 0xB
+                    : totalunlockedcheats - 1;
+
+                for (; i >= 0; i--)
+                {
+                    if ((s32) cursor_v_pos >= (i * 0x14) + 0x35)
+                    {
+                        D_8002B5E0 = i;
+                        break;
+                    }
+                }
+            }
         }
-      }
     }
-    else {
-      tab_prev_highlight = TRUE;
-      iVar1 = dword_8002B5E0;
+    
+    if (joyGetButtonsPressedThisFrame(PLAYER_1, A_BUTTON|Z_TRIG))
+    {
+        if (tab_prev_highlight != 0)
+        {
+            tab_prev_selected = 1;
+        }
+        else
+        {
+            MP_menu_selected_option = 1;
+        }
+        
+        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-  }
-  dword_8002B5E0 = iVar1;
-  uVar2 = joyGetButtonsPressedThisFrame(PLAYER_1,Z_TRIG|A_BUTTON);
-  if (uVar2 == 0) {
-    uVar2 = joyGetButtonsPressedThisFrame(PLAYER_1,B_BUTTON);
-    if (uVar2 != 0) {
-      tab_prev_selected = TRUE;
-      sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
+    else if (joyGetButtonsPressedThisFrame(0, 0x4000U) != 0)
+    {
+        tab_prev_selected = 1;
+        sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
-  }
-  else {
-    if (tab_prev_highlight == FALSE) {
-      MP_menu_selected_option = 1;
+    
+    disable_all_switches(walletinst[0]);
+    set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
+    set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
+    menu_control_stick_tracking();
+    
+    if (tab_prev_selected)
+    {
+        frontChangeMenu(MENU_MODE_SELECT, 0);
+        setCursorPOSforMode(gamemode);
+        return;
     }
-    else {
-      tab_prev_selected = TRUE;
+    
+    if (MP_menu_selected_option)
+    {
+    i = arrayUnlockedCheats[D_8002B5E0];
+        g_CheatActivated[i] = 1 - g_CheatActivated[i];
     }
-    sndPlaySfx((s32)(int)g_musicSfxBufferPtr,DOOR_METAL_CLOSE2_SFX,NULL);
-  }
-  disable_all_switches((int)walletinst[0]);
-  set_item_visibility_in_objinstance((int)walletinst[0], SW_TABS, 1);
-  set_item_visibility_in_objinstance((int)walletinst[0], SW_BLANK, 1);
-  set_item_visibility_in_objinstance((int)walletinst[0], SW_CLASSIFIED, 1);
-  menu_control_stick_tracking();
-  if (tab_prev_selected == FALSE) {
-    if (MP_menu_selected_option != 0) {
-      *(char *)((&DAT_800697f0)[dword_8002B5E0] + -0x7ff96960) =
-           1 - *(char *)((&DAT_800697f0)[dword_8002B5E0] + -0x7ff96960);
-    }
-  }
-  else {
-    frontChangeMenu(MENU_MODE_SELECT, FALSE);
-    setCursorPOSforMode(gamemode);
-  }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel menu15_aspect
-.word 0x3FAAAAAB /*1.3333334;*/
-glabel menu15_pageheight
-.word 0x461C4000 /*10000.0;*/
-.text
-glabel interface_menu15_cheat
-/* 04C7B8 7F017C88 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04C7BC 7F017C8C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 04C7C0 7F017C90 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04C7C4 7F017C94 44816000 */  mtc1  $at, $f12
-/* 04C7C8 7F017C98 0C001151 */  jal   viSetFovY
-/* 04C7CC 7F017C9C 00000000 */   nop
-/* 04C7D0 7F017CA0 3C018005 */  lui   $at, %hi(menu15_aspect)
-/* 04C7D4 7F017CA4 0C001164 */  jal   viSetAspect
-/* 04C7D8 7F017CA8 C42C1AE4 */   lwc1  $f12, %lo(menu15_aspect)($at)
-/* 04C7DC 7F017CAC 3C0142C8 */  li    $at, 0x42C80000 # 100.000000
-/* 04C7E0 7F017CB0 44816000 */  mtc1  $at, $f12
-/* 04C7E4 7F017CB4 3C018005 */  lui   $at, %hi(menu15_pageheight)
-/* 04C7E8 7F017CB8 0C001194 */  jal   viSetZRange
-/* 04C7EC 7F017CBC C42E1AE8 */   lwc1  $f14, %lo(menu15_pageheight)($at)
-/* 04C7F0 7F017CC0 0C00114D */  jal   viSetUseZBuf
-/* 04C7F4 7F017CC4 00002025 */   move  $a0, $zero
-/* 04C7F8 7F017CC8 3C018003 */  lui   $at, %hi(MP_menu_selected_option)
-/* 04C7FC 7F017CCC AC20B5E4 */  sw    $zero, %lo(MP_menu_selected_option)($at)
-/* 04C800 7F017CD0 00002025 */  move  $a0, $zero
-/* 04C804 7F017CD4 0C0030C3 */  jal   joyGetButtons
-/* 04C808 7F017CD8 3405A000 */   li    $a1, 40960
-/* 04C80C 7F017CDC 14400049 */  bnez  $v0, .L7F017E04
-/* 04C810 7F017CE0 3C018003 */   lui   $at, %hi(tab_prev_highlight)
-/* 04C814 7F017CE4 AC20A8E4 */  sw    $zero, %lo(tab_prev_highlight)($at)
-/* 04C818 7F017CE8 3C018003 */  lui   $at, %hi(tab_next_highlight)
-/* 04C81C 7F017CEC AC20A8E0 */  sw    $zero, %lo(tab_next_highlight)($at)
-/* 04C820 7F017CF0 3C018003 */  lui   $at, %hi(tab_start_highlight)
-/* 04C824 7F017CF4 AC20A8DC */  sw    $zero, %lo(tab_start_highlight)($at)
-/* 04C828 7F017CF8 3C018003 */  lui   $at, %hi(D_8002B5E0)
-/* 04C82C 7F017CFC 0FC028E7 */  jal   isontab3
-/* 04C830 7F017D00 AC20B5E0 */   sw    $zero, %lo(D_8002B5E0)($at)
-/* 04C834 7F017D04 10400005 */  beqz  $v0, .L7F017D1C
-/* 04C838 7F017D08 3C058003 */   lui   $a1, %hi(totalunlockedcheats)
-/* 04C83C 7F017D0C 240E0001 */  li    $t6, 1
-/* 04C840 7F017D10 3C018003 */  lui   $at, %hi(tab_prev_highlight)
-/* 04C844 7F017D14 1000003B */  b     .L7F017E04
-/* 04C848 7F017D18 AC2EA8E4 */   sw    $t6, %lo(tab_prev_highlight)($at)
-.L7F017D1C:
-/* 04C84C 7F017D1C 8CA5B5DC */  lw    $a1, %lo(totalunlockedcheats)($a1)
-/* 04C850 7F017D20 3C098003 */  lui   $t1, %hi(D_8002B5E0)
-/* 04C854 7F017D24 28A1000D */  slti  $at, $a1, 0xd
-/* 04C858 7F017D28 1420001C */  bnez  $at, .L7F017D9C
-/* 04C85C 7F017D2C 3C018003 */   lui   $at, %hi(cursor_h_pos)
-/* 04C860 7F017D30 C424A908 */  lwc1  $f4, %lo(cursor_h_pos)($at)
-/* 04C864 7F017D34 24A3FFF3 */  addiu $v1, $a1, -0xd
-/* 04C868 7F017D38 4600218D */  trunc.w.s $f6, $f4
-/* 04C86C 7F017D3C 44183000 */  mfc1  $t8, $f6
-/* 04C870 7F017D40 00000000 */  nop
-/* 04C874 7F017D44 2B0100DC */  slti  $at, $t8, 0xdc
-/* 04C878 7F017D48 14200014 */  bnez  $at, .L7F017D9C
-/* 04C87C 7F017D4C 00000000 */   nop
-/* 04C880 7F017D50 04600012 */  bltz  $v1, .L7F017D9C
-/* 04C884 7F017D54 3C018003 */   lui   $at, %hi(cursor_v_pos)
-/* 04C888 7F017D58 C428A90C */  lwc1  $f8, %lo(cursor_v_pos)($at)
-/* 04C88C 7F017D5C 00031080 */  sll   $v0, $v1, 2
-/* 04C890 7F017D60 00431021 */  addu  $v0, $v0, $v1
-/* 04C894 7F017D64 4600428D */  trunc.w.s $f10, $f8
-/* 04C898 7F017D68 00021080 */  sll   $v0, $v0, 2
-/* 04C89C 7F017D6C 24420035 */  addiu $v0, $v0, 0x35
-/* 04C8A0 7F017D70 44045000 */  mfc1  $a0, $f10
-/* 04C8A4 7F017D74 00000000 */  nop
-.L7F017D78:
-/* 04C8A8 7F017D78 0082082A */  slt   $at, $a0, $v0
-/* 04C8AC 7F017D7C 14200004 */  bnez  $at, .L7F017D90
-/* 04C8B0 7F017D80 2468000C */   addiu $t0, $v1, 0xc
-/* 04C8B4 7F017D84 3C018003 */  lui   $at, %hi(D_8002B5E0)
-/* 04C8B8 7F017D88 10000004 */  b     .L7F017D9C
-/* 04C8BC 7F017D8C AC28B5E0 */   sw    $t0, %lo(D_8002B5E0)($at)
-.L7F017D90:
-/* 04C8C0 7F017D90 2463FFFF */  addiu $v1, $v1, -1
-/* 04C8C4 7F017D94 0461FFF8 */  bgez  $v1, .L7F017D78
-/* 04C8C8 7F017D98 2442FFEC */   addiu $v0, $v0, -0x14
-.L7F017D9C:
-/* 04C8CC 7F017D9C 8D29B5E0 */  lw    $t1, %lo(D_8002B5E0)($t1)
-/* 04C8D0 7F017DA0 28A1000D */  slti  $at, $a1, 0xd
-/* 04C8D4 7F017DA4 55200018 */  bnezl $t1, .L7F017E08
-/* 04C8D8 7F017DA8 00002025 */   move  $a0, $zero
-/* 04C8DC 7F017DAC 14200003 */  bnez  $at, .L7F017DBC
-/* 04C8E0 7F017DB0 24A3FFFF */   addiu $v1, $a1, -1
-/* 04C8E4 7F017DB4 10000001 */  b     .L7F017DBC
-/* 04C8E8 7F017DB8 2403000B */   li    $v1, 11
-.L7F017DBC:
-/* 04C8EC 7F017DBC 04600011 */  bltz  $v1, .L7F017E04
-/* 04C8F0 7F017DC0 3C018003 */   lui   $at, %hi(cursor_v_pos)
-/* 04C8F4 7F017DC4 C430A90C */  lwc1  $f16, %lo(cursor_v_pos)($at)
-/* 04C8F8 7F017DC8 00031080 */  sll   $v0, $v1, 2
-/* 04C8FC 7F017DCC 00431021 */  addu  $v0, $v0, $v1
-/* 04C900 7F017DD0 4600848D */  trunc.w.s $f18, $f16
-/* 04C904 7F017DD4 00021080 */  sll   $v0, $v0, 2
-/* 04C908 7F017DD8 24420035 */  addiu $v0, $v0, 0x35
-/* 04C90C 7F017DDC 44049000 */  mfc1  $a0, $f18
-/* 04C910 7F017DE0 00000000 */  nop
-.L7F017DE4:
-/* 04C914 7F017DE4 0082082A */  slt   $at, $a0, $v0
-/* 04C918 7F017DE8 14200003 */  bnez  $at, .L7F017DF8
-/* 04C91C 7F017DEC 3C018003 */   lui   $at, %hi(D_8002B5E0)
-/* 04C920 7F017DF0 10000004 */  b     .L7F017E04
-/* 04C924 7F017DF4 AC23B5E0 */   sw    $v1, %lo(D_8002B5E0)($at)
-.L7F017DF8:
-/* 04C928 7F017DF8 2463FFFF */  addiu $v1, $v1, -1
-/* 04C92C 7F017DFC 0461FFF9 */  bgez  $v1, .L7F017DE4
-/* 04C930 7F017E00 2442FFEC */   addiu $v0, $v0, -0x14
-.L7F017E04:
-/* 04C934 7F017E04 00002025 */  move  $a0, $zero
-.L7F017E08:
-/* 04C938 7F017E08 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 04C93C 7F017E0C 3405A000 */   li    $a1, 40960
-/* 04C940 7F017E10 10400012 */  beqz  $v0, .L7F017E5C
-/* 04C944 7F017E14 00002025 */   move  $a0, $zero
-/* 04C948 7F017E18 3C0B8003 */  lui   $t3, %hi(tab_prev_highlight)
-/* 04C94C 7F017E1C 8D6BA8E4 */  lw    $t3, %lo(tab_prev_highlight)($t3)
-/* 04C950 7F017E20 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04C954 7F017E24 240500C7 */  li    $a1, 199
-/* 04C958 7F017E28 11600005 */  beqz  $t3, .L7F017E40
-/* 04C95C 7F017E2C 00003025 */   move  $a2, $zero
-/* 04C960 7F017E30 240C0001 */  li    $t4, 1
-/* 04C964 7F017E34 3C018003 */  lui   $at, %hi(tab_prev_selected)
-/* 04C968 7F017E38 10000004 */  b     .L7F017E4C
-/* 04C96C 7F017E3C AC2CA8D8 */   sw    $t4, %lo(tab_prev_selected)($at)
-.L7F017E40:
-/* 04C970 7F017E40 240D0001 */  li    $t5, 1
-/* 04C974 7F017E44 3C018003 */  lui   $at, %hi(MP_menu_selected_option)
-/* 04C978 7F017E48 AC2DB5E4 */  sw    $t5, %lo(MP_menu_selected_option)($at)
-.L7F017E4C:
-/* 04C97C 7F017E4C 0C002382 */  jal   sndPlaySfx
-/* 04C980 7F017E50 8C843720 */   lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 04C984 7F017E54 1000000C */  b     .L7F017E88
-/* 04C988 7F017E58 00000000 */   nop
-.L7F017E5C:
-/* 04C98C 7F017E5C 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 04C990 7F017E60 24054000 */   li    $a1, 16384
-/* 04C994 7F017E64 10400008 */  beqz  $v0, .L7F017E88
-/* 04C998 7F017E68 240E0001 */   li    $t6, 1
-/* 04C99C 7F017E6C 3C018003 */  lui   $at, %hi(tab_prev_selected)
-/* 04C9A0 7F017E70 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 04C9A4 7F017E74 AC2EA8D8 */  sw    $t6, %lo(tab_prev_selected)($at)
-/* 04C9A8 7F017E78 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 04C9AC 7F017E7C 240500C7 */  li    $a1, 199
-/* 04C9B0 7F017E80 0C002382 */  jal   sndPlaySfx
-/* 04C9B4 7F017E84 00003025 */   move  $a2, $zero
-.L7F017E88:
-/* 04C9B8 7F017E88 3C048003 */  lui   $a0, %hi(walletinst)
-/* 04C9BC 7F017E8C 0FC02DC9 */  jal   disable_all_switches
-/* 04C9C0 7F017E90 8C84A95C */   lw    $a0, %lo(walletinst)($a0)
-/* 04C9C4 7F017E94 3C048003 */  lui   $a0, %hi(walletinst)
-/* 04C9C8 7F017E98 8C84A95C */  lw    $a0, %lo(walletinst)($a0)
-/* 04C9CC 7F017E9C 00002825 */  move  $a1, $zero
-/* 04C9D0 7F017EA0 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04C9D4 7F017EA4 24060001 */   li    $a2, 1
-/* 04C9D8 7F017EA8 3C048003 */  lui   $a0, %hi(walletinst)
-/* 04C9DC 7F017EAC 8C84A95C */  lw    $a0, %lo(walletinst)($a0)
-/* 04C9E0 7F017EB0 2405002A */  li    $a1, 42
-/* 04C9E4 7F017EB4 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04C9E8 7F017EB8 24060001 */   li    $a2, 1
-/* 04C9EC 7F017EBC 3C048003 */  lui   $a0, %hi(walletinst)
-/* 04C9F0 7F017EC0 8C84A95C */  lw    $a0, %lo(walletinst)($a0)
-/* 04C9F4 7F017EC4 24050006 */  li    $a1, 6
-/* 04C9F8 7F017EC8 0FC02DF0 */  jal   set_item_visibility_in_objinstance
-/* 04C9FC 7F017ECC 24060001 */   li    $a2, 1
-/* 04CA00 7F017ED0 0FC026E1 */  jal   menu_control_stick_tracking
-/* 04CA04 7F017ED4 00000000 */   nop
-/* 04CA08 7F017ED8 3C0F8003 */  lui   $t7, %hi(tab_prev_selected)
-/* 04CA0C 7F017EDC 8DEFA8D8 */  lw    $t7, %lo(tab_prev_selected)($t7)
-/* 04CA10 7F017EE0 24040006 */  li    $a0, 6
-/* 04CA14 7F017EE4 3C188003 */  lui   $t8, %hi(MP_menu_selected_option)
-/* 04CA18 7F017EE8 11E00008 */  beqz  $t7, .L7F017F0C
-/* 04CA1C 7F017EEC 00000000 */   nop
-/* 04CA20 7F017EF0 0FC06975 */  jal   frontChangeMenu
-/* 04CA24 7F017EF4 00002825 */   move  $a1, $zero
-/* 04CA28 7F017EF8 3C048003 */  lui   $a0, %hi(gamemode)
-/* 04CA2C 7F017EFC 0FC035FF */  jal   setCursorPOSforMode
-/* 04CA30 7F017F00 8C84A8F0 */   lw    $a0, %lo(gamemode)($a0)
-/* 04CA34 7F017F04 10000012 */  b     .L7F017F50
-/* 04CA38 7F017F08 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F017F0C:
-/* 04CA3C 7F017F0C 8F18B5E4 */  lw    $t8, %lo(MP_menu_selected_option)($t8)
-/* 04CA40 7F017F10 3C198003 */  lui   $t9, %hi(D_8002B5E0)
-/* 04CA44 7F017F14 5300000E */  beql  $t8, $zero, .L7F017F50
-/* 04CA48 7F017F18 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 04CA4C 7F017F1C 8F39B5E0 */  lw    $t9, %lo(D_8002B5E0)($t9)
-/* 04CA50 7F017F20 3C038007 */  lui   $v1, %hi(arrayUnlockedCheats)
-/* 04CA54 7F017F24 3C098007 */  lui   $t1, %hi(g_CheatActivated)
-/* 04CA58 7F017F28 00194080 */  sll   $t0, $t9, 2
-/* 04CA5C 7F017F2C 00681821 */  addu  $v1, $v1, $t0
-/* 04CA60 7F017F30 8C6397F0 */  lw    $v1, %lo(arrayUnlockedCheats)($v1)
-/* 04CA64 7F017F34 252996A0 */  addiu $t1, %lo(g_CheatActivated) # addiu $t1, $t1, -0x6960
-/* 04CA68 7F017F38 240B0001 */  li    $t3, 1
-/* 04CA6C 7F017F3C 00691021 */  addu  $v0, $v1, $t1
-/* 04CA70 7F017F40 904A0000 */  lbu   $t2, ($v0)
-/* 04CA74 7F017F44 016A6023 */  subu  $t4, $t3, $t2
-/* 04CA78 7F017F48 A04C0000 */  sb    $t4, ($v0)
-/* 04CA7C 7F017F4C 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F017F50:
-/* 04CA80 7F017F50 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04CA84 7F017F54 03E00008 */  jr    $ra
-/* 04CA88 7F017F58 00000000 */   nop
-)
-#endif
+
 
 
 
