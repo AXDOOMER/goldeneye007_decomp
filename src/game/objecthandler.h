@@ -94,7 +94,7 @@ void animInit(struct Model *, struct ModelFileHeader *, u32 *);
 void modelSetAnimFlipFunction(Model *, void *);
 void subcalcmatrices(struct unk_joint_list *, Model *);
 void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
-void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, s32 buffer);
+void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, struct texpool * buffer);
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(struct unk_joint_list *arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);

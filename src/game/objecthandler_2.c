@@ -142,7 +142,7 @@ glabel sub_GAME_7F0762E0
 
 
 #ifdef NONMATCHING
-void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, u8* dst, s32 size, s32 buffer)
+void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, u8* dst, s32 size, struct texpool * buffer)
 {
 
     struct ModelNode *filedata;

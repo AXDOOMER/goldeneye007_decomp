@@ -94,14 +94,13 @@ f32 flt_CODE_bss_800695D8;
 f32 flt_CODE_bss_800695DC;
 //CODE.bss:800695E0
 f32 flt_CODE_bss_800695E0;
+
 //CODE.bss:800695E4
-f32 flt_CODE_bss_800695E4;
+s32 bss_800695E4;
+
 //CODE.bss:800695E8
-f32 flt_CODE_bss_800695E8;
-//CODE.bss:800695EC
-f32 flt_CODE_bss_800695EC;
-//CODE.bss:800695F0
-f32 flt_CODE_bss_800695F0;
+struct coord3d flt_CODE_bss_800695E8;
+
 //CODE.bss:800695F4
 f32 flt_CODE_bss_800695F4;
 //CODE.bss:800695F8
@@ -303,7 +302,7 @@ s32 is_emulating_spectrum = FALSE;
 
 s32 is_cheat_menu_available = FALSE;
 
-Gfx * ptr_logo_and_walletbond_DL = 0;
+u8 * ptr_logo_and_walletbond_DL = NULL;
 s32 ptr_menu_videobuffer = 0;
 struct Model *logoinst = NULL;
 struct Model * walletinst[] = { NULL, NULL, NULL, NULL};
@@ -686,8 +685,8 @@ u32 MP_menu_selected_option = 0;
 u32 intro_character_index = 0;
 u32 randomly_selected_intro_animation = ANIM_idle;
 u32 intro_animation_count = 0;
-u32 objinstance = 0;
-u32 ptrobjinstance = 0;
+struct Model *cast_model = NULL;
+struct Model *cast_model_weapon = NULL;
 u32 full_actor_intro = 0;
 
 struct intro_char intro_char_table[] = {
@@ -754,12 +753,14 @@ struct intro_animation intro_animation_table[] = {
     {0xFFFFFFFF, 0.0, 0.0, 0}
 };
 
-u32 D_8002BA2C = 0;
-u32 D_8002BA30 = 0;
-u32 D_8002BA34 = 0;
+struct coord3d D_8002BA2C = { 0 };
 
-PROP random_rifles_in_intro[] =
+#define INTRO_RANDOM_RIFLE_LEN 6
+struct intro_random_rifles
 {
+    PROP props[INTRO_RANDOM_RIFLE_LEN];
+};
+struct intro_random_rifles random_rifles_in_intro = {
     PROP_CHRKALASH,
     PROP_CHRM16,
     PROP_CHRFNP90,
@@ -768,8 +769,12 @@ PROP random_rifles_in_intro[] =
     PROP_CHRSNIPERRIFLE
 };
 
-PROP random_pistols_in_intro[] =
+#define INTRO_RANDOM_PISTO_LEN 10
+struct intro_random_pistols
 {
+    PROP props[INTRO_RANDOM_PISTO_LEN];
+};
+struct intro_random_pistols random_pistols_in_intro = {
     PROP_CHRWPPK,
     PROP_CHRWPPKSIL,
     PROP_CHRSKORPION,
@@ -8436,242 +8441,235 @@ void do_extended_cast_display(s32 flag)
 //CAST SCREEN
 //********************************************************************************************************
 #ifdef NONMATCHING
+
+// Address 0x7F01869C NTSC
+// Address 0x7F018714 PAL
+
+// https://decomp.me/scratch/MAkgo (PAL) 97.69%
 void init_menu18_displaycast(void)
 {
-  ModelFileHeader *objheader;
-  u32 uVar2;
-  u32 uVar3;
-  int iVar4;
-  s32 lVar1;
-  u32 BVar5;
-  int iVar6;
-  s32 extraout_a2_lo;
-  s32 extraout_a2_lo_00;
-  s32 extraout_a3_lo;
-  int *piVar7;
-  int *piVar8;
-  int *piVar9;
-  int *piVar10;
-  float fVar11;
-  f32 scale;
-  f32 scale_00;
-  float extraout_f12;
-  f32 extraout_f12_00;
-  float extraout_f12_01;
-  f32 extraout_f14;
-  float extraout_f14_00;
-  int local_8c [10];
-  int rifles [6];
-  ModelFileHeader *headHeader;
-  HEADS headID;
-  BODIES bodyID;
-  int aiStack40 [4];
-  float local_18;
-  s32 local_14;
-  s32 local_10;
-  undefined *local_8;
-  undefined *local_4;
+    u8 *spB4;
+    s32 spB0;
+    s32 temp_t0;
+    struct coord3d spA0;
+    struct texpool sp90;
+    enum BODIES sp8C;
+    enum HEADS sp88;
+    s32 sp84;
+    ModelFileHeader *sp80;
+    ModelFileHeader *sp7C;
+    ModelFileHeader *sp78;
+    s32 padding;
+    s32 sp70;
+    s32 sp6C;
+    struct intro_random_rifles sp54;
+    struct intro_random_pistols sp2C;
 
-  local_4 = ptr_logo_and_walletbond_DL;
-  local_18 = dword_8002BA2C;
-  local_14 = DAT_8002ba30;
-  local_10 = DAT_8002ba34;
-  headHeader = NULL;
-  uVar2 = randomGetNext();
-  if ((full_actor_intro != FALSE) && (intro_character_index == 0)) {
-    musicTrack1ApplySeqpVol(0x7fff);
-    g_musicXTrack1Fade = MUSIC_FADESTATE_UNSET;
-    musicTrack1Play(M_INTRO);
-  }
-  intro_animation_count = 0;
-  if (-1 < intro_animation_table[0].animID) {
-    intro_animation_count = 1;
-    while (-1 < intro_animation_table[intro_animation_count].animID) {
-      intro_animation_count += 1;
+    spB4 = ptr_logo_and_walletbond_DL;
+
+    // struct copy
+    spA0 = D_8002BA2C;
+
+    sp7C = NULL;
+    sp70 = randomGetNext() & 1;
+
+    if ((full_actor_intro != 0) && (intro_character_index == 0))
+    {
+        musicTrack1ApplySeqpVol(0x7FFF);
+        g_musicXTrack1Fade = 0;
+        musicTrack1Play(2);
     }
-  }
-  randomly_selected_intro_animation = randomGetNext();
-  randomly_selected_intro_animation %= intro_animation_count;
-  bodyID = intro_char_table[intro_character_index].body;
-  headID = intro_char_table[intro_character_index].head;
-  iVar6 = intro_animation_table[randomly_selected_intro_animation].camera_preset;
-  if (intro_animation_count == 0) {
-    trap(0x1c00);
-  }
-  if (bodyID == BODY_Special_Operations_Uniform) {
-    uVar3 = randomGetNext();
-    if (true) {
-      switch(uVar3 % 5) {
-      case 1:
-        headID = HEAD_Male_Brosnan_Default;
-        bodyID = BODY_Formal_Wear;
-        break;
-      case 2:
-        headID = HEAD_Male_Brosnan_Default;
-        bodyID = BODY_Jungle_Fatigues;
-        break;
-      case 3:
-        headID = HEAD_Male_Brosnan_Default;
-        bodyID = BODY_Parka;
-        break;
-      case 4:
-        headID = HEAD_Male_Brosnan_Tuxedo;
-        bodyID = BODY_Brosnan_Tuxedo;
-      }
+
+    for (intro_animation_count = 0; intro_animation_table[intro_animation_count].animID >= 0; intro_animation_count++)
+    {
+        // this `for` loop just sets intro_animation_count
     }
-  }
-  else {
-    if (bodyID == BODY_Natalya_Skirt) {
-      uVar3 = randomGetNext();
-      if ((uVar3 & 1) != 0) {
-        bodyID = BODY_Natalya_Jungle_Fatigues;
-      }
+
+    randomly_selected_intro_animation = randomGetNext() % (u32) intro_animation_count;
+
+    sp8C = intro_char_table[intro_character_index].body;
+    sp88 = intro_char_table[intro_character_index].head;
+
+    sp6C = intro_animation_table[randomly_selected_intro_animation].camera_preset;
+
+    if (sp8C == BODY_Special_Operations_Uniform)
+    {
+        switch (randomGetNext() % 5U)
+        {
+            case 0:
+            break;
+
+            case 1:
+                sp8C = BODY_Formal_Wear;\
+                sp88 = HEAD_Male_Brosnan_Default;
+            break;
+
+            case 2:
+                sp8C = BODY_Jungle_Fatigues;\
+                sp88 = HEAD_Male_Brosnan_Default;
+            break;
+
+            case 3:
+                sp8C = BODY_Parka;\
+                sp88 = HEAD_Male_Brosnan_Default;
+            break;
+
+            case 4:
+                sp8C = BODY_Brosnan_Tuxedo;\
+                sp88 = HEAD_Male_Brosnan_Tuxedo;
+            break;
+        }
     }
-    else {
-      if ((bodyID == BODY_Trevelyan_006) && (uVar3 = randomGetNext(), (uVar3 & 1) != 0)) {
-        bodyID = BODY_Trevelyan_Janus;
-      }
+    else if (sp8C == BODY_Natalya_Skirt)
+    {
+        if (randomGetNext() & 1)
+        {
+            sp8C = BODY_Natalya_Jungle_Fatigues;
+        }
     }
-  }
-  if (headID == 0xffffff9f) {
-    headID = get_random_head(bodyID);
-  }
-  local_8 = &DAT_00031160;
-  proc_7F0D2448(((u32)(local_4 + 0x3119f) | 0x3f) ^ 0x3f,0x1b8,0x14a);
-  proc_7F0CBAF4(aiStack40,(int)local_4,0x19000);
-  objheader = c_item_entries[bodyID].header;
-  local_4 = local_4 + 0x19000;
-  local_8 = local_8 + -0x19000;
-  load_object_fill_header
-            (objheader,(int *)c_item_entries[bodyID].filename,(int)local_4,(int)local_8,
-             (int)aiStack40);
-  iVar4 = proc_7F0BD188((u8 *)c_item_entries[bodyID].filename);
-  uVar3 = (iVar4 + 0x3fU | 0x3f) ^ 0x3f;
-  local_8 = local_8 + -uVar3;
-  local_4 = local_4 + uVar3;
-  if (-1 < (int)headID) {
-    headHeader = c_item_entries[headID].header;
-    load_object_fill_header
-              (headHeader,(int *)c_item_entries[headID].filename,(int)local_4,(int)local_8,
-               (int)aiStack40);
-    iVar4 = proc_7F0BD188((u8 *)c_item_entries[headID].filename);
-    uVar3 = (iVar4 + 0x3fU | 0x3f) ^ 0x3f;
-    local_8 = local_8 + -uVar3;
-    local_4 = local_4 + uVar3;
-  }
-  objinstance = (undefined *)setup_chr_instance(bodyID,headID,objheader,headHeader,0);
-  modelSetScale((int)objinstance,scale);
-  if (iVar6 == 0) {
-    ptrobjinstance = NULL;
-  }
-  else {
-    if (iVar6 == 2) {
-      rifles[0] = random_rifles_in_intro[0];
-      rifles[1] = random_rifles_in_intro[1];
-      rifles[3] = random_rifles_in_intro[3];
-      rifles[2] = random_rifles_in_intro[2];
-      rifles[4] = random_rifles_in_intro[4];
-      rifles[5] = random_rifles_in_intro[5];
-      uVar3 = randomGetNext();
-      iVar6 = rifles[uVar3 % 6];
+    else if (sp8C == BODY_Trevelyan_006 && randomGetNext() & 1)
+    {
+        sp8C = BODY_Trevelyan_Janus;
     }
-    else {
-      piVar7 = random_pistols_in_intro;
-      piVar9 = local_8c;
-      do {
-        piVar8 = piVar7 + 3;
-        piVar10 = piVar9 + 3;
-        *piVar9 = *piVar7;
-        piVar9[1] = piVar7[1];
-        piVar9[2] = piVar7[2];
-        piVar7 = piVar8;
-        piVar9 = piVar10;
-      } while (piVar8 != random_pistols_in_intro + 9);
-      *piVar10 = random_pistols_in_intro[9];
-      uVar3 = randomGetNext();
-      iVar6 = local_8c[uVar3 % 10];
+
+    if (sp88 == -0x61)
+    {
+        sp88 = get_random_head(sp8C);
     }
-    if ((iVar6 == 0xbe) && (lVar1 = fileIsCradleCompletedAnyFolder(), lVar1 == 0)) {
-      iVar6 = 0xbf;
+
+    // begin problem area
+    
+    temp_t0 = 0x19000;
+    spB0 = 0x18160 + temp_t0;
+
+    if(0);
+    
+    zbufSetBuffer(ALIGN64_V2(spB4 + spB0), 440, 330);
+    texInitPool(&sp90, spB4, temp_t0);
+
+    spB0 -= temp_t0;
+    spB4 += temp_t0;
+
+    sp80 = c_item_entries[sp8C].header;
+
+    // can't get subu a3,a3,v1
+    
+    load_object_fill_header(c_item_entries[sp8C].header, c_item_entries[sp8C].filename, spB4, spB0, &sp90);
+    temp_t0 = ALIGN64_V2(get_pc_buffer_remaining_value(c_item_entries[sp8C].filename));
+
+    // end problem area
+
+    spB0 -= temp_t0;
+    spB4 += temp_t0;
+
+    if (sp88 >= 0)
+    {
+        sp7C = c_item_entries[sp88].header;
+    
+        load_object_fill_header(c_item_entries[sp88].header, c_item_entries[sp88].filename, spB4, spB0, &sp90);
+        temp_t0 = ALIGN64_V2(get_pc_buffer_remaining_value(c_item_entries[sp88].filename));
+    
+        spB0 -= temp_t0;
+        spB4 += temp_t0;    
     }
-    if ((iVar6 == 0xbb) && (BVar5 = check_aztec_completed_any_folder_secret_00(), BVar5 == FALSE)) {
-      iVar6 = 0xbf;
+
+    cast_model = setup_chr_instance(sp8C, sp88, sp80, sp7C, 0);
+    modelSetScale((Model *) cast_model, 0.1f);
+
+    if (sp6C != 0)
+    {
+        if (sp6C == 2)
+        {
+            // struct copy
+            sp54 = random_rifles_in_intro;
+
+            sp84 = sp54.props[randomGetNext() % INTRO_RANDOM_RIFLE_LEN];
+        }
+        else
+        {
+            // struct copy
+            sp2C = random_pistols_in_intro;
+
+            sp84 = sp2C.props[randomGetNext() % INTRO_RANDOM_PISTO_LEN];
+        }
+
+        if (sp84 == PROP_CHRRUGER) // Cougar Magnum
+        {
+            if (fileIsCradleCompletedAnyFolder() == 0)
+            {
+                sp84 = PROP_CHRWPPK;
+            }
+        }
+
+        if (sp84 == PROP_CHRLASER)
+        {
+            if (check_aztec_completed_any_folder_secret_00() == 0)
+            {
+                sp84 = PROP_CHRWPPK;
+            }
+        }
+
+        if (sp84 == PROP_CHRGOLDEN)
+        {
+            if (fileIsEgyptCompletedOn00AnyFolder() == 0)
+            {
+                sp84 = PROP_CHRWPPK;
+            }
+        }
+
+        //temp_v0_4 = &PitemZ_entries[sp84];
+        sp78 = PitemZ_entries[sp84].header;
+    
+        load_object_fill_header(sp78, PitemZ_entries[sp84].filename, spB4, spB0, &sp90);
+        temp_t0 = ALIGN64_V2(get_pc_buffer_remaining_value(PitemZ_entries[sp84].filename));
+        spB0 -= temp_t0;
+        spB4 += temp_t0;
+
+        modelCalculateRwDataLen(sp78);
+        cast_model_weapon = get_obj_instance_controller_for_header(sp78);
+        modelSetScale((Model *) cast_model_weapon, 0.1f);
+
+        cast_model_weapon->attachedto = cast_model;
+        //var_v0_2 = (sp70 != 0) ? 5 : 3;
+        cast_model_weapon->attachedto_objinst = cast_model->obj->Switches[(sp70 != 0) ? 5 : 3];
     }
-    if ((iVar6 == 0xd0) && (BVar5 = fileIsEgyptCompletedOn00AnyFolder(), BVar5 == FALSE)) {
-      iVar6 = 0xbf;
+    else
+    {
+        cast_model_weapon = NULL;
     }
-    objheader = (ModelFileHeader *)PitemZ_entries[iVar6].header;
-    load_object_fill_header
-              (objheader,(int *)PitemZ_entries[iVar6].filename,(int)local_4,(int)local_8,
-               (int)aiStack40);
-    proc_7F0BD188((u8 *)PitemZ_entries[iVar6].filename);
-    modelCalculateRwDataLen(objheader);
-    ptrobjinstance = (undefined *)get_obj_instance_controller_for_header((ModelFileHeader *)objheader)
-    ;
-    modelSetScale((int)ptrobjinstance,scale_00);
-    iVar6 = 3;
-    *(undefined **)(ptrobjinstance + 0x18) = objinstance;
-    if ((uVar2 & 1) != 0) {
-      iVar6 = 5;
-    }
-    *(s32 *)(ptrobjinstance + 0x1c) =
-         *(s32 *)(*(int *)(*(int *)(objinstance + 8) + 8) + iVar6 * 4);
-  }
-  proc_7F06CE84((int)objinstance,0x3dcccccd);
-  setsuboffset((int)objinstance,&local_18,extraout_a2_lo,extraout_a3_lo);
-  setsubroty((int)objinstance,extraout_f12,0.00000000,extraout_a2_lo_00);
-  proc_7F06FF18((int)objinstance,extraout_f12_00,extraout_f14);
-  proc_7F06FCA8((int)objinstance,
-                *(s32 *)
-                 (animation_table_ptrs1 +
-                 intro_animation_table[randomly_selected_intro_animation].animID * 4),
-                (char)(uVar2 & 1),extraout_f12_01,
-                intro_animation_table[randomly_selected_intro_animation].startframeoffset,
-                extraout_f14_00);
-  g_MenuTimer = 0;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695a4 = fVar11 * 0.00000000 * 80.00000000 + 70.00000000;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695a8 = fVar11 * 0.00000000 * 80.00000000 + 70.00000000;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695b0 = (fVar11 * 0.00000000 - 0.50000000) * flt_80051B00;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695b4 = (fVar11 * 0.00000000 - 0.50000000) * flt_80051B04;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695bc = fVar11 * 0.00000000 * 200.00000000 + -100.00000000;
-  iVar6 = randomGetNext();
-  fVar11 = (float)iVar6;
-  if (iVar6 < 0) {
-    fVar11 = fVar11 + 4294967296.00000000;
-  }
-  DAT_800695a0 = DAT_800695a4;
-  dword_80069C6C = DAT_800695b0;
-  DAT_800695b8 = DAT_800695bc;
-  DAT_800695c0 = fVar11 * 0.00000000 * 200.00000000 + -100.00000000;
-  DAT_800695e4 = 1;
-  DAT_800695e8 = 0;
-  DAT_800695ec = 0;
-  DAT_800695f0 = 0;
+
+    sub_GAME_7F06CE84(cast_model, 0.1f);
+    setsuboffset(cast_model, &spA0);
+    setsubroty(cast_model, 0.0f);
+#if defined(VERSION_EU)
+    modelSetAnimPlaySpeed(cast_model, 0.600000023842f, 0);
+#else
+    modelSetAnimPlaySpeed(cast_model, 0.5f, 0);
+#endif
+
+    modelSetAnimation(
+        cast_model,
+        animation_table_ptrs1[intro_animation_table[randomly_selected_intro_animation].animID],
+        sp70,
+        intro_animation_table[randomly_selected_intro_animation].startframeoffset,
+        intro_animation_table[randomly_selected_intro_animation].playback_speed,
+        0.0f);
+    
+    g_MenuTimer = 0;
+    
+    flt_CODE_bss_800695A4 = (RANDOMGETNEXT_F32() * 80.0f) + 70.0f;
+    flt_CODE_bss_800695A8 = (RANDOMGETNEXT_F32() * 80.0f) + 70.0f;
+    flt_CODE_bss_800695B0 = (RANDOMGETNEXT_F32() - 0.5f) * 6.2831855f;
+    flt_CODE_bss_800695B4 = (RANDOMGETNEXT_F32() - 0.5f) * 2.5132742f;
+    flt_CODE_bss_800695BC = (RANDOMGETNEXT_F32() * 200.0f) + (-100.0f);
+    flt_CODE_bss_800695C0 = (RANDOMGETNEXT_F32() * 200.0f) + (-100.0f);
+    flt_CODE_bss_800695A0 = flt_CODE_bss_800695A4;
+    flt_CODE_bss_800695AC = flt_CODE_bss_800695B0;
+    flt_CODE_bss_800695B8 = flt_CODE_bss_800695BC;
+    bss_800695E4 = 1;
+    flt_CODE_bss_800695E8.f[0] = 0.0f;
+    flt_CODE_bss_800695E8.f[1] = 0.0f;
+    flt_CODE_bss_800695E8.f[2] = 0.0f;
 }
 #else
 #ifndef VERSION_EU
@@ -8934,8 +8932,8 @@ glabel init_menu18_displaycast
 /* 04D554 7F018A24 8FA7007C */  lw    $a3, 0x7c($sp)
 /* 04D558 7F018A28 0FC08D2A */  jal   setup_chr_instance
 /* 04D55C 7F018A2C AFA00010 */   sw    $zero, 0x10($sp)
-/* 04D560 7F018A30 3C038003 */  lui   $v1, %hi(objinstance)
-/* 04D564 7F018A34 2463B5F4 */  addiu $v1, %lo(objinstance) # addiu $v1, $v1, -0x4a0c
+/* 04D560 7F018A30 3C038003 */  lui   $v1, %hi(cast_model)
+/* 04D564 7F018A34 2463B5F4 */  addiu $v1, %lo(cast_model) # addiu $v1, $v1, -0x4a0c
 /* 04D568 7F018A38 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D56C 7F018A3C AC620000 */  sw    $v0, ($v1)
 /* 04D570 7F018A40 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
@@ -9046,17 +9044,17 @@ glabel init_menu18_displaycast
 /* 04D6F0 7F018BC0 8FA40078 */   lw    $a0, 0x78($sp)
 /* 04D6F4 7F018BC4 0FC1B025 */  jal   get_obj_instance_controller_for_header
 /* 04D6F8 7F018BC8 8FA40078 */   lw    $a0, 0x78($sp)
-/* 04D6FC 7F018BCC 3C038003 */  lui   $v1, %hi(ptrobjinstance)
-/* 04D700 7F018BD0 2463B5F8 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, -0x4a08
+/* 04D6FC 7F018BCC 3C038003 */  lui   $v1, %hi(cast_model_weapon)
+/* 04D700 7F018BD0 2463B5F8 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, -0x4a08
 /* 04D704 7F018BD4 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D708 7F018BD8 AC620000 */  sw    $v0, ($v1)
 /* 04D70C 7F018BDC 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
 /* 04D710 7F018BE0 0FC1B39E */  jal   modelSetScale
 /* 04D714 7F018BE4 00402025 */   move  $a0, $v0
-/* 04D718 7F018BE8 3C038003 */  lui   $v1, %hi(ptrobjinstance)
-/* 04D71C 7F018BEC 3C068003 */  lui   $a2, %hi(objinstance)
-/* 04D720 7F018BF0 24C6B5F4 */  addiu $a2, %lo(objinstance) # addiu $a2, $a2, -0x4a0c
-/* 04D724 7F018BF4 2463B5F8 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, -0x4a08
+/* 04D718 7F018BE8 3C038003 */  lui   $v1, %hi(cast_model_weapon)
+/* 04D71C 7F018BEC 3C068003 */  lui   $a2, %hi(cast_model)
+/* 04D720 7F018BF0 24C6B5F4 */  addiu $a2, %lo(cast_model) # addiu $a2, $a2, -0x4a0c
+/* 04D724 7F018BF4 2463B5F8 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, -0x4a08
 /* 04D728 7F018BF8 8C6B0000 */  lw    $t3, ($v1)
 /* 04D72C 7F018BFC 8CD90000 */  lw    $t9, ($a2)
 /* 04D730 7F018C00 24020003 */  li    $v0, 3
@@ -9077,26 +9075,26 @@ glabel init_menu18_displaycast
 /* 04D768 7F018C38 10000006 */  b     .L7F018C54
 /* 04D76C 7F018C3C AD0E001C */   sw    $t6, 0x1c($t0)
 .L7F018C40:
-/* 04D770 7F018C40 3C038003 */  lui   $v1, %hi(ptrobjinstance)
-/* 04D774 7F018C44 2463B5F8 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, -0x4a08
-/* 04D778 7F018C48 3C068003 */  lui   $a2, %hi(objinstance)
-/* 04D77C 7F018C4C 24C6B5F4 */  addiu $a2, %lo(objinstance) # addiu $a2, $a2, -0x4a0c
+/* 04D770 7F018C40 3C038003 */  lui   $v1, %hi(cast_model_weapon)
+/* 04D774 7F018C44 2463B5F8 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, -0x4a08
+/* 04D778 7F018C48 3C068003 */  lui   $a2, %hi(cast_model)
+/* 04D77C 7F018C4C 24C6B5F4 */  addiu $a2, %lo(cast_model) # addiu $a2, $a2, -0x4a0c
 /* 04D780 7F018C50 AC600000 */  sw    $zero, ($v1)
 .L7F018C54:
 /* 04D784 7F018C54 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04D788 7F018C58 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
 /* 04D78C 7F018C5C 0FC1B3A1 */  jal   sub_GAME_7F06CE84
 /* 04D790 7F018C60 8CC40000 */   lw    $a0, ($a2)
-/* 04D794 7F018C64 3C048003 */  lui   $a0, %hi(objinstance)
-/* 04D798 7F018C68 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
+/* 04D794 7F018C64 3C048003 */  lui   $a0, %hi(cast_model)
+/* 04D798 7F018C68 8C84B5F4 */  lw    $a0, %lo(cast_model)($a0)
 /* 04D79C 7F018C6C 0FC1B303 */  jal   setsuboffset
 /* 04D7A0 7F018C70 27A500A0 */   addiu $a1, $sp, 0xa0
-/* 04D7A4 7F018C74 3C048003 */  lui   $a0, %hi(objinstance)
-/* 04D7A8 7F018C78 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
+/* 04D7A4 7F018C74 3C048003 */  lui   $a0, %hi(cast_model)
+/* 04D7A8 7F018C78 8C84B5F4 */  lw    $a0, %lo(cast_model)($a0)
 /* 04D7AC 7F018C7C 0FC1B34F */  jal   setsubroty
 /* 04D7B0 7F018C80 24050000 */   li    $a1, 0
-/* 04D7B4 7F018C84 3C048003 */  lui   $a0, %hi(objinstance)
-/* 04D7B8 7F018C88 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
+/* 04D7B4 7F018C84 3C048003 */  lui   $a0, %hi(cast_model)
+/* 04D7B8 7F018C88 8C84B5F4 */  lw    $a0, %lo(cast_model)($a0)
 /* 04D7BC 7F018C8C 3C053F00 */  lui   $a1, 0x3f00
 /* 04D7C0 7F018C90 0FC1BFC6 */  jal   modelSetAnimPlaySpeed
 /* 04D7C4 7F018C94 24060000 */   li    $a2, 0
@@ -9112,8 +9110,8 @@ glabel init_menu18_displaycast
 /* 04D7EC 7F018CBC 3C058003 */  lui   $a1, %hi(animation_table_ptrs1)
 /* 04D7F0 7F018CC0 000AC080 */  sll   $t8, $t2, 2
 /* 04D7F4 7F018CC4 00B82821 */  addu  $a1, $a1, $t8
-/* 04D7F8 7F018CC8 3C048003 */  lui   $a0, %hi(objinstance)
-/* 04D7FC 7F018CCC 8C84B5F4 */  lw    $a0, %lo(objinstance)($a0)
+/* 04D7F8 7F018CC8 3C048003 */  lui   $a0, %hi(cast_model)
+/* 04D7FC 7F018CCC 8C84B5F4 */  lw    $a0, %lo(cast_model)($a0)
 /* 04D800 7F018CD0 8CA59D6C */  lw    $a1, %lo(animation_table_ptrs1)($a1)
 /* 04D804 7F018CD4 8C470004 */  lw    $a3, 4($v0)
 /* 04D808 7F018CD8 8FA60070 */  lw    $a2, 0x70($sp)
@@ -9260,8 +9258,8 @@ glabel init_menu18_displaycast
 /* 04DA24 7F018EF4 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695B8)
 /* 04DA28 7F018EF8 27BD00B8 */  addiu $sp, $sp, 0xb8
 /* 04DA2C 7F018EFC E42A95B8 */  swc1  $f10, %lo(flt_CODE_bss_800695B8)($at)
-/* 04DA30 7F018F00 3C018007 */  lui   $at, %hi(flt_CODE_bss_800695E4)
-/* 04DA34 7F018F04 AC2D95E4 */  sw    $t5, %lo(flt_CODE_bss_800695E4)($at)
+/* 04DA30 7F018F00 3C018007 */  lui   $at, %hi(bss_800695E4)
+/* 04DA34 7F018F04 AC2D95E4 */  sw    $t5, %lo(bss_800695E4)($at)
 /* 04DA38 7F018F08 E4600000 */  swc1  $f0, ($v1)
 /* 04DA3C 7F018F0C E4600004 */  swc1  $f0, 4($v1)
 /* 04DA40 7F018F10 03E00008 */  jr    $ra
@@ -9530,8 +9528,8 @@ glabel init_menu18_displaycast
 /* 04B48C 7F018A9C 8FA7007C */  lw    $a3, 0x7c($sp)
 /* 04B490 7F018AA0 0FC08D22 */  jal   setup_chr_instance
 /* 04B494 7F018AA4 AFA00010 */   sw    $zero, 0x10($sp)
-/* 04B498 7F018AA8 3C038002 */  lui   $v1, %hi(objinstance) # $v1, 0x8002
-/* 04B49C 7F018AAC 24636B44 */  addiu $v1, %lo(objinstance) # addiu $v1, $v1, 0x6b44
+/* 04B498 7F018AA8 3C038002 */  lui   $v1, %hi(cast_model) # $v1, 0x8002
+/* 04B49C 7F018AAC 24636B44 */  addiu $v1, %lo(cast_model) # addiu $v1, $v1, 0x6b44
 /* 04B4A0 7F018AB0 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B4A4 7F018AB4 AC620000 */  sw    $v0, ($v1)
 /* 04B4A8 7F018AB8 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
@@ -9642,17 +9640,17 @@ glabel init_menu18_displaycast
 /* 04B628 7F018C38 8FA40078 */   lw    $a0, 0x78($sp)
 /* 04B62C 7F018C3C 0FC1B1F5 */  jal   get_obj_instance_controller_for_header
 /* 04B630 7F018C40 8FA40078 */   lw    $a0, 0x78($sp)
-/* 04B634 7F018C44 3C038002 */  lui   $v1, %hi(ptrobjinstance) # $v1, 0x8002
-/* 04B638 7F018C48 24636B48 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, 0x6b48
+/* 04B634 7F018C44 3C038002 */  lui   $v1, %hi(cast_model_weapon) # $v1, 0x8002
+/* 04B638 7F018C48 24636B48 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, 0x6b48
 /* 04B63C 7F018C4C 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B640 7F018C50 AC620000 */  sw    $v0, ($v1)
 /* 04B644 7F018C54 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
 /* 04B648 7F018C58 0FC1B4CF */  jal   modelSetScale
 /* 04B64C 7F018C5C 00402025 */   move  $a0, $v0
-/* 04B650 7F018C60 3C038002 */  lui   $v1, %hi(ptrobjinstance) # $v1, 0x8002
-/* 04B654 7F018C64 3C068002 */  lui   $a2, %hi(objinstance) # $a2, 0x8002
-/* 04B658 7F018C68 24C66B44 */  addiu $a2, %lo(objinstance) # addiu $a2, $a2, 0x6b44
-/* 04B65C 7F018C6C 24636B48 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, 0x6b48
+/* 04B650 7F018C60 3C038002 */  lui   $v1, %hi(cast_model_weapon) # $v1, 0x8002
+/* 04B654 7F018C64 3C068002 */  lui   $a2, %hi(cast_model) # $a2, 0x8002
+/* 04B658 7F018C68 24C66B44 */  addiu $a2, %lo(cast_model) # addiu $a2, $a2, 0x6b44
+/* 04B65C 7F018C6C 24636B48 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, 0x6b48
 /* 04B660 7F018C70 8C6B0000 */  lw    $t3, ($v1)
 /* 04B664 7F018C74 8CD90000 */  lw    $t9, ($a2)
 /* 04B668 7F018C78 24020003 */  li    $v0, 3
@@ -9673,28 +9671,28 @@ glabel init_menu18_displaycast
 /* 04B6A0 7F018CB0 10000006 */  b     .L7F018CCC
 /* 04B6A4 7F018CB4 AD0E001C */   sw    $t6, 0x1c($t0)
 .L7F018CB8:
-/* 04B6A8 7F018CB8 3C038002 */  lui   $v1, %hi(ptrobjinstance) # $v1, 0x8002
-/* 04B6AC 7F018CBC 24636B48 */  addiu $v1, %lo(ptrobjinstance) # addiu $v1, $v1, 0x6b48
-/* 04B6B0 7F018CC0 3C068002 */  lui   $a2, %hi(objinstance) # $a2, 0x8002
-/* 04B6B4 7F018CC4 24C66B44 */  addiu $a2, %lo(objinstance) # addiu $a2, $a2, 0x6b44
+/* 04B6A8 7F018CB8 3C038002 */  lui   $v1, %hi(cast_model_weapon) # $v1, 0x8002
+/* 04B6AC 7F018CBC 24636B48 */  addiu $v1, %lo(cast_model_weapon) # addiu $v1, $v1, 0x6b48
+/* 04B6B0 7F018CC0 3C068002 */  lui   $a2, %hi(cast_model) # $a2, 0x8002
+/* 04B6B4 7F018CC4 24C66B44 */  addiu $a2, %lo(cast_model) # addiu $a2, $a2, 0x6b44
 /* 04B6B8 7F018CC8 AC600000 */  sw    $zero, ($v1)
 .L7F018CCC:
 /* 04B6BC 7F018CCC 3C053DCC */  lui   $a1, (0x3DCCCCCD >> 16) # lui $a1, 0x3dcc
 /* 04B6C0 7F018CD0 34A5CCCD */  ori   $a1, (0x3DCCCCCD & 0xFFFF) # ori $a1, $a1, 0xcccd
 /* 04B6C4 7F018CD4 0FC1B4D2 */  jal   sub_GAME_7F06CE84
 /* 04B6C8 7F018CD8 8CC40000 */   lw    $a0, ($a2)
-/* 04B6CC 7F018CDC 3C048002 */  lui   $a0, %hi(objinstance) # $a0, 0x8002
-/* 04B6D0 7F018CE0 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
+/* 04B6CC 7F018CDC 3C048002 */  lui   $a0, %hi(cast_model) # $a0, 0x8002
+/* 04B6D0 7F018CE0 8C846B44 */  lw    $a0, %lo(cast_model)($a0)
 /* 04B6D4 7F018CE4 0FC1B480 */  jal   setsuboffset
 /* 04B6D8 7F018CE8 27A500A0 */   addiu $a1, $sp, 0xa0
-/* 04B6DC 7F018CEC 3C048002 */  lui   $a0, %hi(objinstance) # $a0, 0x8002
-/* 04B6E0 7F018CF0 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
+/* 04B6DC 7F018CEC 3C048002 */  lui   $a0, %hi(cast_model) # $a0, 0x8002
+/* 04B6E0 7F018CF0 8C846B44 */  lw    $a0, %lo(cast_model)($a0)
 /* 04B6E4 7F018CF4 0FC1B49D */  jal   setsubroty
 /* 04B6E8 7F018CF8 24050000 */   li    $a1, 0
-/* 04B6EC 7F018CFC 3C048002 */  lui   $a0, %hi(objinstance) # $a0, 0x8002
+/* 04B6EC 7F018CFC 3C048002 */  lui   $a0, %hi(cast_model) # $a0, 0x8002
 /* 04B6F0 7F018D00 3C053F19 */  lui   $a1, (0x3F19999A >> 16) # lui $a1, 0x3f19
 /* 04B6F4 7F018D04 34A5999A */  ori   $a1, (0x3F19999A & 0xFFFF) # ori $a1, $a1, 0x999a
-/* 04B6F8 7F018D08 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
+/* 04B6F8 7F018D08 8C846B44 */  lw    $a0, %lo(cast_model)($a0)
 /* 04B6FC 7F018D0C 0FC1C02E */  jal   modelSetAnimPlaySpeed
 /* 04B700 7F018D10 24060000 */   li    $a2, 0
 /* 04B704 7F018D14 3C198002 */  lui   $t9, %hi(randomly_selected_intro_animation) # $t9, 0x8002
@@ -9709,8 +9707,8 @@ glabel init_menu18_displaycast
 /* 04B728 7F018D38 3C058002 */  lui   $a1, %hi(animation_table_ptrs1)
 /* 04B72C 7F018D3C 000AC080 */  sll   $t8, $t2, 2
 /* 04B730 7F018D40 00B82821 */  addu  $a1, $a1, $t8
-/* 04B734 7F018D44 3C048002 */  lui   $a0, %hi(objinstance) # $a0, 0x8002
-/* 04B738 7F018D48 8C846B44 */  lw    $a0, %lo(objinstance)($a0)
+/* 04B734 7F018D44 3C048002 */  lui   $a0, %hi(cast_model) # $a0, 0x8002
+/* 04B738 7F018D48 8C846B44 */  lw    $a0, %lo(cast_model)($a0)
 /* 04B73C 7F018D4C 8CA552BC */  lw    $a1, %lo(animation_table_ptrs1)($a1)
 /* 04B740 7F018D50 8C470004 */  lw    $a3, 4($v0)
 /* 04B744 7F018D54 8FA60070 */  lw    $a2, 0x70($sp)
@@ -9857,8 +9855,8 @@ glabel init_menu18_displaycast
 /* 04B960 7F018F70 3C018006 */  lui   $at, %hi(flt_CODE_bss_800695B8) # $at, 0x8006
 /* 04B964 7F018F74 27BD00B8 */  addiu $sp, $sp, 0xb8
 /* 04B968 7F018F78 E42A84F8 */  swc1  $f10, %lo(flt_CODE_bss_800695B8)($at)
-/* 04B96C 7F018F7C 3C018006 */  lui   $at, %hi(flt_CODE_bss_800695E4) # $at, 0x8006
-/* 04B970 7F018F80 AC2D8524 */  sw    $t5, %lo(flt_CODE_bss_800695E4)($at)
+/* 04B96C 7F018F7C 3C018006 */  lui   $at, %hi(bss_800695E4) # $at, 0x8006
+/* 04B970 7F018F80 AC2D8524 */  sw    $t5, %lo(bss_800695E4)($at)
 /* 04B974 7F018F84 E4600000 */  swc1  $f0, ($v1)
 /* 04B978 7F018F88 E4600004 */  swc1  $f0, 4($v1)
 /* 04B97C 7F018F8C 03E00008 */  jr    $ra
@@ -9870,11 +9868,11 @@ glabel init_menu18_displaycast
 
 
 void update_menu18_displaycast(void) {
-    if (objinstance != 0) {
-        clear_aircraft_model_obj(objinstance);
+    if (cast_model != 0) {
+        clear_aircraft_model_obj(cast_model);
     }
-    if (ptrobjinstance != 0) {
-        clear_model_obj(ptrobjinstance);
+    if (cast_model_weapon != 0) {
+        clear_model_obj(cast_model_weapon);
         return;
     }
 }
@@ -10781,8 +10779,8 @@ glabel constructor_menu18_displaycast
 /* 04E23C 7F01970C 3C0B0382 */  lui   $t3, (0x03820010 >> 16) # lui $t3, 0x382
 /* 04E240 7F019710 356B0010 */  ori   $t3, (0x03820010 & 0xFFFF) # ori $t3, $t3, 0x10
 /* 04E244 7F019714 26180010 */  addiu $t8, $s0, 0x10
-/* 04E248 7F019718 3C148003 */  lui   $s4, %hi(objinstance)
-/* 04E24C 7F01971C 2694B5F4 */  addiu $s4, %lo(objinstance) # addiu $s4, $s4, -0x4a0c
+/* 04E248 7F019718 3C148003 */  lui   $s4, %hi(cast_model)
+/* 04E24C 7F01971C 2694B5F4 */  addiu $s4, %lo(cast_model) # addiu $s4, $s4, -0x4a0c
 /* 04E250 7F019720 ACF80004 */  sw    $t8, 4($a3)
 /* 04E254 7F019724 ACEB0000 */  sw    $t3, ($a3)
 /* 04E258 7F019728 3C058005 */  lui   $a1, %hi(g_ClockTimer)
@@ -10797,8 +10795,8 @@ glabel constructor_menu18_displaycast
 /* 04E27C 7F01974C 00002025 */   move  $a0, $zero
 /* 04E280 7F019750 0FC1B5AC */  jal   subcalcpos
 /* 04E284 7F019754 8E840000 */   lw    $a0, ($s4)
-/* 04E288 7F019758 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E28C 7F01975C 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E288 7F019758 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E28C 7F01975C 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E290 7F019760 10E0000B */  beqz  $a3, .L7F019790
 /* 04E294 7F019764 00000000 */   nop
 /* 04E298 7F019768 8CEC0008 */  lw    $t4, 8($a3)
@@ -10809,8 +10807,8 @@ glabel constructor_menu18_displaycast
 /* 04E2AC 7F01977C 0FC1B1E7 */  jal   modelGetNodeRwData
 /* 04E2B0 7F019780 00E02025 */   move  $a0, $a3
 /* 04E2B4 7F019784 A4400000 */  sh    $zero, ($v0)
-/* 04E2B8 7F019788 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E2BC 7F01978C 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E2B8 7F019788 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E2BC 7F01978C 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 .L7F019790:
 /* 04E2C0 7F019790 50E0000A */  beql  $a3, $zero, .L7F0197BC
 /* 04E2C4 7F019794 8E8D0000 */   lw    $t5, ($s4)
@@ -10840,8 +10838,8 @@ glabel constructor_menu18_displaycast
 /* 04E320 7F0197F0 8E840000 */  lw    $a0, ($s4)
 /* 04E324 7F0197F4 0FC1B2E6 */  jal   getsuboffset
 /* 04E328 7F0197F8 27A50128 */   addiu $a1, $sp, 0x128
-/* 04E32C 7F0197FC 3C068007 */  lui   $a2, %hi(flt_CODE_bss_800695E4)
-/* 04E330 7F019800 24C695E4 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x6a1c
+/* 04E32C 7F0197FC 3C068007 */  lui   $a2, %hi(bss_800695E4)
+/* 04E330 7F019800 24C695E4 */  addiu $a2, %lo(bss_800695E4) # addiu $a2, $a2, -0x6a1c
 /* 04E334 7F019804 8CC20000 */  lw    $v0, ($a2)
 /* 04E338 7F019808 00008825 */  move  $s1, $zero
 /* 04E33C 7F01980C 3C038005 */  lui   $v1, %hi(g_ClockTimer)
@@ -10966,8 +10964,8 @@ glabel constructor_menu18_displaycast
 /* 04E504 7F0199D4 8D84000C */   lw    $a0, 0xc($t4)
 /* 04E508 7F0199D8 C60A0004 */  lwc1  $f10, 4($s0)
 /* 04E50C 7F0199DC C6040008 */  lwc1  $f4, 8($s0)
-/* 04E510 7F0199E0 3C068007 */  lui   $a2, %hi(flt_CODE_bss_800695E4)
-/* 04E514 7F0199E4 24C695E4 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x6a1c
+/* 04E510 7F0199E0 3C068007 */  lui   $a2, %hi(bss_800695E4)
+/* 04E514 7F0199E4 24C695E4 */  addiu $a2, %lo(bss_800695E4) # addiu $a2, $a2, -0x6a1c
 /* 04E518 7F0199E8 8CD90000 */  lw    $t9, ($a2)
 /* 04E51C 7F0199EC 3C018005 */  lui   $at, %hi(D_80051B30)
 /* 04E520 7F0199F0 E7AA0064 */  swc1  $f10, 0x64($sp)
@@ -11114,8 +11112,8 @@ glabel constructor_menu18_displaycast
 /* 04E744 7F019C14 27A401A8 */  addiu $a0, $sp, 0x1a8
 /* 04E748 7F019C18 0FC1BCBE */  jal   subcalcmatrices
 /* 04E74C 7F019C1C 8E850000 */   lw    $a1, ($s4)
-/* 04E750 7F019C20 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E754 7F019C24 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E750 7F019C20 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E754 7F019C24 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E758 7F019C28 50E00025 */  beql  $a3, $zero, .L7F019CC0
 /* 04E75C 7F019C2C 24180007 */   li    $t8, 7
 /* 04E760 7F019C30 8E840000 */  lw    $a0, ($s4)
@@ -11124,9 +11122,9 @@ glabel constructor_menu18_displaycast
 /* 04E76C 7F019C3C 00003025 */   move  $a2, $zero
 /* 04E770 7F019C40 8E980000 */  lw    $t8, ($s4)
 /* 04E774 7F019C44 AFA201A8 */  sw    $v0, 0x1a8($sp)
-/* 04E778 7F019C48 3C078003 */  lui   $a3, %hi(ptrobjinstance)
+/* 04E778 7F019C48 3C078003 */  lui   $a3, %hi(cast_model_weapon)
 /* 04E77C 7F019C4C 8F0C0008 */  lw    $t4, 8($t8)
-/* 04E780 7F019C50 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E780 7F019C50 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E784 7F019C54 27B20160 */  addiu $s2, $sp, 0x160
 /* 04E788 7F019C58 8D990008 */  lw    $t9, 8($t4)
 /* 04E78C 7F019C5C 8CEB001C */  lw    $t3, 0x1c($a3)
@@ -11140,8 +11138,8 @@ glabel constructor_menu18_displaycast
 /* 04E7AC 7F019C7C 8FA401A8 */  lw    $a0, 0x1a8($sp)
 /* 04E7B0 7F019C80 0FC1601A */  jal   matrix_4x4_multiply_in_place
 /* 04E7B4 7F019C84 02402825 */   move  $a1, $s2
-/* 04E7B8 7F019C88 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E7BC 7F019C8C 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E7B8 7F019C88 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E7BC 7F019C8C 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E7C0 7F019C90 AFB201A8 */  sw    $s2, 0x1a8($sp)
 /* 04E7C4 7F019C94 8CEF0008 */  lw    $t7, 8($a3)
 .L7F019C98:
@@ -11149,9 +11147,9 @@ glabel constructor_menu18_displaycast
 /* 04E7CC 7F019C9C 00046980 */  sll   $t5, $a0, 6
 /* 04E7D0 7F019CA0 0FC2F5C5 */  jal   dynAllocate
 /* 04E7D4 7F019CA4 01A02025 */   move  $a0, $t5
-/* 04E7D8 7F019CA8 3C058003 */  lui   $a1, %hi(ptrobjinstance)
+/* 04E7D8 7F019CA8 3C058003 */  lui   $a1, %hi(cast_model_weapon)
 /* 04E7DC 7F019CAC AFA201B8 */  sw    $v0, 0x1b8($sp)
-/* 04E7E0 7F019CB0 8CA5B5F8 */  lw    $a1, %lo(ptrobjinstance)($a1)
+/* 04E7E0 7F019CB0 8CA5B5F8 */  lw    $a1, %lo(cast_model_weapon)($a1)
 /* 04E7E4 7F019CB4 0FC1BC92 */  jal   instcalcmatrices
 /* 04E7E8 7F019CB8 27A401A8 */   addiu $a0, $sp, 0x1a8
 /* 04E7EC 7F019CBC 24180007 */  li    $t8, 7
@@ -11166,8 +11164,8 @@ glabel constructor_menu18_displaycast
 /* 04E80C 7F019CDC 27A401A8 */  addiu $a0, $sp, 0x1a8
 /* 04E810 7F019CE0 0FC1D1A1 */  jal   subdraw
 /* 04E814 7F019CE4 8E850000 */   lw    $a1, ($s4)
-/* 04E818 7F019CE8 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E81C 7F019CEC 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E818 7F019CE8 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E81C 7F019CEC 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E820 7F019CF0 10E00003 */  beqz  $a3, .L7F019D00
 /* 04E824 7F019CF4 27A401A8 */   addiu $a0, $sp, 0x1a8
 /* 04E828 7F019CF8 0FC1D1A1 */  jal   subdraw
@@ -11201,8 +11199,8 @@ glabel constructor_menu18_displaycast
 /* 04E890 7F019D60 5420FFF0 */  bnezl $at, .L7F019D24
 /* 04E894 7F019D64 8C4F000C */   lw    $t7, 0xc($v0)
 .L7F019D68:
-/* 04E898 7F019D68 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E89C 7F019D6C 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E898 7F019D68 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E89C 7F019D6C 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E8A0 7F019D70 50E0001C */  beql  $a3, $zero, .L7F019DE4
 /* 04E8A4 7F019D74 02601025 */   move  $v0, $s3
 /* 04E8A8 7F019D78 8CEE0008 */  lw    $t6, 8($a3)
@@ -11216,15 +11214,15 @@ glabel constructor_menu18_displaycast
 /* 04E8C4 7F019D94 02402825 */  move  $a1, $s2
 /* 04E8C8 7F019D98 0FC16008 */  jal   matrix_4x4_copy
 /* 04E8CC 7F019D9C 01B02021 */   addu  $a0, $t5, $s0
-/* 04E8D0 7F019DA0 3C188003 */  lui   $t8, %hi(ptrobjinstance)
-/* 04E8D4 7F019DA4 8F18B5F8 */  lw    $t8, %lo(ptrobjinstance)($t8)
+/* 04E8D0 7F019DA0 3C188003 */  lui   $t8, %hi(cast_model_weapon)
+/* 04E8D4 7F019DA4 8F18B5F8 */  lw    $t8, %lo(cast_model_weapon)($t8)
 /* 04E8D8 7F019DA8 0011C980 */  sll   $t9, $s1, 6
 /* 04E8DC 7F019DAC 02402025 */  move  $a0, $s2
 /* 04E8E0 7F019DB0 8F0C000C */  lw    $t4, 0xc($t8)
 /* 04E8E4 7F019DB4 0FC16327 */  jal   matrix_4x4_f32_to_s32
 /* 04E8E8 7F019DB8 01992821 */   addu  $a1, $t4, $t9
-/* 04E8EC 7F019DBC 3C078003 */  lui   $a3, %hi(ptrobjinstance)
-/* 04E8F0 7F019DC0 8CE7B5F8 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04E8EC 7F019DBC 3C078003 */  lui   $a3, %hi(cast_model_weapon)
+/* 04E8F0 7F019DC0 8CE7B5F8 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04E8F4 7F019DC4 26310001 */  addiu $s1, $s1, 1
 /* 04E8F8 7F019DC8 26100040 */  addiu $s0, $s0, 0x40
 /* 04E8FC 7F019DCC 8CEB0008 */  lw    $t3, 8($a3)
@@ -11905,8 +11903,8 @@ glabel constructor_menu18_displaycast
 /* 04C178 7F019788 3C0B0382 */  lui   $t3, (0x03820010 >> 16) # lui $t3, 0x382
 /* 04C17C 7F01978C 356B0010 */  ori   $t3, (0x03820010 & 0xFFFF) # ori $t3, $t3, 0x10
 /* 04C180 7F019790 26180010 */  addiu $t8, $s0, 0x10
-/* 04C184 7F019794 3C148002 */  lui   $s4, %hi(objinstance) # $s4, 0x8002
-/* 04C188 7F019798 26946B44 */  addiu $s4, %lo(objinstance) # addiu $s4, $s4, 0x6b44
+/* 04C184 7F019794 3C148002 */  lui   $s4, %hi(cast_model) # $s4, 0x8002
+/* 04C188 7F019798 26946B44 */  addiu $s4, %lo(cast_model) # addiu $s4, $s4, 0x6b44
 /* 04C18C 7F01979C ACF80004 */  sw    $t8, 4($a3)
 /* 04C190 7F0197A0 ACEB0000 */  sw    $t3, ($a3)
 /* 04C194 7F0197A4 3C058004 */  lui   $a1, %hi(g_ClockTimer) # $a1, 0x8004
@@ -11921,8 +11919,8 @@ glabel constructor_menu18_displaycast
 /* 04C1B8 7F0197C8 00002025 */   move  $a0, $zero
 /* 04C1BC 7F0197CC 0FC1B6B8 */  jal   subcalcpos
 /* 04C1C0 7F0197D0 8E840000 */   lw    $a0, ($s4)
-/* 04C1C4 7F0197D4 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C1C8 7F0197D8 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C1C4 7F0197D4 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C1C8 7F0197D8 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C1CC 7F0197DC 10E0000B */  beqz  $a3, .L7F01980C
 /* 04C1D0 7F0197E0 00000000 */   nop
 /* 04C1D4 7F0197E4 8CEC0008 */  lw    $t4, 8($a3)
@@ -11933,8 +11931,8 @@ glabel constructor_menu18_displaycast
 /* 04C1E8 7F0197F8 0FC1B3A3 */  jal   modelGetNodeRwData
 /* 04C1EC 7F0197FC 00E02025 */   move  $a0, $a3
 /* 04C1F0 7F019800 A4400000 */  sh    $zero, ($v0)
-/* 04C1F4 7F019804 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C1F8 7F019808 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C1F4 7F019804 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C1F8 7F019808 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 .L7F01980C:
 /* 04C1FC 7F01980C 50E0000A */  beql  $a3, $zero, .L7F019838
 /* 04C200 7F019810 8E8D0000 */   lw    $t5, ($s4)
@@ -11964,8 +11962,8 @@ glabel constructor_menu18_displaycast
 /* 04C25C 7F01986C 8E840000 */  lw    $a0, ($s4)
 /* 04C260 7F019870 0FC1B476 */  jal   getsuboffset
 /* 04C264 7F019874 27A50128 */   addiu $a1, $sp, 0x128
-/* 04C268 7F019878 3C068006 */  lui   $a2, %hi(flt_CODE_bss_800695E4) # $a2, 0x8006
-/* 04C26C 7F01987C 24C68524 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x7adc
+/* 04C268 7F019878 3C068006 */  lui   $a2, %hi(bss_800695E4) # $a2, 0x8006
+/* 04C26C 7F01987C 24C68524 */  addiu $a2, %lo(bss_800695E4) # addiu $a2, $a2, -0x7adc
 /* 04C270 7F019880 8CC20000 */  lw    $v0, ($a2)
 /* 04C274 7F019884 00008825 */  move  $s1, $zero
 /* 04C278 7F019888 3C038004 */  lui   $v1, %hi(g_ClockTimer) # $v1, 0x8004
@@ -12090,8 +12088,8 @@ glabel constructor_menu18_displaycast
 /* 04C440 7F019A50 8D84000C */   lw    $a0, 0xc($t4)
 /* 04C444 7F019A54 C60A0004 */  lwc1  $f10, 4($s0)
 /* 04C448 7F019A58 C6040008 */  lwc1  $f4, 8($s0)
-/* 04C44C 7F019A5C 3C068006 */  lui   $a2, %hi(flt_CODE_bss_800695E4) # $a2, 0x8006
-/* 04C450 7F019A60 24C68524 */  addiu $a2, %lo(flt_CODE_bss_800695E4) # addiu $a2, $a2, -0x7adc
+/* 04C44C 7F019A5C 3C068006 */  lui   $a2, %hi(bss_800695E4) # $a2, 0x8006
+/* 04C450 7F019A60 24C68524 */  addiu $a2, %lo(bss_800695E4) # addiu $a2, $a2, -0x7adc
 /* 04C454 7F019A64 8CD90000 */  lw    $t9, ($a2)
 /* 04C458 7F019A68 3C018004 */  lui   $at, %hi(D_80051B30) # $at, 0x8004
 /* 04C45C 7F019A6C E7AA0064 */  swc1  $f10, 0x64($sp)
@@ -12238,8 +12236,8 @@ glabel constructor_menu18_displaycast
 /* 04C680 7F019C90 27A401A8 */  addiu $a0, $sp, 0x1a8
 /* 04C684 7F019C94 0FC1BD9C */  jal   subcalcmatrices
 /* 04C688 7F019C98 8E850000 */   lw    $a1, ($s4)
-/* 04C68C 7F019C9C 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C690 7F019CA0 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C68C 7F019C9C 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C690 7F019CA0 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C694 7F019CA4 50E00025 */  beql  $a3, $zero, .L7F019D3C
 /* 04C698 7F019CA8 24180007 */   li    $t8, 7
 /* 04C69C 7F019CAC 8E840000 */  lw    $a0, ($s4)
@@ -12248,9 +12246,9 @@ glabel constructor_menu18_displaycast
 /* 04C6A8 7F019CB8 00003025 */   move  $a2, $zero
 /* 04C6AC 7F019CBC 8E980000 */  lw    $t8, ($s4)
 /* 04C6B0 7F019CC0 AFA201A8 */  sw    $v0, 0x1a8($sp)
-/* 04C6B4 7F019CC4 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
+/* 04C6B4 7F019CC4 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
 /* 04C6B8 7F019CC8 8F0C0008 */  lw    $t4, 8($t8)
-/* 04C6BC 7F019CCC 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C6BC 7F019CCC 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C6C0 7F019CD0 27B20160 */  addiu $s2, $sp, 0x160
 /* 04C6C4 7F019CD4 8D990008 */  lw    $t9, 8($t4)
 /* 04C6C8 7F019CD8 8CEB001C */  lw    $t3, 0x1c($a3)
@@ -12264,8 +12262,8 @@ glabel constructor_menu18_displaycast
 /* 04C6E8 7F019CF8 8FA401A8 */  lw    $a0, 0x1a8($sp)
 /* 04C6EC 7F019CFC 0FC16144 */  jal   matrix_4x4_multiply_in_place
 /* 04C6F0 7F019D00 02402825 */   move  $a1, $s2
-/* 04C6F4 7F019D04 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C6F8 7F019D08 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C6F4 7F019D04 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C6F8 7F019D08 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C6FC 7F019D0C AFB201A8 */  sw    $s2, 0x1a8($sp)
 /* 04C700 7F019D10 8CEF0008 */  lw    $t7, 8($a3)
 .L7F019D14:
@@ -12273,9 +12271,9 @@ glabel constructor_menu18_displaycast
 /* 04C708 7F019D18 00046980 */  sll   $t5, $a0, 6
 /* 04C70C 7F019D1C 0FC2F2B1 */  jal   dynAllocate
 /* 04C710 7F019D20 01A02025 */   move  $a0, $t5
-/* 04C714 7F019D24 3C058002 */  lui   $a1, %hi(ptrobjinstance) # $a1, 0x8002
+/* 04C714 7F019D24 3C058002 */  lui   $a1, %hi(cast_model_weapon) # $a1, 0x8002
 /* 04C718 7F019D28 AFA201B8 */  sw    $v0, 0x1b8($sp)
-/* 04C71C 7F019D2C 8CA56B48 */  lw    $a1, %lo(ptrobjinstance)($a1)
+/* 04C71C 7F019D2C 8CA56B48 */  lw    $a1, %lo(cast_model_weapon)($a1)
 /* 04C720 7F019D30 0FC1BD8D */  jal   instcalcmatrices
 /* 04C724 7F019D34 27A401A8 */   addiu $a0, $sp, 0x1a8
 /* 04C728 7F019D38 24180007 */  li    $t8, 7
@@ -12290,8 +12288,8 @@ glabel constructor_menu18_displaycast
 /* 04C748 7F019D58 27A401A8 */  addiu $a0, $sp, 0x1a8
 /* 04C74C 7F019D5C 0FC1D1D6 */  jal   subdraw
 /* 04C750 7F019D60 8E850000 */   lw    $a1, ($s4)
-/* 04C754 7F019D64 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C758 7F019D68 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C754 7F019D64 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C758 7F019D68 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C75C 7F019D6C 10E00003 */  beqz  $a3, .L7F019D7C
 /* 04C760 7F019D70 27A401A8 */   addiu $a0, $sp, 0x1a8
 /* 04C764 7F019D74 0FC1D1D6 */  jal   subdraw
@@ -12325,8 +12323,8 @@ glabel constructor_menu18_displaycast
 /* 04C7CC 7F019DDC 5420FFF0 */  bnezl $at, .L7F019DA0
 /* 04C7D0 7F019DE0 8C4F000C */   lw    $t7, 0xc($v0)
 .L7F019DE4:
-/* 04C7D4 7F019DE4 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C7D8 7F019DE8 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C7D4 7F019DE4 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C7D8 7F019DE8 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C7DC 7F019DEC 50E0001C */  beql  $a3, $zero, .L7F019E60
 /* 04C7E0 7F019DF0 02601025 */   move  $v0, $s3
 /* 04C7E4 7F019DF4 8CEE0008 */  lw    $t6, 8($a3)
@@ -12340,15 +12338,15 @@ glabel constructor_menu18_displaycast
 /* 04C800 7F019E10 02402825 */  move  $a1, $s2
 /* 04C804 7F019E14 0FC16132 */  jal   matrix_4x4_copy
 /* 04C808 7F019E18 01B02021 */   addu  $a0, $t5, $s0
-/* 04C80C 7F019E1C 3C188002 */  lui   $t8, %hi(ptrobjinstance) # $t8, 0x8002
-/* 04C810 7F019E20 8F186B48 */  lw    $t8, %lo(ptrobjinstance)($t8)
+/* 04C80C 7F019E1C 3C188002 */  lui   $t8, %hi(cast_model_weapon) # $t8, 0x8002
+/* 04C810 7F019E20 8F186B48 */  lw    $t8, %lo(cast_model_weapon)($t8)
 /* 04C814 7F019E24 0011C980 */  sll   $t9, $s1, 6
 /* 04C818 7F019E28 02402025 */  move  $a0, $s2
 /* 04C81C 7F019E2C 8F0C000C */  lw    $t4, 0xc($t8)
 /* 04C820 7F019E30 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 04C824 7F019E34 01992821 */   addu  $a1, $t4, $t9
-/* 04C828 7F019E38 3C078002 */  lui   $a3, %hi(ptrobjinstance) # $a3, 0x8002
-/* 04C82C 7F019E3C 8CE76B48 */  lw    $a3, %lo(ptrobjinstance)($a3)
+/* 04C828 7F019E38 3C078002 */  lui   $a3, %hi(cast_model_weapon) # $a3, 0x8002
+/* 04C82C 7F019E3C 8CE76B48 */  lw    $a3, %lo(cast_model_weapon)($a3)
 /* 04C830 7F019E40 26310001 */  addiu $s1, $s1, 1
 /* 04C834 7F019E44 26100040 */  addiu $s0, $s0, 0x40
 /* 04C838 7F019E48 8CEB0008 */  lw    $t3, 8($a3)

@@ -76,8 +76,8 @@ struct MP_sight_aim_settings {
 };
 
 struct intro_char {
-    int body;
-    int head;
+    enum BODIES body;
+    enum HEADS head;
     short text1;
     short text2;
     short text3;
@@ -131,14 +131,13 @@ extern f32 flt_CODE_bss_800695D8;
 extern f32 flt_CODE_bss_800695DC;
 //CODE.bss:800695E0
 extern f32 flt_CODE_bss_800695E0;
+
 //CODE.bss:800695E4
-extern f32 flt_CODE_bss_800695E4;
+extern s32 bss_800695E4;
+
 //CODE.bss:800695E8
-extern f32 flt_CODE_bss_800695E8;
-//CODE.bss:800695EC
-extern f32 flt_CODE_bss_800695EC;
-//CODE.bss:800695F0
-extern f32 flt_CODE_bss_800695F0;
+extern struct coord3d flt_CODE_bss_800695E8;
+
 //CODE.bss:800695F4                     .align 3
 //CODE.bss:800695F8
 extern f32 flt_CODE_bss_800695F8;
@@ -281,7 +280,7 @@ extern s32 screen_size;
 extern s32 spectrum_related_flag;
 extern s32 is_emulating_spectrum;
 extern s32 is_cheat_menu_available;
-extern Gfx * ptr_logo_and_walletbond_DL;
+extern u8 * ptr_logo_and_walletbond_DL;
 extern s32 ptr_menu_videobuffer;
 extern  Model * walletinst[];
 extern Lights1 gelogolight;
@@ -313,8 +312,8 @@ extern s16 solo_target_time_array[20][3];
 extern u32 intro_character_index;
 extern u32 randomly_selected_intro_animation;
 extern u32 intro_animation_count;
-extern u32 objinstance;
-extern u32 ptrobjinstance;
+extern struct Model *cast_model;
+extern struct Model *cast_model_weapon;
 extern u32 full_actor_intro;
 
 void frontChangeMenu(MENU menu, s32 reload);

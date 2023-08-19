@@ -44,4 +44,6 @@ void *_fileIndexLoadToAddr(int index, FILELOADMETHOD param_2, u8 *ptrdata, int s
 void *_fileIndexLoadToBank(s32 index, FILELOADMETHOD param_2, s32 size, u8 bank);
 #endif
 
+s32 get_pc_buffer_remaining_value(u8 *name);
+
 #endif
