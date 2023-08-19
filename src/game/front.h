@@ -309,7 +309,7 @@ extern s32 unlock_control_style;
 extern s32 unlock_aim_sight;
 extern s16 solo_target_time_array[20][3];
 
-extern u32 intro_character_index;
+extern s32 intro_character_index;
 extern u32 randomly_selected_intro_animation;
 extern u32 intro_animation_count;
 extern struct Model *cast_model;
