@@ -81,19 +81,11 @@ f32 flt_CODE_bss_800695C0;
 //CODE.bss:800695C4
 f32 flt_CODE_bss_800695C4;
 //CODE.bss:800695C8
-f32 flt_CODE_bss_800695C8;
-//CODE.bss:800695CC
-f32 flt_CODE_bss_800695CC;
-//CODE.bss:800695D0
-f32 flt_CODE_bss_800695D0;
+struct coord3d flt_CODE_bss_800695C8;
 //CODE.bss:800695D4
 f32 flt_CODE_bss_800695D4;
 //CODE.bss:800695D8
-f32 flt_CODE_bss_800695D8;
-//CODE.bss:800695DC
-f32 flt_CODE_bss_800695DC;
-//CODE.bss:800695E0
-f32 flt_CODE_bss_800695E0;
+struct coord3d flt_CODE_bss_800695D8;
 
 //CODE.bss:800695E4
 s32 bss_800695E4;
@@ -104,19 +96,14 @@ struct coord3d flt_CODE_bss_800695E8;
 //CODE.bss:800695F4
 f32 flt_CODE_bss_800695F4;
 //CODE.bss:800695F8
-f32 flt_CODE_bss_800695F8;
-//CODE.bss:800695FC
-f32 flt_CODE_bss_800695FC;
-//CODE.bss:80069600
-f32 flt_CODE_bss_80069600;
+struct coord3d flt_CODE_bss_800695F8;
 //CODE.bss:80069604
 f32 flt_CODE_bss_80069604;
+
 //CODE.bss:80069608
-f32 flt_CODE_bss_80069608;
-//CODE.bss:8006960C
-f32 flt_CODE_bss_8006960C;
-//CODE.bss:80069610
-f32 flt_CODE_bss_80069610;
+struct coord3d flt_CODE_bss_80069608;
+
+
 //CODE.bss:80069614
 f32 ninLogoRotRate;
 
@@ -787,38 +774,15 @@ struct intro_random_pistols random_pistols_in_intro = {
     PROP_CHRGOLDEN
 };
 
-f32 D_8002BA78 = 0.0f;
-f32 D_8002BA7C = 0.0f;
-f32 D_8002BA80 = 1.0f;
 
-f32 D_8002BA84 = 0.0f;
-f32 D_8002BA88 = 0.0f;
-f32 D_8002BA8C = 0.0f;
+struct coord3d D_8002BA78 = { 0.0f, 0.0f, 1.0f };
+struct coord3d D_8002BA84 = { 0.0f, 0.0f, 0.0f };
+struct coord3d D_8002BA90 = { 0.0f, 1.0f, 0.0f };
 
-f32 D_8002BA90 = 0.0f;
-f32 D_8002BA94 = 1.0f;
-f32 D_8002BA98 = 0.0f;
+struct unk_joint_list D_8002BA9C = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
-u32 D_8002BA9C = 0;
-u32 D_8002BAA0 = 1;
-u32 D_8002BAA4 = 3;
-u32 D_8002BAA8 = 0;
-u32 D_8002BAAC = 0;
-u32 D_8002BAB0 = 0;
-u32 D_8002BAB4 = 0;
-u32 D_8002BAB8 = 0;
-u32 D_8002BABC = 0;
-u32 D_8002BAC0 = 0;
-u32 D_8002BAC4 = 0;
-u32 D_8002BAC8 = 0;
-u32 D_8002BACC = 0;
-u32 D_8002BAD0 = 0;
-u32 D_8002BAD4 = 0;
-u32 D_8002BAD8 = 0;
-u32 D_8002BADC = 0;
+struct coord3d D_8002BADC = { 0.0f, 40.0f, 25.0f };
 
-f32 D_8002BAE0 = 40.0f;
-f32 D_8002BAE4 = 25.0f;
 u32 D_8002BAE8 = 0;
 u32 D_8002BAEC = 1;
 
@@ -9990,9 +9954,373 @@ void interface_menu18_displaycast(void)
 
 
 #ifdef NONMATCHING
-void constructor_menu18_displaycast(void) {
 
+// https://decomp.me/scratch/8VrOg 71.40%
+
+typedef struct some_model_struct
+{
+    s16 val;
+};
+
+Gfx * constructor_menu18_displaycast(Gfx *DL)
+{
+    struct coord3d sp244;
+    struct coord3d sp238;
+    struct coord3d sp22C;
+    s32 padding;
+    Mtxf sp1E8;
+    struct unk_joint_list sp1A8;
+    s32 padding3;
+    Mtxf sp160;
+    s32 sp15C;
+    s32 sp158;
+    s32 sp154;
+    s32 sp150;
+    LookAt * temp_v0;
+    s32 padding2;
+    f32 sp148;
+    f32 sp144;
+    union ModelRwData *unmrd;
+    struct coord3d sp134;
+    struct coord3d sp128;
+    struct some_model_struct *srecord;
+    ModelNode *mnode;
+    Mtx spE0;
+
+    s32 var_s1;
+    s32 i;
+    struct coord3d temp_f2;
+    u8 *temp_v0_6;
+    s32 var_t4;
+
+    // struct copies.
+    sp244 = D_8002BA78;
+    sp238 = D_8002BA84;
+    sp22C = D_8002BA90;
+    sp1A8 = D_8002BA9C;
+    sp148 = g_MenuTimer / 180.0f;
+    sp134 = D_8002BADC;
+    // end struct copies.
+
+    if ((g_MenuTimer < 0) || (g_MenuTimer >= 0xB4))
+    {
+        sp144 = 0.0f;
+    }
+    else if (g_MenuTimer < 0x1E)
+    {
+        sp144 = g_MenuTimer / 30.0f;
+    }
+    else if (g_MenuTimer >= 0x97)
+    {
+        sp144 = (f32) (0xB4 - g_MenuTimer) / 30.0f;
+    }
+    else
+    {
+        sp144 = 1.0f;
+    }
+
+    DL = viSetFillColor(DL, 0, 0, 0);
+    DL = viFillScreen(DL);
+
+    flt_CODE_bss_800695A0 = ((flt_CODE_bss_800695A8 - flt_CODE_bss_800695A4) * sp148) + flt_CODE_bss_800695A4;
+    flt_CODE_bss_800695AC = ((flt_CODE_bss_800695B4 - flt_CODE_bss_800695B0) * sp148) + flt_CODE_bss_800695B0;
+    flt_CODE_bss_800695B8 = ((flt_CODE_bss_800695C0 - flt_CODE_bss_800695BC) * sp148) + flt_CODE_bss_800695BC;
+    
+    if (flt_CODE_bss_800695AC < 0.0f)
+    {
+        flt_CODE_bss_800695AC += 6.2831855f;
+    }
+
+    sp244.f[0] = (flt_CODE_bss_800695A0 * sinf(flt_CODE_bss_800695AC)) + (0.2f * flt_CODE_bss_800695A0 * cosf(flt_CODE_bss_800695AC));
+    sp244.f[1] = flt_CODE_bss_800695B8;
+    sp244.f[2] = (flt_CODE_bss_800695A0 * cosf(flt_CODE_bss_800695AC)) - (0.2f * flt_CODE_bss_800695A0 * sinf(flt_CODE_bss_800695AC));
+    sp238.f[0] += cosf(flt_CODE_bss_800695AC) * 0.2f * flt_CODE_bss_800695A0;
+    sp238.f[2] += -sinf(flt_CODE_bss_800695AC) * 0.2f * flt_CODE_bss_800695A0;
+
+    temp_v0 = (LookAt *)dynAllocate7F0BD6F8(2);
+    guLookAtReflect(&spE0, temp_v0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+    gSPNumLights(DL++, 1);
+    gSPLight(DL++, &gelogolight.l[0], 1);
+    gSPLight(DL++, &gelogolight.a, 2);
+    gSPLookAtX(DL++, &temp_v0->l[0]);
+    gSPLookAtY(DL++, &temp_v0->l[1]);
+
+    modelTickAnimQuarterSpeed(cast_model, g_ClockTimer, 1);
+    modelSetDistanceDisabled(1);
+    sub_GAME_7F073FC8(0);
+    subcalcpos(cast_model);
+
+    if (cast_model_weapon != NULL)
+    {
+        mnode = cast_model_weapon->obj->Switches[0];
+        
+        if (mnode != NULL)
+        {
+            unmrd = modelGetNodeRwData(cast_model_weapon, mnode);
+            srecord = (struct some_model_struct *)unmrd;
+            srecord->val = 0;
+        }
+    }
+    
+    if (cast_model_weapon != NULL)
+    {
+        mnode = cast_model_weapon->obj->Switches[2];
+        
+        if (mnode != NULL)
+        {
+            unmrd = modelGetNodeRwData(cast_model_weapon, mnode);
+            ((struct ModelRwData_SwitchRecord *)unmrd)->visible = 0;
+        }
+    }
+
+    sp1A8.mtxlist = dynAllocate(cast_model->obj->numMatrices << 6);
+    sp1A8.unk_matrix = &sp1E8;
+    matrix_4x4_set_identity(&sp1E8);
+    subcalcmatrices(&sp1A8, cast_model);
+    getsuboffset(cast_model, &sp128);
+
+    var_s1 = 0;
+    if (bss_800695E4 != 0)
+    {
+        flt_CODE_bss_800695E8.f[1] = sp128.f[1];
+    }
+
+    sp134.f[0] = (sp128.f[0] - flt_CODE_bss_800695E8.f[0]) / g_GlobalTimerDelta;
+    sp134.f[1] = (sp128.f[1] - flt_CODE_bss_800695E8.f[1]) / g_GlobalTimerDelta;
+    sp134.f[2] = (sp128.f[2] - flt_CODE_bss_800695E8.f[2]) / g_GlobalTimerDelta;
+
+    if (bss_800695E4 != 0)
+    {
+        flt_CODE_bss_80069608.f[0] = sp134.f[0] / 0.050000012f;
+        flt_CODE_bss_80069608.f[1] = sp134.f[1] / 0.050000012f;
+        flt_CODE_bss_80069608.f[2] = sp134.f[2] / 0.050000012f;
+    }
+
+    if (g_ClockTimer > 0)
+    {
+        var_s1 = 0;
+        do
+        {
+            flt_CODE_bss_80069608.f[0] = (0.95f * flt_CODE_bss_80069608.f[0]) + sp134.f[0];
+            flt_CODE_bss_80069608.f[1] = (0.95f * flt_CODE_bss_80069608.f[1]) + sp134.f[1];
+            flt_CODE_bss_80069608.f[2] = (0.95f * flt_CODE_bss_80069608.f[2]) + sp134.f[2];
+        }
+        while (++var_s1 < g_ClockTimer);
+
+        if (sp134.f[0]);
+        if (sp134.f[1]);
+        if (sp134.f[2]);
+
+        var_s1 = 0;
+    }
+
+    flt_CODE_bss_800695F8.f[0] = flt_CODE_bss_80069608.f[0] * 0.050000012f;
+    flt_CODE_bss_800695F8.f[1] = flt_CODE_bss_80069608.f[1] * 0.050000012f;
+    flt_CODE_bss_800695F8.f[2] = flt_CODE_bss_80069608.f[2] * 0.050000012f;
+
+    flt_CODE_bss_800695E8.f[0] += flt_CODE_bss_800695F8.f[0] * g_GlobalTimerDelta;
+    flt_CODE_bss_800695E8.f[1] += flt_CODE_bss_800695F8.f[1] * g_GlobalTimerDelta;
+    flt_CODE_bss_800695E8.f[2] += flt_CODE_bss_800695F8.f[2] * g_GlobalTimerDelta;
+
+    mtx4TransformVecInPlace(&cast_model->render_pos->pos, (struct coord3d *) &sp134);
+
+    sp134.f[0] -= flt_CODE_bss_800695E8.f[0];
+    sp134.f[1] -= flt_CODE_bss_800695E8.f[1];
+    sp134.f[2] -= flt_CODE_bss_800695E8.f[2];
+
+    if (bss_800695E4 != 0)
+    {
+        bss_800695E4 = 0;
+        flt_CODE_bss_800695D8.f[0] = (f32) (sp134.f[0] / 0.050000012f);
+        flt_CODE_bss_800695D8.f[1] = (f32) (sp134.f[1] / 0.050000012f);
+        flt_CODE_bss_800695D8.f[2] = (f32) (sp134.f[2] / 0.050000012f);
+    }
+
+    if (g_ClockTimer > 0)
+    {
+        var_s1 = 0;
+        do
+        {
+            flt_CODE_bss_800695D8.f[0] = (0.95f * flt_CODE_bss_800695D8.f[0]) + sp134.f[0];
+            flt_CODE_bss_800695D8.f[1] = (0.95f * flt_CODE_bss_800695D8.f[1]) + sp134.f[1];
+            flt_CODE_bss_800695D8.f[2] = (0.95f * flt_CODE_bss_800695D8.f[2]) + sp134.f[2];
+        }
+        while (++var_s1 < g_ClockTimer);
+
+        flt_CODE_bss_800695D8.f[0] = (0.95f * flt_CODE_bss_800695D8.f[0]) + sp134.f[0];
+        flt_CODE_bss_800695D8.f[1] = (0.95f * flt_CODE_bss_800695D8.f[1]) + sp134.f[1];
+        flt_CODE_bss_800695D8.f[2] = (0.95f * flt_CODE_bss_800695D8.f[2]) + sp134.f[2];
+
+        var_s1 = 0;
+    }
+
+    flt_CODE_bss_800695C8.f[0] = flt_CODE_bss_800695D8.f[0] * 0.050000012f;
+    flt_CODE_bss_800695C8.f[1] = flt_CODE_bss_800695D8.f[1] * 0.050000012f;
+    flt_CODE_bss_800695C8.f[2] = flt_CODE_bss_800695D8.f[2] * 0.050000012f;
+
+    sp134.f[2] = flt_CODE_bss_800695E8.f[2] + flt_CODE_bss_800695C8.f[2];
+    sp238.f[0] += flt_CODE_bss_800695E8.f[0] + flt_CODE_bss_800695C8.f[0];
+    sp244.f[0] += flt_CODE_bss_800695E8.f[0];
+    sp238.f[2] += flt_CODE_bss_800695E8.f[2] + flt_CODE_bss_800695C8.f[2];
+    sp244.f[2] += flt_CODE_bss_800695E8.f[1] + 52.5f;
+    sp244.f[2] += flt_CODE_bss_800695E8.f[2];
+    sp238.f[2] += (flt_CODE_bss_800695E8.f[1] + flt_CODE_bss_800695C8.f[1]) - 10.0f;
+    sp134.f[0] = flt_CODE_bss_800695E8.f[0] + flt_CODE_bss_800695C8.f[0];
+    sp134.f[2] = (flt_CODE_bss_800695E8.f[1] + flt_CODE_bss_800695C8.f[1]) - 10.0f;
+
+    matrix_4x4_7F059694(&sp1E8, sp244.f[0], sp244.f[1], sp244.f[2], flt_CODE_bss_800695E8.f[1], sp238.f[2], sp238.f[2], sp22C.f[0], sp22C.f[1], sp22C.f[2]);
+
+    sp1A8.unk_matrix = &sp1E8;
+    sp1A8.mtxlist = dynAllocate(cast_model->obj->numMatrices << 6);
+    subcalcmatrices((struct unk_joint_list *) &sp1A8, cast_model);
+
+    if (cast_model_weapon != NULL)
+    {
+        sp1A8.unk_matrix = modelFindNodeMtx(cast_model, cast_model_weapon->attachedto_objinst, 0);
+
+        if (cast_model_weapon->attachedto_objinst == cast_model->obj->Switches[5])
+        {
+            matrix_4x4_set_rotation_around_z(3.1415927f, &sp160);
+            matrix_4x4_multiply_in_place(sp1A8.unk_matrix, &sp160);
+            sp1A8.unk_matrix = &sp160;
+        }
+
+        sp1A8.mtxlist = dynAllocate(cast_model_weapon->obj->numMatrices << 6);
+        instcalcmatrices((struct unk_joint_list *) &sp1A8, cast_model_weapon);
+    }
+
+    sp1A8.unk20 = 7;
+    sp1A8.unk04 = 1;
+    sp1A8.gdl = DL++;
+    sp1A8.unk08 = 3;
+    subdraw((struct unk_joint_list *) &sp1A8, cast_model);
+    
+    if (cast_model_weapon != NULL)
+    {
+        subdraw((struct unk_joint_list *) &sp1A8, cast_model_weapon);
+    }
+    
+    modelSetDistanceDisabled(0);
+
+    for (; var_s1<cast_model->obj->numMatrices; var_s1++)
+    {
+        // hack: source address steps by sizeof(Mtxf), but can't get that to match
+        matrix_4x4_copy(&((s8*)cast_model->render_pos)[var_s1*0x40], &sp160);
+        matrix_4x4_f32_to_s32(&sp160, &((Mtxf*)cast_model->render_pos)[var_s1]);
+    }
+
+    if (cast_model_weapon != NULL)
+    {
+        for (i=0; i<cast_model_weapon->obj->numMatrices; i++)
+        {
+            // hack: source address steps by sizeof(Mtxf), but can't get that to match
+            matrix_4x4_copy(&((s8*)cast_model_weapon->render_pos)[i*0x40], &sp160);
+            matrix_4x4_f32_to_s32(&sp160, &((Mtxf*)cast_model_weapon->render_pos)[i]);
+        }
+    }
+    
+    gDPSetScissor(DL++, G_SC_NON_INTERLACE, 0, 0, 440, 330);
+    gDPPipeSync(DL++);
+    gDPSetCycleType(DL++, G_CYC_1CYCLE);
+    gDPSetColorDither(DL++, G_CD_DISABLE);
+    gDPSetTexturePersp(DL++, G_TP_NONE);
+    gDPSetAlphaCompare(DL++, G_AC_NONE);
+    gDPSetTextureLOD(DL++, G_TL_TILE);
+    gDPSetTextureFilter(DL++, G_TF_BILERP);
+    gDPSetTextureConvert(DL++, G_TC_FILT);
+    gDPSetTextureLUT(DL++, G_TT_NONE);
+    gDPSetRenderMode(DL++, G_RM_CLD_SURF, G_RM_CLD_SURF2);
+    gDPSetCombineMode(DL++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(DL++, 0, 0, 0x00, 0x00, 0x00, (0xFF - (s32) (255.0f * sp144)) & 0xFF);
+    gDPFillRectangle(DL++, 0, 0, 440, 330);
+    gDPPipeSync(DL++);
+    gDPSetColorDither(DL++, G_CD_BAYER);
+    gDPSetTexturePersp(DL++, G_TP_PERSP);
+    gDPSetTextureLOD(DL++, G_TL_LOD);
+
+    DL = microcode_constructor(DL);
+
+    if (full_actor_intro == 0)
+    {
+        temp_v0_6 = langGet(intro_char_table[intro_character_index].text1);
+        textMeasure(&sp150, &sp154, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+
+        sp158 = 0x6C;
+        sp15C = 0x13B - (sp154 / 2);
+
+        DL = microcode_constructor_related_to_menus(DL, sp15C, 0x6C, sp15C + sp154 + 1, sp150 + 0x6D, 0);
+/*
+        if (sp158 & 0x78)
+        {
+            if (!(sp158 & 0x78))
+            {
+                var_t4 = (255.0f * sp144) / 2147483647;
+            }
+            else
+            {
+                var_t4 = -1;
+            }
+        }
+        else
+        {
+            var_t4 = 255.0f * sp144;
+            if (var_t4 < 0)
+            {
+                var_t4 = -1;
+            }
+        }
+*/
+        if ((s32)sp144 & 0x78)
+        {
+            var_t4 = (255.0f * sp144) / 2147483647;
+        }
+        else
+        {
+            var_t4 = -1;
+        }
+        
+        DL = textRender(DL, &sp15C, &sp158, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, var_t4 | ~0xFF, viGetX(), viGetY(), 0, 0);
+    }
+/*
+    if (sp158 & 0x78)
+    {
+        if (!(sp158 & 0x78))
+        {
+            var_t4 = (255.0f * sp144) / 2147483647;
+        }
+        else
+        {
+            var_t4 = -1;
+        }
+    }
+    else
+    {
+        var_t4 = 255.0f * sp144;
+        if (var_t4 < 0)
+        {
+            var_t4 = -1;
+        }
+    }
+*/
+    
+    temp_v0_6 = langGet(intro_char_table[intro_character_index].text2);
+    textMeasure(&sp150, &sp154, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+    sp158 = 0x98;
+    sp15C = 0x13B - (sp154 / 2);
+    DL = microcode_constructor_related_to_menus(DL, sp15C, 0x98, sp15C + sp154 + 1, sp150 + 0x99, 0);
+    DL = textRender(DL, &sp15C, &sp158, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, var_t4 | ~0xFF, viGetX(), viGetY(), 0, 0);
+
+    temp_v0_6 = langGet(intro_char_table[intro_character_index].text3);
+    textMeasure(&sp150, &sp154, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
+    sp158 = 0xAE;
+    sp15C = 0x13B - (sp154 / 2);
+    DL = microcode_constructor_related_to_menus(DL, sp15C, 0xAE, sp15C + sp154 + 1, sp150 + 0xAF, 0);
+    DL = textRender(DL, &sp15C, &sp158, temp_v0_6, ptrFontZurichBoldChars, ptrFontZurichBold, var_t4 | ~0xFF, viGetX(), viGetY(), 0, 0);
+    
+    return DL;
 }
+
 #else
 #ifndef VERSION_EU
 GLOBAL_ASM(

@@ -119,18 +119,10 @@ extern f32 flt_CODE_bss_800695BC;
 extern f32 flt_CODE_bss_800695C0;
 //CODE.bss:800695C4                     .align 3
 //CODE.bss:800695C8
-extern f32 flt_CODE_bss_800695C8;
-//CODE.bss:800695CC
-extern f32 flt_CODE_bss_800695CC;
-//CODE.bss:800695D0
-extern f32 flt_CODE_bss_800695D0;
+extern struct coord3d flt_CODE_bss_800695C8;
 //CODE.bss:800695D4                     .align 3
 //CODE.bss:800695D8
-extern f32 flt_CODE_bss_800695D8;
-//CODE.bss:800695DC
-extern f32 flt_CODE_bss_800695DC;
-//CODE.bss:800695E0
-extern f32 flt_CODE_bss_800695E0;
+extern struct coord3d flt_CODE_bss_800695D8;
 
 //CODE.bss:800695E4
 extern s32 bss_800695E4;
@@ -140,18 +132,11 @@ extern struct coord3d flt_CODE_bss_800695E8;
 
 //CODE.bss:800695F4                     .align 3
 //CODE.bss:800695F8
-extern f32 flt_CODE_bss_800695F8;
-//CODE.bss:800695FC
-extern f32 flt_CODE_bss_800695FC;
-//CODE.bss:80069600
-extern f32 flt_CODE_bss_80069600;
+extern struct coord3d flt_CODE_bss_800695F8;
 //CODE.bss:80069604                     .align 3
 //CODE.bss:80069608
-extern f32 flt_CODE_bss_80069608;
-//CODE.bss:8006960C
-extern f32 flt_CODE_bss_8006960C;
-//CODE.bss:80069610
-extern f32 flt_CODE_bss_80069610;
+extern struct coord3d flt_CODE_bss_80069608;
+
 //CODE.bss:80069614
 extern f32 ninLogoRotRate;
 //CODE.bss:80069618
