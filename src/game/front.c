@@ -42,6 +42,7 @@
 #include <assets/font_dl.h>
 #include "image.h"
 #include "ob.h"
+#include "gbi_extension.h"
 
 
 
@@ -12637,122 +12638,34 @@ void interface_menu19_spectrum(void)
 
 
 
-
-#ifdef NONMATCHING
-Gfx * constructor_menu19_spectrum(Gfx *DL)
-{
-    #if defined(LEFTOVERSPECTRUM)
-    DL = insert_imageDL(DL);
-    //DL[0]->w0 = 0xba001402;
-    //DL[0]->w1 = 0;    
-    gDPSetCycleType(DL++, G_CYC_1CYCLE);
-    //DL[1].w0 = 0xb900031d;
-    //DL[1].w1 = &DAT_00552048;
-    gDPSetRenderMode(DL++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-    //DL[2].w0 = 0xb6000000;
-    //DL[2].w1 = 0x204;
-    gSPClearGeometryMode(DL++, G_SHADE | G_SHADING_SMOOTH);
-    //DL[3].w0 = 0xfcffffff;
-    //DL[3].w1 = 0xfffcf87c;
-    gDPSetCombineMode(DL++, G_CC_DECALRGB, G_CC_DECALRGB);
-    //DL[4].w0 = 0xba000c02;
-    //DL[4].w1 = 0;
-    gDPSetTextureFilter(DL++, G_TF_POINT);
-    //DL[5].w0 = 0xfd500000;
-    //DL[5].w1 = color_palette_entries_50_percent;
-    gDPSetTextureImage(DL++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &color_palette_entries_50_percent);
-    //DL[6].w0 = 0xf5000300;
-    //DL[6].w1 = 0x07000000;
-    gDPSetTile(DL++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 1, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-    //DL[7].w0 = 0xe6000000;
-    //DL[7].w1 = 0;
-    gDPLoadSync(DL++);
-    //DL[8].w0 = 0xf0000ff0;
-    //DL[8].w1 = 0x0701cff0;
-    gDPLoadTLUTCmd(DL++, G_TX_LOADTILE, 7);
-    //DL[9].w0 = 0xe7000000;
-    //DL[9].w1 = 0;
-    gDPPipeSync(DL++);
-    //DL[10].w0 = 0xba000e02;
-    //DL[10].w1 = 0x00008000;
-    gDPSetTextureLUT(DL++, G_TT_RGBA16);
-    DL = spectrum_draw_screen(DL++);
-    #endif
-    return DL;
-}
-#else
 #if !defined(LEFTOVERSPECTRUM)
 Gfx* constructor_menu19_spectrum(Gfx* DL)
 {
     return DL;
 }
 #else
-GLOBAL_ASM(
-.text
-glabel constructor_menu19_spectrum
-/* 04F010 7F01A4E0 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 04F014 7F01A4E4 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 04F018 7F01A4E8 0FC07034 */  jal   insert_imageDL
-/* 04F01C 7F01A4EC 00000000 */   nop
-/* 04F020 7F01A4F0 3C0EBA00 */  lui   $t6, (0xBA001402 >> 16) # lui $t6, 0xba00
-/* 04F024 7F01A4F4 3C0AFFFC */  lui   $t2, (0xFFFCF87C >> 16) # lui $t2, 0xfffc
-/* 04F028 7F01A4F8 35CE1402 */  ori   $t6, (0xBA001402 & 0xFFFF) # ori $t6, $t6, 0x1402
-/* 04F02C 7F01A4FC 3C0FB900 */  lui   $t7, (0xB900031D >> 16) # lui $t7, 0xb900
-/* 04F030 7F01A500 3C180055 */  lui   $t8, (0x00552048 >> 16) # lui $t8, 0x55
-/* 04F034 7F01A504 3C19B600 */  lui   $t9, 0xb600
-/* 04F038 7F01A508 24080204 */  li    $t0, 516
-/* 04F03C 7F01A50C 354AF87C */  ori   $t2, (0xFFFCF87C & 0xFFFF) # ori $t2, $t2, 0xf87c
-/* 04F040 7F01A510 3C09FCFF */  lui   $t1, (0xFCFFFFFF >> 16) # lui $t1, 0xfcff
-/* 04F044 7F01A514 3C0BBA00 */  lui   $t3, (0xBA000C02 >> 16) # lui $t3, 0xba00
-/* 04F048 7F01A518 AC4E0000 */  sw    $t6, ($v0)
-/* 04F04C 7F01A51C 37182048 */  ori   $t8, (0x00552048 & 0xFFFF) # ori $t8, $t8, 0x2048
-/* 04F050 7F01A520 35EF031D */  ori   $t7, (0xB900031D & 0xFFFF) # ori $t7, $t7, 0x31d
-/* 04F054 7F01A524 AC480014 */  sw    $t0, 0x14($v0)
-/* 04F058 7F01A528 AC590010 */  sw    $t9, 0x10($v0)
-/* 04F05C 7F01A52C 3529FFFF */  ori   $t1, (0xFCFFFFFF & 0xFFFF) # ori $t1, $t1, 0xffff
-/* 04F060 7F01A530 AC4A001C */  sw    $t2, 0x1c($v0)
-/* 04F064 7F01A534 356B0C02 */  ori   $t3, (0xBA000C02 & 0xFFFF) # ori $t3, $t3, 0xc02
-/* 04F068 7F01A538 AC4F0008 */  sw    $t7, 8($v0)
-/* 04F06C 7F01A53C AC58000C */  sw    $t8, 0xc($v0)
-/* 04F070 7F01A540 AC490018 */  sw    $t1, 0x18($v0)
-/* 04F074 7F01A544 AC4B0020 */  sw    $t3, 0x20($v0)
-/* 04F078 7F01A548 3C0D8003 */  lui   $t5, %hi(color_palette_entries_50_percent)
-/* 04F07C 7F01A54C 3C0EF500 */  lui   $t6, (0xF5000300 >> 16) # lui $t6, 0xf500
-/* 04F080 7F01A550 3C19F000 */  lui   $t9, (0xF0000FF0 >> 16) # lui $t9, 0xf000
-/* 04F084 7F01A554 3C080701 */  lui   $t0, (0x0701CFF0 >> 16) # lui $t0, 0x701
-/* 04F088 7F01A558 3C0ABA00 */  lui   $t2, (0xBA000E02 >> 16) # lui $t2, 0xba00
-/* 04F08C 7F01A55C 25ADBAF0 */  addiu $t5, %lo(color_palette_entries_50_percent) # addiu $t5, $t5, -0x4510
-/* 04F090 7F01A560 3C0CFD50 */  lui   $t4, 0xfd50
-/* 04F094 7F01A564 35CE0300 */  ori   $t6, (0xF5000300 & 0xFFFF) # ori $t6, $t6, 0x300
-/* 04F098 7F01A568 3C0F0700 */  lui   $t7, 0x700
-/* 04F09C 7F01A56C 3C18E600 */  lui   $t8, 0xe600
-/* 04F0A0 7F01A570 3508CFF0 */  ori   $t0, (0x0701CFF0 & 0xFFFF) # ori $t0, $t0, 0xcff0
-/* 04F0A4 7F01A574 37390FF0 */  ori   $t9, (0xF0000FF0 & 0xFFFF) # ori $t9, $t9, 0xff0
-/* 04F0A8 7F01A578 3C09E700 */  lui   $t1, 0xe700
-/* 04F0AC 7F01A57C 354A0E02 */  ori   $t2, (0xBA000E02 & 0xFFFF) # ori $t2, $t2, 0xe02
-/* 04F0B0 7F01A580 340B8000 */  li    $t3, 32768
-/* 04F0B4 7F01A584 AC400004 */  sw    $zero, 4($v0)
-/* 04F0B8 7F01A588 AC400024 */  sw    $zero, 0x24($v0)
-/* 04F0BC 7F01A58C AC4C0028 */  sw    $t4, 0x28($v0)
-/* 04F0C0 7F01A590 AC4D002C */  sw    $t5, 0x2c($v0)
-/* 04F0C4 7F01A594 AC4F0034 */  sw    $t7, 0x34($v0)
-/* 04F0C8 7F01A598 AC4E0030 */  sw    $t6, 0x30($v0)
-/* 04F0CC 7F01A59C AC580038 */  sw    $t8, 0x38($v0)
-/* 04F0D0 7F01A5A0 AC40003C */  sw    $zero, 0x3c($v0)
-/* 04F0D4 7F01A5A4 AC590040 */  sw    $t9, 0x40($v0)
-/* 04F0D8 7F01A5A8 AC480044 */  sw    $t0, 0x44($v0)
-/* 04F0DC 7F01A5AC AC490048 */  sw    $t1, 0x48($v0)
-/* 04F0E0 7F01A5B0 AC40004C */  sw    $zero, 0x4c($v0)
-/* 04F0E4 7F01A5B4 AC4B0054 */  sw    $t3, 0x54($v0)
-/* 04F0E8 7F01A5B8 AC4A0050 */  sw    $t2, 0x50($v0)
-/* 04F0EC 7F01A5BC 0FC34CED */  jal   spectrum_draw_screen
-/* 04F0F0 7F01A5C0 24440058 */   addiu $a0, $v0, 0x58
-/* 04F0F4 7F01A5C4 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 04F0F8 7F01A5C8 27BD0018 */  addiu $sp, $sp, 0x18
-/* 04F0FC 7F01A5CC 03E00008 */  jr    $ra
-/* 04F100 7F01A5D0 00000000 */   nop
-)
-#endif
+
+// Address 0x7F01A4E0 NTSC
+Gfx * constructor_menu19_spectrum(Gfx * DL)
+{
+    DL = insert_imageDL(DL);
+
+    gDPSetCycleType(DL++, G_CYC_1CYCLE);
+    gDPSetRenderMode(DL++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+    gSPClearGeometryMode(DL++, G_SHADE | G_SHADING_SMOOTH);
+    gDPSetCombineMode(DL++, G_CC_DECALRGB, G_CC_DECALRGB);
+    gDPSetTextureFilter(DL++, G_TF_POINT);
+    gDPSetTextureImage(DL++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, color_palette_entries_50_percent);
+    gDPSetTile(DL++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 1, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+    gDPLoadSync(DL++);
+    gDPLoadTLUTCmd2(DL++, G_TX_LOADTILE, 7);
+    gDPPipeSync(DL++);
+    gDPSetTextureLUT(DL++, G_TT_RGBA16);
+
+    DL = spectrum_draw_screen(DL);
+
+    return DL;
+}
 #endif
 
 
