@@ -1595,7 +1595,7 @@ void interface_menu17_switchscreens(void)
     if ((g_MenuTimer >= 4) && (!spectrum_related_flag) && (!is_emulating_spectrum))
     {
         maybe_prev_menu = menu_update;
-        menu_update = -1;
+        menu_update = MENU_INVALID;
     }
 }
 
@@ -2159,10 +2159,12 @@ void init_menu05_fileselect(void)
 
 
 
-void update_menu05_filesel(void) {
-  if ((menu_update == 0) || (maybe_prev_menu == 0)) {
-    sub_GAME_7F00B990();
-  }
+void update_menu05_filesel(void)
+{
+    if ((menu_update == MENU_LEGAL_SCREEN) || (maybe_prev_menu == MENU_LEGAL_SCREEN))
+    {
+        sub_GAME_7F00B990();
+    }
 }
 
 
@@ -12680,11 +12682,13 @@ void frontChangeMenu(MENU menu, s32 reload)
     {
         is_emulating_spectrum = TRUE;
     }
+
     if (reload)
     {
         menu_update = menu;
         return;
     }
+
     maybe_prev_menu = menu;
 }
 
@@ -12699,315 +12703,169 @@ MENU get_currentmenu(void)
 
 
 #ifdef NONMATCHING
-void menu_init()
+// Address 0x7F01A61C NTSC
+//
+// https://decomp.me/scratch/yiZ1o 99.26% (v0,v1 swapped at first switch)
+void menu_init(void)
 {
-    MENU MVar1;
-
     if (current_menu == MENU_SWITCH_SCREENS)
     {
-        if (spectrum_related_flag == FALSE)
+        if (spectrum_related_flag != 0)
         {
-            if ((is_emulating_spectrum != FALSE) && (viGetFrameBuf2() == cfb_16[0]))
-            {
-                screen_size = SCREEN_SIZE_320x240;
-                is_emulating_spectrum = FALSE;
-            }
-        }
-        else {
-            if (viGetFrameBuf2() == cfb_16[1])
+            if (viGetFrameBuf2() == (cfb_16[1]))
             {
                 screen_size = SCREEN_SIZE_440x330;
-                spectrum_related_flag = FALSE;
+                spectrum_related_flag = 0;
             }
         }
+        else if ((is_emulating_spectrum != 0) && (viGetFrameBuf2() == cfb_16[0]))
+        {
+            screen_size = SCREEN_SIZE_320x240;
+            is_emulating_spectrum = 0;
+        }
     }
-
-    if (screen_size == SCREEN_SIZE_320x240)
+    
+    if (screen_size != SCREEN_SIZE_320x240)
     {
-        viSetAspect((f32)flt_80051B48);
-        viSetXY(320,240);
-        viSetBuf(320,240);
-        set_cur_player_screen_size(320,240);
-        viSetViewSize(320,240);
-        set_cur_player_viewport_size(0,0);
-        viSetViewPosition(0,0);
+        if (viGetFrameBuf2() == (cfb_16[1]))
+        {
+            viSetFrameBuf2(ptr_menu_videobuffer);
+        }
+        
+        viSetAspect(ASPECT_RATIO);
+        viSetXY(440, 330);
+        viSetBuf(440, 330);
+        set_cur_player_screen_size(440, 330);
+        viSetViewSize(440, 330);
+        set_cur_player_viewport_size(0, 0);
+        viSetViewPosition(0, 0);
     }
     else
     {
-        if (viGetFrameBuf2() == cfb_16[1])
-        {
-            set_video_settings2_frameb(ptr_menu_videobuffer);
-        }
-        viSetAspect((f32)flt_80051B44);
-        viSetXY(440,330);
-        viSetBuf(440,330);
-        set_cur_player_screen_size(440,330);
-        viSetViewSize(440,330);
-        set_cur_player_viewport_size(0,0);
-        viSetViewPosition(0,0);
+        viSetAspect(ASPECT_RATIO);
+        viSetXY(320, SCREEN_HEIGHT);
+        viSetBuf(320, SCREEN_HEIGHT);
+        set_cur_player_screen_size(320, SCREEN_HEIGHT);
+        viSetViewSize(320, SCREEN_HEIGHT);
+        set_cur_player_viewport_size(0, 0);
+        viSetViewPosition(0, 0);
     }
-    if (((-1 < menu_update) || (-1 < maybe_prev_menu)) && (current_menu != MENU_SWITCH_SCREENS))
+
+    if ( ((menu_update > MENU_INVALID) || (maybe_prev_menu > MENU_INVALID)) && (current_menu != MENU_SWITCH_SCREENS))
     {
-        if (true)
-        {
-            switch(current_menu) {
-            case MENU_LEGAL_SCREEN:
-                update_menu00_legalscreen();
-                break;
-            case MENU_NINTENDO_LOGO:
-                update_menu01_nintendo();
-                break;
-            case MENU_RAREWARE_LOGO:
-                update_menu02_rareware();
-                break;
-            case MENU_EYE_INTRO:
-                update_menu_03_eyeintro();
-                break;
-            case MENU_GOLDENEYE_LOGO:
-                update_menu04_goldeneyelogo();
-                break;
-            case MENU_FILE_SELECT:
-                update_menu05_filesel();
-                break;
-            case MENU_MODE_SELECT:
-                update_menu06_modesel();
-                break;
-            case MENU_MISSION_SELECT:
-                update_menu07_missionsel();
-                break;
-            case MENU_DIFFICULTY:
-                update_menu08_difficulty();
-                break;
-            case MENU_007_OPTIONS:
-                update_menu09_007options();
-                break;
-            case MENU_BRIEFING:
-                update_menu0A_briefing();
-                break;
-            case MENU_MISSION_FAILED:
-                update_menu0C_missionfailed();
-                break;
-            case MENU_MISSION_COMPLETE:
-                update_menu0D_missioncomplete();
-                break;
-            case MENU_MP_OPTIONS:
-                update_menu0E_mpoptions();
-                break;
-            case MENU_MP_CHAR_SELECT:
-                update_menu0F_mpcharsel();
-                break;
-            case MENU_MP_HANDICAP:
-                update_menu10_mphandicap();
-                break;
-            case MENU_MP_CONTROL_STYLE:
-                update_menu11_mpcontrols();
-                break;
-            case MENU_MP_STAGE_SELECT:
-                update_menu12_mpstage();
-                break;
-            case MENU_MP_SCENARIO_SELECT:
-                update_menu13_mpscenario();
-                break;
-            case MENU_MP_TEAMS:
-                update_menu14_mpteams();
-                break;
-            case MENU_CHEAT:
-                update_menu15_cheat();
-                break;
-            case MENU_NO_CONTROLLERS:
-                update_menu16_nocontrollers();
-                break;
-            case MENU_DISPLAY_CAST:
-                update_menu18_displaycast();
-                break;
-            case MENU_SPECTRUM_EMU:
-                update_menu19_spectrum();
-            }
+        switch(current_menu) {
+            case MENU_LEGAL_SCREEN:           update_menu00_legalscreen();          break;
+            case MENU_NINTENDO_LOGO:          update_menu01_nintendo();             break;
+            case MENU_RAREWARE_LOGO:          update_menu02_rareware();             break;
+            case MENU_EYE_INTRO:              update_menu_03_eyeintro();            break;
+            case MENU_GOLDENEYE_LOGO:         update_menu04_goldeneyelogo();        break;
+            case MENU_FILE_SELECT:            update_menu05_filesel();              break;
+            case MENU_MODE_SELECT:            update_menu06_modesel();              break;
+            case MENU_MISSION_SELECT:         update_menu07_missionsel();           break;
+            case MENU_DIFFICULTY:             update_menu08_difficulty();           break;
+            case MENU_007_OPTIONS:            update_menu09_007options();           break;
+            case MENU_BRIEFING:               update_menu0A_briefing();             break;
+            case MENU_MISSION_FAILED:         update_menu0C_missionfailed();        break;
+            case MENU_MISSION_COMPLETE:       update_menu0D_missioncomplete();      break;
+            case MENU_MP_OPTIONS:             update_menu0E_mpoptions();            break;
+            case MENU_MP_SCENARIO_SELECT:     update_menu13_mpscenario();           break;
+            case MENU_MP_CHAR_SELECT:         update_menu0F_mpcharsel();            break;
+            case MENU_MP_TEAMS:               update_menu14_mpteams();              break;
+            case MENU_MP_HANDICAP:            update_menu10_mphandicap();           break;
+            case MENU_MP_CONTROL_STYLE:       update_menu11_mpcontrols();           break;
+            case MENU_MP_STAGE_SELECT:        update_menu12_mpstage();              break;
+            case MENU_CHEAT:                  update_menu15_cheat();                break;
+            case MENU_NO_CONTROLLERS:         update_menu16_nocontrollers();        break;
+            case MENU_DISPLAY_CAST:           update_menu18_displaycast();          break;
+            case MENU_SPECTRUM_EMU:           update_menu19_spectrum();             break;
         }
-        if (-1 < menu_update) {
+
+        if (menu_update > MENU_INVALID)
+        {
             current_menu = MENU_SWITCH_SCREENS;
             reset_menutimer();
         }
     }
-    MVar1 = maybe_prev_menu;
-    if (true) {
+
+    if (maybe_prev_menu > MENU_INVALID)
+    {
         current_menu = maybe_prev_menu;
-        maybe_prev_menu = ~MENU_LEGAL_SCREEN;
-        if (true) {
-            switch(MVar1) {
-            case MENU_LEGAL_SCREEN:
-                init_menu00_legalscreen();
-                break;
-            case MENU_NINTENDO_LOGO:
-                init_menu01_nintendo();
-                break;
-            case MENU_RAREWARE_LOGO:
-                init_menu02_rareware();
-                break;
-            case MENU_EYE_INTRO:
-                init_menu03_eyeintro();
-                break;
-            case MENU_GOLDENEYE_LOGO:
-                init_menu04_goldeneyelogo();
-                break;
-            case MENU_FILE_SELECT:
-                init_menu05_filesel();
-                break;
-            case MENU_MODE_SELECT:
-                init_menu06_modesel();
-                break;
-            case MENU_MISSION_SELECT:
-                init_menu07_missionsel();
-                break;
-            case MENU_DIFFICULTY:
-                init_menu08_difficulty();
-                break;
-            case MENU_007_OPTIONS:
-                init_menu09_007options();
-                break;
-            case MENU_BRIEFING:
-                init_menu0A_briefing();
-                break;
-            case MENU_RUN_STAGE:
-                init_menu0B_runstage();
-                break;
-            case MENU_MISSION_FAILED:
-                init_menu0C_missionfailed();
-                break;
-            case MENU_MISSION_COMPLETE:
-                init_menu0D_missioncomplete();
-                break;
-            case MENU_MP_OPTIONS:
-                init_menu0E_mpoptions();
-                break;
-            case MENU_MP_CHAR_SELECT:
-                init_menu0f_mpcharsel();
-                break;
-            case MENU_MP_HANDICAP:
-                init_menu10_mphandicap();
-                break;
-            case MENU_MP_CONTROL_STYLE:
-                init_menu11_mpcontrol();
-                break;
-            case MENU_MP_STAGE_SELECT:
-                init_menu12_mpstage();
-                break;
-            case MENU_MP_SCENARIO_SELECT:
-                init_menu13_mpscenariosel();
-                break;
-            case MENU_MP_TEAMS:
-                init_menu14_mpteamsel();
-                break;
-            case MENU_CHEAT:
-                init_menu15_cheat();
-                break;
-            case MENU_NO_CONTROLLERS:
-                init_menu16_nocontroller();
-                break;
-            case MENU_DISPLAY_CAST:
-                init_menu18_displaycast();
-                break;
-            case MENU_SPECTRUM_EMU:
-                init_menu19_spectrum();
-            }
+        maybe_prev_menu = MENU_INVALID;
+
+        switch(current_menu) {
+            case MENU_LEGAL_SCREEN:           init_menu00_legalscreen();            break;
+            case MENU_NINTENDO_LOGO:          init_menu01_nintendo();               break;
+            case MENU_RAREWARE_LOGO:          init_menu02_rareware();               break;
+            case MENU_EYE_INTRO:              init_menu03_eyeintro();               break;
+            case MENU_GOLDENEYE_LOGO:         init_menu04_goldeneyelogo();          break;
+            case MENU_FILE_SELECT:            init_menu05_filesel();                break;
+            case MENU_MODE_SELECT:            init_menu06_modesel();                break;
+            case MENU_MISSION_SELECT:         init_menu07_missionsel();             break;
+            case MENU_DIFFICULTY:             init_menu08_difficulty();             break;
+            case MENU_007_OPTIONS:            init_menu09_007options();             break;
+            case MENU_BRIEFING:               init_menu0A_briefing();               break;
+            case MENU_RUN_STAGE:              init_menu0B_runstage();               break;
+            case MENU_MISSION_FAILED:         init_menu0C_missionfailed();          break;
+            case MENU_MISSION_COMPLETE:       init_menu0D_missioncomplete();        break;
+            case MENU_MP_OPTIONS:             init_menu0E_mpoptions();              break;
+            case MENU_MP_SCENARIO_SELECT:     init_menu13_mpscenariosel();          break;
+            case MENU_MP_CHAR_SELECT:         init_menu0f_mpcharsel();              break;
+            case MENU_MP_TEAMS:               init_menu14_mpteamsel();              break;
+            case MENU_MP_HANDICAP:            init_menu10_mphandicap();             break;
+            case MENU_MP_CONTROL_STYLE:       init_menu11_mpcontrol();              break;
+            case MENU_MP_STAGE_SELECT:        init_menu12_mpstage();                break;
+            case MENU_CHEAT:                  init_menu15_cheat();                  break;
+            case MENU_NO_CONTROLLERS:         init_menu16_nocontroller();           break;
+            case MENU_DISPLAY_CAST:           init_menu18_displaycast();            break;
+            case MENU_SPECTRUM_EMU:           init_menu19_spectrum();               break;
         }
     }
+    
     switch(current_menu) {
-    case MENU_LEGAL_SCREEN:
-        interface_menu00_legalscreen();
-        break;
-    case MENU_NINTENDO_LOGO:
-        interface_menu01_nintendo();
-        break;
-    case MENU_RAREWARE_LOGO:
-        interface_menu02_rareware();
-        break;
-    case MENU_EYE_INTRO:
-        interface_menu03_eyeintro();
-        break;
-    case MENU_GOLDENEYE_LOGO:
-        interface_menu04_goldeneyelogo();
-        break;
-    case MENU_FILE_SELECT:
-        interface_menu05_filesel();
-        break;
-    case MENU_MODE_SELECT:
-        interface_menu06_modesel();
-        break;
-    case MENU_MISSION_SELECT:
-        interface_menu07_missionsel();
-        break;
-    case MENU_DIFFICULTY:
-        interface_menu08_difficulty();
-        break;
-    case MENU_007_OPTIONS:
-        interface_menu09_007options();
-        break;
-    case MENU_BRIEFING:
-        interface_menu0A_briefing();
-        break;
-    case MENU_RUN_STAGE:
-        if (interface_menu0B_runstage() == 0) {
-            if (gamemode == GAMEMODE_MULTI) {
-                frontChangeMenu(MENU_MP_OPTIONS, TRUE);
+        case MENU_LEGAL_SCREEN:           interface_menu00_legalscreen();           break;
+        case MENU_SWITCH_SCREENS:         interface_menu17_switchscreens();         break;
+        case MENU_NINTENDO_LOGO:          interface_menu01_nintendo();              break;
+        case MENU_RAREWARE_LOGO:          interface_menu02_rareware();              break;
+        case MENU_EYE_INTRO:              interface_menu03_eyeintro();              break;
+        case MENU_GOLDENEYE_LOGO:         interface_menu04_goldeneyelogo();         break;
+        case MENU_FILE_SELECT:            interface_menu05_filesel();               break;
+        case MENU_MODE_SELECT:            interface_menu06_modesel();               break;
+        case MENU_MISSION_SELECT:         interface_menu07_missionsel();            break;
+        case MENU_DIFFICULTY:             interface_menu08_difficulty();            break;
+        case MENU_007_OPTIONS:            interface_menu09_007options();            break;
+        case MENU_BRIEFING:               interface_menu0A_briefing();              break;
+        case MENU_MISSION_FAILED:         interface_menu0C_missionfailed();         break;
+        case MENU_MISSION_COMPLETE:       interface_menu0D_missioncomplete();       break;
+        case MENU_MP_OPTIONS:             interface_menu0E_mpoptions();             break;
+        case MENU_MP_SCENARIO_SELECT:     interface_menu13_mpscenario();            break;
+        case MENU_MP_CHAR_SELECT:         interface_menu0F_mpcharsel();             break;
+        case MENU_MP_TEAMS:               interface_menu14_mpteams();               break;
+        case MENU_MP_HANDICAP:            interface_menu10_mphandicap();            break;
+        case MENU_MP_CONTROL_STYLE:       interface_menu11_mpcontrols();            break;
+        case MENU_MP_STAGE_SELECT:        interface_menu12_mpstage();               break;
+        case MENU_CHEAT:                  interface_menu15_cheat();                 break;
+        case MENU_NO_CONTROLLERS:         interface_menu16_nocontrollers();         break;
+        case MENU_DISPLAY_CAST:           interface_menu18_displaycast();           break;
+        case MENU_SPECTRUM_EMU:           interface_menu19_spectrum();              break;
+        case MENU_RUN_STAGE:
+            if (interface_menu0B_runstage())
+            {
+                frontChangeMenu(MENU_LEGAL_SCREEN, 1);
             }
-            else {
-                if (selected_stage == LEVELID_CUBA) {
-                    do_extended_cast_display(1);
-                    frontChangeMenu(MENU_DISPLAY_CAST, TRUE);
-                }
-                else {
-                    frontChangeMenu(MENU_MISSION_FAILED, TRUE);
-                }
+            else if (gamemode == GAMEMODE_MULTI)
+            {
+                frontChangeMenu(MENU_MP_OPTIONS, 1);
             }
-        }
-        else {
-            frontChangeMenu(MENU_LEGAL_SCREEN, TRUE);
-        }
-        break;
-    case MENU_MISSION_FAILED:
-        interface_menu0C_missionfailed();
-        break;
-    case MENU_MISSION_COMPLETE:
-        interface_menu0D_missioncomplete();
-        break;
-    case MENU_MP_OPTIONS:
-        interface_menu0E_mpoptions();
-        break;
-    case MENU_MP_CHAR_SELECT:
-        interface_menu0F_mpcharsel();
-        break;
-    case MENU_MP_HANDICAP:
-        interface_menu10_mphandicap();
-        break;
-    case MENU_MP_CONTROL_STYLE:
-        interface_menu11_mpcontrols();
-        break;
-    case MENU_MP_STAGE_SELECT:
-        interface_menu12_mpstage();
-        break;
-    case MENU_MP_SCENARIO_SELECT:
-        interface_menu13_mpscenario();
-        break;
-    case MENU_MP_TEAMS:
-        interface_menu14_mpteams();
-        break;
-    case MENU_CHEAT:
-        interface_menu15_cheat();
-        break;
-    case MENU_NO_CONTROLLERS:
-        interface_menu16_nocontrollers();
-        break;
-    case MENU_SWITCH_SCREENS:
-        interface_menu17_switchscreens();
-        break;
-    case MENU_DISPLAY_CAST:
-        interface_menu18_displaycast();
-        break;
-    case MENU_SPECTRUM_EMU:
-        interface_menu19_spectrum();
+            else if (selected_stage == LEVELID_CUBA)
+            {
+                do_extended_cast_display(1);
+                frontChangeMenu(MENU_DISPLAY_CAST, 1);
+            }
+            else
+            {
+                frontChangeMenu(MENU_MISSION_FAILED, 1);                
+            }
     }
-    return;
 }
 #else
 
