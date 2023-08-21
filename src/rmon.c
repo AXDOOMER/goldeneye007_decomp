@@ -138,7 +138,7 @@ void osWriteHost(void * buffer, u32 size)
 	if (size);
     #ifdef ENABLE_USB
     //flesh out a proper ge parser on pc app
-    usb_write(DATATYPE_RMON  , buffer, size);
+    usb_write(DATATYPE_RAWBINARY  , buffer, size);
     #endif
 }
 
