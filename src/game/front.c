@@ -43,6 +43,8 @@
 #include "image.h"
 #include "ob.h"
 #include "gbi_extension.h"
+#include "initanitable.h"
+#include "macro.h"
 
 
 
@@ -678,36 +680,43 @@ struct Model *cast_model_weapon = NULL;
 u32 full_actor_intro = 0;
 
 struct intro_char intro_char_table[] = {
-    {BODY_Brosnan_Tuxedo, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Special_Operations_Uniform, HEAD_Male_Brosnan_Boiler, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_232), TEXT(LTITLE, TITLE_STR_233), 0, 0},
+    //{BODY_Brosnan_Tuxedo, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 1},
+    //{BODY_Special_Operations_Uniform, HEAD_Male_Brosnan_Boiler, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_232), TEXT(LTITLE, TITLE_STR_233), 0, 0},
+    {BODY_Brosnan_Tuxedo, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Special_Operations_Uniform, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Formal_Wear, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Jungle_Fatigues, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Parka, HEAD_Male_Brosnan_Tuxedo, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_228), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Natalya_Skirt, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_234), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Natalya_Jungle_Fatigues, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_234), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Trevelyan_006, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_235), TEXT(LTITLE, TITLE_STR_236), 0, 0},
+    {BODY_Trevelyan_Janus, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_229), TEXT(LTITLE, TITLE_STR_235), TEXT(LTITLE, TITLE_STR_236), 0, 0},
     {BODY_Xenia, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_230), TEXT(LTITLE, TITLE_STR_237), TEXT(LTITLE, TITLE_STR_238), 0, 0},
     {BODY_Ourumov, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_230), TEXT(LTITLE, TITLE_STR_239), TEXT(LTITLE, TITLE_STR_240), 0, 0},
     {BODY_Boris, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_230), TEXT(LTITLE, TITLE_STR_241), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Valentin_, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_230), TEXT(LTITLE, TITLE_STR_242), TEXT(LTITLE, TITLE_STR_243), 0, 0},
     {BODY_Siberian_Guard_1_Mishkin, 0x45, TEXT(LTITLE, TITLE_STR_230), TEXT(LTITLE, TITLE_STR_244), TEXT(LTITLE, TITLE_STR_245), 0, 0},
-    {BODY_Russian_Soldier, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_253), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Russian_Infantry, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_252), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Scientist_1_Male, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_263), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Scientist_2_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_263), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Russian_Commandant, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_256), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Janus_Marine, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_254), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Naval_Officer, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_257), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Helicopter_Pilot, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_262), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_St_Petersburg_Guard, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_251), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Civilian_1_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Civilian_2, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Civilian_3, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Civilian_4, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Siberian_Guard_1_Mishkin, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_258), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Arctic_Commando, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_259), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Siberian_Guard_2, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_258), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Siberian_Special_Forces, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_260), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Jungle_Commando, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_250), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Janus_Special_Forces, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_255), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Moonraker_Elite_1_Male, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_261), TEXT(LTITLE, TITLE_STR_227), 0, 1},
-    {BODY_Moonraker_Elite_2_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_261), TEXT(LTITLE, TITLE_STR_227), 0, 1},
+    {BODY_Russian_Soldier, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_253), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Russian_Infantry, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_252), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Scientist_1_Male, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_263), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Scientist_2_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_263), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Russian_Commandant, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_256), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Janus_Marine, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_254), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Naval_Officer, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_257), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Helicopter_Pilot, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_262), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_St_Petersburg_Guard, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_251), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Civilian_1_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Civilian_2, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Civilian_3, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Civilian_4, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_264), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Siberian_Guard_1_Mishkin, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_258), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Arctic_Commando, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_259), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Siberian_Guard_2, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_258), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Siberian_Special_Forces, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_260), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Jungle_Commando, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_250), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Janus_Special_Forces, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_255), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Moonraker_Elite_1_Male, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_261), TEXT(LTITLE, TITLE_STR_227), 0, 0},
+    {BODY_Moonraker_Elite_2_Female, 0xFFFFFF9F, TEXT(LTITLE, TITLE_STR_227), TEXT(LTITLE, TITLE_STR_261), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Mayday, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_231), TEXT(LTITLE, TITLE_STR_246), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Jaws, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_231), TEXT(LTITLE, TITLE_STR_247), TEXT(LTITLE, TITLE_STR_227), 0, 0},
     {BODY_Oddjob, 0xFFFFFFFF, TEXT(LTITLE, TITLE_STR_231), TEXT(LTITLE, TITLE_STR_248), TEXT(LTITLE, TITLE_STR_227), 0, 0},
@@ -716,6 +725,8 @@ struct intro_char intro_char_table[] = {
 };
 
 struct intro_animation intro_animation_table[] = {
+    {ANIM_idle, 0.0, 1.0, 0},
+    /*
     {ANIM_spotting_bond, 98.0, 1.0, 0},
     {ANIM_fire_standing_draw_one_handed_weapon_fast, 21.0, 1.0, 1},
     {ANIM_fire_standing_draw_one_handed_weapon_slow, 26.0, 1.0, 1},
@@ -738,6 +749,7 @@ struct intro_animation intro_animation_table[] = {
     {ANIM_conversation, 37.0, 1.0, 2},
     {ANIM_conversation_listener, 300.0, 1.0, 2},
     {ANIM_conversation_cleaned, 120.0, 1.0, 2},
+    */
     {0xFFFFFFFF, 0.0, 0.0, 0}
 };
 
@@ -1913,6 +1925,10 @@ void interface_menu04_goldeneyelogo(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
     g_MenuTimer += g_ClockTimer;
+
+    do_extended_cast_display(0);
+    frontChangeMenu(MENU_DISPLAY_CAST, 1);
+/*
     if (((!is_first_time_on_main_menu) || (GOLDENEYELOGO_TIMER_1 < g_MenuTimer)) ||
        ((ge_logo_bool && (GOLDENEYELOGO_TIMER_2 < g_MenuTimer)))) {
         if (g_MenuTimer > GOLDENEYELOGO_TIMER_1) {
@@ -1935,6 +1951,7 @@ void interface_menu04_goldeneyelogo(void)
             ge_logo_bool = TRUE;
         }
     }
+    */
 }
 
 
@@ -8402,12 +8419,15 @@ void do_extended_cast_display(s32 flag)
         return;
     }
     intro_character_index = 1;
+
+    intro_character_index = 0;
 }
 
 //********************************************************************************************************
 //CAST SCREEN
 //********************************************************************************************************
-#ifdef NONMATCHING
+//#ifdef NONMATCHING
+#if 1
 
 // Address 0x7F01869C NTSC
 // Address 0x7F018714 PAL
@@ -8440,11 +8460,13 @@ void init_menu18_displaycast(void)
     sp7C = NULL;
     sp70 = randomGetNext() & 1;
 
-    if ((full_actor_intro != 0) && (intro_character_index == 0))
+    //if ((full_actor_intro != 0) && (intro_character_index == 0))
+    if (intro_character_index == 0)
     {
         musicTrack1ApplySeqpVol(0x7FFF);
         g_musicXTrack1Fade = 0;
-        musicTrack1Play(2);
+        //musicTrack1Play(2);
+        musicTrack1Play(M_CUBA);
     }
 
     for (intro_animation_count = 0; intro_animation_table[intro_animation_count].animID >= 0; intro_animation_count++)
@@ -8459,7 +8481,8 @@ void init_menu18_displaycast(void)
 
     sp6C = intro_animation_table[randomly_selected_intro_animation].camera_preset;
 
-    if (sp8C == BODY_Special_Operations_Uniform)
+    //if (sp8C == BODY_Special_Operations_Uniform)
+    if (0)
     {
         switch (randomGetNext() % 5U)
         {
@@ -8487,14 +8510,16 @@ void init_menu18_displaycast(void)
             break;
         }
     }
-    else if (sp8C == BODY_Natalya_Skirt)
+    //else if (sp8C == BODY_Natalya_Skirt)
+    else if (0)
     {
         if (randomGetNext() & 1)
         {
             sp8C = BODY_Natalya_Jungle_Fatigues;
         }
     }
-    else if (sp8C == BODY_Trevelyan_006 && randomGetNext() & 1)
+    //else if (sp8C == BODY_Trevelyan_006 && randomGetNext() & 1)
+    else if (0)
     {
         sp8C = BODY_Trevelyan_Janus;
     }
@@ -8623,13 +8648,15 @@ void init_menu18_displaycast(void)
         0.0f);
     
     g_MenuTimer = 0;
+
     
-    flt_CODE_bss_800695A4 = (RANDOMGETNEXT_F32() * 80.0f) + 70.0f;
-    flt_CODE_bss_800695A8 = (RANDOMGETNEXT_F32() * 80.0f) + 70.0f;
-    flt_CODE_bss_800695B0 = (RANDOMGETNEXT_F32() - 0.5f) * 6.2831855f;
-    flt_CODE_bss_800695B4 = (RANDOMGETNEXT_F32() - 0.5f) * 2.5132742f;
-    flt_CODE_bss_800695BC = (RANDOMGETNEXT_F32() * 200.0f) + (-100.0f);
-    flt_CODE_bss_800695C0 = (RANDOMGETNEXT_F32() * 200.0f) + (-100.0f);
+    
+    flt_CODE_bss_800695A4 = (/*ANDOMGETNEXT_F32()*/ 0.5f * 80.0f) + 70.0f;
+    flt_CODE_bss_800695A8 = (/*ANDOMGETNEXT_F32()*/ 0.5f * 80.0f) + 70.0f;
+    flt_CODE_bss_800695B0 = (/*ANDOMGETNEXT_F32()*/ 0.5f - 0.5f) * 6.2831855f;
+    flt_CODE_bss_800695B4 = (/*ANDOMGETNEXT_F32()*/ 0.5f - 0.5f) * 2.5132742f;
+    flt_CODE_bss_800695BC = (/*ANDOMGETNEXT_F32()*/ 0.5f * 200.0f) + (-100.0f);
+    flt_CODE_bss_800695C0 = (/*ANDOMGETNEXT_F32()*/ 0.5f * 200.0f) + (-100.0f);
     flt_CODE_bss_800695A0 = flt_CODE_bss_800695A4;
     flt_CODE_bss_800695AC = flt_CODE_bss_800695B0;
     flt_CODE_bss_800695B8 = flt_CODE_bss_800695BC;
@@ -9865,10 +9892,10 @@ void interface_menu18_displaycast(void)
     g_MenuTimer += g_ClockTimer;
 
 #if defined(VERSION_US) || defined(VERSION_JP)
-#define INTERFACE_MENU18_TIMER 181
+#define INTERFACE_MENU18_TIMER (60*4)+1
 #endif
 #if defined(VERSION_EU)
-#define INTERFACE_MENU18_TIMER 151
+#define INTERFACE_MENU18_TIMER (50*4)+1
 #endif
 
     if (g_MenuTimer >= INTERFACE_MENU18_TIMER)
@@ -9878,6 +9905,7 @@ void interface_menu18_displaycast(void)
         
         while (1)
         {
+            /*
             if (intro_char_table[intro_character_index].flag && full_actor_intro == 0 && 1)
             {
                 intro_character_index++;
@@ -9919,6 +9947,7 @@ void interface_menu18_displaycast(void)
                 intro_character_index++;
                 continue;
             }
+            */
 
             break;
         }
