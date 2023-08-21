@@ -280,7 +280,7 @@ $(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
 ## Collect Objects ##
 
 APPELF := $(BUILD_DIR)/ge007.$(OUTCODE).elf
-APPROM := $(BUILD_DIR)/ge007.$(OUTCODE)-$(shell date +%s).z64
+APPROM := $(BUILD_DIR)/ge007.$(OUTCODE).z64
 APPBIN := $(BUILD_DIR)/ge007.$(OUTCODE).bin
 
 HEADERFILES := $(foreach dir,src,$(wildcard $(dir)/*.s))
@@ -303,9 +303,6 @@ ASSET_DATAOBJECTS := $(foreach file,$(ASSET_DATAFILES),$(BUILD_DIR)/$(file:.c=.o
 
 ROMFILES2 := assets/romfiles2.s
 ROMOBJECTS2 := $(BUILD_DIR)/assets/romfiles2.o
-
-SPECROMFILES := assets/specrom.s
-SPECROMOBJECTS := $(BUILD_DIR)/assets/specrom.o
 
 RAMROM_FILES := assets/ramrom/ramrom.s
 RAMROM_OBJECTS := $(BUILD_DIR)/assets/ramrom/ramrom.o
@@ -506,7 +503,7 @@ endif
 #	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
 
 #Link Files
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(SPECROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14 ge007.ld
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14 ge007.ld
 	cpp $(LDFILEOPTS) -P ge007.ld -o build/ge007.$(OUTCODE).ld
 	@echo "Linking Files into ELF" 
 	$(LD) $(LDFLAGS) -o $@
