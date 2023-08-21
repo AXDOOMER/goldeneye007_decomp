@@ -91,6 +91,9 @@
 #define ASPECT_RATIO_SD    (1.3333334f)
 #define ASPECT_RATIO_PAL    (1.1764706f)
 
+#define ASPECT_RATIO_EU_400_330    (1.5873016119f)
+#define ASPECT_RATIO_EU_320_272    (1.40056025982f)
+
 #if defined(VERSION_EU)
 /* PAL */
 #define	SCREEN_HEIGHT                      SCREEN_HEIGHT_272
