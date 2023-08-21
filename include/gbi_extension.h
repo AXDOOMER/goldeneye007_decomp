@@ -196,6 +196,14 @@
     _g->words.w1 = _SHIFTL(0x06, 24, 8) | _SHIFTL((c), 14, 10) | _SHIFTL((d), 2, 10);       \
 }
 
+#define	gDPLoadTLUTCmd2(pkt, tile, count)				\
+{									\
+	Gfx *_g = (Gfx *)pkt;						\
+									\
+	_g->words.w0 = _SHIFTL(G_LOADTLUT, 24, 8) | 0xff0;			\
+	_g->words.w1 = _SHIFTL((tile), 24, 3) | _SHIFTL((count), 14, 10) | 0xff0;\
+}
+
 /*
  * Texturing macro Overrides
  */

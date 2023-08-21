@@ -91,6 +91,9 @@
 #define ASPECT_RATIO_SD    (1.3333334f)
 #define ASPECT_RATIO_PAL    (1.1764706f)
 
+#define ASPECT_RATIO_EU_400_330    (1.5873016119f)
+#define ASPECT_RATIO_EU_320_272    (1.40056025982f)
+
 #if defined(VERSION_EU)
 /* PAL */
 #define	SCREEN_HEIGHT                      SCREEN_HEIGHT_272
@@ -199,7 +202,8 @@ s32 viGetHorizontalOffset(void);
 void video_related_8(void);
 void viSetBuf(s16 x, s16 y);
 void viSetXY(s16 x, s16 y);
-
+Gfx *viSetFillColor(Gfx *gdl, s32 r, s32 g, s32 b);
+Gfx *viFillScreen(Gfx *gdl);
 Gfx *viSetupScreensForNumPlayers(Gfx *gdl);
 
 void indyGrabJpg16bit(void);
