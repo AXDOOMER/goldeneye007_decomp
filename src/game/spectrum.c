@@ -101,9 +101,144 @@ u8 spec_OUT_port[] =
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0D28E0(void) {
 
+// https://decomp.me/scratch/lXRos 89.33%
+
+struct spec_struct {
+    u32 D_8004EC40;
+    s16 D_8004EC44[96];
+    u8 D_8004ED04;
+    u8 D_8004ED05;
+    u8 D_8004ED06;
+    u8 D_8004ED07;
+};
+
+extern struct spec_struct D_8004EC40;
+
+void sub_GAME_7F0D28E0(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3)
+{
+    s32 var_a1;
+    s32 temp_t1;
+    u8 *var_s0;
+    u8 *var_v0;
+    s32 var_v1;
+    s32 var_a0;
+    s32 var_t0;
+    u8 temp_a3;
+    s32 var_a2;
+    s32 i;
+
+    void* pp;
+    s32 temp_v1;
+
+    
+    var_v0 = &arg0[((arg2 << 5) & 0x1800) | ((arg2 << 8) & 0x700) | ((arg2 << 2) & 0xE0) | (arg1 >> 3)];
+    temp_t1 = arg0[((arg2 << 2) & 0x3E0) + (arg1 >> 3) + 0x1800];
+
+    if(*var_v0);
+
+    // problem area: need copy of t1, one for each `if` branch.
+    
+    if ((temp_t1 & 0x80) && (D_8004EC40.D_8004ED04 != 0))
+    {
+        var_a0 = (temp_t1 >> 3) & 7;
+        var_v1 = temp_t1 & 7;
+    }
+    else
+    {
+        var_v1 = (temp_t1 >> 3) & 7;
+        var_a0 = temp_t1 & 7;
+    }
+
+    if (!(temp_t1 & 0x40))
+    {
+        var_a0 = (var_a0 + 8) & 0xff;
+        var_v1 = (var_v1 + 8) & 0xff;
+    }
+    
+    for (i = 0; i < 8; i++)
+    {
+        temp_a3 = *var_v0;
+
+        if (temp_a3 & 0x80)
+        {
+            var_a2 = var_a0;
+        }
+        else
+        {
+            var_a2 = var_v1;
+        }
+        
+        if (temp_a3 & 0x40)
+        {
+            var_t0 = var_a0;
+        }
+        else
+        {
+            var_t0 = var_v1;
+        }
+        
+        arg3[0] = (s8) (var_t0 | (var_a2 * 0x10));
+
+        if (temp_a3 & 0x20)
+        {
+            var_a2 = var_a0;
+        }
+        else
+        {
+            var_a2 = var_v1;
+        }
+        if (temp_a3 & 0x10)
+        {
+            var_t0 = var_a0;
+        }
+        else
+        {
+            var_t0 = var_v1;
+        }
+        arg3[1] = (s8) (var_t0 | (var_a2 * 0x10));
+
+        if (temp_a3 & 8)
+        {
+            var_a2 = var_a0;
+        }
+        else
+        {
+            var_a2 = var_v1;
+        }
+        if (temp_a3 & 4)
+        {
+            var_t0 = var_a0;
+        }
+        else
+        {
+            var_t0 = var_v1;
+        }
+        arg3[2] = (s8) (var_t0 | (var_a2 * 0x10));
+
+        if (temp_a3 & 2)
+        {
+            var_a2 = var_a0;
+        }
+        else
+        {
+            var_a2 = var_v1;
+        }
+        if (temp_a3 & 1)
+        {
+            var_t0 = var_a0;
+        }
+        else
+        {
+            var_t0 = var_v1;
+        }
+        arg3[3] = (s8) (var_t0 | (var_a2 * 0x10));
+
+        arg3 += 0x20;
+        var_v0 += 0x100;
+    }
 }
+
 #else
 GLOBAL_ASM(
 .text
@@ -1394,19 +1529,19 @@ void nullsub_50(void) {
 
 u8 sub_GAME_7F0D37DC(u32 cycles, u8 specA, u8 port, u8 value)
 {
-  int temp_v0;
-  if (port == 0xFE)
-  {
-    temp_v0 = value & 7;
-    if (temp_v0 != spec_OUT_port[0])
+    int temp_v0;
+    if (port == 0xFE)
     {
-      spec_OUT_port[0] = temp_v0;
+        temp_v0 = value & 7;
+        if (temp_v0 != spec_OUT_port[0])
+        {
+            spec_OUT_port[0] = temp_v0;
+        }
+
+        return 0;
     }
 
     return 0;
-  }
-
-  return 0;
 }
 
 
