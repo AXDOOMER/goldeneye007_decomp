@@ -8,7 +8,7 @@ default: colour
 FINAL := YES
 VERSION := US
 IDO_RECOMP := YES
-VERBOSE := 1
+VERBOSE := 2
 # If COMPARE is 1, check the output sha1sum when building 'all', and if fail to match
 # then compare ELF sections to known md5 checksums.
 # If compare is 2, it will just compare the sha1sum.
@@ -81,7 +81,67 @@ endef
 # Common build print status function
 PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) $(if $3, -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3))$(RESTORECOLOUR)"
 
+# Seperate "constant" drawing from variable drawing to speed up PBar rendering
+# draws a box and fills it grey ready for blue bar
+SetupProgressBar =                                                                                           \
+	{                                                                                                        \
+		str="$(SAVECURSOR)$(call SET_SCROLLREGION,4,0)$(call CURSOR_GOTO,2,999)\033[1J$(call CURSOR_GOTO,1)";\
+		str=$$str"\033(0lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk";   \
+		str=$$str"\nx$(call SET_TEXTATTRIB,$(BG_GRAY))%78s$(RESTORECOLOUR)x\n";                              \
+		str=$$str"mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj\033(B";   \
+		str=$$str"$(RESTORECURSOR)";                                                                         \
+		printf $$str "";                                                                                     \
+	}
 
+#(call DrawProgressBar,Percent)
+# OR
+#(call DrawProgressBar,NumberOfItemsDone,TotalNumberOfItems)
+# If second param is given, use it to work out a percentage.
+# divide the percentage into a 80 char long bar
+# paint the whole bar grey
+# paint the first half, then text, then second half.
+# clear colour codes 
+DrawProgressBar =                                       \
+	{                                                   \
+		$(if $(2),                                      \
+			if [ "$(1)" -ne "$(2)" ];                   \
+			then                                        \
+				_pdone=`expr 100 / $(2) \* $(1)`;       \
+			else                                        \
+				_pdone=100;                             \
+			fi                                          \
+			,_pdone=$(1)                                \
+		);                                              \
+		pdone=`expr $$_pdone \* 74 / 100`;              \
+		pdoneb=0;                                       \
+		str="$(SAVECURSOR)$(call CURSOR_GOTO,2,2)";\
+		str=$$str"$(call SET_TEXTATTRIB,$(BOLD),$(FG_WHITE),$(BG_NAVY))" ;    \
+		                                                \
+		if [ "$$pdone" -lt "36" ];                      \
+		then                                            \
+			str=$$str"%$${pdone}s";                     \
+			str=$$str"$(call SET_TEXTATTRIB,$(BG_GRAY))";\
+			pdoneb=`expr 36 - $$pdone`;                 \
+			str=$$str"%$${pdoneb}s%3d%%";               \
+		else                                            \
+			pdoneb=`expr $$pdone - 36`;                 \
+			str=$$str"%1s%35s%3d%%%$${pdoneb}s";        \
+		fi;                                             \
+		str=$$str"$(RESTORECURSOR)$(RESTORECOLOUR)";    \
+		printf $$str "" "" $$_pdone;                 \
+	}
+
+# Increment Progress Bar From percentage (1), and increase by 1 every (2) seconds.
+# Continue doing so until calling process ends
+IncrementProgressBarFromAtRate =         \
+	{                                    \
+		i=$(1);                          \
+		while [ -d /proc/$$! ] && [ $$i -le 100 ]; do       \
+			$(call DrawProgressBar,$$i); \
+			i=$$((i+1));                 \
+			sleep $(2);                  \
+		done;                            \
+	}
 
 # Ask to continue
 # (1) Prompt, (2) Do if Yes,
@@ -322,6 +382,9 @@ PRINTMATCH := printf "\n\n\n\033[3A$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(
 include src/libultrare/Makefile.libultrare
 
 all: $(APPROM)
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,100)
+endif
 ifeq ($(COMPARE),1)
 
 	@echo "\n"
@@ -358,30 +421,30 @@ ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanc
 endif
 
 # Build RSP
-$(BUILD_DIR)/rsp/%.bin: rsp/*.s
+$(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
 	$(call PRINT_STATUS,Assembling1:,$<,$@)
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin 
 
 #Build asm files in root
-$(BUILD_DIR)/%.o: src/%.s
+$(BUILD_DIR)/%.o: src/%.s pb2
 	$(call PRINT_STATUS,Assembling2:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build asm files in src/
-$(BUILD_DIR)/src/%.o: src/%.s
+$(BUILD_DIR)/src/%.o: src/%.s pb3
 	$(call PRINT_STATUS,Assembling3:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Images
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb5
 	$(call PRINT_STATUS,Compiling5:,$<,$@)
 	$(LD) -r -b binary $< -o $@ 
 
 
 #Compress Obseg
-$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
+$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
 	$(call PRINT_STATUS,Compressing6:,$<,$@)
 
 
@@ -397,27 +460,27 @@ $(BUILD_DIR)/src/%.o: src/%.c
 
 
 #Build RamRom
-$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
+$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
 	$(call PRINT_STATUS,Assembling9:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build fonts
-$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
+$(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
 	$(call PRINT_STATUS,Compiling10:,$<,$@)
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
 
 #Build asm files in assets/
-$(BUILD_DIR)/assets/%.o: assets/%.s
+$(BUILD_DIR)/assets/%.o: assets/%.s pb11
 	$(call PRINT_STATUS,Assembling11:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Obseg
-$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
+$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
 	$(call PRINT_STATUS,Assembling12:,$<,$@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build C files in assets/
-$(BUILD_DIR)/assets/%.o: assets/%.c
+$(BUILD_DIR)/assets/%.o: assets/%.c pb4
 	$(call PRINT_STATUS,Compiling4:,$<,$@)
 ifeq ($(filter-out %setup%,$<),)
 	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION) 
@@ -432,16 +495,22 @@ endif
 #	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
 
 #Link Files
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) ge007.ld
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14 ge007.ld
 	cpp $(LDFILEOPTS) -P ge007.ld -o build/ge007.$(OUTCODE).ld
 	@echo "Linking Files into ELF" 
 	$(LD) $(LDFLAGS) -o $@
 
 $(APPBIN): $(APPELF)
+  ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,98)
+  endif
 	@echo "Building ROM"
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 	
 $(APPROM):	$(APPBIN)
+  ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,100)
+  endif
 	@echo "Compressing ROM"
 	$(DATASEG_COMP) $< $(OUTCODE)
 	@echo "Finalizing ROM"
@@ -456,6 +525,8 @@ $(APPROM):	$(APPBIN)
 
 
 .PHONY: all default codeclean dataclean clean cmdbuidler test help colour
+# Dont declare as phony otherwise make will re-evaluate every build including the recipies assosiated with them - just make sure no file is ever called pbx
+# pb1 pb2 pb3 pb4 pb5 pb6 pb7 pb8 pb9 pb10 pb11 pb12 pb13 pb14
 
 setupclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -471,9 +542,18 @@ libultraclean:
 
 
 codeclean:
-	@echo "\n\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
+ifeq ($(VERBOSE),1)
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
+else
+	@clear
+	@$(call SetupProgressBar)
+	@echo "\n\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map
+	@$(call DrawProgressBar,50)
+	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
+	@$(call DrawProgressBar,100)
+endif
 	@echo "\033[1J$(RESTORESCROLLREGION)\nCode Binaries Cleared! Make will Re-Build these next time.\n"
 
 dataclean: 
@@ -481,14 +561,28 @@ dataclean:
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
 
+# "Conditionals control what 'make' actually "sees" in the makefile, so they cannot be used to control recipes at the time of execution."
+# https://www.gnu.org/software/make/manual/html_node/Conditionals.html
+ifeq ($(VERBOSE),1)
 clean::
 	# if this command is modified, make sure to update this in the `nuke` recipe.
-	@echo "\n\n\nDeleting All Code and Asset Binaries"
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) \
 	$(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)
+else
+clean::
+	@clear
+	@echo "\n\n\nDeleting All Code and Asset Binaries"
+	@$(call SetupProgressBar)
+	@rm -f $(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map & $(call IncrementProgressBarFromAtRate,0,0.125)
+	@rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) & $(call IncrementProgressBarFromAtRate,25,0.125)
+	@rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) & $(call IncrementProgressBarFromAtRate,50,0.125)
+	@rm -f $(IMAGE_OBJS) $(MUSIC_RZ_FILES) $(RSPOBJECTS) $(STAN_BUILD_FILES) $(SETUP_BUILD_FILES)& $(call IncrementProgressBarFromAtRate,75,0.125)
+
+	@$(call DrawProgressBar,100)
 	@echo "\033[1J$(RESTORESCROLLREGION)\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
+endif
 
 nuke:
 	@echo deleting files specified from make clean ...
@@ -536,13 +630,7 @@ help:
 	@echo "    VERSION=v                       Region version. (US is default)"
 	@echo "                                    Supported values: ${ALLOWED_VERSIONS}\n"
 
-
-
-
-
-
 #CMD Builder tools
-
 AI_CMD_BUILDER := $(TOOLS_DIR)/cmdbuilder.c
 AI_CMD_LIST_DEFINITIONS := src/aicommands.def
 AI_CMD_LIST_TEMP := $(BUILD_DIR)/aicommands.temp
@@ -591,20 +679,28 @@ cmdbuilder:
 	@echo
 	@echo Building AI Command Macros...
 	@echo
+	@$(call SetupProgressBar)
+	@$(call DrawProgressBar,0)
 	@ # copy command definitions to temp
 	@cp $(AI_CMD_LIST_DEFINITIONS) $(AI_CMD_LIST_TEMP)
+	@$(call DrawProgressBar,5)
 	@ # Preformat Definitions for builder (encode documentation tags)
 	@$(call PRINT_STATUS,"Pre Formatting",$(AI_CMD_LIST_DEFINITIONS))
 	@$(AI_CMD_BUILDER_PRECONVERT) $(AI_CMD_LIST_TEMP) > $(AI_CMD_LIST_DEFINITIONS)
+	@$(call DrawProgressBar,10)
 	@ # Print Header
 	@echo $(AI_CMD_LIST_H2_HEADER) > $(AI_CMD_LIST_H2)
+	@$(call DrawProgressBar,11)
 	@ # Execute Builder and format (re-add newlines, documentation tags etc) -C keeps /**/ comments
 	@$(call PRINT_STATUS,"Processing",$(AI_CMD_LIST_DEFINITIONS))
 	@echo This might take some time...
 	@$(CC) -Xcpluscomm -c $(AI_CMD_BUILDER) $(INCLUDE) -w 581 -E | $(AI_CMD_BUILDER_CONVERT) >> $(AI_CMD_LIST_H2) & $(call IncrementProgressBarFromAtRate,12,0.5)
+	@$(call DrawProgressBar,98)
 	@ # restore command def from temp (no encoding)
 	@cp $(AI_CMD_LIST_TEMP) $(AI_CMD_LIST_DEFINITIONS)
+	@$(call DrawProgressBar,99)
 	@rm $(AI_CMD_LIST_TEMP)
+	@$(call DrawProgressBar,100)
 	@echo
 	@echo Done!
 	@echo
@@ -637,13 +733,21 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
+testPB:
+	$(call SetupProgressBar)
+	$(call IncrementProgressBarFromAtRate,0,0.125)
 
 textures:
 	$(foreach x,$(IMAGE_BINS),tools/mktex/build/tex2png $(x) assets/images/out ${\n})
 	
 colour:
 	@echo "\033[3A"
- 	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
+  ifeq ($(VERBOSE),0)
+#	@clear
+	@$(call SetupProgressBar)
+	@$(call DrawProgressBar,0)
+  endif
+	@$(MAKE) --no-print-directory all 2>&1 | sed -E \
 	-e 's/\(\(\x27E\x27\,\x27R\x27\,\x27R\x27\,\x27O\x27\,\x27R\x27,\s?((\x27?,?\s?\x27.)*)\x27,\s?\x27([^x27])\x27\)/((\x27ERROR\x27,\1\3\x27\)/g; :loop s/\(\((\x27ERROR)((\x27?,?\s?\x27.)*),?\s?\x27(.)\x27([^x27]*)\x27\)/((\1\2\5\x27\)/g; tloop; ' \
 	-e "s/(ERROR:[^\x27]*?\x27)|(^.*[Ee]rror.*)|(Mis-Match in)|(:\sFAILED)/$$(echo "$(call SET_TEXTATTRIB,$(FG_RED))")&$$(echo "$(RESTORECOLOUR)")/g" \
 	-e "s/^.*[Ww]arning.*/$$(echo "$(call SET_TEXTATTRIB,$(FG_YELLOW))")&$$(echo "$(RESTORECOLOUR)")/g" \
@@ -658,4 +762,65 @@ else
 	.SILENT:
 	endif
 endif
+
+
+## Progress Bar status - call once ##
+pb1:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,1,15)
+endif
+pb2:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,2,15)
+endif
+pb3:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,3,15)
+endif
+pb4:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,4,15)
+endif
+pb5:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,5,15)
+endif
+pb6:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,6,15)
+endif
+pb7:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,7,15)
+endif
+pb8:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,8,15)
+endif
+pb9:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,9,15)
+endif
+pb10:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,10,15)
+endif
+pb11:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,11,15)
+endif
+pb12:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,12,15)
+endif
+pb13:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,13,15)
+endif
+pb14:
+ifeq ($(VERBOSE),0)
+	@$(call DrawProgressBar,14,15)
+endif
+
+
 
