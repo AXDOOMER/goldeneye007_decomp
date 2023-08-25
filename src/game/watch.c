@@ -357,202 +357,54 @@ void controller_deadzone_related(void)
 
 
 
-#ifdef NONMATCHING
-//code seems to match, can't seem to get data lined up correctly
 Gfx * sub_GAME_7F0A4B40(Gfx *DL)
 {
-    u8 buffer [0x16];
-    int *pFontFile;
-    int *pFontChars;
-    
-    u32 y;
-    u32 x;
-    
-    if (10 < joyGetStickX(PLAYER_1)) {
+    if (10 < joyGetStickX(PLAYER_1))
+    {
         D_80040B48 += 1;
     }
 
-    if (joyGetStickX(PLAYER_1) < -10) {
+    if (joyGetStickX(PLAYER_1) < -10)
+    {
         D_80040B48 -= 1;
     }
 
-    if (10 < joyGetStickY(PLAYER_1)) {
+    if (10 < joyGetStickY(PLAYER_1))
+    {
         D_80040B4C -= 1;
     }
 
-    if (joyGetStickY(PLAYER_1) < -10) {
+    if (joyGetStickY(PLAYER_1) < -10)
+    {
         D_80040B4C += 1;
     }
+    
     gDPSetRenderMode(DL++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     gDPSetCombineMode(DL++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(DL++, 0, 0, 0xFF, 0x00, 0x00, 0xFF);
     gDPFillRectangle(DL++, D_80040B48, D_80040B4C, D_80040B48+1, D_80040B4C+1);
 
-    pFontFile = ptrFontBankGothic;
-    pFontChars = ptrFontBankGothicChars;
-    sprintf(buffer,"%d, %d\n",D_80040B48,D_80040B4C);
+    {
+        u8 buffer [0x12];
+        struct font * pFontFile;
+        struct fontchar * pFontChars;
+        s32 y;
+        s32 x;
+        
+        pFontFile = ptrFontBankGothic;
+        pFontChars = ptrFontBankGothicChars;
+        sprintf(buffer,"%d, %d\n",D_80040B48,D_80040B4C);
+    
+        DL = microcode_constructor(DL++);
 
-    DL = microcode_constructor(DL++);
-    textMeasure(x,y,buffer,pFontChars,pFontFile,0);
-    DL = textRender(DL,&D_80040B48,&D_80040B4C,buffer,pFontChars,pFontFile, 0xff0000ff,y,x,0,0);
-    D_80040B4C = (D_80040B4C - pFontChars[0x224]) + 1;
+        textMeasure(&x, &y, buffer, pFontChars, pFontFile, 0);
+        DL = textRender(DL, &D_80040B48, &D_80040B4C, buffer, pFontChars, pFontFile, 0xff0000ff, y, x, 0, 0);
+        // HACK: what is this: ((s32*)pFontChars)[0x224]
+        D_80040B4C = (D_80040B4C - ((s32*)pFontChars)[0x224]) + 1;
+    }
+    
     return DL;
 }
-#else
-// rodata
-//D:80057760
-const char aDD[] =  "%d, %d\n";
-
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0A4B40
-/* 0D9670 7F0A4B40 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0D9674 7F0A4B44 AFB00038 */  sw    $s0, 0x38($sp)
-/* 0D9678 7F0A4B48 00808025 */  move  $s0, $a0
-/* 0D967C 7F0A4B4C AFBF0044 */  sw    $ra, 0x44($sp)
-/* 0D9680 7F0A4B50 AFB20040 */  sw    $s2, 0x40($sp)
-/* 0D9684 7F0A4B54 AFB1003C */  sw    $s1, 0x3c($sp)
-/* 0D9688 7F0A4B58 0C00303B */  jal   joyGetStickX
-/* 0D968C 7F0A4B5C 00002025 */   move  $a0, $zero
-/* 0D9690 7F0A4B60 2841000B */  slti  $at, $v0, 0xb
-/* 0D9694 7F0A4B64 14200006 */  bnez  $at, .L7F0A4B80
-/* 0D9698 7F0A4B68 00002025 */   move  $a0, $zero
-/* 0D969C 7F0A4B6C 3C128004 */  lui   $s2, %hi(D_80040B48)
-/* 0D96A0 7F0A4B70 26520B48 */  addiu $s2, %lo(D_80040B48) # addiu $s2, $s2, 0xb48
-/* 0D96A4 7F0A4B74 8E4E0000 */  lw    $t6, ($s2)
-/* 0D96A8 7F0A4B78 25CF0001 */  addiu $t7, $t6, 1
-/* 0D96AC 7F0A4B7C AE4F0000 */  sw    $t7, ($s2)
-.L7F0A4B80:
-/* 0D96B0 7F0A4B80 3C128004 */  lui   $s2, %hi(D_80040B48)
-/* 0D96B4 7F0A4B84 0C00303B */  jal   joyGetStickX
-/* 0D96B8 7F0A4B88 26520B48 */   addiu $s2, %lo(D_80040B48) # addiu $s2, $s2, 0xb48
-/* 0D96BC 7F0A4B8C 2841FFF6 */  slti  $at, $v0, -0xa
-/* 0D96C0 7F0A4B90 10200004 */  beqz  $at, .L7F0A4BA4
-/* 0D96C4 7F0A4B94 00000000 */   nop
-/* 0D96C8 7F0A4B98 8E580000 */  lw    $t8, ($s2)
-/* 0D96CC 7F0A4B9C 2719FFFF */  addiu $t9, $t8, -1
-/* 0D96D0 7F0A4BA0 AE590000 */  sw    $t9, ($s2)
-.L7F0A4BA4:
-/* 0D96D4 7F0A4BA4 0C00307F */  jal   joyGetStickY
-/* 0D96D8 7F0A4BA8 00002025 */   move  $a0, $zero
-/* 0D96DC 7F0A4BAC 2841000B */  slti  $at, $v0, 0xb
-/* 0D96E0 7F0A4BB0 14200006 */  bnez  $at, .L7F0A4BCC
-/* 0D96E4 7F0A4BB4 00002025 */   move  $a0, $zero
-/* 0D96E8 7F0A4BB8 3C118004 */  lui   $s1, %hi(D_80040B4C)
-/* 0D96EC 7F0A4BBC 26310B4C */  addiu $s1, %lo(D_80040B4C) # addiu $s1, $s1, 0xb4c
-/* 0D96F0 7F0A4BC0 8E2A0000 */  lw    $t2, ($s1)
-/* 0D96F4 7F0A4BC4 254BFFFF */  addiu $t3, $t2, -1
-/* 0D96F8 7F0A4BC8 AE2B0000 */  sw    $t3, ($s1)
-.L7F0A4BCC:
-/* 0D96FC 7F0A4BCC 3C118004 */  lui   $s1, %hi(D_80040B4C)
-/* 0D9700 7F0A4BD0 0C00307F */  jal   joyGetStickY
-/* 0D9704 7F0A4BD4 26310B4C */   addiu $s1, %lo(D_80040B4C) # addiu $s1, $s1, 0xb4c
-/* 0D9708 7F0A4BD8 2841FFF6 */  slti  $at, $v0, -0xa
-/* 0D970C 7F0A4BDC 10200004 */  beqz  $at, .L7F0A4BF0
-/* 0D9710 7F0A4BE0 02001025 */   move  $v0, $s0
-/* 0D9714 7F0A4BE4 8E2C0000 */  lw    $t4, ($s1)
-/* 0D9718 7F0A4BE8 258D0001 */  addiu $t5, $t4, 1
-/* 0D971C 7F0A4BEC AE2D0000 */  sw    $t5, ($s1)
-.L7F0A4BF0:
-/* 0D9720 7F0A4BF0 26100008 */  addiu $s0, $s0, 8
-/* 0D9724 7F0A4BF4 3C0EB900 */  lui   $t6, (0xB900031D >> 16) # lui $t6, 0xb900
-/* 0D9728 7F0A4BF8 3C0F0050 */  lui   $t7, (0x00504240 >> 16) # lui $t7, 0x50
-/* 0D972C 7F0A4BFC 35EF4240 */  ori   $t7, (0x00504240 & 0xFFFF) # ori $t7, $t7, 0x4240
-/* 0D9730 7F0A4C00 35CE031D */  ori   $t6, (0xB900031D & 0xFFFF) # ori $t6, $t6, 0x31d
-/* 0D9734 7F0A4C04 02001825 */  move  $v1, $s0
-/* 0D9738 7F0A4C08 AC4E0000 */  sw    $t6, ($v0)
-/* 0D973C 7F0A4C0C AC4F0004 */  sw    $t7, 4($v0)
-/* 0D9740 7F0A4C10 3C18FCFF */  lui   $t8, (0xFCFFFFFF >> 16) # lui $t8, 0xfcff
-/* 0D9744 7F0A4C14 3C19FFFD */  lui   $t9, (0xFFFDF6FB >> 16) # lui $t9, 0xfffd
-/* 0D9748 7F0A4C18 3739F6FB */  ori   $t9, (0xFFFDF6FB & 0xFFFF) # ori $t9, $t9, 0xf6fb
-/* 0D974C 7F0A4C1C 3718FFFF */  ori   $t8, (0xFCFFFFFF & 0xFFFF) # ori $t8, $t8, 0xffff
-/* 0D9750 7F0A4C20 26100008 */  addiu $s0, $s0, 8
-/* 0D9754 7F0A4C24 AC780000 */  sw    $t8, ($v1)
-/* 0D9758 7F0A4C28 AC790004 */  sw    $t9, 4($v1)
-/* 0D975C 7F0A4C2C 02004025 */  move  $t0, $s0
-/* 0D9760 7F0A4C30 3C0BFF00 */  lui   $t3, (0xFF0000FF >> 16) # lui $t3, 0xff00
-/* 0D9764 7F0A4C34 356B00FF */  ori   $t3, (0xFF0000FF & 0xFFFF) # ori $t3, $t3, 0xff
-/* 0D9768 7F0A4C38 3C0AFA00 */  lui   $t2, 0xfa00
-/* 0D976C 7F0A4C3C AD0A0000 */  sw    $t2, ($t0)
-/* 0D9770 7F0A4C40 AD0B0004 */  sw    $t3, 4($t0)
-/* 0D9774 7F0A4C44 8E4C0000 */  lw    $t4, ($s2)
-/* 0D9778 7F0A4C48 8E390000 */  lw    $t9, ($s1)
-/* 0D977C 7F0A4C4C 3C01F600 */  lui   $at, 0xf600
-/* 0D9780 7F0A4C50 258D0001 */  addiu $t5, $t4, 1
-/* 0D9784 7F0A4C54 31AE03FF */  andi  $t6, $t5, 0x3ff
-/* 0D9788 7F0A4C58 272A0001 */  addiu $t2, $t9, 1
-/* 0D978C 7F0A4C5C 314B03FF */  andi  $t3, $t2, 0x3ff
-/* 0D9790 7F0A4C60 000E7B80 */  sll   $t7, $t6, 0xe
-/* 0D9794 7F0A4C64 26100008 */  addiu $s0, $s0, 8
-/* 0D9798 7F0A4C68 01E1C025 */  or    $t8, $t7, $at
-/* 0D979C 7F0A4C6C 000B6080 */  sll   $t4, $t3, 2
-/* 0D97A0 7F0A4C70 030C6825 */  or    $t5, $t8, $t4
-/* 0D97A4 7F0A4C74 02004825 */  move  $t1, $s0
-/* 0D97A8 7F0A4C78 AD2D0000 */  sw    $t5, ($t1)
-/* 0D97AC 7F0A4C7C 8E2A0000 */  lw    $t2, ($s1)
-/* 0D97B0 7F0A4C80 8E4E0000 */  lw    $t6, ($s2)
-/* 0D97B4 7F0A4C84 3C0D8004 */  lui   $t5, %hi(ptrFontBankGothic)
-/* 0D97B8 7F0A4C88 314B03FF */  andi  $t3, $t2, 0x3ff
-/* 0D97BC 7F0A4C8C 31CF03FF */  andi  $t7, $t6, 0x3ff
-/* 0D97C0 7F0A4C90 000FCB80 */  sll   $t9, $t7, 0xe
-/* 0D97C4 7F0A4C94 000BC080 */  sll   $t8, $t3, 2
-/* 0D97C8 7F0A4C98 03386025 */  or    $t4, $t9, $t8
-/* 0D97CC 7F0A4C9C AD2C0004 */  sw    $t4, 4($t1)
-/* 0D97D0 7F0A4CA0 3C0E8004 */  lui   $t6, %hi(ptrFontBankGothicChars)
-/* 0D97D4 7F0A4CA4 8DAD0EAC */  lw    $t5, %lo(ptrFontBankGothic)($t5)
-/* 0D97D8 7F0A4CA8 8DCE0EB0 */  lw    $t6, %lo(ptrFontBankGothicChars)($t6)
-/* 0D97DC 7F0A4CAC 3C058005 */  lui   $a1, %hi(aDD)
-/* 0D97E0 7F0A4CB0 26100008 */  addiu $s0, $s0, 8
-/* 0D97E4 7F0A4CB4 24A57760 */  addiu $a1, %lo(aDD) # addiu $a1, $a1, 0x7760
-/* 0D97E8 7F0A4CB8 8E270000 */  lw    $a3, ($s1)
-/* 0D97EC 7F0A4CBC 8E460000 */  lw    $a2, ($s2)
-/* 0D97F0 7F0A4CC0 27A4005C */  addiu $a0, $sp, 0x5c
-/* 0D97F4 7F0A4CC4 AFAD0058 */  sw    $t5, 0x58($sp)
-/* 0D97F8 7F0A4CC8 0C002B25 */  jal   sprintf
-/* 0D97FC 7F0A4CCC AFAE0054 */   sw    $t6, 0x54($sp)
-/* 0D9800 7F0A4CD0 0FC2B366 */  jal   microcode_constructor
-/* 0D9804 7F0A4CD4 02002025 */   move  $a0, $s0
-/* 0D9808 7F0A4CD8 8FAF0058 */  lw    $t7, 0x58($sp)
-/* 0D980C 7F0A4CDC 00408025 */  move  $s0, $v0
-/* 0D9810 7F0A4CE0 27A4004C */  addiu $a0, $sp, 0x4c
-/* 0D9814 7F0A4CE4 27A50050 */  addiu $a1, $sp, 0x50
-/* 0D9818 7F0A4CE8 27A6005C */  addiu $a2, $sp, 0x5c
-/* 0D981C 7F0A4CEC 8FA70054 */  lw    $a3, 0x54($sp)
-/* 0D9820 7F0A4CF0 AFA00014 */  sw    $zero, 0x14($sp)
-/* 0D9824 7F0A4CF4 0FC2BA63 */  jal   textMeasure
-/* 0D9828 7F0A4CF8 AFAF0010 */   sw    $t7, 0x10($sp)
-/* 0D982C 7F0A4CFC 8FAA0054 */  lw    $t2, 0x54($sp)
-/* 0D9830 7F0A4D00 8FAB0058 */  lw    $t3, 0x58($sp)
-/* 0D9834 7F0A4D04 8FB80050 */  lw    $t8, 0x50($sp)
-/* 0D9838 7F0A4D08 8FAC004C */  lw    $t4, 0x4c($sp)
-/* 0D983C 7F0A4D0C 3C19FF00 */  lui   $t9, (0xFF0000FF >> 16) # lui $t9, 0xff00
-/* 0D9840 7F0A4D10 373900FF */  ori   $t9, (0xFF0000FF & 0xFFFF) # ori $t9, $t9, 0xff
-/* 0D9844 7F0A4D14 AFB90018 */  sw    $t9, 0x18($sp)
-/* 0D9848 7F0A4D18 02002025 */  move  $a0, $s0
-/* 0D984C 7F0A4D1C 02402825 */  move  $a1, $s2
-/* 0D9850 7F0A4D20 02203025 */  move  $a2, $s1
-/* 0D9854 7F0A4D24 27A7005C */  addiu $a3, $sp, 0x5c
-/* 0D9858 7F0A4D28 AFA00024 */  sw    $zero, 0x24($sp)
-/* 0D985C 7F0A4D2C AFA00028 */  sw    $zero, 0x28($sp)
-/* 0D9860 7F0A4D30 AFAA0010 */  sw    $t2, 0x10($sp)
-/* 0D9864 7F0A4D34 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0D9868 7F0A4D38 AFB8001C */  sw    $t8, 0x1c($sp)
-/* 0D986C 7F0A4D3C 0FC2B6AF */  jal   textRender
-/* 0D9870 7F0A4D40 AFAC0020 */   sw    $t4, 0x20($sp)
-/* 0D9874 7F0A4D44 8FAE0054 */  lw    $t6, 0x54($sp)
-/* 0D9878 7F0A4D48 8E2D0000 */  lw    $t5, ($s1)
-/* 0D987C 7F0A4D4C 8FBF0044 */  lw    $ra, 0x44($sp)
-/* 0D9880 7F0A4D50 8DCF0890 */  lw    $t7, 0x890($t6)
-/* 0D9884 7F0A4D54 8FB00038 */  lw    $s0, 0x38($sp)
-/* 0D9888 7F0A4D58 8FB20040 */  lw    $s2, 0x40($sp)
-/* 0D988C 7F0A4D5C 01AF5023 */  subu  $t2, $t5, $t7
-/* 0D9890 7F0A4D60 254B0001 */  addiu $t3, $t2, 1
-/* 0D9894 7F0A4D64 AE2B0000 */  sw    $t3, ($s1)
-/* 0D9898 7F0A4D68 8FB1003C */  lw    $s1, 0x3c($sp)
-/* 0D989C 7F0A4D6C 03E00008 */  jr    $ra
-/* 0D98A0 7F0A4D70 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
 
 
 
