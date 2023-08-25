@@ -25,6 +25,7 @@
     #define DATATYPE_HEADER     0x03
     #define DATATYPE_SCREENSHOT 0x04
     #define DATATYPE_HEARTBEAT  0x05
+    #define DATATYPE_RMONBINARY  0x69
         
     
     /*********************************
