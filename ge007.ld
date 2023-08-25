@@ -52,10 +52,10 @@ SECTIONS
 
    _alt_startSegmentRomStart = _startSegmentRomStart + 0x100000;
    _alt_startSegmentStart = _startSegmentStart - 0x10000000 + 0x100000;
-   codeVADDR = _startSegmentStart - 0x10000000 +(_startSegmentEnd - _startSegmentStart);
+   
 
    /* 0x70000450, 0x70020D90 001050-021990 */
-   BEGIN_SEG(code, _startSegmentRomEnd, codeVADDR) SUBALIGN(16)
+   BEGIN_SEG(code, _startSegmentRomEnd, (_startSegmentEnd - 0x10000000)) SUBALIGN(16)
    {
 #include "ld/lib.text.ld.inc"
    }
