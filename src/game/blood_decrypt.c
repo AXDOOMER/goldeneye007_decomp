@@ -78,164 +78,50 @@ void sub_GAME_7F01CC94(u8* arg0, u16 arg1, u8* arg2)
     }
 }
 
+// Address 0x7F01CCEC NTSC
+void sub_GAME_7F01CCEC(u8 *arg0, u8 arg1, u8 arg2, u8 *arg3, u8 arg4)
+{
+    s16 i;
+    s16 j;
 
-#ifdef NONMATCHING
-void sub_GAME_7F01CCEC(void) {
+    u32 var_t0;
+    u32 var_t1;
+    
+    s16 var_t5;
 
+    s16 var_s4;
+
+    u8 tempt9;
+
+    for (i = 0; i < arg2; i++)
+    {
+        for (j = 0; j < arg1; j++)
+        {
+            var_t0 = 0;
+            var_t1 = 0;
+            
+            var_t5 = ((i - arg4) < 0) ? 0 : (i - arg4);
+
+            while ((((arg2 - 1) < (i + arg4)) ? (arg2 - 1) : (i + arg4)) >= var_t5)
+            {
+                var_s4 = ((j - arg4) < 0) ? 0 : (j - arg4);
+                
+                while ((((arg1 - 1) < (j + arg4)) ? (arg1 - 1) : (j + arg4)) >= var_s4)
+                {
+                    var_t1 += arg0[var_s4 + (var_t5 * arg1)];
+                    
+                    var_s4 += 1;
+                    var_t0 += 1;
+                }
+
+                var_t5 += 1;
+            }
+
+            tempt9  = (u8) ((u32) ((var_t0 >> 1) + var_t1) / var_t0);
+            arg3[j + (i * arg1)] = tempt9;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01CCEC
-/* 05181C 7F01CCEC 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 051820 7F01CCF0 30CF00FF */  andi  $t7, $a2, 0xff
-/* 051824 7F01CCF4 AFBE0024 */  sw    $fp, 0x24($sp)
-/* 051828 7F01CCF8 AFB70020 */  sw    $s7, 0x20($sp)
-/* 05182C 7F01CCFC AFB6001C */  sw    $s6, 0x1c($sp)
-/* 051830 7F01CD00 AFB50018 */  sw    $s5, 0x18($sp)
-/* 051834 7F01CD04 AFB40014 */  sw    $s4, 0x14($sp)
-/* 051838 7F01CD08 AFB30010 */  sw    $s3, 0x10($sp)
-/* 05183C 7F01CD0C AFB2000C */  sw    $s2, 0xc($sp)
-/* 051840 7F01CD10 AFB10008 */  sw    $s1, 8($sp)
-/* 051844 7F01CD14 AFB00004 */  sw    $s0, 4($sp)
-/* 051848 7F01CD18 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 05184C 7F01CD1C AFA60030 */  sw    $a2, 0x30($sp)
-/* 051850 7F01CD20 30AE00FF */  andi  $t6, $a1, 0xff
-/* 051854 7F01CD24 01E01825 */  move  $v1, $t7
-/* 051858 7F01CD28 19E00065 */  blez  $t7, .L7F01CEC0
-/* 05185C 7F01CD2C 00001025 */   move  $v0, $zero
-/* 051860 7F01CD30 01C03025 */  move  $a2, $t6
-/* 051864 7F01CD34 93AA003B */  lbu   $t2, 0x3b($sp)
-.L7F01CD38:
-/* 051868 7F01CD38 18C0005B */  blez  $a2, .L7F01CEA8
-/* 05186C 7F01CD3C 00002825 */   move  $a1, $zero
-/* 051870 7F01CD40 00460019 */  multu $v0, $a2
-/* 051874 7F01CD44 01405825 */  move  $t3, $t2
-/* 051878 7F01CD48 004A6023 */  subu  $t4, $v0, $t2
-/* 05187C 7F01CD4C 2470FFFF */  addiu $s0, $v1, -1
-/* 051880 7F01CD50 004A8821 */  addu  $s1, $v0, $t2
-/* 051884 7F01CD54 0000F012 */  mflo  $fp
-/* 051888 7F01CD58 00000000 */  nop   
-/* 05188C 7F01CD5C 00000000 */  nop   
-/* 051890 7F01CD60 00004025 */  move  $t0, $zero
-.L7F01CD64:
-/* 051894 7F01CD64 05810003 */  bgez  $t4, .L7F01CD74
-/* 051898 7F01CD68 00004825 */   move  $t1, $zero
-/* 05189C 7F01CD6C 10000004 */  b     .L7F01CD80
-/* 0518A0 7F01CD70 00006825 */   move  $t5, $zero
-.L7F01CD74:
-/* 0518A4 7F01CD74 000C6C00 */  sll   $t5, $t4, 0x10
-/* 0518A8 7F01CD78 000DC403 */  sra   $t8, $t5, 0x10
-/* 0518AC 7F01CD7C 03006825 */  move  $t5, $t8
-.L7F01CD80:
-/* 0518B0 7F01CD80 0211082A */  slt   $at, $s0, $s1
-/* 0518B4 7F01CD84 10200003 */  beqz  $at, .L7F01CD94
-/* 0518B8 7F01CD88 02209025 */   move  $s2, $s1
-/* 0518BC 7F01CD8C 10000001 */  b     .L7F01CD94
-/* 0518C0 7F01CD90 02009025 */   move  $s2, $s0
-.L7F01CD94:
-/* 0518C4 7F01CD94 024D082A */  slt   $at, $s2, $t5
-/* 0518C8 7F01CD98 54200033 */  bnezl $at, .L7F01CE68
-/* 0518CC 7F01CD9C 0008C842 */   srl   $t9, $t0, 1
-/* 0518D0 7F01CDA0 00AB9823 */  subu  $s3, $a1, $t3
-/* 0518D4 7F01CDA4 24D5FFFF */  addiu $s5, $a2, -1
-/* 0518D8 7F01CDA8 00ABB021 */  addu  $s6, $a1, $t3
-.L7F01CDAC:
-/* 0518DC 7F01CDAC 06610003 */  bgez  $s3, .L7F01CDBC
-/* 0518E0 7F01CDB0 02B6082A */   slt   $at, $s5, $s6
-/* 0518E4 7F01CDB4 10000004 */  b     .L7F01CDC8
-/* 0518E8 7F01CDB8 0000A025 */   move  $s4, $zero
-.L7F01CDBC:
-/* 0518EC 7F01CDBC 0013A400 */  sll   $s4, $s3, 0x10
-/* 0518F0 7F01CDC0 0014CC03 */  sra   $t9, $s4, 0x10
-/* 0518F4 7F01CDC4 0320A025 */  move  $s4, $t9
-.L7F01CDC8:
-/* 0518F8 7F01CDC8 10200003 */  beqz  $at, .L7F01CDD8
-/* 0518FC 7F01CDCC 02C09025 */   move  $s2, $s6
-/* 051900 7F01CDD0 10000001 */  b     .L7F01CDD8
-/* 051904 7F01CDD4 02A09025 */   move  $s2, $s5
-.L7F01CDD8:
-/* 051908 7F01CDD8 0254082A */  slt   $at, $s2, $s4
-/* 05190C 7F01CDDC 54200016 */  bnezl $at, .L7F01CE38
-/* 051910 7F01CDE0 25AD0001 */   addiu $t5, $t5, 1
-/* 051914 7F01CDE4 01A60019 */  multu $t5, $a2
-/* 051918 7F01CDE8 0000B812 */  mflo  $s7
-/* 05191C 7F01CDEC 00000000 */  nop   
-/* 051920 7F01CDF0 00000000 */  nop   
-/* 051924 7F01CDF4 00947021 */  addu  $t6, $a0, $s4
-.L7F01CDF8:
-/* 051928 7F01CDF8 01D77821 */  addu  $t7, $t6, $s7
-/* 05192C 7F01CDFC 91F80000 */  lbu   $t8, ($t7)
-/* 051930 7F01CE00 26940001 */  addiu $s4, $s4, 1
-/* 051934 7F01CE04 0014CC00 */  sll   $t9, $s4, 0x10
-/* 051938 7F01CE08 02B6082A */  slt   $at, $s5, $s6
-/* 05193C 7F01CE0C 0019A403 */  sra   $s4, $t9, 0x10
-/* 051940 7F01CE10 25080001 */  addiu $t0, $t0, 1
-/* 051944 7F01CE14 10200003 */  beqz  $at, .L7F01CE24
-/* 051948 7F01CE18 01384821 */   addu  $t1, $t1, $t8
-/* 05194C 7F01CE1C 10000002 */  b     .L7F01CE28
-/* 051950 7F01CE20 02A09025 */   move  $s2, $s5
-.L7F01CE24:
-/* 051954 7F01CE24 02C09025 */  move  $s2, $s6
-.L7F01CE28:
-/* 051958 7F01CE28 0254082A */  slt   $at, $s2, $s4
-/* 05195C 7F01CE2C 5020FFF2 */  beql  $at, $zero, .L7F01CDF8
-/* 051960 7F01CE30 00947021 */   addu  $t6, $a0, $s4
-/* 051964 7F01CE34 25AD0001 */  addiu $t5, $t5, 1
-.L7F01CE38:
-/* 051968 7F01CE38 000D7C00 */  sll   $t7, $t5, 0x10
-/* 05196C 7F01CE3C 000FC403 */  sra   $t8, $t7, 0x10
-/* 051970 7F01CE40 0211082A */  slt   $at, $s0, $s1
-/* 051974 7F01CE44 10200003 */  beqz  $at, .L7F01CE54
-/* 051978 7F01CE48 03006825 */   move  $t5, $t8
-/* 05197C 7F01CE4C 10000002 */  b     .L7F01CE58
-/* 051980 7F01CE50 02009025 */   move  $s2, $s0
-.L7F01CE54:
-/* 051984 7F01CE54 02209025 */  move  $s2, $s1
-.L7F01CE58:
-/* 051988 7F01CE58 024D082A */  slt   $at, $s2, $t5
-/* 05198C 7F01CE5C 1020FFD3 */  beqz  $at, .L7F01CDAC
-/* 051990 7F01CE60 00000000 */   nop   
-/* 051994 7F01CE64 0008C842 */  srl   $t9, $t0, 1
-.L7F01CE68:
-/* 051998 7F01CE68 03297021 */  addu  $t6, $t9, $t1
-/* 05199C 7F01CE6C 01C8001B */  divu  $zero, $t6, $t0
-/* 0519A0 7F01CE70 00E5C021 */  addu  $t8, $a3, $a1
-/* 0519A4 7F01CE74 24A50001 */  addiu $a1, $a1, 1
-/* 0519A8 7F01CE78 00057400 */  sll   $t6, $a1, 0x10
-/* 0519AC 7F01CE7C 031EC821 */  addu  $t9, $t8, $fp
-/* 0519B0 7F01CE80 000EC403 */  sra   $t8, $t6, 0x10
-/* 0519B4 7F01CE84 0306082A */  slt   $at, $t8, $a2
-/* 0519B8 7F01CE88 00007812 */  mflo  $t7
-/* 0519BC 7F01CE8C 03002825 */  move  $a1, $t8
-/* 0519C0 7F01CE90 15000002 */  bnez  $t0, .L7F01CE9C
-/* 0519C4 7F01CE94 00000000 */   nop   
-/* 0519C8 7F01CE98 0007000D */  break 7
-.L7F01CE9C:
-/* 0519CC 7F01CE9C A32F0000 */  sb    $t7, ($t9)
-/* 0519D0 7F01CEA0 5420FFB0 */  bnezl $at, .L7F01CD64
-/* 0519D4 7F01CEA4 00004025 */   move  $t0, $zero
-.L7F01CEA8:
-/* 0519D8 7F01CEA8 24420001 */  addiu $v0, $v0, 1
-/* 0519DC 7F01CEAC 00027C00 */  sll   $t7, $v0, 0x10
-/* 0519E0 7F01CEB0 000F1403 */  sra   $v0, $t7, 0x10
-/* 0519E4 7F01CEB4 0043082A */  slt   $at, $v0, $v1
-/* 0519E8 7F01CEB8 1420FF9F */  bnez  $at, .L7F01CD38
-/* 0519EC 7F01CEBC 00000000 */   nop   
-.L7F01CEC0:
-/* 0519F0 7F01CEC0 8FB00004 */  lw    $s0, 4($sp)
-/* 0519F4 7F01CEC4 8FB10008 */  lw    $s1, 8($sp)
-/* 0519F8 7F01CEC8 8FB2000C */  lw    $s2, 0xc($sp)
-/* 0519FC 7F01CECC 8FB30010 */  lw    $s3, 0x10($sp)
-/* 051A00 7F01CED0 8FB40014 */  lw    $s4, 0x14($sp)
-/* 051A04 7F01CED4 8FB50018 */  lw    $s5, 0x18($sp)
-/* 051A08 7F01CED8 8FB6001C */  lw    $s6, 0x1c($sp)
-/* 051A0C 7F01CEDC 8FB70020 */  lw    $s7, 0x20($sp)
-/* 051A10 7F01CEE0 8FBE0024 */  lw    $fp, 0x24($sp)
-/* 051A14 7F01CEE4 03E00008 */  jr    $ra
-/* 051A18 7F01CEE8 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
 
 
 
