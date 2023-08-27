@@ -126,7 +126,7 @@ void sub_GAME_7F01CCEC(u8 *arg0, u8 arg1, u8 arg2, u8 *arg3, u8 arg4)
 
 
 #ifdef NONMATCHING
-// Averages 4 pixel data.
+// Averages 4 pixel data, ending on "second" row.
 // https://decomp.me/scratch/J5ivR 55% ... or 90%?
 void sub_GAME_7F01CEEC(u8*, s32, u8*) {
 #if 0
@@ -281,7 +281,10 @@ glabel sub_GAME_7F01CEEC
 
 
 #ifdef NONMATCHING
+// Averages 4 pixel data, ending on "first" row.
 void sub_GAME_7F01D02C(u8*, s32, u8*) {
+
+// implementation looks to be the same as sub_GAME_7F01CEEC, but with row look ahead instead of look behind.
 
 }
 #else
@@ -375,41 +378,38 @@ glabel sub_GAME_7F01D02C
 #endif
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F01D16C(u8*, s32, s32, u8*)
+// Address 0x7F01D16C NTSC
+void sub_GAME_7F01D16C(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3)
 {
+    s32 temp_lo;
+    u32 temp_a0;
+    u32 var_t2;
+    u8 *var_t0;
+    u8 *var_v1;
+    u32 t1;
 
+    temp_lo = arg1 * arg2;
+    var_v1 = arg0;
+    var_t0 = arg3;
+    t1 = arg0 + temp_lo;
+    var_t2 = arg0 + arg1;
+
+    do
+    {
+        temp_a0 = var_t2;
+
+        do
+        {
+            *var_t0 = *var_v1++;
+            var_t2 += 1;
+            var_t0 += arg2;
+            
+        } while ((u32) var_v1 < temp_a0);
+
+        var_t0 = (var_t0 - (temp_lo)) + 1;
+        
+    } while ((u32) var_v1 < (u32) t1);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01D16C
-/* 051C9C 7F01D16C 00A60019 */  multu $a1, $a2
-/* 051CA0 7F01D170 00801825 */  move  $v1, $a0
-/* 051CA4 7F01D174 00E04025 */  move  $t0, $a3
-/* 051CA8 7F01D178 00855021 */  addu  $t2, $a0, $a1
-/* 051CAC 7F01D17C 00001012 */  mflo  $v0
-/* 051CB0 7F01D180 00824821 */  addu  $t1, $a0, $v0
-/* 051CB4 7F01D184 00000000 */  nop   
-.L7F01D188:
-/* 051CB8 7F01D188 01402025 */  move  $a0, $t2
-.L7F01D18C:
-/* 051CBC 7F01D18C 906E0000 */  lbu   $t6, ($v1)
-/* 051CC0 7F01D190 24630001 */  addiu $v1, $v1, 1
-/* 051CC4 7F01D194 0064082B */  sltu  $at, $v1, $a0
-/* 051CC8 7F01D198 A10E0000 */  sb    $t6, ($t0)
-/* 051CCC 7F01D19C 254A0001 */  addiu $t2, $t2, 1
-/* 051CD0 7F01D1A0 1420FFFA */  bnez  $at, .L7F01D18C
-/* 051CD4 7F01D1A4 01064021 */   addu  $t0, $t0, $a2
-/* 051CD8 7F01D1A8 01024023 */  subu  $t0, $t0, $v0
-/* 051CDC 7F01D1AC 0069082B */  sltu  $at, $v1, $t1
-/* 051CE0 7F01D1B0 1420FFF5 */  bnez  $at, .L7F01D188
-/* 051CE4 7F01D1B4 25080001 */   addiu $t0, $t0, 1
-/* 051CE8 7F01D1B8 03E00008 */  jr    $ra
-/* 051CEC 7F01D1BC 00000000 */   nop   
-)
-#endif
 
 
 
