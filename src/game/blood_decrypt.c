@@ -198,8 +198,15 @@ void sub_GAME_7F01D16C(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D1C0(void) {
+// Unreferenced.
+// Address 0x7F01D1C0 NTSC.
+u8 *sub_GAME_7F01D1C0(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3)
+{
+    // mips2c output makes this look like `decrypt_bleeding_animation_data`, but without
+    // u8 variables, and without arg4. But I can't get it to generate anything
+    // close to matching.
 
+    // https://decomp.me/scratch/ptG72 0%
 }
 #else
 GLOBAL_ASM(
