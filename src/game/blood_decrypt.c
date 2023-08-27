@@ -126,8 +126,67 @@ void sub_GAME_7F01CCEC(u8 *arg0, u8 arg1, u8 arg2, u8 *arg3, u8 arg4)
 
 
 #ifdef NONMATCHING
+// Averages 4 pixel data.
+// https://decomp.me/scratch/J5ivR 55% ... or 90%?
 void sub_GAME_7F01CEEC(u8*, s32, u8*) {
+#if 0
 
+    // logical implementation ~ 50% match
+
+    s32 i;
+    s32 j;
+
+    for (i = 1; i < arg1 - 1; i++)
+    {
+        for (j = 0; j < 0x5e; j++)
+        {
+            arg2[(i-1)*0x60 + j+0] = (arg0[(i-1)*0x60 + j+0] + arg0[(i-1)*0x60 + j+1] + arg0[(i+0)*0x60 + j+0] + arg0[(i+0)*0x60 + j+1] + 2) >> 2;
+        }
+    }
+#endif
+
+#if 0
+
+    // best match implementation ~ 90% match
+
+    s32 i;
+    s32 j;
+
+    u8 *var_a0;
+    u8 *var_a2;
+
+    var_a0 = arg0 + 0x61;
+    var_a2 = arg2 + 0x61;
+
+    for (i = 1; i < arg1 - 1; i++)
+    {
+        if ((var_a0[-1] + var_a0[0] + var_a0[-0x61] + var_a0[-0x60] + 2));
+        
+        var_a2[0] = (var_a0[-1] + var_a0[0] + var_a0[-0x61] + var_a0[-0x60] + 2) >> 2;
+        var_a2[1] = (var_a0[0] + var_a0[1] + var_a0[-0x60] + var_a0[-0x5f] + 2) >> 2;
+
+        j = 3;
+        var_a2 += 2;
+        var_a0 += 2;
+    
+        while ( j != 0x5f )
+        {
+            if ((var_a0[-1] + var_a0[0] + var_a0[-0x61] + var_a0[-0x60] + 2));
+            
+            var_a2[0] = (var_a0[-1] + var_a0[0] + var_a0[-0x61] + var_a0[-0x60] + 2) >> 2;
+            var_a2[1] = (var_a0[0] + var_a0[1] + var_a0[-0x60] + var_a0[-0x5f] + 2) >> 2;
+            var_a2[2] = (var_a0[1] + var_a0[2] + var_a0[-0x5f] + var_a0[-0x5e] + 2) >> 2;
+            var_a2[3] = (var_a0[2] + var_a0[3] + var_a0[-0x5e] + var_a0[-0x5d] + 2) >> 2;
+
+            j+=4;
+            var_a2 += 4;
+            var_a0 += 4;
+        }
+
+        var_a2 += 2;
+        var_a0 += 2;
+    }
+#endif
 }
 #else
 GLOBAL_ASM(
@@ -318,7 +377,8 @@ glabel sub_GAME_7F01D02C
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01D16C(u8*, s32, s32, u8*) {
+void sub_GAME_7F01D16C(u8*, s32, s32, u8*)
+{
 
 }
 #else
