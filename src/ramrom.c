@@ -83,7 +83,7 @@ s32 romCopyAligned(void *target, void *source, s32 length)
  * doRomWrite
  * actually writes to rom (buffer on Indy) 
  */
-void doRomWrite(void *source, void *target, u32 size)\
+void doRomWrite(void *source, void *target, u32 size)
 {
     osWritebackDCache(source, size);
     osPiStartDma(&memoryMesgMB, 0, 1, target, source, size, &memoryMesgQueue);

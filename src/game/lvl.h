@@ -48,7 +48,7 @@ extern s32 dword_CODE_bss_8008C268;
 extern s32 dword_CODE_bss_8008C26C;
 extern char ramrom_data_target[0x380];
 extern s32 record_slot_num;
-extern s32 address_demo_loaded;
+extern u8 * address_demo_loaded;
 extern s32 dword_CODE_bss_8008C5F8;
 
 #if defined(BUGFIX_R1)

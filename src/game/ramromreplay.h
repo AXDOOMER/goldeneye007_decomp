@@ -3,7 +3,10 @@
 
 #include <ultra64.h>
 #include "file.h"
+#include "bondconstants.h"
+
 #define INDY_RAMROM_DEMO_ADDRESS 0x00F00000
+#define INDY_RAMROM_DEMO_POINTER ((void*)INDY_RAMROM_DEMO_ADDRESS)
 
 typedef struct ramromfilestructure {
     u64 randomseed;
@@ -12,8 +15,8 @@ typedef struct ramromfilestructure {
     enum DIFFICULTY difficulty;
     u32 size_cmds;
     save_data savefile;
-    f32 totaltime_ms;
-    u32 filesize;
+    s32 totaltime_ms;
+    s32 filesize;
     enum GAMEMODE mode;
     u32 slotnum;
     u32 numplayers;

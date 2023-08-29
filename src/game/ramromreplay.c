@@ -96,73 +96,28 @@ s32 interface_menu0B_runstage(void) {
     return g_ramromPlayBackFlag;
 }
 
-#ifdef NONMATCHING
+// Address 0x7F0BFCB0 NTSC.
 void finalize_ramrom_on_hw(void)
 {
-  undefined *source;
-  undefined auStack25 [25];
+    u8 buffer[0x28];
+    u8 *p;
+    void *a1;
 
-  source = (auStack25 | 0xf) ^ 0xf;
-  *source = 0;
-  source[1] = 0;
-  romWrite(source,address_demo_loaded,0x10);
-  address_demo_loaded = address_demo_loaded + 4;
-  ptr_active_demofile = romCopyAligned(&ramrom_data_target,0xf00000,0xf0);
-  ptr_active_demofile->totaltime_ms = g_GlobalTimer - g_ClockTimer;
-  ptr_active_demofile->filesize = address_demo_loaded - 0xf00000;
-  romWrite(ptr_active_demofile,0xf00000,0xf0);
-  return;
+    p = ALIGN16_a((s32)buffer);
+    p[0] = 0;
+    p[1] = 0;
+
+    romWrite((void *) p, (void *) address_demo_loaded, 0x10U);
+    
+    address_demo_loaded += 4;
+
+    a1 = INDY_RAMROM_DEMO_POINTER;
+
+    ptr_active_demofile = romCopyAligned(ramrom_data_target, a1, 0xf0);
+    ptr_active_demofile->totaltime_ms = g_GlobalTimer - g_ClockTimer;
+    ptr_active_demofile->filesize = (s32)address_demo_loaded - (s32)a1;
+    romWrite(ptr_active_demofile, a1, 0xf0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel finalize_ramrom_on_hw
-/* 0F47E0 7F0BFCB0 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0F47E4 7F0BFCB4 03A02025 */  move  $a0, $sp
-/* 0F47E8 7F0BFCB8 2484002F */  addiu $a0, $a0, 0x2f
-/* 0F47EC 7F0BFCBC 348E000F */  ori   $t6, $a0, 0xf
-/* 0F47F0 7F0BFCC0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F47F4 7F0BFCC4 39C4000F */  xori  $a0, $t6, 0xf
-/* 0F47F8 7F0BFCC8 A0800000 */  sb    $zero, ($a0)
-/* 0F47FC 7F0BFCCC A0800001 */  sb    $zero, 1($a0)
-/* 0F4800 7F0BFCD0 3C058009 */  lui   $a1, %hi(address_demo_loaded)
-/* 0F4804 7F0BFCD4 8CA5C5F4 */  lw    $a1, %lo(address_demo_loaded)($a1)
-/* 0F4808 7F0BFCD8 0C001742 */  jal   romWrite
-/* 0F480C 7F0BFCDC 24060010 */   li    $a2, 16
-/* 0F4810 7F0BFCE0 3C028009 */  lui   $v0, %hi(address_demo_loaded)
-/* 0F4814 7F0BFCE4 2442C5F4 */  addiu $v0, %lo(address_demo_loaded) # addiu $v0, $v0, -0x3a0c
-/* 0F4818 7F0BFCE8 8C580000 */  lw    $t8, ($v0)
-/* 0F481C 7F0BFCEC 3C048009 */  lui   $a0, %hi(ramrom_data_target)
-/* 0F4820 7F0BFCF0 2484C270 */  addiu $a0, %lo(ramrom_data_target) # addiu $a0, $a0, -0x3d90
-/* 0F4824 7F0BFCF4 27190004 */  addiu $t9, $t8, 4
-/* 0F4828 7F0BFCF8 AC590000 */  sw    $t9, ($v0)
-/* 0F482C 7F0BFCFC 3C0500F0 */  lui   $a1, 0xf0
-/* 0F4830 7F0BFD00 0C001711 */  jal   romCopyAligned
-/* 0F4834 7F0BFD04 240600F0 */   li    $a2, 240
-/* 0F4838 7F0BFD08 3C038005 */  lui   $v1, %hi(ptr_active_demofile)
-/* 0F483C 7F0BFD0C 24638468 */  addiu $v1, %lo(ptr_active_demofile) # addiu $v1, $v1, -0x7b98
-/* 0F4840 7F0BFD10 AC620000 */  sw    $v0, ($v1)
-/* 0F4844 7F0BFD14 3C088005 */  lui   $t0, %hi(g_GlobalTimer)
-/* 0F4848 7F0BFD18 3C098005 */  lui   $t1, %hi(g_ClockTimer)
-/* 0F484C 7F0BFD1C 8D298374 */  lw    $t1, %lo(g_ClockTimer)($t1)
-/* 0F4850 7F0BFD20 8D08837C */  lw    $t0, %lo(g_GlobalTimer)($t0)
-/* 0F4854 7F0BFD24 3C0C8009 */  lui   $t4, %hi(address_demo_loaded)
-/* 0F4858 7F0BFD28 3C0500F0 */  lui   $a1, 0xf0
-/* 0F485C 7F0BFD2C 01095023 */  subu  $t2, $t0, $t1
-/* 0F4860 7F0BFD30 AC4A007C */  sw    $t2, 0x7c($v0)
-/* 0F4864 7F0BFD34 8D8CC5F4 */  lw    $t4, %lo(address_demo_loaded)($t4)
-/* 0F4868 7F0BFD38 8C6E0000 */  lw    $t6, ($v1)
-/* 0F486C 7F0BFD3C 240600F0 */  li    $a2, 240
-/* 0F4870 7F0BFD40 01856823 */  subu  $t5, $t4, $a1
-/* 0F4874 7F0BFD44 ADCD0080 */  sw    $t5, 0x80($t6)
-/* 0F4878 7F0BFD48 0C001742 */  jal   romWrite
-/* 0F487C 7F0BFD4C 8C640000 */   lw    $a0, ($v1)
-/* 0F4880 7F0BFD50 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F4884 7F0BFD54 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0F4888 7F0BFD58 03E00008 */  jr    $ra
-/* 0F488C 7F0BFD5C 00000000 */   nop
-)
-#endif
 
 
 
