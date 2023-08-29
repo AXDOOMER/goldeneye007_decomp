@@ -3,6 +3,7 @@
 #include <token.h>
 #include <str.h>
 #include <memp.h>
+#include <macro.h>
 
 /**
  * This file handles memory usage for graphics related tasks.

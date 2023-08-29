@@ -9,4 +9,9 @@
 
 #define ALIGN64_V2(val) ((((u32)val) + 0x3f | 0x3f) ^ 0x3f)
 
+/*
+* Align to 16 bit boundary. Version "a", with preliminary addition.
+*/
+#define ALIGN16_a(val)        (((val) + 0xf | 0xf) ^ 0xf)
+
 #endif

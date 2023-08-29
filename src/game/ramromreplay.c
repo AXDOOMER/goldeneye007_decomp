@@ -6,6 +6,7 @@
 #include "front.h"
 #include "ramromreplay.h"
 #include <ramrom.h>
+#include <macro.h>
 //D:800483F0
 
 
@@ -27,9 +28,21 @@ extern u32* ramrom_Frigate_2;
 extern u32* ramrom_Train;
 
 struct ramrom_struct ramrom_table[] = {
-    {&ramrom_Dam_1, 0}, {&ramrom_Dam_2, 0}, {&ramrom_Facility_1, 0}, {&ramrom_Facility_2, 0}, {&ramrom_Facility_3, 0},
-    {&ramrom_Runway_1, 0}, {&ramrom_Runway_2, 0}, {&ramrom_BunkerI_1, 0}, {&ramrom_BunkerI_2, 0}, {&ramrom_Silo_1, 0},
-    {&ramrom_Silo_2, 0}, {&ramrom_Frigate_1, 0}, {&ramrom_Frigate_2, 0}, {&ramrom_Train, 0}, {0,0}
+    {&ramrom_Dam_1, 0},
+    {&ramrom_Dam_2, 0},
+    {&ramrom_Facility_1, 0},
+    {&ramrom_Facility_2, 0},
+    {&ramrom_Facility_3, 0},
+    {&ramrom_Runway_1, 0},
+    {&ramrom_Runway_2, 0},
+    {&ramrom_BunkerI_1, 0},
+    {&ramrom_BunkerI_2, 0},
+    {&ramrom_Silo_1, 0},
+    {&ramrom_Silo_2, 0},
+    {&ramrom_Frigate_1, 0},
+    {&ramrom_Frigate_2, 0},
+    {&ramrom_Train, 0},
+    {0,0}
 };
 
 //D:80048468
@@ -779,7 +792,6 @@ void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *
     set_players_team_or_scenario_item_flag(3, state->mp_flags[3]);
 }
 
-#define ALIGN16_a(val)        (((val) + 0xf | 0xf) ^ 0xf)
 #ifdef NONMATCHING
 //uses v1 instead of v0 for address_demo_loaded
 void test_if_recording_demos_this_stage_load(s32 levelid, s32 difficulty)
