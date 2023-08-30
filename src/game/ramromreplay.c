@@ -120,95 +120,26 @@ void finalize_ramrom_on_hw(void)
 }
 
 
-
-
-
-#ifdef NONMATCHING
-/*
- * just 2 lines swapped
- * f48ac:    addiu   s2,s2,-0x48b0    | f48ac:    li      s0,1
- * f48b0:    li      s0,1             | f48b0:    addiu   s2,s2,-0x48b0
- *
- */
+// Address 0x7F0BFD60 NTSC.
 void save_ramrom_to_devtool(void)
 {
-    int i=1;
+    int i;
     char indyFileName [256];
     u32 size;
     
-    while( TRUE ) {
-        sprintf(indyFileName,"replay/demo.%d",i);
-        if (!indycommHostCheckFileExists(indyFileName,&size)) break;
-        i++;
+    for (i = 1; ; i++)
+    {
+        sprintf(indyFileName, "replay/demo.%d", i);
+        
+        if (!indycommHostCheckFileExists(indyFileName, &size))
+        {
+            break;
+        }
     }
-    sprintf(indyFileName,"replay/demo.%d",i);
-    indycommHostSaveFile(indyFileName,0xf00000,ptr_active_demofile->filesize);
-    return;
+    
+    sprintf(indyFileName, "replay/demo.%d", i);
+    indycommHostSaveFile(indyFileName, INDY_RAMROM_DEMO_POINTER, ptr_active_demofile->filesize);
 }
-#else
-
-GLOBAL_ASM(
-.rdata
-#const char aReplayDemo_D[] = "replay/demo.%d";
-glabel aReplayDemo_D
-.word 0x7265706c
-.word 0x61792f64
-.word 0x656d6f2e
-.word 0x25640000
-
-#const char aReplayDemo_D_1[] = "replay/demo.%d";
-glabel aReplayDemo_D_1
-.word 0x7265706c
-.word 0x61792f64
-.word 0x656d6f2e
-.word 0x25640000
-
-.text
-glabel save_ramrom_to_devtool
-/* 0F4890 7F0BFD60 27BDFED0 */  addiu $sp, $sp, -0x130
-/* 0F4894 7F0BFD64 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 0F4898 7F0BFD68 AFB30020 */  sw    $s3, 0x20($sp)
-/* 0F489C 7F0BFD6C AFB10018 */  sw    $s1, 0x18($sp)
-/* 0F48A0 7F0BFD70 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0F48A4 7F0BFD74 3C128006 */  lui   $s2, %hi(aReplayDemo_D)
-/* 0F48A8 7F0BFD78 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0F48AC 7F0BFD7C 2652B750 */  addiu $s2, %lo(aReplayDemo_D) # addiu $s2, $s2, -0x48b0
-/* 0F48B0 7F0BFD80 24100001 */  li    $s0, 1
-/* 0F48B4 7F0BFD84 27B1002C */  addiu $s1, $sp, 0x2c
-/* 0F48B8 7F0BFD88 27B30028 */  addiu $s3, $sp, 0x28
-.L7F0BFD8C:
-/* 0F48BC 7F0BFD8C 02202025 */  move  $a0, $s1
-/* 0F48C0 7F0BFD90 02402825 */  move  $a1, $s2
-/* 0F48C4 7F0BFD94 0C002B25 */  jal   sprintf
-/* 0F48C8 7F0BFD98 02003025 */   move  $a2, $s0
-/* 0F48CC 7F0BFD9C 02202025 */  move  $a0, $s1
-/* 0F48D0 7F0BFDA0 0FC34026 */  jal   indycommHostCheckFileExists
-/* 0F48D4 7F0BFDA4 02602825 */   move  $a1, $s3
-/* 0F48D8 7F0BFDA8 10400003 */  beqz  $v0, .L7F0BFDB8
-/* 0F48DC 7F0BFDAC 00000000 */   nop
-/* 0F48E0 7F0BFDB0 1000FFF6 */  b     .L7F0BFD8C
-/* 0F48E4 7F0BFDB4 26100001 */   addiu $s0, $s0, 1
-.L7F0BFDB8:
-/* 0F48E8 7F0BFDB8 3C058006 */  lui   $a1, %hi(aReplayDemo_D_1)
-/* 0F48EC 7F0BFDBC 24A5B760 */  addiu $a1, %lo(aReplayDemo_D_1) # addiu $a1, $a1, -0x48a0
-/* 0F48F0 7F0BFDC0 02202025 */  move  $a0, $s1
-/* 0F48F4 7F0BFDC4 0C002B25 */  jal   sprintf
-/* 0F48F8 7F0BFDC8 02003025 */   move  $a2, $s0
-/* 0F48FC 7F0BFDCC 3C0E8005 */  lui   $t6, %hi(ptr_active_demofile)
-/* 0F4900 7F0BFDD0 8DCE8468 */  lw    $t6, %lo(ptr_active_demofile)($t6)
-/* 0F4904 7F0BFDD4 02202025 */  move  $a0, $s1
-/* 0F4908 7F0BFDD8 3C0500F0 */  lui   $a1, 0xf0
-/* 0F490C 7F0BFDDC 0FC34017 */  jal   indycommHostSaveFile
-/* 0F4910 7F0BFDE0 8DC60080 */   lw    $a2, 0x80($t6)
-/* 0F4914 7F0BFDE4 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0F4918 7F0BFDE8 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0F491C 7F0BFDEC 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0F4920 7F0BFDF0 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0F4924 7F0BFDF4 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0F4928 7F0BFDF8 03E00008 */  jr    $ra
-/* 0F492C 7F0BFDFC 27BD0130 */   addiu $sp, $sp, 0x130
-)
-#endif
 
 
 
