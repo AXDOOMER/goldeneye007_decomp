@@ -7,7 +7,6 @@
  * This file contains code to handle reading and writing rom addresses. 
  */
 
-#define align_addr_even(X) (((X) | 1) ^ 1)
 
 OSIoMesg memoryMesgMB;
 OSMesg memoryMesg;

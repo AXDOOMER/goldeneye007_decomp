@@ -19,6 +19,21 @@ struct ramrom_struct
     s32 locked;
 };
 
+struct ramrom_blockbuf
+{
+    s8 stick_x;
+    s8 stick_y;
+    u8 button_low;
+    u8 button_high;
+};
+struct ramrom_seed
+{
+    u8 speedframes;
+    u8 count;
+    u8 randseed;
+    u8 check;
+};
+
 //move me to better home
 extern u32* ramrom_Dam_1;
 extern u32* ramrom_Dam_2;
@@ -59,9 +74,9 @@ struct ramrom_struct ramrom_table[] = {
 //D:80048468
 ramromfilestructure* ptr_active_demofile = 0;
 //D:8004846C
-s32 ramrom_blkbuf_2 = 0;
+struct ramrom_seed * ramrom_blkbuf_2 = NULL;
 //D:80048470
-s32 ramrom_blkbuf_3 = 0;
+struct ramrom_blockbuf * ramrom_blkbuf_3 = NULL;
 //D:80048474
 s32 is_ramrom_flag = 0;
 //D:80048478
@@ -81,7 +96,7 @@ s32 g_ramromRecordFlag = 0;
 
 
 
-
+void ensureCameraModeA(void);
 s32 ramrom_replay_handler(struct contsample *arg0, s32 arg1);
 void record_player_input_as_packet(struct contsample *arg0, s32 arg1, s32 arg2);
 void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state);
@@ -481,157 +496,47 @@ glabel ramrom_replay_handler
 
 
 
-
-
-#ifdef NONMATCHING
-s32 iterate_ramrom_entries_handle_camera_out(void) {
-    ? temp_ret;
-    s32 temp_a3;
+// Address 0x7F0C0268 NTSC.
+void iterate_ramrom_entries_handle_camera_out(void)
+{
     s32 temp_v1;
-    s32 phi_a0;
-    void *phi_v1;
-    s32 phi_a3;
-    void *phi_v1_2;
-    s32 phi_return;
+    s32 var_a3;
+    
+    ramrom_blkbuf_2 = romCopyAligned(ramrom_data_target + 0x1F8, address_demo_loaded, sizeof(struct ramrom_seed));
 
-    // Node 0
-    temp_ret = romCopyAligned(&ramrom_data_target + 0x1F8, address_demo_loaded, 4);
-    ramrom_blkbuf_2 = temp_ret;
-    temp_a3 = temp_ret->unk1;
-    phi_a0 = temp_a3;
-    phi_v1 = temp_ret;
-    phi_a3 = temp_a3;
-    if (temp_a3 > 0)
+    var_a3 = ramrom_blkbuf_2->count;
+    if (var_a3 > 0)
     {
-        // Node 1
-        ramrom_blkbuf_3 = romCopyAligned(&ramrom_data_target + 0x21E, (address_demo_loaded + 4), ((ptr_active_demofile->unk18 * 4) * temp_a3), temp_a3);
-        phi_a0 = ramrom_blkbuf_2->unk1;
-        phi_v1 = (void *) ramrom_blkbuf_2;
-        phi_a3 = ramrom_blkbuf_2->unk1;
+        ramrom_blkbuf_3 = romCopyAligned(
+            ramrom_data_target + 0x21E,
+            address_demo_loaded + 4,
+            ptr_active_demofile->size_cmds * sizeof(struct ramrom_blockbuf) * ramrom_blkbuf_2->count);
     }
-    // Node 2
-    if ((phi_a0 == 0) && (*phi_v1 == 0))
+
+    var_a3 = ramrom_blkbuf_2->count;
+    if (var_a3 == 0 && ramrom_blkbuf_2->speedframes == 0)
     {
-        // Node 4
-        ensureCameraModeA(phi_a0, phi_a3);
-        phi_v1_2 = (void *) ramrom_blkbuf_2;
+        ensureCameraModeA();
     }
     else
     {
-        // Node 5
-        address_demo_loaded = (s32) (address_demo_loaded + (((((ptr_active_demofile->unk18 * 4) * phi_a3) + 5) | 1) ^ 1));
-        phi_v1_2 = phi_v1;
+        // 5 is ??
+        address_demo_loaded += align_addr_even((ptr_active_demofile->size_cmds * sizeof(struct ramrom_blockbuf) * ramrom_blkbuf_2->count) + 5);
     }
-    // Node 6
-    sub_GAME_7F0C0AA0(*phi_v1_2);
-    temp_v1 = (ptr_active_demofile->unk7C + -0x3c);
-    phi_return = g_GlobalTimer;
-    if (g_GlobalTimer >= temp_v1)
+
+    sub_GAME_7F0C0AA0(ramrom_blkbuf_2->speedframes);
+
+    // BUG? Does this need to be adjusted for PAL?
+    temp_v1 = ptr_active_demofile->totaltime_ms - 0x3C;
+    if(0);
+    if ((g_GlobalTimer >= temp_v1) && ((g_GlobalTimer - g_ClockTimer) < temp_v1))
     {
-        // Node 7
-        phi_return = g_GlobalTimer;
-        if ((g_GlobalTimer - g_ClockTimer) < temp_v1)
-        {
-            // Node 8
-            phi_return = ensureCameraModeA();
-        }
+        ensureCameraModeA();
     }
-    // Node 9
-    return phi_return;
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel iterate_ramrom_entries_handle_camera_out
-/* 0F4D98 7F0C0268 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0F4D9C 7F0C026C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F4DA0 7F0C0270 3C048009 */  lui   $a0, %hi(ramrom_data_target + 0x1F8)
-/* 0F4DA4 7F0C0274 3C058009 */  lui   $a1, %hi(address_demo_loaded)
-/* 0F4DA8 7F0C0278 8CA5C5F4 */  lw    $a1, %lo(address_demo_loaded)($a1)
-/* 0F4DAC 7F0C027C 2484C468 */  addiu $a0, %lo(ramrom_data_target + 0x1F8) # addiu $a0, $a0, -0x3b98
-/* 0F4DB0 7F0C0280 0C001711 */  jal   romCopyAligned
-/* 0F4DB4 7F0C0284 24060004 */   li    $a2, 4
-/* 0F4DB8 7F0C0288 3C058005 */  lui   $a1, %hi(ramrom_blkbuf_2)
-/* 0F4DBC 7F0C028C 24A5846C */  addiu $a1, %lo(ramrom_blkbuf_2) # addiu $a1, $a1, -0x7b94
-/* 0F4DC0 7F0C0290 ACA20000 */  sw    $v0, ($a1)
-/* 0F4DC4 7F0C0294 90470001 */  lbu   $a3, 1($v0)
-/* 0F4DC8 7F0C0298 00401825 */  move  $v1, $v0
-/* 0F4DCC 7F0C029C 3C0E8005 */  lui   $t6, %hi(ptr_active_demofile)
-/* 0F4DD0 7F0C02A0 18E00013 */  blez  $a3, .L7F0C02F0
-/* 0F4DD4 7F0C02A4 00E02025 */   move  $a0, $a3
-/* 0F4DD8 7F0C02A8 8DCE8468 */  lw    $t6, %lo(ptr_active_demofile)($t6)
-/* 0F4DDC 7F0C02AC 3C058009 */  lui   $a1, %hi(address_demo_loaded)
-/* 0F4DE0 7F0C02B0 8CA5C5F4 */  lw    $a1, %lo(address_demo_loaded)($a1)
-/* 0F4DE4 7F0C02B4 8DCF0018 */  lw    $t7, 0x18($t6)
-/* 0F4DE8 7F0C02B8 3C048009 */  lui   $a0, %hi(ramrom_data_target + 0x21E)
-/* 0F4DEC 7F0C02BC 2484C48E */  addiu $a0, %lo(ramrom_data_target + 0x21E) # addiu $a0, $a0, -0x3b72
-/* 0F4DF0 7F0C02C0 000FC080 */  sll   $t8, $t7, 2
-/* 0F4DF4 7F0C02C4 03070019 */  multu $t8, $a3
-/* 0F4DF8 7F0C02C8 24A50004 */  addiu $a1, $a1, 4
-/* 0F4DFC 7F0C02CC 00003012 */  mflo  $a2
-/* 0F4E00 7F0C02D0 0C001711 */  jal   romCopyAligned
-/* 0F4E04 7F0C02D4 00000000 */   nop
-/* 0F4E08 7F0C02D8 3C038005 */  lui   $v1, %hi(ramrom_blkbuf_2)
-/* 0F4E0C 7F0C02DC 8C63846C */  lw    $v1, %lo(ramrom_blkbuf_2)($v1)
-/* 0F4E10 7F0C02E0 3C018005 */  lui   $at, %hi(ramrom_blkbuf_3)
-/* 0F4E14 7F0C02E4 AC228470 */  sw    $v0, %lo(ramrom_blkbuf_3)($at)
-/* 0F4E18 7F0C02E8 90670001 */  lbu   $a3, 1($v1)
-/* 0F4E1C 7F0C02EC 00E02025 */  move  $a0, $a3
-.L7F0C02F0:
-/* 0F4E20 7F0C02F0 14800009 */  bnez  $a0, .L7F0C0318
-/* 0F4E24 7F0C02F4 3C098005 */   lui   $t1, %hi(ptr_active_demofile)
-/* 0F4E28 7F0C02F8 90790000 */  lbu   $t9, ($v1)
-/* 0F4E2C 7F0C02FC 17200006 */  bnez  $t9, .L7F0C0318
-/* 0F4E30 7F0C0300 00000000 */   nop
-/* 0F4E34 7F0C0304 0FC30232 */  jal   ensureCameraModeA
-/* 0F4E38 7F0C0308 00000000 */   nop
-/* 0F4E3C 7F0C030C 3C038005 */  lui   $v1, %hi(ramrom_blkbuf_2)
-/* 0F4E40 7F0C0310 1000000E */  b     .L7F0C034C
-/* 0F4E44 7F0C0314 8C63846C */   lw    $v1, %lo(ramrom_blkbuf_2)($v1)
-.L7F0C0318:
-/* 0F4E48 7F0C0318 8D298468 */  lw    $t1, %lo(ptr_active_demofile)($t1)
-/* 0F4E4C 7F0C031C 3C088009 */  lui   $t0, %hi(address_demo_loaded)
-/* 0F4E50 7F0C0320 8D08C5F4 */  lw    $t0, %lo(address_demo_loaded)($t0)
-/* 0F4E54 7F0C0324 8D2A0018 */  lw    $t2, 0x18($t1)
-/* 0F4E58 7F0C0328 3C018009 */  lui   $at, %hi(address_demo_loaded)
-/* 0F4E5C 7F0C032C 000A5880 */  sll   $t3, $t2, 2
-/* 0F4E60 7F0C0330 01670019 */  multu $t3, $a3
-/* 0F4E64 7F0C0334 00006012 */  mflo  $t4
-/* 0F4E68 7F0C0338 258D0005 */  addiu $t5, $t4, 5
-/* 0F4E6C 7F0C033C 35AE0001 */  ori   $t6, $t5, 1
-/* 0F4E70 7F0C0340 39CF0001 */  xori  $t7, $t6, 1
-/* 0F4E74 7F0C0344 010FC021 */  addu  $t8, $t0, $t7
-/* 0F4E78 7F0C0348 AC38C5F4 */  sw    $t8, %lo(address_demo_loaded)($at)
-.L7F0C034C:
-/* 0F4E7C 7F0C034C 0FC302A8 */  jal   sub_GAME_7F0C0AA0
-/* 0F4E80 7F0C0350 90640000 */   lbu   $a0, ($v1)
-/* 0F4E84 7F0C0354 3C198005 */  lui   $t9, %hi(ptr_active_demofile)
-/* 0F4E88 7F0C0358 8F398468 */  lw    $t9, %lo(ptr_active_demofile)($t9)
-/* 0F4E8C 7F0C035C 3C028005 */  lui   $v0, %hi(g_GlobalTimer)
-/* 0F4E90 7F0C0360 8C42837C */  lw    $v0, %lo(g_GlobalTimer)($v0)
-/* 0F4E94 7F0C0364 8F23007C */  lw    $v1, 0x7c($t9)
-/* 0F4E98 7F0C0368 3C098005 */  lui   $t1, %hi(g_ClockTimer)
-/* 0F4E9C 7F0C036C 2463FFC4 */  addiu $v1, $v1, -0x3c
-/* 0F4EA0 7F0C0370 0043082A */  slt   $at, $v0, $v1
-/* 0F4EA4 7F0C0374 54200009 */  bnezl $at, .L7F0C039C
-/* 0F4EA8 7F0C0378 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4EAC 7F0C037C 8D298374 */  lw    $t1, %lo(g_ClockTimer)($t1)
-/* 0F4EB0 7F0C0380 00495023 */  subu  $t2, $v0, $t1
-/* 0F4EB4 7F0C0384 0143082A */  slt   $at, $t2, $v1
-/* 0F4EB8 7F0C0388 50200004 */  beql  $at, $zero, .L7F0C039C
-/* 0F4EBC 7F0C038C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F4EC0 7F0C0390 0FC30232 */  jal   ensureCameraModeA
-/* 0F4EC4 7F0C0394 00000000 */   nop
-/* 0F4EC8 7F0C0398 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C039C:
-/* 0F4ECC 7F0C039C 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0F4ED0 7F0C03A0 03E00008 */  jr    $ra
-/* 0F4ED4 7F0C03A4 00000000 */   nop
-)
-#endif
-
-void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state) {
+void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state)
+{
     state->randomseed = g_randomSeed;
     state->randomizer = g_chrObjRandomSeed;
     state->mode = gamemode;
@@ -659,7 +564,8 @@ void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *s
     state->mp_flags[3] = get_players_team_or_scenario_item_flag(3);
 }
 
-void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *state) {
+void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *state)
+{
     g_randomSeed = state->randomseed;
     g_chrObjRandomSeed = state->randomizer;
     gamemode = state->mode;
