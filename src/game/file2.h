@@ -35,5 +35,6 @@ void fileDeleteSaveForFolder(s32 foldernum);
 void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty);
 bool check_aztec_completed_any_folder_secret_00(void);
 bool fileIsEgyptCompletedOn00AnyFolder(void);
+LEVEL_SOLO_SEQUENCE fileGetHighestStageUnlockedAnyFolder(void);
 
 #endif

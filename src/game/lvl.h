@@ -23,11 +23,6 @@
 #define DEFAULT_007_SOLO_AMMO_MULTIPLIER DEFAULT_00_AGENT_SOLO_AMMO_MULTIPLIER
 #define DEFAULT_007_AI_REACTION_SPEED DEFAULT_00_AGENT_AI_REACTION_SPEED
 
-struct ramrom_struct {
-    u32 *address;
-    u32 locked;
-};
-
 struct LvlMpUnknown {
     u8 unk_0;
     u8 unk_1;

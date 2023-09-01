@@ -7,9 +7,15 @@
 #include "ramromreplay.h"
 #include <ramrom.h>
 #include <macro.h>
+#include "file2.h"
+#include <random.h>
 //D:800483F0
 
-
+struct ramrom_struct
+{
+    ramromfilestructure *fdata;
+    s32 locked;
+};
 
 //move me to better home
 extern u32* ramrom_Dam_1;
@@ -26,6 +32,9 @@ extern u32* ramrom_Silo_2;
 extern u32* ramrom_Frigate_1;
 extern u32* ramrom_Frigate_2;
 extern u32* ramrom_Train;
+
+extern u64 g_randomSeed;
+extern u64 g_chrObjRandomSeed;
 
 struct ramrom_struct ramrom_table[] = {
     {&ramrom_Dam_1, 0},
@@ -620,8 +629,6 @@ glabel iterate_ramrom_entries_handle_camera_out
 )
 #endif
 
-extern u64 g_randomSeed;
-extern u64 g_chrObjRandomSeed;
 void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state) {
     state->randomseed = g_randomSeed;
     state->randomizer = g_chrObjRandomSeed;
@@ -885,72 +892,19 @@ void stop_demo_playback(void)
 
 
 
-
-#ifdef NONMATCHING
+// Address 0x7F0C0970 NTSC.
 void select_ramrom_to_play(void)
 {
-    u32 i=0;
+    s32 i;
+    s32 temp_v0;
 
-    while((ramrom_table[i].address != 0) && ( fileGetHighestStageUnlockedAnyFolder() >= ramrom_table[i].locked ))
-    {
-        i++;
-    }
+    temp_v0 = fileGetHighestStageUnlockedAnyFolder();
 
-    replay_recorded_ramrom_at_address(ramrom_table[randomGetNext() % i].address);
+    for (i = 0; ramrom_table[i].fdata != NULL && temp_v0 >= ramrom_table[i].locked; i++)
+    {}
+
+    replay_recorded_ramrom_at_address(ramrom_table[randomGetNext() % i].fdata);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel select_ramrom_to_play
-/* 0F54A0 7F0C0970 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F54A4 7F0C0974 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F54A8 7F0C0978 0FC07A66 */  jal   fileGetHighestStageUnlockedAnyFolder
-/* 0F54AC 7F0C097C 00000000 */   nop
-/* 0F54B0 7F0C0980 3C0E8005 */  lui   $t6, %hi(ramrom_table)
-/* 0F54B4 7F0C0984 8DCE83F0 */  lw    $t6, %lo(ramrom_table)($t6)
-/* 0F54B8 7F0C0988 00402025 */  move  $a0, $v0
-/* 0F54BC 7F0C098C 00001825 */  move  $v1, $zero
-/* 0F54C0 7F0C0990 11C00011 */  beqz  $t6, .L7F0C09D8
-/* 0F54C4 7F0C0994 3C0F8005 */   lui   $t7, %hi(ramrom_table + 0x4)
-/* 0F54C8 7F0C0998 8DEF83F4 */  lw    $t7, %lo(ramrom_table + 0x4)($t7)
-/* 0F54CC 7F0C099C 3C198005 */  lui   $t9, %hi(ramrom_table)
-/* 0F54D0 7F0C09A0 273983F0 */  addiu $t9, %lo(ramrom_table) # addiu $t9, $t9, -0x7c10
-/* 0F54D4 7F0C09A4 004F082A */  slt   $at, $v0, $t7
-/* 0F54D8 7F0C09A8 1420000B */  bnez  $at, .L7F0C09D8
-/* 0F54DC 7F0C09AC 0003C0C0 */   sll   $t8, $v1, 3
-/* 0F54E0 7F0C09B0 03191021 */  addu  $v0, $t8, $t9
-/* 0F54E4 7F0C09B4 8C480008 */  lw    $t0, 8($v0)
-.L7F0C09B8:
-/* 0F54E8 7F0C09B8 24630001 */  addiu $v1, $v1, 1
-/* 0F54EC 7F0C09BC 24420008 */  addiu $v0, $v0, 8
-/* 0F54F0 7F0C09C0 11000005 */  beqz  $t0, .L7F0C09D8
-/* 0F54F4 7F0C09C4 00000000 */   nop
-/* 0F54F8 7F0C09C8 8C490004 */  lw    $t1, 4($v0)
-/* 0F54FC 7F0C09CC 0089082A */  slt   $at, $a0, $t1
-/* 0F5500 7F0C09D0 5020FFF9 */  beql  $at, $zero, .L7F0C09B8
-/* 0F5504 7F0C09D4 8C480008 */   lw    $t0, 8($v0)
-.L7F0C09D8:
-/* 0F5508 7F0C09D8 0C002914 */  jal   randomGetNext
-/* 0F550C 7F0C09DC AFA3001C */   sw    $v1, 0x1c($sp)
-/* 0F5510 7F0C09E0 8FA3001C */  lw    $v1, 0x1c($sp)
-/* 0F5514 7F0C09E4 3C048005 */  lui   $a0, %hi(ramrom_table)
-/* 0F5518 7F0C09E8 0043001B */  divu  $zero, $v0, $v1
-/* 0F551C 7F0C09EC 00005010 */  mfhi  $t2
-/* 0F5520 7F0C09F0 000A58C0 */  sll   $t3, $t2, 3
-/* 0F5524 7F0C09F4 008B2021 */  addu  $a0, $a0, $t3
-/* 0F5528 7F0C09F8 14600002 */  bnez  $v1, .L7F0C0A04
-/* 0F552C 7F0C09FC 00000000 */   nop
-/* 0F5530 7F0C0A00 0007000D */  break 7
-.L7F0C0A04:
-/* 0F5534 7F0C0A04 8C8483F0 */  lw    $a0, %lo(ramrom_table)($a0)
-/* 0F5538 7F0C0A08 0FC30207 */  jal   replay_recorded_ramrom_at_address
-/* 0F553C 7F0C0A0C 00000000 */   nop
-/* 0F5540 7F0C0A10 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0F5544 7F0C0A14 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F5548 7F0C0A18 03E00008 */  jr    $ra
-/* 0F554C 7F0C0A1C 00000000 */   nop
-)
-#endif
 
 
 
