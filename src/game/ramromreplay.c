@@ -7,8 +7,10 @@
 #include "ramromreplay.h"
 #include <ramrom.h>
 #include <macro.h>
+#include "file.h"
 #include "file2.h"
 #include <random.h>
+#include "joy.h"
 //D:800483F0
 
 struct ramrom_struct
@@ -80,8 +82,10 @@ s32 g_ramromRecordFlag = 0;
 
 
 
-
-
+s32 ramrom_replay_handler(struct contsample *arg0, s32 arg1);
+void record_player_input_as_packet(struct contsample *arg0, s32 arg1, s32 arg2);
+void copy_current_ingame_registers_before_ramrom_playback(ramromfilestructure *state);
+void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *state);
 
 
 void clear_ramrom_block_buffer_heading_ptrs(void) {
@@ -177,7 +181,6 @@ void record_player_input_as_packet(void) {
 
 }
 #else
-void record_player_input_as_packet(int param_1,int param_2,int param_3);
 GLOBAL_ASM(
 .text
 glabel record_player_input_as_packet
@@ -338,7 +341,6 @@ void ramrom_replay_handler(void) {
 
 }
 #else
-int ramrom_replay_handler(int param_1,int param_2);
 GLOBAL_ASM(
 .text
 glabel ramrom_replay_handler
@@ -685,148 +687,45 @@ void copy_recorded_ramrom_registers_to_proper_place_ingame(ramromfilestructure *
     set_players_team_or_scenario_item_flag(3, state->mp_flags[3]);
 }
 
-#ifdef NONMATCHING
-//uses v1 instead of v0 for address_demo_loaded
-void test_if_recording_demos_this_stage_load(s32 levelid, s32 difficulty)
+// Address 0x7F0C0640 NTSC
+void test_if_recording_demos_this_stage_load(enum LEVELID arg0, enum DIFFICULTY arg1)
 {
     if (g_ramromRecordFlag != 0)
     {
-        ptr_active_demofile = (ramromfilestructure*) ALIGN16_a((s32)ramrom_data_target);
+        ptr_active_demofile = (ramromfilestructure *) ALIGN16_a((s32)ramrom_data_target);
         dword_CODE_bss_8008C5F8 = 0;
-        ptr_active_demofile->stagenum = levelid;
-        ptr_active_demofile->difficulty = difficulty;
+        ptr_active_demofile->stagenum = arg0;
+        ptr_active_demofile->difficulty = arg1;
         ptr_active_demofile->size_cmds = joyGetControllerCount();
         ptr_active_demofile->slotnum = record_slot_num;
         sub_GAME_7F01D61C(&ptr_active_demofile->savefile);
         copy_current_ingame_registers_before_ramrom_playback(ptr_active_demofile);
         recording_ramrom_flag = 1;
         ramrom_demo_related_6 = 1;
-        joySetRecordFunc(&record_player_input_as_packet);
-        address_demo_loaded = INDY_RAMROM_DEMO_ADDRESS;
-        romWrite(ptr_active_demofile, address_demo_loaded, 0xF0);
-        address_demo_loaded += 0xE8;
+        joySetRecordFunc(record_player_input_as_packet);
+        address_demo_loaded = INDY_RAMROM_DEMO_POINTER;
+        romWrite(ptr_active_demofile, address_demo_loaded, 0xF0U);
+        address_demo_loaded += sizeof(struct ramromfilestructure);
         g_ramromRecordFlag = 0;
+        
         return;
     }
+    
     if (g_ramromPlayBackFlag != 0)
     {
         dword_CODE_bss_8008C5F8 = 0;
         set_selected_difficulty(ptr_active_demofile->difficulty);
         set_solo_and_ptr_briefing(ptr_active_demofile->stagenum);
         set_selected_foldernum_and_copy_demo_eeprom(&ptr_active_demofile->savefile);
-        copy_current_ingame_registers_before_ramrom_playback(ramrom_data_target + 0x110);
+        copy_current_ingame_registers_before_ramrom_playback((ramromfilestructure *) (ramrom_data_target + 0x110));
         copy_recorded_ramrom_registers_to_proper_place_ingame(ptr_active_demofile);
         is_ramrom_flag = 1;
         ramrom_demo_related_3 = 1;
-        joySetPlaybackFunc(&ramrom_replay_handler, ptr_active_demofile->size_cmds);
+        joySetPlaybackFunc(ramrom_replay_handler, ptr_active_demofile->size_cmds);
         joySetContDataIndex(1);
         g_ramromPlayBackFlag = 0;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel test_if_recording_demos_this_stage_load
-/* 0F5170 7F0C0640 3C0E8005 */  lui   $t6, %hi(g_ramromRecordFlag)
-/* 0F5174 7F0C0644 8DCE8488 */  lw    $t6, %lo(g_ramromRecordFlag)($t6)
-/* 0F5178 7F0C0648 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F517C 7F0C064C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F5180 7F0C0650 11C00032 */  beqz  $t6, .L7F0C071C
-/* 0F5184 7F0C0654 AFB00018 */   sw    $s0, 0x18($sp)
-/* 0F5188 7F0C0658 3C0F8009 */  lui   $t7, %hi(ramrom_data_target)
-/* 0F518C 7F0C065C 25EFC270 */  addiu $t7, %lo(ramrom_data_target) # addiu $t7, $t7, -0x3d90
-/* 0F5190 7F0C0660 25F8000F */  addiu $t8, $t7, 0xf
-/* 0F5194 7F0C0664 3C108005 */  lui   $s0, %hi(ptr_active_demofile)
-/* 0F5198 7F0C0668 3719000F */  ori   $t9, $t8, 0xf
-/* 0F519C 7F0C066C 26108468 */  addiu $s0, %lo(ptr_active_demofile) # addiu $s0, $s0, -0x7b98
-/* 0F51A0 7F0C0670 3B28000F */  xori  $t0, $t9, 0xf
-/* 0F51A4 7F0C0674 AE080000 */  sw    $t0, ($s0)
-/* 0F51A8 7F0C0678 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C5F8)
-/* 0F51AC 7F0C067C AC20C5F8 */  sw    $zero, %lo(dword_CODE_bss_8008C5F8)($at)
-/* 0F51B0 7F0C0680 8E090000 */  lw    $t1, ($s0)
-/* 0F51B4 7F0C0684 AD240010 */  sw    $a0, 0x10($t1)
-/* 0F51B8 7F0C0688 8E0A0000 */  lw    $t2, ($s0)
-/* 0F51BC 7F0C068C 0C002E7E */  jal   joyGetControllerCount
-/* 0F51C0 7F0C0690 AD450014 */   sw    $a1, 0x14($t2)
-/* 0F51C4 7F0C0694 8E0B0000 */  lw    $t3, ($s0)
-/* 0F51C8 7F0C0698 3C0C8009 */  lui   $t4, %hi(record_slot_num)
-/* 0F51CC 7F0C069C AD620018 */  sw    $v0, 0x18($t3)
-/* 0F51D0 7F0C06A0 8E0D0000 */  lw    $t5, ($s0)
-/* 0F51D4 7F0C06A4 8D8CC5F0 */  lw    $t4, %lo(record_slot_num)($t4)
-/* 0F51D8 7F0C06A8 ADAC0088 */  sw    $t4, 0x88($t5)
-/* 0F51DC 7F0C06AC 8E040000 */  lw    $a0, ($s0)
-/* 0F51E0 7F0C06B0 0FC07587 */  jal   sub_GAME_7F01D61C
-/* 0F51E4 7F0C06B4 2484001C */   addiu $a0, $a0, 0x1c
-/* 0F51E8 7F0C06B8 0FC300EA */  jal   copy_current_ingame_registers_before_ramrom_playback
-/* 0F51EC 7F0C06BC 8E040000 */   lw    $a0, ($s0)
-/* 0F51F0 7F0C06C0 24020001 */  li    $v0, 1
-/* 0F51F4 7F0C06C4 3C018005 */  lui   $at, %hi(recording_ramrom_flag)
-/* 0F51F8 7F0C06C8 AC228480 */  sw    $v0, %lo(recording_ramrom_flag)($at)
-/* 0F51FC 7F0C06CC 3C018005 */  lui   $at, %hi(ramrom_demo_related_6)
-/* 0F5200 7F0C06D0 3C047F0C */  lui   $a0, %hi(record_player_input_as_packet) # $a0, 0x7f0c
-/* 0F5204 7F0C06D4 AC228484 */  sw    $v0, %lo(ramrom_demo_related_6)($at)
-/* 0F5208 7F0C06D8 0C002EEF */  jal   joySetRecordFunc
-/* 0F520C 7F0C06DC 2484FE5C */   addiu $a0, %lo(record_player_input_as_packet) # addiu $a0, $a0, -0x1a4
-/* 0F5210 7F0C06E0 3C028009 */  lui   $v0, %hi(address_demo_loaded)
-/* 0F5214 7F0C06E4 2442C5F4 */  addiu $v0, %lo(address_demo_loaded) # addiu $v0, $v0, -0x3a0c
-/* 0F5218 7F0C06E8 3C0500F0 */  lui   $a1, 0xf0
-/* 0F521C 7F0C06EC AC450000 */  sw    $a1, ($v0)
-/* 0F5220 7F0C06F0 8E040000 */  lw    $a0, ($s0)
-/* 0F5224 7F0C06F4 0C001742 */  jal   romWrite
-/* 0F5228 7F0C06F8 240600F0 */   li    $a2, 240
-/* 0F522C 7F0C06FC 3C028009 */  lui   $v0, %hi(address_demo_loaded)
-/* 0F5230 7F0C0700 2442C5F4 */  addiu $v0, %lo(address_demo_loaded) # addiu $v0, $v0, -0x3a0c
-/* 0F5234 7F0C0704 8C4F0000 */  lw    $t7, ($v0)
-/* 0F5238 7F0C0708 3C018005 */  lui   $at, %hi(g_ramromRecordFlag)
-/* 0F523C 7F0C070C 25F800E8 */  addiu $t8, $t7, 0xe8
-/* 0F5240 7F0C0710 AC580000 */  sw    $t8, ($v0)
-/* 0F5244 7F0C0714 10000024 */  b     .L7F0C07A8
-/* 0F5248 7F0C0718 AC208488 */   sw    $zero, %lo(g_ramromRecordFlag)($at)
-.L7F0C071C:
-/* 0F524C 7F0C071C 3C198005 */  lui   $t9, %hi(g_ramromPlayBackFlag)
-/* 0F5250 7F0C0720 8F39847C */  lw    $t9, %lo(g_ramromPlayBackFlag)($t9)
-/* 0F5254 7F0C0724 13200020 */  beqz  $t9, .L7F0C07A8
-/* 0F5258 7F0C0728 3C108005 */   lui   $s0, %hi(ptr_active_demofile)
-/* 0F525C 7F0C072C 3C018009 */  lui   $at, %hi(dword_CODE_bss_8008C5F8)
-/* 0F5260 7F0C0730 26108468 */  addiu $s0, %lo(ptr_active_demofile) # addiu $s0, $s0, -0x7b98
-/* 0F5264 7F0C0734 AC20C5F8 */  sw    $zero, %lo(dword_CODE_bss_8008C5F8)($at)
-/* 0F5268 7F0C0738 8E080000 */  lw    $t0, ($s0)
-/* 0F526C 7F0C073C 0FC07567 */  jal   set_selected_difficulty
-/* 0F5270 7F0C0740 8D040014 */   lw    $a0, 0x14($t0)
-/* 0F5274 7F0C0744 8E090000 */  lw    $t1, ($s0)
-/* 0F5278 7F0C0748 0FC0757B */  jal   set_solo_and_ptr_briefing
-/* 0F527C 7F0C074C 8D240010 */   lw    $a0, 0x10($t1)
-/* 0F5280 7F0C0750 8E040000 */  lw    $a0, ($s0)
-/* 0F5284 7F0C0754 0FC07591 */  jal   set_selected_foldernum_and_copy_demo_eeprom
-/* 0F5288 7F0C0758 2484001C */   addiu $a0, $a0, 0x1c
-/* 0F528C 7F0C075C 3C048009 */  lui   $a0, %hi(ramrom_data_target + 0x110)
-/* 0F5290 7F0C0760 0FC300EA */  jal   copy_current_ingame_registers_before_ramrom_playback
-/* 0F5294 7F0C0764 2484C380 */   addiu $a0, %lo(ramrom_data_target + 0x110) # addiu $a0, $a0, -0x3c80
-/* 0F5298 7F0C0768 0FC3013D */  jal   copy_recorded_ramrom_registers_to_proper_place_ingame
-/* 0F529C 7F0C076C 8E040000 */   lw    $a0, ($s0)
-/* 0F52A0 7F0C0770 24020001 */  li    $v0, 1
-/* 0F52A4 7F0C0774 3C018005 */  lui   $at, %hi(is_ramrom_flag)
-/* 0F52A8 7F0C0778 AC228474 */  sw    $v0, %lo(is_ramrom_flag)($at)
-/* 0F52AC 7F0C077C 3C018005 */  lui   $at, %hi(ramrom_demo_related_3)
-/* 0F52B0 7F0C0780 AC228478 */  sw    $v0, %lo(ramrom_demo_related_3)($at)
-/* 0F52B4 7F0C0784 8E0A0000 */  lw    $t2, ($s0)
-/* 0F52B8 7F0C0788 3C047F0C */  lui   $a0, %hi(ramrom_replay_handler) # $a0, 0x7f0c
-/* 0F52BC 7F0C078C 24840080 */  addiu $a0, %lo(ramrom_replay_handler) # addiu $a0, $a0, 0x80
-/* 0F52C0 7F0C0790 0C002EEA */  jal   joySetPlaybackFunc
-/* 0F52C4 7F0C0794 8D450018 */   lw    $a1, 0x18($t2)
-/* 0F52C8 7F0C0798 0C00324C */  jal   joySetContDataIndex
-/* 0F52CC 7F0C079C 24040001 */   li    $a0, 1
-/* 0F52D0 7F0C07A0 3C018005 */  lui   $at, %hi(g_ramromPlayBackFlag)
-/* 0F52D4 7F0C07A4 AC20847C */  sw    $zero, %lo(g_ramromPlayBackFlag)($at)
-.L7F0C07A8:
-/* 0F52D8 7F0C07A8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F52DC 7F0C07AC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0F52E0 7F0C07B0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F52E4 7F0C07B4 03E00008 */  jr    $ra
-/* 0F52E8 7F0C07B8 00000000 */   nop
-)
-#endif
-
 
 
 
@@ -852,7 +751,7 @@ void stop_recording_ramrom(void)
 void replay_recorded_ramrom_at_address(ramromfilestructure *demofile)
 {
     address_demo_loaded = demofile;
-    ptr_active_demofile = romCopyAligned(&ramrom_data_target,address_demo_loaded,0xe8);
+    ptr_active_demofile = romCopyAligned(&ramrom_data_target, address_demo_loaded, 0xe8);
     address_demo_loaded += sizeof(ramromfilestructure);
     g_ramromPlayBackFlag = 1;
     set_solo_and_ptr_briefing(ptr_active_demofile->stagenum);
