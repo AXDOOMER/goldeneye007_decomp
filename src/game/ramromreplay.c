@@ -181,8 +181,8 @@ void load_ramrom_from_devtool(void)
 
     if (indycommHostCheckFileExists(&strDemoFileName, &size) != 0)
     {
-        indycommHostRamRomLoad(&strDemoFileName,(u8 *)INDY_RAMROM_DEMO_ADDRESS,size);
-        ptr_active_demofile = romCopyAligned(&ramrom_data_target,(u8 *)INDY_RAMROM_DEMO_ADDRESS,0xe8);
+        indycommHostRamRomLoad(&strDemoFileName, (u8 *)INDY_RAMROM_DEMO_ADDRESS, size);
+        ptr_active_demofile = romCopyAligned(&ramrom_data_target, (u8 *)INDY_RAMROM_DEMO_ADDRESS, sizeof(struct ramromfilestructure));
     }
 }
 
@@ -350,149 +350,69 @@ glabel record_player_input_as_packet
 
 
 
+// Address 0x7F0C0080 NTSC.
+s32 ramrom_replay_handler(struct contsample *arg0, s32 arg1)
+{
+    s32 padding[2];
+    s32 var_a3;
+    s32 var_a0;
+    struct ramrom_blockbuf *temp_v0;
+    u8 var_t0;
+    s32 temp_a2;
+    s32 temp_t2;
 
-#ifdef NONMATCHING
-void ramrom_replay_handler(void) {
+    var_t0 = 0;
+    temp_a2 = (s32) ptr_active_demofile->size_cmds;
+    temp_t2 = ramrom_blkbuf_2->count;
 
+    for (var_a3 = 0; var_a3 < temp_t2; var_a3++)
+    {
+        arg1 = (s32) (arg1 + 1) % CONTSAMPLE_LEN;
+
+        for (var_a0 = 0; var_a0 < MAXCONTROLLERS; var_a0++)
+        {
+            if (var_a0 < temp_a2)
+            {
+                temp_v0 = ramrom_blkbuf_3 + (var_a3 * temp_a2) + var_a0;
+
+                arg0->pads[arg1 * 4 + var_a0].stick_x = temp_v0->stick_x;
+                arg0->pads[arg1 * 4 + var_a0].stick_y = temp_v0->stick_y;
+                arg0->pads[arg1 * 4 + var_a0].button = (temp_v0->button_high << 8) | temp_v0->button_low;
+
+                var_t0 += (u8)((u8)temp_v0->stick_x + (u8)temp_v0->stick_y + temp_v0->button_low + temp_v0->button_high);
+            }
+            else
+            {
+                arg0->pads[arg1 * 4 + var_a0].stick_x = 0;
+                arg0->pads[arg1 * 4 + var_a0].stick_y = 0;
+                arg0->pads[arg1 * 4 + var_a0].button = 0;
+            }
+        }
+    }
+
+    if (ramrom_blkbuf_2->randseed != (u8)g_randomSeed)
+    {
+        ensureCameraModeA();
+    }
+
+    var_t0 += (u8)((u8)ramrom_blkbuf_2->speedframes + (u8)ramrom_blkbuf_2->count + ramrom_blkbuf_2->randseed);
+    if (ramrom_blkbuf_2->check != var_t0)
+    {
+        ensureCameraModeA();
+    }
+    
+    joySetContDataIndex(0);
+    
+    if (joyGetButtonsPressedThisFrame(0, 0xFFFFU) != 0)
+    {
+        ensureCameraModeA();
+        prev_keypresses = 1;
+    }
+    
+    joySetContDataIndex(1);
+
+    return arg1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel ramrom_replay_handler
-/* 0F4BB0 7F0C0080 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 0F4BB4 7F0C0084 3C028005 */  lui   $v0, %hi(ramrom_blkbuf_2)
-/* 0F4BB8 7F0C0088 8C42846C */  lw    $v0, %lo(ramrom_blkbuf_2)($v0)
-/* 0F4BBC 7F0C008C AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0F4BC0 7F0C0090 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0F4BC4 7F0C0094 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0F4BC8 7F0C0098 904A0001 */  lbu   $t2, 1($v0)
-/* 0F4BCC 7F0C009C 3C0E8005 */  lui   $t6, %hi(ptr_active_demofile)
-/* 0F4BD0 7F0C00A0 8DCE8468 */  lw    $t6, %lo(ptr_active_demofile)($t6)
-/* 0F4BD4 7F0C00A4 00A08025 */  move  $s0, $a1
-/* 0F4BD8 7F0C00A8 00808825 */  move  $s1, $a0
-/* 0F4BDC 7F0C00AC 00004025 */  move  $t0, $zero
-/* 0F4BE0 7F0C00B0 00003825 */  move  $a3, $zero
-/* 0F4BE4 7F0C00B4 19400041 */  blez  $t2, .L7F0C01BC
-/* 0F4BE8 7F0C00B8 8DC60018 */   lw    $a2, 0x18($t6)
-/* 0F4BEC 7F0C00BC 3C058005 */  lui   $a1, %hi(ramrom_blkbuf_3)
-/* 0F4BF0 7F0C00C0 24A58470 */  addiu $a1, %lo(ramrom_blkbuf_3) # addiu $a1, $a1, -0x7b90
-/* 0F4BF4 7F0C00C4 240B0014 */  li    $t3, 20
-/* 0F4BF8 7F0C00C8 24090004 */  li    $t1, 4
-/* 0F4BFC 7F0C00CC 260F0001 */  addiu $t7, $s0, 1
-.L7F0C00D0:
-/* 0F4C00 7F0C00D0 01EB001A */  div   $zero, $t7, $t3
-/* 0F4C04 7F0C00D4 00008010 */  mfhi  $s0
-/* 0F4C08 7F0C00D8 0010C080 */  sll   $t8, $s0, 2
-/* 0F4C0C 7F0C00DC 0018C880 */  sll   $t9, $t8, 2
-/* 0F4C10 7F0C00E0 0338C823 */  subu  $t9, $t9, $t8
-/* 0F4C14 7F0C00E4 0019C840 */  sll   $t9, $t9, 1
-/* 0F4C18 7F0C00E8 15600002 */  bnez  $t3, .L7F0C00F4
-/* 0F4C1C 7F0C00EC 00000000 */   nop
-/* 0F4C20 7F0C00F0 0007000D */  break 7
-.L7F0C00F4:
-/* 0F4C24 7F0C00F4 2401FFFF */  li    $at, -1
-/* 0F4C28 7F0C00F8 15610004 */  bne   $t3, $at, .L7F0C010C
-/* 0F4C2C 7F0C00FC 3C018000 */   lui   $at, 0x8000
-/* 0F4C30 7F0C0100 15E10002 */  bne   $t7, $at, .L7F0C010C
-/* 0F4C34 7F0C0104 00000000 */   nop
-/* 0F4C38 7F0C0108 0006000D */  break 6
-.L7F0C010C:
-/* 0F4C3C 7F0C010C 02391821 */  addu  $v1, $s1, $t9
-/* 0F4C40 7F0C0110 00002025 */  move  $a0, $zero
-.L7F0C0114:
-/* 0F4C44 7F0C0114 0086082A */  slt   $at, $a0, $a2
-/* 0F4C48 7F0C0118 5020001E */  beql  $at, $zero, .L7F0C0194
-/* 0F4C4C 7F0C011C A0600002 */   sb    $zero, 2($v1)
-/* 0F4C50 7F0C0120 00E60019 */  multu $a3, $a2
-/* 0F4C54 7F0C0124 8CAE0000 */  lw    $t6, ($a1)
-/* 0F4C58 7F0C0128 0004C080 */  sll   $t8, $a0, 2
-/* 0F4C5C 7F0C012C 00006012 */  mflo  $t4
-/* 0F4C60 7F0C0130 000C6880 */  sll   $t5, $t4, 2
-/* 0F4C64 7F0C0134 01AE7821 */  addu  $t7, $t5, $t6
-/* 0F4C68 7F0C0138 01F81021 */  addu  $v0, $t7, $t8
-/* 0F4C6C 7F0C013C 80590000 */  lb    $t9, ($v0)
-/* 0F4C70 7F0C0140 A0790002 */  sb    $t9, 2($v1)
-/* 0F4C74 7F0C0144 804C0001 */  lb    $t4, 1($v0)
-/* 0F4C78 7F0C0148 A06C0003 */  sb    $t4, 3($v1)
-/* 0F4C7C 7F0C014C 904D0003 */  lbu   $t5, 3($v0)
-/* 0F4C80 7F0C0150 904F0002 */  lbu   $t7, 2($v0)
-/* 0F4C84 7F0C0154 000D7200 */  sll   $t6, $t5, 8
-/* 0F4C88 7F0C0158 01CFC025 */  or    $t8, $t6, $t7
-/* 0F4C8C 7F0C015C A4780000 */  sh    $t8, ($v1)
-/* 0F4C90 7F0C0160 904C0001 */  lbu   $t4, 1($v0)
-/* 0F4C94 7F0C0164 90590000 */  lbu   $t9, ($v0)
-/* 0F4C98 7F0C0168 904E0002 */  lbu   $t6, 2($v0)
-/* 0F4C9C 7F0C016C 90580003 */  lbu   $t8, 3($v0)
-/* 0F4CA0 7F0C0170 032C6821 */  addu  $t5, $t9, $t4
-/* 0F4CA4 7F0C0174 01AE7821 */  addu  $t7, $t5, $t6
-/* 0F4CA8 7F0C0178 01F8C821 */  addu  $t9, $t7, $t8
-/* 0F4CAC 7F0C017C 332C00FF */  andi  $t4, $t9, 0xff
-/* 0F4CB0 7F0C0180 010C4021 */  addu  $t0, $t0, $t4
-/* 0F4CB4 7F0C0184 310D00FF */  andi  $t5, $t0, 0xff
-/* 0F4CB8 7F0C0188 10000004 */  b     .L7F0C019C
-/* 0F4CBC 7F0C018C 01A04025 */   move  $t0, $t5
-/* 0F4CC0 7F0C0190 A0600002 */  sb    $zero, 2($v1)
-.L7F0C0194:
-/* 0F4CC4 7F0C0194 A0600003 */  sb    $zero, 3($v1)
-/* 0F4CC8 7F0C0198 A4600000 */  sh    $zero, ($v1)
-.L7F0C019C:
-/* 0F4CCC 7F0C019C 24840001 */  addiu $a0, $a0, 1
-/* 0F4CD0 7F0C01A0 1489FFDC */  bne   $a0, $t1, .L7F0C0114
-/* 0F4CD4 7F0C01A4 24630006 */   addiu $v1, $v1, 6
-/* 0F4CD8 7F0C01A8 24E70001 */  addiu $a3, $a3, 1
-/* 0F4CDC 7F0C01AC 54EAFFC8 */  bnel  $a3, $t2, .L7F0C00D0
-/* 0F4CE0 7F0C01B0 260F0001 */   addiu $t7, $s0, 1
-/* 0F4CE4 7F0C01B4 3C028005 */  lui   $v0, %hi(ramrom_blkbuf_2)
-/* 0F4CE8 7F0C01B8 8C42846C */  lw    $v0, %lo(ramrom_blkbuf_2)($v0)
-.L7F0C01BC:
-/* 0F4CEC 7F0C01BC 3C0F8002 */  lui   $t7, %hi(g_randomSeed + 0x4)
-/* 0F4CF0 7F0C01C0 8DEF4464 */  lw    $t7, %lo(g_randomSeed + 0x4)($t7)
-/* 0F4CF4 7F0C01C4 90430002 */  lbu   $v1, 2($v0)
-/* 0F4CF8 7F0C01C8 31F900FF */  andi  $t9, $t7, 0xff
-/* 0F4CFC 7F0C01CC 53230008 */  beql  $t9, $v1, .L7F0C01F0
-/* 0F4D00 7F0C01D0 904C0000 */   lbu   $t4, ($v0)
-/* 0F4D04 7F0C01D4 0FC30232 */  jal   ensureCameraModeA
-/* 0F4D08 7F0C01D8 A3A80023 */   sb    $t0, 0x23($sp)
-/* 0F4D0C 7F0C01DC 3C028005 */  lui   $v0, %hi(ramrom_blkbuf_2)
-/* 0F4D10 7F0C01E0 8C42846C */  lw    $v0, %lo(ramrom_blkbuf_2)($v0)
-/* 0F4D14 7F0C01E4 93A80023 */  lbu   $t0, 0x23($sp)
-/* 0F4D18 7F0C01E8 90430002 */  lbu   $v1, 2($v0)
-/* 0F4D1C 7F0C01EC 904C0000 */  lbu   $t4, ($v0)
-.L7F0C01F0:
-/* 0F4D20 7F0C01F0 904D0001 */  lbu   $t5, 1($v0)
-/* 0F4D24 7F0C01F4 018D7021 */  addu  $t6, $t4, $t5
-/* 0F4D28 7F0C01F8 904C0003 */  lbu   $t4, 3($v0)
-/* 0F4D2C 7F0C01FC 01C3C021 */  addu  $t8, $t6, $v1
-/* 0F4D30 7F0C0200 01184021 */  addu  $t0, $t0, $t8
-/* 0F4D34 7F0C0204 311900FF */  andi  $t9, $t0, 0xff
-/* 0F4D38 7F0C0208 132C0003 */  beq   $t9, $t4, .L7F0C0218
-/* 0F4D3C 7F0C020C 00000000 */   nop
-/* 0F4D40 7F0C0210 0FC30232 */  jal   ensureCameraModeA
-/* 0F4D44 7F0C0214 00000000 */   nop
-.L7F0C0218:
-/* 0F4D48 7F0C0218 0C00324C */  jal   joySetContDataIndex
-/* 0F4D4C 7F0C021C 00002025 */   move  $a0, $zero
-/* 0F4D50 7F0C0220 00002025 */  move  $a0, $zero
-/* 0F4D54 7F0C0224 0C0030EB */  jal   joyGetButtonsPressedThisFrame
-/* 0F4D58 7F0C0228 3405FFFF */   li    $a1, 65535
-/* 0F4D5C 7F0C022C 10400006 */  beqz  $v0, .L7F0C0248
-/* 0F4D60 7F0C0230 00000000 */   nop
-/* 0F4D64 7F0C0234 0FC30232 */  jal   ensureCameraModeA
-/* 0F4D68 7F0C0238 00000000 */   nop
-/* 0F4D6C 7F0C023C 240D0001 */  li    $t5, 1
-/* 0F4D70 7F0C0240 3C018003 */  lui   $at, %hi(prev_keypresses)
-/* 0F4D74 7F0C0244 AC2DA934 */  sw    $t5, %lo(prev_keypresses)($at)
-.L7F0C0248:
-/* 0F4D78 7F0C0248 0C00324C */  jal   joySetContDataIndex
-/* 0F4D7C 7F0C024C 24040001 */   li    $a0, 1
-/* 0F4D80 7F0C0250 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0F4D84 7F0C0254 02001025 */  move  $v0, $s0
-/* 0F4D88 7F0C0258 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0F4D8C 7F0C025C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0F4D90 7F0C0260 03E00008 */  jr    $ra
-/* 0F4D94 7F0C0264 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 
@@ -657,7 +577,7 @@ void stop_recording_ramrom(void)
 void replay_recorded_ramrom_at_address(ramromfilestructure *demofile)
 {
     address_demo_loaded = demofile;
-    ptr_active_demofile = romCopyAligned(&ramrom_data_target, address_demo_loaded, 0xe8);
+    ptr_active_demofile = romCopyAligned(&ramrom_data_target, address_demo_loaded, sizeof(struct ramromfilestructure));
     address_demo_loaded += sizeof(ramromfilestructure);
     g_ramromPlayBackFlag = 1;
     set_solo_and_ptr_briefing(ptr_active_demofile->stagenum);
