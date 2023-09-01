@@ -192,8 +192,62 @@ void load_ramrom_from_devtool(void)
 
 
 #ifdef NONMATCHING
-void record_player_input_as_packet(void) {
+// Address 0x7F0BFE5C NTSC
+//
+// https://decomp.me/scratch/RNdWO 75% or 93%
+// -- The mips2c loop section makes no sense, below is the "best guess" about
+//    what the section should look like.
+void record_player_input_as_packet(struct contsample *arg0, s32 arg1, s32 arg2)
+{
+    s32 temp_t5;
+    s32 temp_t1;
+    s32 var_a0;
+    s32 var_a2;
+    u8 var_a3;
+    s32 var_t2;
+    struct ramrom_blockbuf *temp_v0;
+    s32 temp_s0;
+    u8 t1;
+    s32 others0;
 
+    temp_t5 = ALIGN16_a((s32)&ramrom_data_target[0x1f8]);
+    temp_t1 = ptr_active_demofile->size_cmds;
+
+    var_t2 = 0;
+    var_a3 = 0;
+    
+    ramrom_blkbuf_2 = (struct ramrom_seed *)temp_t5;
+    ramrom_blkbuf_3 = (struct ramrom_blockbuf *)(ramrom_blkbuf_2 + 1);
+    
+    for (; arg1 != arg2; arg1 = (s32) (arg1 + 1) % CONTSAMPLE_LEN)
+    {
+        for (var_a0 = 0; var_a0 < temp_t1; var_a0++)
+        {
+            temp_v0 = ramrom_blkbuf_3 + (var_t2 * temp_t1) + var_a0;
+            
+            temp_v0->stick_x = arg0->pads[arg1 * 4 + var_a0].stick_x;
+            temp_v0->stick_y = arg0->pads[arg1 * 4 + var_a0].stick_y;
+            temp_v0->button_low = arg0->pads[arg1 * 4 + var_a0].button;
+            temp_v0->button_high = arg0->pads[arg1 * 4 + var_a0].button >> 8;
+
+            var_a3 += (u8) ((u8)temp_v0->stick_x + (u8)temp_v0->stick_y + temp_v0->button_low + temp_v0->button_high);
+        }
+
+        var_t2++;
+    }
+        
+    ramrom_blkbuf_2->count = var_t2;
+    ramrom_blkbuf_2->speedframes = speedgraphframes;
+    ramrom_blkbuf_2->randseed = g_randomSeed;
+    
+    var_a3 += (u8) ((u8)ramrom_blkbuf_2->speedframes + (u8)ramrom_blkbuf_2->count + ramrom_blkbuf_2->randseed);
+    ramrom_blkbuf_2->check = var_a3;
+
+    temp_s0 = (temp_t1 * 4 * var_t2) + sizeof(s32);
+
+    romWrite((void *) ramrom_blkbuf_2, address_demo_loaded, ALIGN16_a(temp_s0));
+
+    address_demo_loaded += align_addr_even(temp_s0 + 1);
 }
 #else
 GLOBAL_ASM(
