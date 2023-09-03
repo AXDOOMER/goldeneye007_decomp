@@ -194,9 +194,7 @@ void load_ramrom_from_devtool(void)
 #ifdef NONMATCHING
 // Address 0x7F0BFE5C NTSC
 //
-// https://decomp.me/scratch/RNdWO 75% or 93%
-// -- The mips2c loop section makes no sense, below is the "best guess" about
-//    what the section should look like.
+// https://decomp.me/scratch/RNdWO 93%
 void record_player_input_as_packet(struct contsample *arg0, s32 arg1, s32 arg2)
 {
     s32 temp_t5;
@@ -218,22 +216,38 @@ void record_player_input_as_packet(struct contsample *arg0, s32 arg1, s32 arg2)
     
     ramrom_blkbuf_2 = (struct ramrom_seed *)temp_t5;
     ramrom_blkbuf_3 = (struct ramrom_blockbuf *)(ramrom_blkbuf_2 + 1);
-    
-    for (; arg1 != arg2; arg1 = (s32) (arg1 + 1) % CONTSAMPLE_LEN)
+
+    // loop structure based on: void joyConsumeSamples(struct contdata *contdata)
+    if (arg1 != arg2)
     {
-        for (var_a0 = 0; var_a0 < temp_t1; var_a0++)
+        var_a2 = (s32) (arg1 + 1) % CONTSAMPLE_LEN;
+        while (1)
         {
-            temp_v0 = ramrom_blkbuf_3 + (var_t2 * temp_t1) + var_a0;
-            
-            temp_v0->stick_x = arg0->pads[arg1 * 4 + var_a0].stick_x;
-            temp_v0->stick_y = arg0->pads[arg1 * 4 + var_a0].stick_y;
-            temp_v0->button_low = arg0->pads[arg1 * 4 + var_a0].button;
-            temp_v0->button_high = arg0->pads[arg1 * 4 + var_a0].button >> 8;
+            for (var_a0 = 0; var_a0 < temp_t1; var_a0++)
+            {
+                temp_v0 = ramrom_blkbuf_3 + (var_t2 * temp_t1) + var_a0;
 
-            var_a3 += (u8) ((u8)temp_v0->stick_x + (u8)temp_v0->stick_y + temp_v0->button_low + temp_v0->button_high);
+                temp_v0->stick_x = arg0->pads[var_a2*4 + var_a0].stick_x;
+                temp_v0->stick_y = arg0->pads[var_a2*4 + var_a0].stick_y;
+                temp_v0->button_low = arg0->pads[var_a2*4 + var_a0].button;
+                temp_v0->button_high = arg0->pads[var_a2*4 + var_a0].button >> 8;
+    
+                var_a3 += (u8) (
+                    (u8)temp_v0->stick_x
+                    + (u8)temp_v0->stick_y
+                    + temp_v0->button_low
+                    + temp_v0->button_high);
+            }
+    
+            var_t2++;
+
+            if (var_a2 == arg2)
+            {
+                break;
+            }
+
+            var_a2 = (s32) (var_a2 + 1) % CONTSAMPLE_LEN;
         }
-
-        var_t2++;
     }
         
     ramrom_blkbuf_2->count = var_t2;

@@ -86,7 +86,8 @@ s32 ceil1000(s32 arg0)
 }
 
 
-s32 sub_GAME_7F0767D8(s32 arg0, s32 arg1, s32 arg2) {
+s32 sub_GAME_7F0767D8(s32 arg0, s32 arg1, s32 arg2)
+{
     s32 ret;
     ret = 0;
 
@@ -103,7 +104,8 @@ s32 sub_GAME_7F0767D8(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 
-s32 sub_GAME_7F076848(s32 arg0, s32 arg1, s32 arg2) {
+s32 sub_GAME_7F076848(s32 arg0, s32 arg1, s32 arg2)
+{
     s32 ret;
     ret = 0;
 
@@ -120,7 +122,8 @@ s32 sub_GAME_7F076848(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 
-s32 sub_GAME_7F0768B8(s32 arg0, s32 arg1, s32 arg2) {
+s32 sub_GAME_7F0768B8(s32 arg0, s32 arg1, s32 arg2)
+{
     s32 ret;
     ret = 0;
 
@@ -137,7 +140,8 @@ s32 sub_GAME_7F0768B8(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 
-s32 sub_GAME_7F076928(s32 arg0, s32 arg1, s32 arg2) {
+s32 sub_GAME_7F076928(s32 arg0, s32 arg1, s32 arg2)
+{
     s32 ret;
     ret = 0;
 
