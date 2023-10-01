@@ -127,7 +127,6 @@ void sub_GAME_7F01CCEC(u8 *arg0, u8 arg1, u8 arg2, u8 *arg3, u8 arg4)
 
 // Averages 4 pixel data, ending on "second" row.
 // Address 0x7F01CEEC NTSC
-// https://decomp.me/scratch/J5ivR 55% ... or 90%?
 void sub_GAME_7F01CEEC(u8 *arg0, s32 arg1, u8 *arg2)
 {
     s32 i;

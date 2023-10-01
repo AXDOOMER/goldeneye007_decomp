@@ -2,11 +2,6 @@
 #include "joy.h"
 #include <PR/os.h>
 
-/**
- * Number of samples in contdata.
- */
-#define CONTSAMPLE_LEN   20
-
 #define JOY_CLAMP_MIN          0
 #define JOY_CLAMP_MAX        120
 #define JOY_CLAMP_MAX_F   120.0f
