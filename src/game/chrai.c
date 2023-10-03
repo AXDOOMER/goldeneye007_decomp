@@ -3921,7 +3921,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFCameraIsInIntro:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if ((get_camera_mode() == 1) || (get_camera_mode() == 2))
+                    if ((bondviewGetCameraMode() == 1) || (bondviewGetCameraMode() == 2))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
@@ -3934,7 +3934,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFCameraIsInBondSwirl:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (get_camera_mode() == 3)
+                    if (bondviewGetCameraMode() == 3)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }
@@ -4003,7 +4003,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_CameraReturnToBond:
                 {
-                    set_camera_mode(CAMERAMODE_FP_NOINPUT);
+                    bondviewSetCameraMode(CAMERAMODE_FP_NOINPUT);
                     Offset += AI_CameraReturnToBond_LENGTH;
                     break;
                 }
@@ -4019,7 +4019,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         dword_CODE_bss_800799F8 = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padnum)];
                     }
-                    set_camera_mode(CAMERAMODE_POSEND);
+                    bondviewSetCameraMode(CAMERAMODE_POSEND);
                     Offset += AI_CameraLookAtBondFromPad_LENGTH;
                     break;
                 }
@@ -4042,7 +4042,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                             gBondViewCutscene       = cdef;
                             dword_CODE_bss_80079A18 = CharArrayTo16(ai->val,1);
                             dword_CODE_bss_80079A1C = CharArrayTo16(ai->val,3);
-                            set_camera_mode(CAMERAMODE_POSEND);
+                            bondviewSetCameraMode(CAMERAMODE_POSEND);
                         }
                     }
                     Offset += AI_CameraSwitch_LENGTH;
@@ -4402,7 +4402,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     flt_CODE_bss_80079A0C   = camHeight;
                     flt_CODE_bss_80079A10   = targetHeight;
                     dword_CODE_bss_80079A14 = padnum;
-                    set_camera_mode(CAMERAMODE_POSEND);
+                    bondviewSetCameraMode(CAMERAMODE_POSEND);
                     Offset += AI_CameraOrbitPad_LENGTH;
                     break;
                 }

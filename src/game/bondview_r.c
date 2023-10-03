@@ -450,11 +450,11 @@ void bondviewLoadSetupIntroSection(void)
     
     if (getPlayerCount() == 1)
     {
-        set_camera_mode(CAMERAMODE_INTRO);
+        bondviewSetCameraMode(CAMERAMODE_INTRO);
     }
     else
     {
-        set_camera_mode(CAMERAMODE_MP);
+        bondviewSetCameraMode(CAMERAMODE_MP);
     }
 
     g_bondviewBondDeathAnimationsCount = 0;

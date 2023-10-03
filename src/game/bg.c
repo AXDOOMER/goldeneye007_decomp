@@ -3050,7 +3050,7 @@ glabel sub_GAME_7F0B4884
 /* 0E9400 7F0B48D0 0FC2D9BA */  jal   sub_GAME_7F0B66E8
 /* 0E9404 7F0B48D4 00000000 */   nop   
 .L7F0B48D8:
-/* 0E9408 7F0B48D8 0FC1E94A */  jal   get_camera_mode
+/* 0E9408 7F0B48D8 0FC1E94A */  jal   bondviewGetCameraMode
 /* 0E940C 7F0B48DC 00000000 */   nop   
 /* 0E9410 7F0B48E0 3C038004 */  lui   $v1, %hi(D_800442F8)
 /* 0E9414 7F0B48E4 244FFFFF */  addiu $t7, $v0, -1

@@ -3010,7 +3010,7 @@ extern StandTilePoint *dword_CODE_bss_80079DA4;
 extern s32 dword_CODE_bss_80079DA8[];
 
 
-u32 get_camera_mode(void);
+u32 bondviewGetCameraMode(void);
 
 void bondviewTriggerWatchZoom(f32 zoominfovy);
 
@@ -3112,7 +3112,7 @@ f32 bondviewGetBondBreathing(void);
 void     bondviewClearUpperTextDisplayFlag(int param_1);
 
 void     bondviewSetUpperTextDisplayFlag(PLAYERFLAG flag);
-void     set_camera_mode(s32 arg0);
+void     bondviewSetCameraMode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(char* string);
 void     SurroundWithExplosions(int delay);

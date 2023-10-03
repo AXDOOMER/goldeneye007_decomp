@@ -3716,7 +3716,7 @@ void maybe_solo_intro_camera_handler(void)
 
 
 
-u32 get_camera_mode(void) {
+u32 bondviewGetCameraMode(void) {
     // Node 0
     return g_CameraMode;
 }
@@ -4055,7 +4055,7 @@ glabel sub_GAME_7F07A534
 
 
 // Address 0x7F07A9B8 NTSC.
-void set_camera_mode(s32 arg0)
+void bondviewSetCameraMode(s32 arg0)
 {
     s32 padding;
     s32 padding2;
@@ -4075,7 +4075,7 @@ void set_camera_mode(s32 arg0)
         }
         else
         {
-            set_camera_mode(CAMERAMODE_SWIRL);            
+            bondviewSetCameraMode(CAMERAMODE_SWIRL);            
         }
     }
     else if (g_CameraMode == CAMERAMODE_FADESWIRL)
@@ -4137,7 +4137,7 @@ void set_camera_mode(s32 arg0)
         }
         else
         {
-            set_camera_mode(CAMERAMODE_FP);            
+            bondviewSetCameraMode(CAMERAMODE_FP);            
         }
     }
     else if (g_CameraMode == CAMERAMODE_FP)
@@ -4318,7 +4318,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFCF0 7F07B1C0 24010001 */  li    $at, 1
 /* 0AFCF4 7F07B1C4 14410005 */  bne   $v0, $at, .L7F07B1DC
 /* 0AFCF8 7F07B1C8 AFBF0014 */   sw    $ra, 0x14($sp)
-/* 0AFCFC 7F07B1CC 0FC1EA6E */  jal   set_camera_mode
+/* 0AFCFC 7F07B1CC 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0AFD00 7F07B1D0 24040002 */   li    $a0, 2
 /* 0AFD04 7F07B1D4 1000002F */  b     .L7F07B294
 /* 0AFD08 7F07B1D8 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -4328,7 +4328,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD14 7F07B1E4 24010009 */   li    $at, 9
 /* 0AFD18 7F07B1E8 0FC228CC */  jal   bondviewResetIntroCameraMessageDialogs
 /* 0AFD1C 7F07B1EC 00000000 */   nop
-/* 0AFD20 7F07B1F0 0FC1EA6E */  jal   set_camera_mode
+/* 0AFD20 7F07B1F0 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0AFD24 7F07B1F4 24040003 */   li    $a0, 3
 /* 0AFD28 7F07B1F8 10000026 */  b     .L7F07B294
 /* 0AFD2C 7F07B1FC 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -4345,7 +4345,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD54 7F07B224 44806000 */  mtc1  $zero, $f12
 /* 0AFD58 7F07B228 0FC20284 */  jal   currentPlayerStartChrFade
 /* 0AFD5C 7F07B22C 00000000 */   nop
-/* 0AFD60 7F07B230 0FC1EA6E */  jal   set_camera_mode
+/* 0AFD60 7F07B230 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0AFD64 7F07B234 24040004 */   li    $a0, 4
 /* 0AFD68 7F07B238 10000016 */  b     .L7F07B294
 /* 0AFD6C 7F07B23C 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -4355,7 +4355,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD78 7F07B248 24010005 */   li    $at, 5
 /* 0AFD7C 7F07B24C 54410006 */  bnel  $v0, $at, .L7F07B268
 /* 0AFD80 7F07B250 24010006 */   li    $at, 6
-/* 0AFD84 7F07B254 0FC1EA6E */  jal   set_camera_mode
+/* 0AFD84 7F07B254 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0AFD88 7F07B258 24040006 */   li    $a0, 6
 /* 0AFD8C 7F07B25C 1000000D */  b     .L7F07B294
 /* 0AFD90 7F07B260 8FBF0014 */   lw    $ra, 0x14($sp)
@@ -4369,7 +4369,7 @@ glabel sub_GAME_7F07B1A4
 /* 0AFDAC 7F07B27C 29E10003 */  slti  $at, $t7, 3
 /* 0AFDB0 7F07B280 10200003 */  beqz  $at, .L7F07B290
 /* 0AFDB4 7F07B284 AC4F0000 */   sw    $t7, ($v0)
-/* 0AFDB8 7F07B288 0FC1EA6E */  jal   set_camera_mode
+/* 0AFDB8 7F07B288 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0AFDBC 7F07B28C 24040005 */   li    $a0, 5
 .L7F07B290:
 /* 0AFDC0 7F07B290 8FBF0014 */  lw    $ra, 0x14($sp)
@@ -15883,7 +15883,7 @@ glabel maybe_mp_interface
 /* 0BE0D4 7F0895A4 24010001 */  li    $at, 1
 /* 0BE0D8 7F0895A8 14410005 */  bne   $v0, $at, .L7F0895C0
 /* 0BE0DC 7F0895AC 00000000 */   nop
-/* 0BE0E0 7F0895B0 0FC1EA6E */  jal   set_camera_mode
+/* 0BE0E0 7F0895B0 0FC1EA6E */  jal   bondviewSetCameraMode
 /* 0BE0E4 7F0895B4 24040005 */   li    $a0, 5
 /* 0BE0E8 7F0895B8 10000027 */  b     .L7F089658
 /* 0BE0EC 7F0895BC 00000000 */   nop
@@ -16213,7 +16213,7 @@ glabel maybe_mp_interface
 /* 0BC0FC 7F08970C 24010001 */  li    $at, 1
 /* 0BC100 7F089710 14410005 */  bne   $v0, $at, .L7F089728
 /* 0BC104 7F089714 00000000 */   nop   
-/* 0BC108 7F089718 0FC1EA94 */  jal   set_camera_mode
+/* 0BC108 7F089718 0FC1EA94 */  jal   bondviewSetCameraMode
 /* 0BC10C 7F08971C 24040005 */   li    $a0, 5
 /* 0BC110 7F089720 10000027 */  b     .L7F0897C0
 /* 0BC114 7F089724 00000000 */   nop   
