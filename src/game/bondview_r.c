@@ -168,8 +168,8 @@ void bondviewLoadSetupIntroSection(void)
     watch_time_0 = 0;
     g_IntroAnimationIndex = 0;
     watch_transition_time = 0.9090909f;
-    starting_left_weapon = ITEM_UNARMED;
-    starting_right_weapon = ITEM_UNARMED;
+    starting_weapon[GUNLEFT] = ITEM_UNARMED;
+    starting_weapon[GUNRIGHT] = ITEM_UNARMED;
     
     if (intro_record != NULL)
     {
@@ -210,7 +210,7 @@ void bondviewLoadSetupIntroSection(void)
 
                         if (set_starting_weapon == 0)
                         {
-                            starting_right_weapon = intro_item->item_right;
+                            starting_weapon[GUNRIGHT] = intro_item->item_right;
 
                             if(intro_item->item_left);
 
@@ -218,7 +218,7 @@ void bondviewLoadSetupIntroSection(void)
                             
                             if (intro_item->item_left >= 0)
                             {
-                                starting_left_weapon = intro_item->item_left;
+                                starting_weapon[GUNLEFT] = intro_item->item_left;
                             }
                         }
                     }
@@ -364,7 +364,7 @@ void bondviewLoadSetupIntroSection(void)
 
     if (set_starting_weapon == 0)
     {
-        starting_right_weapon = ITEM_FIST;
+        starting_weapon[GUNRIGHT] = ITEM_FIST;
     }
 
     g_CurrentPlayer->field_78 = FLOAT_INIT;

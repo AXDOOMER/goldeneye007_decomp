@@ -224,10 +224,11 @@ struct coord3d g_EnterTankCoord;
 
 //CODE.bss:800799DC
 f32 flt_CODE_bss_800799DC;
+
 //CODE.bss:800799E0
-s32 starting_right_weapon;
-//CODE.bss:800799E4
-s32 starting_left_weapon;
+//s32 starting_right_weapon;
+//s32 starting_left_weapon;
+ITEM_IDS starting_weapon[2];
 
 //CODE.bss:800799E8
 struct coord3d flt_CODE_bss_800799E8;
@@ -1522,8 +1523,8 @@ void bondviewPlayerSpawnRelated(void)
 
     if (getPlayerCount() >= 2)
     {
-        currentPlayerEquipWeaponWrapper(GUNLEFT, starting_left_weapon);
-        currentPlayerEquipWeaponWrapper(GUNRIGHT, starting_right_weapon);
+        currentPlayerEquipWeaponWrapper(GUNLEFT, starting_weapon[GUNLEFT]);
+        currentPlayerEquipWeaponWrapper(GUNRIGHT, starting_weapon[GUNRIGHT]);
 
         if (g_CurrentPlayer->ptr_char_objectinstance == NULL)
         {
@@ -2151,8 +2152,8 @@ variable_body_head:
 /* 0AEAB8 7F079F88 8DEF6494 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AEABC 7F079F8C 24010003 */  li    $at, 3
 /* 0AEAC0 7F079F90 15E10003 */  bne   $t7, $at, .L7F079FA0
-/* 0AEAC4 7F079F94 3C0B8008 */   lui   $t3, %hi(starting_right_weapon)
-/* 0AEAC8 7F079F98 8D6B99E0 */  lw    $t3, %lo(starting_right_weapon)($t3)
+/* 0AEAC4 7F079F94 3C0B8008 */   lui   $t3, %hi(starting_weapon)
+/* 0AEAC8 7F079F98 8D6B99E0 */  lw    $t3, %lo(starting_weapon)($t3)
 /* 0AEACC 7F079F9C AFAB0048 */  sw    $t3, 0x48($sp)
 .L7F079FA0:
 /* 0AEAD0 7F079FA0 0FC26919 */  jal   getPlayerCount
@@ -2743,8 +2744,8 @@ variable_body_head:
 /* 0AF0E8 7F07A578 8DEF64D4 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AF0EC 7F07A57C 24010003 */  li    $at, 3
 /* 0AF0F0 7F07A580 15E10003 */  bne   $t7, $at, .Ljp7F07A590
-/* 0AF0F4 7F07A584 3C0B8008 */   lui   $t3, %hi(starting_right_weapon) # $t3, 0x8008
-/* 0AF0F8 7F07A588 8D6B9A20 */  lw    $t3, %lo(starting_right_weapon)($t3)
+/* 0AF0F4 7F07A584 3C0B8008 */   lui   $t3, %hi(starting_weapon) # $t3, 0x8008
+/* 0AF0F8 7F07A588 8D6B9A20 */  lw    $t3, %lo(starting_weapon)($t3)
 /* 0AF0FC 7F07A58C AFAB0048 */  sw    $t3, 0x48($sp)
 .Ljp7F07A590:
 /* 0AF100 7F07A590 0FC26C01 */  jal   getPlayerCount
@@ -3350,8 +3351,8 @@ variable_body_head:
 /* 0AC9F8 7F07A008 8DEF19E4 */  lw    $t7, %lo(g_CameraMode)($t7)
 /* 0AC9FC 7F07A00C 24010003 */  li    $at, 3
 /* 0ACA00 7F07A010 15E10003 */  bne   $t7, $at, .L7F07A020
-/* 0ACA04 7F07A014 3C0B8007 */   lui   $t3, %hi(starting_right_weapon) # $t3, 0x8007
-/* 0ACA08 7F07A018 8D6B84C0 */  lw    $t3, %lo(starting_right_weapon)($t3)
+/* 0ACA04 7F07A014 3C0B8007 */   lui   $t3, %hi(starting_weapon) # $t3, 0x8007
+/* 0ACA08 7F07A018 8D6B84C0 */  lw    $t3, %lo(starting_weapon)($t3)
 /* 0ACA0C 7F07A01C AFAB0048 */  sw    $t3, 0x48($sp)
 .L7F07A020:
 /* 0ACA10 7F07A020 0FC26669 */  jal   getPlayerCount
@@ -4550,8 +4551,8 @@ glabel set_camera_mode
 /* 0AF854 7F07AD24 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
 /* 0AF858 7F07AD28 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
 /* 0AF85C 7F07AD2C 8E0A0000 */  lw    $t2, ($s0)
-/* 0AF860 7F07AD30 3C108008 */  lui   $s0, %hi(starting_right_weapon)
-/* 0AF864 7F07AD34 261099E0 */  addiu $s0, %lo(starting_right_weapon) # addiu $s0, $s0, -0x6620
+/* 0AF860 7F07AD30 3C108008 */  lui   $s0, %hi(starting_weapon)
+/* 0AF864 7F07AD34 261099E0 */  addiu $s0, %lo(starting_weapon) # addiu $s0, $s0, -0x6620
 /* 0AF868 7F07AD38 8D4B01C8 */  lw    $t3, 0x1c8($t2)
 /* 0AF86C 7F07AD3C 24040001 */  li    $a0, 1
 /* 0AF870 7F07AD40 15600006 */  bnez  $t3, .L7F07AD5C

@@ -2948,7 +2948,7 @@ typedef enum TVCMD
         ACT_PREARGH,
         ACT_ATTACK,
         ACT_ATTACKWALK,
-        ACT_ATTACKROLL,
+        ACT_ATTACKROLL, // 10
         ACT_SIDESTEP,
         ACT_JUMPOUT,
         ACT_RUNPOS,
@@ -2958,7 +2958,7 @@ typedef enum TVCMD
         ACT_LOOKATTARGET,
         ACT_SURPRISED,
         ACT_STARTALARM,
-        ACT_THROWGRENADE,
+        ACT_THROWGRENADE, // 20
         ACT_TURNDIR,
         ACT_TEST,
         ACT_BONDINTRO,
