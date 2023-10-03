@@ -4283,7 +4283,7 @@ void set_camera_mode(s32 arg0)
         maybe_solo_intro_camera_handler();
         g_CameraMode = CAMERAMODE_FP;
     }
-    else if (g_CameraMode == CAMERAMODE_UNK10)
+    else if (g_CameraMode == CAMERAMODE_FADE_TO_TITLE)
     {
         s32 var_s0;
         
@@ -11344,7 +11344,7 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     bondviewUpdatePlayerY(0, 0.0f);
     bondviewUpdatePlayerCollisionPositionFields();
     
-    if ((g_CameraMode == CAMERAMODE_FP_NOINPUT) || (g_CameraMode == CAMERAMODE_FP) || (g_CameraMode == CAMERAMODE_UNK10))
+    if ((g_CameraMode == CAMERAMODE_FP_NOINPUT) || (g_CameraMode == CAMERAMODE_FP) || (g_CameraMode == CAMERAMODE_FADE_TO_TITLE))
     {
         currentPlayerSetField00(0);
         return;
@@ -11648,7 +11648,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     if (1);
 #endif
 
-    if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (D_800364B0 != 0)) || (g_CameraMode == CAMERAMODE_UNK10))
+    if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (D_800364B0 != 0)) || (g_CameraMode == CAMERAMODE_FADE_TO_TITLE))
     {
         if (get_cur_playernum() == 0)
         {
@@ -11722,7 +11722,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
         }
     }
 
-    if ((g_CameraMode == CAMERAMODE_UNK10) && currentPlayerIsFadeComplete())
+    if ((g_CameraMode == CAMERAMODE_FADE_TO_TITLE) && currentPlayerIsFadeComplete())
     {
         bossRunTitleStage();
     }
