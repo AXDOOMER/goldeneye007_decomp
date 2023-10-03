@@ -754,6 +754,7 @@ void bondviewUpdateSpeedSideways(s32 arg0);
 void bondviewUpdateSpeedForwards(s32 arg0);
 void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, struct StandTile **stan, struct coord3d *arg6);
 void sub_GAME_7F07B2A0(s32, f32, struct coord3d *, struct coord3d *);
+s32 sub_GAME_7F07A534(struct PropRecord *, struct coord3d *, struct PropRecord *, struct coord3d *, struct StandTile *, f32);
 
 // end forward declarations
 
@@ -4053,811 +4054,249 @@ glabel sub_GAME_7F07A534
 
 
 
-
-#ifdef NONMATCHING
+// Address 0x7F07A9B8 NTSC.
 void set_camera_mode(s32 arg0)
 {
-    f32 sp78;
-    void *sp64;
-    f32 sp60;
-    f32 sp5C;
-    f32 sp58;
-    f32 sp50;
-    f32 sp4C;
-    f32 sp48;
-    void *sp38;
-    f32 temp_f12;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 temp_v0_4;
-    void *temp_a0;
-    void *temp_a0_2;
-    void *temp_t8;
-    void *temp_t9;
-    void *temp_t9_2;
-    void *temp_v0_10;
-    void *temp_v0_11;
-    void *temp_v0_12;
-    void *temp_v0_2;
-    void *temp_v0_3;
-    void *temp_v0_5;
-    void *temp_v0_6;
-    void *temp_v0_7;
-    void *temp_v0_8;
-    void *temp_v0_9;
-    void *temp_v1;
-    void *phi_t8;
-    void *phi_t9;
-    s32 phi_v0;
-    void *phi_a2;
-    s32 phi_v1;
-    f32 phi_f0;
-    s32 phi_s0;
-
-    g_CameraMode               = arg0;
+    s32 padding;
+    s32 padding2;
+    
+    g_CameraMode = arg0;
     g_CameraAfterCinema = 0;
-    temp_v0                  = g_CameraMode;
-    if (temp_v0 == 1)
+    
+    if (g_CameraMode == CAMERAMODE_INTRO)
     {
-        if ((ptr_random06cam_entry != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
+        if ((ptr_random06cam_entry != NULL) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
         {
             D_800364A4 = 0.0f;
-            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
-            currentPlayerSetFadeFrac(0x42700000, 0);
-            load_enviroment(bossGetStageNum(), 1);
-            pPlayer->unk34 = 0;
-            return;
+            currentPlayerSetFadeColour(0, 0, 0, 1.0f);
+            currentPlayerSetFadeFrac(60.0f, 0.0f);
+            fogLoadLevelEnvironment(bossGetStageNum(), 1);
+            g_CurrentPlayer->room_pointer = NULL;
         }
-        set_camera_mode(3);
-        return;
+        else
+        {
+            set_camera_mode(CAMERAMODE_SWIRL);            
+        }
     }
-    if (temp_v0 == 2)
+    else if (g_CameraMode == CAMERAMODE_FADESWIRL)
     {
-        currentPlayerSetFadeColour(0, 0, 0, 0);
-        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
-        return;
+        currentPlayerSetFadeColour(0, 0, 0, 0.0f);
+        currentPlayerSetFadeFrac(60.0f, 1.0f);
     }
-    if (temp_v0 == 9)
+    else if (g_CameraMode == CAMERAMODE_MP)
     {
         g_MpSwirlRotateSpeed = 0.0f;
         g_MpSwirlAngleDegrees = -90.0f;
         g_MpSwirlForwardSpeed = 0.0f;
         g_MpSwirlDistance = 80.0f;
-        load_enviroment(bossGetStageNum(0), 0);
-        return;
+        fogLoadLevelEnvironment(bossGetStageNum(), 0);
     }
-    if (temp_v0 == 3)
+    else if (g_CameraMode == CAMERAMODE_SWIRL)
     {
+        struct ModelAnimation *sp38;
+        f32 sp78;
+        f32 ftemp_3;
+        f32 ftemp_1;
+        struct ChrRecord *temp_v1;
+        
         D_8003649C = 0;
-        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
-        currentPlayerSetFadeFrac(0x42700000, 0);
-        load_enviroment(bossGetStageNum(), 0);
+        currentPlayerSetFadeColour(0, 0, 0, 1.0f);
+        currentPlayerSetFadeFrac(60.0f, 0.0f);
+        fogLoadLevelEnvironment(bossGetStageNum(), 0);
+        
         if ((g_IntroSwirl != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
         {
             D_800364A4 = 0.0f;
-            D_800364A8 = 1;
-            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            D_800364A8 = CAMERAMODE_INTRO;
+            currentPlayerStartChrFade(0.0f, 1.0f);
             solo_char_load();
-            temp_v0_2 = (g_IntroAnimationIndex * 0x10) + &stage_intro_anim_table;
-            temp_f12  = temp_v0_2->unk8;
-            sp78      = temp_f12;
-            modelSetAnimation(pPlayer->unkD4, temp_v0_2->unk0 + ptr_animation_table, 0, temp_v0_2->unk4, temp_v0_2->unkC, 0.0f);
-            if (temp_f12 > 0.0f)
+
+            // HACK: ptr_animation_table->data regalloc is backwards
+            sp38 = (struct ModelAnimation *)((s32)stage_intro_anim_table[g_IntroAnimationIndex].anonymous_0 + (s32)&ptr_animation_table->data);
+            sp78 = stage_intro_anim_table[g_IntroAnimationIndex].anonymous_2;
+            ftemp_1 = stage_intro_anim_table[g_IntroAnimationIndex].anonymous_1;
+            ftemp_3 = stage_intro_anim_table[g_IntroAnimationIndex].anonymous_3;
+
+            modelSetAnimation(
+                g_CurrentPlayer->ptr_char_objectinstance,
+                sp38,
+                0,
+                ftemp_1,
+                ftemp_3,
+                0.0f);
+            
+            if (sp78 > 0.0f)
             {
-                modelSetAnimEndFrame(pPlayer->unkD4, temp_f12);
+                modelSetAnimEndFrame(g_CurrentPlayer->ptr_char_objectinstance, sp78);
             }
-            temp_v0_3       = pPlayer->unkA8->unk4;
-            temp_v0_3->unk7 = 0x17;
-            temp_v0_3->unk8 = 0;
-            pPlayer->unk34  = 0;
-            return;
+
+            temp_v1 = g_CurrentPlayer->prop->chr;
+            temp_v1->actiontype = ACT_BONDINTRO;
+            temp_v1->sleep = 0;
+            g_CurrentPlayer->room_pointer = NULL;
         }
-        set_camera_mode(4);
-        return;
-    }
-    if (temp_v0 == 4)
-    {
-        if (bossGetStageNum(0) == 0x36)
+        else
         {
-            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
-            currentPlayerSetFadeFrac(0, 0x3F800000);
+            set_camera_mode(CAMERAMODE_FP);            
+        }
+    }
+    else if (g_CameraMode == CAMERAMODE_FP)
+    {
+        if (bossGetStageNum() == LEVELID_CUBA)
+        {
+            currentPlayerSetFadeColour(0, 0, 0, 1.0f);
+            currentPlayerSetFadeFrac(0.0f, 1.0f);
         }
         else if (D_8003649C != 0)
         {
-            currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
-            currentPlayerSetFadeFrac(0x42700000, 0);
+            currentPlayerSetFadeColour(0, 0, 0, 1.0f);
+            currentPlayerSetFadeFrac(60.0f, 0.0f);
         }
+        
         if (getPlayerCount() >= 2)
         {
-            load_enviroment(bossGetStageNum(), 0);
+            fogLoadLevelEnvironment(bossGetStageNum(), 0);
         }
-        if (pPlayer->unk1C8 == 0)
+        
+        if (g_CurrentPlayer->watch_animation_state == 0)
         {
-            currentPlayerEquipWeaponWrapper(1, starting_right_weapon.unk4);
-            currentPlayerEquipWeaponWrapper(0, starting_right_weapon.unk0);
+            currentPlayerEquipWeaponWrapper(GUNLEFT, starting_weapon[GUNLEFT]);
+            currentPlayerEquipWeaponWrapper(GUNRIGHT, starting_weapon[GUNRIGHT]);
         }
+        
         stop_time_flag = 0;
-        return;
     }
-    if (temp_v0 == 5)
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
     {
+        f32 var_f0;
+        PropRecord *sp64;
+        struct coord3d sp58;
+        StandTile *var_v1;
+        struct coord3d sp48;
+        PropRecord *var_a2;
+        struct ChrRecord *temp_v1_2;
+        
         D_800364A4 = 0.0f;
-        D_800364A8 = 1;
-        currentPlayerSetFadeColour(0, 0, 0, 0x3F800000);
-        currentPlayerSetFadeFrac(0x42700000, 0);
-        temp_v0_4 = g_ExplodeTankOnDeathFlag;
-        phi_v0    = temp_v0_4;
-        if ((temp_v0_4 != 0) && (g_PlayerTankProp != 0))
+        D_800364A8 = CAMERAMODE_INTRO;
+        currentPlayerSetFadeColour(0, 0, 0, 1.0f);
+        currentPlayerSetFadeFrac(60.0f, 0.0f);
+        
+        if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
+            // removed
         }
         else
         {
             in_tank_flag = 0;
-            temp_t9      = pPlayer;
-            phi_t8       = temp_t9;
-            phi_t9       = temp_t9;
-            do
-            {
-                temp_t8           = phi_t8 + 0xC;
-                temp_t9_2         = phi_t9 + 0xC;
-                temp_t9_2->unk47C = phi_t8->unk434;
-                temp_t9_2->unk480 = temp_t8->unk42C;
-                temp_t9_2->unk484 = temp_t8->unk430;
-                phi_t8            = temp_t8;
-                phi_t9            = temp_t9_2;
-            } while (temp_t8 != (temp_t9 + 0x54));
-            temp_v0_5                = pPlayer;
-            temp_v0_5->unk148        = temp_v0_5->unk414;
-            temp_v0_6                = pPlayer;
-            temp_v0_6->unk158        = temp_v0_6->unk418;
-            temp_v0_7                = pPlayer;
-            temp_v0_7->unkA8->unk8   = temp_v0_7->unk48C;
-            temp_v0_8                = pPlayer;
-            temp_v0_8->unkA8->unkC   = temp_v0_8->unk490;
-            temp_v0_9                = pPlayer;
-            temp_v0_9->unkA8->unk10  = temp_v0_9->unk494;
-            temp_v0_10               = pPlayer;
-            temp_v0_10->unkA8->unk14 = temp_v0_10->unk488;
+
+            // struct copy
+            g_CurrentPlayer->field_488 = g_CurrentPlayer->previous_collision_info;
+            
+            g_CurrentPlayer->vv_theta = g_CurrentPlayer->thetadie;
+            g_CurrentPlayer->vv_verta = g_CurrentPlayer->vertadie;
+            g_CurrentPlayer->prop->pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
+            g_CurrentPlayer->prop->pos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
+            g_CurrentPlayer->prop->pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
+            g_CurrentPlayer->prop->stan = g_CurrentPlayer->field_488.current_tile_ptr;
+            
             bondviewApplyVertaTheta();
             bondviewMoveAnimationTick(0, 0, 0);
             bondviewUpdatePlayerCollisionPositionFields();
-            currentPlayerStartChrFade(0.0f, 0x3F800000);
+            currentPlayerStartChrFade(0.0f, 1.0f);
             solo_char_load();
-            sp38 = sub_GAME_7F06F5AC(pPlayer + 0x598);
-            modelSetAnimation(pPlayer->unkD4, sp38, objecthandlerGetModelGunhand(pPlayer + 0x598), 0.0f, 0.5f, 0.0f);
-            temp_v1        = pPlayer->unkA8->unk4;
-            temp_v1->unk7  = 0x18;
-            temp_v1->unk8  = 0;
-            temp_v1->unk14 = temp_v1->unk14 | 1;
-            temp_v0_11     = pPlayer;
-            setsuboffset(temp_v0_11->unkD4, temp_v0_11->unkA8 + 8);
-            setsubroty(pPlayer->unkD4, get_curplay_horizontal_rotation_in_degrees());
-            phi_v0 = g_ExplodeTankOnDeathFlag;
+
+            modelSetAnimation(
+                g_CurrentPlayer->ptr_char_objectinstance,
+                objecthandlerGetModelAnim((Model *) &g_CurrentPlayer->model),
+                objecthandlerGetModelGunhand(&g_CurrentPlayer->model),
+                0.0f,
+                0.5f,
+                0.0f);
+ 
+            temp_v1_2 = g_CurrentPlayer->prop->chr;
+            temp_v1_2->actiontype = ACT_BONDDIE;
+            temp_v1_2->sleep = 0;
+            temp_v1_2->chrflags |= 1;
+            
+            setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
+            var_f0 = get_curplay_horizontal_rotation_in_degrees();
+            setsubroty(g_CurrentPlayer->ptr_char_objectinstance, var_f0);
         }
-        if ((phi_v0 != 0) && (temp_a0 = g_PlayerTankProp, (temp_a0 != 0)))
+        
+        if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
-            sp64   = temp_a0;
-            sp58   = temp_a0->unk8;
-            sp5C   = temp_a0->unkC;
-            sp60   = temp_a0->unk10;
-            sp48   = temp_a0->unk8;
-            sp4C   = temp_a0->unkC;
-            sp50   = temp_a0->unk10;
-            phi_a2 = temp_a0;
-            phi_v1 = temp_a0->unk14;
-            phi_f0 = 500.0f;
+            sp64 = g_PlayerTankProp;
+            var_f0 = 500.0f;
+            sp58.f[0] = g_PlayerTankProp->pos.f[0];
+            sp58.f[1] = g_PlayerTankProp->pos.f[1];
+            sp58.f[2] = g_PlayerTankProp->pos.f[2];
+            var_a2 = g_PlayerTankProp;
+            sp48.f[0] = g_PlayerTankProp->pos.f[0];
+            sp48.f[1] = g_PlayerTankProp->pos.f[1];
+            sp48.f[2] = g_PlayerTankProp->pos.f[2];
+            var_v1 = g_PlayerTankProp->stan;
         }
         else
         {
-            temp_v0_12 = pPlayer;
-            sp64       = temp_v0_12->unkA8;
-            sp58       = temp_v0_12->unk3C4;
-            sp5C       = temp_v0_12->unk3C8;
-            sp60       = temp_v0_12->unk3CC;
-            sp48       = temp_v0_12->unk48C;
-            sp4C       = temp_v0_12->unk490;
-            sp50       = temp_v0_12->unk494;
-            phi_a2     = temp_v0_12->unkA8;
-            phi_v1     = temp_v0_12->unk488;
-            phi_f0     = 200.0f;
+            var_f0 = 200.0f;
+            sp64 = g_CurrentPlayer->prop;
+            sp58.f[0] = g_CurrentPlayer->field_3C4;
+            sp58.f[1] = g_CurrentPlayer->field_3C8;
+            sp58.f[2] = g_CurrentPlayer->field_3CC;
+            var_a2 = g_CurrentPlayer->prop;
+            sp48.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
+            sp48.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
+            sp48.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
+            var_v1 = g_CurrentPlayer->field_488.current_tile_ptr;
         }
-        if (sub_GAME_7F07A534(sp64, &sp58, phi_a2, &sp48, phi_v1, phi_f0) != 0)
+        
+        if (sub_GAME_7F07A534(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
         {
-            if (D_80036510 == CAMERAMODE_NONE)
+            if (D_80036510 == 0)
             {
                 musicTrack1Play(M_INTROSWOOSH);
-                sndSetScalerApplyVolumeAllSfxSlot(0x3F000000);
+                sndSetScalerApplyVolumeAllSfxSlot(0.5f);
             }
-            if ((g_ExplodeTankOnDeathFlag != 0) && (g_PlayerTankProp != 0))
+            
+            if ((g_ExplodeTankOnDeathFlag != 0) && (g_PlayerTankProp != NULL))
             {
-                temp_a0_2 = g_PlayerTankProp;
-                explosionCreate(temp_a0_2, temp_a0_2 + 8, temp_a0_2->unk14, 0xD, 0, get_cur_playernum(), temp_a0_2 + 0x2C, 0);
-                return;
+                explosionCreate(g_PlayerTankProp, &g_PlayerTankProp->pos, g_PlayerTankProp->stan, 0xD, 0, get_cur_playernum(), g_PlayerTankProp->rooms, 0);
             }
-            // Duplicate return node #56. Try simplifying control flow for better match
-            return;
         }
-        bossRunTitleStage();
-        return;
-    }
-    if (temp_v0 == 6)
-    {
-        currentPlayerSetFadeColour(0, 0, 0, 0);
-        currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
-        return;
-    }
-    if (temp_v0 == 7)
-    {
-        solo_char_load(0);
-        pPlayer->unk34 = 0;
-        return;
-    }
-    if (temp_v0 == 8)
-    {
-        maybe_solo_intro_camera_handler(0);
-        g_CameraMode = CAMERAMODE_FP;
-        return;
-    }
-    if (temp_v0 == 0xA)
-    {
-        phi_s0 = 0;
-        if (getPlayerCount(0) > 0)
+        else
         {
-            do
-            {
-                set_cur_player(phi_s0);
-                currentPlayerSetFadeColour(0, 0, 0, 0);
-                currentPlayerSetFadeFrac(0x42700000, 0x3F800000);
-                temp_s0 = phi_s0 + 1;
-                phi_s0  = temp_s0;
-            } while (temp_s0 < getPlayerCount());
+            bossRunTitleStage();
         }
+    }
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+    {
+        currentPlayerSetFadeColour(0, 0, 0, 0.0f);
+        currentPlayerSetFadeFrac(60.0f, 1.0f);
+    }    
+    else if (g_CameraMode == CAMERAMODE_POSEND)
+    {
+        solo_char_load();
+        g_CurrentPlayer->room_pointer = NULL;
+    }    
+    else if (g_CameraMode == CAMERAMODE_FP_NOINPUT)
+    {
+        maybe_solo_intro_camera_handler();
+        g_CameraMode = CAMERAMODE_FP;
+    }
+    else if (g_CameraMode == CAMERAMODE_UNK10)
+    {
+        s32 var_s0;
+        
+        for (var_s0 = 0; var_s0 < getPlayerCount(); var_s0++)
+        {
+            set_cur_player(var_s0);
+            currentPlayerSetFadeColour(0, 0, 0, 0.0f);
+            currentPlayerSetFadeFrac(60.0f, 1.0f);
+        }
+        
         set_cur_player(0);
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel set_camera_mode
-/* 0AF4E8 7F07A9B8 27BDFF78 */  addiu $sp, $sp, -0x88
-/* 0AF4EC 7F07A9BC AFB00028 */  sw    $s0, 0x28($sp)
-/* 0AF4F0 7F07A9C0 3C108003 */  lui   $s0, %hi(g_CameraMode)
-/* 0AF4F4 7F07A9C4 26106494 */  addiu $s0, %lo(g_CameraMode) # addiu $s0, $s0, 0x6494
-/* 0AF4F8 7F07A9C8 AE040000 */  sw    $a0, ($s0)
-/* 0AF4FC 7F07A9CC 3C018003 */  lui   $at, %hi(g_CameraAfterCinema)
-/* 0AF500 7F07A9D0 AC206498 */  sw    $zero, %lo(g_CameraAfterCinema)($at)
-/* 0AF504 7F07A9D4 8E020000 */  lw    $v0, ($s0)
-/* 0AF508 7F07A9D8 24030001 */  li    $v1, 1
-/* 0AF50C 7F07A9DC AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0AF510 7F07A9E0 14620027 */  bne   $v1, $v0, .L7F07AA80
-/* 0AF514 7F07A9E4 24010002 */   li    $at, 2
-/* 0AF518 7F07A9E8 3C0E8003 */  lui   $t6, %hi(ptr_random06cam_entry)
-/* 0AF51C 7F07A9EC 8DCE64C0 */  lw    $t6, %lo(ptr_random06cam_entry)($t6)
-/* 0AF520 7F07A9F0 11C0001F */  beqz  $t6, .L7F07AA70
-/* 0AF524 7F07A9F4 00000000 */   nop
-/* 0AF528 7F07A9F8 0FC2FF26 */  jal   get_recording_ramrom_flag
-/* 0AF52C 7F07A9FC 00000000 */   nop
-/* 0AF530 7F07AA00 1440001B */  bnez  $v0, .L7F07AA70
-/* 0AF534 7F07AA04 00000000 */   nop
-/* 0AF538 7F07AA08 0FC2FF23 */  jal   get_is_ramrom_flag
-/* 0AF53C 7F07AA0C 00000000 */   nop
-/* 0AF540 7F07AA10 14400017 */  bnez  $v0, .L7F07AA70
-/* 0AF544 7F07AA14 3C018003 */   lui   $at, %hi(D_800364A4)
-/* 0AF548 7F07AA18 44802000 */  mtc1  $zero, $f4
-/* 0AF54C 7F07AA1C 00002025 */  move  $a0, $zero
-/* 0AF550 7F07AA20 00002825 */  move  $a1, $zero
-/* 0AF554 7F07AA24 00003025 */  move  $a2, $zero
-/* 0AF558 7F07AA28 3C073F80 */  lui   $a3, 0x3f80
-/* 0AF55C 7F07AA2C 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF560 7F07AA30 E42464A4 */   swc1  $f4, %lo(D_800364A4)($at)
-/* 0AF564 7F07AA34 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AF568 7F07AA38 44816000 */  mtc1  $at, $f12
-/* 0AF56C 7F07AA3C 44807000 */  mtc1  $zero, $f14
-/* 0AF570 7F07AA40 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF574 7F07AA44 00000000 */   nop
-/* 0AF578 7F07AA48 0C001A57 */  jal   bossGetStageNum
-/* 0AF57C 7F07AA4C 00000000 */   nop
-/* 0AF580 7F07AA50 00402025 */  move  $a0, $v0
-/* 0AF584 7F07AA54 0FC2EA99 */  jal   fogLoadLevelEnvironment
-/* 0AF588 7F07AA58 24050001 */   li    $a1, 1
-/* 0AF58C 7F07AA5C 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF590 7F07AA60 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AF594 7F07AA64 8E0F0000 */  lw    $t7, ($s0)
-/* 0AF598 7F07AA68 100001C9 */  b     .L7F07B190
-/* 0AF59C 7F07AA6C ADE00034 */   sw    $zero, 0x34($t7)
-.L7F07AA70:
-/* 0AF5A0 7F07AA70 0FC1EA6E */  jal   set_camera_mode
-/* 0AF5A4 7F07AA74 24040003 */   li    $a0, 3
-/* 0AF5A8 7F07AA78 100001C6 */  b     .L7F07B194
-/* 0AF5AC 7F07AA7C 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07AA80:
-/* 0AF5B0 7F07AA80 1441000D */  bne   $v0, $at, .L7F07AAB8
-/* 0AF5B4 7F07AA84 00002025 */   move  $a0, $zero
-/* 0AF5B8 7F07AA88 00002825 */  move  $a1, $zero
-/* 0AF5BC 7F07AA8C 00003025 */  move  $a2, $zero
-/* 0AF5C0 7F07AA90 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF5C4 7F07AA94 24070000 */   li    $a3, 0
-/* 0AF5C8 7F07AA98 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AF5CC 7F07AA9C 44816000 */  mtc1  $at, $f12
-/* 0AF5D0 7F07AAA0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AF5D4 7F07AAA4 44817000 */  mtc1  $at, $f14
-/* 0AF5D8 7F07AAA8 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF5DC 7F07AAAC 00000000 */   nop
-/* 0AF5E0 7F07AAB0 100001B8 */  b     .L7F07B194
-/* 0AF5E4 7F07AAB4 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07AAB8:
-/* 0AF5E8 7F07AAB8 24010009 */  li    $at, 9
-/* 0AF5EC 7F07AABC 54410015 */  bnel  $v0, $at, .L7F07AB14
-/* 0AF5F0 7F07AAC0 24010003 */   li    $at, 3
-/* 0AF5F4 7F07AAC4 44800000 */  mtc1  $zero, $f0
-/* 0AF5F8 7F07AAC8 3C018008 */  lui   $at, %hi(g_MpSwirlRotateSpeed)
-/* 0AF5FC 7F07AACC E4209E04 */  swc1  $f0, %lo(g_MpSwirlRotateSpeed)($at)
-/* 0AF600 7F07AAD0 3C01C2B4 */  li    $at, 0xC2B40000 # -90.000000
-/* 0AF604 7F07AAD4 44813000 */  mtc1  $at, $f6
-/* 0AF608 7F07AAD8 3C018008 */  lui   $at, %hi(g_MpSwirlAngleDegrees)
-/* 0AF60C 7F07AADC E4269E08 */  swc1  $f6, %lo(g_MpSwirlAngleDegrees)($at)
-/* 0AF610 7F07AAE0 3C018008 */  lui   $at, %hi(g_MpSwirlForwardSpeed)
-/* 0AF614 7F07AAE4 E4209E0C */  swc1  $f0, %lo(g_MpSwirlForwardSpeed)($at)
-/* 0AF618 7F07AAE8 3C0142A0 */  li    $at, 0x42A00000 # 80.000000
-/* 0AF61C 7F07AAEC 44814000 */  mtc1  $at, $f8
-/* 0AF620 7F07AAF0 3C018008 */  lui   $at, %hi(g_MpSwirlDistance)
-/* 0AF624 7F07AAF4 0C001A57 */  jal   bossGetStageNum
-/* 0AF628 7F07AAF8 E4289E10 */   swc1  $f8, %lo(g_MpSwirlDistance)($at)
-/* 0AF62C 7F07AAFC 00402025 */  move  $a0, $v0
-/* 0AF630 7F07AB00 0FC2EA99 */  jal   fogLoadLevelEnvironment
-/* 0AF634 7F07AB04 00002825 */   move  $a1, $zero
-/* 0AF638 7F07AB08 100001A2 */  b     .L7F07B194
-/* 0AF63C 7F07AB0C 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 0AF640 7F07AB10 24010003 */  li    $at, 3
-.L7F07AB14:
-/* 0AF644 7F07AB14 14410059 */  bne   $v0, $at, .L7F07AC7C
-/* 0AF648 7F07AB18 00002025 */   move  $a0, $zero
-/* 0AF64C 7F07AB1C 3C018003 */  lui   $at, %hi(D_8003649C)
-/* 0AF650 7F07AB20 AC20649C */  sw    $zero, %lo(D_8003649C)($at)
-/* 0AF654 7F07AB24 00002825 */  move  $a1, $zero
-/* 0AF658 7F07AB28 00003025 */  move  $a2, $zero
-/* 0AF65C 7F07AB2C 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF660 7F07AB30 3C073F80 */   lui   $a3, 0x3f80
-/* 0AF664 7F07AB34 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AF668 7F07AB38 44816000 */  mtc1  $at, $f12
-/* 0AF66C 7F07AB3C 44807000 */  mtc1  $zero, $f14
-/* 0AF670 7F07AB40 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF674 7F07AB44 00000000 */   nop
-/* 0AF678 7F07AB48 0C001A57 */  jal   bossGetStageNum
-/* 0AF67C 7F07AB4C 00000000 */   nop
-/* 0AF680 7F07AB50 00402025 */  move  $a0, $v0
-/* 0AF684 7F07AB54 0FC2EA99 */  jal   fogLoadLevelEnvironment
-/* 0AF688 7F07AB58 00002825 */   move  $a1, $zero
-/* 0AF68C 7F07AB5C 3C188003 */  lui   $t8, %hi(g_IntroSwirl)
-/* 0AF690 7F07AB60 8F1864AC */  lw    $t8, %lo(g_IntroSwirl)($t8)
-/* 0AF694 7F07AB64 13000041 */  beqz  $t8, .L7F07AC6C
-/* 0AF698 7F07AB68 00000000 */   nop
-/* 0AF69C 7F07AB6C 0FC2FF26 */  jal   get_recording_ramrom_flag
-/* 0AF6A0 7F07AB70 00000000 */   nop
-/* 0AF6A4 7F07AB74 1440003D */  bnez  $v0, .L7F07AC6C
-/* 0AF6A8 7F07AB78 00000000 */   nop
-/* 0AF6AC 7F07AB7C 0FC2FF23 */  jal   get_is_ramrom_flag
-/* 0AF6B0 7F07AB80 00000000 */   nop
-/* 0AF6B4 7F07AB84 14400039 */  bnez  $v0, .L7F07AC6C
-/* 0AF6B8 7F07AB88 00000000 */   nop
-/* 0AF6BC 7F07AB8C 44806000 */  mtc1  $zero, $f12
-/* 0AF6C0 7F07AB90 3C018003 */  lui   $at, %hi(D_800364A4)
-/* 0AF6C4 7F07AB94 24190001 */  li    $t9, 1
-/* 0AF6C8 7F07AB98 E42C64A4 */  swc1  $f12, %lo(D_800364A4)($at)
-/* 0AF6CC 7F07AB9C 3C018003 */  lui   $at, %hi(D_800364A8)
-/* 0AF6D0 7F07ABA0 AC3964A8 */  sw    $t9, %lo(D_800364A8)($at)
-/* 0AF6D4 7F07ABA4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AF6D8 7F07ABA8 44817000 */  mtc1  $at, $f14
-/* 0AF6DC 7F07ABAC 0FC20284 */  jal   currentPlayerStartChrFade
-/* 0AF6E0 7F07ABB0 00000000 */   nop
-/* 0AF6E4 7F07ABB4 0FC1E73C */  jal   solo_char_load
-/* 0AF6E8 7F07ABB8 00000000 */   nop
-/* 0AF6EC 7F07ABBC 3C088003 */  lui   $t0, %hi(g_IntroAnimationIndex)
-/* 0AF6F0 7F07ABC0 8D086514 */  lw    $t0, %lo(g_IntroAnimationIndex)($t0)
-/* 0AF6F4 7F07ABC4 3C0A8003 */  lui   $t2, %hi(stage_intro_anim_table)
-/* 0AF6F8 7F07ABC8 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF6FC 7F07ABCC 254A6518 */  addiu $t2, %lo(stage_intro_anim_table) # addiu $t2, $t2, 0x6518
-/* 0AF700 7F07ABD0 00084900 */  sll   $t1, $t0, 4
-/* 0AF704 7F07ABD4 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AF708 7F07ABD8 012A1021 */  addu  $v0, $t1, $t2
-/* 0AF70C 7F07ABDC 8E0D0000 */  lw    $t5, ($s0)
-/* 0AF710 7F07ABE0 C4400004 */  lwc1  $f0, 4($v0)
-/* 0AF714 7F07ABE4 3C0C8007 */  lui   $t4, %hi(ptr_animation_table)
-/* 0AF718 7F07ABE8 8D8C9538 */  lw    $t4, %lo(ptr_animation_table)($t4)
-/* 0AF71C 7F07ABEC 8C4B0000 */  lw    $t3, ($v0)
-/* 0AF720 7F07ABF0 C44C0008 */  lwc1  $f12, 8($v0)
-/* 0AF724 7F07ABF4 C442000C */  lwc1  $f2, 0xc($v0)
-/* 0AF728 7F07ABF8 44805000 */  mtc1  $zero, $f10
-/* 0AF72C 7F07ABFC 8DA400D4 */  lw    $a0, 0xd4($t5)
-/* 0AF730 7F07AC00 44070000 */  mfc1  $a3, $f0
-/* 0AF734 7F07AC04 00003025 */  move  $a2, $zero
-/* 0AF738 7F07AC08 016C2821 */  addu  $a1, $t3, $t4
-/* 0AF73C 7F07AC0C E7AC0078 */  swc1  $f12, 0x78($sp)
-/* 0AF740 7F07AC10 E7A20010 */  swc1  $f2, 0x10($sp)
-/* 0AF744 7F07AC14 0FC1BF2A */  jal   modelSetAnimation
-/* 0AF748 7F07AC18 E7AA0014 */   swc1  $f10, 0x14($sp)
-/* 0AF74C 7F07AC1C C7AC0078 */  lwc1  $f12, 0x78($sp)
-/* 0AF750 7F07AC20 44808000 */  mtc1  $zero, $f16
-/* 0AF754 7F07AC24 00000000 */  nop
-/* 0AF758 7F07AC28 460C803C */  c.lt.s $f16, $f12
-/* 0AF75C 7F07AC2C 00000000 */  nop
-/* 0AF760 7F07AC30 45020006 */  bc1fl .L7F07AC4C
-/* 0AF764 7F07AC34 8E0F0000 */   lw    $t7, ($s0)
-/* 0AF768 7F07AC38 8E0E0000 */  lw    $t6, ($s0)
-/* 0AF76C 7F07AC3C 44056000 */  mfc1  $a1, $f12
-/* 0AF770 7F07AC40 0FC1BF7A */  jal   modelSetAnimEndFrame
-/* 0AF774 7F07AC44 8DC400D4 */   lw    $a0, 0xd4($t6)
-/* 0AF778 7F07AC48 8E0F0000 */  lw    $t7, ($s0)
-.L7F07AC4C:
-/* 0AF77C 7F07AC4C 24190017 */  li    $t9, 23
-/* 0AF780 7F07AC50 8DF800A8 */  lw    $t8, 0xa8($t7)
-/* 0AF784 7F07AC54 8F020004 */  lw    $v0, 4($t8)
-/* 0AF788 7F07AC58 A0590007 */  sb    $t9, 7($v0)
-/* 0AF78C 7F07AC5C A0400008 */  sb    $zero, 8($v0)
-/* 0AF790 7F07AC60 8E080000 */  lw    $t0, ($s0)
-/* 0AF794 7F07AC64 1000014A */  b     .L7F07B190
-/* 0AF798 7F07AC68 AD000034 */   sw    $zero, 0x34($t0)
-.L7F07AC6C:
-/* 0AF79C 7F07AC6C 0FC1EA6E */  jal   set_camera_mode
-/* 0AF7A0 7F07AC70 24040004 */   li    $a0, 4
-/* 0AF7A4 7F07AC74 10000147 */  b     .L7F07B194
-/* 0AF7A8 7F07AC78 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07AC7C:
-/* 0AF7AC 7F07AC7C 24010004 */  li    $at, 4
-/* 0AF7B0 7F07AC80 5441003A */  bnel  $v0, $at, .L7F07AD6C
-/* 0AF7B4 7F07AC84 24010005 */   li    $at, 5
-/* 0AF7B8 7F07AC88 0C001A57 */  jal   bossGetStageNum
-/* 0AF7BC 7F07AC8C 00000000 */   nop
-/* 0AF7C0 7F07AC90 24010036 */  li    $at, 54
-/* 0AF7C4 7F07AC94 1441000D */  bne   $v0, $at, .L7F07ACCC
-/* 0AF7C8 7F07AC98 3C098003 */   lui   $t1, %hi(D_8003649C)
-/* 0AF7CC 7F07AC9C 00002025 */  move  $a0, $zero
-/* 0AF7D0 7F07ACA0 00002825 */  move  $a1, $zero
-/* 0AF7D4 7F07ACA4 00003025 */  move  $a2, $zero
-/* 0AF7D8 7F07ACA8 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF7DC 7F07ACAC 3C073F80 */   lui   $a3, 0x3f80
-/* 0AF7E0 7F07ACB0 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AF7E4 7F07ACB4 44817000 */  mtc1  $at, $f14
-/* 0AF7E8 7F07ACB8 44806000 */  mtc1  $zero, $f12
-/* 0AF7EC 7F07ACBC 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF7F0 7F07ACC0 00000000 */   nop
-/* 0AF7F4 7F07ACC4 1000000D */  b     .L7F07ACFC
-/* 0AF7F8 7F07ACC8 00000000 */   nop
-.L7F07ACCC:
-/* 0AF7FC 7F07ACCC 8D29649C */  lw    $t1, %lo(D_8003649C)($t1)
-/* 0AF800 7F07ACD0 00002025 */  move  $a0, $zero
-/* 0AF804 7F07ACD4 00002825 */  move  $a1, $zero
-/* 0AF808 7F07ACD8 11200008 */  beqz  $t1, .L7F07ACFC
-/* 0AF80C 7F07ACDC 00003025 */   move  $a2, $zero
-/* 0AF810 7F07ACE0 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF814 7F07ACE4 3C073F80 */   lui   $a3, 0x3f80
-/* 0AF818 7F07ACE8 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AF81C 7F07ACEC 44816000 */  mtc1  $at, $f12
-/* 0AF820 7F07ACF0 44807000 */  mtc1  $zero, $f14
-/* 0AF824 7F07ACF4 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF828 7F07ACF8 00000000 */   nop
-.L7F07ACFC:
-/* 0AF82C 7F07ACFC 0FC26919 */  jal   getPlayerCount
-/* 0AF830 7F07AD00 00000000 */   nop
-/* 0AF834 7F07AD04 28410002 */  slti  $at, $v0, 2
-/* 0AF838 7F07AD08 14200006 */  bnez  $at, .L7F07AD24
-/* 0AF83C 7F07AD0C 00000000 */   nop
-/* 0AF840 7F07AD10 0C001A57 */  jal   bossGetStageNum
-/* 0AF844 7F07AD14 00000000 */   nop
-/* 0AF848 7F07AD18 00402025 */  move  $a0, $v0
-/* 0AF84C 7F07AD1C 0FC2EA99 */  jal   fogLoadLevelEnvironment
-/* 0AF850 7F07AD20 00002825 */   move  $a1, $zero
-.L7F07AD24:
-/* 0AF854 7F07AD24 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF858 7F07AD28 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AF85C 7F07AD2C 8E0A0000 */  lw    $t2, ($s0)
-/* 0AF860 7F07AD30 3C108008 */  lui   $s0, %hi(starting_weapon)
-/* 0AF864 7F07AD34 261099E0 */  addiu $s0, %lo(starting_weapon) # addiu $s0, $s0, -0x6620
-/* 0AF868 7F07AD38 8D4B01C8 */  lw    $t3, 0x1c8($t2)
-/* 0AF86C 7F07AD3C 24040001 */  li    $a0, 1
-/* 0AF870 7F07AD40 15600006 */  bnez  $t3, .L7F07AD5C
-/* 0AF874 7F07AD44 00000000 */   nop
-/* 0AF878 7F07AD48 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 0AF87C 7F07AD4C 8E050004 */   lw    $a1, 4($s0)
-/* 0AF880 7F07AD50 00002025 */  move  $a0, $zero
-/* 0AF884 7F07AD54 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 0AF888 7F07AD58 8E050000 */   lw    $a1, ($s0)
-.L7F07AD5C:
-/* 0AF88C 7F07AD5C 3C018003 */  lui   $at, %hi(stop_time_flag)
-/* 0AF890 7F07AD60 1000010B */  b     .L7F07B190
-/* 0AF894 7F07AD64 AC2064A0 */   sw    $zero, %lo(stop_time_flag)($at)
-/* 0AF898 7F07AD68 24010005 */  li    $at, 5
-.L7F07AD6C:
-/* 0AF89C 7F07AD6C 144100CC */  bne   $v0, $at, .L7F07B0A0
-/* 0AF8A0 7F07AD70 00002025 */   move  $a0, $zero
-/* 0AF8A4 7F07AD74 44809000 */  mtc1  $zero, $f18
-/* 0AF8A8 7F07AD78 3C018003 */  lui   $at, %hi(D_800364A4)
-/* 0AF8AC 7F07AD7C 00002825 */  move  $a1, $zero
-/* 0AF8B0 7F07AD80 E43264A4 */  swc1  $f18, %lo(D_800364A4)($at)
-/* 0AF8B4 7F07AD84 3C018003 */  lui   $at, %hi(D_800364A8)
-/* 0AF8B8 7F07AD88 AC2364A8 */  sw    $v1, %lo(D_800364A8)($at)
-/* 0AF8BC 7F07AD8C 00003025 */  move  $a2, $zero
-/* 0AF8C0 7F07AD90 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AF8C4 7F07AD94 3C073F80 */   lui   $a3, 0x3f80
-/* 0AF8C8 7F07AD98 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AF8CC 7F07AD9C 44816000 */  mtc1  $at, $f12
-/* 0AF8D0 7F07ADA0 44807000 */  mtc1  $zero, $f14
-/* 0AF8D4 7F07ADA4 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AF8D8 7F07ADA8 00000000 */   nop
-/* 0AF8DC 7F07ADAC 3C028003 */  lui   $v0, %hi(g_ExplodeTankOnDeathFlag)
-/* 0AF8E0 7F07ADB0 8C42648C */  lw    $v0, %lo(g_ExplodeTankOnDeathFlag)($v0)
-/* 0AF8E4 7F07ADB4 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF8E8 7F07ADB8 3C0C8003 */  lui   $t4, %hi(g_PlayerTankProp)
-/* 0AF8EC 7F07ADBC 10400007 */  beqz  $v0, .L7F07ADDC
-/* 0AF8F0 7F07ADC0 2610A0B0 */   addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AF8F4 7F07ADC4 8D8C6450 */  lw    $t4, %lo(g_PlayerTankProp)($t4)
-/* 0AF8F8 7F07ADC8 11800004 */  beqz  $t4, .L7F07ADDC
-/* 0AF8FC 7F07ADCC 00000000 */   nop
-/* 0AF900 7F07ADD0 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AF904 7F07ADD4 1000005C */  b     .L7F07AF48
-/* 0AF908 7F07ADD8 2610A0B0 */   addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-.L7F07ADDC:
-/* 0AF90C 7F07ADDC 3C018003 */  lui   $at, %hi(in_tank_flag)
-/* 0AF910 7F07ADE0 AC206448 */  sw    $zero, %lo(in_tank_flag)($at)
-/* 0AF914 7F07ADE4 8E190000 */  lw    $t9, ($s0)
-/* 0AF918 7F07ADE8 0320C025 */  move  $t8, $t9
-/* 0AF91C 7F07ADEC 272F0054 */  addiu $t7, $t9, 0x54
-.L7F07ADF0:
-/* 0AF920 7F07ADF0 8F010434 */  lw    $at, 0x434($t8)
-/* 0AF924 7F07ADF4 2718000C */  addiu $t8, $t8, 0xc
-/* 0AF928 7F07ADF8 2739000C */  addiu $t9, $t9, 0xc
-/* 0AF92C 7F07ADFC AF21047C */  sw    $at, 0x47c($t9)
-/* 0AF930 7F07AE00 8F01042C */  lw    $at, 0x42c($t8)
-/* 0AF934 7F07AE04 AF210480 */  sw    $at, 0x480($t9)
-/* 0AF938 7F07AE08 8F010430 */  lw    $at, 0x430($t8)
-/* 0AF93C 7F07AE0C 170FFFF8 */  bne   $t8, $t7, .L7F07ADF0
-/* 0AF940 7F07AE10 AF210484 */   sw    $at, 0x484($t9)
-/* 0AF944 7F07AE14 8E020000 */  lw    $v0, ($s0)
-/* 0AF948 7F07AE18 C4440414 */  lwc1  $f4, 0x414($v0)
-/* 0AF94C 7F07AE1C E4440148 */  swc1  $f4, 0x148($v0)
-/* 0AF950 7F07AE20 8E020000 */  lw    $v0, ($s0)
-/* 0AF954 7F07AE24 C4460418 */  lwc1  $f6, 0x418($v0)
-/* 0AF958 7F07AE28 E4460158 */  swc1  $f6, 0x158($v0)
-/* 0AF95C 7F07AE2C 8E020000 */  lw    $v0, ($s0)
-/* 0AF960 7F07AE30 C448048C */  lwc1  $f8, 0x48c($v0)
-/* 0AF964 7F07AE34 8C4800A8 */  lw    $t0, 0xa8($v0)
-/* 0AF968 7F07AE38 E5080008 */  swc1  $f8, 8($t0)
-/* 0AF96C 7F07AE3C 8E020000 */  lw    $v0, ($s0)
-/* 0AF970 7F07AE40 C44A0490 */  lwc1  $f10, 0x490($v0)
-/* 0AF974 7F07AE44 8C4900A8 */  lw    $t1, 0xa8($v0)
-/* 0AF978 7F07AE48 E52A000C */  swc1  $f10, 0xc($t1)
-/* 0AF97C 7F07AE4C 8E020000 */  lw    $v0, ($s0)
-/* 0AF980 7F07AE50 C4500494 */  lwc1  $f16, 0x494($v0)
-/* 0AF984 7F07AE54 8C4A00A8 */  lw    $t2, 0xa8($v0)
-/* 0AF988 7F07AE58 E5500010 */  swc1  $f16, 0x10($t2)
-/* 0AF98C 7F07AE5C 8E020000 */  lw    $v0, ($s0)
-/* 0AF990 7F07AE60 8C4B0488 */  lw    $t3, 0x488($v0)
-/* 0AF994 7F07AE64 8C4C00A8 */  lw    $t4, 0xa8($v0)
-/* 0AF998 7F07AE68 0FC205E4 */  jal   bondviewApplyVertaTheta
-/* 0AF99C 7F07AE6C AD8B0014 */   sw    $t3, 0x14($t4)
-/* 0AF9A0 7F07AE70 44806000 */  mtc1  $zero, $f12
-/* 0AF9A4 7F07AE74 00000000 */  nop
-/* 0AF9A8 7F07AE78 44066000 */  mfc1  $a2, $f12
-/* 0AF9AC 7F07AE7C 0FC202CD */  jal   bondviewMoveAnimationTick
-/* 0AF9B0 7F07AE80 46006386 */   mov.s $f14, $f12
-/* 0AF9B4 7F07AE84 0FC2051E */  jal   bondviewUpdatePlayerCollisionPositionFields
-/* 0AF9B8 7F07AE88 00000000 */   nop
-/* 0AF9BC 7F07AE8C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AF9C0 7F07AE90 44817000 */  mtc1  $at, $f14
-/* 0AF9C4 7F07AE94 44806000 */  mtc1  $zero, $f12
-/* 0AF9C8 7F07AE98 0FC20284 */  jal   currentPlayerStartChrFade
-/* 0AF9CC 7F07AE9C 00000000 */   nop
-/* 0AF9D0 7F07AEA0 0FC1E73C */  jal   solo_char_load
-/* 0AF9D4 7F07AEA4 00000000 */   nop
-/* 0AF9D8 7F07AEA8 8E040000 */  lw    $a0, ($s0)
-/* 0AF9DC 7F07AEAC 0FC1BD6B */  jal   objecthandlerGetModelAnim
-/* 0AF9E0 7F07AEB0 24840598 */   addiu $a0, $a0, 0x598
-/* 0AF9E4 7F07AEB4 8E040000 */  lw    $a0, ($s0)
-/* 0AF9E8 7F07AEB8 AFA20038 */  sw    $v0, 0x38($sp)
-/* 0AF9EC 7F07AEBC 0FC1BD6D */  jal   objecthandlerGetModelGunhand
-/* 0AF9F0 7F07AEC0 24840598 */   addiu $a0, $a0, 0x598
-/* 0AF9F4 7F07AEC4 44800000 */  mtc1  $zero, $f0
-/* 0AF9F8 7F07AEC8 8E0E0000 */  lw    $t6, ($s0)
-/* 0AF9FC 7F07AECC 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0AFA00 7F07AED0 44819000 */  mtc1  $at, $f18
-/* 0AFA04 7F07AED4 8DC400D4 */  lw    $a0, 0xd4($t6)
-/* 0AFA08 7F07AED8 44070000 */  mfc1  $a3, $f0
-/* 0AFA0C 7F07AEDC 8FA50038 */  lw    $a1, 0x38($sp)
-/* 0AFA10 7F07AEE0 00403025 */  move  $a2, $v0
-/* 0AFA14 7F07AEE4 E7A00014 */  swc1  $f0, 0x14($sp)
-/* 0AFA18 7F07AEE8 0FC1BF2A */  jal   modelSetAnimation
-/* 0AFA1C 7F07AEEC E7B20010 */   swc1  $f18, 0x10($sp)
-/* 0AFA20 7F07AEF0 8E0D0000 */  lw    $t5, ($s0)
-/* 0AFA24 7F07AEF4 24180018 */  li    $t8, 24
-/* 0AFA28 7F07AEF8 8DAF00A8 */  lw    $t7, 0xa8($t5)
-/* 0AFA2C 7F07AEFC 8DE30004 */  lw    $v1, 4($t7)
-/* 0AFA30 7F07AF00 8C790014 */  lw    $t9, 0x14($v1)
-/* 0AFA34 7F07AF04 A0780007 */  sb    $t8, 7($v1)
-/* 0AFA38 7F07AF08 A0600008 */  sb    $zero, 8($v1)
-/* 0AFA3C 7F07AF0C 37280001 */  ori   $t0, $t9, 1
-/* 0AFA40 7F07AF10 AC680014 */  sw    $t0, 0x14($v1)
-/* 0AFA44 7F07AF14 8E020000 */  lw    $v0, ($s0)
-/* 0AFA48 7F07AF18 8C4500A8 */  lw    $a1, 0xa8($v0)
-/* 0AFA4C 7F07AF1C 8C4400D4 */  lw    $a0, 0xd4($v0)
-/* 0AFA50 7F07AF20 0FC1B303 */  jal   setsuboffset
-/* 0AFA54 7F07AF24 24A50008 */   addiu $a1, $a1, 8
-/* 0AFA58 7F07AF28 0FC227B9 */  jal   get_curplay_horizontal_rotation_in_degrees
-/* 0AFA5C 7F07AF2C 00000000 */   nop
-/* 0AFA60 7F07AF30 8E090000 */  lw    $t1, ($s0)
-/* 0AFA64 7F07AF34 44050000 */  mfc1  $a1, $f0
-/* 0AFA68 7F07AF38 0FC1B34F */  jal   setsubroty
-/* 0AFA6C 7F07AF3C 8D2400D4 */   lw    $a0, 0xd4($t1)
-/* 0AFA70 7F07AF40 3C028003 */  lui   $v0, %hi(g_ExplodeTankOnDeathFlag)
-/* 0AFA74 7F07AF44 8C42648C */  lw    $v0, %lo(g_ExplodeTankOnDeathFlag)($v0)
-.L7F07AF48:
-/* 0AFA78 7F07AF48 10400017 */  beqz  $v0, .L7F07AFA8
-/* 0AFA7C 7F07AF4C 27A50058 */   addiu $a1, $sp, 0x58
-/* 0AFA80 7F07AF50 3C048003 */  lui   $a0, %hi(g_PlayerTankProp)
-/* 0AFA84 7F07AF54 8C846450 */  lw    $a0, %lo(g_PlayerTankProp)($a0)
-/* 0AFA88 7F07AF58 50800014 */  beql  $a0, $zero, .L7F07AFAC
-/* 0AFA8C 7F07AF5C 8E020000 */   lw    $v0, ($s0)
-/* 0AFA90 7F07AF60 AFA40064 */  sw    $a0, 0x64($sp)
-/* 0AFA94 7F07AF64 C4840008 */  lwc1  $f4, 8($a0)
-/* 0AFA98 7F07AF68 3C0143FA */  li    $at, 0x43FA0000 # 500.000000
-/* 0AFA9C 7F07AF6C 44810000 */  mtc1  $at, $f0
-/* 0AFAA0 7F07AF70 E7A40058 */  swc1  $f4, 0x58($sp)
-/* 0AFAA4 7F07AF74 C486000C */  lwc1  $f6, 0xc($a0)
-/* 0AFAA8 7F07AF78 00803025 */  move  $a2, $a0
-/* 0AFAAC 7F07AF7C E7A6005C */  swc1  $f6, 0x5c($sp)
-/* 0AFAB0 7F07AF80 C4880010 */  lwc1  $f8, 0x10($a0)
-/* 0AFAB4 7F07AF84 E7A80060 */  swc1  $f8, 0x60($sp)
-/* 0AFAB8 7F07AF88 C48A0008 */  lwc1  $f10, 8($a0)
-/* 0AFABC 7F07AF8C E7AA0048 */  swc1  $f10, 0x48($sp)
-/* 0AFAC0 7F07AF90 C490000C */  lwc1  $f16, 0xc($a0)
-/* 0AFAC4 7F07AF94 E7B0004C */  swc1  $f16, 0x4c($sp)
-/* 0AFAC8 7F07AF98 C4920010 */  lwc1  $f18, 0x10($a0)
-/* 0AFACC 7F07AF9C E7B20050 */  swc1  $f18, 0x50($sp)
-/* 0AFAD0 7F07AFA0 10000014 */  b     .L7F07AFF4
-/* 0AFAD4 7F07AFA4 8C830014 */   lw    $v1, 0x14($a0)
-.L7F07AFA8:
-/* 0AFAD8 7F07AFA8 8E020000 */  lw    $v0, ($s0)
-.L7F07AFAC:
-/* 0AFADC 7F07AFAC 3C014348 */  li    $at, 0x43480000 # 200.000000
-/* 0AFAE0 7F07AFB0 44810000 */  mtc1  $at, $f0
-/* 0AFAE4 7F07AFB4 8C4A00A8 */  lw    $t2, 0xa8($v0)
-/* 0AFAE8 7F07AFB8 AFAA0064 */  sw    $t2, 0x64($sp)
-/* 0AFAEC 7F07AFBC C44403C4 */  lwc1  $f4, 0x3c4($v0)
-/* 0AFAF0 7F07AFC0 E7A40058 */  swc1  $f4, 0x58($sp)
-/* 0AFAF4 7F07AFC4 C44603C8 */  lwc1  $f6, 0x3c8($v0)
-/* 0AFAF8 7F07AFC8 E7A6005C */  swc1  $f6, 0x5c($sp)
-/* 0AFAFC 7F07AFCC C44803CC */  lwc1  $f8, 0x3cc($v0)
-/* 0AFB00 7F07AFD0 E7A80060 */  swc1  $f8, 0x60($sp)
-/* 0AFB04 7F07AFD4 C44A048C */  lwc1  $f10, 0x48c($v0)
-/* 0AFB08 7F07AFD8 8C4600A8 */  lw    $a2, 0xa8($v0)
-/* 0AFB0C 7F07AFDC E7AA0048 */  swc1  $f10, 0x48($sp)
-/* 0AFB10 7F07AFE0 C4500490 */  lwc1  $f16, 0x490($v0)
-/* 0AFB14 7F07AFE4 E7B0004C */  swc1  $f16, 0x4c($sp)
-/* 0AFB18 7F07AFE8 C4520494 */  lwc1  $f18, 0x494($v0)
-/* 0AFB1C 7F07AFEC E7B20050 */  swc1  $f18, 0x50($sp)
-/* 0AFB20 7F07AFF0 8C430488 */  lw    $v1, 0x488($v0)
-.L7F07AFF4:
-/* 0AFB24 7F07AFF4 8FA40064 */  lw    $a0, 0x64($sp)
-/* 0AFB28 7F07AFF8 27A70048 */  addiu $a3, $sp, 0x48
-/* 0AFB2C 7F07AFFC AFA30010 */  sw    $v1, 0x10($sp)
-/* 0AFB30 7F07B000 0FC1E94D */  jal   sub_GAME_7F07A534
-/* 0AFB34 7F07B004 E7A00014 */   swc1  $f0, 0x14($sp)
-/* 0AFB38 7F07B008 10400021 */  beqz  $v0, .L7F07B090
-/* 0AFB3C 7F07B00C 3C0B8003 */   lui   $t3, %hi(D_80036510)
-/* 0AFB40 7F07B010 8D6B6510 */  lw    $t3, %lo(D_80036510)($t3)
-/* 0AFB44 7F07B014 15600007 */  bnez  $t3, .L7F07B034
-/* 0AFB48 7F07B018 00000000 */   nop
-/* 0AFB4C 7F07B01C 0C001B9F */  jal   musicTrack1Play
-/* 0AFB50 7F07B020 2404002C */   li    $a0, 44
-/* 0AFB54 7F07B024 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0AFB58 7F07B028 44816000 */  mtc1  $at, $f12
-/* 0AFB5C 7F07B02C 0C00248E */  jal   sndSetScalerApplyVolumeAllSfxSlot
-/* 0AFB60 7F07B030 00000000 */   nop
-.L7F07B034:
-/* 0AFB64 7F07B034 3C0C8003 */  lui   $t4, %hi(g_ExplodeTankOnDeathFlag)
-/* 0AFB68 7F07B038 8D8C648C */  lw    $t4, %lo(g_ExplodeTankOnDeathFlag)($t4)
-/* 0AFB6C 7F07B03C 3C0E8003 */  lui   $t6, %hi(g_PlayerTankProp)
-/* 0AFB70 7F07B040 51800054 */  beql  $t4, $zero, .L7F07B194
-/* 0AFB74 7F07B044 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 0AFB78 7F07B048 8DCE6450 */  lw    $t6, %lo(g_PlayerTankProp)($t6)
-/* 0AFB7C 7F07B04C 51C00051 */  beql  $t6, $zero, .L7F07B194
-/* 0AFB80 7F07B050 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 0AFB84 7F07B054 0FC26C54 */  jal   get_cur_playernum
-/* 0AFB88 7F07B058 00000000 */   nop
-/* 0AFB8C 7F07B05C 3C048003 */  lui   $a0, %hi(g_PlayerTankProp)
-/* 0AFB90 7F07B060 8C846450 */  lw    $a0, %lo(g_PlayerTankProp)($a0)
-/* 0AFB94 7F07B064 2407000D */  li    $a3, 13
-/* 0AFB98 7F07B068 8C860014 */  lw    $a2, 0x14($a0)
-/* 0AFB9C 7F07B06C 248D002C */  addiu $t5, $a0, 0x2c
-/* 0AFBA0 7F07B070 AFAD0018 */  sw    $t5, 0x18($sp)
-/* 0AFBA4 7F07B074 AFA0001C */  sw    $zero, 0x1c($sp)
-/* 0AFBA8 7F07B078 AFA20014 */  sw    $v0, 0x14($sp)
-/* 0AFBAC 7F07B07C AFA00010 */  sw    $zero, 0x10($sp)
-/* 0AFBB0 7F07B080 0FC27094 */  jal   explosionCreate
-/* 0AFBB4 7F07B084 24850008 */   addiu $a1, $a0, 8
-/* 0AFBB8 7F07B088 10000042 */  b     .L7F07B194
-/* 0AFBBC 7F07B08C 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07B090:
-/* 0AFBC0 7F07B090 0C001A4C */  jal   bossRunTitleStage
-/* 0AFBC4 7F07B094 00000000 */   nop
-/* 0AFBC8 7F07B098 1000003E */  b     .L7F07B194
-/* 0AFBCC 7F07B09C 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07B0A0:
-/* 0AFBD0 7F07B0A0 24010006 */  li    $at, 6
-/* 0AFBD4 7F07B0A4 1441000D */  bne   $v0, $at, .L7F07B0DC
-/* 0AFBD8 7F07B0A8 00002025 */   move  $a0, $zero
-/* 0AFBDC 7F07B0AC 00002825 */  move  $a1, $zero
-/* 0AFBE0 7F07B0B0 00003025 */  move  $a2, $zero
-/* 0AFBE4 7F07B0B4 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AFBE8 7F07B0B8 24070000 */   li    $a3, 0
-/* 0AFBEC 7F07B0BC 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AFBF0 7F07B0C0 44816000 */  mtc1  $at, $f12
-/* 0AFBF4 7F07B0C4 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AFBF8 7F07B0C8 44817000 */  mtc1  $at, $f14
-/* 0AFBFC 7F07B0CC 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AFC00 7F07B0D0 00000000 */   nop
-/* 0AFC04 7F07B0D4 1000002F */  b     .L7F07B194
-/* 0AFC08 7F07B0D8 8FBF002C */   lw    $ra, 0x2c($sp)
-.L7F07B0DC:
-/* 0AFC0C 7F07B0DC 24010007 */  li    $at, 7
-/* 0AFC10 7F07B0E0 54410009 */  bnel  $v0, $at, .L7F07B108
-/* 0AFC14 7F07B0E4 24010008 */   li    $at, 8
-/* 0AFC18 7F07B0E8 0FC1E73C */  jal   solo_char_load
-/* 0AFC1C 7F07B0EC 00000000 */   nop
-/* 0AFC20 7F07B0F0 3C108008 */  lui   $s0, %hi(g_CurrentPlayer)
-/* 0AFC24 7F07B0F4 2610A0B0 */  addiu $s0, %lo(g_CurrentPlayer) # addiu $s0, $s0, -0x5f50
-/* 0AFC28 7F07B0F8 8E0F0000 */  lw    $t7, ($s0)
-/* 0AFC2C 7F07B0FC 10000024 */  b     .L7F07B190
-/* 0AFC30 7F07B100 ADE00034 */   sw    $zero, 0x34($t7)
-/* 0AFC34 7F07B104 24010008 */  li    $at, 8
-.L7F07B108:
-/* 0AFC38 7F07B108 54410007 */  bnel  $v0, $at, .L7F07B128
-/* 0AFC3C 7F07B10C 2401000A */   li    $at, 10
-/* 0AFC40 7F07B110 0FC1E928 */  jal   maybe_solo_intro_camera_handler
-/* 0AFC44 7F07B114 00000000 */   nop
-/* 0AFC48 7F07B118 24180004 */  li    $t8, 4
-/* 0AFC4C 7F07B11C 1000001C */  b     .L7F07B190
-/* 0AFC50 7F07B120 AE180000 */   sw    $t8, ($s0)
-/* 0AFC54 7F07B124 2401000A */  li    $at, 10
-.L7F07B128:
-/* 0AFC58 7F07B128 5441001A */  bnel  $v0, $at, .L7F07B194
-/* 0AFC5C 7F07B12C 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 0AFC60 7F07B130 0FC26919 */  jal   getPlayerCount
-/* 0AFC64 7F07B134 00008025 */   move  $s0, $zero
-/* 0AFC68 7F07B138 18400013 */  blez  $v0, .L7F07B188
-/* 0AFC6C 7F07B13C 00000000 */   nop
-.L7F07B140:
-/* 0AFC70 7F07B140 0FC26C43 */  jal   set_cur_player
-/* 0AFC74 7F07B144 02002025 */   move  $a0, $s0
-/* 0AFC78 7F07B148 00002025 */  move  $a0, $zero
-/* 0AFC7C 7F07B14C 00002825 */  move  $a1, $zero
-/* 0AFC80 7F07B150 00003025 */  move  $a2, $zero
-/* 0AFC84 7F07B154 0FC201EC */  jal   currentPlayerSetFadeColour
-/* 0AFC88 7F07B158 24070000 */   li    $a3, 0
-/* 0AFC8C 7F07B15C 3C014270 */  li    $at, 0x42700000 # 60.000000
-/* 0AFC90 7F07B160 44816000 */  mtc1  $at, $f12
-/* 0AFC94 7F07B164 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0AFC98 7F07B168 44817000 */  mtc1  $at, $f14
-/* 0AFC9C 7F07B16C 0FC20216 */  jal   currentPlayerSetFadeFrac
-/* 0AFCA0 7F07B170 00000000 */   nop
-/* 0AFCA4 7F07B174 0FC26919 */  jal   getPlayerCount
-/* 0AFCA8 7F07B178 26100001 */   addiu $s0, $s0, 1
-/* 0AFCAC 7F07B17C 0202082A */  slt   $at, $s0, $v0
-/* 0AFCB0 7F07B180 1420FFEF */  bnez  $at, .L7F07B140
-/* 0AFCB4 7F07B184 00000000 */   nop
-.L7F07B188:
-/* 0AFCB8 7F07B188 0FC26C43 */  jal   set_cur_player
-/* 0AFCBC 7F07B18C 00002025 */   move  $a0, $zero
-.L7F07B190:
-/* 0AFCC0 7F07B190 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F07B194:
-/* 0AFCC4 7F07B194 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0AFCC8 7F07B198 27BD0088 */  addiu $sp, $sp, 0x88
-/* 0AFCCC 7F07B19C 03E00008 */  jr    $ra
-/* 0AFCD0 7F07B1A0 00000000 */   nop
-)
-#endif
-
-
 
 
 
