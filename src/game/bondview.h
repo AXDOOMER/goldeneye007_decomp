@@ -437,7 +437,7 @@ struct player
   struct rect4f collision_bounds;
 
   /* 0x00d0 */ s32 field_D0;
-  /* 0x00d4 */ s32 *ptr_char_objectinstance;
+  /* 0x00d4 */ struct Model *ptr_char_objectinstance;
   /* 0x00d8 */ s32 bonddead;
   /* 0x00dc */ f32 bondhealth;
   /* 0x00e0 */ f32 bondarmour;
@@ -2999,8 +2999,8 @@ extern s32 watch_time_0;
 #endif
 
 extern f32 watch_transition_time;
-extern s32 starting_right_weapon;
-extern s32 starting_left_weapon;
+// ITEM_IDS
+extern ITEM_IDS starting_weapon[2];
 extern PadRecord *g_Startpad[];
 extern s32 startpadcount;
 extern StandTilePoint *dword_CODE_bss_80079DA0;
@@ -3010,7 +3010,7 @@ extern StandTilePoint *dword_CODE_bss_80079DA4;
 extern s32 dword_CODE_bss_80079DA8[];
 
 
-u32 get_camera_mode(void);
+u32 bondviewGetCameraMode(void);
 
 void bondviewTriggerWatchZoom(f32 zoominfovy);
 
@@ -3112,7 +3112,7 @@ f32 bondviewGetBondBreathing(void);
 void     bondviewClearUpperTextDisplayFlag(int param_1);
 
 void     bondviewSetUpperTextDisplayFlag(PLAYERFLAG flag);
-void     set_camera_mode(s32 arg0);
+void     bondviewSetCameraMode(s32 arg0);
 bool     isBondInTank(void);
 void     hudmsgTopShow(char* string);
 void     SurroundWithExplosions(int delay);
@@ -3128,5 +3128,6 @@ Mtxf *currentPlayerGetProjectionMatrixF(void);
 int redirect_get_BONDdata_autoaim_x(void);
 int redirect_get_BONDdata_autoaim_y(void);
 void sub_GAME_7F077FF4(coord3d *in, coord3d *out);
+void maybe_solo_intro_camera_handler(void);
 
 #endif
