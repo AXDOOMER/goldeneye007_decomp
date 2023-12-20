@@ -3852,82 +3852,50 @@ void sub_GAME_7F03D058(PropRecord *prop, bool unset) //#MATCH
 
 
 
+/**
+ * NTSC address: 0x7F03D0D4.
+*/
+void sub_GAME_7F03D0D4(void)
+{
+    PropRecord *prop;
+    PropRecord *propprev;
+    bool isCollected = FALSE;
+    
+    if (!isBondInTank() && !g_PlayerInvincible)
+    {   
+        //for each prop in setup
+        
+        for (prop = get_ptr_obj_pos_list_current_entry(); prop != NULL; prop = propprev)
+        {
+            isCollected = 0;
+            
+            if (prop->timetoregen <= 0)
+            {
+                switch (prop->type)
+                {
+                    case PROP_TYPE_DOOR:
+                    case PROP_TYPE_CHR:
+                    case PROP_TYPE_PLAYER:
+                    case PROP_TYPE_VIEWER:
+                    case PROP_TYPE_EXPLOSION:
+                    case PROP_TYPE_SMOKE:
+                         break;
 
+                    case PROP_TYPE_OBJ:
+                        isCollected = object_collectability_routines(prop);
+                        break;
 
-#ifdef NONMATCHING
-void sub_GAME_7F03D0D4(void) {
+                    case PROP_TYPE_WEAPON:
+                        isCollected = redirect_object_collectability_routines(prop);
+                        break;
+                }
+            }
+            propprev = prop->prev; //not sure why rare put this here and not in the for statement
 
+            propExecuteTickOperation(prop, isCollected);             
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-/*D:800529A0*/
-glabel jpt_800529A0
-.word loc_CODE_7F03D144
-.word def_7F03D13C
-.word def_7F03D13C
-.word loc_CODE_7F03D154
-.word def_7F03D13C
-.word def_7F03D13C
-.word def_7F03D13C
-.word def_7F03D13C
-.text
-glabel sub_GAME_7F03D0D4
-/* 071C04 7F03D0D4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 071C08 7F03D0D8 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 071C0C 7F03D0DC AFB10018 */  sw    $s1, 0x18($sp)
-/* 071C10 7F03D0E0 0FC1F39E */  jal   isBondInTank
-/* 071C14 7F03D0E4 AFB00014 */   sw    $s0, 0x14($sp)
-/* 071C18 7F03D0E8 14400022 */  bnez  $v0, .L7F03D174
-/* 071C1C 7F03D0EC 3C0E8003 */   lui   $t6, %hi(g_PlayerInvincible) 
-/* 071C20 7F03D0F0 8DCE64B4 */  lw    $t6, %lo(g_PlayerInvincible)($t6)
-/* 071C24 7F03D0F4 55C00020 */  bnezl $t6, .L7F03D178
-/* 071C28 7F03D0F8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 071C2C 7F03D0FC 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 071C30 7F03D100 00000000 */   nop   
-/* 071C34 7F03D104 1040001B */  beqz  $v0, .L7F03D174
-/* 071C38 7F03D108 00408825 */   move  $s1, $v0
-.L7F03D10C:
-/* 071C3C 7F03D10C 862F0002 */  lh    $t7, 2($s1)
-/* 071C40 7F03D110 00002825 */  move  $a1, $zero
-/* 071C44 7F03D114 5DE00013 */  bgtzl $t7, .L7F03D164
-/* 071C48 7F03D118 8E300024 */   lw    $s0, 0x24($s1)
-/* 071C4C 7F03D11C 92380000 */  lbu   $t8, ($s1)
-/* 071C50 7F03D120 2719FFFF */  addiu $t9, $t8, -1
-/* 071C54 7F03D124 2F210008 */  sltiu $at, $t9, 8
-/* 071C58 7F03D128 1020000D */  beqz  $at, .L7F03D160
-/* 071C5C 7F03D12C 0019C880 */   sll   $t9, $t9, 2
-/* 071C60 7F03D130 3C018005 */  lui   $at, %hi(jpt_800529A0)
-/* 071C64 7F03D134 00390821 */  addu  $at, $at, $t9
-/* 071C68 7F03D138 8C3929A0 */  lw    $t9, %lo(jpt_800529A0)($at)
-/* 071C6C 7F03D13C 03200008 */  jr    $t9
-/* 071C70 7F03D140 00000000 */   nop   
-loc_CODE_7F03D144:
-/* 071C74 7F03D144 0FC141B7 */  jal   object_collectability_routines
-/* 071C78 7F03D148 02202025 */   move  $a0, $s1
-/* 071C7C 7F03D14C 10000004 */  b     .L7F03D160
-/* 071C80 7F03D150 00402825 */   move  $a1, $v0
-loc_CODE_7F03D154:
-/* 071C84 7F03D154 0FC14955 */  jal   redirect_object_collectability_routines
-/* 071C88 7F03D158 02202025 */   move  $a0, $s1
-/* 071C8C 7F03D15C 00402825 */  move  $a1, $v0
-def_7F03D13C:
-.L7F03D160:
-/* 071C90 7F03D160 8E300024 */  lw    $s0, 0x24($s1)
-.L7F03D164:
-/* 071C94 7F03D164 0FC0F0AF */  jal   propExecuteTickOperation
-/* 071C98 7F03D168 02202025 */   move  $a0, $s1
-/* 071C9C 7F03D16C 1600FFE7 */  bnez  $s0, .L7F03D10C
-/* 071CA0 7F03D170 02008825 */   move  $s1, $s0
-.L7F03D174:
-/* 071CA4 7F03D174 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F03D178:
-/* 071CA8 7F03D178 8FB00014 */  lw    $s0, 0x14($sp)
-/* 071CAC 7F03D17C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 071CB0 7F03D180 03E00008 */  jr    $ra
-/* 071CB4 7F03D184 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
 
 f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32 *arg4)
