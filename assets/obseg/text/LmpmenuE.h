@@ -35,5 +35,5 @@ enum LMPMENUE_STRINGS
     MPMENU_STR_20, // "cancel",
     MPMENU_STR_21, // "confirm",
     MPMENU_STR_22, // "press start\n",
-    MPMENU_STR_23, // "to continue\n"
+    MPMENU_STR_23 // "to continue\n"
 };
