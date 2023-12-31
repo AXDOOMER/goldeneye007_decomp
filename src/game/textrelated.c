@@ -105,7 +105,7 @@ void load_font_tables(void)
     text_s = 0;
     MACROSIZE = 0x24b0 - 0;
     text_t = 0;
-    ptrFontBankGothic = mempAllocBytesInBank(MACROSIZE, 4);
+    ptrFontBankGothic      = mempAllocBytesInBank(MACROSIZE, MEMPOOL_STAGE);
     ptrFontBankGothicChars = (s32) (ptrFontBankGothic + 0x2a4);
     romCopy(&ptrFontBankGothic, &_fontbankgothicSegmentRomStart, MACROSIZE);
     i = 0;
@@ -119,7 +119,7 @@ loop_1:
         goto loop_1;
     }
     MACROSIZE = 0x3540 - 0;
-    ptrFontZurichBold = mempAllocBytesInBank(MACROSIZE, 4);
+    ptrFontZurichBold      = mempAllocBytesInBank(MACROSIZE, MEMPOOL_STAGE);
     ptrFontZurichBoldChars = (s32) (ptrFontZurichBold + 0x2a4);
     romCopy(&ptrFontZurichBold, &_fontzurichboldSegmentRomStart, MACROSIZE);
     ptrFontZurichBoldChars->unk14 = (s32) (ptrFontZurichBoldChars->unk14 + ptrFontZurichBold);

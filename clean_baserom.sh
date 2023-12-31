@@ -1,4 +1,5 @@
 #!/bin/bash
+# This file will delete all extracted *.bin files from a previous ./extract_baserom.sh (provided the csv has not changed!!!)
 if [ -z "$1" ]; then
     DOALL="1"
     echo "Processing Everything"

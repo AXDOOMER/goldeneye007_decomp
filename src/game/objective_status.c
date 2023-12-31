@@ -95,15 +95,15 @@ u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
     {
         if (page == 0)
         {
-            textptr = langGet(TEXT(LMISC, MISC_STR_29)); //"E R R O R\n"
+            textptr = langGet(getStringID(LMISC, MISC_STR_29_ERROR_LF)); //"E R R O R\n"
         }
         else if (page == 1)
         {
-            textptr = langGet(TEXT(LMISC, MISC_STR_2A)); //"no briefing for this mission\n"
+            textptr = langGet(getStringID(LMISC, MISC_STR_2A_NOBRIEFING_LF)); //"no briefing for this mission\n"
         }
         else
         {
-            textptr = langGet(TEXT(LMISC, MISC_STR_2B)); //"\n"
+            textptr = langGet(getStringID(LMISC, MISC_STR_2B_LF)); //"\n"
         }
     }
 
@@ -350,17 +350,25 @@ void display_objective_status_text_on_status_change(void) {
         if (dword_CODE_bss_80075D58[i] != status) {
             dword_CODE_bss_80075D58[i] = status;
             if (get_difficulty_for_objective(i) <= lvlGetSelectedDifficulty()) {
-                if (j_text_trigger != 0) {
-                    sprintf(&buffer, "%s \x80%c ", langGet(0xB02C), availableindex + 0x1A);
-                } else {
-                    sprintf(&buffer, "%s %c: ", langGet(0xB02C), availableindex + 0x61);
+                if (j_text_trigger != 0)
+                {
+                    sprintf(&buffer, "%s \x80%c ", langGet(getStringID(LMISC, MISC_STR_2C_OBJECTIVE)), availableindex + 0x1A);
                 }
-                if (status == OBJECTIVESTATUS_COMPLETE) {
-                    strcat(&buffer, langGet(0xB02D));
-                } else if (status == OBJECTIVESTATUS_INCOMPLETE) {
-                    strcat(&buffer, langGet(0xB02E));
-                } else if (status == OBJECTIVESTATUS_FAILED) {
-                    strcat(&buffer, langGet(0xB02F));
+                else
+                {
+                    sprintf(&buffer, "%s %c: ", langGet(getStringID(LMISC, MISC_STR_2C_OBJECTIVE)), availableindex + 0x61);
+                }
+                if (status == OBJECTIVESTATUS_COMPLETE)
+                {
+                    strcat(&buffer, langGet(getStringID(LMISC, MISC_STR_2D_COMPLETED_LF)));
+                }
+                else if (status == OBJECTIVESTATUS_INCOMPLETE)
+                {
+                    strcat(&buffer, langGet(getStringID(LMISC, MISC_STR_2E_INCOMPLETE_LF)));
+                }
+                else if (status == OBJECTIVESTATUS_FAILED)
+                {
+                    strcat(&buffer, langGet(getStringID(LMISC, MISC_STR_2F_FAILED_LF)));
                 }
 #ifdef VERSION_US
                 hudmsgBottomShow(&buffer);

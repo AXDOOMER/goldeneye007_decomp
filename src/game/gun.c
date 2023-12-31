@@ -21833,7 +21833,7 @@ void analyzeGEKey(void)
 {
     if (bondinvHasGEKey())
     {
-   	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D8))); //Analyzing the GoldenEye key...
+   	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D8_ANALYZINGTHEGOLDENEYEKEY_LF))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
@@ -21841,7 +21841,7 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D9))); //You do not have the GoldenEye key.
+	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D9_YOUDONOTHAVETHEGOLDENEYEKEY_LF))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;
@@ -26496,7 +26496,7 @@ void increment_num_kills_display_text_in_MP(void)
     if (getPlayerCount() < 2) { return; }
 
     mission_time = getMissiontimer();
-    sprintf(&buffer, aSD, langGet(TEXT(LGUN, GUN_STR_DA)), g_playerPerm->kill_count); // "kill count"
+    sprintf(&buffer, aSD, langGet(getStringID(LGUN, GUN_STR_DA_KILLCOUNT)), g_playerPerm->kill_count); // "kill count"
 
 #if defined(VERSION_US)
     hudmsgBottomShow(&buffer);
@@ -26567,11 +26567,11 @@ void increment_num_deaths(void)
     {
         if (g_CurrentPlayer->deathcount == 1)
         {
-            sprintf(buffer, langGet(TEXT(LGUN, GUN_STR_DB))); //died once
+            sprintf(buffer, langGet(getStringID(LGUN, GUN_STR_DB_DIEDONCE_LF))); //died once
         }
         else
         {
-            sprintf(buffer, "%s %d %s\n", langGet(TEXT(LGUN, GUN_STR_DC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, GUN_STR_DD))); //died times
+            sprintf(buffer, "%s %d %s\n", langGet(getStringID(LGUN, GUN_STR_DC_DIED)), g_CurrentPlayer->deathcount, langGet(getStringID(LGUN, GUN_STR_DD_TIMES))); //died times
         }
 #if defined(VERSION_JP) || defined(VERSION_EU)
 		jp_hudmsgBottomShow(buffer);
@@ -26600,7 +26600,7 @@ void increment_num_suicides_display_MP(void) {
         
         currentTime = getMissiontimer();
         
-        sprintf(&buffer, &aSD_0, langGet(TEXT(LGUN, GUN_STR_DE)), g_CurrentPlayer->num_suicides); // "suicide count"
+        sprintf(&buffer, &aSD_0, langGet(getStringID(LGUN, GUN_STR_DE_SUICIDECOUNT)), g_CurrentPlayer->num_suicides); // "suicide count"
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
 		jp_hudmsgBottomShow(&buffer);

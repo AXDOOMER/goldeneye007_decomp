@@ -356,7 +356,11 @@ void langClearBank(s32 textBank) {
     g_LangBanks[textBank] = 0;
 }
 
-
+/**
+ * Get pointer of a string based on language of game (E/J) 
+ * @param slotID: UniqueID of string (a combination of Bank ID and string index)
+ * @return char* string.
+ */
 u8 * langGet(s32 slotID)
 {
     u32 * textbank_ptr = g_LangBanks[slotID >> 10]; /* get the text file bank ID index the text ptr table */

@@ -1998,7 +1998,7 @@ void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex)
     autogun->unk8C = ((*((s32 *) (&autogun->unk8C))) * M_TAU_F) / 65536.0f;
 #endif
 
-    beam = mempAllocBytesInBank(0x30U, 4U);
+    beam          = mempAllocBytesInBank(0x30U, MEMPOOL_STAGE);
     autogun->beam = beam;
     *beam = -1;
 

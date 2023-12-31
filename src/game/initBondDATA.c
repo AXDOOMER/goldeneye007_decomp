@@ -58,9 +58,9 @@ void init_player_BONDdata_stats(void) {
         phi_t7 = temp_t7;
         phi_t6 = temp_t6;
     } while (temp_t7 != (&BONDdata_item_control_blocks_initdata + 0x3A8));
-    g_CurrentPlayer->hand_item[0] = mempAllocBytesInBank(size_item_buffer, 4);
+    g_CurrentPlayer->hand_item[0] = mempAllocBytesInBank(size_item_buffer, MEMPOOL_STAGE);
     if (getPlayerCount() == 1) {
-        g_CurrentPlayer->hand_item[1] = mempAllocBytesInBank(*(&size_item_buffer + 4), 4);
+        g_CurrentPlayer->hand_item[1] = mempAllocBytesInBank(*(&size_item_buffer + 4), MEMPOOL_STAGE);
     }
     g_CurrentPlayer->hand_invisible[0] = 0;
     g_CurrentPlayer->hand_invisible[1] = 0;

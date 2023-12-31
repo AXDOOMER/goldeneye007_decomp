@@ -176,7 +176,7 @@ f32 g_PowerOnTimeSec = 0;
 /**
  * Debug variable, seems to track whether user input has changed since
  * the last time the method was entered.
- * 
+ *
  * Addres 0x800483C0.
  */
 s32 D_800483C0 = 1;
@@ -237,7 +237,7 @@ void lvInit(void)
     debTryAdd(&lvl_c_debug_notice_list, "lv_c_debug");
     size = (s32)&_fontdlSegmentRomEnd - (s32)&_fontdlSegmentRomStart;
     lvl_c_debug_notice_list = 1;
-    ptr_font_DL = mempAllocBytesInBank(size, 6);
+    ptr_font_DL = mempAllocBytesInBank(size, MEMPOOL_PERMANENT);
     romCopy(ptr_font_DL, &_fontdlSegmentRomStart, size);
 }
 
@@ -293,7 +293,7 @@ void lvlMusicPlayStageTrackOrRandom(void)
  * Title screen is handled as a special case.
  * First half of method resets stage and player values (including mutliplayer values) to defaults.
  * Second part loads stage data (init guards, init guard heads, etc).
- * 
+ *
  * NTSC Address: 0x7F0BDAB0.
  * NTSC-J Address: 7F0BE660.
  * PAL Address: 7F0BCE60.
@@ -302,7 +302,7 @@ void lvlStageLoad(s32 stage)
 {
     s32 i;
     struct player_data *player_data;
- 
+
     g_CurrentStageToLoad = stage;
 
     // this if block pushes where g_CurrentStageToLoad gets loaded to the
@@ -332,7 +332,7 @@ void lvlStageLoad(s32 stage)
     g_GlobalTimerDelta = 1.f;
 #endif
 #if defined(VERSION_EU)
-    g_GlobalTimerDelta = 1.20000004768f;        
+    g_GlobalTimerDelta = 1.20000004768f;
 #endif
 
     D_80048388 = 0;
@@ -359,7 +359,7 @@ void lvlStageLoad(s32 stage)
     texReset();
     load_font_tables();
 
-    /* If title screen, initialize screen and folder setup. 
+    /* If title screen, initialize screen and folder setup.
     * Otherwise:
     * - enable cheats for player
     * - init watch
@@ -392,7 +392,7 @@ void lvlStageLoad(s32 stage)
 
         load_bg_file(g_CurrentStageToLoad);
         skySetStageNum(g_CurrentStageToLoad);
-        
+
         // HACK: This method call is wrong. The function takes one argument, but the asm calls it without
         // any arguments here.
         init_watch_at_start_of_stage();
@@ -427,7 +427,7 @@ void lvlStageLoad(s32 stage)
                     {
                         g_playerPlayerData[s3].handicap = get_player_mp_handicap(s3);
                     }
-                    
+
                     g_playerPlayerData[s3].player_perspective_height = get_player_mp_char_height(s3);
                 }
 
@@ -481,7 +481,7 @@ void lvlStageLoad(s32 stage)
     else
     {
         s32 s0;
-        
+
         init_path_table_links();
         init_ejected_cartridges();
 
@@ -502,7 +502,7 @@ void lvlStageLoad(s32 stage)
 
     set_contents_of_80036078(0);
     zbufDeallocate();
-    viSetVideoMode(1);
+    viSetVideoMode(MD_NORMAL);
     D_80048368 = 1.0f;
     lvlSetControlsLockedFlag(0);
 }
@@ -521,9 +521,9 @@ s32 lvlGetCurrentStageToLoad(void)
  * on controller 1 and 2 are used for control flow.
  *
  * address 0x7F0BDF10.
- * 
+ *
  * https://decomp.me/scratch/C83v8 90.47%
- * 
+ *
  * decomp status:
  * - compiles: yes
  * - stack resize: wrong
@@ -594,7 +594,7 @@ Gfx * lvlPortalDebug7F0BDF10(Gfx * arg0)
     else if (joyGetButtons(PLAYER_1, R_TRIG) | joyGetButtons(PLAYER_2, R_TRIG))
     {
         if (
-            (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD)) 
+            (joyGetButtonsPressedThisFrame(PLAYER_1, D_JPAD) | joyGetButtonsPressedThisFrame(PLAYER_2, D_JPAD))
             && (bgGetDataPortalsControlBytes1Bit1(g_DebugPortalsD_800483CC) == 0))
         {
             bgToggleDataPortalsContrlBytes1Bit1(g_DebugPortalsD_800483CC, 0);
@@ -932,7 +932,7 @@ glabel lvlPortalDebug7F0BDF10
 /**
  * Graphics render method.
  * Also sets player max ammo if infinite ammo cheat is enabled.
- * 
+ *
  * Address 0x7F0BE30C (VERSION_US).
  */
 
@@ -971,7 +971,7 @@ Gfx* lvlRender(Gfx* DL)
 
             DL = viClearZBufCurrentPlayer(DL);
             DL = video_related_F(DL);
-            
+
             if (get_debug_render_raster() == DEB_MOVE_VIEW)
             {
                 DL = sub_GAME_7F091580(DL);
@@ -1105,7 +1105,7 @@ Gfx* lvlRender(Gfx* DL)
 /**
  * Sets the modifier values for the level being loaded.
  * This covers the enemy accuracy, reaction speed, and similar values.
- * 
+ *
  * address 0x7F0BE8D0
  */
 void lvlSetMultipliersForDifficulty(void)
@@ -1218,15 +1218,15 @@ void lvlSetMultipliersForDifficulty(void)
  * Multiplayer method.
  * Tracks you-only-live-twice kills/deaths.
  * Lots of debug code.
- * 
+ *
  * Address: 0x7F0BEB88 (NTSC).
- * 
+ *
  * decomp status:
  * - compiles: yes
  * - stack resize: fail
  * - identical instructions: fail
  * - identical registers: fail
- * 
+ *
  * notes: there is one big `if` block that is very wrong. A few places where two instructions are swapped.
  * Otherwise just lots of regalloc.
  */
@@ -1479,7 +1479,7 @@ void lvlManageMpGame(void)
                     }
                 }
             //}
-            
+
             temp_v1_7 = var_player_count2 - 1;
             if (not_dead_count >= temp_v1_7)
             {
@@ -1553,7 +1553,7 @@ void lvlManageMpGame(void)
         if ((get_debug_joy2detailedit_flag() != 0) && (D_800483C8 == 0))
         {
             s32 i;
-            D_800483C8 = (struct LvlMpUnknown*)mempAllocBytesInBank(0x3000, 4);
+            D_800483C8 = (struct LvlMpUnknown *)mempAllocBytesInBank(0x3000, MEMPOOL_STAGE);
             if (D_800483C8 != 0)
             {
                 for (i=0; i<3000; i++)
@@ -3508,17 +3508,17 @@ glabel lvlManageMpGame
 /* 0F099C 7F0BDFAC 27BDFE68 */  addiu $sp, $sp, -0x198
 /* 0F09A0 7F0BDFB0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0F09A4 7F0BDFB4 0C000744 */  jal   tlbmanageResetCurrentEntriesCount
-/* 0F09A8 7F0BDFB8 00000000 */   nop   
+/* 0F09A8 7F0BDFB8 00000000 */   nop
 /* 0F09AC 7F0BDFBC 3C0E8004 */  lui   $t6, %hi(g_ControlsLockedFlag) # $t6, 0x8004
 /* 0F09B0 7F0BDFC0 8DCE0FF0 */  lw    $t6, %lo(g_ControlsLockedFlag)($t6)
 /* 0F09B4 7F0BDFC4 3C018004 */  lui   $at, %hi(g_ClockTimer) # $at, 0x8004
 /* 0F09B8 7F0BDFC8 11C00003 */  beqz  $t6, .L7F0BDFD8
-/* 0F09BC 7F0BDFCC 00000000 */   nop   
+/* 0F09BC 7F0BDFCC 00000000 */   nop
 /* 0F09C0 7F0BDFD0 10000010 */  b     .L7F0BE014
 /* 0F09C4 7F0BDFD4 AC200FF4 */   sw    $zero, %lo(g_ClockTimer)($at)
 .L7F0BDFD8:
 /* 0F09C8 7F0BDFD8 0FC31565 */  jal   checkGamePaused
-/* 0F09CC 7F0BDFDC 00000000 */   nop   
+/* 0F09CC 7F0BDFDC 00000000 */   nop
 /* 0F09D0 7F0BDFE0 10400004 */  beqz  $v0, .L7F0BDFF4
 /* 0F09D4 7F0BDFE4 3C0F8004 */   lui   $t7, %hi(speedgraphframes) # $t7, 0x8004
 /* 0F09D8 7F0BDFE8 3C018004 */  lui   $at, %hi(g_ClockTimer) # $at, 0x8004
@@ -3557,10 +3557,10 @@ glabel lvlManageMpGame
 /* 0F0A54 7F0BE064 AC8F0000 */  sw    $t7, ($a0)
 /* 0F0A58 7F0BE068 8F180FE4 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F0A5C 7F0BE06C 1301001D */  beq   $t8, $at, .L7F0BE0E4
-/* 0F0A60 7F0BE070 00000000 */   nop   
+/* 0F0A60 7F0BE070 00000000 */   nop
 /* 0F0A64 7F0BE074 8F391018 */  lw    $t9, %lo(D_80048394)($t9)
 /* 0F0A68 7F0BE078 1720001A */  bnez  $t9, .L7F0BE0E4
-/* 0F0A6C 7F0BE07C 00000000 */   nop   
+/* 0F0A6C 7F0BE07C 00000000 */   nop
 /* 0F0A70 7F0BE080 18400018 */  blez  $v0, .L7F0BE0E4
 /* 0F0A74 7F0BE084 3C0E8002 */   lui   $t6, %hi(g_AppendCheatSinglePlayer) # $t6, 0x8002
 /* 0F0A78 7F0BE088 8DCE5E50 */  lw    $t6, %lo(g_AppendCheatSinglePlayer)($t6)
@@ -3591,19 +3591,19 @@ glabel lvlManageMpGame
 /* 0F0AD0 7F0BE0E0 24630001 */   addiu $v1, $v1, 1
 .L7F0BE0E4:
 /* 0F0AD4 7F0BE0E4 0FC26669 */  jal   getPlayerCount
-/* 0F0AD8 7F0BE0E8 00000000 */   nop   
+/* 0F0AD8 7F0BE0E8 00000000 */   nop
 /* 0F0ADC 7F0BE0EC 28410002 */  slti  $at, $v0, 2
 /* 0F0AE0 7F0BE0F0 1420014C */  bnez  $at, .L7F0BE624
 /* 0F0AE4 7F0BE0F4 3C188004 */   lui   $t8, %hi(g_CurrentStageToLoad) # $t8, 0x8004
 /* 0F0AE8 7F0BE0F8 8F180FE4 */  lw    $t8, %lo(g_CurrentStageToLoad)($t8)
 /* 0F0AEC 7F0BE0FC 2401005A */  li    $at, 90
 /* 0F0AF0 7F0BE100 13010148 */  beq   $t8, $at, .L7F0BE624
-/* 0F0AF4 7F0BE104 00000000 */   nop   
+/* 0F0AF4 7F0BE104 00000000 */   nop
 /* 0F0AF8 7F0BE108 0FC3003C */  jal   get_mission_state
-/* 0F0AFC 7F0BE10C 00000000 */   nop   
+/* 0F0AFC 7F0BE10C 00000000 */   nop
 /* 0F0B00 7F0BE110 24010006 */  li    $at, 6
 /* 0F0B04 7F0BE114 14410029 */  bne   $v0, $at, .L7F0BE1BC
-/* 0F0B08 7F0BE118 00000000 */   nop   
+/* 0F0B08 7F0BE118 00000000 */   nop
 /* 0F0B0C 7F0BE11C AFA00190 */  sw    $zero, 0x190($sp)
 /* 0F0B10 7F0BE120 AFA0018C */  sw    $zero, 0x18c($sp)
 /* 0F0B14 7F0BE124 0FC26669 */  jal   getPlayerCount
@@ -3642,9 +3642,9 @@ glabel lvlManageMpGame
 /* 0F0B90 7F0BE1A0 8FA60188 */   lw    $a2, 0x188($sp)
 .L7F0BE1A4:
 /* 0F0B94 7F0BE1A4 18A00005 */  blez  $a1, .L7F0BE1BC
-/* 0F0B98 7F0BE1A8 00000000 */   nop   
+/* 0F0B98 7F0BE1A8 00000000 */   nop
 /* 0F0B9C 7F0BE1AC 14A60003 */  bne   $a1, $a2, .L7F0BE1BC
-/* 0F0BA0 7F0BE1B0 00000000 */   nop   
+/* 0F0BA0 7F0BE1B0 00000000 */   nop
 /* 0F0BA4 7F0BE1B4 0FC3003F */  jal   set_missionstate
 /* 0F0BA8 7F0BE1B8 24040001 */   li    $a0, 1
 .L7F0BE1BC:
@@ -3653,7 +3653,7 @@ glabel lvlManageMpGame
 /* 0F0BB4 7F0BE1C4 3C028004 */  lui   $v0, %hi(D_80048394) # $v0, 0x8004
 /* 0F0BB8 7F0BE1C8 3C198004 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8004
 /* 0F0BBC 7F0BE1CC 1860004A */  blez  $v1, .Leu7F0BE2F8
-/* 0F0BC0 7F0BE1D0 00000000 */   nop   
+/* 0F0BC0 7F0BE1D0 00000000 */   nop
 /* 0F0BC4 7F0BE1D4 8C421018 */  lw    $v0, %lo(D_80048394)($v0)
 /* 0F0BC8 7F0BE1D8 8F390FF4 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F0BCC 7F0BE1DC 2464F448 */  addiu $a0, $v1, -0xbb8
@@ -3664,11 +3664,11 @@ glabel lvlManageMpGame
 /* 0F0BE0 7F0BE1F0 AFA20184 */   sw    $v0, 0x184($sp)
 /* 0F0BE4 7F0BE1F4 01C4082A */  slt   $at, $t6, $a0
 /* 0F0BE8 7F0BE1F8 14200013 */  bnez  $at, .L7F0BE248
-/* 0F0BEC 7F0BE1FC 00000000 */   nop   
+/* 0F0BEC 7F0BE1FC 00000000 */   nop
 /* 0F0BF0 7F0BE200 0FC26669 */  jal   getPlayerCount
 /* 0F0BF4 7F0BE204 AFA0017C */   sw    $zero, 0x17c($sp)
 /* 0F0BF8 7F0BE208 1840000F */  blez  $v0, .L7F0BE248
-/* 0F0BFC 7F0BE20C 00000000 */   nop   
+/* 0F0BFC 7F0BE20C 00000000 */   nop
 .L7F0BE210:
 /* 0F0C00 7F0BE210 0FC26993 */  jal   set_cur_player
 /* 0F0C04 7F0BE214 8FA4017C */   lw    $a0, 0x17c($sp)
@@ -3683,7 +3683,7 @@ glabel lvlManageMpGame
 /* 0F0C28 7F0BE238 8FB9017C */  lw    $t9, 0x17c($sp)
 /* 0F0C2C 7F0BE23C 0322082A */  slt   $at, $t9, $v0
 /* 0F0C30 7F0BE240 1420FFF3 */  bnez  $at, .L7F0BE210
-/* 0F0C34 7F0BE244 00000000 */   nop   
+/* 0F0C34 7F0BE244 00000000 */   nop
 .L7F0BE248:
 /* 0F0C38 7F0BE248 3C0F8004 */  lui   $t7, %hi(g_MpTime) # $t7, 0x8004
 /* 0F0C3C 7F0BE24C 8DEF101C */  lw    $t7, %lo(g_MpTime)($t7)
@@ -3692,12 +3692,12 @@ glabel lvlManageMpGame
 /* 0F0C48 7F0BE258 25F8FE0C */  addiu $t8, $t7, -0x1f4
 /* 0F0C4C 7F0BE25C 01D8082A */  slt   $at, $t6, $t8
 /* 0F0C50 7F0BE260 1420000D */  bnez  $at, .L7F0BE298
-/* 0F0C54 7F0BE264 00000000 */   nop   
+/* 0F0C54 7F0BE264 00000000 */   nop
 /* 0F0C58 7F0BE268 8F391024 */  lw    $t9, %lo(g_MpSoundStateRelated)($t9)
 /* 0F0C5C 7F0BE26C 1720000A */  bnez  $t9, .L7F0BE298
-/* 0F0C60 7F0BE270 00000000 */   nop   
+/* 0F0C60 7F0BE270 00000000 */   nop
 /* 0F0C64 7F0BE274 0FC2FC1E */  jal   lvlGetControlsLockedFlag
-/* 0F0C68 7F0BE278 00000000 */   nop   
+/* 0F0C68 7F0BE278 00000000 */   nop
 /* 0F0C6C 7F0BE27C 14400006 */  bnez  $v0, .L7F0BE298
 /* 0F0C70 7F0BE280 3C048005 */   lui   $a0, %hi(g_musicSfxBufferPtr) # $a0, 0x8005
 /* 0F0C74 7F0BE284 3C068004 */  lui   $a2, %hi(g_MpSoundStateRelated) # $a2, 0x8004
@@ -3707,14 +3707,14 @@ glabel lvlManageMpGame
 /* 0F0C84 7F0BE294 240500A1 */   li    $a1, 161
 .L7F0BE298:
 /* 0F0C88 7F0BE298 0FC2FC1E */  jal   lvlGetControlsLockedFlag
-/* 0F0C8C 7F0BE29C 00000000 */   nop   
+/* 0F0C8C 7F0BE29C 00000000 */   nop
 /* 0F0C90 7F0BE2A0 1040000A */  beqz  $v0, .L7F0BE2CC
 /* 0F0C94 7F0BE2A4 3C048004 */   lui   $a0, %hi(g_MpSoundStateRelated) # $a0, 0x8004
 /* 0F0C98 7F0BE2A8 8C841024 */  lw    $a0, %lo(g_MpSoundStateRelated)($a0)
 /* 0F0C9C 7F0BE2AC 10800007 */  beqz  $a0, .L7F0BE2CC
-/* 0F0CA0 7F0BE2B0 00000000 */   nop   
+/* 0F0CA0 7F0BE2B0 00000000 */   nop
 /* 0F0CA4 7F0BE2B4 0C002094 */  jal   sndGetPlayingState
-/* 0F0CA8 7F0BE2B8 00000000 */   nop   
+/* 0F0CA8 7F0BE2B8 00000000 */   nop
 /* 0F0CAC 7F0BE2BC 10400003 */  beqz  $v0, .L7F0BE2CC
 /* 0F0CB0 7F0BE2C0 3C048004 */   lui   $a0, %hi(g_MpSoundStateRelated) # $a0, 0x8004
 /* 0F0CB4 7F0BE2C4 0C002120 */  jal   sndDeactivate
@@ -3728,7 +3728,7 @@ glabel lvlManageMpGame
 /* 0F0CD0 7F0BE2E0 10200005 */  beqz  $at, .Leu7F0BE2F8
 /* 0F0CD4 7F0BE2E4 01C3082A */   slt   $at, $t6, $v1
 /* 0F0CD8 7F0BE2E8 14200003 */  bnez  $at, .Leu7F0BE2F8
-/* 0F0CDC 7F0BE2EC 00000000 */   nop   
+/* 0F0CDC 7F0BE2EC 00000000 */   nop
 /* 0F0CE0 7F0BE2F0 0FC30684 */  jal   mpCalculateAwards
 /* 0F0CE4 7F0BE2F4 00002025 */   move  $a0, $zero
 .Leu7F0BE2F8:
@@ -3736,12 +3736,12 @@ glabel lvlManageMpGame
 /* 0F0CEC 7F0BE2FC 8F181020 */  lw    $t8, %lo(g_MpPoint)($t8)
 /* 0F0CF0 7F0BE300 3C198004 */  lui   $t9, %hi(g_ClockTimer) # $t9, 0x8004
 /* 0F0CF4 7F0BE304 1B00003D */  blez  $t8, .L7F0BE3FC
-/* 0F0CF8 7F0BE308 00000000 */   nop   
+/* 0F0CF8 7F0BE308 00000000 */   nop
 /* 0F0CFC 7F0BE30C 8F390FF4 */  lw    $t9, %lo(g_ClockTimer)($t9)
 /* 0F0D00 7F0BE310 1320003A */  beqz  $t9, .L7F0BE3FC
-/* 0F0D04 7F0BE314 00000000 */   nop   
+/* 0F0D04 7F0BE314 00000000 */   nop
 /* 0F0D08 7F0BE318 0FC26669 */  jal   getPlayerCount
-/* 0F0D0C 7F0BE31C 00000000 */   nop   
+/* 0F0D0C 7F0BE31C 00000000 */   nop
 /* 0F0D10 7F0BE320 00403825 */  move  $a3, $v0
 /* 0F0D14 7F0BE324 00002825 */  move  $a1, $zero
 /* 0F0D18 7F0BE328 00003025 */  move  $a2, $zero
@@ -3763,7 +3763,7 @@ glabel lvlManageMpGame
 /* 0F0D54 7F0BE364 24A50001 */   addiu $a1, $a1, 1
 /* 0F0D58 7F0BE368 C45203E4 */  lwc1  $f18, 0x3e4($v0)
 /* 0F0D5C 7F0BE36C 4612003E */  c.le.s $f0, $f18
-/* 0F0D60 7F0BE370 00000000 */  nop   
+/* 0F0D60 7F0BE370 00000000 */  nop
 /* 0F0D64 7F0BE374 45020003 */  bc1fl .L7F0BE384
 /* 0F0D68 7F0BE378 AFA3001C */   sw    $v1, 0x1c($sp)
 /* 0F0D6C 7F0BE37C 24A50001 */  addiu $a1, $a1, 1
@@ -3793,27 +3793,27 @@ glabel lvlManageMpGame
 /* 0F0DC0 7F0BE3D0 24630004 */   addiu $v1, $v1, 4
 .L7F0BE3D4:
 /* 0F0DC4 7F0BE3D4 18C00009 */  blez  $a2, .L7F0BE3FC
-/* 0F0DC8 7F0BE3D8 00000000 */   nop   
+/* 0F0DC8 7F0BE3D8 00000000 */   nop
 /* 0F0DCC 7F0BE3DC 14A00005 */  bnez  $a1, .L7F0BE3F4
-/* 0F0DD0 7F0BE3E0 00000000 */   nop   
+/* 0F0DD0 7F0BE3E0 00000000 */   nop
 /* 0F0DD4 7F0BE3E4 0FC30684 */  jal   mpCalculateAwards
 /* 0F0DD8 7F0BE3E8 00002025 */   move  $a0, $zero
 /* 0F0DDC 7F0BE3EC 10000003 */  b     .L7F0BE3FC
-/* 0F0DE0 7F0BE3F0 00000000 */   nop   
+/* 0F0DE0 7F0BE3F0 00000000 */   nop
 .L7F0BE3F4:
 /* 0F0DE4 7F0BE3F4 0FC30680 */  jal   mpwatchSetStopPlayFlag
-/* 0F0DE8 7F0BE3F8 00000000 */   nop   
+/* 0F0DE8 7F0BE3F8 00000000 */   nop
 .L7F0BE3FC:
 /* 0F0DEC 7F0BE3FC 0FC051B2 */  jal   get_scenario
-/* 0F0DF0 7F0BE400 00000000 */   nop   
+/* 0F0DF0 7F0BE400 00000000 */   nop
 /* 0F0DF4 7F0BE404 24010001 */  li    $at, 1
 /* 0F0DF8 7F0BE408 14410086 */  bne   $v0, $at, .L7F0BE624
 /* 0F0DFC 7F0BE40C 3C0F8004 */   lui   $t7, %hi(g_ClockTimer) # $t7, 0x8004
 /* 0F0E00 7F0BE410 8DEF0FF4 */  lw    $t7, %lo(g_ClockTimer)($t7)
 /* 0F0E04 7F0BE414 11E00083 */  beqz  $t7, .L7F0BE624
-/* 0F0E08 7F0BE418 00000000 */   nop   
+/* 0F0E08 7F0BE418 00000000 */   nop
 /* 0F0E0C 7F0BE41C 0FC26669 */  jal   getPlayerCount
-/* 0F0E10 7F0BE420 00000000 */   nop   
+/* 0F0E10 7F0BE420 00000000 */   nop
 /* 0F0E14 7F0BE424 44800000 */  mtc1  $zero, $f0
 /* 0F0E18 7F0BE428 00405025 */  move  $t2, $v0
 /* 0F0E1C 7F0BE42C 00006825 */  move  $t5, $zero
@@ -3932,7 +3932,7 @@ glabel lvlManageMpGame
 /* 0F0FB4 7F0BE5C4 258C0001 */   addiu $t4, $t4, 1
 /* 0F0FB8 7F0BE5C8 C46403E4 */  lwc1  $f4, 0x3e4($v1)
 /* 0F0FBC 7F0BE5CC 4600203C */  c.lt.s $f4, $f0
-/* 0F0FC0 7F0BE5D0 00000000 */  nop   
+/* 0F0FC0 7F0BE5D0 00000000 */  nop
 /* 0F0FC4 7F0BE5D4 45020003 */  bc1fl .L7F0BE5E4
 /* 0F0FC8 7F0BE5D8 258C0001 */   addiu $t4, $t4, 1
 /* 0F0FCC 7F0BE5DC 27FF0001 */  addiu $ra, $ra, 1
@@ -3950,13 +3950,13 @@ glabel lvlManageMpGame
 /* 0F0FF0 7F0BE600 0FC30684 */  jal   mpCalculateAwards
 /* 0F0FF4 7F0BE604 00002025 */   move  $a0, $zero
 /* 0F0FF8 7F0BE608 10000006 */  b     .L7F0BE624
-/* 0F0FFC 7F0BE60C 00000000 */   nop   
+/* 0F0FFC 7F0BE60C 00000000 */   nop
 /* 0F1000 7F0BE610 01A3082A */  slt   $at, $t5, $v1
 .L7F0BE614:
 /* 0F1004 7F0BE614 14200003 */  bnez  $at, .L7F0BE624
-/* 0F1008 7F0BE618 00000000 */   nop   
+/* 0F1008 7F0BE618 00000000 */   nop
 /* 0F100C 7F0BE61C 0FC30680 */  jal   mpwatchSetStopPlayFlag
-/* 0F1010 7F0BE620 00000000 */   nop   
+/* 0F1010 7F0BE620 00000000 */   nop
 .L7F0BE624:
 /* 0F1014 7F0BE624 3C028004 */  lui   $v0, %hi(g_ClockTimer) # $v0, 0x8004
 /* 0F1018 7F0BE628 3C0F8004 */  lui   $t7, %hi(D_80048394) # $t7, 0x8004
@@ -4015,7 +4015,7 @@ glabel lvlManageMpGame
 /* 0F10E4 7F0BE6F4 3C038004 */  lui   $v1, %hi(D_8004838C) # $v1, 0x8004
 /* 0F10E8 7F0BE6F8 24631010 */  addiu $v1, %lo(D_8004838C) # addiu $v1, $v1, 0x1010
 /* 0F10EC 7F0BE6FC 11C00005 */  beqz  $t6, .L7F0BE714
-/* 0F10F0 7F0BE700 00000000 */   nop   
+/* 0F10F0 7F0BE700 00000000 */   nop
 /* 0F10F4 7F0BE704 8C790000 */  lw    $t9, ($v1)
 /* 0F10F8 7F0BE708 0322C021 */  addu  $t8, $t9, $v0
 /* 0F10FC 7F0BE70C 10000015 */  b     .L7F0BE764
@@ -4048,49 +4048,49 @@ glabel lvlManageMpGame
 /* 0F1160 7F0BE770 8F390FE4 */  lw    $t9, %lo(g_CurrentStageToLoad)($t9)
 /* 0F1164 7F0BE774 2401005A */  li    $at, 90
 /* 0F1168 7F0BE778 17210009 */  bne   $t9, $at, .L7F0BE7A0
-/* 0F116C 7F0BE77C 00000000 */   nop   
+/* 0F116C 7F0BE77C 00000000 */   nop
 /* 0F1170 7F0BE780 0FC2436F */  jal   cheat_buttons_mp_related
-/* 0F1174 7F0BE784 00000000 */   nop   
+/* 0F1174 7F0BE784 00000000 */   nop
 /* 0F1178 7F0BE788 0FC06920 */  jal   menu_init
-/* 0F117C 7F0BE78C 00000000 */   nop   
+/* 0F117C 7F0BE78C 00000000 */   nop
 /* 0F1180 7F0BE790 0FC30388 */  jal   langTick
-/* 0F1184 7F0BE794 00000000 */   nop   
+/* 0F1184 7F0BE794 00000000 */   nop
 /* 0F1188 7F0BE798 100000A9 */  b     .L7F0BEA40
-/* 0F118C 7F0BE79C 00000000 */   nop   
+/* 0F118C 7F0BE79C 00000000 */   nop
 .L7F0BE7A0:
 /* 0F1190 7F0BE7A0 0FC26C3F */  jal   sub_GAME_7F09BBBC
-/* 0F1194 7F0BE7A4 00000000 */   nop   
+/* 0F1194 7F0BE7A4 00000000 */   nop
 /* 0F1198 7F0BE7A8 0FC2F72D */  jal   lvlSetMultipliersForDifficulty
-/* 0F119C 7F0BE7AC 00000000 */   nop   
+/* 0F119C 7F0BE7AC 00000000 */   nop
 /* 0F11A0 7F0BE7B0 0FC2EEF5 */  jal   sub_GAME_7F0BC7D4
-/* 0F11A4 7F0BE7B4 00000000 */   nop   
+/* 0F11A4 7F0BE7B4 00000000 */   nop
 /* 0F11A8 7F0BE7B8 0FC248E4 */  jal   sub_GAME_7F092E50
-/* 0F11AC 7F0BE7BC 00000000 */   nop   
+/* 0F11AC 7F0BE7BC 00000000 */   nop
 /* 0F11B0 7F0BE7C0 0FC24E5E */  jal   sub_GAME_7F094438
-/* 0F11B4 7F0BE7C4 00000000 */   nop   
+/* 0F11B4 7F0BE7C4 00000000 */   nop
 /* 0F11B8 7F0BE7C8 0FC28ECE */  jal   sub_GAME_7F0A4600
-/* 0F11BC 7F0BE7CC 00000000 */   nop   
+/* 0F11BC 7F0BE7CC 00000000 */   nop
 /* 0F11C0 7F0BE7D0 0FC1A580 */  jal   update_bullet_casings
-/* 0F11C4 7F0BE7D4 00000000 */   nop   
+/* 0F11C4 7F0BE7D4 00000000 */   nop
 /* 0F11C8 7F0BE7D8 0FC28785 */  jal   update_broken_windows
-/* 0F11CC 7F0BE7DC 00000000 */   nop   
+/* 0F11CC 7F0BE7DC 00000000 */   nop
 /* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   update_gray_flying_particles
-/* 0F11D4 7F0BE7E4 00000000 */   nop   
+/* 0F11D4 7F0BE7E4 00000000 */   nop
 /* 0F11D8 7F0BE7E8 0FC0F1C2 */  jal   handle_mp_respawn_and_some_things
-/* 0F11DC 7F0BE7EC 00000000 */   nop   
+/* 0F11DC 7F0BE7EC 00000000 */   nop
 /* 0F11E0 7F0BE7F0 0FC3022A */  jal   reset_all_music_slots
-/* 0F11E4 7F0BE7F4 00000000 */   nop   
+/* 0F11E4 7F0BE7F4 00000000 */   nop
 /* 0F11E8 7F0BE7F8 0FC30388 */  jal   langTick
-/* 0F11EC 7F0BE7FC 00000000 */   nop   
+/* 0F11EC 7F0BE7FC 00000000 */   nop
 /* 0F11F0 7F0BE800 0FC24116 */  jal   get_debug_joy2detailedit_flag
-/* 0F11F4 7F0BE804 00000000 */   nop   
+/* 0F11F4 7F0BE804 00000000 */   nop
 /* 0F11F8 7F0BE808 1040004D */  beqz  $v0, .L7F0BE940
 /* 0F11FC 7F0BE80C 3C068004 */   lui   $a2, %hi(D_800483C8) # $a2, 0x8004
 /* 0F1200 7F0BE810 24C6104C */  addiu $a2, %lo(D_800483C8) # addiu $a2, $a2, 0x104c
 /* 0F1204 7F0BE814 8CD80000 */  lw    $t8, ($a2)
 /* 0F1208 7F0BE818 24043000 */  li    $a0, 12288
 /* 0F120C 7F0BE81C 17000048 */  bnez  $t8, .L7F0BE940
-/* 0F1210 7F0BE820 00000000 */   nop   
+/* 0F1210 7F0BE820 00000000 */   nop
 /* 0F1214 7F0BE824 0C0022E0 */  jal   mempAllocBytesInBank
 /* 0F1218 7F0BE828 24050004 */   li    $a1, 4
 /* 0F121C 7F0BE82C 3C068004 */  lui   $a2, %hi(D_800483C8) # $a2, 0x8004
@@ -4165,14 +4165,14 @@ glabel lvlManageMpGame
 /* 0F132C 7F0BE93C A04F000D */   sb    $t7, 0xd($v0)
 .L7F0BE940:
 /* 0F1330 7F0BE940 0FC2413C */  jal   get_debug_portal_flag
-/* 0F1334 7F0BE944 00000000 */   nop   
+/* 0F1334 7F0BE944 00000000 */   nop
 /* 0F1338 7F0BE948 10400003 */  beqz  $v0, .L7F0BE958
-/* 0F133C 7F0BE94C 00000000 */   nop   
+/* 0F133C 7F0BE94C 00000000 */   nop
 /* 0F1340 7F0BE950 0FC2F4B4 */  jal   lvlPortalDebug7F0BDF10
 /* 0F1344 7F0BE954 00002025 */   move  $a0, $zero
 .L7F0BE958:
 /* 0F1348 7F0BE958 0FC240FC */  jal   getDebugMode
-/* 0F134C 7F0BE95C 00000000 */   nop   
+/* 0F134C 7F0BE95C 00000000 */   nop
 /* 0F1350 7F0BE960 24010004 */  li    $at, 4
 /* 0F1354 7F0BE964 10410006 */  beq   $v0, $at, .L7F0BE980
 /* 0F1358 7F0BE968 00002025 */   move  $a0, $zero
@@ -4180,7 +4180,7 @@ glabel lvlManageMpGame
 /* 0F1360 7F0BE970 1041001A */  beq   $v0, $at, .L7F0BE9DC
 /* 0F1364 7F0BE974 00002025 */   move  $a0, $zero
 /* 0F1368 7F0BE978 10000031 */  b     .L7F0BEA40
-/* 0F136C 7F0BE97C 00000000 */   nop   
+/* 0F136C 7F0BE97C 00000000 */   nop
 .L7F0BE980:
 /* 0F1370 7F0BE980 0C002C48 */  jal   joyGetButtonsPressedThisFrame
 /* 0F1374 7F0BE984 24050002 */   li    $a1, 2
@@ -4197,7 +4197,7 @@ glabel lvlManageMpGame
 /* 0F139C 7F0BE9AC 0C002C48 */  jal   joyGetButtonsPressedThisFrame
 /* 0F13A0 7F0BE9B0 24050001 */   li    $a1, 1
 /* 0F13A4 7F0BE9B4 10400022 */  beqz  $v0, .L7F0BEA40
-/* 0F13A8 7F0BE9B8 00000000 */   nop   
+/* 0F13A8 7F0BE9B8 00000000 */   nop
 /* 0F13AC 7F0BE9BC 0FC2BA3C */  jal   sub_GAME_7F0AF630
 /* 0F13B0 7F0BE9C0 24040001 */   li    $a0, 1
 /* 0F13B4 7F0BE9C4 00002025 */  move  $a0, $zero
@@ -4205,14 +4205,14 @@ glabel lvlManageMpGame
 /* 0F13BC 7F0BE9CC 0FC2C7FE */  jal   sub_GAME_7F0B2D38
 /* 0F13C0 7F0BE9D0 00003025 */   move  $a2, $zero
 /* 0F13C4 7F0BE9D4 1000001A */  b     .L7F0BEA40
-/* 0F13C8 7F0BE9D8 00000000 */   nop   
+/* 0F13C8 7F0BE9D8 00000000 */   nop
 .L7F0BE9DC:
 /* 0F13CC 7F0BE9DC 0C002C48 */  jal   joyGetButtonsPressedThisFrame
 /* 0F13D0 7F0BE9E0 24050002 */   li    $a1, 2
 /* 0F13D4 7F0BE9E4 50400004 */  beql  $v0, $zero, .L7F0BE9F8
 /* 0F13D8 7F0BE9E8 00002025 */   move  $a0, $zero
 /* 0F13DC 7F0BE9EC 0FC08B7E */  jal   chrDecrementAnimationTablePointerCount
-/* 0F13E0 7F0BE9F0 00000000 */   nop   
+/* 0F13E0 7F0BE9F0 00000000 */   nop
 /* 0F13E4 7F0BE9F4 00002025 */  move  $a0, $zero
 .L7F0BE9F8:
 /* 0F13E8 7F0BE9F8 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4220,7 +4220,7 @@ glabel lvlManageMpGame
 /* 0F13F0 7F0BEA00 50400004 */  beql  $v0, $zero, .L7F0BEA14
 /* 0F13F4 7F0BEA04 00002025 */   move  $a0, $zero
 /* 0F13F8 7F0BEA08 0FC08B96 */  jal   chrIncrementAnimationTablePointerCount
-/* 0F13FC 7F0BEA0C 00000000 */   nop   
+/* 0F13FC 7F0BEA0C 00000000 */   nop
 /* 0F1400 7F0BEA10 00002025 */  move  $a0, $zero
 .L7F0BEA14:
 /* 0F1404 7F0BEA14 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4228,7 +4228,7 @@ glabel lvlManageMpGame
 /* 0F140C 7F0BEA1C 50400004 */  beql  $v0, $zero, .L7F0BEA30
 /* 0F1410 7F0BEA20 00002025 */   move  $a0, $zero
 /* 0F1414 7F0BEA24 0FC08BA4 */  jal   chrToggleD_8002C90C
-/* 0F1418 7F0BEA28 00000000 */   nop   
+/* 0F1418 7F0BEA28 00000000 */   nop
 /* 0F141C 7F0BEA2C 00002025 */  move  $a0, $zero
 .L7F0BEA30:
 /* 0F1420 7F0BEA30 0C002C20 */  jal   joyGetButtons
@@ -4237,7 +4237,7 @@ glabel lvlManageMpGame
 /* 0F142C 7F0BEA3C 0002202B */   sltu  $a0, $zero, $v0
 .L7F0BEA40:
 /* 0F1430 7F0BEA40 0FC240FC */  jal   getDebugMode
-/* 0F1434 7F0BEA44 00000000 */   nop   
+/* 0F1434 7F0BEA44 00000000 */   nop
 /* 0F1438 7F0BEA48 2401000C */  li    $at, 12
 /* 0F143C 7F0BEA4C 1041002E */  beq   $v0, $at, .L7F0BEB08
 /* 0F1440 7F0BEA50 00002025 */   move  $a0, $zero
@@ -4248,7 +4248,7 @@ glabel lvlManageMpGame
 /* 0F1454 7F0BEA64 54410074 */  bnel  $v0, $at, .L7F0BEC38
 /* 0F1458 7F0BEA68 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0F145C 7F0BEA6C 0C000F7E */  jal   viGetHorizontalOffset
-/* 0F1460 7F0BEA70 00000000 */   nop   
+/* 0F1460 7F0BEA70 00000000 */   nop
 /* 0F1464 7F0BEA74 0C000F78 */  jal   viGet800232A0
 /* 0F1468 7F0BEA78 AFA20030 */   sw    $v0, 0x30($sp)
 /* 0F146C 7F0BEA7C AFA2002C */  sw    $v0, 0x2c($sp)
@@ -4296,7 +4296,7 @@ glabel lvlManageMpGame
 /* 0F1500 7F0BEB10 50400004 */  beql  $v0, $zero, .L7F0BEB24
 /* 0F1504 7F0BEB14 00002025 */   move  $a0, $zero
 /* 0F1508 7F0BEB18 0FC2F37A */  jal   lvlMusicAppendPlayEndTheme
-/* 0F150C 7F0BEB1C 00000000 */   nop   
+/* 0F150C 7F0BEB1C 00000000 */   nop
 /* 0F1510 7F0BEB20 00002025 */  move  $a0, $zero
 .L7F0BEB24:
 /* 0F1514 7F0BEB24 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4304,7 +4304,7 @@ glabel lvlManageMpGame
 /* 0F151C 7F0BEB2C 50400004 */  beql  $v0, $zero, .L7F0BEB40
 /* 0F1520 7F0BEB30 00002025 */   move  $a0, $zero
 /* 0F1524 7F0BEB34 0FC2F367 */  jal   lvlMusicAppendPlaySoloDeathShort
-/* 0F1528 7F0BEB38 00000000 */   nop   
+/* 0F1528 7F0BEB38 00000000 */   nop
 /* 0F152C 7F0BEB3C 00002025 */  move  $a0, $zero
 .L7F0BEB40:
 /* 0F1530 7F0BEB40 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4312,7 +4312,7 @@ glabel lvlManageMpGame
 /* 0F1538 7F0BEB48 50400004 */  beql  $v0, $zero, .L7F0BEB5C
 /* 0F153C 7F0BEB4C 00002025 */   move  $a0, $zero
 /* 0F1540 7F0BEB50 0C00190C */  jal   musicTrack1Stop
-/* 0F1544 7F0BEB54 00000000 */   nop   
+/* 0F1544 7F0BEB54 00000000 */   nop
 /* 0F1548 7F0BEB58 00002025 */  move  $a0, $zero
 .L7F0BEB5C:
 /* 0F154C 7F0BEB5C 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4320,7 +4320,7 @@ glabel lvlManageMpGame
 /* 0F1554 7F0BEB64 50400034 */  beql  $v0, $zero, .L7F0BEC38
 /* 0F1558 7F0BEB68 8FBF0014 */   lw    $ra, 0x14($sp)
 /* 0F155C 7F0BEB6C 0C001940 */  jal   musicTrack1SaveCurrentVolumeAsTrackDefault
-/* 0F1560 7F0BEB70 00000000 */   nop   
+/* 0F1560 7F0BEB70 00000000 */   nop
 /* 0F1564 7F0BEB74 10000030 */  b     .L7F0BEC38
 /* 0F1568 7F0BEB78 8FBF0014 */   lw    $ra, 0x14($sp)
 .L7F0BEB7C:
@@ -4361,7 +4361,7 @@ glabel lvlManageMpGame
 /* 0F15EC 7F0BEBFC 50400004 */  beql  $v0, $zero, .L7F0BEC10
 /* 0F15F0 7F0BEC00 00002025 */   move  $a0, $zero
 /* 0F15F4 7F0BEC04 0C002161 */  jal   sndDeactivateAllSfxByFlag_1
-/* 0F15F8 7F0BEC08 00000000 */   nop   
+/* 0F15F8 7F0BEC08 00000000 */   nop
 /* 0F15FC 7F0BEC0C 00002025 */  move  $a0, $zero
 .L7F0BEC10:
 /* 0F1600 7F0BEC10 0C002C48 */  jal   joyGetButtonsPressedThisFrame
@@ -4378,7 +4378,7 @@ glabel lvlManageMpGame
 .L7F0BEC38:
 /* 0F1628 7F0BEC38 27BD0198 */  addiu $sp, $sp, 0x198
 /* 0F162C 7F0BEC3C 03E00008 */  jr    $ra
-/* 0F1630 7F0BEC40 00000000 */   nop   
+/* 0F1630 7F0BEC40 00000000 */   nop
 )
 #endif
 
@@ -4389,10 +4389,10 @@ glabel lvlManageMpGame
  * Assumes a debug mode is present, and handles debug edit intro, debug stan edit, debug bond "view."
  * By default, the DEB_BOND_VIEW path is chosen without debug info.
  * This updates the player viewport(s), and handles player movement.
- * 
+ *
  * Multiplayer:
  * Updates distance_traveled and possibly (depending on scenario) have_token_or_goldengun.
- * 
+ *
  * US Address 0x7F0BF800.
  * EU address 7F0BEC44.
  */
@@ -4464,13 +4464,13 @@ void lvlViewMoveTick(void)
                 currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
 
                 if(1);
-                
+
                 if (g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 == 2)
                 {
                     g_CurrentPlayer->hands[GUNRIGHT].when_detonating_mines_is_0 = 5;
                 }
             }
-            
+
             g_playerPerm->flag_counter += g_ClockTimer;
             g_playerPerm->have_token_or_goldengun = 1;
         }

@@ -1353,7 +1353,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
 
         if (obj->flags & 0x100)
         {
-            obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, 4U);
+            obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, MEMPOOL_STAGE);
             obj->state = (u8) (obj->state | 8);
         }
         else
@@ -32505,10 +32505,10 @@ void sub_GAME_7F04F244(PropRecord* prop, rect4f** arg1, s32* arg2, f32* arg3, f3
 
 void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 {
-  u8 *puVar1;
+  u8 *str;
   
-  puVar1 = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)); //Picked up
-  strcat(buffer,puVar1);
+  str = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)); //Picked up
+  strcat(buffer,str);
   return;
 }
 
@@ -32525,7 +32525,7 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_9MM_2:
     case AMMO_RIFLE:
     case AMMO_PLASTIQUE:
-        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
         strcat(buffer,textfiletext);
         break;
     case AMMO_SHOTGUN:
@@ -32545,33 +32545,33 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_02)); //a
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_02_A)); //a
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_EXPLOSIVEPEN:
     case AMMO_BOMBCASE:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_03)); //an
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_03_AN)); //an
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_GEKEY:
     case AMMO_TOKEN:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_04)); //the
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_04_THE)); //the
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
     }
@@ -32584,23 +32584,23 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
     u8 *textfiletext;
     if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE))
     {
-        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_05)); //ammo
+        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_05_AMMO)); //ammo
         strcat(buffer,textfiletext);
     }
     else
     {
         if (ammotype == AMMO_KNIFE)
         {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0F)); //throwing
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0F_THROWING)); //throwing
             strcat(buffer,textfiletext);
             if (amount == 1)
             {
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_10)); //knife
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_10_KNIFE)); //knife
                 strcat(buffer,textfiletext);
             }
             else
             {
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_11)); //knives
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_11_KNIVES)); //knives
                 strcat(buffer,textfiletext);
             }
         }
@@ -32610,15 +32610,15 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
             {
                 if (amount == 1)
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_19)); //stick
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_19_STICK)); //stick
                     strcat(buffer,textfiletext);
                 }
                 else
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1A)); //sticks
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1A_STICKS)); //sticks
                     strcat(buffer,textfiletext);
                 }
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_18)); //of dynamite
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_18_OFDYNAMITE)); //of dynamite
                 strcat(buffer,textfiletext);
             }
             else
@@ -32626,85 +32626,85 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
                 switch(ammotype)
                 {
                     case AMMO_SHOTGUN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_06)); //shotgun cartridge
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_06_SHOTGUNCARTRIDGE)); //shotgun cartridge
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_MAGNUM:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_07)); //magnum bullet
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_07_MAGNUMBULLET)); //magnum bullet
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GGUN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_08)); //golden bullet
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_08_GOLDENBULLET)); //golden bullet
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GRENADE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_09)); //hand grenade
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_09_HANDGRENADE)); //hand grenade
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GRENADEROUND:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0A)); //grenade round
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0A_GRENADEROUND)); //grenade round
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_ROCKETS:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0B)); //rocket
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0B_ROCKET)); //rocket
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_REMOTEMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0C)); //remote mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0C_REMOTEMINE)); //remote mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PROXMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0D)); //proximity mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0D_PROXIMITYMINE)); //proximity mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_TIMEDMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0E)); //timed mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0E_TIMEDMINE)); //timed mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_DARTS:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_13)); //dart
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_13_DART)); //dart
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_EXPLOSIVEPEN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_14)); //explosive pen
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_14_EXPLOSIVEPEN)); //explosive pen
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_BOMBCASE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_15)); //explosive case
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_15_EXPLOSIVECASE)); //explosive case
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_FLARE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_16)); //flare
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_16_FLARE)); //flare
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PITON:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_17)); //piton
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_17_PITON)); //piton
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_BUG:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1B)); //bug
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1B_BUG)); //bug
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_MICRO_CAMERA:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1C)); //micro camera
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1C_MICROCAMERA)); //micro camera
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GEKEY:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1D)); //GoldenEye key
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1D_GOLDENEYEKEY)); //GoldenEye key
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_TOKEN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1E)); //token
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1E_TOKEN)); //token
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PLASTIQUE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1F)); //plastique
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1F_PLASTIQUE)); //plastique
                         strcat(buffer,textfiletext);
                         break;
                 }
                 if (1 < amount)
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_12)); //s
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_12_S)); //s
                     strcat(buffer,textfiletext);
                 }
             }
@@ -32974,7 +32974,7 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
           if (getPlayerCount() < 3)
           {
              //Picked up
-            strcpy(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
+            strcpy(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)));
           }
     }
 
@@ -32997,115 +32997,115 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
             return;
         case ITEM_KNIFE:
             //a hunting knife.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_20)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_20_AHUNTINGKNIFE)));
             break;
         case ITEM_WPPK:
             //a PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_21)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_21_APPK)));
             break;
         case ITEM_WPPKSIL:
             //a silenced PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_22)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_22_ASILENCEDPPK)));
             break;
         case ITEM_TT33:
             //a DD44 Dostovei.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_23)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_23_ATT33)));
             break;
         case ITEM_SKORPION:
             //a Klobb.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_24)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_24_ASPKORPION)));
             break;
         case ITEM_AK47:
             //a KF7 Soviet.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_25)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_25_ANAK47)));
             break;
         case ITEM_UZI:
             //a ZMG (9mm).
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_26)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_26_ANUZI)));
             break;
         case ITEM_MP5K:
             //a D5K Deutsche.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_27)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_27_ANMP5K)));
             break;
         case ITEM_MP5KSIL:
             //a silenced D5K.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_28)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_28_ASILENCEDMP5)));
             break;
         case ITEM_SPECTRE:
             //a Phantom.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_29)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_29_ASPECTRE)));
             break;
         case ITEM_M16:
             //an AR33 assault rifle.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2A)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2A_ANM16)));
             break;
         case ITEM_FNP90:
             //an RC-P90.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2B)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2B_ANFNP90)));
             break;
         case ITEM_SHOTGUN:
             //a shotgun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2C)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2C_ASHOTGUN)));
             break;
         case ITEM_AUTOSHOT:
             //an automatic shotgun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2D)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2D_ANAUTOSHOTGUN)));
             break;
         case ITEM_SNIPERRIFLE:
             //a sniper rifle.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2E)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2E_ASNIPERRIFLE)));
             break;
         case ITEM_GRENADELAUNCH:
             //a grenade launcher.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2F)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2F_AGRENADELAUNCHER)));
             break;
         case ITEM_ROCKETLAUNCH:
             //a rocket launcher.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_30)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_30_AROCKETLAUNCHER)));
             break;
         case ITEM_RUGER:
             //a Cougar Magnum.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_31)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_31_ARUGERMAGNUM)));
             break;
         case ITEM_GOLDENGUN:
             //the Golden Gun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_32)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_32_THEGOLDENGUN)));
             break;
         case ITEM_LASER:
             //a Moonraker laser.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_33)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_33_AMOOKRAKERLASER)));
             break;
         case ITEM_FLAREPISTOL:
             //a flare pistol.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_34)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_34_AFLAREPISTOL)));
             break;
         case ITEM_PITONGUN:
             //a piton gun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_35)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_35_APITONGUN)));
             break;
         case ITEM_SILVERWPPK:
             //a silver PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_36)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_36_ASILVERPPK)));
             break;
         case ITEM_GOLDWPPK:
             //a gold PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_37)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_37_AGOLDPPK)));
             break;
         case ITEM_KEYCARD:
             //a keycard.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_38)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_38_AKEYCARD)));
             break;
         case ITEM_KEYYALE:
             //a yale key.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_39)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_39_AYALEKEY)));
             break;
         case ITEM_KEYBOLT:
             //a bolt key.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3A)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_3A_ABOLTKEY)));
             break;
         default:
             //a new weapon.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3B)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_3B_ANEWWEAPON)));
             break;
     }
 
@@ -33116,7 +33116,7 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
             finalstring[strlen(finalstring) - 1] = '\0';
         }
         //Picked up
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
+        strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)));
         strcat(finalstring,"\n");
     }
 
@@ -38790,7 +38790,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
 
     prop = objInitWithAutoModel((ObjectRecord* ) door);
     scale = PitemZ_entries[door->obj].scale;
-    door->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, 4U);
+    door->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, MEMPOOL_STAGE);
 
     matrix_4x4_copy(mtx, &door->mtx);
     matrix_scalar_multiply(scale, door->mtx.m[0]);
@@ -38812,7 +38812,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
 
     if (door->doorFlags & 4) {
         union ModelRoData *rodata = door->model->obj->RootNode->Child->Child->Data;
-        door->unkcc = mempAllocBytesInBank(rodata->DisplayListCollisions.numVertices * sizeof(Vertex), 4U);
+        door->unkcc = mempAllocBytesInBank(rodata->DisplayListCollisions.numVertices * sizeof(Vertex), MEMPOOL_STAGE);
     } else {
         door->unkcc = NULL;
     }

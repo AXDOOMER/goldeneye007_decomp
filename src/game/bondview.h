@@ -27,7 +27,7 @@ typedef struct invitem_dual
 /** unknown struct, used in `strut player`.
  * We know this is a struct from the compiler auto-generated
  * code to copy structs in bondview.c bondviewKillCurrentPlayer.
- * 
+ *
  * sizeof == 84 (0x54)
  */
 struct collision434 {
@@ -45,8 +45,8 @@ struct collision434 {
     /**
      * This affects Bond's movement, but not the viewport.
      * This does not affect boost direction.
-     * 
-     * f[0]: forward component (sin theta) in radians 
+     *
+     * f[0]: forward component (sin theta) in radians
      * f[1]: zero
      * f[2]: sideways component (cos theta) in radians.
      * Offset 0x10.
@@ -203,7 +203,7 @@ struct hand
 
   // offset 0xad8
   Mtxf throw_item_pos_related;
-  
+
   s32 field_B18;
   s32 field_B1C;
   s32 field_B20;
@@ -286,10 +286,10 @@ typedef struct textoverride {
   /*0x00*/ u32 unk1;
 	/*0x04*/ s32 objoffset;
 	/*0x08*/ s32 weapon;
-	/*0x0c*/ u32 unk4;
-	/*0x10*/ u32 unk5;
-	/*0x14*/ u32 unk6;
-	/*0x18*/ u32 unk7;
+	/*0x0c*/ u32 titletext1; //1st title
+	/*0x10*/ u32 titletext2;//2nd title
+	/*0x14*/ u32 shorttext;
+	/*0x18*/ u32 longtext; //longname
 	/*0x1c*/ u32 pickuptext;
 	/*0x20*/ struct textoverride *next;
 	/*0x24*/ struct ObjectRecord *obj;
@@ -381,7 +381,7 @@ struct player
    * Offset 0x007c.
    */
   /* 0x007c */ f32 field_7C;
-  
+
   /* 0x0080 */ f32 field_80;
 
   /**
@@ -406,13 +406,13 @@ struct player
    * Collision / clipping related.
    * When Bond falls off a ladder or similar, will "overshoot" vertical default.
    * Current offset is stored in this field.
-   * 
+   *
    * Offset 0x0090.
    */
   /* 0x0090 */ f32 vertical_bounce_adjust;
   /* 0x0094 */ s32 field_94;
   /* 0x0098 */ f32 field_98;
-  
+
   /**
    * Flag: 0, 1, 2
   */
@@ -458,7 +458,7 @@ struct player
     * 0x00f4
     **/
     f32 damageshowtime;
-    
+
     /**
      * When a non-negative integer:
      * - Show health and body armor overlay if Bond isn't dead.
@@ -501,25 +501,25 @@ struct player
   /* 0x0144 */ s32 autoxaimtime60;
   /* 0x0148 */ f32 vv_theta;
   /* 0x014c */ f32 speedtheta;
-  
+
   /**
    * Computed value from vv_theta, used to calculate boost direction.
    * 0x0150
    **/
   f32 vv_costheta;
-  
+
   /**
    * Computed value from vv_theta, used to calculate boost direction.
    * 0x0154
    **/
   f32 vv_sintheta;
-  
+
   /**
    * Vertical look angle.
    * 0x0158
    **/
   f32 vv_verta;
-  
+
   /**
    * Vertical look angle. Computed value from vv_verta, should always be between 0 and 360 degrees.
    * 0x015c
@@ -527,13 +527,13 @@ struct player
   f32 vv_verta360;
 
   /* 0x0160 */ f32 speedverta;
-  
+
   /**
    * Computed value from vv_verta360, but otherwise unused?
    * 0x0164
    **/
   f32 vv_cosverta;
-  
+
   /**
    * Computed value from vv_verta360, but otherwise unused?
    * 0x0168
@@ -555,7 +555,7 @@ struct player
    * How long Bond has been running
   */
   /* 0x017c */ s32 speedmaxtime60;
-  
+
   coord3d bondshotspeed; //0x180
 
   // offset 0x18c
@@ -572,7 +572,7 @@ struct player
 
   // offset 0x19c
   f32 bondbreathing;
-  
+
   s32 field_1A0;
   s32 field_1A4;
   s32 field_1A8;
@@ -638,7 +638,7 @@ struct player
    * Offset 0x022c.
    */
   f32 pause_watch_related_scaled;
-  
+
   s32 something_with_watch_object_instance;
 
   s32 field_234;
@@ -779,10 +779,10 @@ struct player
   * Offset 0x408.
   */
   coord3d bondprevpos; //0x408
-  
+
   f32 thetadie; //0x414
   f32 vertadie; //0x418
-  s32 bondtype; 
+  s32 bondtype;
   s32 startnewbonddie; //0x420
 
   /**
@@ -852,7 +852,7 @@ struct player
   s8 field_5BD;
   s8 field_5BE;
   s8 field_5BF;
-  
+
   f32 field_5C0;
 
   s32 field_5C4;
@@ -946,16 +946,16 @@ struct player
    * Offset 0x7f6.
    */
   s16 viewtop;
-  
+
   s32 hand_invisible[2]; /* 0x7f8*/
   ITEM_IDS hand_item[2]; /* 0x800 */
   ModelFileHeader *ptr_hand_weapon_buffer[2]; /* 0x808 */
-  
+
   /**
    * Offset 0x810.
    */
   ModelFileHeader copy_of_body_obj_header[2];
-  
+
   struct texpool item_related[2]; /* 0x850 */
 
   /**
@@ -972,7 +972,7 @@ struct player
    * Offset 0xfcc.
    */
   s32 field_FCC;
-  
+
   // Seems to be copy of field_FCC
   s32 field_FD0;
 
@@ -1118,7 +1118,7 @@ struct player
    * Used during level.
    * 0x2: no crosshair
    * 0x0: cross hair shown on screen.
-   * 
+   *
    * Offset 0x1128.
    */
   s32 gunsightmode;
@@ -1546,12 +1546,12 @@ struct player
    * Offset 0x19b8.
   */
   struct WatchRectangle buffer_for_watch_static_vertices[1];
-  
+
   /**
    * Offset 0x19f8
   */
   s32 watch_body_armor_bar_gdl; // used in watch
-  
+
   s32 field_19FC;
   s32 field_1A00;
   s32 field_1A04;
@@ -2481,7 +2481,7 @@ struct player
    * Offset 0x2858
   */
   Gfx buffer_for_watch_greenbackdrop_DL[WATCH_NUMBER_SCREENS];
-  
+
   s32 field_2880;
   s32 field_2884;
   s32 field_2888;
@@ -2552,7 +2552,7 @@ struct player
   s32 field_298C;
   s32 field_2990;
   s32 field_2994;
-  
+
   /**
    * Watch static, not "static DL".
    * Offset 0x2998
@@ -2598,7 +2598,7 @@ struct player
 
   /**
    * Current tile pointer -> room.
-   * 
+   *
    * Offset 0x2a04.
    */
   s16 field_2A04;
