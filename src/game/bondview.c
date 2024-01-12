@@ -754,7 +754,7 @@ void bondviewUpdateSpeedSideways(s32 arg0);
 void bondviewUpdateSpeedForwards(s32 arg0);
 void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, struct StandTile **stan, struct coord3d *arg6);
 void sub_GAME_7F07B2A0(s32, f32, struct coord3d *, struct coord3d *);
-s32 sub_GAME_7F07A534(struct PropRecord *, struct coord3d *, struct PropRecord *, struct coord3d *, struct StandTile *, f32);
+s32 pickDeathCameraAngles(struct PropRecord *, struct coord3d *, struct PropRecord *, struct coord3d *, struct StandTile *, f32);
 
 // end forward declarations
 
@@ -3727,7 +3727,7 @@ u32 bondviewGetCameraMode(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07A534(void) {
+void pickDeathCameraAngles(void) {
 
 }
 #else
@@ -3744,7 +3744,7 @@ glabel D_8005503C
 glabel D_80055040
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F07A534
+glabel pickDeathCameraAngles
 /* 0AF064 7F07A534 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 0AF068 7F07A538 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F4)
 /* 0AF06C 7F07A53C AC2499F4 */  sw    $a0, %lo(dword_CODE_bss_800799F4)($at)
@@ -4166,7 +4166,7 @@ void bondviewSetCameraMode(s32 arg0)
         
         stop_time_flag = 0;
     }
-    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
     {
         f32 var_f0;
         PropRecord *sp64;
@@ -4187,6 +4187,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
+            // This branch restarts Bond's death animation for his death replay
             in_tank_flag = 0;
 
             // struct copy
@@ -4226,7 +4227,7 @@ void bondviewSetCameraMode(s32 arg0)
         if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
             sp64 = g_PlayerTankProp;
-            var_f0 = 500.0f;
+            var_f0 = 500.0f; // distance to place the camera
             sp58.f[0] = g_PlayerTankProp->pos.f[0];
             sp58.f[1] = g_PlayerTankProp->pos.f[1];
             sp58.f[2] = g_PlayerTankProp->pos.f[2];
@@ -4238,7 +4239,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
-            var_f0 = 200.0f;
+            var_f0 = 200.0f; // distance to place the camera
             sp64 = g_CurrentPlayer->prop;
             sp58.f[0] = g_CurrentPlayer->field_3C4;
             sp58.f[1] = g_CurrentPlayer->field_3C8;
@@ -4250,7 +4251,7 @@ void bondviewSetCameraMode(s32 arg0)
             var_v1 = g_CurrentPlayer->field_488.current_tile_ptr;
         }
         
-        if (sub_GAME_7F07A534(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
+        if (pickDeathCameraAngles(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
         {
             if (D_80036510 == 0)
             {
@@ -4265,10 +4266,12 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
+            // pickDeathCameraAngles has returned 0. This happens when no possible angles were found
+            // to place the camera at the requested distance or when the three death replays are finished.
             bossRunTitleStage();
         }
     }
-    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
     {
         currentPlayerSetFadeColour(0, 0, 0, 0.0f);
         currentPlayerSetFadeFrac(60.0f, 1.0f);
@@ -4831,9 +4834,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
         }
     }
-    else if ((g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST) || (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND))
+    else if ((g_CameraMode == CAMERAMODE_DEATH_CAM_SP) || (g_CameraMode == CAMERAMODE_DEATH_CAM_MP))
     {
-        if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
+        if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
         {
             D_800364A4 += g_GlobalTimerDelta;
             
@@ -4859,7 +4862,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 D_80036510 = CAMERAMODE_FADESWIRL;
             }
         }
-        else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+        else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
         {
             D_800364A4 += g_GlobalTimerDelta;
             
@@ -8256,7 +8259,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
     g_CurrentPlayer->field_488.collision_position.f[1] = g_CurrentPlayer->field_70 + phi_f0;
     
-    if (((g_CameraMode != CAMERAMODE_DEATH_CAM_FIRST) && (g_CameraMode != CAMERAMODE_DEATH_CAM_SECOND) && (g_CameraMode != CAMERAMODE_POSEND))
+    if (((g_CameraMode != CAMERAMODE_DEATH_CAM_SP) && (g_CameraMode != CAMERAMODE_DEATH_CAM_MP) && (g_CameraMode != CAMERAMODE_POSEND))
         || (g_CurrentPlayer->ptr_char_objectinstance == 0))
     {
         g_CurrentPlayer->field_488.pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
