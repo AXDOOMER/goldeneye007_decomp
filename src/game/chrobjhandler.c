@@ -37897,9 +37897,123 @@ void sub_GAME_7F052B00(DoorRecord *door)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F052D8C(DoorRecord* door) {
+/**
+ * NTSC address 0x7F052D8C.
+ * perfect dark void door0f08cb20(struct doorobj *door, Vtx *src, Vtx *dst, s32 numvertices)
+ * 
+ * https://decomp.me/scratch/ccGWm
+*/
+void sub_GAME_7F052D8C(DoorRecord *door)
+{
+#define CYCLIC_NEXT1ALT(j) (j + 1) % 4
+#define CYCLIC_NEXT2ALT(j) (j + 2) % 4
+#define CYCLIC_NEXT3ALT(j) (j + 3) % 4
 
+#define CYCLIC_NEXT1(j) (j + 1) % 4
+#define CYCLIC_NEXT2(j) (j + 2) % 4
+#define CYCLIC_NEXT3(j) (j + 3) % 4
+
+    Model                                          *mdl;
+    ModelNode                                      *mdlDLCNode;
+    struct ModelRoData_DisplayList_CollisionRecord *src;
+    struct ModelRwData_DisplayList_CollisionRecord *dst;
+    s16                                             cutoff;
+    s32                                             var_fp;
+    s32                                             j;
+    s32                                             k;
+
+    Vertex                                         *psrc;
+    Vertex                                         *pdst;
+
+    if (door->doorFlags & DOORFLAG_0004)
+    {
+        mdl = door->model;
+        mdlDLCNode = mdl->obj->RootNode->Child->Child; //Get the DL
+        src = (struct ModelRoData_DisplayList_CollisionRecord *)mdlDLCNode->Data;
+        dst = (struct ModelRwData_DisplayList_CollisionRecord *)modelGetNodeRwData(mdl, mdlDLCNode);
+
+        if (door->doorType == DOORTYPE_VERTICAL)
+        {
+            cutoff = door->bbox.Bounds.ymax + 0.5f;
+        }
+        else
+        {
+            cutoff = door->bbox.Bounds.xmin + 0.5f;
+        }
+
+        dst->Vertices = dynAllocate7F0BD6C4(src->numVertices);
+
+        for (var_fp = 0; var_fp < src->numVertices / 4; var_fp++) //block of 4 vertices (quad)
+        {
+            for (j = 0; j < 4; j++) //for each vertex in block, move and clamp to bounding box, if clamped, move texture coords so it doesnt look "squished"
+            {
+                psrc = &src->Vertices[var_fp * 4];
+                pdst = &dst->Vertices[var_fp * 4];
+
+                if (j == 0)
+                {
+                    pdst[j]       = psrc[j];
+                    pdst[CYCLIC_NEXT1(j)] = psrc[CYCLIC_NEXT1(j)];
+                    pdst[CYCLIC_NEXT2(j)] = psrc[CYCLIC_NEXT2(j)];
+                    pdst[CYCLIC_NEXT3(j)] = psrc[CYCLIC_NEXT3(j)];
+                    // if (1);
+                }
+
+                if (door->doorType == DOORTYPE_VERTICAL)
+                {
+                    //if current vtx is higher than "cutoff", clamp it to cutoff.
+                    if (psrc[j].coord.y >= cutoff) 
+                    {
+                        //if next and current x and z are equal AND y Not equal - Find the "below" vertex in a quad
+                        if (psrc[CYCLIC_NEXT1(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT1(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT1(j)].coord.y != psrc[j].coord.y)
+                        {
+                            //InterpolatedValue = InitialValue + (Difference1) * (ChangeInValue) / (Difference2);
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT1(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT1(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT1(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT1(j)].coord.y);
+                        }
+                        else if (psrc[CYCLIC_NEXT2(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT2(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT2(j)].coord.y != psrc[j].coord.y)
+                        {
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT2(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT2(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT2(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT2(j)].coord.y);
+                        }
+                        else if (psrc[CYCLIC_NEXT3(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT3(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT3(j)].coord.y != psrc[j].coord.y)
+                        {
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT3(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT3(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT3(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT3(j)].coord.y);
+                        }
+
+                        pdst[j].coord.y = cutoff;
+                    }
+                }
+                else
+                {
+                    if (psrc[j].coord.x <= cutoff)
+                    {
+                        //if next and current y and z are equal AND x Not equal  - Find the "right" vertex in a quad
+                        if (psrc[CYCLIC_NEXT1(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT1(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT1(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT1(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT1(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT1(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT1(j)].coord.x - psrc[j].coord.x);
+                        }
+                        else if (psrc[CYCLIC_NEXT2(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT2(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT2(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT2(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT2(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT2(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT2(j)].coord.x - psrc[j].coord.x);
+                        }
+                        else if (psrc[CYCLIC_NEXT3(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT3(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT3(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT3(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT3(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT3(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT3(j)].coord.x - psrc[j].coord.x);
+                        }
+
+                        pdst[j].coord.x = cutoff;
+                    }
+                }
+            }
+        }
+    }
 }
+
 #else
 void sub_GAME_7F052D8C(DoorRecord*);
 GLOBAL_ASM(
