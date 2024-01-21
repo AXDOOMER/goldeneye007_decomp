@@ -2835,15 +2835,7 @@ typedef union
 
         Vertex*            unkcc; /*0xcc*/
 
-        // maybe struct ModelRoData_BoundingBoxRecord *
-        u32 unkd0;
-
-        u32                unkd4;
-        u32                unkd8;
-        u32                unkdc;
-        u32                unke0;
-        u32                unke4;
-        u32                unke8;
+        struct ModelRoData_BoundingBoxRecord bbox;
 
         /**
          * When the door completely opens, the current global timer value is
@@ -2874,7 +2866,7 @@ typedef union
          * Copy of global timer value.
          * Offset 0xfc.
          */
-        u32                timer;
+        f32                timer;
     } DoorRecord;
 
     #define New_DoorRecord(pad)                               \
