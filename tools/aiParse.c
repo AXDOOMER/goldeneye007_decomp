@@ -23,10 +23,10 @@
 
 // command 68 - door states
 char *DOORSTATE_ToString[] = {
-    " DOOR_STATE_CLOSED",  /* Closed*/
-    " DOOR_STATE_OPEN",    /* Opened*/
-    " DOOR_STATE_CLOSING", /* Closing*/
-    " DOOR_STATE_OPENING" /* Opening*/};
+    " AI_DOOR_STATE_CLOSED",  /* Closed*/
+    " AI_DOOR_STATE_OPEN",    /* Opened*/
+    " AI_DOOR_STATE_CLOSING", /* Closing*/
+    " AI_DOOR_STATE_OPENING" /* Opening*/};
 
 // command D7 - hud flags
 #define HUD_HIDE_ALL           0x00 /* Hide all*/

@@ -2452,20 +2452,20 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             if (door->openPosition <= 0)
                             {
-                                pass = (ai->val[1] & DOOR_STATE_CLOSED) != 0;
+                                pass = (ai->val[1] & AI_DOOR_STATE_CLOSED) != 0;
                             }
                             else
                             {
-                                pass = (ai->val[1] & DOOR_STATE_OPEN) != 0;
+                                pass = (ai->val[1] & AI_DOOR_STATE_OPEN) != 0;
                             }
                         }
                         else if (door->openstate == DOORSTATE_OPENING || door->openstate == DOORSTATE_WAITING)
                         {
-                            pass = (ai->val[1] & DOOR_STATE_OPENING) != 0;
+                            pass = (ai->val[1] & AI_DOOR_STATE_OPENING) != 0;
                         }
                         else if (door->openstate == DOORSTATE_CLOSING)
                         {
-                            pass = (ai->val[1] & DOOR_STATE_CLOSING) != 0;
+                            pass = (ai->val[1] & AI_DOOR_STATE_CLOSING) != 0;
                         }
                     }
                     if (pass)
