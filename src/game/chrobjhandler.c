@@ -5161,196 +5161,108 @@ s32 chrobjTestPointPolygonCollision(struct coord3d *point, f32 collision_radius,
 }
 
 
+/**
+ * NTSC address 0x7F0448A8.
+*/
+s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
+{
+    s32 var_s0;
+    struct rect4f *sp98;
+    s32 sp94;
+    f32 sp90;
+    f32 sp8C;
+    s32 roomids[8];    
+    s16 *temp_s0;
+    f32 sp64;
+    f32 sp60;
+    f32 sp5C;
+    f32 temp_f0;
+    PropRecord *propss;
+    ObjectRecord *temp_v0_2;
+    struct rect4f *sp4C;
+    s32 sp48;
+    f32 sp44;
+    f32 sp40;
+    
+    chraiGetCollisionBounds(arg0, &sp98, &sp94, &sp90, &sp8C);
 
-#ifdef NONMATCHING
-void sub_GAME_7F0448A8(void) {
+    if (sp94 <= 0)
+    {
+        return 1;
+    }
 
+    chraiGetPropRoomIds(arg0, (s32*)&roomids);
+    roomGetProps((s32*)&roomids);
+
+    propss = (PropRecord *)&pos_data_entry;
+
+    for (temp_s0 = ptr_list_object_lookup_indices; *temp_s0 >= 0; temp_s0++)
+    {
+        PropRecord *prop = &propss[*temp_s0];
+
+        if (prop != arg0)
+        {
+            if ((prop->type == PROP_TYPE_VIEWER) || (prop->type == PROP_TYPE_CHR))
+            {
+                temp_v0_2 = prop->obj;
+                if ((temp_v0_2 == NULL) || !((s32) temp_v0_2->model & 0x400))
+                {
+                    chrpropGetCollisionBounds(prop, &sp5C, &sp64, &sp60);
+
+                    temp_f0 = sub_GAME_7F03CFE8(prop);
+                    sp60 += temp_f0;
+                    sp64 += temp_f0;
+
+                    if (sp60 <= sp90)
+                    {
+                        var_s0 = 1;
+
+                        if (sp8C <= sp64)
+                        {
+                            if (chrpropTestPointInPolygon(&prop->pos, sp98, sp94) != 0)
+                            {
+                                var_s0 = 0;
+                            }
+                            
+                            if ((var_s0 != 0) && (chrobjTestPointPolygonCollision(&prop->pos, sp5C, sp98, sp94) != 0))
+                            {
+                                var_s0 = 0;
+                            }
+                            
+                            if (var_s0 == 0)
+                            {
+                                if ((prop->type == PROP_TYPE_CHR) && (arg0->type == PROP_TYPE_DOOR))
+                                {
+                                    prop->chr->hidden |= CHRFLAG_INVINCIBLE;
+                                }
+                                
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (
+                ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_DOOR))
+                && (
+                    (arg0->type != PROP_TYPE_DOOR)
+                    || ((prop->type != PROP_TYPE_DOOR) && ((prop->obj->type != PROPDEF_SAFE)) && (prop->obj->type != PROPDEF_AIRCRAFT))))
+            {
+                chraiGetCollisionBounds(prop, &sp4C, &sp48, &sp44, &sp40);
+                
+                if ((sp48 > 0)
+                    && (sp40 <= sp90)
+                    && (sp8C <= sp44)
+                    && (sub_GAME_7F0446B8(sp4C, sp48, sp98, sp94) != 0))
+                {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0448A8
-/* 0793D8 7F0448A8 27BDFF60 */  addiu $sp, $sp, -0xa0
-/* 0793DC 7F0448AC AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0793E0 7F0448B0 AFB50030 */  sw    $s5, 0x30($sp)
-/* 0793E4 7F0448B4 27AE008C */  addiu $t6, $sp, 0x8c
-/* 0793E8 7F0448B8 0080A825 */  move  $s5, $a0
-/* 0793EC 7F0448BC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 0793F0 7F0448C0 AFB30028 */  sw    $s3, 0x28($sp)
-/* 0793F4 7F0448C4 AFB20024 */  sw    $s2, 0x24($sp)
-/* 0793F8 7F0448C8 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0793FC 7F0448CC AFB0001C */  sw    $s0, 0x1c($sp)
-/* 079400 7F0448D0 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 079404 7F0448D4 27A50098 */  addiu $a1, $sp, 0x98
-/* 079408 7F0448D8 27A60094 */  addiu $a2, $sp, 0x94
-/* 07940C 7F0448DC 0FC0F308 */  jal   chraiGetCollisionBounds
-/* 079410 7F0448E0 27A70090 */   addiu $a3, $sp, 0x90
-/* 079414 7F0448E4 8FAF0094 */  lw    $t7, 0x94($sp)
-/* 079418 7F0448E8 27B0006C */  addiu $s0, $sp, 0x6c
-/* 07941C 7F0448EC 02A02025 */  move  $a0, $s5
-/* 079420 7F0448F0 1DE00003 */  bgtz  $t7, .L7F044900
-/* 079424 7F0448F4 00000000 */   nop   
-/* 079428 7F0448F8 10000086 */  b     .L7F044B14
-/* 07942C 7F0448FC 24020001 */   li    $v0, 1
-.L7F044900:
-/* 079430 7F044900 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 079434 7F044904 02002825 */   move  $a1, $s0
-/* 079438 7F044908 0FC0F8FF */  jal   roomGetProps
-/* 07943C 7F04490C 02002025 */   move  $a0, $s0
-/* 079440 7F044910 3C138007 */  lui   $s3, %hi(ptr_list_object_lookup_indices)
-/* 079444 7F044914 8E739C30 */  lw    $s3, %lo(ptr_list_object_lookup_indices)($s3)
-/* 079448 7F044918 24140002 */  li    $s4, 2
-/* 07944C 7F04491C 86620000 */  lh    $v0, ($s3)
-/* 079450 7F044920 0440007B */  bltz  $v0, .L7F044B10
-/* 079454 7F044924 0002C080 */   sll   $t8, $v0, 2
-.L7F044928:
-/* 079458 7F044928 0302C023 */  subu  $t8, $t8, $v0
-/* 07945C 7F04492C 0018C080 */  sll   $t8, $t8, 2
-/* 079460 7F044930 0302C021 */  addu  $t8, $t8, $v0
-/* 079464 7F044934 3C198007 */  lui   $t9, %hi(pos_data_entry) 
-/* 079468 7F044938 27399C38 */  addiu $t9, %lo(pos_data_entry) # addiu $t9, $t9, -0x63c8
-/* 07946C 7F04493C 0018C080 */  sll   $t8, $t8, 2
-/* 079470 7F044940 03199021 */  addu  $s2, $t8, $t9
-/* 079474 7F044944 5255006F */  beql  $s2, $s5, .L7F044B04
-/* 079478 7F044948 86620002 */   lh    $v0, 2($s3)
-/* 07947C 7F04494C 92420000 */  lbu   $v0, ($s2)
-/* 079480 7F044950 24010006 */  li    $at, 6
-/* 079484 7F044954 10410003 */  beq   $v0, $at, .L7F044964
-/* 079488 7F044958 24010003 */   li    $at, 3
-/* 07948C 7F04495C 5441003C */  bnel  $v0, $at, .L7F044A50
-/* 079490 7F044960 24010001 */   li    $at, 1
-.L7F044964:
-/* 079494 7F044964 8E420004 */  lw    $v0, 4($s2)
-/* 079498 7F044968 02402025 */  move  $a0, $s2
-/* 07949C 7F04496C 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0794A0 7F044970 10400005 */  beqz  $v0, .L7F044988
-/* 0794A4 7F044974 27A60064 */   addiu $a2, $sp, 0x64
-/* 0794A8 7F044978 8C480014 */  lw    $t0, 0x14($v0)
-/* 0794AC 7F04497C 31090400 */  andi  $t1, $t0, 0x400
-/* 0794B0 7F044980 55200060 */  bnezl $t1, .L7F044B04
-/* 0794B4 7F044984 86620002 */   lh    $v0, 2($s3)
-.L7F044988:
-/* 0794B8 7F044988 0FC0F3E2 */  jal   chrpropGetCollisionBounds
-/* 0794BC 7F04498C 27A70060 */   addiu $a3, $sp, 0x60
-/* 0794C0 7F044990 0FC0F3FA */  jal   sub_GAME_7F03CFE8
-/* 0794C4 7F044994 02402025 */   move  $a0, $s2
-/* 0794C8 7F044998 C7A20060 */  lwc1  $f2, 0x60($sp)
-/* 0794CC 7F04499C C7A80090 */  lwc1  $f8, 0x90($sp)
-/* 0794D0 7F0449A0 C7A40064 */  lwc1  $f4, 0x64($sp)
-/* 0794D4 7F0449A4 46001080 */  add.s $f2, $f2, $f0
-/* 0794D8 7F0449A8 C7AA008C */  lwc1  $f10, 0x8c($sp)
-/* 0794DC 7F0449AC 46002180 */  add.s $f6, $f4, $f0
-/* 0794E0 7F0449B0 E7A20060 */  swc1  $f2, 0x60($sp)
-/* 0794E4 7F0449B4 4608103E */  c.le.s $f2, $f8
-/* 0794E8 7F0449B8 E7A60064 */  swc1  $f6, 0x64($sp)
-/* 0794EC 7F0449BC 45020051 */  bc1fl .L7F044B04
-/* 0794F0 7F0449C0 86620002 */   lh    $v0, 2($s3)
-/* 0794F4 7F0449C4 4606503E */  c.le.s $f10, $f6
-/* 0794F8 7F0449C8 26510008 */  addiu $s1, $s2, 8
-/* 0794FC 7F0449CC 24100001 */  li    $s0, 1
-/* 079500 7F0449D0 02202025 */  move  $a0, $s1
-/* 079504 7F0449D4 4500004A */  bc1f  .L7F044B00
-/* 079508 7F0449D8 8FA50098 */   lw    $a1, 0x98($sp)
-/* 07950C 7F0449DC 0FC0F336 */  jal   chrpropTestPointInPolygon
-/* 079510 7F0449E0 8FA60094 */   lw    $a2, 0x94($sp)
-/* 079514 7F0449E4 10400002 */  beqz  $v0, .L7F0449F0
-/* 079518 7F0449E8 02202025 */   move  $a0, $s1
-/* 07951C 7F0449EC 00008025 */  move  $s0, $zero
-.L7F0449F0:
-/* 079520 7F0449F0 12000007 */  beqz  $s0, .L7F044A10
-/* 079524 7F0449F4 8FA5005C */   lw    $a1, 0x5c($sp)
-/* 079528 7F0449F8 8FA60098 */  lw    $a2, 0x98($sp)
-/* 07952C 7F0449FC 0FC111C6 */  jal   chrobjTestPointPolygonCollision
-/* 079530 7F044A00 8FA70094 */   lw    $a3, 0x94($sp)
-/* 079534 7F044A04 10400002 */  beqz  $v0, .L7F044A10
-/* 079538 7F044A08 00000000 */   nop   
-/* 07953C 7F044A0C 00008025 */  move  $s0, $zero
-.L7F044A10:
-/* 079540 7F044A10 5600003C */  bnezl $s0, .L7F044B04
-/* 079544 7F044A14 86620002 */   lh    $v0, 2($s3)
-/* 079548 7F044A18 924A0000 */  lbu   $t2, ($s2)
-/* 07954C 7F044A1C 24010003 */  li    $at, 3
-/* 079550 7F044A20 15410008 */  bne   $t2, $at, .L7F044A44
-/* 079554 7F044A24 00000000 */   nop   
-/* 079558 7F044A28 92AB0000 */  lbu   $t3, ($s5)
-/* 07955C 7F044A2C 168B0005 */  bne   $s4, $t3, .L7F044A44
-/* 079560 7F044A30 00000000 */   nop   
-/* 079564 7F044A34 8E420004 */  lw    $v0, 4($s2)
-/* 079568 7F044A38 944C0012 */  lhu   $t4, 0x12($v0)
-/* 07956C 7F044A3C 358D0010 */  ori   $t5, $t4, 0x10
-/* 079570 7F044A40 A44D0012 */  sh    $t5, 0x12($v0)
-.L7F044A44:
-/* 079574 7F044A44 10000033 */  b     .L7F044B14
-/* 079578 7F044A48 00001025 */   move  $v0, $zero
-/* 07957C 7F044A4C 24010001 */  li    $at, 1
-.L7F044A50:
-/* 079580 7F044A50 10410005 */  beq   $v0, $at, .L7F044A68
-/* 079584 7F044A54 24010004 */   li    $at, 4
-/* 079588 7F044A58 50410004 */  beql  $v0, $at, .L7F044A6C
-/* 07958C 7F044A5C 92AE0000 */   lbu   $t6, ($s5)
-/* 079590 7F044A60 56820028 */  bnel  $s4, $v0, .L7F044B04
-/* 079594 7F044A64 86620002 */   lh    $v0, 2($s3)
-.L7F044A68:
-/* 079598 7F044A68 92AE0000 */  lbu   $t6, ($s5)
-.L7F044A6C:
-/* 07959C 7F044A6C 02402025 */  move  $a0, $s2
-/* 0795A0 7F044A70 27A5004C */  addiu $a1, $sp, 0x4c
-/* 0795A4 7F044A74 168E0009 */  bne   $s4, $t6, .L7F044A9C
-/* 0795A8 7F044A78 27A60048 */   addiu $a2, $sp, 0x48
-/* 0795AC 7F044A7C 52820021 */  beql  $s4, $v0, .L7F044B04
-/* 0795B0 7F044A80 86620002 */   lh    $v0, 2($s3)
-/* 0795B4 7F044A84 8E4F0004 */  lw    $t7, 4($s2)
-/* 0795B8 7F044A88 2401002B */  li    $at, 43
-/* 0795BC 7F044A8C 91E20003 */  lbu   $v0, 3($t7)
-/* 0795C0 7F044A90 1041001B */  beq   $v0, $at, .L7F044B00
-/* 0795C4 7F044A94 24010028 */   li    $at, 40
-/* 0795C8 7F044A98 10410019 */  beq   $v0, $at, .L7F044B00
-.L7F044A9C:
-/* 0795CC 7F044A9C 27B80040 */   addiu $t8, $sp, 0x40
-/* 0795D0 7F044AA0 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0795D4 7F044AA4 0FC0F308 */  jal   chraiGetCollisionBounds
-/* 0795D8 7F044AA8 27A70044 */   addiu $a3, $sp, 0x44
-/* 0795DC 7F044AAC 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0795E0 7F044AB0 C7B00090 */  lwc1  $f16, 0x90($sp)
-/* 0795E4 7F044AB4 C7B20040 */  lwc1  $f18, 0x40($sp)
-/* 0795E8 7F044AB8 58A00012 */  blezl $a1, .L7F044B04
-/* 0795EC 7F044ABC 86620002 */   lh    $v0, 2($s3)
-/* 0795F0 7F044AC0 4610903E */  c.le.s $f18, $f16
-/* 0795F4 7F044AC4 C7A40044 */  lwc1  $f4, 0x44($sp)
-/* 0795F8 7F044AC8 C7A8008C */  lwc1  $f8, 0x8c($sp)
-/* 0795FC 7F044ACC 4502000D */  bc1fl .L7F044B04
-/* 079600 7F044AD0 86620002 */   lh    $v0, 2($s3)
-/* 079604 7F044AD4 4604403E */  c.le.s $f8, $f4
-/* 079608 7F044AD8 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 07960C 7F044ADC 8FA60098 */  lw    $a2, 0x98($sp)
-/* 079610 7F044AE0 45020008 */  bc1fl .L7F044B04
-/* 079614 7F044AE4 86620002 */   lh    $v0, 2($s3)
-/* 079618 7F044AE8 0FC111AE */  jal   sub_GAME_7F0446B8
-/* 07961C 7F044AEC 8FA70094 */   lw    $a3, 0x94($sp)
-/* 079620 7F044AF0 50400004 */  beql  $v0, $zero, .L7F044B04
-/* 079624 7F044AF4 86620002 */   lh    $v0, 2($s3)
-/* 079628 7F044AF8 10000006 */  b     .L7F044B14
-/* 07962C 7F044AFC 00001025 */   move  $v0, $zero
-.L7F044B00:
-/* 079630 7F044B00 86620002 */  lh    $v0, 2($s3)
-.L7F044B04:
-/* 079634 7F044B04 26730002 */  addiu $s3, $s3, 2
-/* 079638 7F044B08 0443FF87 */  bgezl $v0, .L7F044928
-/* 07963C 7F044B0C 0002C080 */   sll   $t8, $v0, 2
-.L7F044B10:
-/* 079640 7F044B10 24020001 */  li    $v0, 1
-.L7F044B14:
-/* 079644 7F044B14 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 079648 7F044B18 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 07964C 7F044B1C 8FB10020 */  lw    $s1, 0x20($sp)
-/* 079650 7F044B20 8FB20024 */  lw    $s2, 0x24($sp)
-/* 079654 7F044B24 8FB30028 */  lw    $s3, 0x28($sp)
-/* 079658 7F044B28 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 07965C 7F044B2C 8FB50030 */  lw    $s5, 0x30($sp)
-/* 079660 7F044B30 03E00008 */  jr    $ra
-/* 079664 7F044B34 27BD00A0 */   addiu $sp, $sp, 0xa0
-)
-#endif
 
 
 
