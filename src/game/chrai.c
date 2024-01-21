@@ -4232,9 +4232,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         door->openPosition = door->maxFrac;
                         door->openedTime   = g_GlobalTimer;
                         door->openstate    = DOORSTATE_STATIONARY;
-                        sub_GAME_7F052B00(door);
+                        door7F052B00(door);
                         doorActivatePortal(door); // doorActivatePortal
-                        sub_GAME_7F053B10(door);
+                        door7F053B10(door);
                     }
                     Offset += AI_DoorOpenInstant_LENGTH;
                     break;

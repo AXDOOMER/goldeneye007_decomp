@@ -837,7 +837,7 @@ s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2
 s32 sub_GAME_7F042A0C(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4);
 s32 handles_projectile_motion(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
 void sub_GAME_7F0431E4(struct ObjectRecord *arg0, struct coord3d *arg1);
-void sub_GAME_7F054FB4(struct DoorRecord *arg0);
+void door7F054FB4(struct DoorRecord *arg0);
 
 /* PD: projectileFree (similar but not the same structure) */
 void projectileFree(Projectile* projectile)
@@ -6599,7 +6599,7 @@ s32 object_interaction(struct PropRecord *arg0)
             
             if ((door->timer < g_GlobalTimer) || (g_ClockTimer == 0))
             {
-                sub_GAME_7F054FB4(door);
+                door7F054FB4(door);
             }
         }
         // mips2c line 1130
@@ -7516,7 +7516,7 @@ s32 object_interaction(struct PropRecord *arg0)
         {
             sp39C = (struct DoorRecord *)arg0->obj;            
             
-            sub_GAME_7F0526EC(sp39C, (Mtxf *)model->render_pos);
+            door7F0526EC(sp39C, (Mtxf *)model->render_pos);
             matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), (Mtxf *)model->render_pos);
             
             temp_v0_31 = model->obj;
@@ -9759,7 +9759,7 @@ glabel object_interaction
 /* 07B2B4 7F046784 550006AA */  bnezl $t0, .L7F048230
 /* 07B2B8 7F046788 92220003 */   lbu   $v0, 3($s1)
 .L7F04678C:
-/* 07B2BC 7F04678C 0FC153ED */  jal   sub_GAME_7F054FB4
+/* 07B2BC 7F04678C 0FC153ED */  jal   door7F054FB4
 /* 07B2C0 7F046790 02002025 */   move  $a0, $s0
 /* 07B2C4 7F046794 100006A6 */  b     .L7F048230
 /* 07B2C8 7F046798 92220003 */   lbu   $v0, 3($s1)
@@ -11750,7 +11750,7 @@ glabel object_interaction
 /* 07CFA8 7F048478 26240018 */   addiu $a0, $s1, 0x18
 /* 07CFAC 7F04847C 8E640004 */  lw    $a0, 4($s3)
 /* 07CFB0 7F048480 00402825 */  move  $a1, $v0
-/* 07CFB4 7F048484 0FC149BB */  jal   sub_GAME_7F0526EC
+/* 07CFB4 7F048484 0FC149BB */  jal   door7F0526EC
 /* 07CFB8 7F048488 AFA4039C */   sw    $a0, 0x39c($sp)
 /* 07CFBC 7F04848C 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 07CFC0 7F048490 00000000 */   nop   
@@ -14865,7 +14865,7 @@ glabel object_interaction
 /* 07B6F8 7F046B88 554006AA */  bnezl $t2, .Ljp7F048634
 /* 07B6FC 7F046B8C 92220003 */   lbu   $v0, 3($s1)
 .Ljp7F046B90:
-/* 07B700 7F046B90 0FC1552C */  jal   sub_GAME_7F054FB4
+/* 07B700 7F046B90 0FC1552C */  jal   door7F054FB4
 /* 07B704 7F046B94 02002025 */   move  $a0, $s0
 /* 07B708 7F046B98 100006A6 */  b     .Ljp7F048634
 /* 07B70C 7F046B9C 92220003 */   lbu   $v0, 3($s1)
@@ -16856,7 +16856,7 @@ glabel object_interaction
 /* 07D3EC 7F04887C 26240018 */   addiu $a0, $s1, 0x18
 /* 07D3F0 7F048880 8E640004 */  lw    $a0, 4($s3)
 /* 07D3F4 7F048884 00402825 */  move  $a1, $v0
-/* 07D3F8 7F048888 0FC14AFA */  jal   sub_GAME_7F0526EC
+/* 07D3F8 7F048888 0FC14AFA */  jal   door7F0526EC
 /* 07D3FC 7F04888C AFA403A0 */   sw    $a0, 0x3a0($sp)
 /* 07D400 7F048890 0FC1E26D */  jal   camGetWorldToScreenMtxf
 /* 07D404 7F048894 00000000 */   nop   
@@ -19978,7 +19978,7 @@ glabel object_interaction
 /* 079350 7F046960 556006AB */  bnezl $t3, .L7F048410
 /* 079354 7F046964 92220003 */   lbu   $v0, 3($s1)
 .L7F046968:
-/* 079358 7F046968 0FC154A5 */  jal   sub_GAME_7F054FB4
+/* 079358 7F046968 0FC154A5 */  jal   door7F054FB4
 /* 07935C 7F04696C 02002025 */   move  $a0, $s0
 /* 079360 7F046970 100006A7 */  b     .L7F048410
 /* 079364 7F046974 92220003 */   lbu   $v0, 3($s1)
@@ -21969,7 +21969,7 @@ glabel object_interaction
 /* 07B044 7F048654 26240018 */   addiu $a0, $s1, 0x18
 /* 07B048 7F048658 8E640004 */  lw    $a0, 4($s3)
 /* 07B04C 7F04865C 00402825 */  move  $a1, $v0
-/* 07B050 7F048660 0FC14A73 */  jal   sub_GAME_7F0526EC
+/* 07B050 7F048660 0FC14A73 */  jal   door7F0526EC
 /* 07B054 7F048664 AFA403A0 */   sw    $a0, 0x3a0($sp)
 /* 07B058 7F048668 0FC1E111 */  jal   camGetWorldToScreenMtxf
 /* 07B05C 7F04866C 00000000 */   nop   
@@ -30690,7 +30690,7 @@ glabel sub_GAME_7F04DD68
 /* 0828B8 7F04DD88 8F190008 */  lw    $t9, 8($t8)
 /* 0828BC 7F04DD8C 8F220004 */  lw    $v0, 4($t9)
 /* 0828C0 7F04DD90 AFA30078 */  sw    $v1, 0x78($sp)
-/* 0828C4 7F04DD94 0FC149BB */  jal   sub_GAME_7F0526EC
+/* 0828C4 7F04DD94 0FC149BB */  jal   door7F0526EC
 /* 0828C8 7F04DD98 AFA20074 */   sw    $v0, 0x74($sp)
 /* 0828CC 7F04DD9C 8FA20074 */  lw    $v0, 0x74($sp)
 /* 0828D0 7F04DDA0 27A40060 */  addiu $a0, $sp, 0x60
@@ -37723,7 +37723,7 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
 /**
  * US address 7F0526EC.
 */
-void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
+void door7F0526EC(DoorRecord *door, Mtxf *rhs)
 {
     Mtxf lhs;
     struct coord3d sp54;
@@ -37821,7 +37821,7 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
 /**
  * NTSC address 0x7F052B00.
 */
-void sub_GAME_7F052B00(DoorRecord *door)
+void door7F052B00(DoorRecord *door)
 {
     struct ModelRoData_BoundingBoxRecord *door_bb;
     Mtxf sp2C;
@@ -37850,7 +37850,7 @@ void sub_GAME_7F052B00(DoorRecord *door)
         return;
     }
 
-    sub_GAME_7F0526EC(door, &sp2C);
+    door7F0526EC(door, &sp2C);
     sub_GAME_7F03F540(&door->bbox, &sp2C, &door->ptr_allocated_collisiondata_block->unk04, door->ptr_allocated_collisiondata_block);
 
     if (door->doorType == DOORTYPE_VERTICAL)
@@ -38656,7 +38656,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
     door->runtime_pos.z = centre->z;
     door->flags |= PROPFLAG_00000100;
     
-    sub_GAME_7F052B00(door);
+    door7F052B00(door);
     sub_GAME_7F052D8C(door);
     sub_GAME_7F0402B4(door->prop, &door->nextcol);
 
@@ -38781,7 +38781,7 @@ void sub_GAME_7F053A3C(DoorRecord* arg0)
 }
 
 
-void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
+void door7F053B10(DoorRecord *door) //#MATCH
 {
     if (door->openSoundState && sndGetPlayingState(door->openSoundState))
     {
@@ -38797,11 +38797,11 @@ void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
 
 
 
-void play_door_opening_soundeffect_0(DoorRecord *door) {
+void doorPlayOpenSound0(DoorRecord *door) {
     ALSoundState *soundState = NULL;
     ALSoundState *pendingState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     if (door->openSoundState == NULL)
     {
@@ -38926,11 +38926,11 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
 
 
 
-void play_door_opening_soundeffect_1(DoorRecord *door) {
+void doorPlayOpenSound1(DoorRecord *door) {
     ALSoundState *soundState = NULL;
     ALSoundState *pendingState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     if (door->openSoundState == NULL)
     {
@@ -39039,10 +39039,10 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
 
 
 
-void play_door_closing_soundeffect_0(DoorRecord *door) {
+void doorPlayCloseSound0(DoorRecord *door) {
     ALSoundState *soundState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     switch (door->doorOpenSound)
     {
@@ -39098,11 +39098,11 @@ void play_door_closing_soundeffect_0(DoorRecord *door) {
 
 
 
-void play_door_closing_soundeffect_1(DoorRecord *door)
+void doorPlayCloseSound1(DoorRecord *door)
 {
     ALSoundState *soundState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     switch (door->doorOpenSound)
     {
@@ -39177,7 +39177,7 @@ void doorStartOpen(DoorRecord *door)
     door->flags &= ~DOORFLAG_KEEPOPEN;
     door->runtime_bitflags |= RUNTIMEBITFLAG_BEENOPENED;
 
-    play_door_opening_soundeffect_0(door);
+    doorPlayOpenSound0(door);
     doorActivatePortal(door);
 
     if (door->doorType == 8)
@@ -39198,13 +39198,13 @@ void doorStartOpen(DoorRecord *door)
 void doorStartClose(DoorRecord *door)
 {
     door->flags &= ~DOORFLAG_KEEPOPEN;
-    play_door_opening_soundeffect_1(door);
+    doorPlayOpenSound1(door);
 }
 
 
 void doorFinishOpen(DoorRecord *door)
 {
-    play_door_closing_soundeffect_0(door);
+    doorPlayCloseSound0(door);
 
     if (door->doorType == 8)
     {
@@ -39221,7 +39221,7 @@ void doorFinishOpen(DoorRecord *door)
 
 void doorFinishClose(DoorRecord* door)
 {
-    play_door_closing_soundeffect_1(door);
+    doorPlayCloseSound1(door);
     doorDeactivatePortal(door);
 }
 
@@ -39530,7 +39530,7 @@ s32 updateDoorDisplacement(DoorRecord* door)
 /**
  * NTSC address 0x7F054FB4.
 */
-void sub_GAME_7F054FB4(DoorRecord *door)
+void door7F054FB4(DoorRecord *door)
 {
     Model *temp_a0;
     ModelNode *temp_a1;
@@ -39567,7 +39567,7 @@ void sub_GAME_7F054FB4(DoorRecord *door)
     {
         while (var_s1 != NULL)
         {
-            sub_GAME_7F052B00(var_s1);
+            door7F052B00(var_s1);
             var_s5 = sub_GAME_7F0448A8(var_s1->prop);
             
             if (var_s5 == 0)
@@ -39618,7 +39618,7 @@ void sub_GAME_7F054FB4(DoorRecord *door)
                 var_s1->speed = 0.0f;
                 var_s1->openPosition = var_s1->timer;
                 
-                sub_GAME_7F052B00(var_s1);
+                door7F052B00(var_s1);
             }
             
             sub_GAME_7F052D8C(var_s1);
@@ -39657,7 +39657,7 @@ void sub_GAME_7F054FB4(DoorRecord *door)
 
 
 // PD: door0f08f604
-void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsystem)
+void door7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsystem)
 {
     f32 anglediff;
     PropRecord *playerprop;
@@ -39787,7 +39787,7 @@ void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsyste
 
 
 // PD: func0f08f968
-bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
+bool door7F0555F8(DoorRecord *door, bool altcoordsystem)
 {
     bool checkmore;
     f32 sp50;
@@ -39802,7 +39802,7 @@ bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
 
     if (g_InteractProp == NULL)
     {
-        sub_GAME_7F05522C(door, &sp50, &sp4c, altcoordsystem);
+        door7F05522C(door, &sp50, &sp4c, altcoordsystem);
 
         if ((sp50 >= -limit) && (sp50 <= limit) && (sp4c >= -limit) && (sp4c <= limit))
         {
@@ -39815,7 +39815,7 @@ bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
 
             while (sibling != NULL && sibling != door && (sp50 >= 0.0f || sp4c < 0.0f))
             {
-                sub_GAME_7F05522C(sibling, &sp40, &sp3c, altcoordsystem);
+                door7F05522C(sibling, &sp40, &sp3c, altcoordsystem);
 
                 if ((sp50 > 0.0f) && (sp40 < sp50))
                 {
@@ -39890,11 +39890,11 @@ bool doorTestForInteract(PropRecord *prop)
 
 		if (maybe)
         {
-            checkmore = sub_GAME_7F0555F8(door, FALSE);
+            checkmore = door7F0555F8(door, FALSE);
 
             if (checkmore && (door->flags2 & PROPFLAG2_DOOR_ALTCOORDSYSTEM))
             {
-                checkmore = sub_GAME_7F0555F8(door, TRUE);
+                checkmore = door7F0555F8(door, TRUE);
             }
 		}
 	}
