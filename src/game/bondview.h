@@ -3059,7 +3059,7 @@ s32 bond_pressed_reload_activate(void);
 Gfx* write_stan_tiles_in_yellow(Gfx *arg0);
 Gfx * maybe_mp_interface(Gfx *arg0);
 Gfx * bondviewRemoved7F08BCB8(Gfx *arg0);
-s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale);
+s32 camIsPosInScreen(coord3d *vec_scale, f32 norm_scale);
 s32 getMissiontimer(void);
 void solo_char_load(void);
 void bondviewUpdateYAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_y);
@@ -3099,7 +3099,7 @@ void bondviewSetVisibleToGuardsFlag(s32 param_1);
 Mtxf *currentPlayerGetMatrix10EC(void);
 f32 get_curplay_horizontal_rotation_in_degrees(void);
 Mtxf *camGetWorldToScreenMtxf(void);
-void sub_GAME_7F077EEC(struct coord2d *in, coord3d *out, f32 value);
+void transformAndNormalizeByLength2Dto3D(struct coord2d *in, coord3d *out, f32 value);
 s32 camIsPosInScreenBox(coord3d *, f32, struct bbox2d *);
 
 void bondviewTransformManyPosToViewMatrix(RenderPosView *arg0, s32 arg1);

@@ -39449,7 +39449,7 @@ bool sub_GAME_7F054D6C(PropRecord *prop, coord3d *pos, f32 arg2, bool arg3)
                 }
                 else
                 {
-                    result = sub_GAME_7F078A58(pos, arg2);
+                    result = camIsPosInScreen(pos, arg2);
                 }
 
                 if (result)

@@ -44,7 +44,7 @@ void sub_GAME_7F093880(f32 offset_x, f32 offset_y, coord3d* out) {
     coords.x = getPlayer_c_screenleft() + offset_x;
     screen_top = getPlayer_c_screentop();
     coords.y = fogGetCurrentEnvironmentp()->WaterConcavity + (offset_y + screen_top);
-    sub_GAME_7F077EEC(&coords, out, 100.0f);
+    transformAndNormalizeByLength2Dto3D(&coords, out, 100.0f);
     mtx4RotateVecInPlace(player_mtxf, out->f);
 }
 

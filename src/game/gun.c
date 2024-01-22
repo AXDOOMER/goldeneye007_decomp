@@ -22318,7 +22318,7 @@ void caclulate_gun_crosshair_position_rotation(f32 turn_x, f32 turn_y, f32 guncr
     g_CurrentPlayer->field_FFC.x += getPlayer_c_screenleft();
     g_CurrentPlayer->field_FFC.y += getPlayer_c_screentop();
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->field_FFC, &coords, 1000.0f);
+    transformAndNormalizeByLength2Dto3D(&g_CurrentPlayer->field_FFC, &coords, 1000.0f);
     sub_GAME_7F067AB4(&coords);
 }
 
@@ -22388,7 +22388,7 @@ void sub_GAME_7F06802C(void)
     g_CurrentPlayer->crosshair_angle.y = tmp;
     g_CurrentPlayer->field_FFC.y = tmp;
 
-    sub_GAME_7F077EEC((coord2d *) &g_CurrentPlayer->field_FFC, &coord, 1000.0f);
+    transformAndNormalizeByLength2Dto3D((coord2d *) &g_CurrentPlayer->field_FFC, &coord, 1000.0f);
     sub_GAME_7F067AB4(&coord);
 }
 
@@ -22425,7 +22425,7 @@ void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
     zeropos->y = 0.0f;
     zeropos->z = 0.0f;
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
+    transformAndNormalizeByLength2Dto3D(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
 }
 
 
@@ -22460,7 +22460,7 @@ void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND
 
     // Result is a normalized vector describing the path the bullet will follow
     // Can be used to compute x,y,z displacement off the center of the screen if done for a projectile
-    sub_GAME_7F077EEC(&crosspos, result, 1.0f);
+    transformAndNormalizeByLength2Dto3D(&crosspos, result, 1.0f);
 }
 
 
