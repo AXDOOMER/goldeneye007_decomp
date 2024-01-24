@@ -4128,7 +4128,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         stan            = pad->stan;
                         sub_GAME_7F03D058(chr->prop, FALSE);
 
-                        if (sub_GAME_7F033F48(&pos, &stan, FacingDirection, TRUE))
+                        if (chrAdjustPosForSpawn(&pos, &stan, FacingDirection, TRUE))
                         {
                             {
                                 chr->prop->pos.x = pos.x;
