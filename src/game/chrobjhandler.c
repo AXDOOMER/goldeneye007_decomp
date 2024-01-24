@@ -5233,7 +5233,7 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
                             {
                                 if ((prop->type == PROP_TYPE_CHR) && (arg0->type == PROP_TYPE_DOOR))
                                 {
-                                    prop->chr->hidden |= CHRFLAG_INVINCIBLE;
+                                    prop->chr->hidden |= CHRHIDDEN_OFFSCREEN_PATROL;
                                 }
                                 
                                 return 0;
@@ -39548,7 +39548,7 @@ void door7F054FB4(DoorRecord *door)
     var_s1 = door;
     while (var_s1 != NULL)
     {
-        var_s1->timer = var_s1->openPosition;
+        var_s1->lastcalc60f = var_s1->openPosition;
         if (updateDoorDisplacement(var_s1) != 0)
         {
             var_s4 = 1;
@@ -39616,7 +39616,7 @@ void door7F054FB4(DoorRecord *door)
             else
             {
                 var_s1->speed = 0.0f;
-                var_s1->openPosition = var_s1->timer;
+                var_s1->openPosition = var_s1->lastcalc60f;
                 
                 door7F052B00(var_s1);
             }
@@ -39642,9 +39642,7 @@ void door7F054FB4(DoorRecord *door)
             temp_v0_3->Vertices = var_s1->unkcc;
         }
 
-        // HACK: the above references for door->timer expect a f32,
-        // but this assignment expects an integer.
-        *(u32*)&(var_s1->timer) = g_GlobalTimer;
+        var_s1->lastcalc60i = g_GlobalTimer;
 
         var_s1 = var_s1->linkedDoor;
 

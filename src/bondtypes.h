@@ -2864,9 +2864,17 @@ typedef union
 
         /**
          * Copy of global timer value.
+         * 
+         * For each sibling, the original frac is backed up into the sibling's
+         * lastcalc60 field. The desired frac is then calculated and set in the
+         * sibling's frac property. Then collision checks are done, and the original
+         * frac is restored if any sibling is blocked.
          * Offset 0xfc.
          */
-        f32                timer;
+        union {
+            s32 lastcalc60i;
+            f32 lastcalc60f;
+        };
     } DoorRecord;
 
     #define New_DoorRecord(pad)                               \
