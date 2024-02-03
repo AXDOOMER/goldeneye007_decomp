@@ -126,7 +126,7 @@ typedef enum NAME \
 
 #pragma region Bitflags
 
-/** 
+/**
  * Reverted to manual Enums for intellisense descriptions (comments)
  * Advantage of BITFLAG macro is auto-numbering but with loss of comments
  * if the Auto numbering sounds better or I find a way to keep comments then I can revert.
@@ -135,14 +135,14 @@ typedef enum NAME \
 typedef enum ATTACKTYPE
 {
     ATTACKTYPE_NONE,
-    ATTACKTYPE_BOND      = 1 << 0, // aim/shoot at Bond                                                
-    ATTACKTYPE_FORWARD   = 1 << 1, // aim/shoot in front of self                                       
-    ATTACKTYPE_CHR       = 1 << 2, // aim/shoot at chr (ID should be given in entity_id)               
-    ATTACKTYPE_PAD       = 1 << 3, // aim/shoot at pad (ID should be given in entity_id)               
-    ATTACKTYPE_DIRECTION = 1 << 4, // aim/shoot in compass direction (0000, 4000, 8000, c000)          
-    ATTACKTYPE_AIMONLY   = 1 << 5, // aim only - do not shoot                                          
+    ATTACKTYPE_BOND      = 1 << 0, // aim/shoot at Bond
+    ATTACKTYPE_FORWARD   = 1 << 1, // aim/shoot in front of self
+    ATTACKTYPE_CHR       = 1 << 2, // aim/shoot at chr (ID should be given in entity_id)
+    ATTACKTYPE_PAD       = 1 << 3, // aim/shoot at pad (ID should be given in entity_id)
+    ATTACKTYPE_DIRECTION = 1 << 4, // aim/shoot in compass direction (0000, 4000, 8000, c000)
+    ATTACKTYPE_AIMONLY   = 1 << 5, // aim only - do not shoot
     ATTACKTYPE_DONTTURN  = 1 << 6, // dont do a shooting animation that would change the chrs direction
-    ATTACKTYPE_TARGET    = 1 << 7  // aim/shoot at whatever is in the chrs `target` field              
+    ATTACKTYPE_TARGET    = 1 << 7  // aim/shoot at whatever is in the chrs `target` field
 }ATTACKTYPE;
 #if 0
 BITFLAG(ATTACKTYPE,
@@ -173,7 +173,7 @@ typedef enum CHRHIDDEN
                                                  calculate collision. It'll keep the 0x10 flag until the guard
                                                  appears on screen.
                                               */
-    CHRHIDDEN_OFFSCREEN_PATROL      = 0x0010,    
+    CHRHIDDEN_OFFSCREEN_PATROL      = 0x0010,
     CHRHIDDEN_REMOVE                = 0x0020, // remove character
     CHRHIDDEN_TIMER_ACTIVE          = 0x0040, // chr timer is active
     CHRHIDDEN_FIRE_TRACER           = 0x0080, // spawn a tracer
@@ -205,7 +205,7 @@ typedef enum CHRFLAG
     CHRFLAG_LOCK_Y_POS                   = 0x00001000 , // lock y position (no gravity, used for dam/cradle jump)
     CHRFLAG_NO_SHADOW                    = 0x00002000 , // no shadow
     CHRFLAG_IGNORE_ANIM_TRANSLATION      = 0x00004000 , // ignore animation translation
-    CHRFLAG_IMPACT_ALWAYS                = 0x00008000 , // Trev on cradle sets this flag so he can be shot off the platform 
+    CHRFLAG_IMPACT_ALWAYS                = 0x00008000 , // Trev on cradle sets this flag so he can be shot off the platform
     CHRFLAG_00010000                     = 0x00010000 , // unknown
     CHRFLAG_00020000                     = 0x00020000 , // unknown
     CHRFLAG_00040000                     = 0x00040000 , // unknown
@@ -319,11 +319,11 @@ typedef enum PROPFLAG
     PROPFLAG_CONCEAL_GUN                 = 0x20000000,
     PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup / Area Behind Door Visible*/
     PROPFLAG_NO_PORTAL_CLOSE             = 0x40000000,
-    PROPFLAG_NO_AMMO                     = 0x40000000, 
+    PROPFLAG_NO_AMMO                     = 0x40000000,
     PROPFLAG_80000000                    = 0x80000000, // Open By Default/Weapon Paired for Player
     PROPFLAG_IS_DOUBLE                   = 0x80000000
 }PROPFLAG;
-// prop definition flags 
+// prop definition flags
 typedef enum PROPFLAG2
 {
     PROPFLAG2_00000001            = 0x00000001, // Activate Drone Gun
@@ -346,7 +346,7 @@ typedef enum PROPFLAG2
     PROPFLAG2_00020000            = 0x00020000, // unknown
     PROPFLAG2_00040000            = 0x00040000, // Hide inventory item (for tagged armor/ammo/magazine)
     PROPFLAG2_00080000            = 0x00080000, // Invincible Except to Explosions
-    PROPFLAG2_00100000            = 0x00100000, // Bulletproof Glass    
+    PROPFLAG2_00100000            = 0x00100000, // Bulletproof Glass
     PROPFLAG2_00200000            = 0x00200000, // Immune to Explosions
     PROPFLAG2_00400000            = 0x00400000, // Don't load on 2P
     PROPFLAG2_00800000            = 0x00800000, // Don't load on 3P
@@ -362,12 +362,82 @@ typedef enum PROPFLAG2
 
 typedef enum DOORFLAG
 {
+    DOORFLAG_0001            = 0x00000001,
+    DOORFLAG_WINDOWED        = 0x00000002,
+    DOORFLAG_0004            = 0x00000004,
+    DOORFLAG_FLIP            = 0x00000008,
+    DOORFLAG_AUTOMATIC       = 0x00000010,
+    DOORFLAG_0020            = 0x00000020,
+    DOORFLAG_ROTATEDPAD      = 0x00000040,
     DOORFLAG_080             = 0x00000080,
     DOORFLAG_100             = 0x00000100,
+    DOORFLAG_LONGRANGE       = 0x00000200,
+    DOORFLAG_DAMAGEONCONTACT = 0x00000400, // Lasers
+    DOORFLAG_UNBLOCKABLEOPEN = 0x00000800, // Skip collision checks when opening
+    DOORFLAG_4000            = 0x00004000, // Two Investigation vertical doors after lasers
     DOORFLAG_CANNOT_ACTIVATE = 0x02000000,
     DOORFLAG_KEEPOPEN        = 0x80000000
 
 } DOORFLAG;
+
+typedef enum DOORMODE
+{
+    DOORMODE_IDLE,
+    DOORMODE_OPENING,
+    DOORMODE_CLOSING,
+    // Waiting for sibling door to close. Eg. Dam gates in GE
+    DOORMODE_WAITING
+} DOORMODE;
+
+typedef enum DOORSTATE
+{
+    DOORSTATE_STATIONARY,
+    DOORSTATE_OPENING,// also OPEN but NOT AIlist compatible (02)
+    DOORSTATE_CLOSING, // also CLOSE but NOT AIlist compatible (01)
+    DOORSTATE_WAITING
+} DOORSTATE;
+
+#define DOORTYPE_SLIDING    0
+// GE only - Bunker flexi door
+#define DOORTYPE_FLEXI1     1  
+#define DOORTYPE_FLEXI2     2
+#define DOORTYPE_FLEXI3     3
+#define DOORTYPE_VERTICAL   4
+#define DOORTYPE_SWINGING   5
+// GE only - Caverns
+#define DOORTYPE_EYE        6  
+// GE only - Caverns
+#define DOORTYPE_IRIS       7  
+// GE only - Surface grate and Train floor panel
+#define DOORTYPE_FALLAWAY   8  
+// GE only
+#define DOORTYPE_AZTECCHAIR 9  
+// Attack Ship windows
+#define DOORTYPE_HULL       10 
+#define DOORTYPE_LASER      11
+
+typedef enum DOOR_OPEN_SOUND
+{
+    DOOR_OPEN_SOUND_NONE = 0,
+    DOOR_OPEN_SOUND_01,
+    DOOR_OPEN_SOUND_02,
+    DOOR_OPEN_SOUND_METAL,
+    DOOR_OPEN_SOUND_04,
+    DOOR_OPEN_SOUND_WOOD,
+    DOOR_OPEN_SOUND_06,
+    DOOR_OPEN_SOUND_WOOD_2,
+    DOOR_OPEN_SOUND_WOOD_3,
+    DOOR_OPEN_SOUND_09,
+    DOOR_OPEN_SOUND_METAL_2,
+    DOOR_OPEN_SOUND_11,
+    DOOR_OPEN_SOUND_METAL_3,
+    DOOR_OPEN_SOUND_13,
+    DOOR_OPEN_SOUND_HYDROLIC,
+    DOOR_OPEN_SOUND_STONE,
+    DOOR_OPEN_SOUND_16,
+    DOOR_OPEN_SOUND_METAL_4,
+    DOOR_OPEN_SOUND_18
+} DOOR_OPEN_SOUND;
 
 typedef enum DROPTYPE
 {
@@ -928,7 +998,7 @@ typedef enum CONTROLLER_CONFIG
 
     /* 2.4 */
     CONTROLLER_CONFIG_GOODHEAD,
-    
+
     CONTROLLER_CONFIG_CINEMA
 } CONTROLLER_CONFIG;
 
@@ -1210,7 +1280,7 @@ typedef enum HIT_TYPE
     HIT_TYPE_COUNT
 } HIT_TYPE;
 
-    
+
 #define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME,
 typedef enum IMAGEIDS
 {
@@ -1652,11 +1722,11 @@ typedef enum SFX_ID
 {
     NOTHING_SFX,
     ROCKET_LAUNCH_SFX,
-    GLASS_SHATTERING_SFX, 
+    GLASS_SHATTERING_SFX,
     KNIFE_HIT_WALL_SFX,
     GRENADE_THROW_SFX,          //Grenade/Mine or in fact Any object thrown.
-    GRENADE_THROW_QUIET_SFX, 
-    GRENADE_THROW_FAINT_SFX, 
+    GRENADE_THROW_QUIET_SFX,
+    GRENADE_THROW_FAINT_SFX,
     TRAIN_SLIDE_DOOR_SLIDE_SFX, //Ding used on elevator
     TRAIN_RAILS_SFX,
     TRAIN_RAILS2_SFX,
@@ -1666,8 +1736,8 @@ typedef enum SFX_ID
     GET_HIT_GIRL1_SFX,
     GET_HIT_GIRL2_SFX,
     GET_HIT_GIRL3_SFX,
-    BEEP_SFX, 
-    BEEP_QUIET_SFX, 
+    BEEP_SFX,
+    BEEP_QUIET_SFX,
     OPTION_CLICK2_SFX,
     RICO_12_GBU_A_SFX,
     RICO_12_GBU_B_SFX,
@@ -1694,7 +1764,7 @@ typedef enum SFX_ID
     RICO_6_HBBA_C_SFX,
     RICO_6_HBBA_D_SFX,
     OPTION_CHOOSE_SFX,
-    UNKNOWN1_SFX, 
+    UNKNOWN1_SFX,
     DROP_GUN_SFX,
     GUN_SILPPK_A_SFX,
     PUNCH1_SFX,
@@ -1702,12 +1772,12 @@ typedef enum SFX_ID
     PUNCH3_SFX,
     GUN_RIFLECOCK_SFX,
     TRAIN_CLUTTER3_SFX,
-    TRAIN_CLUTTER3B_SFX, 
-    TRAIN_CLUTTER3C_SFX, 
+    TRAIN_CLUTTER3B_SFX,
+    TRAIN_CLUTTER3C_SFX,
     EVIL_LAUGH_SFX,
-    EVIL_LAUGH_QUIET_SFX, 
-    EVIL_LAUGH_FAINT_SFX, 
-    EVIL_LAUGH_HUSH_SFX, 
+    EVIL_LAUGH_QUIET_SFX,
+    EVIL_LAUGH_FAINT_SFX,
+    EVIL_LAUGH_HUSH_SFX,
     HELI_RUN_SFX,
     HELI_FLY_SFX,
     ENGINE_ROOM_SFX,
@@ -1717,7 +1787,7 @@ typedef enum SFX_ID
     TRAIN_GO_SFX,
     TRUCK_RUN_SFX,
     TRUCK_START_SFX,
-    TRUCK_ENGINE_SFX, 
+    TRUCK_ENGINE_SFX,
     BOND_GET_HIT1_SFX,
     HIT_BULLET_FLESH_SFX,
     HIT_BULLET_GLASS_SFX,
@@ -1728,7 +1798,7 @@ typedef enum SFX_ID
     HIT_BULLET_WOOD_SFX,
     HIT_BULLET_WATER_SFX,
     PAPER_TURN_SFX,
-    PAPER_TURN_2_SFX, 
+    PAPER_TURN_2_SFX,
     COPY_FILE_SFX,
     RADIO_MESSAGE_SFX,
     ARMOUR_COLLECT_SFX,
@@ -1736,25 +1806,25 @@ typedef enum SFX_ID
     DOOR_DECODER_SFX,
     GIRL_GET_HIT1_SFX,
     CONSOLE_OFF_SFX,
-    CONSOLE_OFF2_SFX, 
-    CONSOLE_ON2_SFX, 
-    CONSOLE_ON3_SFX, 
+    CONSOLE_OFF2_SFX,
+    CONSOLE_ON2_SFX,
+    CONSOLE_ON3_SFX,
     EMPTY_GUN_FIRE_SFX,
-    SHELL_CASE_SFX, 
+    SHELL_CASE_SFX,
     RICO_LASER1_SFX,
     RICO_LASER2_SFX,
     RICO_LASER3_SFX,
-    RADIO_SFX, 
+    RADIO_SFX,
     KNIFE_THROW1_SFX,
     KNIFE_THROW2_SFX,
     KNIFE_THROW3_SFX,
     COUGH_SFX,
-    COUGH2_SFX, 
+    COUGH2_SFX,
     GUN_TASER_SFX,
-    GUN_TASER_LOOP_SFX, 
+    GUN_TASER_LOOP_SFX,
     GAS_HISS_SFX,
-    UNKNOWN2_SFX, 
-    UNKNOWN3_SFX, 
+    UNKNOWN2_SFX,
+    UNKNOWN3_SFX,
     PUNCHING_AIR_SFX,
     GUN_B1_MGUN3_3_SFX,         //Used for Skorpion (Klobb)
     GUN_B2_HEAVY_SFX,           //Used for PPK
@@ -1764,12 +1834,12 @@ typedef enum SFX_ID
     GUN_RIFLE7BIG_1_SFX,        //used for Rugar
     GUN_B8_ANOTHER_SFX,         //used for TT33
     GUN_B9_CANNON_SFX,          //used for M16
-    GUN_GRENADE_LAUNCHER_SFX, 
-    GUN_UNKNOWN2_SFX, 
+    GUN_GRENADE_LAUNCHER_SFX,
+    GUN_UNKNOWN2_SFX,
     GUN_B12_FULLAMRIFLE_SFX,    //used for Auto Shotgun
     GUN_B13_M60AMMGUN_SFX,      //used for Golden Gun
     GUN_M60AMMGUN_3_SFX,
-    GUN_UNKNOWN3_SFX, 
+    GUN_UNKNOWN3_SFX,
     HIT_METAL_OBJECT1_SFX,
     GUN_B17_RIFLE_SFX,          //used for Shotgun
     CART_SPENT_SFX,
@@ -1810,7 +1880,7 @@ typedef enum SFX_ID
     GET_HIT_MALE23_SFX,
     GET_HIT_MALE24_SFX,
     CAMERA_BEEP1_SFX,           //Used for Watch Beeping
-    BING_SFX, 
+    BING_SFX,
     ALARM1_SFX,
     ALARM2_SFX,
     ALARM3_SFX,
@@ -1819,18 +1889,18 @@ typedef enum SFX_ID
     RICO_EAR_WHISTLE3_SFX,
     RICO_EAR_WHISTLE4_SFX,
     RICO_EAR_WHISTLE5_SFX,
-    EXPLOSION_2A_SFX, 
+    EXPLOSION_2A_SFX,
     EXPLOSION_2B_SFX,
-    EXPLOSION_3_SFX, 
+    EXPLOSION_3_SFX,
     EXPLOSION_4A_SFX,
     EXPLOSION_4B_SFX,
     EXPLOSION_5A_SFX,
-    EXPLOSION_5B_SFX, 
-    EXPLOSION_5C_SFX, 
-    EXPLOSION_6_SFX, 
-    EXPLOSION_7_SFX, 
-    EXPLOSION_8_SFX, 
-    EXPLOSION_9_SFX, 
+    EXPLOSION_5B_SFX,
+    EXPLOSION_5C_SFX,
+    EXPLOSION_6_SFX,
+    EXPLOSION_7_SFX,
+    EXPLOSION_8_SFX,
+    EXPLOSION_9_SFX,
     EXPLOSION_1B_SFX,
     EXPLOSION_1C_SFX,
     CRUSHED_YELL_SFX,
@@ -1840,10 +1910,10 @@ typedef enum SFX_ID
     DOOR_WOOD_CLOSE_SFX,
     DOOR_WOOD_OPEN_SFX,
     ATOMIC_BOMB_SFX,
-    KEY_ANALYSER2_SFX, 
+    KEY_ANALYSER2_SFX,
     DOOR_WOOD_SLIDE_SFX,
     TRAIN_SLIDE_DOOR_CATCH_SFX,
-    GAS_LEAK_SFX, 
+    GAS_LEAK_SFX,
     DOOR_SHUTTER_OPEN_SFX,
     DOOR_SHUTTER_CLOSE_SFX,
     DOOR_METAL_OPEN_SFX,
@@ -1855,9 +1925,9 @@ typedef enum SFX_ID
     METAL_SLIDE_OPEN_SFX,
     METAL_SLIDE_CLOSE_SFX,
     METAL_SLIDE_LOOP_SFX,
-    UNKNOWN4_SFX, 
-    UNKNOWN5_SFX, 
-    UNKNOWN6_SFX, 
+    UNKNOWN4_SFX,
+    UNKNOWN5_SFX,
+    UNKNOWN6_SFX,
     HIT_BULLET_STONE1_SFX,
     HIT_BULLET_STONE2_SFX,
     DOOR_SMART_CATCH1_SFX,
@@ -1890,7 +1960,7 @@ typedef enum SFX_ID
     WATCH_ON_SFX,
     WATCH_OFF_SFX,
     HIT_BULLET_METAL_A3_SFX,
-    HIT_BULLET_METAL_A4_SFX, 
+    HIT_BULLET_METAL_A4_SFX,
     ATTACH_MINE_SFX,
     PICKUP_LASER_SFX,
     WATCH_DETONATE_MINE_SFX,    //Watch Trigger
@@ -1900,17 +1970,17 @@ typedef enum SFX_ID
     BOMB_DEFUSE_SFX,
     BI_PLANE_SFX,
     TRAIN_CLUTTER_SFX,
-    TRAIN_CLUTTERB_SFX, 
-    TRAIN_CLUTTERC_SFX, 
-    TRAIN_CLUTTERD_SFX, 
+    TRAIN_CLUTTERB_SFX,
+    TRAIN_CLUTTERC_SFX,
+    TRAIN_CLUTTERD_SFX,
     GUN_B9_CANNON_SHORT_SFX,
-    UNKNOWN_QUIET_SFX, 
-    CAMERA_ZOOM_LOOP_SFX, 
-    CAMERA_ZOOM_STOP_SFX, 
+    UNKNOWN_QUIET_SFX,
+    CAMERA_ZOOM_LOOP_SFX,
+    CAMERA_ZOOM_STOP_SFX,
     SNEEZE_SFX,
     RARELOGO_SFX,
-    RARELOGO_QUIET_SFX, 
-    RARELOGO_FAINT_SFX, 
+    RARELOGO_QUIET_SFX,
+    RARELOGO_FAINT_SFX,
     BIG_CLANK_SFX
 } SFX_ID;
 
@@ -2297,7 +2367,7 @@ typedef enum AWARD {
 
     AWARD_MOSTSUICIDAL     = 0x00001,
     AWARD_WHONEEDSAMMO     = 0x00002,
-    AWARD_WHERESTHEARMOR   = 0x00004,
+    AWARD_WHERESTHEARMOUR  = 0x00004,
     AWARD_ACNEGATIVE10     = 0x00008,
     AWARD_MARKSMANSHIP     = 0x00010,
     AWARD_MOSTPROFESSIONAL = 0x00020,
@@ -2894,7 +2964,7 @@ typedef enum TVCMD
 
 #pragma region  PropDef stuff
     // used by characters
-     
+
     /*Action Type to be performed by chr (canonical names)*/
     typedef enum ACT_STATUS
     {
@@ -2973,7 +3043,7 @@ typedef enum TVCMD
         ACT_DRUGGEDCOMINGUP
         ACT_ATTACKAMOUNT
         ACT_ROBOTATTACK
-        ACT_SKJUMP* 
+        ACT_SKJUMP*
         */
         ACT_NULL,
         ACT_TYPE_MAX
@@ -3017,13 +3087,6 @@ typedef enum TVCMD
         AMMOTYPE_MAX
     } AMMOTYPE;
 
-    typedef enum DOORSTATE
-    {
-        DOORSTATE_STATIONARY,
-        DOORSTATE_OPENING,// also OPEN but NOT AIlist compatible (02)
-        DOORSTATE_CLOSING, // also CLOSE but NOT AIlist compatible (01)
-        DOORSTATE_WAITING
-    } DOORSTATE;
     typedef enum HATTYPE
     {
         HATTYPE_OTHER = -1,
@@ -3194,7 +3257,7 @@ typedef enum TVCMD
 
 #pragma endregion
 
-#pragma region Setup 
+#pragma region Setup
 
     /**
      * enums were listed in a particular order, it appears the first few are associated with the start/intro
@@ -3208,8 +3271,8 @@ typedef enum TVCMD
         CAMERAMODE_FADESWIRL,
         CAMERAMODE_SWIRL,
         CAMERAMODE_FP,
-        CAMERAMODE_DEATH_CAM_FIRST,
-        CAMERAMODE_DEATH_CAM_SECOND,
+        CAMERAMODE_DEATH_CAM_SP,
+        CAMERAMODE_DEATH_CAM_MP,
         CAMERAMODE_POSEND,
         CAMERAMODE_FP_NOINPUT,
         CAMERAMODE_MP,
@@ -3284,11 +3347,17 @@ typedef enum TVCMD
         SCREEN_RATIO_16_9
     } SCREEN_RATIO_OPTION;
 
+    //canonically MD
     typedef enum VIDEOMODE
     {
-        VIDEOMODE_DISABLE_320x240,
-        VIDEOMODE_320x240,
-        VIDEOMODE_640x480
+        MD_BLACK,
+        MD_NORMAL,
+        MD_MAXIMUM,
+
+        //just in case someone commits with old name
+        VIDEOMODE_DISABLE_320x240 = MD_BLACK,
+        VIDEOMODE_320x240 = MD_NORMAL,
+        VIDEOMODE_640x480 = MD_MAXIMUM
     } VIDEOMODE;
 #pragma endregion
 
@@ -3296,7 +3365,7 @@ typedef enum TVCMD
 #define MAXROOMCOUNT    150
 #else
 #define MAXROOMCOUNT    139
-#endif 
+#endif
 
 
 /* special chr num IDs */
@@ -3390,12 +3459,12 @@ typedef enum TVCMD
 #define getBGAIListID(ID)         ((ID)-4096)
 
     /* language file to slot allocation */
-#define TEXT(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
+#define getStringID(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)
 
     /* Image ID to RAM allocation */
 #define IMAGESEG(id)             0xABCD0000 | id
 
-/*Doesnt work! might be handy for something else 
+/*Doesnt work! might be handy for something else
 #define setMask(t)\
       (t) <=   2 ? 1\
     : (t) <=   4 ? 2\
@@ -3408,7 +3477,7 @@ typedef enum TVCMD
     : (t) <= 512 ? 9\
     : (t) <=1024 ? 10\
     : "TEXTURE TOO BIG (>1024)"*/
-    
+
     //macros for FILERECORDS
 #define SKELETON(NAME)    skeleton_ ## NAME
 #define JOINTLIST(NAME)   jointlist_ ## NAME

@@ -21833,7 +21833,7 @@ void analyzeGEKey(void)
 {
     if (bondinvHasGEKey())
     {
-   	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D8))); //Analyzing the GoldenEye key...
+   	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D8_ANALYZINGTHEGOLDENEYEKEY_LF))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = 1;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
@@ -21841,7 +21841,7 @@ void analyzeGEKey(void)
   	}
   	else
   	{
-	    HUDMESSAGEBOTTOM(langGet(TEXT(LGUN, GUN_STR_D9))); //You do not have the GoldenEye key.
+	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D9_YOUDONOTHAVETHEGOLDENEYEKEY_LF))); //You do not have the GoldenEye key.
 	    sub_GAME_7F05D690();
   	}
   	return;
@@ -22318,7 +22318,7 @@ void caclulate_gun_crosshair_position_rotation(f32 turn_x, f32 turn_y, f32 guncr
     g_CurrentPlayer->field_FFC.x += getPlayer_c_screenleft();
     g_CurrentPlayer->field_FFC.y += getPlayer_c_screentop();
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->field_FFC, &coords, 1000.0f);
+    transformAndNormalizeByLength2Dto3D(&g_CurrentPlayer->field_FFC, &coords, 1000.0f);
     sub_GAME_7F067AB4(&coords);
 }
 
@@ -22388,7 +22388,7 @@ void sub_GAME_7F06802C(void)
     g_CurrentPlayer->crosshair_angle.y = tmp;
     g_CurrentPlayer->field_FFC.y = tmp;
 
-    sub_GAME_7F077EEC((coord2d *) &g_CurrentPlayer->field_FFC, &coord, 1000.0f);
+    transformAndNormalizeByLength2Dto3D((coord2d *) &g_CurrentPlayer->field_FFC, &coord, 1000.0f);
     sub_GAME_7F067AB4(&coord);
 }
 
@@ -22425,7 +22425,7 @@ void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
     zeropos->y = 0.0f;
     zeropos->z = 0.0f;
 
-    sub_GAME_7F077EEC(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
+    transformAndNormalizeByLength2Dto3D(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
 }
 
 
@@ -22460,7 +22460,7 @@ void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND
 
     // Result is a normalized vector describing the path the bullet will follow
     // Can be used to compute x,y,z displacement off the center of the screen if done for a projectile
-    sub_GAME_7F077EEC(&crosspos, result, 1.0f);
+    transformAndNormalizeByLength2Dto3D(&crosspos, result, 1.0f);
 }
 
 
@@ -26496,7 +26496,7 @@ void increment_num_kills_display_text_in_MP(void)
     if (getPlayerCount() < 2) { return; }
 
     mission_time = getMissiontimer();
-    sprintf(&buffer, aSD, langGet(TEXT(LGUN, GUN_STR_DA)), g_playerPerm->kill_count); // "kill count"
+    sprintf(&buffer, aSD, langGet(getStringID(LGUN, GUN_STR_DA_KILLCOUNT)), g_playerPerm->kill_count); // "kill count"
 
 #if defined(VERSION_US)
     hudmsgBottomShow(&buffer);
@@ -26567,11 +26567,11 @@ void increment_num_deaths(void)
     {
         if (g_CurrentPlayer->deathcount == 1)
         {
-            sprintf(buffer, langGet(TEXT(LGUN, GUN_STR_DB))); //died once
+            sprintf(buffer, langGet(getStringID(LGUN, GUN_STR_DB_DIEDONCE_LF))); //died once
         }
         else
         {
-            sprintf(buffer, "%s %d %s\n", langGet(TEXT(LGUN, GUN_STR_DC)), g_CurrentPlayer->deathcount, langGet(TEXT(LGUN, GUN_STR_DD))); //died times
+            sprintf(buffer, "%s %d %s\n", langGet(getStringID(LGUN, GUN_STR_DC_DIED)), g_CurrentPlayer->deathcount, langGet(getStringID(LGUN, GUN_STR_DD_TIMES))); //died times
         }
 #if defined(VERSION_JP) || defined(VERSION_EU)
 		jp_hudmsgBottomShow(buffer);
@@ -26600,7 +26600,7 @@ void increment_num_suicides_display_MP(void) {
         
         currentTime = getMissiontimer();
         
-        sprintf(&buffer, &aSD_0, langGet(TEXT(LGUN, GUN_STR_DE)), g_CurrentPlayer->num_suicides); // "suicide count"
+        sprintf(&buffer, &aSD_0, langGet(getStringID(LGUN, GUN_STR_DE_SUICIDECOUNT)), g_CurrentPlayer->num_suicides); // "suicide count"
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
 		jp_hudmsgBottomShow(&buffer);

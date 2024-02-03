@@ -3010,7 +3010,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorClosed(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3021,7 +3021,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpen(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN, GOTOLABEL)   
 
 
  
@@ -3032,7 +3032,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorClosing(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_CLOSING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_CLOSING, GOTOLABEL)   
 
 
  
@@ -3043,7 +3043,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpening(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPENING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPENING, GOTOLABEL)   
 
 
  
@@ -3054,7 +3054,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpenOrClosed(GOTOLABEL)  \
-                IFDoorStateEqual(IFDOOR_STATE_OPEN | DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(IFAI_DOOR_STATE_OPEN | AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3065,7 +3065,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpeningOrClosing(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_CLOSING | DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_CLOSING | AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3076,7 +3076,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpenOrClosing(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN | DOOR_STATE_CLOSING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN | AI_DOOR_STATE_CLOSING, GOTOLABEL)   
 
 
  
@@ -3087,7 +3087,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorNotOpening(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN | DOOR_STATE_CLOSING | DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN | AI_DOOR_STATE_CLOSING | AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3098,7 +3098,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorClosedOrOpening(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_CLOSED | DOOR_STATE_OPENING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_CLOSED | AI_DOOR_STATE_OPENING, GOTOLABEL)   
 
 
  
@@ -3109,7 +3109,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpenOrOpening(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN | DOOR_STATE_OPENING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN | AI_DOOR_STATE_OPENING, GOTOLABEL)   
 
 
  
@@ -3120,7 +3120,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorNotClosing(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN | DOOR_STATE_OPENING | DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN | AI_DOOR_STATE_OPENING | AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3131,7 +3131,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorOpeningOrClosed(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPENING | DOOR_STATE_CLOSED, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPENING | AI_DOOR_STATE_CLOSED, GOTOLABEL)   
 
 
  
@@ -3142,7 +3142,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorNotOpen(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPENING | DOOR_STATE_CLOSED | DOOR_STATE_CLOSING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPENING | AI_DOOR_STATE_CLOSED | AI_DOOR_STATE_CLOSING, GOTOLABEL)   
 
 
  
@@ -3153,7 +3153,7 @@
   @return     Continue execution from LABEL if TRUE 
 *******************************************************************************/  
 #define IFDoorNotClosed(GOTOLABEL)  \
-                IFDoorStateEqual(DOOR_STATE_OPEN | DOOR_STATE_OPENING | DOOR_STATE_CLOSING, GOTOLABEL)   
+                IFDoorStateEqual(AI_DOOR_STATE_OPEN | AI_DOOR_STATE_OPENING | AI_DOOR_STATE_CLOSING, GOTOLABEL)   
 
 
  

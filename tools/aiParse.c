@@ -23,10 +23,10 @@
 
 // command 68 - door states
 char *DOORSTATE_ToString[] = {
-    " DOOR_STATE_CLOSED",  /* Closed*/
-    " DOOR_STATE_OPEN",    /* Opened*/
-    " DOOR_STATE_CLOSING", /* Closing*/
-    " DOOR_STATE_OPENING" /* Opening*/};
+    " AI_DOOR_STATE_CLOSED",  /* Closed*/
+    " AI_DOOR_STATE_OPEN",    /* Opened*/
+    " AI_DOOR_STATE_CLOSING", /* Closing*/
+    " AI_DOOR_STATE_OPENING" /* Opening*/};
 
 // command D7 - hud flags
 #define HUD_HIDE_ALL           0x00 /* Hide all*/
@@ -752,8 +752,8 @@ char *CAMERAMODE_ToString[] = {
     "CAMERAMODE_FADESWIRL",
     "CAMERAMODE_SWIRL",
     "CAMERAMODE_FP",
-    "CAMERAMODE_DEATH_CAM_FIRST",
-    "CAMERAMODE_DEATH_CAM_SECOND",
+    "CAMERAMODE_DEATH_CAM_SP",
+    "CAMERAMODE_DEATH_CAM_MP",
     "CAMERAMODE_POSEND",
     "CAMERAMODE_FP_NOINPUT",
     "CAMERAMODE_MP",

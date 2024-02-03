@@ -64,25 +64,25 @@ f32 D_800409D4 = 0.0f;
 s32 D_800409D8 = 8;
 //D:800409DC
 u16 D_800409DC[] = {
-    /*1.1 honey*/    TEXT(LOPTIONS, OPTION_STR_09), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*action*/TEXT(LOPTIONS, OPTION_STR_02), /*fire*/TEXT(LOPTIONS, OPTION_STR_00),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*move*/TEXT(LOPTIONS, OPTION_STR_05),
-    /*1.2 solitaire*/TEXT(LOPTIONS, OPTION_STR_0A), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*action*/TEXT(LOPTIONS, OPTION_STR_02), /*fire*/TEXT(LOPTIONS, OPTION_STR_00),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01),    /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*look*/TEXT(LOPTIONS, OPTION_STR_06),
-    /*1.3 kissy*/    TEXT(LOPTIONS, OPTION_STR_0B),   /*fire*/TEXT(LOPTIONS, OPTION_STR_00), /*action*/TEXT(LOPTIONS, OPTION_STR_02),  /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*look*/TEXT(LOPTIONS, OPTION_STR_06), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*move*/TEXT(LOPTIONS, OPTION_STR_05),
-    /*1.4 goodnight*/TEXT(LOPTIONS, OPTION_STR_0C),   /*fire*/TEXT(LOPTIONS, OPTION_STR_00), /*action*/TEXT(LOPTIONS, OPTION_STR_02),  /*aim*/TEXT(LOPTIONS, OPTION_STR_01), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*weapon*/TEXT(LOPTIONS, OPTION_STR_03), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*move*/TEXT(LOPTIONS, OPTION_STR_05), /*pause*/TEXT(LOPTIONS, OPTION_STR_04), /*look*/TEXT(LOPTIONS, OPTION_STR_06),
-    /*2.1 plenty*/   TEXT(LOPTIONS, OPTION_STR_0D),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
-    /*2.2 galore*/   TEXT(LOPTIONS, OPTION_STR_0E),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
-    /*2.3 domino*/   TEXT(LOPTIONS, OPTION_STR_0F),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),
-    /*2.4 goodhead*/ TEXT(LOPTIONS, OPTION_STR_10),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),      /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07),     /*?*/TEXT(LOPTIONS, OPTION_STR_07),    /*?*/TEXT(LOPTIONS, OPTION_STR_07)
+    /*1.1 honey*/    getStringID(LOPTIONS, OPTION_STR_09_11HONEY_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*action*/getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF), /*fire*/getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF),    /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF),    /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF), /*pause*/getStringID(LOPTIONS, OPTION_STR_04_PAUSE_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF),
+    /*1.2 solitaire*/getStringID(LOPTIONS, OPTION_STR_0A_12SOLITAIRE_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*action*/getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF), /*fire*/getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF),    /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF),    /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF), /*pause*/getStringID(LOPTIONS, OPTION_STR_04_PAUSE_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF),
+    /*1.3 kissy*/    getStringID(LOPTIONS, OPTION_STR_0B_13KISSY_LF),   /*fire*/getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF), /*action*/getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF),  /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF), /*pause*/getStringID(LOPTIONS, OPTION_STR_04_PAUSE_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF),
+    /*1.4 goodnight*/getStringID(LOPTIONS, OPTION_STR_0C_14GOODNIGHT_LF),   /*fire*/getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF), /*action*/getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF),  /*aim*/getStringID(LOPTIONS, OPTION_STR_01_AIM_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*weapon*/getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF), /*move*/getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF), /*pause*/getStringID(LOPTIONS, OPTION_STR_04_PAUSE_LF), /*look*/getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF),
+    /*2.1 plenty*/   getStringID(LOPTIONS, OPTION_STR_0D_21PLENTY_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),     /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),
+    /*2.2 galore*/   getStringID(LOPTIONS, OPTION_STR_0E_22GALORE_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),     /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),
+    /*2.3 domino*/   getStringID(LOPTIONS, OPTION_STR_0F_23DOMINO_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),     /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),
+    /*2.4 goodhead*/ getStringID(LOPTIONS, OPTION_STR_10_24GOODHEAD_LF),     /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),      /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),     /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF),    /*?*/getStringID(LOPTIONS, OPTION_STR_07_QUESTION_LF)
 };
 
 struct game_options game_options_entries[] = {
-    { {TEXT(LOPTIONS, OPTION_STR_11), TEXT(LOPTIONS, OPTION_STR_1C), TEXT(LOPTIONS, OPTION_STR_1B), 0}, 0}, //look up/down, reverse, upright
-    { {TEXT(LOPTIONS, OPTION_STR_12), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //autoaim, off, on
-    { {TEXT(LOPTIONS, OPTION_STR_14), TEXT(LOPTIONS, OPTION_STR_1E), TEXT(LOPTIONS, OPTION_STR_1D), 0}, 0}, //aim control, hold, toggle
-    { {TEXT(LOPTIONS, OPTION_STR_15), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //sight on screen, off, on
-    { {TEXT(LOPTIONS, OPTION_STR_13), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //look ahead, off, on
-    { {TEXT(LOPTIONS, OPTION_STR_16), TEXT(LOPTIONS, OPTION_STR_1A), TEXT(LOPTIONS, OPTION_STR_19), 0}, 1}, //ammo on screen, off, on
-    { {TEXT(LOPTIONS, OPTION_STR_17), TEXT(LOPTIONS, OPTION_STR_1F), TEXT(LOPTIONS, OPTION_STR_20), TEXT(LOPTIONS, OPTION_STR_21)}, 0}, //screen, full, wide, cinema
-    { {TEXT(LOPTIONS, OPTION_STR_18), TEXT(LOPTIONS, OPTION_STR_22), TEXT(LOPTIONS, OPTION_STR_23), 0}, 0} //ratio, normal, 16:9
+    { {getStringID(LOPTIONS, OPTION_STR_11_LOOKUPDOWN_LF), getStringID(LOPTIONS, OPTION_STR_1C_REVERSE_LF), getStringID(LOPTIONS, OPTION_STR_1B_UPRIGHT_LF), 0}, 0}, //look up/down, reverse, upright
+    { {getStringID(LOPTIONS, OPTION_STR_12_AUTOAIM_LF), getStringID(LOPTIONS, OPTION_STR_1A_OFF_LF), getStringID(LOPTIONS, OPTION_STR_19_ON_LF), 0}, 1}, //autoaim, off, on
+    { {getStringID(LOPTIONS, OPTION_STR_14_AIMCONTROL_LF), getStringID(LOPTIONS, OPTION_STR_1E_HOLD_LF), getStringID(LOPTIONS, OPTION_STR_1D_TOGGLE_LF), 0}, 0}, //aim control, hold, toggle
+    { {getStringID(LOPTIONS, OPTION_STR_15_SIGHTONSCREEN_LF), getStringID(LOPTIONS, OPTION_STR_1A_OFF_LF), getStringID(LOPTIONS, OPTION_STR_19_ON_LF), 0}, 1}, //sight on screen, off, on
+    { {getStringID(LOPTIONS, OPTION_STR_13_LOOKAHEAD_LF), getStringID(LOPTIONS, OPTION_STR_1A_OFF_LF), getStringID(LOPTIONS, OPTION_STR_19_ON_LF), 0}, 1}, //look ahead, off, on
+    { {getStringID(LOPTIONS, OPTION_STR_16_AMMOONSCREEN_LF), getStringID(LOPTIONS, OPTION_STR_1A_OFF_LF), getStringID(LOPTIONS, OPTION_STR_19_ON_LF), 0}, 1}, //ammo on screen, off, on
+    { {getStringID(LOPTIONS, OPTION_STR_17_SCREEN_LF), getStringID(LOPTIONS, OPTION_STR_1F_FULL_LF), getStringID(LOPTIONS, OPTION_STR_20_WIDE_LF), getStringID(LOPTIONS, OPTION_STR_21_CINEMA_LF)}, 0}, //screen, full, wide, cinema
+    { {getStringID(LOPTIONS, OPTION_STR_18_RATIO_LF), getStringID(LOPTIONS, OPTION_STR_22_NORMAL_LF), getStringID(LOPTIONS, OPTION_STR_23_169_LF), 0}, 0} //ratio, normal, 16:9
 };
 
 //D:80040ADC
@@ -2524,9 +2524,9 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
 
     pFontFile = ptrFontBankGothic;
     pFontChars = ptrFontBankGothicChars;
-    sp54 = langGet(TEXT(LOPTIONS, OPTION_STR_24)); //abort:
-    sp50 = langGet(TEXT(LOPTIONS, OPTION_STR_25)); //confirm
-    sp4C = langGet(TEXT(LOPTIONS, OPTION_STR_26)); //cancel
+    sp54 = langGet(getStringID(LOPTIONS, OPTION_STR_24_ABORT_LF)); //abort:
+    sp50 = langGet(getStringID(LOPTIONS, OPTION_STR_25_CONFIRM_LF)); //confirm
+    sp4C = langGet(getStringID(LOPTIONS, OPTION_STR_26_CANCEL_LF)); //cancel
     sp7C = 0x51;
 
     sp78 = (j_text_trigger ? 0xF : 0) + 0xBD;
@@ -2601,19 +2601,19 @@ Gfx *draw_text_mission_status(Gfx *gdl)
     s32 sp4C;
     s32 joffset;
 
-    txtptr_1 = langGet(TEXT(LOPTIONS, OPTION_STR_27)); //mission status:
+    txtptr_1 = langGet(getStringID(LOPTIONS, OPTION_STR_27_MISSIONSTATUS_LF)); //mission status:
     pFontFile = ptrFontBankGothic;
     pFontChars = ptrFontBankGothicChars;
 
     if (objectiveIsAllComplete())
     {
         sp4C = 0xFF00B0;
-        txtptr_2 = langGet(TEXT(LOPTIONS, OPTION_STR_28)); //complete
+        txtptr_2 = langGet(getStringID(LOPTIONS, OPTION_STR_28_COMPLETE_LF)); //complete
     }
     else
     {
         sp4C = D_80040AF4;
-        txtptr_2 = langGet(TEXT(LOPTIONS, OPTION_STR_29)); //incomplete
+        txtptr_2 = langGet(getStringID(LOPTIONS, OPTION_STR_29_INCOMPLETE_LF)); //incomplete
     }
 
     gdl = microcode_constructor(gdl);
@@ -2657,7 +2657,7 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
     s32 pFontChars;
     s32 joffset;
 
-    txtptr = langGet(TEXT(LOPTIONS, OPTION_STR_2B)); //q watch v2.01 beta
+    txtptr = langGet(getStringID(LOPTIONS, OPTION_STR_2B_QWATCHVERSION_LF)); //q watch v2.01 beta
 
     if (j_text_trigger)
     {
@@ -7851,29 +7851,29 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if (joyGetButtons(PLAYER_1, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_WEAPTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //weapon
     }
 
     if (joyGetButtons(PLAYER_1, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 0); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
     }
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_00)); //fire
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF)); //fire
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_01)); //aim
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_01_AIM_LF)); //aim
     }
 
     if (joyGetButtons(PLAYER_1, Z_TRIG))
@@ -7887,40 +7887,40 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_05)); //move
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF)); //move
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_06)); //look
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF)); //look
     }
 
     gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_4, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
 
     if (joyGetButtons(1, A_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //weapon
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_03)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //weapon
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_WEAPTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_03_WEAPON_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //weapon
     }
 
     if (joyGetButtons(1, B_BUTTON))
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), -1, 1, 0x7000A0, 0, 0, 0x3000B0, 1); //action
     }
     else
     {
-        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(TEXT(LOPTIONS, OPTION_STR_02)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
+        gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
     }
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_01)); //aim
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_01_AIM_LF)); //aim
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_00)); //fire
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF)); //fire
     }
 
     if (joyGetButtons(1, Z_TRIG))
@@ -7934,11 +7934,11 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
 
     if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_06)); //look
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF)); //look
     }
     else
     {
-        textptr_aux = langGet(TEXT(LOPTIONS, OPTION_STR_05)); //move
+        textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF)); //move
     }
 
     gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_4, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
@@ -9408,7 +9408,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
         pFontChars = ptrFontBankGothicChars;
         
         gdl = microcode_constructor(gdl);
-        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_32)); //control style
+        textptr = langGet(getStringID(LOPTIONS, OPTION_STR_32_CONTROLSTYLE_LF)); //control style
     
         sp5C = XOFFSET_1;
         sp58 = 0x1A;
@@ -9433,13 +9433,13 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
         }
         
         gdl = sub_GAME_7F0A97D0(gdl);
-        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_33)); //controller;
+        textptr = langGet(getStringID(LOPTIONS, OPTION_STR_33_CONTROLLER_LF)); //controller;
         
         phi_s1 = 0xFF00B0;
         
         if (controllerCheckDualControllerTypesAllowed())
         {
-            textptr = langGet(TEXT(LOPTIONS, OPTION_STR_34)); //controllers;
+            textptr = langGet(getStringID(LOPTIONS, OPTION_STR_34_CONTROLLERS_LF)); //controllers;
         }
         sp5C = XOFFSET_1;
         sp58 = 0x2B;
@@ -9937,7 +9937,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
         pFontChars = ptrFontBankGothicChars;
         gdl = microcode_constructor(gdl);
 
-        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_35)); //music
+        textptr = langGet(getStringID(LOPTIONS, OPTION_STR_35_MUSIC_LF)); //music
 
         sp54 = XOFFSET_1;
         sp50 = YOFFSET_8;
@@ -9965,7 +9965,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
         }
 
         sp5C = 0xFF00B0;
-        textptr = langGet(TEXT(LOPTIONS, OPTION_STR_36)); //fx
+        textptr = langGet(getStringID(LOPTIONS, OPTION_STR_36_FX_LF)); //fx
 
         sp54 = XOFFSET_1;
         sp50 = YOFFSET_9;

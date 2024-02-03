@@ -17,7 +17,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
     numImpactEntries = 0;
     D_80040178 = 1.0f;
 
-    ptr_explosion_buf = (struct Explosion*)mempAllocBytesInBank(EXPLOSION_BUFFER_LEN * sizeof(struct Explosion), 4);
+    ptr_explosion_buf = (struct Explosion *)mempAllocBytesInBank(EXPLOSION_BUFFER_LEN * sizeof(struct Explosion), MEMPOOL_STAGE);
 
     for (i=0; i<EXPLOSION_BUFFER_LEN; i++)
     {
@@ -29,7 +29,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
         }
     }
 
-    ptr_smoke_buf = (struct Smoke*)mempAllocBytesInBank(SMOKE_BUFFER_LEN * sizeof(struct Smoke), 4);
+    ptr_smoke_buf = (struct Smoke *)mempAllocBytesInBank(SMOKE_BUFFER_LEN * sizeof(struct Smoke), MEMPOOL_STAGE);
 
     for (i=0; i<SMOKE_BUFFER_LEN; i++)
     {
@@ -44,7 +44,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
     if (getPlayerCount() == 1)
     {
         // scorches are the circle burn marks left on the ground from explosions
-        ptr_scorch_buf = (struct Scorch*)mempAllocBytesInBank(SCORCH_BUFFER_LEN * sizeof(struct Scorch), 4);
+        ptr_scorch_buf = (struct Scorch *)mempAllocBytesInBank(SCORCH_BUFFER_LEN * sizeof(struct Scorch), MEMPOOL_STAGE);
 
         for (i=0; i<SCORCH_BUFFER_LEN; i++)
         {
@@ -52,7 +52,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
         }
     }
 
-    ptr_bullet_impact_buf = (struct BulletImpact*)mempAllocBytesInBank(BULLET_IMPACT_BUFFER_LEN * sizeof(struct BulletImpact), 4);
+    ptr_bullet_impact_buf = (struct BulletImpact *)mempAllocBytesInBank(BULLET_IMPACT_BUFFER_LEN * sizeof(struct BulletImpact), MEMPOOL_STAGE);
 
     for (i=0; i<BULLET_IMPACT_BUFFER_LEN; i++)
     {
@@ -66,7 +66,7 @@ void alloc_explosion_smoke_casing_scorch_impact_buffers(void)
         max_particles = (s32) max_particles >> 1;
     }
 
-    ptr_flying_particles_buf = (struct FlyingParticles*)mempAllocBytesInBank(((max_particles * sizeof(struct FlyingParticles)) + 0xF) & ~0xF, 4);
+    ptr_flying_particles_buf = (struct FlyingParticles *)mempAllocBytesInBank(((max_particles * sizeof(struct FlyingParticles)) + 0xF) & ~0xF, MEMPOOL_STAGE);
 
     for (i=0; i<max_particles; i++)
     {

@@ -142,7 +142,7 @@ f32 get_distance_actor_to_position            (ChrRecord *self, coord3d *pos);
 s32 chrResolveId                              (ChrRecord *self, s32 id);
 s32 sub_GAME_7F033780                         (waypoint *arg0, coord3d *arg1, f32 angle);
 s32 chrlvFindPathNeighborRelated              (coord3d *bondpos, StandTile *stan, f32 rot, u8 quadrant);
-s32 sub_GAME_7F033EAC                         (coord3d *arg0, StandTile *arg1);
+s32 chrIsPosOffScreen                         (coord3d *arg0, StandTile *arg1);
 PropRecord *chrSpawnAtCoord(s32 bodynum, s32 headnum, coord3d *pos, StandTile *stan, f32 angle, AIListRecord *ailist, s32 spawnflags);
 void chrlvInitActAttack                       (ChrRecord *self, struct anim_group_info ** arg1, s32 arg2, point2d *arg3, s32 attack_type, s32 arg5, s32 arg6);
 s32 chrlvPatrolCalculateStep                  (ChrRecord *self, bool *forward, s32 numsteps);
@@ -11116,22 +11116,22 @@ s32 chrIsTargetNearlyInSight(ChrRecord *self)
  * Address 0x7F033EAC.
  * PD: chrIsPosOffScreen
 */
-s32 sub_GAME_7F033EAC(coord3d *arg0, StandTile *arg1)
+s32 chrIsPosOffScreen(coord3d *arg0, StandTile *tile)
 {
     bool offscreen;
-    bbox2d sp1C;
+    bbox2d box;
 
     offscreen = TRUE;
 
-    if (getROOMID_Bitflags(getTileRoom(arg1)) && fogPositionIsVisibleThroughFog(arg0, 0.0f))
+    if (getROOMID_Bitflags(getTileRoom(tile)) && fogPositionIsVisibleThroughFog(arg0, 0.0f))
     {
-        if (bgGet2dBboxByRoomId(getTileRoom(arg1), &sp1C))
+        if (bgGet2dBboxByRoomId(getTileRoom(tile), &box))
         {
-            offscreen = camIsPosInScreenBox(arg0, 200.0f, &sp1C) == 0;
+            offscreen = camIsPosInScreenBox(arg0, 200.0f, &box) == 0;
         }
         else
         {
-            offscreen = sub_GAME_7F078A58(arg0, 200.0f) == 0;
+            offscreen = camIsPosInScreen(arg0, 200.0f) == 0;
         }
     }
 
@@ -11143,7 +11143,7 @@ s32 sub_GAME_7F033EAC(coord3d *arg0, StandTile *arg1)
  * Address 0x7F033F48.
  * PD: chrAdjustPosForSpawn
 */
-bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowonscreen)
+bool chrAdjustPosForSpawn(coord3d *pos, StandTile **arg1, f32 facing, bool allowonscreen)
 {
     coord3d testpos;
     StandTile *s;
@@ -11154,7 +11154,7 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowons
     spp = &s;
 
     if ((stanTestVolume(spp, pos->f[0], pos->z, 20.0f, 0x1F, 0.0f, 1.0f) < 0) &&
-        (allowonscreen || sub_GAME_7F033EAC(pos, *arg1)))
+        (allowonscreen || chrIsPosOffScreen(pos, *arg1)))
     {
         return TRUE;
     }
@@ -11169,7 +11169,7 @@ bool sub_GAME_7F033F48(coord3d *pos, StandTile **arg1, f32 facing, bool allowons
 
         if (stanTestLineUnobstructed(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
             && (stanTestVolume(spp, testpos.f[0], testpos.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
-            && (allowonscreen || sub_GAME_7F033EAC(&testpos, s)))
+            && (allowonscreen || chrIsPosOffScreen(&testpos, s)))
         {
             *arg1 = s;
 
@@ -11216,7 +11216,7 @@ PropRecord *chrSpawnAtCoord(s32 bodynum, s32 headnum, coord3d *pos, StandTile *s
         newpos.z = pos->z;
         stancopy = stan;
 
-        if (sub_GAME_7F033F48(&newpos, &stancopy, angle, ((spawnflags & 0x10) != 0)))
+        if (chrAdjustPosForSpawn(&newpos, &stancopy, angle, ((spawnflags & 0x10) != 0)))
         {
             chrHeader = retrieve_header_for_body_and_head(bodynum, headnum, spawnflags);
 

@@ -29,7 +29,7 @@ void alloc_init_GUARDdata_entries(s32 count)
     
     g_NumChrSlots = count + 0xA;
 
-    g_ChrSlots = mempAllocBytesInBank(align_addr_zero(g_NumChrSlots*sizeof(ChrRecord)), 4);
+    g_ChrSlots = mempAllocBytesInBank(align_addr_zero(g_NumChrSlots * sizeof(ChrRecord)), MEMPOOL_STAGE);
     for(i = 0; g_NumChrSlots > i; i++)
     {
         g_ChrSlots[i].model = 0;

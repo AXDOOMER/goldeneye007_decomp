@@ -754,7 +754,7 @@ void bondviewUpdateSpeedSideways(s32 arg0);
 void bondviewUpdateSpeedForwards(s32 arg0);
 void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, struct coord3d *pos2, struct coord3d *offset, struct StandTile **stan, struct coord3d *arg6);
 void sub_GAME_7F07B2A0(s32, f32, struct coord3d *, struct coord3d *);
-s32 sub_GAME_7F07A534(struct PropRecord *, struct coord3d *, struct PropRecord *, struct coord3d *, struct StandTile *, f32);
+s32 pickDeathCameraAngles(struct PropRecord *, struct coord3d *, struct PropRecord *, struct coord3d *, struct StandTile *, f32);
 
 // end forward declarations
 
@@ -821,7 +821,15 @@ void currentPlayerSetCameraScale(void)
 	g_CurrentPlayer->c_cameraleftnorm.z = -fVar5 * fVar4;
 }
 
-void sub_GAME_7F077EEC(coord2d *in, coord3d *out, f32 value) {
+/**
+ * Transforms a 2D screen coordinate to a 3D world coordinate
+ *
+ * 'out' looks to be a vector which probably has the length 'length'
+ * It starts from the middle of the screen.
+ *
+ * Address 0x7F077EEC.
+ */
+void transformAndNormalizeByLength2Dto3D(coord2d *in, coord3d *out, f32 length) {
     f32 norm;
     f32 x;
     f32 y;
@@ -829,7 +837,7 @@ void sub_GAME_7F077EEC(coord2d *in, coord3d *out, f32 value) {
     y = (g_CurrentPlayer->c_halfheight - (in->y - g_CurrentPlayer->c_screentop)) * g_CurrentPlayer->c_scaley;
     x = ((in->x - g_CurrentPlayer->c_screenleft) - g_CurrentPlayer->c_halfwidth) * g_CurrentPlayer->c_scalex;
     z = -1.0f;
-    norm = value / sqrtf((x * x) + (y * y) + (z * z));
+    norm = length / sqrtf((x * x) + (y * y) + (z * z));
     out->x = (x * norm);
     out->y = (y * norm);
     out->z = (-1.0f * norm);
@@ -840,7 +848,7 @@ void sub_GAME_7F077FB4(coord3d *in, f32 value, coord3d *out) {
     out->x = ((in->x * value) * g_CurrentPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(coord3d *in, coord3d *out) {
+void sub_GAME_7F077FF4(coord3d *in, coord2d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * g_CurrentPlayer->c_recipscaley) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
     out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * inv_z * g_CurrentPlayer->c_recipscalex);
@@ -1144,40 +1152,42 @@ void sub_GAME_7F078A10(coord3d *arg0, f32 *arg1) {
 }
 
 /**
- * Takes dot product of some vectors and compares each to an associated scalar value.
+ * Check if the 3D coordinate is within the screen
+ *
+ * Takes dot product of some position and compares each to an associated scalar value.
  * Returns 0 if the dot product exceeds the scalar amount, 1 otherwise.
- * 
- * @param vec_scale: Applies dot product of this vector against g_CurrentPlayer->field_10D4
+ *
+ * @param pos: Applies dot product of this position against g_CurrentPlayer->field_10D4
  * and four coords starting at flt_CODE_bss_80079960.
- * 
- * @param norm_scale: Value added to flt_CODE_bss_80079980 to compare g_CurrentPlayer->field_10D4,
+ *
+ * @param margin: Value added to flt_CODE_bss_80079980 to compare g_CurrentPlayer->field_10D4,
  * and the four values starting at flt_CODE_bss_8007996C.
- * 
+ *
  * Address 0x7F078A58.
  */
-s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale)
+s32 camIsPosInScreen(coord3d *pos, f32 margin)
 {
-    if (flt_CODE_bss_80079980 + norm_scale < (g_CurrentPlayer->field_10D4->m[2][0] * vec_scale->f[0]) + (g_CurrentPlayer->field_10D4->m[2][1] * vec_scale->f[1]) + (g_CurrentPlayer->field_10D4->m[2][2] * vec_scale->f[2]))
+    if (flt_CODE_bss_80079980 + margin < (g_CurrentPlayer->field_10D4->m[2][0] * pos->f[0]) + (g_CurrentPlayer->field_10D4->m[2][1] * pos->f[1]) + (g_CurrentPlayer->field_10D4->m[2][2] * pos->f[2]))
     {
         return 0;
     }
 
-    if (flt_CODE_bss_8007996C + norm_scale < (flt_CODE_bss_80079960.f[0] * vec_scale->f[0]) + (flt_CODE_bss_80079960.f[1] * vec_scale->f[1]) + (flt_CODE_bss_80079960.f[2] * vec_scale->f[2]))
+    if (flt_CODE_bss_8007996C + margin < (flt_CODE_bss_80079960.f[0] * pos->f[0]) + (flt_CODE_bss_80079960.f[1] * pos->f[1]) + (flt_CODE_bss_80079960.f[2] * pos->f[2]))
     {
         return 0;
     }
 
-    if (flt_CODE_bss_8007997C + norm_scale < (flt_CODE_bss_80079970.f[0] * vec_scale->f[0]) + (flt_CODE_bss_80079970.f[1] * vec_scale->f[1]) + (flt_CODE_bss_80079970.f[2] * vec_scale->f[2]))
+    if (flt_CODE_bss_8007997C + margin < (flt_CODE_bss_80079970.f[0] * pos->f[0]) + (flt_CODE_bss_80079970.f[1] * pos->f[1]) + (flt_CODE_bss_80079970.f[2] * pos->f[2]))
     {
         return 0;
     }
 
-    if (flt_CODE_bss_8007994C + norm_scale < (flt_CODE_bss_80079940.f[0] * vec_scale->f[0]) + (flt_CODE_bss_80079940.f[1] * vec_scale->f[1]) + (flt_CODE_bss_80079940.f[2] * vec_scale->f[2]))
+    if (flt_CODE_bss_8007994C + margin < (flt_CODE_bss_80079940.f[0] * pos->f[0]) + (flt_CODE_bss_80079940.f[1] * pos->f[1]) + (flt_CODE_bss_80079940.f[2] * pos->f[2]))
     {
         return 0;
     }
 
-    if (flt_CODE_bss_8007995C + norm_scale < (flt_CODE_bss_80079950.f[0] * vec_scale->f[0]) + (flt_CODE_bss_80079950.f[1] * vec_scale->f[1]) + (flt_CODE_bss_80079950.f[2] * vec_scale->f[2]))
+    if (flt_CODE_bss_8007995C + margin < (flt_CODE_bss_80079950.f[0] * pos->f[0]) + (flt_CODE_bss_80079950.f[1] * pos->f[1]) + (flt_CODE_bss_80079950.f[2] * pos->f[2]))
     {
         return 0;
     }
@@ -1186,7 +1196,7 @@ s32 sub_GAME_7F078A58(coord3d *vec_scale, f32 norm_scale)
 }
 
 
-bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
+bool camIsPosInScreenBox(coord3d *pos, f32 margin, bbox2d *box)
 {
     coord3d sp74;
     f32 sp70;
@@ -1207,12 +1217,12 @@ bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
     f32 sp1c;
     f32 sp18;
 
-    if (flt_CODE_bss_80079980 + arg1 < g_CurrentPlayer->field_10D4->m[2][0] * pos->f[0] + g_CurrentPlayer->field_10D4->m[2][1] * pos->f[1] + g_CurrentPlayer->field_10D4->m[2][2] * pos->f[2])
+    if (flt_CODE_bss_80079980 + margin < g_CurrentPlayer->field_10D4->m[2][0] * pos->f[0] + g_CurrentPlayer->field_10D4->m[2][1] * pos->f[1] + g_CurrentPlayer->field_10D4->m[2][2] * pos->f[2])
     {
         return FALSE;
     }
 
-    sp38 = (arg2->min.x - g_CurrentPlayer->c_screenleft - g_CurrentPlayer->c_halfwidth) * g_CurrentPlayer->c_scalex;
+    sp38 = (box->min.x - g_CurrentPlayer->c_screenleft - g_CurrentPlayer->c_halfwidth) * g_CurrentPlayer->c_scalex;
 
     sp3c = 1.0f / sqrtf(sp38 * sp38 + 1.0f);
     sp38 *= sp3c;
@@ -1224,12 +1234,12 @@ bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
 
     sp50 = sp54.f[0] * g_CurrentPlayer->field_10D4->m[3][0] + sp54.f[1] * g_CurrentPlayer->field_10D4->m[3][1] + sp54.f[2] * g_CurrentPlayer->field_10D4->m[3][2];
 
-    if (sp50 + arg1 < sp54.f[0] * pos->f[0] + sp54.f[1] * pos->f[1] + sp54.f[2] * pos->f[2])
+    if (sp50 + margin < sp54.f[0] * pos->f[0] + sp54.f[1] * pos->f[1] + sp54.f[2] * pos->f[2])
     {
         return FALSE;
     }
 
-    sp38 = -(arg2->max.x - g_CurrentPlayer->c_screenleft - g_CurrentPlayer->c_halfwidth) * g_CurrentPlayer->c_scalex;
+    sp38 = -(box->max.x - g_CurrentPlayer->c_screenleft - g_CurrentPlayer->c_halfwidth) * g_CurrentPlayer->c_scalex;
     sp30 = 1.0f / sqrtf(sp38 * sp38 + 1.0f);
     sp38 *= sp30;
     sp20 = -sp30;
@@ -1240,12 +1250,12 @@ bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
 
     sp40 = sp44.f[0] * g_CurrentPlayer->field_10D4->m[3][0] + sp44.f[1] * g_CurrentPlayer->field_10D4->m[3][1] + sp44.f[2] * g_CurrentPlayer->field_10D4->m[3][2];
 
-    if (sp40 + arg1 < sp44.f[0] * pos->f[0] + sp44.f[1] * pos->f[1] + sp44.f[2] * pos->f[2])
+    if (sp40 + margin < sp44.f[0] * pos->f[0] + sp44.f[1] * pos->f[1] + sp44.f[2] * pos->f[2])
     {
         return FALSE;
     }
 
-    sp34 = (g_CurrentPlayer->c_halfheight - (arg2->min.y - g_CurrentPlayer->c_screentop)) * g_CurrentPlayer->c_scaley;
+    sp34 = (g_CurrentPlayer->c_halfheight - (box->min.y - g_CurrentPlayer->c_screentop)) * g_CurrentPlayer->c_scaley;
     sp2c = 1.0f / sqrtf(sp34 * sp34 + 1.0f);
     sp34 *= sp2c;
     sp1c = -sp2c;
@@ -1256,12 +1266,12 @@ bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
 
     sp70 = sp74.f[0] * g_CurrentPlayer->field_10D4->m[3][0] + sp74.f[1] * g_CurrentPlayer->field_10D4->m[3][1] + sp74.f[2] * g_CurrentPlayer->field_10D4->m[3][2];
 
-    if (sp70 + arg1 < sp74.f[0] * pos->f[0] + sp74.f[1] * pos->f[1] + sp74.f[2] * pos->f[2])
+    if (sp70 + margin < sp74.f[0] * pos->f[0] + sp74.f[1] * pos->f[1] + sp74.f[2] * pos->f[2])
     {
         return FALSE;
     }
 
-    sp34 = -(g_CurrentPlayer->c_halfheight - (arg2->max.y - g_CurrentPlayer->c_screentop)) * g_CurrentPlayer->c_scaley;
+    sp34 = -(g_CurrentPlayer->c_halfheight - (box->max.y - g_CurrentPlayer->c_screentop)) * g_CurrentPlayer->c_scaley;
     sp28 = 1.0f / sqrtf(sp34 * sp34 + 1.0f);
     sp34 *= sp28;
     sp18 = -sp28;
@@ -1272,7 +1282,7 @@ bool camIsPosInScreenBox(coord3d *pos, f32 arg1, bbox2d *arg2)
 
     sp60 = sp64.f[0] * g_CurrentPlayer->field_10D4->m[3][0] + sp64.f[1] * g_CurrentPlayer->field_10D4->m[3][1] + sp64.f[2] * g_CurrentPlayer->field_10D4->m[3][2];
 
-    if (sp60 + arg1 < sp64.f[0] * pos->f[0] + sp64.f[1] * pos->f[1] + sp64.f[2] * pos->f[2])
+    if (sp60 + margin < sp64.f[0] * pos->f[0] + sp64.f[1] * pos->f[1] + sp64.f[2] * pos->f[2])
     {
         return FALSE;
     }
@@ -3727,7 +3737,7 @@ u32 bondviewGetCameraMode(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07A534(void) {
+void pickDeathCameraAngles(void) {
 
 }
 #else
@@ -3744,7 +3754,7 @@ glabel D_8005503C
 glabel D_80055040
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F07A534
+glabel pickDeathCameraAngles
 /* 0AF064 7F07A534 27BDFF20 */  addiu $sp, $sp, -0xe0
 /* 0AF068 7F07A538 3C018008 */  lui   $at, %hi(dword_CODE_bss_800799F4)
 /* 0AF06C 7F07A53C AC2499F4 */  sw    $a0, %lo(dword_CODE_bss_800799F4)($at)
@@ -4166,7 +4176,7 @@ void bondviewSetCameraMode(s32 arg0)
         
         stop_time_flag = 0;
     }
-    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
     {
         f32 var_f0;
         PropRecord *sp64;
@@ -4187,6 +4197,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
+            // This branch restarts Bond's death animation for his death replay
             in_tank_flag = 0;
 
             // struct copy
@@ -4226,7 +4237,7 @@ void bondviewSetCameraMode(s32 arg0)
         if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
             sp64 = g_PlayerTankProp;
-            var_f0 = 500.0f;
+            var_f0 = 500.0f; // distance to place the camera
             sp58.f[0] = g_PlayerTankProp->pos.f[0];
             sp58.f[1] = g_PlayerTankProp->pos.f[1];
             sp58.f[2] = g_PlayerTankProp->pos.f[2];
@@ -4238,7 +4249,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
-            var_f0 = 200.0f;
+            var_f0 = 200.0f; // distance to place the camera
             sp64 = g_CurrentPlayer->prop;
             sp58.f[0] = g_CurrentPlayer->field_3C4;
             sp58.f[1] = g_CurrentPlayer->field_3C8;
@@ -4250,7 +4261,7 @@ void bondviewSetCameraMode(s32 arg0)
             var_v1 = g_CurrentPlayer->field_488.current_tile_ptr;
         }
         
-        if (sub_GAME_7F07A534(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
+        if (pickDeathCameraAngles(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
         {
             if (D_80036510 == 0)
             {
@@ -4265,10 +4276,12 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
+            // pickDeathCameraAngles has returned 0. This happens when no possible angles were found
+            // to place the camera at the requested distance or when the three death replays are finished.
             bossRunTitleStage();
         }
     }
-    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+    else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
     {
         currentPlayerSetFadeColour(0, 0, 0, 0.0f);
         currentPlayerSetFadeFrac(60.0f, 1.0f);
@@ -4831,9 +4844,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
         }
     }
-    else if ((g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST) || (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND))
+    else if ((g_CameraMode == CAMERAMODE_DEATH_CAM_SP) || (g_CameraMode == CAMERAMODE_DEATH_CAM_MP))
     {
-        if (g_CameraMode == CAMERAMODE_DEATH_CAM_FIRST)
+        if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
         {
             D_800364A4 += g_GlobalTimerDelta;
             
@@ -4859,7 +4872,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 D_80036510 = CAMERAMODE_FADESWIRL;
             }
         }
-        else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SECOND)
+        else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
         {
             D_800364A4 += g_GlobalTimerDelta;
             
@@ -8256,7 +8269,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
     g_CurrentPlayer->field_488.collision_position.f[1] = g_CurrentPlayer->field_70 + phi_f0;
     
-    if (((g_CameraMode != CAMERAMODE_DEATH_CAM_FIRST) && (g_CameraMode != CAMERAMODE_DEATH_CAM_SECOND) && (g_CameraMode != CAMERAMODE_POSEND))
+    if (((g_CameraMode != CAMERAMODE_DEATH_CAM_SP) && (g_CameraMode != CAMERAMODE_DEATH_CAM_MP) && (g_CameraMode != CAMERAMODE_POSEND))
         || (g_CurrentPlayer->ptr_char_objectinstance == 0))
     {
         g_CurrentPlayer->field_488.pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];

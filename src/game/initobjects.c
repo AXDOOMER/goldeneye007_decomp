@@ -69,9 +69,9 @@ void alloc_lookup_buffers(void)
     s32 j;
     s32 i;
 
-    ptr_list_object_lookup_indices = (s16*)mempAllocBytesInBank(PTR_LIST_OBJECT_LOOKUP_INDICES_LEN * sizeof(s16), 4);
-    RoomPropListChunkIndexes = (s16*)mempAllocBytesInBank((((MaxNumRooms * 4) + 0xF) | 0xF) ^ 0xF, 4);
-    RoomPropListChunks = (s16*)mempAllocBytesInBank(BSS_8007161C_LEN * sizeof(struct roomproplistchunk), 4);
+    ptr_list_object_lookup_indices = (s16 *)mempAllocBytesInBank(PTR_LIST_OBJECT_LOOKUP_INDICES_LEN * sizeof(s16), MEMPOOL_STAGE);
+    RoomPropListChunkIndexes       = (s16 *)mempAllocBytesInBank((((MaxNumRooms * 4) + 0xF) | 0xF) ^ 0xF, MEMPOOL_STAGE);
+    RoomPropListChunks             = (s16 *)mempAllocBytesInBank(BSS_8007161C_LEN * sizeof(struct roomproplistchunk), MEMPOOL_STAGE);
 
     ptr_list_object_lookup_indices[0] = -1;
 

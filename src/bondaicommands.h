@@ -469,10 +469,10 @@ typedef enum HITTARGET
 } HITTARGET;
 
 // command 68 - door states
-#define DOOR_STATE_CLOSED               0x01 /* Closed*/
-#define DOOR_STATE_OPEN                 0x02 /* Opened*/
-#define DOOR_STATE_CLOSING              0x04 /* Closing*/
-#define DOOR_STATE_OPENING              0x08 /* Opening*/
+#define AI_DOOR_STATE_CLOSED               0x01 /* Closed*/
+#define AI_DOOR_STATE_OPEN                 0x02 /* Opened*/
+#define AI_DOOR_STATE_CLOSING              0x04 /* Closing*/
+#define AI_DOOR_STATE_OPENING              0x08 /* Opening*/
 
 // command BD/BE - spawn flags
 #define SPAWN_SUNGLASSES                0x00000001 /* Sunglasses*/

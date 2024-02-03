@@ -837,7 +837,7 @@ s32 sub_GAME_7F042EB4(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2
 s32 sub_GAME_7F042A0C(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4);
 s32 handles_projectile_motion(struct ObjectRecord *arg0, f32 *arg1, struct coord3d *arg2, struct coord3d *arg3, s32 arg4, s32 arg5);
 void sub_GAME_7F0431E4(struct ObjectRecord *arg0, struct coord3d *arg1);
-void sub_GAME_7F054FB4(struct DoorRecord *arg0);
+void door7F054FB4(struct DoorRecord *arg0);
 
 /* PD: projectileFree (similar but not the same structure) */
 void projectileFree(Projectile* projectile)
@@ -1353,7 +1353,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
 
         if (obj->flags & 0x100)
         {
-            obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, 4U);
+            obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, MEMPOOL_STAGE);
             obj->state = (u8) (obj->state | 8);
         }
         else
@@ -5161,196 +5161,108 @@ s32 chrobjTestPointPolygonCollision(struct coord3d *point, f32 collision_radius,
 }
 
 
+/**
+ * NTSC address 0x7F0448A8.
+*/
+s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
+{
+    s32 var_s0;
+    struct rect4f *sp98;
+    s32 sp94;
+    f32 sp90;
+    f32 sp8C;
+    s32 roomids[8];    
+    s16 *temp_s0;
+    f32 sp64;
+    f32 sp60;
+    f32 sp5C;
+    f32 temp_f0;
+    PropRecord *propss;
+    ObjectRecord *temp_v0_2;
+    struct rect4f *sp4C;
+    s32 sp48;
+    f32 sp44;
+    f32 sp40;
+    
+    chraiGetCollisionBounds(arg0, &sp98, &sp94, &sp90, &sp8C);
 
-#ifdef NONMATCHING
-void sub_GAME_7F0448A8(void) {
+    if (sp94 <= 0)
+    {
+        return 1;
+    }
 
+    chraiGetPropRoomIds(arg0, (s32*)&roomids);
+    roomGetProps((s32*)&roomids);
+
+    propss = (PropRecord *)&pos_data_entry;
+
+    for (temp_s0 = ptr_list_object_lookup_indices; *temp_s0 >= 0; temp_s0++)
+    {
+        PropRecord *prop = &propss[*temp_s0];
+
+        if (prop != arg0)
+        {
+            if ((prop->type == PROP_TYPE_VIEWER) || (prop->type == PROP_TYPE_CHR))
+            {
+                temp_v0_2 = prop->obj;
+                if ((temp_v0_2 == NULL) || !((s32) temp_v0_2->model & 0x400))
+                {
+                    chrpropGetCollisionBounds(prop, &sp5C, &sp64, &sp60);
+
+                    temp_f0 = sub_GAME_7F03CFE8(prop);
+                    sp60 += temp_f0;
+                    sp64 += temp_f0;
+
+                    if (sp60 <= sp90)
+                    {
+                        var_s0 = 1;
+
+                        if (sp8C <= sp64)
+                        {
+                            if (chrpropTestPointInPolygon(&prop->pos, sp98, sp94) != 0)
+                            {
+                                var_s0 = 0;
+                            }
+                            
+                            if ((var_s0 != 0) && (chrobjTestPointPolygonCollision(&prop->pos, sp5C, sp98, sp94) != 0))
+                            {
+                                var_s0 = 0;
+                            }
+                            
+                            if (var_s0 == 0)
+                            {
+                                if ((prop->type == PROP_TYPE_CHR) && (arg0->type == PROP_TYPE_DOOR))
+                                {
+                                    prop->chr->hidden |= CHRHIDDEN_OFFSCREEN_PATROL;
+                                }
+                                
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (
+                ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_DOOR))
+                && (
+                    (arg0->type != PROP_TYPE_DOOR)
+                    || ((prop->type != PROP_TYPE_DOOR) && ((prop->obj->type != PROPDEF_SAFE)) && (prop->obj->type != PROPDEF_AIRCRAFT))))
+            {
+                chraiGetCollisionBounds(prop, &sp4C, &sp48, &sp44, &sp40);
+                
+                if ((sp48 > 0)
+                    && (sp40 <= sp90)
+                    && (sp8C <= sp44)
+                    && (sub_GAME_7F0446B8(sp4C, sp48, sp98, sp94) != 0))
+                {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0448A8
-/* 0793D8 7F0448A8 27BDFF60 */  addiu $sp, $sp, -0xa0
-/* 0793DC 7F0448AC AFBF0034 */  sw    $ra, 0x34($sp)
-/* 0793E0 7F0448B0 AFB50030 */  sw    $s5, 0x30($sp)
-/* 0793E4 7F0448B4 27AE008C */  addiu $t6, $sp, 0x8c
-/* 0793E8 7F0448B8 0080A825 */  move  $s5, $a0
-/* 0793EC 7F0448BC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 0793F0 7F0448C0 AFB30028 */  sw    $s3, 0x28($sp)
-/* 0793F4 7F0448C4 AFB20024 */  sw    $s2, 0x24($sp)
-/* 0793F8 7F0448C8 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0793FC 7F0448CC AFB0001C */  sw    $s0, 0x1c($sp)
-/* 079400 7F0448D0 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 079404 7F0448D4 27A50098 */  addiu $a1, $sp, 0x98
-/* 079408 7F0448D8 27A60094 */  addiu $a2, $sp, 0x94
-/* 07940C 7F0448DC 0FC0F308 */  jal   chraiGetCollisionBounds
-/* 079410 7F0448E0 27A70090 */   addiu $a3, $sp, 0x90
-/* 079414 7F0448E4 8FAF0094 */  lw    $t7, 0x94($sp)
-/* 079418 7F0448E8 27B0006C */  addiu $s0, $sp, 0x6c
-/* 07941C 7F0448EC 02A02025 */  move  $a0, $s5
-/* 079420 7F0448F0 1DE00003 */  bgtz  $t7, .L7F044900
-/* 079424 7F0448F4 00000000 */   nop   
-/* 079428 7F0448F8 10000086 */  b     .L7F044B14
-/* 07942C 7F0448FC 24020001 */   li    $v0, 1
-.L7F044900:
-/* 079430 7F044900 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 079434 7F044904 02002825 */   move  $a1, $s0
-/* 079438 7F044908 0FC0F8FF */  jal   roomGetProps
-/* 07943C 7F04490C 02002025 */   move  $a0, $s0
-/* 079440 7F044910 3C138007 */  lui   $s3, %hi(ptr_list_object_lookup_indices)
-/* 079444 7F044914 8E739C30 */  lw    $s3, %lo(ptr_list_object_lookup_indices)($s3)
-/* 079448 7F044918 24140002 */  li    $s4, 2
-/* 07944C 7F04491C 86620000 */  lh    $v0, ($s3)
-/* 079450 7F044920 0440007B */  bltz  $v0, .L7F044B10
-/* 079454 7F044924 0002C080 */   sll   $t8, $v0, 2
-.L7F044928:
-/* 079458 7F044928 0302C023 */  subu  $t8, $t8, $v0
-/* 07945C 7F04492C 0018C080 */  sll   $t8, $t8, 2
-/* 079460 7F044930 0302C021 */  addu  $t8, $t8, $v0
-/* 079464 7F044934 3C198007 */  lui   $t9, %hi(pos_data_entry) 
-/* 079468 7F044938 27399C38 */  addiu $t9, %lo(pos_data_entry) # addiu $t9, $t9, -0x63c8
-/* 07946C 7F04493C 0018C080 */  sll   $t8, $t8, 2
-/* 079470 7F044940 03199021 */  addu  $s2, $t8, $t9
-/* 079474 7F044944 5255006F */  beql  $s2, $s5, .L7F044B04
-/* 079478 7F044948 86620002 */   lh    $v0, 2($s3)
-/* 07947C 7F04494C 92420000 */  lbu   $v0, ($s2)
-/* 079480 7F044950 24010006 */  li    $at, 6
-/* 079484 7F044954 10410003 */  beq   $v0, $at, .L7F044964
-/* 079488 7F044958 24010003 */   li    $at, 3
-/* 07948C 7F04495C 5441003C */  bnel  $v0, $at, .L7F044A50
-/* 079490 7F044960 24010001 */   li    $at, 1
-.L7F044964:
-/* 079494 7F044964 8E420004 */  lw    $v0, 4($s2)
-/* 079498 7F044968 02402025 */  move  $a0, $s2
-/* 07949C 7F04496C 27A5005C */  addiu $a1, $sp, 0x5c
-/* 0794A0 7F044970 10400005 */  beqz  $v0, .L7F044988
-/* 0794A4 7F044974 27A60064 */   addiu $a2, $sp, 0x64
-/* 0794A8 7F044978 8C480014 */  lw    $t0, 0x14($v0)
-/* 0794AC 7F04497C 31090400 */  andi  $t1, $t0, 0x400
-/* 0794B0 7F044980 55200060 */  bnezl $t1, .L7F044B04
-/* 0794B4 7F044984 86620002 */   lh    $v0, 2($s3)
-.L7F044988:
-/* 0794B8 7F044988 0FC0F3E2 */  jal   chrpropGetCollisionBounds
-/* 0794BC 7F04498C 27A70060 */   addiu $a3, $sp, 0x60
-/* 0794C0 7F044990 0FC0F3FA */  jal   sub_GAME_7F03CFE8
-/* 0794C4 7F044994 02402025 */   move  $a0, $s2
-/* 0794C8 7F044998 C7A20060 */  lwc1  $f2, 0x60($sp)
-/* 0794CC 7F04499C C7A80090 */  lwc1  $f8, 0x90($sp)
-/* 0794D0 7F0449A0 C7A40064 */  lwc1  $f4, 0x64($sp)
-/* 0794D4 7F0449A4 46001080 */  add.s $f2, $f2, $f0
-/* 0794D8 7F0449A8 C7AA008C */  lwc1  $f10, 0x8c($sp)
-/* 0794DC 7F0449AC 46002180 */  add.s $f6, $f4, $f0
-/* 0794E0 7F0449B0 E7A20060 */  swc1  $f2, 0x60($sp)
-/* 0794E4 7F0449B4 4608103E */  c.le.s $f2, $f8
-/* 0794E8 7F0449B8 E7A60064 */  swc1  $f6, 0x64($sp)
-/* 0794EC 7F0449BC 45020051 */  bc1fl .L7F044B04
-/* 0794F0 7F0449C0 86620002 */   lh    $v0, 2($s3)
-/* 0794F4 7F0449C4 4606503E */  c.le.s $f10, $f6
-/* 0794F8 7F0449C8 26510008 */  addiu $s1, $s2, 8
-/* 0794FC 7F0449CC 24100001 */  li    $s0, 1
-/* 079500 7F0449D0 02202025 */  move  $a0, $s1
-/* 079504 7F0449D4 4500004A */  bc1f  .L7F044B00
-/* 079508 7F0449D8 8FA50098 */   lw    $a1, 0x98($sp)
-/* 07950C 7F0449DC 0FC0F336 */  jal   chrpropTestPointInPolygon
-/* 079510 7F0449E0 8FA60094 */   lw    $a2, 0x94($sp)
-/* 079514 7F0449E4 10400002 */  beqz  $v0, .L7F0449F0
-/* 079518 7F0449E8 02202025 */   move  $a0, $s1
-/* 07951C 7F0449EC 00008025 */  move  $s0, $zero
-.L7F0449F0:
-/* 079520 7F0449F0 12000007 */  beqz  $s0, .L7F044A10
-/* 079524 7F0449F4 8FA5005C */   lw    $a1, 0x5c($sp)
-/* 079528 7F0449F8 8FA60098 */  lw    $a2, 0x98($sp)
-/* 07952C 7F0449FC 0FC111C6 */  jal   chrobjTestPointPolygonCollision
-/* 079530 7F044A00 8FA70094 */   lw    $a3, 0x94($sp)
-/* 079534 7F044A04 10400002 */  beqz  $v0, .L7F044A10
-/* 079538 7F044A08 00000000 */   nop   
-/* 07953C 7F044A0C 00008025 */  move  $s0, $zero
-.L7F044A10:
-/* 079540 7F044A10 5600003C */  bnezl $s0, .L7F044B04
-/* 079544 7F044A14 86620002 */   lh    $v0, 2($s3)
-/* 079548 7F044A18 924A0000 */  lbu   $t2, ($s2)
-/* 07954C 7F044A1C 24010003 */  li    $at, 3
-/* 079550 7F044A20 15410008 */  bne   $t2, $at, .L7F044A44
-/* 079554 7F044A24 00000000 */   nop   
-/* 079558 7F044A28 92AB0000 */  lbu   $t3, ($s5)
-/* 07955C 7F044A2C 168B0005 */  bne   $s4, $t3, .L7F044A44
-/* 079560 7F044A30 00000000 */   nop   
-/* 079564 7F044A34 8E420004 */  lw    $v0, 4($s2)
-/* 079568 7F044A38 944C0012 */  lhu   $t4, 0x12($v0)
-/* 07956C 7F044A3C 358D0010 */  ori   $t5, $t4, 0x10
-/* 079570 7F044A40 A44D0012 */  sh    $t5, 0x12($v0)
-.L7F044A44:
-/* 079574 7F044A44 10000033 */  b     .L7F044B14
-/* 079578 7F044A48 00001025 */   move  $v0, $zero
-/* 07957C 7F044A4C 24010001 */  li    $at, 1
-.L7F044A50:
-/* 079580 7F044A50 10410005 */  beq   $v0, $at, .L7F044A68
-/* 079584 7F044A54 24010004 */   li    $at, 4
-/* 079588 7F044A58 50410004 */  beql  $v0, $at, .L7F044A6C
-/* 07958C 7F044A5C 92AE0000 */   lbu   $t6, ($s5)
-/* 079590 7F044A60 56820028 */  bnel  $s4, $v0, .L7F044B04
-/* 079594 7F044A64 86620002 */   lh    $v0, 2($s3)
-.L7F044A68:
-/* 079598 7F044A68 92AE0000 */  lbu   $t6, ($s5)
-.L7F044A6C:
-/* 07959C 7F044A6C 02402025 */  move  $a0, $s2
-/* 0795A0 7F044A70 27A5004C */  addiu $a1, $sp, 0x4c
-/* 0795A4 7F044A74 168E0009 */  bne   $s4, $t6, .L7F044A9C
-/* 0795A8 7F044A78 27A60048 */   addiu $a2, $sp, 0x48
-/* 0795AC 7F044A7C 52820021 */  beql  $s4, $v0, .L7F044B04
-/* 0795B0 7F044A80 86620002 */   lh    $v0, 2($s3)
-/* 0795B4 7F044A84 8E4F0004 */  lw    $t7, 4($s2)
-/* 0795B8 7F044A88 2401002B */  li    $at, 43
-/* 0795BC 7F044A8C 91E20003 */  lbu   $v0, 3($t7)
-/* 0795C0 7F044A90 1041001B */  beq   $v0, $at, .L7F044B00
-/* 0795C4 7F044A94 24010028 */   li    $at, 40
-/* 0795C8 7F044A98 10410019 */  beq   $v0, $at, .L7F044B00
-.L7F044A9C:
-/* 0795CC 7F044A9C 27B80040 */   addiu $t8, $sp, 0x40
-/* 0795D0 7F044AA0 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0795D4 7F044AA4 0FC0F308 */  jal   chraiGetCollisionBounds
-/* 0795D8 7F044AA8 27A70044 */   addiu $a3, $sp, 0x44
-/* 0795DC 7F044AAC 8FA50048 */  lw    $a1, 0x48($sp)
-/* 0795E0 7F044AB0 C7B00090 */  lwc1  $f16, 0x90($sp)
-/* 0795E4 7F044AB4 C7B20040 */  lwc1  $f18, 0x40($sp)
-/* 0795E8 7F044AB8 58A00012 */  blezl $a1, .L7F044B04
-/* 0795EC 7F044ABC 86620002 */   lh    $v0, 2($s3)
-/* 0795F0 7F044AC0 4610903E */  c.le.s $f18, $f16
-/* 0795F4 7F044AC4 C7A40044 */  lwc1  $f4, 0x44($sp)
-/* 0795F8 7F044AC8 C7A8008C */  lwc1  $f8, 0x8c($sp)
-/* 0795FC 7F044ACC 4502000D */  bc1fl .L7F044B04
-/* 079600 7F044AD0 86620002 */   lh    $v0, 2($s3)
-/* 079604 7F044AD4 4604403E */  c.le.s $f8, $f4
-/* 079608 7F044AD8 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 07960C 7F044ADC 8FA60098 */  lw    $a2, 0x98($sp)
-/* 079610 7F044AE0 45020008 */  bc1fl .L7F044B04
-/* 079614 7F044AE4 86620002 */   lh    $v0, 2($s3)
-/* 079618 7F044AE8 0FC111AE */  jal   sub_GAME_7F0446B8
-/* 07961C 7F044AEC 8FA70094 */   lw    $a3, 0x94($sp)
-/* 079620 7F044AF0 50400004 */  beql  $v0, $zero, .L7F044B04
-/* 079624 7F044AF4 86620002 */   lh    $v0, 2($s3)
-/* 079628 7F044AF8 10000006 */  b     .L7F044B14
-/* 07962C 7F044AFC 00001025 */   move  $v0, $zero
-.L7F044B00:
-/* 079630 7F044B00 86620002 */  lh    $v0, 2($s3)
-.L7F044B04:
-/* 079634 7F044B04 26730002 */  addiu $s3, $s3, 2
-/* 079638 7F044B08 0443FF87 */  bgezl $v0, .L7F044928
-/* 07963C 7F044B0C 0002C080 */   sll   $t8, $v0, 2
-.L7F044B10:
-/* 079640 7F044B10 24020001 */  li    $v0, 1
-.L7F044B14:
-/* 079644 7F044B14 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 079648 7F044B18 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 07964C 7F044B1C 8FB10020 */  lw    $s1, 0x20($sp)
-/* 079650 7F044B20 8FB20024 */  lw    $s2, 0x24($sp)
-/* 079654 7F044B24 8FB30028 */  lw    $s3, 0x28($sp)
-/* 079658 7F044B28 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 07965C 7F044B2C 8FB50030 */  lw    $s5, 0x30($sp)
-/* 079660 7F044B30 03E00008 */  jr    $ra
-/* 079664 7F044B34 27BD00A0 */   addiu $sp, $sp, 0xa0
-)
-#endif
 
 
 
@@ -6687,7 +6599,7 @@ s32 object_interaction(struct PropRecord *arg0)
             
             if ((door->timer < g_GlobalTimer) || (g_ClockTimer == 0))
             {
-                sub_GAME_7F054FB4(door);
+                door7F054FB4(door);
             }
         }
         // mips2c line 1130
@@ -7604,7 +7516,7 @@ s32 object_interaction(struct PropRecord *arg0)
         {
             sp39C = (struct DoorRecord *)arg0->obj;            
             
-            sub_GAME_7F0526EC(sp39C, (Mtxf *)model->render_pos);
+            door7F0526EC(sp39C, (Mtxf *)model->render_pos);
             matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), (Mtxf *)model->render_pos);
             
             temp_v0_31 = model->obj;
@@ -9847,7 +9759,7 @@ glabel object_interaction
 /* 07B2B4 7F046784 550006AA */  bnezl $t0, .L7F048230
 /* 07B2B8 7F046788 92220003 */   lbu   $v0, 3($s1)
 .L7F04678C:
-/* 07B2BC 7F04678C 0FC153ED */  jal   sub_GAME_7F054FB4
+/* 07B2BC 7F04678C 0FC153ED */  jal   door7F054FB4
 /* 07B2C0 7F046790 02002025 */   move  $a0, $s0
 /* 07B2C4 7F046794 100006A6 */  b     .L7F048230
 /* 07B2C8 7F046798 92220003 */   lbu   $v0, 3($s1)
@@ -11838,7 +11750,7 @@ glabel object_interaction
 /* 07CFA8 7F048478 26240018 */   addiu $a0, $s1, 0x18
 /* 07CFAC 7F04847C 8E640004 */  lw    $a0, 4($s3)
 /* 07CFB0 7F048480 00402825 */  move  $a1, $v0
-/* 07CFB4 7F048484 0FC149BB */  jal   sub_GAME_7F0526EC
+/* 07CFB4 7F048484 0FC149BB */  jal   door7F0526EC
 /* 07CFB8 7F048488 AFA4039C */   sw    $a0, 0x39c($sp)
 /* 07CFBC 7F04848C 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
 /* 07CFC0 7F048490 00000000 */   nop   
@@ -14953,7 +14865,7 @@ glabel object_interaction
 /* 07B6F8 7F046B88 554006AA */  bnezl $t2, .Ljp7F048634
 /* 07B6FC 7F046B8C 92220003 */   lbu   $v0, 3($s1)
 .Ljp7F046B90:
-/* 07B700 7F046B90 0FC1552C */  jal   sub_GAME_7F054FB4
+/* 07B700 7F046B90 0FC1552C */  jal   door7F054FB4
 /* 07B704 7F046B94 02002025 */   move  $a0, $s0
 /* 07B708 7F046B98 100006A6 */  b     .Ljp7F048634
 /* 07B70C 7F046B9C 92220003 */   lbu   $v0, 3($s1)
@@ -16944,7 +16856,7 @@ glabel object_interaction
 /* 07D3EC 7F04887C 26240018 */   addiu $a0, $s1, 0x18
 /* 07D3F0 7F048880 8E640004 */  lw    $a0, 4($s3)
 /* 07D3F4 7F048884 00402825 */  move  $a1, $v0
-/* 07D3F8 7F048888 0FC14AFA */  jal   sub_GAME_7F0526EC
+/* 07D3F8 7F048888 0FC14AFA */  jal   door7F0526EC
 /* 07D3FC 7F04888C AFA403A0 */   sw    $a0, 0x3a0($sp)
 /* 07D400 7F048890 0FC1E26D */  jal   camGetWorldToScreenMtxf
 /* 07D404 7F048894 00000000 */   nop   
@@ -20066,7 +19978,7 @@ glabel object_interaction
 /* 079350 7F046960 556006AB */  bnezl $t3, .L7F048410
 /* 079354 7F046964 92220003 */   lbu   $v0, 3($s1)
 .L7F046968:
-/* 079358 7F046968 0FC154A5 */  jal   sub_GAME_7F054FB4
+/* 079358 7F046968 0FC154A5 */  jal   door7F054FB4
 /* 07935C 7F04696C 02002025 */   move  $a0, $s0
 /* 079360 7F046970 100006A7 */  b     .L7F048410
 /* 079364 7F046974 92220003 */   lbu   $v0, 3($s1)
@@ -22057,7 +21969,7 @@ glabel object_interaction
 /* 07B044 7F048654 26240018 */   addiu $a0, $s1, 0x18
 /* 07B048 7F048658 8E640004 */  lw    $a0, 4($s3)
 /* 07B04C 7F04865C 00402825 */  move  $a1, $v0
-/* 07B050 7F048660 0FC14A73 */  jal   sub_GAME_7F0526EC
+/* 07B050 7F048660 0FC14A73 */  jal   door7F0526EC
 /* 07B054 7F048664 AFA403A0 */   sw    $a0, 0x3a0($sp)
 /* 07B058 7F048668 0FC1E111 */  jal   camGetWorldToScreenMtxf
 /* 07B05C 7F04866C 00000000 */   nop   
@@ -30778,7 +30690,7 @@ glabel sub_GAME_7F04DD68
 /* 0828B8 7F04DD88 8F190008 */  lw    $t9, 8($t8)
 /* 0828BC 7F04DD8C 8F220004 */  lw    $v0, 4($t9)
 /* 0828C0 7F04DD90 AFA30078 */  sw    $v1, 0x78($sp)
-/* 0828C4 7F04DD94 0FC149BB */  jal   sub_GAME_7F0526EC
+/* 0828C4 7F04DD94 0FC149BB */  jal   door7F0526EC
 /* 0828C8 7F04DD98 AFA20074 */   sw    $v0, 0x74($sp)
 /* 0828CC 7F04DD9C 8FA20074 */  lw    $v0, 0x74($sp)
 /* 0828D0 7F04DDA0 27A40060 */  addiu $a0, $sp, 0x60
@@ -32505,10 +32417,10 @@ void sub_GAME_7F04F244(PropRecord* prop, rect4f** arg1, s32* arg2, f32* arg3, f3
 
 void append_text_picked_up(u8 *buffer,u8 * param2,u8 * param3)
 {
-  u8 *puVar1;
+  u8 *str;
   
-  puVar1 = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)); //Picked up
-  strcat(buffer,puVar1);
+  str = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)); //Picked up
+  strcat(buffer,str);
   return;
 }
 
@@ -32525,7 +32437,7 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_9MM_2:
     case AMMO_RIFLE:
     case AMMO_PLASTIQUE:
-        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
         strcat(buffer,textfiletext);
         break;
     case AMMO_SHOTGUN:
@@ -32545,33 +32457,33 @@ void append_text_ammo_amount_word(u8 *buffer, AMMOTYPE ammotype,u32 amount)
     case AMMO_BUG:
     case AMMO_MICRO_CAMERA:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_02)); //a
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_02_A)); //a
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_EXPLOSIVEPEN:
     case AMMO_BOMBCASE:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_03)); //an
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_03_AN)); //an
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
         break;
     case AMMO_GEKEY:
     case AMMO_TOKEN:
         if (amount == 1) {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_04)); //the
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_04_THE)); //the
             strcat(buffer,textfiletext);
         }
         else {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_01)); //some
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_01_SOME)); //some
             strcat(buffer,textfiletext);
         }
     }
@@ -32584,23 +32496,23 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
     u8 *textfiletext;
     if (((ammotype == AMMO_9MM) || (ammotype == AMMO_9MM_2)) || (ammotype == AMMO_RIFLE))
     {
-        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_05)); //ammo
+        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_05_AMMO)); //ammo
         strcat(buffer,textfiletext);
     }
     else
     {
         if (ammotype == AMMO_KNIFE)
         {
-            textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0F)); //throwing
+            textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0F_THROWING)); //throwing
             strcat(buffer,textfiletext);
             if (amount == 1)
             {
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_10)); //knife
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_10_KNIFE)); //knife
                 strcat(buffer,textfiletext);
             }
             else
             {
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_11)); //knives
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_11_KNIVES)); //knives
                 strcat(buffer,textfiletext);
             }
         }
@@ -32610,15 +32522,15 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
             {
                 if (amount == 1)
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_19)); //stick
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_19_STICK)); //stick
                     strcat(buffer,textfiletext);
                 }
                 else
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1A)); //sticks
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1A_STICKS)); //sticks
                     strcat(buffer,textfiletext);
                 }
-                textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_18)); //of dynamite
+                textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_18_OFDYNAMITE)); //of dynamite
                 strcat(buffer,textfiletext);
             }
             else
@@ -32626,85 +32538,85 @@ void apped_text_ammotype(u8 *buffer, AMMOTYPE ammotype, s32 amount)
                 switch(ammotype)
                 {
                     case AMMO_SHOTGUN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_06)); //shotgun cartridge
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_06_SHOTGUNCARTRIDGE)); //shotgun cartridge
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_MAGNUM:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_07)); //magnum bullet
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_07_MAGNUMBULLET)); //magnum bullet
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GGUN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_08)); //golden bullet
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_08_GOLDENBULLET)); //golden bullet
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GRENADE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_09)); //hand grenade
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_09_HANDGRENADE)); //hand grenade
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GRENADEROUND:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0A)); //grenade round
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0A_GRENADEROUND)); //grenade round
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_ROCKETS:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0B)); //rocket
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0B_ROCKET)); //rocket
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_REMOTEMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0C)); //remote mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0C_REMOTEMINE)); //remote mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PROXMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0D)); //proximity mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0D_PROXIMITYMINE)); //proximity mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_TIMEDMINE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_0E)); //timed mine
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_0E_TIMEDMINE)); //timed mine
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_DARTS:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_13)); //dart
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_13_DART)); //dart
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_EXPLOSIVEPEN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_14)); //explosive pen
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_14_EXPLOSIVEPEN)); //explosive pen
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_BOMBCASE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_15)); //explosive case
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_15_EXPLOSIVECASE)); //explosive case
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_FLARE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_16)); //flare
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_16_FLARE)); //flare
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PITON:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_17)); //piton
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_17_PITON)); //piton
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_BUG:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1B)); //bug
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1B_BUG)); //bug
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_MICRO_CAMERA:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1C)); //micro camera
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1C_MICROCAMERA)); //micro camera
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_GEKEY:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1D)); //GoldenEye key
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1D_GOLDENEYEKEY)); //GoldenEye key
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_TOKEN:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1E)); //token
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1E_TOKEN)); //token
                         strcat(buffer,textfiletext);
                         break;
                     case AMMO_PLASTIQUE:
-                        textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_1F)); //plastique
+                        textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_1F_PLASTIQUE)); //plastique
                         strcat(buffer,textfiletext);
                         break;
                 }
                 if (1 < amount)
                 {
-                    textfiletext = langGet(TEXT(LPROPOBJ,PROPOBJ_STR_12)); //s
+                    textfiletext = langGet(getStringID(LPROPOBJ,PROPOBJ_STR_12_S)); //s
                     strcat(buffer,textfiletext);
                 }
             }
@@ -32974,7 +32886,7 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
           if (getPlayerCount() < 3)
           {
              //Picked up
-            strcpy(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
+            strcpy(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)));
           }
     }
 
@@ -32997,115 +32909,115 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
             return;
         case ITEM_KNIFE:
             //a hunting knife.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_20)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_20_AHUNTINGKNIFE)));
             break;
         case ITEM_WPPK:
             //a PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_21)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_21_APPK)));
             break;
         case ITEM_WPPKSIL:
             //a silenced PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_22)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_22_ASILENCEDPPK)));
             break;
         case ITEM_TT33:
             //a DD44 Dostovei.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_23)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_23_ATT33)));
             break;
         case ITEM_SKORPION:
             //a Klobb.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_24)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_24_ASPKORPION)));
             break;
         case ITEM_AK47:
             //a KF7 Soviet.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_25)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_25_ANAK47)));
             break;
         case ITEM_UZI:
             //a ZMG (9mm).
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_26)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_26_ANUZI)));
             break;
         case ITEM_MP5K:
             //a D5K Deutsche.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_27)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_27_ANMP5K)));
             break;
         case ITEM_MP5KSIL:
             //a silenced D5K.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_28)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_28_ASILENCEDMP5)));
             break;
         case ITEM_SPECTRE:
             //a Phantom.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_29)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_29_ASPECTRE)));
             break;
         case ITEM_M16:
             //an AR33 assault rifle.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2A)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2A_ANM16)));
             break;
         case ITEM_FNP90:
             //an RC-P90.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2B)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2B_ANFNP90)));
             break;
         case ITEM_SHOTGUN:
             //a shotgun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2C)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2C_ASHOTGUN)));
             break;
         case ITEM_AUTOSHOT:
             //an automatic shotgun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2D)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2D_ANAUTOSHOTGUN)));
             break;
         case ITEM_SNIPERRIFLE:
             //a sniper rifle.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2E)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2E_ASNIPERRIFLE)));
             break;
         case ITEM_GRENADELAUNCH:
             //a grenade launcher.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_2F)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_2F_AGRENADELAUNCHER)));
             break;
         case ITEM_ROCKETLAUNCH:
             //a rocket launcher.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_30)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_30_AROCKETLAUNCHER)));
             break;
         case ITEM_RUGER:
             //a Cougar Magnum.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_31)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_31_ARUGERMAGNUM)));
             break;
         case ITEM_GOLDENGUN:
             //the Golden Gun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_32)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_32_THEGOLDENGUN)));
             break;
         case ITEM_LASER:
             //a Moonraker laser.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_33)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_33_AMOOKRAKERLASER)));
             break;
         case ITEM_FLAREPISTOL:
             //a flare pistol.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_34)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_34_AFLAREPISTOL)));
             break;
         case ITEM_PITONGUN:
             //a piton gun.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_35)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_35_APITONGUN)));
             break;
         case ITEM_SILVERWPPK:
             //a silver PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_36)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_36_ASILVERPPK)));
             break;
         case ITEM_GOLDWPPK:
             //a gold PP7.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_37)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_37_AGOLDPPK)));
             break;
         case ITEM_KEYCARD:
             //a keycard.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_38)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_38_AKEYCARD)));
             break;
         case ITEM_KEYYALE:
             //a yale key.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_39)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_39_AYALEKEY)));
             break;
         case ITEM_KEYBOLT:
             //a bolt key.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3A)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_3A_ABOLTKEY)));
             break;
         default:
             //a new weapon.
-            strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_3B)));
+            strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_3B_ANEWWEAPON)));
             break;
     }
 
@@ -33116,7 +33028,7 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
             finalstring[strlen(finalstring) - 1] = '\0';
         }
         //Picked up
-        strcat(finalstring, langGet(TEXT(LPROPOBJ,PROPOBJ_STR_00)));
+        strcat(finalstring, langGet(getStringID(LPROPOBJ,PROPOBJ_STR_00_PICKEDUP)));
         strcat(finalstring,"\n");
     }
 
@@ -36315,7 +36227,7 @@ glabel object_collectability_routines
 #endif
 
 
-bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
+bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3)
 {
     if (prop->flags & PROPFLAG_ONSCREEN)
     {
@@ -36329,13 +36241,13 @@ bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
             arg1->x = matrix->m[3][0];
             arg1->y = matrix->m[3][1];
 
-            arg3[0] = 0;
-            arg3[1] = 0;
+            arg3->f[0] = 0;
+            arg3->f[1] = 0;
 
-            arg2[0] = 0;
-            arg2[1] = 0;
+            arg2->f[0] = 0;
+            arg2->f[1] = 0;
 
-            sub_GAME_7F03F90C(obj->model, &arg2[1], &arg2[0], &arg3[1], &arg3[0]);
+            sub_GAME_7F03F90C(obj->model, &arg2->f[1], &arg2->f[0], &arg3->f[1], &arg3->f[0]);
 
             return TRUE;
         }
@@ -37811,7 +37723,7 @@ HATTYPE get_hat_model(PropRecord *prop) //#MATCH
 /**
  * US address 7F0526EC.
 */
-void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
+void door7F0526EC(DoorRecord *door, Mtxf *rhs)
 {
     Mtxf lhs;
     struct coord3d sp54;
@@ -37906,291 +37818,202 @@ void sub_GAME_7F0526EC(DoorRecord *door, Mtxf *rhs)
 
 
 
-
-#ifdef NONMATCHING
-void sub_GAME_7F052B00(DoorRecord *door)
+/**
+ * NTSC address 0x7F052B00.
+*/
+void door7F052B00(DoorRecord *door)
 {
-    ? sp2C;
-    u32 * sp28;
-    s32   temp_a3;
-    s32   temp_a3_2;
-    s32   temp_a3_3;
-    s32   temp_a3_4;
-    u16   temp_v0_2;
-    u16   temp_v0_3;
-    u32   temp_f0;
-    u32   temp_f0_2;
-    u32 * temp_v1;
-    void *temp_v0;
+    struct ModelRoData_BoundingBoxRecord *door_bb;
+    Mtxf sp2C;
 
-    temp_v1        = &door->unkd0;
-    temp_v0        = (*door->model->unk8)->unk14->unk4;
-    temp_v1->unk0  = temp_v0->unk0;
-    temp_v1->unk4  = temp_v0->unk4;
-    temp_v1->unk8  = temp_v0->unk8;
-    temp_v1->unkC  = temp_v0->unkC;
-    temp_v1->unk10 = temp_v0->unk10;
-    temp_v1->unk14 = temp_v0->unk14;
-    temp_v1->unk18 = temp_v0->unk18;
-    if ((door->doorFlags & 4) != 0)
+    door_bb = (struct ModelRoData_BoundingBoxRecord *)door->model->obj->RootNode->Child->Data;
+
+    // struct copy
+    door->bbox = *door_bb;
+    
+    if (door->doorFlags & DOORFLAG_0004)
     {
-        if (door->doorType == 4)
+        if (door->doorType == DOORTYPE_VERTICAL)
         {
-            temp_f0     = temp_v0->unk10;
-            door->unke0 = (bitwise u32)((bitwise f32)temp_f0 + (((bitwise f32)temp_v0->unkC - (bitwise f32)temp_f0) * door->openPosition));
+            door->bbox.Bounds.ymax = door_bb->Bounds.ymax + (door_bb->Bounds.ymin - door_bb->Bounds.ymax) * door->openPosition;
         }
         else
         {
-            temp_f0_2   = temp_v0->unk4;
-            door->unkd4 = (bitwise u32)((bitwise f32)temp_f0_2 + (((bitwise f32)temp_v0->unk8 - (bitwise f32)temp_f0_2) * door->openPosition));
+            door->bbox.Bounds.xmin = door_bb->Bounds.xmin + (door_bb->Bounds.xmax - door_bb->Bounds.xmin) * door->openPosition;
         }
     }
+
     if (door->perimFrac <= door->openPosition)
     {
-        door->ptr_allocated_collisiondata_block->unk0 = 0;
+        door->ptr_allocated_collisiondata_block->unk00 = 0;
+
         return;
     }
-    sp28 = temp_v1;
-    sub_GAME_7F0526EC(door, &sp2C);
-    temp_a3 = door->ptr_allocated_collisiondata_block;
-    sub_GAME_7F03F540(sp28, &sp2C, temp_a3 + 4, temp_a3);
-    temp_v0_2 = door->doorType;
-    if (temp_v0_2 == 4)
+
+    door7F0526EC(door, &sp2C);
+    sub_GAME_7F03F540(&door->bbox, &sp2C, &door->ptr_allocated_collisiondata_block->unk04, door->ptr_allocated_collisiondata_block);
+
+    if (door->doorType == DOORTYPE_VERTICAL)
     {
-        door->ptr_allocated_collisiondata_block->unk48 = chrpropSumMatrixPosY(sp28, &sp2C) + door->Pos.y;
+        door->ptr_allocated_collisiondata_block->unk48 = door->runtime_pos.f[1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
     }
-    else if (temp_v0_2 == 8)
+    else if (door->doorType == DOORTYPE_FALLAWAY)
     {
-        door->ptr_allocated_collisiondata_block->unk48 = door->Pos.y - D_80053334;
+        door->ptr_allocated_collisiondata_block->unk48 = door->runtime_pos.f[1] - 10000.0f;
     }
     else
     {
-        door->ptr_allocated_collisiondata_block->unk48 = chrpropSumMatrixPosY(sp28, &sp2C) + sp60;
-        if ((door->doorFlags & 1) != 0)
+        door->ptr_allocated_collisiondata_block->unk48 = sp2C.m[3][1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
+        
+        if (door->doorFlags & DOORFLAG_0001)
         {
-            temp_a3_2        = door->ptr_allocated_collisiondata_block;
-            temp_a3_2->unk48 = temp_a3_2->unk48 - 1000.0f;
+            door->ptr_allocated_collisiondata_block->unk48 -= 1000.0f;
         }
     }
-    temp_v0_3 = door->doorType;
-    if (((temp_v0_3 == 6) && ((D_80053338 * door->maxFrac) < door->openPosition)) || ((temp_v0_3 == 7) && ((D_8005333C * door->maxFrac) < door->openPosition)))
+
+    if (((door->doorType == DOORTYPE_EYE) && (0 < door->openPosition - (0.4f * door->maxFrac)))
+        || ((door->doorType == DOORTYPE_IRIS) && (0 < door->openPosition - (0.4f * door->maxFrac)))
+        )
     {
-        temp_a3_4        = door->ptr_allocated_collisiondata_block;
-        temp_a3_4->unk44 = temp_a3_4->unk48 + 50.0f;
-        return;
-    }
-    if (temp_v0_3 == 8)
+        
+        door->ptr_allocated_collisiondata_block->unk44 = door->ptr_allocated_collisiondata_block->unk48 + 50.0f;
+    }    
+    else if (door->doorType == DOORTYPE_FALLAWAY)
     {
-        door->ptr_allocated_collisiondata_block->unk44 = door->Pos.y + 1000.0f;
-        return;
+        door->ptr_allocated_collisiondata_block->unk44 = door->runtime_pos.f[1] + 1000.0f;
     }
-    door->ptr_allocated_collisiondata_block->unk44 = chrpropSumMatrixNegY(sp28, &sp2C) + sp60;
-    if ((door->doorFlags & 1) != 0)
+    else
     {
-        temp_a3_3        = door->ptr_allocated_collisiondata_block;
-        temp_a3_3->unk44 = temp_a3_3->unk44 + 1000.0f;
+        door->ptr_allocated_collisiondata_block->unk44 = sp2C.m[3][1] + chrpropSumMatrixNegY(&door->bbox, &sp2C);
+        
+        if (door->doorFlags & DOORFLAG_0001)
+        {
+            door->ptr_allocated_collisiondata_block->unk44 += 1000.0f;
+        }
     }
+    
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_80053334
-.word 0x461c4000 /*10000.0*/
-glabel D_80053338
-.word 0x3ecccccd /*0.40000001*/
-glabel D_8005333C
-.word 0x3ecccccd /*0.40000001*/
-.text
-glabel sub_GAME_7F052B00
-/* 087630 7F052B00 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 087634 7F052B04 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 087638 7F052B08 AFB00018 */  sw    $s0, 0x18($sp)
-/* 08763C 7F052B0C 8C8E0014 */  lw    $t6, 0x14($a0)
-/* 087640 7F052B10 248300D0 */  addiu $v1, $a0, 0xd0
-/* 087644 7F052B14 00808025 */  move  $s0, $a0
-/* 087648 7F052B18 8DCF0008 */  lw    $t7, 8($t6)
-/* 08764C 7F052B1C 27A5002C */  addiu $a1, $sp, 0x2c
-/* 087650 7F052B20 8DF80000 */  lw    $t8, ($t7)
-/* 087654 7F052B24 8F190014 */  lw    $t9, 0x14($t8)
-/* 087658 7F052B28 8F220004 */  lw    $v0, 4($t9)
-/* 08765C 7F052B2C 8C410000 */  lw    $at, ($v0)
-/* 087660 7F052B30 AC610000 */  sw    $at, ($v1)
-/* 087664 7F052B34 8C4A0004 */  lw    $t2, 4($v0)
-/* 087668 7F052B38 AC6A0004 */  sw    $t2, 4($v1)
-/* 08766C 7F052B3C 8C410008 */  lw    $at, 8($v0)
-/* 087670 7F052B40 AC610008 */  sw    $at, 8($v1)
-/* 087674 7F052B44 8C4A000C */  lw    $t2, 0xc($v0)
-/* 087678 7F052B48 AC6A000C */  sw    $t2, 0xc($v1)
-/* 08767C 7F052B4C 8C410010 */  lw    $at, 0x10($v0)
-/* 087680 7F052B50 AC610010 */  sw    $at, 0x10($v1)
-/* 087684 7F052B54 8C4A0014 */  lw    $t2, 0x14($v0)
-/* 087688 7F052B58 AC6A0014 */  sw    $t2, 0x14($v1)
-/* 08768C 7F052B5C 8C410018 */  lw    $at, 0x18($v0)
-/* 087690 7F052B60 AC610018 */  sw    $at, 0x18($v1)
-/* 087694 7F052B64 948B0098 */  lhu   $t3, 0x98($a0)
-/* 087698 7F052B68 316C0004 */  andi  $t4, $t3, 4
-/* 08769C 7F052B6C 51800015 */  beql  $t4, $zero, .L7F052BC4
-/* 0876A0 7F052B70 C61000B4 */   lwc1  $f16, 0xb4($s0)
-/* 0876A4 7F052B74 948D009A */  lhu   $t5, 0x9a($a0)
-/* 0876A8 7F052B78 24010004 */  li    $at, 4
-/* 0876AC 7F052B7C 55A1000A */  bnel  $t5, $at, .L7F052BA8
-/* 0876B0 7F052B80 C4400004 */   lwc1  $f0, 4($v0)
-/* 0876B4 7F052B84 C4400010 */  lwc1  $f0, 0x10($v0)
-/* 0876B8 7F052B88 C444000C */  lwc1  $f4, 0xc($v0)
-/* 0876BC 7F052B8C C48800B4 */  lwc1  $f8, 0xb4($a0)
-/* 0876C0 7F052B90 46002181 */  sub.s $f6, $f4, $f0
-/* 0876C4 7F052B94 46083282 */  mul.s $f10, $f6, $f8
-/* 0876C8 7F052B98 460A0400 */  add.s $f16, $f0, $f10
-/* 0876CC 7F052B9C 10000008 */  b     .L7F052BC0
-/* 0876D0 7F052BA0 E49000E0 */   swc1  $f16, 0xe0($a0)
-/* 0876D4 7F052BA4 C4400004 */  lwc1  $f0, 4($v0)
-.L7F052BA8:
-/* 0876D8 7F052BA8 C4520008 */  lwc1  $f18, 8($v0)
-/* 0876DC 7F052BAC C60600B4 */  lwc1  $f6, 0xb4($s0)
-/* 0876E0 7F052BB0 46009101 */  sub.s $f4, $f18, $f0
-/* 0876E4 7F052BB4 46062202 */  mul.s $f8, $f4, $f6
-/* 0876E8 7F052BB8 46080280 */  add.s $f10, $f0, $f8
-/* 0876EC 7F052BBC E60A00D4 */  swc1  $f10, 0xd4($s0)
-.L7F052BC0:
-/* 0876F0 7F052BC0 C61000B4 */  lwc1  $f16, 0xb4($s0)
-.L7F052BC4:
-/* 0876F4 7F052BC4 C6120088 */  lwc1  $f18, 0x88($s0)
-/* 0876F8 7F052BC8 02002025 */  move  $a0, $s0
-/* 0876FC 7F052BCC 4610903E */  c.le.s $f18, $f16
-/* 087700 7F052BD0 00000000 */  nop   
-/* 087704 7F052BD4 45000004 */  bc1f  .L7F052BE8
-/* 087708 7F052BD8 00000000 */   nop   
-/* 08770C 7F052BDC 8E0E0068 */  lw    $t6, 0x68($s0)
-/* 087710 7F052BE0 10000065 */  b     .L7F052D78
-/* 087714 7F052BE4 ADC00000 */   sw    $zero, ($t6)
-.L7F052BE8:
-/* 087718 7F052BE8 0FC149BB */  jal   sub_GAME_7F0526EC
-/* 08771C 7F052BEC AFA30028 */   sw    $v1, 0x28($sp)
-/* 087720 7F052BF0 8E070068 */  lw    $a3, 0x68($s0)
-/* 087724 7F052BF4 8FA40028 */  lw    $a0, 0x28($sp)
-/* 087728 7F052BF8 27A5002C */  addiu $a1, $sp, 0x2c
-/* 08772C 7F052BFC 0FC0FD50 */  jal   sub_GAME_7F03F540
-/* 087730 7F052C00 24E60004 */   addiu $a2, $a3, 4
-/* 087734 7F052C04 9602009A */  lhu   $v0, 0x9a($s0)
-/* 087738 7F052C08 24010004 */  li    $at, 4
-/* 08773C 7F052C0C 8FA40028 */  lw    $a0, 0x28($sp)
-/* 087740 7F052C10 54410009 */  bnel  $v0, $at, .L7F052C38
-/* 087744 7F052C14 24010008 */   li    $at, 8
-/* 087748 7F052C18 0FC0FA6F */  jal   chrpropSumMatrixPosY
-/* 08774C 7F052C1C 27A5002C */   addiu $a1, $sp, 0x2c
-/* 087750 7F052C20 C604005C */  lwc1  $f4, 0x5c($s0)
-/* 087754 7F052C24 8E0F0068 */  lw    $t7, 0x68($s0)
-/* 087758 7F052C28 46040180 */  add.s $f6, $f0, $f4
-/* 08775C 7F052C2C 1000001B */  b     .L7F052C9C
-/* 087760 7F052C30 E5E60048 */   swc1  $f6, 0x48($t7)
-/* 087764 7F052C34 24010008 */  li    $at, 8
-.L7F052C38:
-/* 087768 7F052C38 14410008 */  bne   $v0, $at, .L7F052C5C
-/* 08776C 7F052C3C 8FA40028 */   lw    $a0, 0x28($sp)
-/* 087770 7F052C40 3C018005 */  lui   $at, %hi(D_80053334)
-/* 087774 7F052C44 C42A3334 */  lwc1  $f10, %lo(D_80053334)($at)
-/* 087778 7F052C48 C608005C */  lwc1  $f8, 0x5c($s0)
-/* 08777C 7F052C4C 8E180068 */  lw    $t8, 0x68($s0)
-/* 087780 7F052C50 460A4401 */  sub.s $f16, $f8, $f10
-/* 087784 7F052C54 10000011 */  b     .L7F052C9C
-/* 087788 7F052C58 E7100048 */   swc1  $f16, 0x48($t8)
-.L7F052C5C:
-/* 08778C 7F052C5C 0FC0FA6F */  jal   chrpropSumMatrixPosY
-/* 087790 7F052C60 27A5002C */   addiu $a1, $sp, 0x2c
-/* 087794 7F052C64 C7B20060 */  lwc1  $f18, 0x60($sp)
-/* 087798 7F052C68 8E190068 */  lw    $t9, 0x68($s0)
-/* 08779C 7F052C6C 46120100 */  add.s $f4, $f0, $f18
-/* 0877A0 7F052C70 E7240048 */  swc1  $f4, 0x48($t9)
-/* 0877A4 7F052C74 96090098 */  lhu   $t1, 0x98($s0)
-/* 0877A8 7F052C78 31280001 */  andi  $t0, $t1, 1
-/* 0877AC 7F052C7C 51000008 */  beql  $t0, $zero, .L7F052CA0
-/* 0877B0 7F052C80 9602009A */   lhu   $v0, 0x9a($s0)
-/* 0877B4 7F052C84 8E070068 */  lw    $a3, 0x68($s0)
-/* 0877B8 7F052C88 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 0877BC 7F052C8C 44814000 */  mtc1  $at, $f8
-/* 0877C0 7F052C90 C4E60048 */  lwc1  $f6, 0x48($a3)
-/* 0877C4 7F052C94 46083281 */  sub.s $f10, $f6, $f8
-/* 0877C8 7F052C98 E4EA0048 */  swc1  $f10, 0x48($a3)
-.L7F052C9C:
-/* 0877CC 7F052C9C 9602009A */  lhu   $v0, 0x9a($s0)
-.L7F052CA0:
-/* 0877D0 7F052CA0 24010006 */  li    $at, 6
-/* 0877D4 7F052CA4 14410008 */  bne   $v0, $at, .L7F052CC8
-/* 0877D8 7F052CA8 3C018005 */   lui   $at, %hi(D_80053338)
-/* 0877DC 7F052CAC C4303338 */  lwc1  $f16, %lo(D_80053338)($at)
-/* 0877E0 7F052CB0 C6120084 */  lwc1  $f18, 0x84($s0)
-/* 0877E4 7F052CB4 C60600B4 */  lwc1  $f6, 0xb4($s0)
-/* 0877E8 7F052CB8 46128102 */  mul.s $f4, $f16, $f18
-/* 0877EC 7F052CBC 4606203C */  c.lt.s $f4, $f6
-/* 0877F0 7F052CC0 00000000 */  nop   
-/* 0877F4 7F052CC4 4501000B */  bc1t  .L7F052CF4
-.L7F052CC8:
-/* 0877F8 7F052CC8 24010007 */   li    $at, 7
-/* 0877FC 7F052CCC 14410010 */  bne   $v0, $at, .L7F052D10
-/* 087800 7F052CD0 3C018005 */   lui   $at, %hi(D_8005333C)
-/* 087804 7F052CD4 C428333C */  lwc1  $f8, %lo(D_8005333C)($at)
-/* 087808 7F052CD8 C60A0084 */  lwc1  $f10, 0x84($s0)
-/* 08780C 7F052CDC C61200B4 */  lwc1  $f18, 0xb4($s0)
-/* 087810 7F052CE0 460A4402 */  mul.s $f16, $f8, $f10
-/* 087814 7F052CE4 4612803C */  c.lt.s $f16, $f18
-/* 087818 7F052CE8 00000000 */  nop   
-/* 08781C 7F052CEC 45020009 */  bc1fl .L7F052D14
-/* 087820 7F052CF0 24010008 */   li    $at, 8
-.L7F052CF4:
-/* 087824 7F052CF4 8E070068 */  lw    $a3, 0x68($s0)
-/* 087828 7F052CF8 3C014248 */  li    $at, 0x42480000 # 50.000000
-/* 08782C 7F052CFC 44813000 */  mtc1  $at, $f6
-/* 087830 7F052D00 C4E40048 */  lwc1  $f4, 0x48($a3)
-/* 087834 7F052D04 46062200 */  add.s $f8, $f4, $f6
-/* 087838 7F052D08 1000001B */  b     .L7F052D78
-/* 08783C 7F052D0C E4E80044 */   swc1  $f8, 0x44($a3)
-.L7F052D10:
-/* 087840 7F052D10 24010008 */  li    $at, 8
-.L7F052D14:
-/* 087844 7F052D14 14410008 */  bne   $v0, $at, .L7F052D38
-/* 087848 7F052D18 8FA40028 */   lw    $a0, 0x28($sp)
-/* 08784C 7F052D1C 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 087850 7F052D20 44818000 */  mtc1  $at, $f16
-/* 087854 7F052D24 C60A005C */  lwc1  $f10, 0x5c($s0)
-/* 087858 7F052D28 8E0A0068 */  lw    $t2, 0x68($s0)
-/* 08785C 7F052D2C 46105480 */  add.s $f18, $f10, $f16
-/* 087860 7F052D30 10000011 */  b     .L7F052D78
-/* 087864 7F052D34 E5520044 */   swc1  $f18, 0x44($t2)
-.L7F052D38:
-/* 087868 7F052D38 0FC0FA97 */  jal   chrpropSumMatrixNegY
-/* 08786C 7F052D3C 27A5002C */   addiu $a1, $sp, 0x2c
-/* 087870 7F052D40 C7A40060 */  lwc1  $f4, 0x60($sp)
-/* 087874 7F052D44 8E0B0068 */  lw    $t3, 0x68($s0)
-/* 087878 7F052D48 46040180 */  add.s $f6, $f0, $f4
-/* 08787C 7F052D4C E5660044 */  swc1  $f6, 0x44($t3)
-/* 087880 7F052D50 960C0098 */  lhu   $t4, 0x98($s0)
-/* 087884 7F052D54 318D0001 */  andi  $t5, $t4, 1
-/* 087888 7F052D58 51A00008 */  beql  $t5, $zero, .L7F052D7C
-/* 08788C 7F052D5C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 087890 7F052D60 8E070068 */  lw    $a3, 0x68($s0)
-/* 087894 7F052D64 3C01447A */  li    $at, 0x447A0000 # 1000.000000
-/* 087898 7F052D68 44815000 */  mtc1  $at, $f10
-/* 08789C 7F052D6C C4E80044 */  lwc1  $f8, 0x44($a3)
-/* 0878A0 7F052D70 460A4400 */  add.s $f16, $f8, $f10
-/* 0878A4 7F052D74 E4F00044 */  swc1  $f16, 0x44($a3)
-.L7F052D78:
-/* 0878A8 7F052D78 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F052D7C:
-/* 0878AC 7F052D7C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0878B0 7F052D80 27BD0070 */  addiu $sp, $sp, 0x70
-/* 0878B4 7F052D84 03E00008 */  jr    $ra
-/* 0878B8 7F052D88 00000000 */   nop   
-)
-#endif
-
-
 
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F052D8C(DoorRecord* door) {
+/**
+ * NTSC address 0x7F052D8C.
+ * perfect dark void door0f08cb20(struct doorobj *door, Vtx *src, Vtx *dst, s32 numvertices)
+ * 
+ * https://decomp.me/scratch/ccGWm
+*/
+void sub_GAME_7F052D8C(DoorRecord *door)
+{
+#define CYCLIC_NEXT1ALT(j) (j + 1) % 4
+#define CYCLIC_NEXT2ALT(j) (j + 2) % 4
+#define CYCLIC_NEXT3ALT(j) (j + 3) % 4
 
+#define CYCLIC_NEXT1(j) (j + 1) % 4
+#define CYCLIC_NEXT2(j) (j + 2) % 4
+#define CYCLIC_NEXT3(j) (j + 3) % 4
+
+    Model                                          *mdl;
+    ModelNode                                      *mdlDLCNode;
+    struct ModelRoData_DisplayList_CollisionRecord *src;
+    struct ModelRwData_DisplayList_CollisionRecord *dst;
+    s16                                             cutoff;
+    s32                                             var_fp;
+    s32                                             j;
+    s32                                             k;
+
+    Vertex                                         *psrc;
+    Vertex                                         *pdst;
+
+    if (door->doorFlags & DOORFLAG_0004)
+    {
+        mdl = door->model;
+        mdlDLCNode = mdl->obj->RootNode->Child->Child; //Get the DL
+        src = (struct ModelRoData_DisplayList_CollisionRecord *)mdlDLCNode->Data;
+        dst = (struct ModelRwData_DisplayList_CollisionRecord *)modelGetNodeRwData(mdl, mdlDLCNode);
+
+        if (door->doorType == DOORTYPE_VERTICAL)
+        {
+            cutoff = door->bbox.Bounds.ymax + 0.5f;
+        }
+        else
+        {
+            cutoff = door->bbox.Bounds.xmin + 0.5f;
+        }
+
+        dst->Vertices = dynAllocate7F0BD6C4(src->numVertices);
+
+        for (var_fp = 0; var_fp < src->numVertices / 4; var_fp++) //block of 4 vertices (quad)
+        {
+            for (j = 0; j < 4; j++) //for each vertex in block, move and clamp to bounding box, if clamped, move texture coords so it doesnt look "squished"
+            {
+                psrc = &src->Vertices[var_fp * 4];
+                pdst = &dst->Vertices[var_fp * 4];
+
+                if (j == 0)
+                {
+                    pdst[j]       = psrc[j];
+                    pdst[CYCLIC_NEXT1(j)] = psrc[CYCLIC_NEXT1(j)];
+                    pdst[CYCLIC_NEXT2(j)] = psrc[CYCLIC_NEXT2(j)];
+                    pdst[CYCLIC_NEXT3(j)] = psrc[CYCLIC_NEXT3(j)];
+                    // if (1);
+                }
+
+                if (door->doorType == DOORTYPE_VERTICAL)
+                {
+                    //if current vtx is higher than "cutoff", clamp it to cutoff.
+                    if (psrc[j].coord.y >= cutoff) 
+                    {
+                        //if next and current x and z are equal AND y Not equal - Find the "below" vertex in a quad
+                        if (psrc[CYCLIC_NEXT1(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT1(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT1(j)].coord.y != psrc[j].coord.y)
+                        {
+                            //InterpolatedValue = InitialValue + (Difference1) * (ChangeInValue) / (Difference2);
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT1(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT1(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT1(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT1(j)].coord.y);
+                        }
+                        else if (psrc[CYCLIC_NEXT2(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT2(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT2(j)].coord.y != psrc[j].coord.y)
+                        {
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT2(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT2(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT2(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT2(j)].coord.y);
+                        }
+                        else if (psrc[CYCLIC_NEXT3(j)].coord.x == psrc[j].coord.x && psrc[CYCLIC_NEXT3(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT3(j)].coord.y != psrc[j].coord.y)
+                        {
+                            pdst[j].s = psrc[j].s + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT3(j)].s - psrc[j].s) / (psrc[j].coord.y - psrc[CYCLIC_NEXT3(j)].coord.y);
+                            pdst[j].t = psrc[j].t + (psrc[j].coord.y - cutoff) * (psrc[CYCLIC_NEXT3(j)].t - psrc[j].t) / (psrc[j].coord.y - psrc[CYCLIC_NEXT3(j)].coord.y);
+                        }
+
+                        pdst[j].coord.y = cutoff;
+                    }
+                }
+                else
+                {
+                    if (psrc[j].coord.x <= cutoff)
+                    {
+                        //if next and current y and z are equal AND x Not equal  - Find the "right" vertex in a quad
+                        if (psrc[CYCLIC_NEXT1(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT1(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT1(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT1(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT1(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT1(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT1(j)].coord.x - psrc[j].coord.x);
+                        }
+                        else if (psrc[CYCLIC_NEXT2(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT2(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT2(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT2(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT2(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT2(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT2(j)].coord.x - psrc[j].coord.x);
+                        }
+                        else if (psrc[CYCLIC_NEXT3(j)].coord.y == psrc[j].coord.y && psrc[CYCLIC_NEXT3(j)].coord.z == psrc[j].coord.z && psrc[CYCLIC_NEXT3(j)].coord.x != psrc[j].coord.x)
+                        {
+                            pdst[j].s = psrc[j].s + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT3(j)].s - psrc[j].s) / (psrc[CYCLIC_NEXT3(j)].coord.x - psrc[j].coord.x);
+                            pdst[j].t = psrc[j].t + (cutoff - psrc[j].coord.x) * (psrc[CYCLIC_NEXT3(j)].t - psrc[j].t) / (psrc[CYCLIC_NEXT3(j)].coord.x - psrc[j].coord.x);
+                        }
+
+                        pdst[j].coord.x = cutoff;
+                    }
+                }
+            }
+        }
+    }
 }
+
 #else
 void sub_GAME_7F052D8C(DoorRecord*);
 GLOBAL_ASM(
@@ -38790,7 +38613,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
 
     prop = objInitWithAutoModel((ObjectRecord* ) door);
     scale = PitemZ_entries[door->obj].scale;
-    door->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, 4U);
+    door->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, MEMPOOL_STAGE);
 
     matrix_4x4_copy(mtx, &door->mtx);
     matrix_scalar_multiply(scale, door->mtx.m[0]);
@@ -38812,7 +38635,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
 
     if (door->doorFlags & 4) {
         union ModelRoData *rodata = door->model->obj->RootNode->Child->Child->Data;
-        door->unkcc = mempAllocBytesInBank(rodata->DisplayListCollisions.numVertices * sizeof(Vertex), 4U);
+        door->unkcc = mempAllocBytesInBank(rodata->DisplayListCollisions.numVertices * sizeof(Vertex), MEMPOOL_STAGE);
     } else {
         door->unkcc = NULL;
     }
@@ -38833,7 +38656,7 @@ PropRecord* doorInit(DoorRecord* door, coord3d* pos, Mtxf* mtx, StandTile* stan,
     door->runtime_pos.z = centre->z;
     door->flags |= PROPFLAG_00000100;
     
-    sub_GAME_7F052B00(door);
+    door7F052B00(door);
     sub_GAME_7F052D8C(door);
     sub_GAME_7F0402B4(door->prop, &door->nextcol);
 
@@ -38958,7 +38781,7 @@ void sub_GAME_7F053A3C(DoorRecord* arg0)
 }
 
 
-void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
+void door7F053B10(DoorRecord *door) //#MATCH
 {
     if (door->openSoundState && sndGetPlayingState(door->openSoundState))
     {
@@ -38974,11 +38797,11 @@ void sub_GAME_7F053B10(DoorRecord *door) //#MATCH
 
 
 
-void play_door_opening_soundeffect_0(DoorRecord *door) {
+void doorPlayOpenSound0(DoorRecord *door) {
     ALSoundState *soundState = NULL;
     ALSoundState *pendingState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     if (door->openSoundState == NULL)
     {
@@ -38991,101 +38814,101 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
 
     switch (door->doorOpenSound)
     {
-    case 1:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_01:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xD3, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_SLIDE1_SFX, pendingState);
         }
         break;
-    case 2:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_02:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 3:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+    case DOOR_OPEN_SOUND_METAL:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_LOOP_SFX, pendingState);
         }
         break;
-    case 4:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+    case DOOR_OPEN_SOUND_04:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xD8, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SINGLE_LOOP_SFX, pendingState);
         }
         break;
-    case 5:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
+    case DOOR_OPEN_SOUND_WOOD:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_OPEN_SFX, NULL);
         break;
-    case 6:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_06:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         break;
-    case 7:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC0, NULL);
+    case DOOR_OPEN_SOUND_WOOD_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_CATCH_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xBF, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_SLIDE_SFX, pendingState);
         }
         break;
-    case 8:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
+    case DOOR_OPEN_SOUND_WOOD_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 9:
+    case DOOR_OPEN_SOUND_09:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC2, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SHUTTER_OPEN_SFX, pendingState);
         }
         break;
-    case 10:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC4, NULL);
+    case DOOR_OPEN_SOUND_METAL_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_OPEN_SFX, NULL);
         break;
-    case 11:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_11:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         break;
-    case 12:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC8, NULL);
+    case DOOR_OPEN_SOUND_METAL_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_OPEN3_SFX, NULL);
         break;
-    case 13:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 14:
+    case DOOR_OPEN_SOUND_HYDROLIC:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xDA, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_HYDRAL_CLOSE_SFX, pendingState);
         }
         break;
-    case 15:
+    case DOOR_OPEN_SOUND_STONE:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xE1, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SLIDE_STONE_OPEN_SFX, pendingState);
         }
         break;
-    case 16:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+    case DOOR_OPEN_SOUND_16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_OPEN_SFX, NULL);
         break;
-    case 17:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_METAL_4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         if (soundState != NULL)
         {
             chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
         }
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_LOOP_SFX, pendingState);
         }
         break;
     }
@@ -39103,11 +38926,11 @@ void play_door_opening_soundeffect_0(DoorRecord *door) {
 
 
 
-void play_door_opening_soundeffect_1(DoorRecord *door) {
+void doorPlayOpenSound1(DoorRecord *door) {
     ALSoundState *soundState = NULL;
     ALSoundState *pendingState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     if (door->openSoundState == NULL)
     {
@@ -39120,86 +38943,86 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
 
     switch (door->doorOpenSound)
     {
-    case 1:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_01:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xD3, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_SLIDE1_SFX, pendingState);
         }
         break;
-    case 2:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_02:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 3:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+    case DOOR_OPEN_SOUND_METAL:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_LOOP_SFX, pendingState);
         }
         break;
-    case 4:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+    case DOOR_OPEN_SOUND_04:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xD8, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SINGLE_LOOP_SFX, pendingState);
         }
         break;
-    case 7:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC0, NULL);
+    case DOOR_OPEN_SOUND_WOOD_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_CATCH_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xBF, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_SLIDE_SFX, pendingState);
         }
         break;
-    case 8:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBC, NULL);
+    case DOOR_OPEN_SOUND_WOOD_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 9:
+    case DOOR_OPEN_SOUND_09:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xC2, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SHUTTER_OPEN_SFX, pendingState);
         }
         break;
-    case 13:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0x07, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, pendingState);
         }
         break;
-    case 14:
+    case DOOR_OPEN_SOUND_HYDROLIC:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xDA, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_HYDRAL_CLOSE_SFX, pendingState);
         }
         break;
-    case 15:
+    case DOOR_OPEN_SOUND_STONE:
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xE1, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, DOOR_SLIDE_STONE_OPEN_SFX, pendingState);
         }
         break;
-    case 16:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD6, NULL);
+    case DOOR_OPEN_SOUND_16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_OPEN_SFX, NULL);
         break;
-    case 17:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_METAL_4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         if (soundState != NULL)
         {
             chrobjSndCreatePostEventDefault(soundState, &door->prop->pos);
         }
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCA, NULL);
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_OPEN_SFX, NULL);
         if (pendingState != NULL)
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xCC, pendingState);
+            sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_LOOP_SFX, pendingState);
         }
         break;
     }
@@ -39216,48 +39039,48 @@ void play_door_opening_soundeffect_1(DoorRecord *door) {
 
 
 
-void play_door_closing_soundeffect_0(DoorRecord *door) {
+void doorPlayCloseSound0(DoorRecord *door) {
     ALSoundState *soundState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     switch (door->doorOpenSound)
     {
-    case 1:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_01:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 2:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_02:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 3:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCB, NULL);
+    case DOOR_OPEN_SOUND_METAL:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 4:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD7, NULL);
+    case DOOR_OPEN_SOUND_04:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 7:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_WOOD_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 8:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBB, NULL);
+    case DOOR_OPEN_SOUND_WOOD_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_CLOSE_SFX, NULL);
         break;
-    case 9:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC3, NULL);
+    case DOOR_OPEN_SOUND_09:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SHUTTER_CLOSE_SFX, NULL);
         break;
-    case 13:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         break;
-    case 14:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xDB, NULL);
+    case DOOR_OPEN_SOUND_HYDROLIC:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_HYDRAL_OPEN_SFX, NULL);
         break;
-    case 15:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xE2, NULL);
+    case DOOR_OPEN_SOUND_STONE:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SLIDE_STONE_CLOSE_SFX, NULL);
         break;
-    case 16:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD7, NULL);
+    case DOOR_OPEN_SOUND_16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 17:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCB, NULL);
+    case DOOR_OPEN_SOUND_METAL_4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_CLOSE_SFX, NULL);
         break;
     }
 
@@ -39275,64 +39098,64 @@ void play_door_closing_soundeffect_0(DoorRecord *door) {
 
 
 
-void play_door_closing_soundeffect_1(DoorRecord *door)
+void doorPlayCloseSound1(DoorRecord *door)
 {
     ALSoundState *soundState = NULL;
 
-    sub_GAME_7F053B10(door);
+    door7F053B10(door);
 
     switch (door->doorOpenSound)
     {
-    case 1:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_01:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 2:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_02:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 3:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCB, NULL);
+    case DOOR_OPEN_SOUND_METAL:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 4:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD7, NULL);
+    case DOOR_OPEN_SOUND_04:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 5:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBB, NULL);
+    case DOOR_OPEN_SOUND_WOOD:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_CLOSE_SFX, NULL);
         break;
-    case 6:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_06:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         break;
-    case 7:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD2, NULL);
+    case DOOR_OPEN_SOUND_WOOD_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SMART_CATCH1_SFX, NULL);
         break;
-    case 8:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xBB, NULL);
+    case DOOR_OPEN_SOUND_WOOD_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_WOOD_CLOSE_SFX, NULL);
         break;
-    case 9:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC3, NULL);
+    case DOOR_OPEN_SOUND_09:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SHUTTER_CLOSE_SFX, NULL);
         break;
-    case 10:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC5, NULL);
+    case DOOR_OPEN_SOUND_METAL_2:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE_SFX, NULL);
         break;
-    case 11:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC7, NULL);
+    case DOOR_OPEN_SOUND_11:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
         break;
-    case 12:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xC9, NULL);
+    case DOOR_OPEN_SOUND_METAL_3:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE3_SFX, NULL);
         break;
-    case 13:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0x07, NULL);
+    case DOOR_OPEN_SOUND_13:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, TRAIN_SLIDE_DOOR_SLIDE_SFX, NULL);
         break;
-    case 14:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xDB, NULL);
+    case DOOR_OPEN_SOUND_HYDROLIC:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_HYDRAL_OPEN_SFX, NULL);
         break;
-    case 15:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xE2, NULL);
+    case DOOR_OPEN_SOUND_STONE:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, DOOR_SLIDE_STONE_CLOSE_SFX, NULL);
         break;
-    case 16:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xD7, NULL);
+    case DOOR_OPEN_SOUND_16:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, HEAVY_SLIDE_CLOSE_SFX, NULL);
         break;
-    case 17:
-        soundState = sndPlaySfx(g_musicSfxBufferPtr, 0xCB, NULL);
+    case DOOR_OPEN_SOUND_METAL_4:
+        soundState = sndPlaySfx(g_musicSfxBufferPtr, METAL_SLIDE_CLOSE_SFX, NULL);
         break;
     }
 
@@ -39354,7 +39177,7 @@ void doorStartOpen(DoorRecord *door)
     door->flags &= ~DOORFLAG_KEEPOPEN;
     door->runtime_bitflags |= RUNTIMEBITFLAG_BEENOPENED;
 
-    play_door_opening_soundeffect_0(door);
+    doorPlayOpenSound0(door);
     doorActivatePortal(door);
 
     if (door->doorType == 8)
@@ -39375,13 +39198,13 @@ void doorStartOpen(DoorRecord *door)
 void doorStartClose(DoorRecord *door)
 {
     door->flags &= ~DOORFLAG_KEEPOPEN;
-    play_door_opening_soundeffect_1(door);
+    doorPlayOpenSound1(door);
 }
 
 
 void doorFinishOpen(DoorRecord *door)
 {
-    play_door_closing_soundeffect_0(door);
+    doorPlayCloseSound0(door);
 
     if (door->doorType == 8)
     {
@@ -39398,7 +39221,7 @@ void doorFinishOpen(DoorRecord *door)
 
 void doorFinishClose(DoorRecord* door)
 {
-    play_door_closing_soundeffect_1(door);
+    doorPlayCloseSound1(door);
     doorDeactivatePortal(door);
 }
 
@@ -39626,7 +39449,7 @@ bool sub_GAME_7F054D6C(PropRecord *prop, coord3d *pos, f32 arg2, bool arg3)
                 }
                 else
                 {
-                    result = sub_GAME_7F078A58(pos, arg2);
+                    result = camIsPosInScreen(pos, arg2);
                 }
 
                 if (result)
@@ -39704,198 +39527,135 @@ s32 updateDoorDisplacement(DoorRecord* door)
 
 
 
+/**
+ * NTSC address 0x7F054FB4.
+*/
+void door7F054FB4(DoorRecord *door)
+{
+    Model *temp_a0;
+    ModelNode *temp_a1;
+    s32 var_s4;
+    DoorRecord *var_s1;
+    s32 var_s5;
+    s32 var_a0;
 
-#ifdef NONMATCHING
-void sub_GAME_7F054FB4(void) {
+    struct ModelRoData_DisplayList_CollisionRecord *temp_s0;
+    struct ModelRwData_DisplayList_CollisionRecord *temp_v0_3;
 
+    var_s4 = 0;
+    var_s5 = 1;
+
+    var_s1 = door;
+    while (var_s1 != NULL)
+    {
+        var_s1->lastcalc60f = var_s1->openPosition;
+        if (updateDoorDisplacement(var_s1) != 0)
+        {
+            var_s4 = 1;
+        }
+
+        var_s1 = var_s1->linkedDoor;
+
+        if (var_s1 == door)
+        {
+            break;
+        }
+    }
+    
+    var_s1 = door;
+    if ((var_s4 != 0))
+    {
+        while (var_s1 != NULL)
+        {
+            door7F052B00(var_s1);
+            var_s5 = sub_GAME_7F0448A8(var_s1->prop);
+            
+            if (var_s5 == 0)
+            {
+                break;
+            }
+            
+            var_s1 = var_s1->linkedDoor;
+
+            if (var_s1 == door)
+            {
+                break;
+            }
+        }
+    }
+
+    var_s1 = door;
+    while (var_s1 != NULL)
+    {
+        if (var_s4)
+        {
+            if (var_s5 != 0)
+            {
+                if (var_s1->openstate == DOORMODE_OPENING)
+                {
+                    if (var_s1->maxFrac <= var_s1->openPosition)
+                    {
+                        var_s1->openstate = 0;
+                        var_s1->speed = 0.0f;
+                        var_s1->openedTime = (u32) g_GlobalTimer;
+                        
+                        doorFinishOpen(var_s1);
+                    }
+                }
+                else if ((var_s1->openstate == DOORMODE_CLOSING) && (var_s1->openPosition <= 0.0f))
+                {
+                    var_s1->openstate = 0;
+                    var_s1->speed = 0.0f;
+                    var_s1->openedTime = 0;
+                    
+                    doorFinishClose(var_s1);
+                }
+                
+                sub_GAME_7F0402B4(var_s1->prop, &var_s1->nextcol);
+            }
+            else
+            {
+                var_s1->speed = 0.0f;
+                var_s1->openPosition = var_s1->lastcalc60f;
+                
+                door7F052B00(var_s1);
+            }
+            
+            sub_GAME_7F052D8C(var_s1);
+        }
+        else if  (var_s1->doorFlags & DOORFLAG_0004)
+        {
+            temp_a0 = var_s1->model;
+            temp_a1 = temp_a0->obj->RootNode->Child->Child;
+            temp_s0 = (struct ModelRoData_DisplayList_CollisionRecord *)temp_a1->Data;
+            temp_v0_3 = (struct ModelRwData_DisplayList_CollisionRecord*)modelGetNodeRwData(temp_a0, temp_a1);
+
+            if (temp_v0_3->Vertices != var_s1->unkcc)
+            {
+                for (var_a0 = 0; var_a0 < temp_s0->numVertices; var_a0++)
+                {
+                    // struct copy
+                    var_s1->unkcc[var_a0] = temp_v0_3->Vertices[var_a0];
+                }
+            }
+            
+            temp_v0_3->Vertices = var_s1->unkcc;
+        }
+
+        var_s1->lastcalc60i = g_GlobalTimer;
+
+        var_s1 = var_s1->linkedDoor;
+
+        if (var_s1 == door)
+        {
+            break;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F054FB4
-/* 089AE4 7F054FB4 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 089AE8 7F054FB8 AFB50030 */  sw    $s5, 0x30($sp)
-/* 089AEC 7F054FBC AFB4002C */  sw    $s4, 0x2c($sp)
-/* 089AF0 7F054FC0 AFB20024 */  sw    $s2, 0x24($sp)
-/* 089AF4 7F054FC4 AFB10020 */  sw    $s1, 0x20($sp)
-/* 089AF8 7F054FC8 00809025 */  move  $s2, $a0
-/* 089AFC 7F054FCC AFBF0034 */  sw    $ra, 0x34($sp)
-/* 089B00 7F054FD0 AFB30028 */  sw    $s3, 0x28($sp)
-/* 089B04 7F054FD4 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 089B08 7F054FD8 F7B40010 */  sdc1  $f20, 0x10($sp)
-/* 089B0C 7F054FDC 0000A025 */  move  $s4, $zero
-/* 089B10 7F054FE0 24150001 */  li    $s5, 1
-/* 089B14 7F054FE4 10800010 */  beqz  $a0, .L7F055028
-/* 089B18 7F054FE8 00808825 */   move  $s1, $a0
-/* 089B1C 7F054FEC C62400B4 */  lwc1  $f4, 0xb4($s1)
-.L7F054FF0:
-/* 089B20 7F054FF0 02202025 */  move  $a0, $s1
-/* 089B24 7F054FF4 0FC153AA */  jal   updateDoorDisplacement
-/* 089B28 7F054FF8 E62400FC */   swc1  $f4, 0xfc($s1)
-/* 089B2C 7F054FFC 50400003 */  beql  $v0, $zero, .L7F05500C
-/* 089B30 7F055000 8E3100C8 */   lw    $s1, 0xc8($s1)
-/* 089B34 7F055004 24140001 */  li    $s4, 1
-/* 089B38 7F055008 8E3100C8 */  lw    $s1, 0xc8($s1)
-.L7F05500C:
-/* 089B3C 7F05500C 16320003 */  bne   $s1, $s2, .L7F05501C
-/* 089B40 7F055010 00000000 */   nop   
-/* 089B44 7F055014 10000004 */  b     .L7F055028
-/* 089B48 7F055018 02408825 */   move  $s1, $s2
-.L7F05501C:
-/* 089B4C 7F05501C 5620FFF4 */  bnezl $s1, .L7F054FF0
-/* 089B50 7F055020 C62400B4 */   lwc1  $f4, 0xb4($s1)
-/* 089B54 7F055024 02408825 */  move  $s1, $s2
-.L7F055028:
-/* 089B58 7F055028 12800013 */  beqz  $s4, .L7F055078
-/* 089B5C 7F05502C 00000000 */   nop   
-/* 089B60 7F055030 12400011 */  beqz  $s2, .L7F055078
-/* 089B64 7F055034 00000000 */   nop   
-.L7F055038:
-/* 089B68 7F055038 0FC14AC0 */  jal   sub_GAME_7F052B00
-/* 089B6C 7F05503C 02202025 */   move  $a0, $s1
-/* 089B70 7F055040 0FC1122A */  jal   sub_GAME_7F0448A8
-/* 089B74 7F055044 8E240010 */   lw    $a0, 0x10($s1)
-/* 089B78 7F055048 14400003 */  bnez  $v0, .L7F055058
-/* 089B7C 7F05504C 0040A825 */   move  $s5, $v0
-/* 089B80 7F055050 10000009 */  b     .L7F055078
-/* 089B84 7F055054 02408825 */   move  $s1, $s2
-.L7F055058:
-/* 089B88 7F055058 8E3100C8 */  lw    $s1, 0xc8($s1)
-/* 089B8C 7F05505C 16320003 */  bne   $s1, $s2, .L7F05506C
-/* 089B90 7F055060 00000000 */   nop   
-/* 089B94 7F055064 10000004 */  b     .L7F055078
-/* 089B98 7F055068 02408825 */   move  $s1, $s2
-.L7F05506C:
-/* 089B9C 7F05506C 1620FFF2 */  bnez  $s1, .L7F055038
-/* 089BA0 7F055070 00000000 */   nop   
-/* 089BA4 7F055074 02408825 */  move  $s1, $s2
-.L7F055078:
-/* 089BA8 7F055078 12400062 */  beqz  $s2, .L7F055204
-/* 089BAC 7F05507C 3C138005 */   lui   $s3, %hi(g_GlobalTimer)
-/* 089BB0 7F055080 4480A000 */  mtc1  $zero, $f20
-/* 089BB4 7F055084 2673837C */  addiu $s3, %lo(g_GlobalTimer) # addiu $s3, $s3, -0x7c84
-.L7F055088:
-/* 089BB8 7F055088 52800030 */  beql  $s4, $zero, .L7F05514C
-/* 089BBC 7F05508C 962F0098 */   lhu   $t7, 0x98($s1)
-/* 089BC0 7F055090 12A00025 */  beqz  $s5, .L7F055128
-/* 089BC4 7F055094 02202025 */   move  $a0, $s1
-/* 089BC8 7F055098 822200BC */  lb    $v0, 0xbc($s1)
-/* 089BCC 7F05509C 24010001 */  li    $at, 1
-/* 089BD0 7F0550A0 54410010 */  bnel  $v0, $at, .L7F0550E4
-/* 089BD4 7F0550A4 24010002 */   li    $at, 2
-/* 089BD8 7F0550A8 C62600B4 */  lwc1  $f6, 0xb4($s1)
-/* 089BDC 7F0550AC C6280084 */  lwc1  $f8, 0x84($s1)
-/* 089BE0 7F0550B0 4606403E */  c.le.s $f8, $f6
-/* 089BE4 7F0550B4 00000000 */  nop   
-/* 089BE8 7F0550B8 45020017 */  bc1fl .L7F055118
-/* 089BEC 7F0550BC 8E240010 */   lw    $a0, 0x10($s1)
-/* 089BF0 7F0550C0 A22000BC */  sb    $zero, 0xbc($s1)
-/* 089BF4 7F0550C4 E63400B8 */  swc1  $f20, 0xb8($s1)
-/* 089BF8 7F0550C8 8E6E0000 */  lw    $t6, ($s3)
-/* 089BFC 7F0550CC 02202025 */  move  $a0, $s1
-/* 089C00 7F0550D0 0FC15203 */  jal   doorFinishOpen
-/* 089C04 7F0550D4 AE2E00EC */   sw    $t6, 0xec($s1)
-/* 089C08 7F0550D8 1000000F */  b     .L7F055118
-/* 089C0C 7F0550DC 8E240010 */   lw    $a0, 0x10($s1)
-/* 089C10 7F0550E0 24010002 */  li    $at, 2
-.L7F0550E4:
-/* 089C14 7F0550E4 5441000C */  bnel  $v0, $at, .L7F055118
-/* 089C18 7F0550E8 8E240010 */   lw    $a0, 0x10($s1)
-/* 089C1C 7F0550EC C62A00B4 */  lwc1  $f10, 0xb4($s1)
-/* 089C20 7F0550F0 02202025 */  move  $a0, $s1
-/* 089C24 7F0550F4 4614503E */  c.le.s $f10, $f20
-/* 089C28 7F0550F8 00000000 */  nop   
-/* 089C2C 7F0550FC 45020006 */  bc1fl .L7F055118
-/* 089C30 7F055100 8E240010 */   lw    $a0, 0x10($s1)
-/* 089C34 7F055104 A22000BC */  sb    $zero, 0xbc($s1)
-/* 089C38 7F055108 E63400B8 */  swc1  $f20, 0xb8($s1)
-/* 089C3C 7F05510C 0FC1521F */  jal   doorFinishClose
-/* 089C40 7F055110 AE2000EC */   sw    $zero, 0xec($s1)
-/* 089C44 7F055114 8E240010 */  lw    $a0, 0x10($s1)
-.L7F055118:
-/* 089C48 7F055118 0FC100AD */  jal   sub_GAME_7F0402B4
-/* 089C4C 7F05511C 2625007C */   addiu $a1, $s1, 0x7c
-/* 089C50 7F055120 10000005 */  b     .L7F055138
-/* 089C54 7F055124 00000000 */   nop   
-.L7F055128:
-/* 089C58 7F055128 C63000FC */  lwc1  $f16, 0xfc($s1)
-/* 089C5C 7F05512C E63400B8 */  swc1  $f20, 0xb8($s1)
-/* 089C60 7F055130 0FC14AC0 */  jal   sub_GAME_7F052B00
-/* 089C64 7F055134 E63000B4 */   swc1  $f16, 0xb4($s1)
-.L7F055138:
-/* 089C68 7F055138 0FC14B63 */  jal   sub_GAME_7F052D8C
-/* 089C6C 7F05513C 02202025 */   move  $a0, $s1
-/* 089C70 7F055140 1000002A */  b     .L7F0551EC
-/* 089C74 7F055144 8E690000 */   lw    $t1, ($s3)
-/* 089C78 7F055148 962F0098 */  lhu   $t7, 0x98($s1)
-.L7F05514C:
-/* 089C7C 7F05514C 31F80004 */  andi  $t8, $t7, 4
-/* 089C80 7F055150 53000026 */  beql  $t8, $zero, .L7F0551EC
-/* 089C84 7F055154 8E690000 */   lw    $t1, ($s3)
-/* 089C88 7F055158 8E240014 */  lw    $a0, 0x14($s1)
-/* 089C8C 7F05515C 8C990008 */  lw    $t9, 8($a0)
-/* 089C90 7F055160 8F280000 */  lw    $t0, ($t9)
-/* 089C94 7F055164 8D090014 */  lw    $t1, 0x14($t0)
-/* 089C98 7F055168 8D250014 */  lw    $a1, 0x14($t1)
-/* 089C9C 7F05516C 0FC1B1E7 */  jal   modelGetNodeRwData
-/* 089CA0 7F055170 8CB00004 */   lw    $s0, 4($a1)
-/* 089CA4 7F055174 8E2300CC */  lw    $v1, 0xcc($s1)
-/* 089CA8 7F055178 8C4A0000 */  lw    $t2, ($v0)
-/* 089CAC 7F05517C 506A001A */  beql  $v1, $t2, .L7F0551E8
-/* 089CB0 7F055180 AC430000 */   sw    $v1, ($v0)
-/* 089CB4 7F055184 860B000C */  lh    $t3, 0xc($s0)
-/* 089CB8 7F055188 00002025 */  move  $a0, $zero
-/* 089CBC 7F05518C 59600016 */  blezl $t3, .L7F0551E8
-/* 089CC0 7F055190 AC430000 */   sw    $v1, ($v0)
-/* 089CC4 7F055194 00001825 */  move  $v1, $zero
-/* 089CC8 7F055198 8C4E0000 */  lw    $t6, ($v0)
-.L7F05519C:
-/* 089CCC 7F05519C 8E2C00CC */  lw    $t4, 0xcc($s1)
-/* 089CD0 7F0551A0 24840001 */  addiu $a0, $a0, 1
-/* 089CD4 7F0551A4 01C37821 */  addu  $t7, $t6, $v1
-/* 089CD8 7F0551A8 8DE10000 */  lw    $at, ($t7)
-/* 089CDC 7F0551AC 01836821 */  addu  $t5, $t4, $v1
-/* 089CE0 7F0551B0 24630010 */  addiu $v1, $v1, 0x10
-/* 089CE4 7F0551B4 ADA10000 */  sw    $at, ($t5)
-/* 089CE8 7F0551B8 8DF90004 */  lw    $t9, 4($t7)
-/* 089CEC 7F0551BC ADB90004 */  sw    $t9, 4($t5)
-/* 089CF0 7F0551C0 8DE10008 */  lw    $at, 8($t7)
-/* 089CF4 7F0551C4 ADA10008 */  sw    $at, 8($t5)
-/* 089CF8 7F0551C8 8DF9000C */  lw    $t9, 0xc($t7)
-/* 089CFC 7F0551CC ADB9000C */  sw    $t9, 0xc($t5)
-/* 089D00 7F0551D0 8608000C */  lh    $t0, 0xc($s0)
-/* 089D04 7F0551D4 0088082A */  slt   $at, $a0, $t0
-/* 089D08 7F0551D8 5420FFF0 */  bnezl $at, .L7F05519C
-/* 089D0C 7F0551DC 8C4E0000 */   lw    $t6, ($v0)
-/* 089D10 7F0551E0 8E2300CC */  lw    $v1, 0xcc($s1)
-/* 089D14 7F0551E4 AC430000 */  sw    $v1, ($v0)
-.L7F0551E8:
-/* 089D18 7F0551E8 8E690000 */  lw    $t1, ($s3)
-.L7F0551EC:
-/* 089D1C 7F0551EC AE2900FC */  sw    $t1, 0xfc($s1)
-/* 089D20 7F0551F0 8E3100C8 */  lw    $s1, 0xc8($s1)
-/* 089D24 7F0551F4 52320004 */  beql  $s1, $s2, .L7F055208
-/* 089D28 7F0551F8 8FBF0034 */   lw    $ra, 0x34($sp)
-/* 089D2C 7F0551FC 1620FFA2 */  bnez  $s1, .L7F055088
-/* 089D30 7F055200 00000000 */   nop   
-.L7F055204:
-/* 089D34 7F055204 8FBF0034 */  lw    $ra, 0x34($sp)
-.L7F055208:
-/* 089D38 7F055208 D7B40010 */  ldc1  $f20, 0x10($sp)
-/* 089D3C 7F05520C 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 089D40 7F055210 8FB10020 */  lw    $s1, 0x20($sp)
-/* 089D44 7F055214 8FB20024 */  lw    $s2, 0x24($sp)
-/* 089D48 7F055218 8FB30028 */  lw    $s3, 0x28($sp)
-/* 089D4C 7F05521C 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 089D50 7F055220 8FB50030 */  lw    $s5, 0x30($sp)
-/* 089D54 7F055224 03E00008 */  jr    $ra
-/* 089D58 7F055228 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
 
 
 // PD: door0f08f604
-void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsystem)
+void door7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsystem)
 {
     f32 anglediff;
     PropRecord *playerprop;
@@ -40025,7 +39785,7 @@ void sub_GAME_7F05522C(DoorRecord *door, f32 *arg1, f32 *arg2, s32 altcoordsyste
 
 
 // PD: func0f08f968
-bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
+bool door7F0555F8(DoorRecord *door, bool altcoordsystem)
 {
     bool checkmore;
     f32 sp50;
@@ -40040,7 +39800,7 @@ bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
 
     if (g_InteractProp == NULL)
     {
-        sub_GAME_7F05522C(door, &sp50, &sp4c, altcoordsystem);
+        door7F05522C(door, &sp50, &sp4c, altcoordsystem);
 
         if ((sp50 >= -limit) && (sp50 <= limit) && (sp4c >= -limit) && (sp4c <= limit))
         {
@@ -40053,7 +39813,7 @@ bool sub_GAME_7F0555F8(DoorRecord *door, bool altcoordsystem)
 
             while (sibling != NULL && sibling != door && (sp50 >= 0.0f || sp4c < 0.0f))
             {
-                sub_GAME_7F05522C(sibling, &sp40, &sp3c, altcoordsystem);
+                door7F05522C(sibling, &sp40, &sp3c, altcoordsystem);
 
                 if ((sp50 > 0.0f) && (sp40 < sp50))
                 {
@@ -40128,11 +39888,11 @@ bool doorTestForInteract(PropRecord *prop)
 
 		if (maybe)
         {
-            checkmore = sub_GAME_7F0555F8(door, FALSE);
+            checkmore = door7F0555F8(door, FALSE);
 
             if (checkmore && (door->flags2 & PROPFLAG2_DOOR_ALTCOORDSYSTEM))
             {
-                checkmore = sub_GAME_7F0555F8(door, TRUE);
+                checkmore = door7F0555F8(door, TRUE);
             }
 		}
 	}

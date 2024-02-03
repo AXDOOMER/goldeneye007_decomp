@@ -2452,20 +2452,20 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             if (door->openPosition <= 0)
                             {
-                                pass = (ai->val[1] & DOOR_STATE_CLOSED) != 0;
+                                pass = (ai->val[1] & AI_DOOR_STATE_CLOSED) != 0;
                             }
                             else
                             {
-                                pass = (ai->val[1] & DOOR_STATE_OPEN) != 0;
+                                pass = (ai->val[1] & AI_DOOR_STATE_OPEN) != 0;
                             }
                         }
                         else if (door->openstate == DOORSTATE_OPENING || door->openstate == DOORSTATE_WAITING)
                         {
-                            pass = (ai->val[1] & DOOR_STATE_OPENING) != 0;
+                            pass = (ai->val[1] & AI_DOOR_STATE_OPENING) != 0;
                         }
                         else if (door->openstate == DOORSTATE_CLOSING)
                         {
-                            pass = (ai->val[1] & DOOR_STATE_CLOSING) != 0;
+                            pass = (ai->val[1] & AI_DOOR_STATE_CLOSING) != 0;
                         }
                     }
                     if (pass)
@@ -4128,7 +4128,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         stan            = pad->stan;
                         sub_GAME_7F03D058(chr->prop, FALSE);
 
-                        if (sub_GAME_7F033F48(&pos, &stan, FacingDirection, TRUE))
+                        if (chrAdjustPosForSpawn(&pos, &stan, FacingDirection, TRUE))
                         {
                             {
                                 chr->prop->pos.x = pos.x;
@@ -4232,9 +4232,9 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         door->openPosition = door->maxFrac;
                         door->openedTime   = g_GlobalTimer;
                         door->openstate    = DOORSTATE_STATIONARY;
-                        sub_GAME_7F052B00(door);
+                        door7F052B00(door);
                         doorActivatePortal(door); // doorActivatePortal
-                        sub_GAME_7F053B10(door);
+                        door7F053B10(door);
                     }
                     Offset += AI_DoorOpenInstant_LENGTH;
                     break;
