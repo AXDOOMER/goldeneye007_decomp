@@ -848,7 +848,7 @@ void sub_GAME_7F077FB4(coord3d *in, f32 value, coord3d *out) {
     out->x = ((in->x * value) * g_CurrentPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(coord3d *in, coord3d *out) {
+void sub_GAME_7F077FF4(coord3d *in, coord2d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * g_CurrentPlayer->c_recipscaley) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
     out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * inv_z * g_CurrentPlayer->c_recipscalex);

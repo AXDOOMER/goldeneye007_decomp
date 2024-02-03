@@ -3127,7 +3127,7 @@ void bondviewResetUpperTextDisplay(void);
 Mtxf *currentPlayerGetProjectionMatrixF(void);
 int redirect_get_BONDdata_autoaim_x(void);
 int redirect_get_BONDdata_autoaim_y(void);
-void sub_GAME_7F077FF4(coord3d *in, coord3d *out);
+void sub_GAME_7F077FF4(coord3d *in, coord2d *out);
 void maybe_solo_intro_camera_handler(void);
 
 #endif
