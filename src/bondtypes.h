@@ -3975,6 +3975,13 @@ struct criteria_deposit {
     struct criteria_deposit *next;
 };
 
+struct criteria_picture {
+    s32 unk00;
+    s32 tag_id;
+    s32 flag;
+    struct criteria_picture *next;
+};
+
 struct PortalMetric {
     struct coord3d normal;
     f32 min;
