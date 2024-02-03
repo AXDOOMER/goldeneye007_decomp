@@ -36227,7 +36227,7 @@ glabel object_collectability_routines
 #endif
 
 
-bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
+bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3)
 {
     if (prop->flags & PROPFLAG_ONSCREEN)
     {
@@ -36241,13 +36241,13 @@ bool sub_GAME_7F050D30(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3)
             arg1->x = matrix->m[3][0];
             arg1->y = matrix->m[3][1];
 
-            arg3[0] = 0;
-            arg3[1] = 0;
+            arg3->f[0] = 0;
+            arg3->f[1] = 0;
 
-            arg2[0] = 0;
-            arg2[1] = 0;
+            arg2->f[0] = 0;
+            arg2->f[1] = 0;
 
-            sub_GAME_7F03F90C(obj->model, &arg2[1], &arg2[0], &arg3[1], &arg3[0]);
+            sub_GAME_7F03F90C(obj->model, &arg2->f[1], &arg2->f[0], &arg3->f[1], &arg3->f[0]);
 
             return TRUE;
         }
