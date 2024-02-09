@@ -843,18 +843,18 @@ void transformAndNormalizeByLength2Dto3D(coord2d *in, coord3d *out, f32 length) 
     out->z = (-1.0f * norm);
 }
 
-void sub_GAME_7F077FB4(coord3d *in, f32 value, coord3d *out) {
+void scale3DCoordinates(coord3d *in, f32 value, coord3d *out) {
     out->y = ((in->y * value) * g_CurrentPlayer->c_scaley);
     out->x = ((in->x * value) * g_CurrentPlayer->c_scalex);
 }
 
-void sub_GAME_7F077FF4(coord3d *in, coord2d *out) {
+void transform3Dto2DCoords(coord3d *in, coord2d *out) {
     f32 inv_z = (1.0f / in->z);
     out->y = (in->y * inv_z * g_CurrentPlayer->c_recipscaley) + (g_CurrentPlayer->c_screentop + g_CurrentPlayer->c_halfheight);
     out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - (in->x * inv_z * g_CurrentPlayer->c_recipscalex);
 }
 
-void sub_GAME_7F078060(coord3d *in, coord3d *out)
+void transform3Dto2DWithZScaling(coord3d *in, coord3d *out)
 {
 	f32 inv_z;
 
@@ -868,13 +868,13 @@ void sub_GAME_7F078060(coord3d *in, coord3d *out)
 	out->x = (g_CurrentPlayer->c_screenleft + g_CurrentPlayer->c_halfwidth) - in->x * inv_z * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F0780F0(coord3d *in, f32 divisor, coord3d *out)
+void divide3DCoordinates(coord3d *in, f32 divisor, coord3d *out)
 {
 	out->y = in->y * (1.0f / divisor) * g_CurrentPlayer->c_recipscaley;
 	out->x = in->x * (1.0f / divisor) * g_CurrentPlayer->c_recipscalex;
 }
 
-void sub_GAME_7F078140(coord3d *in, coord3d *out, f32 value1, f32 angle, f32 value2) {
+void transform3DCoordinatesWithAngle(coord3d *in, coord3d *out, f32 value1, f32 angle, f32 value2) {
     f32 var1;
     f32 x;
     f32 y;
@@ -895,7 +895,7 @@ void sub_GAME_7F078140(coord3d *in, coord3d *out, f32 value1, f32 angle, f32 val
  * 
  * Address 0x7F078258.
  */
-void sub_GAME_7F078258(coord3d *in, coord3d *out, f32 angle, f32 value)
+void transform3DCoordinatesWithAngleAndValue(coord3d *in, coord3d *out, f32 angle, f32 value)
 {
     f32 var1 = (cosf(mDegToHalfRad(angle)) * g_CurrentPlayer->c_halfheight) / (sinf(mDegToHalfRad(angle)) * in->f[2]);
     f32 var2 = (var1 * g_CurrentPlayer->c_halfwidth) / (value * g_CurrentPlayer->c_halfheight);
@@ -1290,7 +1290,7 @@ bool camIsPosInScreenBox(coord3d *pos, f32 margin, bbox2d *box)
     return TRUE;
 }
 
-
+//split here makes sense to have the pd split make sense
 s32 bondviewGetRandomSpawnPadIndex(void)
 {
     PadRecord *pad;
@@ -1458,7 +1458,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->speedsideways = 0.0f;
     g_CurrentPlayer->speedstrafe = 0.0f;
     g_CurrentPlayer->speedforwards = 0.0f;
-    g_CurrentPlayer->field_2A4C = 0.0f;
+    g_CurrentPlayer->speedgo = 0.0f;
     g_CurrentPlayer->speedboost = 1.0f;
     g_CurrentPlayer->speedmaxtime60 = 0;
     g_CurrentPlayer->bondshotspeed.x = 0.0f;
@@ -7637,31 +7637,31 @@ void bondviewUpdateSpeedSideways(s32 arg0) {
 */
 void bondviewUpdateSpeedForwards(s32 arg0) {
     if (arg0 == 1) {
-        g_CurrentPlayer->field_2A4C = (g_CurrentPlayer->field_2A4C + g_GlobalTimerDelta);
-        if (1.0f < g_CurrentPlayer->field_2A4C) {
-            g_CurrentPlayer->field_2A4C = 1.0f;
+        g_CurrentPlayer->speedgo = (g_CurrentPlayer->speedgo + g_GlobalTimerDelta);
+        if (1.0f < g_CurrentPlayer->speedgo) {
+            g_CurrentPlayer->speedgo = 1.0f;
         }
     } else {
         if (arg0 == -1) {
-            g_CurrentPlayer->field_2A4C = (g_CurrentPlayer->field_2A4C - g_GlobalTimerDelta);
-            if (g_CurrentPlayer->field_2A4C < -1.0f) {
-                g_CurrentPlayer->field_2A4C = -1.0f;
+            g_CurrentPlayer->speedgo = (g_CurrentPlayer->speedgo - g_GlobalTimerDelta);
+            if (g_CurrentPlayer->speedgo < -1.0f) {
+                g_CurrentPlayer->speedgo = -1.0f;
             }
         } else {
-            if (0.0f < g_CurrentPlayer->field_2A4C) {
-                g_CurrentPlayer->field_2A4C = (g_CurrentPlayer->field_2A4C - g_GlobalTimerDelta);
-                if (g_CurrentPlayer->field_2A4C < 0.0f) {
-                    g_CurrentPlayer->field_2A4C = 0.0f;
+            if (0.0f < g_CurrentPlayer->speedgo) {
+                g_CurrentPlayer->speedgo = (g_CurrentPlayer->speedgo - g_GlobalTimerDelta);
+                if (g_CurrentPlayer->speedgo < 0.0f) {
+                    g_CurrentPlayer->speedgo = 0.0f;
                 }
             } else {
-                g_CurrentPlayer->field_2A4C = (g_CurrentPlayer->field_2A4C + g_GlobalTimerDelta);
-                if (0.0f < g_CurrentPlayer->field_2A4C) {
-                    g_CurrentPlayer->field_2A4C = 0.0f;
+                g_CurrentPlayer->speedgo = (g_CurrentPlayer->speedgo + g_GlobalTimerDelta);
+                if (0.0f < g_CurrentPlayer->speedgo) {
+                    g_CurrentPlayer->speedgo = 0.0f;
                 }
             }
         }
     }
-    g_CurrentPlayer->speedforwards = g_CurrentPlayer->field_2A4C;
+    g_CurrentPlayer->speedforwards = g_CurrentPlayer->speedgo;
 }
 
 /**

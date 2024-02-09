@@ -2613,7 +2613,7 @@ struct player
   f32 actual_health;
   f32 actual_armor;
   ITEM_IDS field_2A44[2];
-  f32 field_2A4C;
+  f32 speedgo;
   s32 lock_hand_model[2];
   s32 cur_player_control_type_0;
   s32 cur_player_control_type_1;
@@ -3127,7 +3127,7 @@ void bondviewResetUpperTextDisplay(void);
 Mtxf *currentPlayerGetProjectionMatrixF(void);
 int redirect_get_BONDdata_autoaim_x(void);
 int redirect_get_BONDdata_autoaim_y(void);
-void sub_GAME_7F077FF4(coord3d *in, coord2d *out);
+void transform3Dto2DCoords(coord3d *in, coord2d *out);
 void maybe_solo_intro_camera_handler(void);
 
 #endif

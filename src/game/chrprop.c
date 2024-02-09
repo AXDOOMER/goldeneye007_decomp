@@ -3926,23 +3926,23 @@ f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32
 
     result = -2;
 
-    sub_GAME_7F077FF4(arg1, (coord3d*)spa0);
+    transform3Dto2DCoords(arg1, (coord3d*)spa0);
     sp94.x = arg2[0];
     sp94.y = arg1->y;
     sp94.z = arg1->z;
-    sub_GAME_7F077FF4(&sp94, (coord3d*)sp8c);
+    transform3Dto2DCoords(&sp94, (coord3d*)sp8c);
     sp94.x = arg2[1];
     sp94.y = arg1->y;
     sp94.z = arg1->z;
-    sub_GAME_7F077FF4(&sp94, (coord3d*)sp84);
+    transform3Dto2DCoords(&sp94, (coord3d*)sp84);
     sp94.x = arg1->x;
     sp94.y = arg3[1];
     sp94.z = arg1->z;
-    sub_GAME_7F077FF4(&sp94, (coord3d*)sp7c);
+    transform3Dto2DCoords(&sp94, (coord3d*)sp7c);
     sp94.x = arg1->x;
     sp94.y = arg3[0];
     sp94.z = arg1->z;
-    sub_GAME_7F077FF4(&sp94, (coord3d*)sp74);
+    transform3Dto2DCoords(&sp94, (coord3d*)sp74);
 
     if (sp74[1] >= top && bottom >= sp7c[1])
     {
@@ -6484,25 +6484,25 @@ void sub_GAME_7F03F948(struct coord3d *arg0, struct coord2d *arg1, struct coord2
     sp24.f[0] = arg1->f[0];
     sp24.f[1] = arg0->f[1];
     sp24.f[2] = arg0->f[2];
-    sub_GAME_7F077FF4(&sp24, &tout);
+    transform3Dto2DCoords(&sp24, &tout);
     arg3->f[0] = tout.f[0];
     
     sp24.f[0] = arg1->f[1];
     sp24.f[1] = arg0->f[1];
     sp24.f[2] = arg0->f[2];
-    sub_GAME_7F077FF4(&sp24, &tout);
+    transform3Dto2DCoords(&sp24, &tout);
     arg4->f[0] = tout.f[0];
     
     sp24.f[0] = arg0->f[0];
     sp24.f[1] = arg2->f[1];
     sp24.f[2] = arg0->f[2];
-    sub_GAME_7F077FF4(&sp24, &tout);
+    transform3Dto2DCoords(&sp24, &tout);
     arg3->f[1] = tout.f[1];
     
     sp24.f[0] = arg0->f[0];
     sp24.f[1] = arg2->f[0];
     sp24.f[2] = arg0->f[2];
-    sub_GAME_7F077FF4(&sp24, &tout);
+    transform3Dto2DCoords(&sp24, &tout);
     arg4->f[1] = tout.f[1];
 }
 

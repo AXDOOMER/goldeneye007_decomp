@@ -199,7 +199,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->speedsideways = 0.0f;
     g_playerPointers[player_num]->speedstrafe = 0.0f;
     g_playerPointers[player_num]->speedforwards = 0.0f;
-    g_playerPointers[player_num]->field_2A4C = 0.0f;
+    g_playerPointers[player_num]->speedgo = 0.0f;
     g_playerPointers[player_num]->speedboost = 1.0f;
     g_playerPointers[player_num]->bondshotspeed.x = 0.0f;
     g_playerPointers[player_num]->bondshotspeed.y = 0.0f;

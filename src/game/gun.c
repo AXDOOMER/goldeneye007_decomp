@@ -9472,7 +9472,7 @@ glabel sub_GAME_7F061E18
 /* 096F38 7F062408 46007087 */  neg.s $f2, $f14
 /* 096F3C 7F06240C 44051000 */  mfc1  $a1, $f2
 /* 096F40 7F062410 E7A0008C */  swc1  $f0, 0x8c($sp)
-/* 096F44 7F062414 0FC1E03C */  jal   sub_GAME_7F0780F0
+/* 096F44 7F062414 0FC1E03C */  jal   divide3DCoordinates
 /* 096F48 7F062418 E7A00088 */   swc1  $f0, 0x88($sp)
 /* 096F4C 7F06241C 3C014000 */  li    $at, 0x40000000 # 2.000000
 /* 096F50 7F062420 C7B00090 */  lwc1  $f16, 0x90($sp)
@@ -10347,7 +10347,7 @@ glabel sub_GAME_7F061E18
 /* 0952BC 7F0628CC 46007087 */  neg.s $f2, $f14
 /* 0952C0 7F0628D0 44051000 */  mfc1  $a1, $f2
 /* 0952C4 7F0628D4 E7A0008C */  swc1  $f0, 0x8c($sp)
-/* 0952C8 7F0628D8 0FC1E05C */  jal   sub_GAME_7F0780F0
+/* 0952C8 7F0628D8 0FC1E05C */  jal   divide3DCoordinates
 /* 0952CC 7F0628DC E7A00088 */   swc1  $f0, 0x88($sp)
 /* 0952D0 7F0628E0 3C014000 */  li    $at, 0x40000000 # 2.000000
 /* 0952D4 7F0628E4 C7B00090 */  lwc1  $f16, 0x90($sp)
@@ -22406,7 +22406,7 @@ void sub_GAME_7F0680D4(coord3d * coord)
     tmp.x = g_CurrentPlayer->field_101C.m[2][0] * 1000.0f;
     tmp.y = g_CurrentPlayer->field_101C.m[2][1] * 1000.0f;
     tmp.z = g_CurrentPlayer->field_101C.m[2][2] * 1000.0f;
-    sub_GAME_7F077FF4(&tmp, (coord3d* ) &g_CurrentPlayer->crosshair_angle);
+    transform3Dto2DCoords(&tmp, (coord3d* ) &g_CurrentPlayer->crosshair_angle);
 
     g_CurrentPlayer->field_FFC.x = g_CurrentPlayer->crosshair_angle.x;
     g_CurrentPlayer->field_FFC.y = g_CurrentPlayer->crosshair_angle.y;

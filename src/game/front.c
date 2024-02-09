@@ -2189,7 +2189,7 @@ void toggle_deletion_menu_for_folder(int index)
 {
   struct coord2d local_8;
 
-  sub_GAME_7F077FF4(&dword_CODE_bss_80069620[index],&local_8);
+  transform3Dto2DCoords(&dword_CODE_bss_80069620[index],&local_8);
   cursor_h_pos = local_8.x + -1.0f;
   cursor_v_pos = local_8.y + 20.0f;
 }
@@ -2508,7 +2508,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
 
         sp74 = &dword_CODE_bss_80069620[sp1B4];
 
-        sub_GAME_7F077FF4(sp74, &spE4);
+        transform3Dto2DCoords(sp74, &spE4);
 
         if (sp1B4 == folder_selected_for_deletion)
         {

@@ -4009,7 +4009,7 @@ s32 sub_GAME_7F0B5488(coord3d* arg0, coord3d* arg1)
     arg1->z = arg0->z * room_data_float2;
     mtx4TransformVecInPlace(temp_a0, arg1);
 
-    sub_GAME_7F078060(arg1, arg1);
+    transform3Dto2DWithZScaling(arg1, arg1);
 
     if (arg1->z > 0.0f)
     {
@@ -4339,7 +4339,7 @@ glabel sub_GAME_7F0B5864
 /* 0EA494 7F0B5964 02002025 */  move  $a0, $s0
 /* 0EA498 7F0B5968 45020024 */  bc1fl .L7F0B59FC
 /* 0EA49C 7F0B596C 26310001 */   addiu $s1, $s1, 1
-/* 0EA4A0 7F0B5970 0FC1E018 */  jal   sub_GAME_7F078060
+/* 0EA4A0 7F0B5970 0FC1E018 */  jal   transform3Dto2DWithZScaling
 /* 0EA4A4 7F0B5974 02802825 */   move  $a1, $s4
 /* 0EA4A8 7F0B5978 16400006 */  bnez  $s2, .L7F0B5994
 /* 0EA4AC 7F0B597C C7A20078 */   lwc1  $f2, 0x78($sp)
@@ -4533,7 +4533,7 @@ glabel sub_GAME_7F0B5864
 /* 0E7690 7F0B4CA0 02002025 */  move  $a0, $s0
 /* 0E7694 7F0B4CA4 45020024 */  bc1fl .L7F0B4D38
 /* 0E7698 7F0B4CA8 26310001 */   addiu $s1, $s1, 1
-/* 0E769C 7F0B4CAC 0FC1E038 */  jal   sub_GAME_7F078060
+/* 0E769C 7F0B4CAC 0FC1E038 */  jal   transform3Dto2DWithZScaling
 /* 0E76A0 7F0B4CB0 02802825 */   move  $a1, $s4
 /* 0E76A4 7F0B4CB4 16400006 */  bnez  $s2, .L7F0B4CD0
 /* 0E76A8 7F0B4CB8 C7A20078 */   lwc1  $f2, 0x78($sp)
