@@ -3,7 +3,8 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
-extern struct objective_entry * objective_ptrs[];
+extern struct objective_entry * objective_ptrs[OBJECTIVES_MAX];
+extern OBJECTIVESTATUS         objectiveStatuses[OBJECTIVES_MAX]; //This is an array of 10 OBJECTIVESTATUS,
 extern s32 objective_count;
 extern s32 objective_count_related;
 

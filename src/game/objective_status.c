@@ -12,7 +12,7 @@
 // bss
 //CODE.bss:80075D30
 struct objective_entry * objective_ptrs[OBJECTIVES_MAX];
-OBJECTIVESTATUS         dword_CODE_bss_80075D58[OBJECTIVES_MAX]; //This is an array of 10 OBJECTIVESTATUS,
+OBJECTIVESTATUS         objectiveStatuses[OBJECTIVES_MAX]; //This is an array of 10 OBJECTIVESTATUS,
 
 //CODE.bss:80075D80
 u32 *ptr_last_tag_entry_type16;
@@ -155,7 +155,7 @@ s32 get_difficulty_for_objective(s32 objectiveIndex)
 /*
  * Return Status of objective.
  * Note: This matches but may not in future depending on the result of var
- * "OBJECTIVESTATUS *dword_CODE_bss_80075D58". 
+ * "OBJECTIVESTATUS *objectiveStatuses". 
  * https://decomp.me/scratch/MF31e
  */
 OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
@@ -168,7 +168,7 @@ OBJECTIVESTATUS get_status_of_objective(s32 objectiveNum) //#MATCH
     {
         if (!&objective_ptrs[objectiveNum]->id)
         {
-            status = dword_CODE_bss_80075D58[objectiveNum];
+            status = objectiveStatuses[objectiveNum];
         }
         else
         {
@@ -347,8 +347,8 @@ void display_objective_status_text_on_status_change(void) {
 
     for (i = 0; i <= objective_count; i++) {
         status = get_status_of_objective(i);
-        if (dword_CODE_bss_80075D58[i] != status) {
-            dword_CODE_bss_80075D58[i] = status;
+        if (objectiveStatuses[i] != status) {
+            objectiveStatuses[i] = status;
             if (get_difficulty_for_objective(i) <= lvlGetSelectedDifficulty()) {
                 if (j_text_trigger != 0)
                 {

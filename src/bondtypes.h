@@ -3746,7 +3746,7 @@ struct SetupIntroCredits
         u16                            reserved;//8
         u16                            text; //a
         u16                            unkC; //c
-        s8                             unkD; //d
+        u8                             unkD; //d
         s8                             difficulty; //f
     };
 #pragma endregion Objectives
