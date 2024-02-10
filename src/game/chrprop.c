@@ -6554,7 +6554,7 @@ glabel scan_position_data_table_for_normal_object_at_preset
 
 
 
-ObjectRecord * sub_GAME_7F03FAB0(PadRecord * pad, s32 RoomID)
+ObjectRecord * sub_GAME_7F03FAB0(struct coord3d *pos, s32 RoomID)
 {
     s32 unused;
     rect4f * polygon;
@@ -6567,7 +6567,7 @@ ObjectRecord * sub_GAME_7F03FAB0(PadRecord * pad, s32 RoomID)
         if ((prop->type == 1) && (RoomID == prop->stan->room))
         {
             chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
-            if (chrpropTestPointInPolygon(&pad->pos, polygon, edges) != 0)
+            if (chrpropTestPointInPolygon(pos, polygon, edges) != 0)
             {
                 return (ObjectRecord *) prop->chr;
             }
