@@ -1462,7 +1462,7 @@ void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
 
 
 //moveToPad
-void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2)
+void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix, StandTile *stan, PadRecord *pad2)
 {
     int padd[1];
     ModelRoData_BoundingBoxRecord *modelBoundingBox;
@@ -1501,12 +1501,12 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
         f32 byrefC;
         f32 byrefD;
 
-        distfromTileCenter = stanGetPositionYValue(mStan, pad->pos.x, pad->pos.z);
+        distfromTileCenter = stanGetPositionYValue(mStan, pos->f[0], pos->f[2]);
 
         matrix_4x4_copy(matrix, &mtxcopy);
         newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
         newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
-        roomObj  = sub_GAME_7F03FAB0(pad, stan->room);
+        roomObj  = sub_GAME_7F03FAB0(pos, stan->room);
 
         if (roomObj)
         {
@@ -1529,13 +1529,13 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
         }
     }
 
-    if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
+    if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pos->f[0], pos->f[2], newPos.x, newPos.z))
     {
         objChangeShading(baseobj, &newPos, &mtxcopy, mStan);
     }
     else
     {
-        objChangeShading(baseobj, pad, &mtxcopy, stan);
+        objChangeShading(baseobj, pos, &mtxcopy, stan);
         if ((baseobj->flags2 & 1) || (baseobj->flags & 0x1000))
         {
             baseobj->runtime_pos.x = newPos.x;
