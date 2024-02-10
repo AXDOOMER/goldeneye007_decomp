@@ -18,41 +18,45 @@
  */
 void cleanupObjects(s32 stage)
 {
-    object_standard *obj = g_CurrentSetup.propDefs;
+    //int size;
+    PropDefHeaderRecord *record = g_CurrentSetup.propDefs;
+    u8 type = record->type;
+    
+    if (record != NULL) {
+        //record = 
+        //type = record->type;
 
-    if (obj != NULL)
-    {
-        for (; obj->type != 0x30;)
-        {
-            switch (obj->type)
-            {
-                case 1:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case 17:
-                case 20:
-                case 21:
-                case 36:
-                case 39:
-                case 40:
-                case 41:
-                case 42:
-                case 43:
-                case 45:
-                case 47:
-                    objFreePermanently((ObjectRecord *)obj, 1);
+        while (type != '0') {
+            switch(type) {
+                case PROPDEF_DOOR:
+                case PROPDEF_PROP:
+                case PROPDEF_KEY:
+                case PROPDEF_ALARM:
+                case PROPDEF_CCTV:
+                case PROPDEF_MAGAZINE:
+                case PROPDEF_COLLECTABLE:
+                case PROPDEF_MONITOR:
+                case PROPDEF_MULTI_MONITOR:
+                case PROPDEF_RACK:
+                case PROPDEF_AUTOGUN:
+                case PROPDEF_HAT:
+                case PROPDEF_AMMO:
+                case PROPDEF_ARMOUR:
+                case PROPDEF_GAS_RELEASING:
+                case PROPDEF_VEHICHLE:
+                case PROPDEF_AIRCRAFT:
+                case PROPDEF_UNK41:
+                case PROPDEF_GLASS:
+                case PROPDEF_SAFE:
+                case PROPDEF_TANK:
+                case PROPDEF_TINTED_GLASS:
+                    objFreePermanently(record, 1);
                     break;
             }
 
-            obj = &(((s32*)obj)[sizepropdef(obj)]);
+            //size = sizepropdef(record);
+            record = (PropDefHeaderRecord *)((char*)record + sizepropdef(record) * sizeof(*record));
+            type = record->type;
         }
     }
 }
