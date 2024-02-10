@@ -9,11 +9,11 @@
 /**
  * Address 0x7F056850.
 */
-s32 sub_GAME_7F056850(PadRecord *arg0, StandTile *arg1, f32 arg2, PadRecord *arg3, StandTile **arg4)
+s32 sub_GAME_7F056850(struct coord3d *arg0, StandTile *arg1, f32 arg2, PadRecord *arg3, StandTile **arg4)
 {
-    arg3->pos.f[0] = arg0->pos.f[0];
-    arg3->pos.f[1] = arg0->pos.f[1];
-    arg3->pos.f[2] = arg0->pos.f[2];
+    arg3->pos.f[0] = arg0->f[0];
+    arg3->pos.f[1] = arg0->f[1];
+    arg3->pos.f[2] = arg0->f[2];
     
     *arg4 = arg1;
     

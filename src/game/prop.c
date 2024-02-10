@@ -2174,7 +2174,7 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
         }
     }
     
-    if (sub_GAME_7F056850((PadRecord *)pad, pad->stan, 0.0f, &sp1B8, &sp1C8_stan) != 0)
+    if (sub_GAME_7F056850(&pad->pos, pad->stan, 0.0f, &sp1B8, &sp1C8_stan) != 0)
     {
         matrix_4x4_7F059908(&sp12C, 0, 0, 0, -pad->look.f[0], -pad->look.f[1], -pad->look.f[2], pad->up.f[0], pad->up.f[1], pad->up.f[2]);
         sp124 = PitemZ_entries[modelnum].header;

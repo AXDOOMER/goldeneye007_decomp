@@ -125,6 +125,7 @@ void                 countdownTimerSetRunning(bool enable);
 void                 countdownTimerSetValue(f32 time);
 void                 countdownTimerSetVisible(int clocklockbits, bool unset);
 void                 sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2);
+void sub_GAME_7F040BA0(ObjectRecord *obj, coord3d *pos, Mtxf *arg2, StandTile *stan2, coord3d *pos2);
 bool                 chrEquipWeapon(WeaponObjRecord *wep, ChrRecord *chr);
 INV_ITEM_TYPE        collect_or_interact_object(PropRecord *prop, bool showstring);
 INV_ITEM_TYPE        propobjInteract(PropRecord *prop);
@@ -135,6 +136,7 @@ ObjectRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
 HatRecord           *hatCreate(bool musthaveprop, bool musthavemodel, ModelFileHeader *modeldef);
 PropRecord*          objInitWithAutoModel(ObjectRecord* obj);
+PropRecord* objInitWithModelDef(ObjectRecord* object, ModelFileHeader* header);
 Embedment           *embedmentAllocate(void);
 void objDetach(PropRecord *prop);
 void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
@@ -147,5 +149,6 @@ s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads);
 void sub_GAME_7F0A1DA0(f32*, f32*, f32*, f32*, f32, f32, f32, f32, f32, f32);
 void sub_GAME_7F03F90C(Model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4);
 s32 sub_GAME_7F0448A8(struct PropRecord *arg0);
+PropRecord* sub_GAME_7F051DD8(struct ObjectRecord* arg0, ModelFileHeader* arg1);
 
 #endif

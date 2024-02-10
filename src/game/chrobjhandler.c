@@ -36856,7 +36856,7 @@ PropRecord* complete_object_data_block_return_position_entry(WeaponObjRecord* ob
 }
 
 
-PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
+PropRecord* sub_GAME_7F051DD8(struct ObjectRecord* arg0, ModelFileHeader* arg1)
 {
     PropRecord* prop;
 

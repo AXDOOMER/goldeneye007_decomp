@@ -269,7 +269,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
 
     pad = &g_CurrentSetup.pads[arg1->PadID];
 
-    if (sub_GAME_7F056850(pad, pad->stan, 20.0f, (PadRecord *)&sp48, &sp54) != 0)
+    if (sub_GAME_7F056850(&pad->pos, pad->stan, 20.0f, (PadRecord *)&sp48, &sp54) != 0)
     {
         headid = -1;
         bodyid = (arg1->BodyID == 0xFFFF) 
