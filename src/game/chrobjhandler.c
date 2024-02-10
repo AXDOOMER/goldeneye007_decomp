@@ -1462,7 +1462,7 @@ void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
 
 
 //moveToPad
-void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix, StandTile *stan, PadRecord *pad2)
+void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix, StandTile *stan, struct coord3d *pos2)
 {
     int padd[1];
     ModelRoData_BoundingBoxRecord *modelBoundingBox;
@@ -1481,16 +1481,16 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix,
     {
         matrix_4x4_set_rotation_around_z(M_PI, &mtxcopy);
         matrix_4x4_multiply_in_place(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * ymin);
-        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * ymin);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * ymin);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * ymin);
+        newPos.y = pos2->f[1] - (mtxcopy.m[1][1] * ymin);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * ymin);
     }
     else if (baseobj->flags & 8)
     {
         matrix_4x4_copy(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
-        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * xmax);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * xmax);
+        newPos.y = pos2->f[1] - (mtxcopy.m[1][1] * xmax);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * xmax);
     }
     else
     {
@@ -1504,8 +1504,8 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix,
         distfromTileCenter = stanGetPositionYValue(mStan, pos->f[0], pos->f[2]);
 
         matrix_4x4_copy(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * xmax);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * xmax);
         roomObj  = sub_GAME_7F03FAB0(pos, stan->room);
 
         if (roomObj)
