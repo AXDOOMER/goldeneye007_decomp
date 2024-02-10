@@ -62,172 +62,52 @@ s32 load_proptype(PROPDEF_TYPE type)
 }
 
 
-
-#ifdef NONMATCHING
-
-// decomp.me 72% https://decomp.me/scratch/ygs4O
-
-// perfect dark padGetCentre (pad.c)
-void sub_GAME_7F001BD4(struct pad3d *pad, struct coord3d *arg1)
+/**
+ * perfect dark padGetCentre (pad.c)
+ * 
+ * NTSC address 0x7F001BD4.
+*/
+void sub_GAME_7F001BD4(struct BoundPadRecord *pad, struct coord3d *arg1)
 {
-    f32 temp_f12;
-    f32 temp_f14;
-    f32 temp_f16;
-
     struct coord3d normal;
     f32 scale;
-
-    normal.f[0] = (pad->up.f[1] * pad->look.f[2]) - (pad->look.f[1] * pad->up.f[2]);
-    normal.f[1] = (pad->up.f[2] * pad->look.f[0]) - (pad->look.f[2] * pad->up.f[0]);
-    normal.f[2] = (pad->up.f[0] * pad->look.f[1]) - (pad->look.f[0] * pad->up.f[1]);
-
-    scale = 1.0f / sqrtf((normal.f[0] * normal.f[0]) + ((normal.f[1] * normal.f[1]) + (normal.f[2] * normal.f[2])));
+    struct bbox bb;
+    f32 temp;
+    
+    bb.zmax = pad->bbox.xmin;
+    bb.zmin = pad->bbox.xmax;
+    bb.ymax = pad->bbox.ymin;
+    bb.ymin = pad->bbox.ymax;
+    bb.xmax = pad->bbox.zmin;
+    bb.xmin = pad->bbox.zmax;
+    
+    normal.f[0] = (pad->up.f[1] * pad->look.f[2]) - (pad->up.f[2] * pad->look.f[1]);
+    normal.f[1] = (pad->up.f[2] * pad->look.f[0]) - (pad->up.f[0] * pad->look.f[2]);
+    normal.f[2] = (pad->up.f[0] * pad->look.f[1]) - (pad->up.f[1] * pad->look.f[0]);
+    
+    temp = (normal.f[0] * normal.f[0]) + (normal.f[1] * normal.f[1]) + (normal.f[2] * normal.f[2]);
+    scale = 1.0f / sqrtf(temp);
 
     normal.f[0] *= scale;
     normal.f[1] *= scale;
     normal.f[2] *= scale;
 
-    temp_f16 = pad->bbox.xmin + pad->bbox.xmax;
-    temp_f14 = pad->bbox.ymin + pad->bbox.ymax;
-    temp_f12 = pad->bbox.zmin + pad->bbox.zmax;
-
     arg1->f[0] = pad->pos.f[0] + (
-			(temp_f16) * normal.f[0] +
-			(temp_f14) * pad->up.f[0] +
-			(temp_f12) * pad->look.f[0]) * 0.5f;
+			(bb.zmax + bb.zmin) * normal.f[0] +
+			(bb.ymax + bb.ymin) * pad->up.f[0] +
+			(bb.xmax + bb.xmin) * pad->look.f[0]) * 0.5f;
 
 	arg1->f[1] = pad->pos.f[1] + (
-			(temp_f16) * normal.f[1] +
-			(temp_f14) * pad->up.f[1] +
-			(temp_f12) * pad->look.f[1]) * 0.5f;
+			(bb.zmax + bb.zmin) * normal.f[1] +
+			(bb.ymax + bb.ymin) * pad->up.f[1] +
+			(bb.xmax + bb.xmin) * pad->look.f[1]) * 0.5f;
 
 	arg1->f[2] = pad->pos.f[2] + (
-			(temp_f16) * normal.f[2] +
-			(temp_f14) * pad->up.f[2] +
-			(temp_f12) * pad->look.f[2]) * 0.5f;
-
+			(bb.zmax + bb.zmin) * normal.f[2] +
+			(bb.ymax + bb.ymin) * pad->up.f[2] +
+			(bb.xmax + bb.xmin) * pad->look.f[2]) * 0.5f;
+    
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F001BD4
-/* 036704 7F001BD4 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 036708 7F001BD8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 03670C 7F001BDC C484002C */  lwc1  $f4, 0x2c($a0)
-/* 036710 7F001BE0 E7A40034 */  swc1  $f4, 0x34($sp)
-/* 036714 7F001BE4 C4860030 */  lwc1  $f6, 0x30($a0)
-/* 036718 7F001BE8 E7A60030 */  swc1  $f6, 0x30($sp)
-/* 03671C 7F001BEC C48A0034 */  lwc1  $f10, 0x34($a0)
-/* 036720 7F001BF0 E7AA002C */  swc1  $f10, 0x2c($sp)
-/* 036724 7F001BF4 C4880038 */  lwc1  $f8, 0x38($a0)
-/* 036728 7F001BF8 E7A80028 */  swc1  $f8, 0x28($sp)
-/* 03672C 7F001BFC C484003C */  lwc1  $f4, 0x3c($a0)
-/* 036730 7F001C00 E7A40024 */  swc1  $f4, 0x24($sp)
-/* 036734 7F001C04 C4860040 */  lwc1  $f6, 0x40($a0)
-/* 036738 7F001C08 E7A60020 */  swc1  $f6, 0x20($sp)
-/* 03673C 7F001C0C C48A0010 */  lwc1  $f10, 0x10($a0)
-/* 036740 7F001C10 C4880020 */  lwc1  $f8, 0x20($a0)
-/* 036744 7F001C14 C486001C */  lwc1  $f6, 0x1c($a0)
-/* 036748 7F001C18 46085102 */  mul.s $f4, $f10, $f8
-/* 03674C 7F001C1C C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 036750 7F001C20 460A3202 */  mul.s $f8, $f6, $f10
-/* 036754 7F001C24 46082181 */  sub.s $f6, $f4, $f8
-/* 036758 7F001C28 E7A6003C */  swc1  $f6, 0x3c($sp)
-/* 03675C 7F001C2C C4840018 */  lwc1  $f4, 0x18($a0)
-/* 036760 7F001C30 C48A0014 */  lwc1  $f10, 0x14($a0)
-/* 036764 7F001C34 46045202 */  mul.s $f8, $f10, $f4
-/* 036768 7F001C38 C484000C */  lwc1  $f4, 0xc($a0)
-/* 03676C 7F001C3C C48A0020 */  lwc1  $f10, 0x20($a0)
-/* 036770 7F001C40 46045282 */  mul.s $f10, $f10, $f4
-/* 036774 7F001C44 460A4101 */  sub.s $f4, $f8, $f10
-/* 036778 7F001C48 E7A40040 */  swc1  $f4, 0x40($sp)
-/* 03677C 7F001C4C C48A001C */  lwc1  $f10, 0x1c($a0)
-/* 036780 7F001C50 C488000C */  lwc1  $f8, 0xc($a0)
-/* 036784 7F001C54 460A4202 */  mul.s $f8, $f8, $f10
-/* 036788 7F001C58 C48A0018 */  lwc1  $f10, 0x18($a0)
-/* 03678C 7F001C5C E7A60018 */  swc1  $f6, 0x18($sp)
-/* 036790 7F001C60 C4860010 */  lwc1  $f6, 0x10($a0)
-/* 036794 7F001C64 AFA5004C */  sw    $a1, 0x4c($sp)
-/* 036798 7F001C68 AFA40048 */  sw    $a0, 0x48($sp)
-/* 03679C 7F001C6C 46065282 */  mul.s $f10, $f10, $f6
-/* 0367A0 7F001C70 460A4181 */  sub.s $f6, $f8, $f10
-/* 0367A4 7F001C74 C7A80018 */  lwc1  $f8, 0x18($sp)
-/* 0367A8 7F001C78 46084282 */  mul.s $f10, $f8, $f8
-/* 0367AC 7F001C7C E7A60044 */  swc1  $f6, 0x44($sp)
-/* 0367B0 7F001C80 46042202 */  mul.s $f8, $f4, $f4
-/* 0367B4 7F001C84 46085100 */  add.s $f4, $f10, $f8
-/* 0367B8 7F001C88 46063282 */  mul.s $f10, $f6, $f6
-/* 0367BC 7F001C8C 0C007DF8 */  jal   sqrtf
-/* 0367C0 7F001C90 46045300 */   add.s $f12, $f10, $f4
-/* 0367C4 7F001C94 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0367C8 7F001C98 44819000 */  mtc1  $at, $f18
-/* 0367CC 7F001C9C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
-/* 0367D0 7F001CA0 44814000 */  mtc1  $at, $f8
-/* 0367D4 7F001CA4 C7A6003C */  lwc1  $f6, 0x3c($sp)
-/* 0367D8 7F001CA8 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 0367DC 7F001CAC 46004083 */  div.s $f2, $f8, $f0
-/* 0367E0 7F001CB0 8FA40048 */  lw    $a0, 0x48($sp)
-/* 0367E4 7F001CB4 8FA5004C */  lw    $a1, 0x4c($sp)
-/* 0367E8 7F001CB8 46023282 */  mul.s $f10, $f6, $f2
-/* 0367EC 7F001CBC C7A60044 */  lwc1  $f6, 0x44($sp)
-/* 0367F0 7F001CC0 46022202 */  mul.s $f8, $f4, $f2
-/* 0367F4 7F001CC4 E7AA003C */  swc1  $f10, 0x3c($sp)
-/* 0367F8 7F001CC8 46023102 */  mul.s $f4, $f6, $f2
-/* 0367FC 7F001CCC C7A60020 */  lwc1  $f6, 0x20($sp)
-/* 036800 7F001CD0 E7A80040 */  swc1  $f8, 0x40($sp)
-/* 036804 7F001CD4 C7A80024 */  lwc1  $f8, 0x24($sp)
-/* 036808 7F001CD8 46064300 */  add.s $f12, $f8, $f6
-/* 03680C 7F001CDC E7A40044 */  swc1  $f4, 0x44($sp)
-/* 036810 7F001CE0 C7A40034 */  lwc1  $f4, 0x34($sp)
-/* 036814 7F001CE4 C7A80030 */  lwc1  $f8, 0x30($sp)
-/* 036818 7F001CE8 C7A6002C */  lwc1  $f6, 0x2c($sp)
-/* 03681C 7F001CEC 46082380 */  add.s $f14, $f4, $f8
-/* 036820 7F001CF0 C7A40028 */  lwc1  $f4, 0x28($sp)
-/* 036824 7F001CF4 46043400 */  add.s $f16, $f6, $f4
-/* 036828 7F001CF8 460A7202 */  mul.s $f8, $f14, $f10
-/* 03682C 7F001CFC C486000C */  lwc1  $f6, 0xc($a0)
-/* 036830 7F001D00 46068102 */  mul.s $f4, $f16, $f6
-/* 036834 7F001D04 C4860018 */  lwc1  $f6, 0x18($a0)
-/* 036838 7F001D08 46044280 */  add.s $f10, $f8, $f4
-/* 03683C 7F001D0C 460C3202 */  mul.s $f8, $f6, $f12
-/* 036840 7F001D10 460A4100 */  add.s $f4, $f8, $f10
-/* 036844 7F001D14 C4880000 */  lwc1  $f8, ($a0)
-/* 036848 7F001D18 46122182 */  mul.s $f6, $f4, $f18
-/* 03684C 7F001D1C 46083280 */  add.s $f10, $f6, $f8
-/* 036850 7F001D20 E4AA0000 */  swc1  $f10, ($a1)
-/* 036854 7F001D24 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 036858 7F001D28 C4880010 */  lwc1  $f8, 0x10($a0)
-/* 03685C 7F001D2C 46047182 */  mul.s $f6, $f14, $f4
-/* 036860 7F001D30 00000000 */  nop   
-/* 036864 7F001D34 46088282 */  mul.s $f10, $f16, $f8
-/* 036868 7F001D38 C488001C */  lwc1  $f8, 0x1c($a0)
-/* 03686C 7F001D3C 460A3100 */  add.s $f4, $f6, $f10
-/* 036870 7F001D40 460C4182 */  mul.s $f6, $f8, $f12
-/* 036874 7F001D44 46043280 */  add.s $f10, $f6, $f4
-/* 036878 7F001D48 C4860004 */  lwc1  $f6, 4($a0)
-/* 03687C 7F001D4C 46125202 */  mul.s $f8, $f10, $f18
-/* 036880 7F001D50 46064100 */  add.s $f4, $f8, $f6
-/* 036884 7F001D54 E4A40004 */  swc1  $f4, 4($a1)
-/* 036888 7F001D58 C7AA0044 */  lwc1  $f10, 0x44($sp)
-/* 03688C 7F001D5C C4860014 */  lwc1  $f6, 0x14($a0)
-/* 036890 7F001D60 460A7202 */  mul.s $f8, $f14, $f10
-/* 036894 7F001D64 00000000 */  nop   
-/* 036898 7F001D68 46068102 */  mul.s $f4, $f16, $f6
-/* 03689C 7F001D6C C4860020 */  lwc1  $f6, 0x20($a0)
-/* 0368A0 7F001D70 46044280 */  add.s $f10, $f8, $f4
-/* 0368A4 7F001D74 460C3202 */  mul.s $f8, $f6, $f12
-/* 0368A8 7F001D78 460A4100 */  add.s $f4, $f8, $f10
-/* 0368AC 7F001D7C C4880008 */  lwc1  $f8, 8($a0)
-/* 0368B0 7F001D80 46122182 */  mul.s $f6, $f4, $f18
-/* 0368B4 7F001D84 46083280 */  add.s $f10, $f6, $f8
-/* 0368B8 7F001D88 E4AA0008 */  swc1  $f10, 8($a1)
-/* 0368BC 7F001D8C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0368C0 7F001D90 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0368C4 7F001D94 03E00008 */  jr    $ra
-/* 0368C8 7F001D98 00000000 */   nop   
-)
-#endif
 
 
 #ifdef NONMATCHING
