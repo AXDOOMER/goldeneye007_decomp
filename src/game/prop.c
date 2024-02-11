@@ -6,6 +6,7 @@
 #include "chrobjhandler.h"
 #include "game/mp_weapon.h"
 #include "game/player_2.h"
+#include "game/bondview_r.h"
 #include "loadobjectmodel.h"
 #include "math_atan2f.h"
 #include "matrixmath.h"
@@ -452,493 +453,121 @@ void domakedefaultobj(s32 arg0, ObjectRecord *arg1, s32 cmdindex)
     }
 }
 
-
-#ifdef NONMATCHING
+/**
+ * NTSC address 0x7F002738.
+ * PAL address 0x7F002738.
+*/
 void weaponAssignToHome(s32 arg0, WeaponObjRecord* weapon, s32 cmdindex)
 {
-    if ((weapon->flags & PROPFLAG_ASSIGNEDTOCHR)) {
+    s32 padding;
+    bool hastoken;
+    ChrRecord* chr;
+    bool giveweapon;
+    s32 temp_a0;
+    struct s_mp_weapon_set* weapon_set;
+    
+    if ((weapon->flags & PROPFLAG_ASSIGNEDTOCHR))
+    {
+        chr = chrFindByLiteralId(weapon->pad);
         
-        ChrRecord* chr = chrFindByLiteralId(weapon->pad);
-        
-        if (chr && chr->prop && chr->model) {
+        if (chr && chr->prop && chr->model)
+        {
             if (cheatIsActive(CHEAT_ENEMY_ROCKETS))
             {
                 switch ((s8)weapon->weaponnum)
                 {
-                case ITEM_KNIFE:
-                case ITEM_THROWKNIFE:
-                case ITEM_WPPK:
-                case ITEM_WPPKSIL:
-                case ITEM_TT33:
-                case ITEM_SKORPION:
-                case ITEM_AK47:
-                case ITEM_UZI:
-                case ITEM_MP5K:
-                case ITEM_MP5KSIL:
-                case ITEM_SPECTRE:
-                case ITEM_M16:
-                case ITEM_FNP90:
-                case ITEM_SHOTGUN:
-                case ITEM_AUTOSHOT:
-                case ITEM_SNIPERRIFLE:
-                case ITEM_RUGER:
-                case ITEM_GOLDENGUN:
-                case ITEM_SILVERWPPK:
-                case ITEM_GOLDWPPK:
-                case ITEM_LASER:
-                case ITEM_WATCHLASER:
-                case ITEM_REMOTEMINE:
-                case ITEM_TRIGGER:
-                case ITEM_TASER:
-                    weapon->weaponnum = ITEM_ROCKETLAUNCH; 
-                    weapon->obj = PROP_CHRROCKETLAUNCH; 
-                    weapon->extrascale = 256;
-                    break;
+                    case ITEM_KNIFE:
+                    case ITEM_THROWKNIFE:
+                    case ITEM_WPPK:
+                    case ITEM_WPPKSIL:
+                    case ITEM_TT33:
+                    case ITEM_SKORPION:
+                    case ITEM_AK47:
+                    case ITEM_UZI:
+                    case ITEM_MP5K:
+                    case ITEM_MP5KSIL:
+                    case ITEM_SPECTRE:
+                    case ITEM_M16:
+                    case ITEM_FNP90:
+                    case ITEM_SHOTGUN:
+                    case ITEM_AUTOSHOT:
+                    case ITEM_SNIPERRIFLE:
+                    case ITEM_RUGER:
+                    case ITEM_GOLDENGUN:
+                    case ITEM_SILVERWPPK:
+                    case ITEM_GOLDWPPK:
+                    case ITEM_LASER:
+                    case ITEM_WATCHLASER:
+                    case ITEM_REMOTEMINE:
+                    case ITEM_TRIGGER:
+                    case ITEM_TASER:
+                        weapon->weaponnum = ITEM_ROCKETLAUNCH; 
+                        weapon->obj = PROP_CHRROCKETLAUNCH; 
+                        weapon->extrascale = 256;
+                        break;
                 }
             }
+            
             weaponLoadProjectileModels((s8)weapon->weaponnum);
             sub_GAME_7F052030(weapon, chr);
         }
-    } else
+    }
+    else
     {
-        bool hastoken = 1;
-        bool giveweapon = 1;
+        hastoken = 1;
+        giveweapon = 1;
+        
         if (getPlayerCount() >= 2)
         {
-            struct s_mp_weapon_set* mpweapon;
+            lastmpweaponnum = -1;
             
-            *(&lastmpweaponnum) = -1;
             switch ((u8)weapon->weaponnum)
             {
-            case ITEM_UNARMED + 0xF0:
-            case ITEM_FIST + 0xF0:
-            case ITEM_KNIFE + 0xF0:
-            case ITEM_THROWKNIFE + 0xF0:
-            case ITEM_WPPK + 0xF0:
-            case ITEM_WPPKSIL + 0xF0:
-            case ITEM_TT33 + 0xF0:
-            case ITEM_SKORPION + 0xF0:
-                mpweapon = getPtrMPWeaponSetData();
-                *(&lastmpweaponnum) = (u8)weapon->weaponnum - 0xF0;
+                case ITEM_UNARMED + 0xF0:
+                case ITEM_FIST + 0xF0:
+                case ITEM_KNIFE + 0xF0:
+                case ITEM_THROWKNIFE + 0xF0:
+                case ITEM_WPPK + 0xF0:
+                case ITEM_WPPKSIL + 0xF0:
+                case ITEM_TT33 + 0xF0:
+                case ITEM_SKORPION + 0xF0:
+                    weapon_set = getPtrMPWeaponSetData();
+
+                    temp_a0 = (u8)weapon->weaponnum - 0xF0;
+                    lastmpweaponnum = temp_a0;
+                    
+                    weapon->weaponnum = weapon_set[temp_a0].itemID;
+                    weapon->obj = weapon_set[temp_a0].propID;
+#if defined(VERSION_EU)
+                    weapon->extrascale = (weapon_set[temp_a0].size16);
+#else
+                    weapon->extrascale = (weapon_set[temp_a0].size * 256.0f);
+#endif
+                    
+                    giveweapon = weapon_set[temp_a0].allowpickup;
+                    
+                    break;
                 
-                mpweapon = &(mpweapon)[lastmpweaponnum];
-                weapon->weaponnum = (u8)mpweapon->itemID;
-                weapon->obj = (s16)mpweapon->propID;
-                weapon->extrascale = (u16)(mpweapon->size * 256.0f);
-                giveweapon = mpweapon->allowpickup;
-                break;
-            case ITEM_TOKEN:
-                hastoken = 1;
-                if (get_scenario() != SCENARIO_TLD)
-                { 
-                    giveweapon = 0;
-                }
-                break;
+                case ITEM_TOKEN:
+                    
+                    hastoken = 1;
+                    giveweapon = 1;
+                    
+                    if (get_scenario() != SCENARIO_TLD)
+                    { 
+                        giveweapon = 0;
+                    }
+                    break;
             }
         }
+        
         if ((weapon->weaponnum != ITEM_UNARMED) && giveweapon)
         {
             weaponLoadProjectileModels(weapon->weaponnum);
-            domakedefaultobj(arg0, weapon, cmdindex);
+            domakedefaultobj(arg0, (struct ObjectRecord*)weapon, cmdindex);
         }
     }
 }
-
-#else
-#ifndef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_8004EEB8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-
-glabel jpt_mp_ammo_crate_expansion
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.text
-glabel weaponAssignToHome
-/* 037268 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 03726C 7F00273C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 037270 7F002740 AFA40028 */  sw    $a0, 0x28($sp)
-/* 037274 7F002744 AFA60030 */  sw    $a2, 0x30($sp)
-/* 037278 7F002748 8CAE0008 */  lw    $t6, 8($a1)
-/* 03727C 7F00274C 00A03825 */  move  $a3, $a1
-/* 037280 7F002750 31CF4000 */  andi  $t7, $t6, 0x4000
-/* 037284 7F002754 51E0002B */  beql  $t7, $zero, .L7F002804
-/* 037288 7F002758 24050001 */   li    $a1, 1
-/* 03728C 7F00275C 84A40006 */  lh    $a0, 6($a1)
-/* 037290 7F002760 0FC08BF2 */  jal   chrFindByLiteralId
-/* 037294 7F002764 AFA5002C */   sw    $a1, 0x2c($sp)
-/* 037298 7F002768 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 03729C 7F00276C 1040008A */  beqz  $v0, .L7F002998
-/* 0372A0 7F002770 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 0372A4 7F002774 8C580018 */  lw    $t8, 0x18($v0)
-/* 0372A8 7F002778 53000088 */  beql  $t8, $zero, .L7F00299C
-/* 0372AC 7F00277C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0372B0 7F002780 8C59001C */  lw    $t9, 0x1c($v0)
-/* 0372B4 7F002784 2404001C */  li    $a0, 28
-/* 0372B8 7F002788 53200084 */  beql  $t9, $zero, .L7F00299C
-/* 0372BC 7F00278C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0372C0 7F002790 0FC249EF */  jal   cheatIsActive
-/* 0372C4 7F002794 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0372C8 7F002798 10400011 */  beqz  $v0, .L7F0027E0
-/* 0372CC 7F00279C 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 0372D0 7F0027A0 80E80080 */  lb    $t0, 0x80($a3)
-/* 0372D4 7F0027A4 2509FFFE */  addiu $t1, $t0, -2
-/* 0372D8 7F0027A8 2D21001E */  sltiu $at, $t1, 0x1e
-/* 0372DC 7F0027AC 1020000C */  beqz  $at, .L7F0027E0
-/* 0372E0 7F0027B0 00094880 */   sll   $t1, $t1, 2
-/* 0372E4 7F0027B4 3C018005 */  lui   $at, %hi(jpt_8004EEB8)
-/* 0372E8 7F0027B8 00290821 */  addu  $at, $at, $t1
-/* 0372EC 7F0027BC 8C29EEB8 */  lw    $t1, %lo(jpt_8004EEB8)($at)
-/* 0372F0 7F0027C0 01200008 */  jr    $t1
-/* 0372F4 7F0027C4 00000000 */   nop   
-.L7F0027C8:
-/* 0372F8 7F0027C8 240A0019 */  li    $t2, 25
-/* 0372FC 7F0027CC 240B00D3 */  li    $t3, 211
-/* 037300 7F0027D0 240C0100 */  li    $t4, 256
-/* 037304 7F0027D4 A0EA0080 */  sb    $t2, 0x80($a3)
-/* 037308 7F0027D8 A4EB0004 */  sh    $t3, 4($a3)
-/* 03730C 7F0027DC A4EC0000 */  sh    $t4, ($a3)
-.L7F0027E0:
-/* 037310 7F0027E0 80E40080 */  lb    $a0, 0x80($a3)
-/* 037314 7F0027E4 0FC015C4 */  jal   weaponLoadProjectileModels
-/* 037318 7F0027E8 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 03731C 7F0027EC 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 037320 7F0027F0 0FC1480C */  jal   sub_GAME_7F052030
-/* 037324 7F0027F4 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 037328 7F0027F8 10000068 */  b     .L7F00299C
-/* 03732C 7F0027FC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 037330 7F002800 24050001 */  li    $a1, 1
-.L7F002804:
-/* 037334 7F002804 AFA50018 */  sw    $a1, 0x18($sp)
-/* 037338 7F002808 0FC26919 */  jal   getPlayerCount
-/* 03733C 7F00280C AFA7002C */   sw    $a3, 0x2c($sp)
-/* 037340 7F002810 28410002 */  slti  $at, $v0, 2
-/* 037344 7F002814 8FA50018 */  lw    $a1, 0x18($sp)
-/* 037348 7F002818 14200054 */  bnez  $at, .L7F00296C
-/* 03734C 7F00281C 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 037350 7F002820 240DFFFF */  li    $t5, -1
-/* 037354 7F002824 3C018007 */  lui   $at, %hi(lastmpweaponnum)
-/* 037358 7F002828 AC2D9540 */  sw    $t5, %lo(lastmpweaponnum)($at)
-/* 03735C 7F00282C 90E20080 */  lbu   $v0, 0x80($a3)
-/* 037360 7F002830 28410059 */  slti  $at, $v0, 0x59
-/* 037364 7F002834 14200009 */  bnez  $at, .L7F00285C
-/* 037368 7F002838 244EFF10 */   addiu $t6, $v0, -0xf0
-/* 03736C 7F00283C 2DC10008 */  sltiu $at, $t6, 8
-/* 037370 7F002840 1020004A */  beqz  $at, .L7F00296C
-/* 037374 7F002844 000E7080 */   sll   $t6, $t6, 2
-/* 037378 7F002848 3C018005 */  lui   $at, %hi(jpt_mp_ammo_crate_expansion)
-/* 03737C 7F00284C 002E0821 */  addu  $at, $at, $t6
-/* 037380 7F002850 8C2EEF30 */  lw    $t6, %lo(jpt_mp_ammo_crate_expansion)($at)
-/* 037384 7F002854 01C00008 */  jr    $t6
-/* 037388 7F002858 00000000 */   nop   
-.L7F00285C:
-/* 03738C 7F00285C 24010058 */  li    $at, 88
-/* 037390 7F002860 5041003B */  beql  $v0, $at, .L7F002950
-/* 037394 7F002864 AFA50018 */   sw    $a1, 0x18($sp)
-/* 037398 7F002868 10000041 */  b     .L7F002970
-/* 03739C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
-.L7F002870:
-/* 0373A0 7F002870 0FC31985 */  jal   getPtrMPWeaponSetData
-/* 0373A4 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0373A8 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 0373AC 7F00287C 3C018007 */  lui   $at, %hi(lastmpweaponnum)
-/* 0373B0 7F002880 24090001 */  li    $t1, 1
-/* 0373B4 7F002884 90E40080 */  lbu   $a0, 0x80($a3)
-/* 0373B8 7F002888 2484FF10 */  addiu $a0, $a0, -0xf0
-/* 0373BC 7F00288C 00047880 */  sll   $t7, $a0, 2
-/* 0373C0 7F002890 01E47823 */  subu  $t7, $t7, $a0
-/* 0373C4 7F002894 000F78C0 */  sll   $t7, $t7, 3
-/* 0373C8 7F002898 AC249540 */  sw    $a0, %lo(lastmpweaponnum)($at)
-/* 0373CC 7F00289C 004F1821 */  addu  $v1, $v0, $t7
-/* 0373D0 7F0028A0 8C780000 */  lw    $t8, ($v1)
-/* 0373D4 7F0028A4 3C014380 */  li    $at, 0x43800000 # 256.000000
-/* 0373D8 7F0028A8 44813000 */  mtc1  $at, $f6
-/* 0373DC 7F0028AC A0F80080 */  sb    $t8, 0x80($a3)
-/* 0373E0 7F0028B0 8C790004 */  lw    $t9, 4($v1)
-/* 0373E4 7F0028B4 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
-/* 0373E8 7F0028B8 A4F90004 */  sh    $t9, 4($a3)
-/* 0373EC 7F0028BC C4640008 */  lwc1  $f4, 8($v1)
-/* 0373F0 7F0028C0 46062202 */  mul.s $f8, $f4, $f6
-/* 0373F4 7F0028C4 4448F800 */  cfc1  $t0, $31
-/* 0373F8 7F0028C8 44C9F800 */  ctc1  $t1, $31
-/* 0373FC 7F0028CC 00000000 */  nop   
-/* 037400 7F0028D0 460042A4 */  cvt.w.s $f10, $f8
-/* 037404 7F0028D4 4449F800 */  cfc1  $t1, $31
-/* 037408 7F0028D8 00000000 */  nop   
-/* 03740C 7F0028DC 31290078 */  andi  $t1, $t1, 0x78
-/* 037410 7F0028E0 51200013 */  beql  $t1, $zero, .L7F002930
-/* 037414 7F0028E4 44095000 */   mfc1  $t1, $f10
-/* 037418 7F0028E8 44815000 */  mtc1  $at, $f10
-/* 03741C 7F0028EC 24090001 */  li    $t1, 1
-/* 037420 7F0028F0 460A4281 */  sub.s $f10, $f8, $f10
-/* 037424 7F0028F4 44C9F800 */  ctc1  $t1, $31
-/* 037428 7F0028F8 00000000 */  nop   
-/* 03742C 7F0028FC 460052A4 */  cvt.w.s $f10, $f10
-/* 037430 7F002900 4449F800 */  cfc1  $t1, $31
-/* 037434 7F002904 00000000 */  nop   
-/* 037438 7F002908 31290078 */  andi  $t1, $t1, 0x78
-/* 03743C 7F00290C 15200005 */  bnez  $t1, .L7F002924
-/* 037440 7F002910 00000000 */   nop   
-/* 037444 7F002914 44095000 */  mfc1  $t1, $f10
-/* 037448 7F002918 3C018000 */  lui   $at, 0x8000
-/* 03744C 7F00291C 10000007 */  b     .L7F00293C
-/* 037450 7F002920 01214825 */   or    $t1, $t1, $at
-.L7F002924:
-/* 037454 7F002924 10000005 */  b     .L7F00293C
-/* 037458 7F002928 2409FFFF */   li    $t1, -1
-/* 03745C 7F00292C 44095000 */  mfc1  $t1, $f10
-.L7F002930:
-/* 037460 7F002930 00000000 */  nop   
-/* 037464 7F002934 0520FFFB */  bltz  $t1, .L7F002924
-/* 037468 7F002938 00000000 */   nop   
-.L7F00293C:
-/* 03746C 7F00293C 44C8F800 */  ctc1  $t0, $31
-/* 037470 7F002940 A4E90000 */  sh    $t1, ($a3)
-/* 037474 7F002944 10000009 */  b     .L7F00296C
-/* 037478 7F002948 8C650014 */   lw    $a1, 0x14($v1)
-/* 03747C 7F00294C AFA50018 */  sw    $a1, 0x18($sp)
-.L7F002950:
-/* 037480 7F002950 0FC051D6 */  jal   get_scenario
-/* 037484 7F002954 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 037488 7F002958 24010002 */  li    $at, 2
-/* 03748C 7F00295C 8FA50018 */  lw    $a1, 0x18($sp)
-/* 037490 7F002960 10410002 */  beq   $v0, $at, .L7F00296C
-/* 037494 7F002964 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 037498 7F002968 00002825 */  move  $a1, $zero
-def_7F002854:
-.L7F00296C:
-/* 03749C 7F00296C 80E40080 */  lb    $a0, 0x80($a3)
-.L7F002970:
-/* 0374A0 7F002970 5080000A */  beql  $a0, $zero, .L7F00299C
-/* 0374A4 7F002974 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0374A8 7F002978 50A00008 */  beql  $a1, $zero, .L7F00299C
-/* 0374AC 7F00297C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0374B0 7F002980 0FC015C4 */  jal   weaponLoadProjectileModels
-/* 0374B4 7F002984 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0374B8 7F002988 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0374BC 7F00298C 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0374C0 7F002990 0FC00767 */  jal   domakedefaultobj
-/* 0374C4 7F002994 8FA60030 */   lw    $a2, 0x30($sp)
-.L7F002998:
-/* 0374C8 7F002998 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F00299C:
-/* 0374CC 7F00299C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0374D0 7F0029A0 03E00008 */  jr    $ra
-/* 0374D4 7F0029A4 00000000 */   nop   
-)
-#endif
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-glabel jpt_8004EEB8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027E0
-.word .L7F0027C8
-.word .L7F0027C8
-.word .L7F0027C8
-glabel jpt_mp_ammo_crate_expansion
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.word .L7F002870
-.text
-glabel weaponAssignToHome
-/* 035128 7F002738 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 03512C 7F00273C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 035130 7F002740 AFA40028 */  sw    $a0, 0x28($sp)
-/* 035134 7F002744 AFA60030 */  sw    $a2, 0x30($sp)
-/* 035138 7F002748 8CAE0008 */  lw    $t6, 8($a1)
-/* 03513C 7F00274C 00A03825 */  move  $a3, $a1
-/* 035140 7F002750 31CF4000 */  andi  $t7, $t6, 0x4000
-/* 035144 7F002754 51E0002B */  beql  $t7, $zero, .L7F002804
-/* 035148 7F002758 24050001 */   li    $a1, 1
-/* 03514C 7F00275C 84A40006 */  lh    $a0, 6($a1)
-/* 035150 7F002760 0FC08BE4 */  jal   chrFindByLiteralId
-/* 035154 7F002764 AFA5002C */   sw    $a1, 0x2c($sp)
-/* 035158 7F002768 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 03515C 7F00276C 10400064 */  beqz  $v0, .L7F002900
-/* 035160 7F002770 AFA2001C */   sw    $v0, 0x1c($sp)
-/* 035164 7F002774 8C580018 */  lw    $t8, 0x18($v0)
-/* 035168 7F002778 53000062 */  beql  $t8, $zero, .L7F002904
-/* 03516C 7F00277C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 035170 7F002780 8C59001C */  lw    $t9, 0x1c($v0)
-/* 035174 7F002784 2404001C */  li    $a0, 28
-/* 035178 7F002788 5320005E */  beql  $t9, $zero, .L7F002904
-/* 03517C 7F00278C 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 035180 7F002790 0FC24737 */  jal   cheatIsActive
-/* 035184 7F002794 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 035188 7F002798 10400011 */  beqz  $v0, .L7F0027E0
-/* 03518C 7F00279C 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 035190 7F0027A0 80E80080 */  lb    $t0, 0x80($a3)
-/* 035194 7F0027A4 2509FFFE */  addiu $t1, $t0, -2
-/* 035198 7F0027A8 2D21001E */  sltiu $at, $t1, 0x1e
-/* 03519C 7F0027AC 1020000C */  beqz  $at, .L7F0027E0
-/* 0351A0 7F0027B0 00094880 */   sll   $t1, $t1, 2
-/* 0351A4 7F0027B4 3C018004 */  lui   $at, %hi(jpt_8004EEB8)
-/* 0351A8 7F0027B8 00290821 */  addu  $at, $at, $t1
-/* 0351AC 7F0027BC 8C2972F8 */  lw    $t1, %lo(jpt_8004EEB8)($at)
-/* 0351B0 7F0027C0 01200008 */  jr    $t1
-/* 0351B4 7F0027C4 00000000 */   nop   
-.L7F0027C8:
-/* 0351B8 7F0027C8 240A0019 */  li    $t2, 25
-/* 0351BC 7F0027CC 240B00D3 */  li    $t3, 211
-/* 0351C0 7F0027D0 240C0100 */  li    $t4, 256
-/* 0351C4 7F0027D4 A0EA0080 */  sb    $t2, 0x80($a3)
-/* 0351C8 7F0027D8 A4EB0004 */  sh    $t3, 4($a3)
-/* 0351CC 7F0027DC A4EC0000 */  sh    $t4, ($a3)
-.L7F0027E0:
-/* 0351D0 7F0027E0 80E40080 */  lb    $a0, 0x80($a3)
-/* 0351D4 7F0027E4 0FC015AC */  jal   weaponLoadProjectileModels
-/* 0351D8 7F0027E8 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0351DC 7F0027EC 8FA4002C */  lw    $a0, 0x2c($sp)
-/* 0351E0 7F0027F0 0FC148C4 */  jal   sub_GAME_7F052030
-/* 0351E4 7F0027F4 8FA5001C */   lw    $a1, 0x1c($sp)
-/* 0351E8 7F0027F8 10000042 */  b     .L7F002904
-/* 0351EC 7F0027FC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0351F0 7F002800 24050001 */  li    $a1, 1
-.L7F002804:
-/* 0351F4 7F002804 AFA50018 */  sw    $a1, 0x18($sp)
-/* 0351F8 7F002808 0FC26669 */  jal   getPlayerCount
-/* 0351FC 7F00280C AFA7002C */   sw    $a3, 0x2c($sp)
-/* 035200 7F002810 28410002 */  slti  $at, $v0, 2
-/* 035204 7F002814 8FA50018 */  lw    $a1, 0x18($sp)
-/* 035208 7F002818 1420002E */  bnez  $at, .L7F0028D4
-/* 03520C 7F00281C 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 035210 7F002820 240DFFFF */  li    $t5, -1
-/* 035214 7F002824 3C018006 */  lui   $at, %hi(lastmpweaponnum) # $at, 0x8006
-/* 035218 7F002828 AC2D8480 */  sw    $t5, %lo(lastmpweaponnum)($at)
-/* 03521C 7F00282C 90E20080 */  lbu   $v0, 0x80($a3)
-/* 035220 7F002830 28410059 */  slti  $at, $v0, 0x59
-/* 035224 7F002834 14200009 */  bnez  $at, .L7F00285C
-/* 035228 7F002838 244EFF10 */   addiu $t6, $v0, -0xf0
-/* 03522C 7F00283C 2DC10008 */  sltiu $at, $t6, 8
-/* 035230 7F002840 10200024 */  beqz  $at, .L7F0028D4
-/* 035234 7F002844 000E7080 */   sll   $t6, $t6, 2
-/* 035238 7F002848 3C018004 */  lui   $at, %hi(jpt_mp_ammo_crate_expansion)
-/* 03523C 7F00284C 002E0821 */  addu  $at, $at, $t6
-/* 035240 7F002850 8C2E7370 */  lw    $t6, %lo(jpt_mp_ammo_crate_expansion)($at)
-/* 035244 7F002854 01C00008 */  jr    $t6
-/* 035248 7F002858 00000000 */   nop   
-.L7F00285C:
-/* 03524C 7F00285C 24010058 */  li    $at, 88
-/* 035250 7F002860 50410015 */  beql  $v0, $at, .L7F0028B8
-/* 035254 7F002864 AFA50018 */   sw    $a1, 0x18($sp)
-/* 035258 7F002868 1000001B */  b     .L7F0028D8
-/* 03525C 7F00286C 80E40080 */   lb    $a0, 0x80($a3)
-.L7F002870:
-/* 035260 7F002870 0FC316CD */  jal   getPtrMPWeaponSetData
-/* 035264 7F002874 AFA7002C */   sw    $a3, 0x2c($sp)
-/* 035268 7F002878 8FA7002C */  lw    $a3, 0x2c($sp)
-/* 03526C 7F00287C 3C018006 */  lui   $at, %hi(lastmpweaponnum) # $at, 0x8006
-/* 035270 7F002880 90E40080 */  lbu   $a0, 0x80($a3)
-/* 035274 7F002884 2484FF10 */  addiu $a0, $a0, -0xf0
-/* 035278 7F002888 000478C0 */  sll   $t7, $a0, 3
-/* 03527C 7F00288C AC248480 */  sw    $a0, %lo(lastmpweaponnum)($at)
-/* 035280 7F002890 004F1821 */  addu  $v1, $v0, $t7
-/* 035284 7F002894 80780000 */  lb    $t8, ($v1)
-/* 035288 7F002898 A0F80080 */  sb    $t8, 0x80($a3)
-/* 03528C 7F00289C 84790004 */  lh    $t9, 4($v1)
-/* 035290 7F0028A0 A4F90004 */  sh    $t9, 4($a3)
-/* 035294 7F0028A4 84680006 */  lh    $t0, 6($v1)
-/* 035298 7F0028A8 A4E80000 */  sh    $t0, ($a3)
-/* 03529C 7F0028AC 10000009 */  b     .L7F0028D4
-/* 0352A0 7F0028B0 80650003 */   lb    $a1, 3($v1)
-/* 0352A4 7F0028B4 AFA50018 */  sw    $a1, 0x18($sp)
-.L7F0028B8:
-/* 0352A8 7F0028B8 0FC051B2 */  jal   get_scenario
-/* 0352AC 7F0028BC AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0352B0 7F0028C0 24010002 */  li    $at, 2
-/* 0352B4 7F0028C4 8FA50018 */  lw    $a1, 0x18($sp)
-/* 0352B8 7F0028C8 10410002 */  beq   $v0, $at, .L7F0028D4
-/* 0352BC 7F0028CC 8FA7002C */   lw    $a3, 0x2c($sp)
-/* 0352C0 7F0028D0 00002825 */  move  $a1, $zero
-.L7F0028D4:
-/* 0352C4 7F0028D4 80E40080 */  lb    $a0, 0x80($a3)
-.L7F0028D8:
-/* 0352C8 7F0028D8 5080000A */  beql  $a0, $zero, .L7F002904
-/* 0352CC 7F0028DC 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0352D0 7F0028E0 50A00008 */  beql  $a1, $zero, .L7F002904
-/* 0352D4 7F0028E4 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0352D8 7F0028E8 0FC015AC */  jal   weaponLoadProjectileModels
-/* 0352DC 7F0028EC AFA7002C */   sw    $a3, 0x2c($sp)
-/* 0352E0 7F0028F0 8FA5002C */  lw    $a1, 0x2c($sp)
-/* 0352E4 7F0028F4 8FA40028 */  lw    $a0, 0x28($sp)
-/* 0352E8 7F0028F8 0FC00767 */  jal   domakedefaultobj
-/* 0352EC 7F0028FC 8FA60030 */   lw    $a2, 0x30($sp)
-.L7F002900:
-/* 0352F0 7F002900 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F002904:
-/* 0352F4 7F002904 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0352F8 7F002908 03E00008 */  jr    $ra
-/* 0352FC 7F00290C 00000000 */   nop   
-)
-#endif
-#endif
 
 //i should be object hat
 void setupHat(s32 arg0, ObjectRecord* hat, s32 cmdindex)
