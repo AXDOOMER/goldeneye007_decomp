@@ -2998,7 +2998,7 @@ typedef union
     typedef struct CCTVRecord
     {
         struct ObjectRecord;
-        s32 unk80;
+        s32 pad;
         Mtxf unk84;
         f32 unkC4;
         f32 unkC8;
@@ -3010,7 +3010,7 @@ typedef union
         f32 unkDC;
         
         s32 timer; // 0xe0
-        s32 unkE4;
+        s32 convert_to_f32;
         f32 unkE8;
         s32 unkEC;
         
