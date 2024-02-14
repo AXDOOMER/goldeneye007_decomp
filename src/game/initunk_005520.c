@@ -1,7 +1,8 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "initunk_005520.h"
-
+#include "objecthandler.h"
+#include "memp.h"
 
 extern s32 D_80036070;
 extern s32 D_80036074;
@@ -20,77 +21,33 @@ void set_contents_of_80036078(s32 arg0) {
 
 //this may be a file split
 
-#ifdef NONMATCHING
-void sub_GAME_7F005540(void) {
+/**
+ * NTSC address 0x7F005540.
+*/
+void sub_GAME_7F005540(s32 arg0)
+{
+    s32 temp_t6;
+    s32 var_s1;
 
+    D_80036074 = arg0 + 30;
+    
+    ptr_allocation_1 = mempAllocBytesInBank(D_80036074 * sizeof(struct ptr_1_s), MEMPOOL_STAGE);
+
+    for (var_s1 = 0; var_s1 < D_80036074; var_s1++)
+    {
+        ptr_allocation_1[var_s1].unk08 = 0;
+
+        if (var_s1 < arg0)
+        {
+            ptr_allocation_1[var_s1].unk10 = NULL;
+        }
+        else
+        {
+            ptr_allocation_1[var_s1].unk10 = mempAllocBytesInBank(0x50, MEMPOOL_STAGE);
+            ptr_allocation_1[var_s1].unk02 = 0x14;
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F005540
-/* 03A070 7F005540 27BDFFD0 */  addiu $sp, $sp, -0x30
-/* 03A074 7F005544 AFB40024 */  sw    $s4, 0x24($sp)
-/* 03A078 7F005548 3C148003 */  lui   $s4, %hi(D_80036074)
-/* 03A07C 7F00554C AFB50028 */  sw    $s5, 0x28($sp)
-/* 03A080 7F005550 0080A825 */  move  $s5, $a0
-/* 03A084 7F005554 26946074 */  addiu $s4, %lo(D_80036074) # addiu $s4, $s4, 0x6074
-/* 03A088 7F005558 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 03A08C 7F00555C 248E001E */  addiu $t6, $a0, 0x1e
-/* 03A090 7F005560 AFB30020 */  sw    $s3, 0x20($sp)
-/* 03A094 7F005564 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 03A098 7F005568 AFB10018 */  sw    $s1, 0x18($sp)
-/* 03A09C 7F00556C AFB00014 */  sw    $s0, 0x14($sp)
-/* 03A0A0 7F005570 AE8E0000 */  sw    $t6, ($s4)
-/* 03A0A4 7F005574 000E2140 */  sll   $a0, $t6, 5
-/* 03A0A8 7F005578 0C0025C8 */  jal   mempAllocBytesInBank
-/* 03A0AC 7F00557C 24050004 */   li    $a1, 4
-/* 03A0B0 7F005580 8E980000 */  lw    $t8, ($s4)
-/* 03A0B4 7F005584 3C128008 */  lui   $s2, %hi(ptr_allocation_1)
-/* 03A0B8 7F005588 26529934 */  addiu $s2, %lo(ptr_allocation_1) # addiu $s2, $s2, -0x66cc
-/* 03A0BC 7F00558C AE420000 */  sw    $v0, ($s2)
-/* 03A0C0 7F005590 1B00001B */  blez  $t8, .L7F005600
-/* 03A0C4 7F005594 00008825 */   move  $s1, $zero
-/* 03A0C8 7F005598 00008025 */  move  $s0, $zero
-/* 03A0CC 7F00559C 24130014 */  li    $s3, 20
-/* 03A0D0 7F0055A0 8E590000 */  lw    $t9, ($s2)
-.L7F0055A4:
-/* 03A0D4 7F0055A4 0235082A */  slt   $at, $s1, $s5
-/* 03A0D8 7F0055A8 24040050 */  li    $a0, 80
-/* 03A0DC 7F0055AC 03304021 */  addu  $t0, $t9, $s0
-/* 03A0E0 7F0055B0 10200005 */  beqz  $at, .L7F0055C8
-/* 03A0E4 7F0055B4 AD000008 */   sw    $zero, 8($t0)
-/* 03A0E8 7F0055B8 8E490000 */  lw    $t1, ($s2)
-/* 03A0EC 7F0055BC 01305021 */  addu  $t2, $t1, $s0
-/* 03A0F0 7F0055C0 10000009 */  b     .L7F0055E8
-/* 03A0F4 7F0055C4 AD400010 */   sw    $zero, 0x10($t2)
-.L7F0055C8:
-/* 03A0F8 7F0055C8 0C0025C8 */  jal   mempAllocBytesInBank
-/* 03A0FC 7F0055CC 24050004 */   li    $a1, 4
-/* 03A100 7F0055D0 8E4B0000 */  lw    $t3, ($s2)
-/* 03A104 7F0055D4 01706021 */  addu  $t4, $t3, $s0
-/* 03A108 7F0055D8 AD820010 */  sw    $v0, 0x10($t4)
-/* 03A10C 7F0055DC 8E4D0000 */  lw    $t5, ($s2)
-/* 03A110 7F0055E0 01B07021 */  addu  $t6, $t5, $s0
-/* 03A114 7F0055E4 A5D30002 */  sh    $s3, 2($t6)
-.L7F0055E8:
-/* 03A118 7F0055E8 8E8F0000 */  lw    $t7, ($s4)
-/* 03A11C 7F0055EC 26310001 */  addiu $s1, $s1, 1
-/* 03A120 7F0055F0 26100020 */  addiu $s0, $s0, 0x20
-/* 03A124 7F0055F4 022F082A */  slt   $at, $s1, $t7
-/* 03A128 7F0055F8 5420FFEA */  bnezl $at, .L7F0055A4
-/* 03A12C 7F0055FC 8E590000 */   lw    $t9, ($s2)
-.L7F005600:
-/* 03A130 7F005600 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 03A134 7F005604 8FB00014 */  lw    $s0, 0x14($sp)
-/* 03A138 7F005608 8FB10018 */  lw    $s1, 0x18($sp)
-/* 03A13C 7F00560C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 03A140 7F005610 8FB30020 */  lw    $s3, 0x20($sp)
-/* 03A144 7F005614 8FB40024 */  lw    $s4, 0x24($sp)
-/* 03A148 7F005618 8FB50028 */  lw    $s5, 0x28($sp)
-/* 03A14C 7F00561C 03E00008 */  jr    $ra
-/* 03A150 7F005620 27BD0030 */   addiu $sp, $sp, 0x30
-)
-#endif
 
 
 #ifdef NONMATCHING

@@ -15,6 +15,20 @@ struct bondstruct_unk_op07_related {
     s32 unk0C;
 };
 
+struct ptr_1_s {
+    s16 unk00;
+    s16 unk02;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0c;
+    void *unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+};
+
+extern struct ptr_1_s *ptr_allocation_1;
+
 extern s32 g_ModelDistanceDisabled;
 extern f32 g_ModelDistanceScale;
 extern u32 g_ModelAnimMergingEnabled;
