@@ -527,8 +527,6 @@ typedef union
         struct BetaStandFilePoint points[];
     } BetaStandTile;
 
-    StandTilePoint *stanMatchTileName(char *);
-
 #pragma endregion
 
 //Animation controller located in initobjects.h

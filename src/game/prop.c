@@ -13,7 +13,10 @@
 #include "objecthandler.h"
 #include "prop.h"
 #include "bg.h"
+#include "ob.h"
 #include "limits.h"
+#include "lvl_text.h"
+#include "initpathtablesomething.h"
 
 /**
  * EU .bss 0x80068480

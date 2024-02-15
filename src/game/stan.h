@@ -75,4 +75,6 @@ f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3);
 void stanGetMoveBondCollisionTiles(struct StandTile **arg0, struct StandTile **arg1, struct move_bond_collision *arg2);
 struct StandTile *sub_GAME_7F0AFB78(f32 *arg_x, f32 *arg_y, f32 *arg_z, f32 arg3);
 s32 sub_GAME_7F0B0688(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+struct StandTile *stanMatchTileName(char *);
+s32 isPointInsideTriStandTileUnscaled_Maybe(struct StandTile *tile, f32 p_x, f32 p_z);
 #endif
