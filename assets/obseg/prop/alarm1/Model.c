@@ -2,6 +2,7 @@
 #include "assets/image_externs.h"
 
 #define TEXTURECOUNT 2
+
 #define VERTEXGROUPCOUNT0 12
 #define COLLISIONVERTEXCOUNT0 12
 
@@ -20,10 +21,11 @@ ModelFileTextures proptextures[TEXTURECOUNT] =
     {IMAGE_BUZZERSWITCH, 32, 32, 0x06, 0x0, 0x02, 0x0, 0x0},
     {IMAGE_BELL, 32, 32, 0x06, 0x0, 0x02, 0x0, 0x0}
 };
-                        //  {                        opcode,                     data,           parent, next, prev,            child}
-ModelNode ModelNode_0x018 = {        MODELNODE_OPCODE_GROUP,       &GroupRecord_0x060,              0x0,  0x0,  0x0, &ModelNode_0x030};
-ModelNode ModelNode_0x030 = {         MODELNODE_OPCODE_BBOX, &BoundingBoxRecord_0x07c, &ModelNode_0x018,  0x0,  0x0, &ModelNode_0x048};
-ModelNode ModelNode_0x048 = {  MODELNODE_OPCODE_DLCOLLISION, &DLCollisionRecord_0x230, &ModelNode_0x030,  0x0,  0x0,              0x0};
+
+                        //  {                        opcode,                     data,           parent,  next,  prev,            child}
+ModelNode ModelNode_0x018 = {        MODELNODE_OPCODE_GROUP,       &GroupRecord_0x060,             NULL,  NULL,  NULL, &ModelNode_0x030};
+ModelNode ModelNode_0x030 = {         MODELNODE_OPCODE_BBOX, &BoundingBoxRecord_0x07c, &ModelNode_0x018,  NULL,  NULL, &ModelNode_0x048};
+ModelNode ModelNode_0x048 = {  MODELNODE_OPCODE_DLCOLLISION, &DLCollisionRecord_0x230, &ModelNode_0x030,  NULL,  NULL,             NULL};
 
 ModelRoData_GroupRecord GroupRecord_0x060 = 
 {
@@ -32,7 +34,7 @@ ModelRoData_GroupRecord GroupRecord_0x060 =
     0x0, //MatrixID0
     0xFFFF, //MatrixID1
     0xFFFF, //MatrixID2
-    0x0, //ChildGroup
+    NULL, //ChildGroup
     304.6402 //BoundingVolumeRadius
 };
 
