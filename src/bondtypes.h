@@ -3205,6 +3205,8 @@ typedef union
         }
 
     // PROPDEF_SWITCH (19) - see LinkRecord
+    typedef LinkRecord SwitchRecord;
+
     #define New_SwitchRecord(ID1, ID2)                    \
         {                                                 \
             New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
