@@ -165,9 +165,9 @@ void reinit_between_menus(void)
  * Called from proplvreset2 when PROPDEF type is PROPDEF_SWITCH.
  * Address 0x7F001910.
 */
-void initSetLevelLoadPropSwitch(struct ObjectRecord *arg0)
+void initSetLevelLoadPropSwitch(struct LinkRecord *arg0)
 {
-    *((struct ObjectRecord **)&arg0->flags2) = g_LevelLoadPropSwitch;
+    arg0->next = g_LevelLoadPropSwitch;
     g_LevelLoadPropSwitch = arg0;
 }
 
