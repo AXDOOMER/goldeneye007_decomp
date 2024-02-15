@@ -3226,7 +3226,8 @@ typedef union
     typedef struct BodyArmourRecord
     {
         inherits ObjectRecord;
-        u32      Strength;
+        f32 initialamount;
+        f32 amount;
     } BodyArmourRecord;
     #define New_BodyArmourRecord(pad)               \
         {                                           \
@@ -3400,7 +3401,7 @@ typedef union
     typedef struct RenameObjectRecord
     {
         inherits PropDefHeaderRecord;
-        //u16 TagID;
+        s32 TagID;
     } RenameObjectRecord;
     #define New_RenameObjectRecord(TagID)          \
         {                                          \
@@ -3556,7 +3557,7 @@ typedef union
         s32      TintDist;
         s32      CullDist;
         s32      calculatedopacity;
-        s32      unk8c;
+        s32      portalnum;
         f32      unk90;
     } TintedGlassRecord;
     #define New_TintedGlassRecord(pad)              \

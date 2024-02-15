@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "stan.h"
+#include "chr.h"
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
@@ -17,6 +18,8 @@
 #include "limits.h"
 #include "lvl_text.h"
 #include "initpathtablesomething.h"
+#include "inititemslots.h"
+#include "mp_weapon.h"
 
 /**
  * EU .bss 0x80068480
@@ -39,9 +42,21 @@ const u32 only_read_by_stageload[] = {
 
 const char aMp_[] = "mp_";
 
+// forward declarations
 
+s32 load_proptype(PROPDEF_TYPE type);
 void sub_GAME_7F001BD4(struct BoundPadRecord *pad, struct coord3d *arg1);
+void domakedefaultobj(s32 arg0, ObjectRecord *arg1, s32 cmdindex);
+void weaponAssignToHome(s32 arg0, WeaponObjRecord* weapon, s32 cmdindex);
+void setupHat(s32 arg0, ObjectRecord* hat, s32 cmdindex);
+void setupKey(s32 arg0, ObjectRecord* key, s32 cmdindex);
+void setupCctv(s32 arg0, CCTVRecord *arg1, s32 cmdindex);
+void setupAutogun(s32 stageID, AutogunRecord *autogun, s32 cmdindex);
+void setupHangingMonitors(s32 arg0, ObjectRecord* rack, s32 cmdindex);
+void setupSingleMonitor(s32 stageID, MonitorObjRecord *monitor, s32 cmdindex);
+void setupMultiMonitor(s32 stageID, MultiMonitorObjRecord* monitor, s32 cmdindex);
 void sub_GAME_7F00324C(struct BoundPadRecord *arg0, s32 *arg1, s32 *arg2, struct coord3d *arg3, struct coord3d *arg4);
+void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2);
 
 
 s32 load_proptype(PROPDEF_TYPE type)
@@ -595,7 +610,6 @@ void setupKey(s32 arg0, ObjectRecord* key, s32 cmdindex)
 /**
  * NTSC address 0x7F002A3C.
 */
-
 void setupCctv(s32 arg0, CCTVRecord *arg1, s32 cmdindex)
 {
     struct coord3d *temp_a2;

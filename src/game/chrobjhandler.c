@@ -1658,9 +1658,9 @@ void objFree(ObjectRecord* obj, s32 freeprop, s32 canregen)
     else if (obj->type == PROPDEF_TINTED_GLASS)
     {
         TintedGlassRecord* record = (TintedGlassRecord*) obj;
-        if (record->unk8c >= 0)
+        if (record->portalnum >= 0)
         {
-            bgToggleDataPortalsContrlBytes1Bit1(record->unk8c, 1);
+            bgToggleDataPortalsContrlBytes1Bit1(record->portalnum, 1);
         }
     }
     else if (obj->type == PROPDEF_AIRCRAFT)
@@ -33187,7 +33187,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
         {
             BodyArmourRecord *armour = propobj;
             char *            text;
-            add_BONDdata_watch_armor(armour->Strength);
+            //add_BONDdata_watch_armor(armour->initialamount);
             sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
             if (showstring)
             {
