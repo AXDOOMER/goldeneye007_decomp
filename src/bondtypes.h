@@ -3173,9 +3173,10 @@ typedef union
     // PROPDEF_LINK (14)
     typedef struct LinkRecord
     {
-        inherits PropDefHeaderRecord;
-        s32      Index1;
-        s32      Index2;
+        struct PropDefHeaderRecord;
+        struct PropRecord *first;
+        struct PropRecord *second;
+        struct LinkRecord *next;
     } LinkRecord;
     #define New_LinkRecord(ID1, ID2)                      \
         {                                                 \
