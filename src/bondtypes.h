@@ -3174,8 +3174,16 @@ typedef union
     typedef struct LinkRecord
     {
         struct PropDefHeaderRecord;
-        struct PropRecord *first;
-        struct PropRecord *second;
+        union
+        {
+            struct PropRecord *first;
+            s32 Index1;
+        };
+        union
+        {
+            struct PropRecord *second;
+            s32 Index2;
+        };
         struct LinkRecord *next;
     } LinkRecord;
     #define New_LinkRecord(ID1, ID2)                      \
@@ -3217,7 +3225,7 @@ typedef union
     typedef struct MultiAmmoCrateRecord
     {
         inherits ObjectRecord;
-        s16      unk80;
+        u16      unk80;
         u16      quantities[AMMOTYPE_GLOBAL_MAX]; // indexed by ammotype /*0x80*/
     } MultiAmmoCrateRecord;
     #define New_MultiAmmoCrateRecord(pad)           \
@@ -3415,10 +3423,17 @@ typedef union
     typedef struct LockDoorRecord
     {
         inherits PropDefHeaderRecord;
-        struct DoorRecord*     door;
-        struct ObjectRecord*   lock;
+        union
+        {
+            struct DoorRecord*     door;
+            s32 Index1;
+        };
+        union
+        {
+            struct ObjectRecord*   lock;
+            s32 Index2;
+        };
         struct LockDoorRecord* next;
-        //u16 TagID;
     } LockDoorRecord;
     #define New_RenameObjectRecord(TagID)          \
         {                                          \

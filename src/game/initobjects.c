@@ -176,9 +176,9 @@ void initSetLevelLoadPropSwitch(struct LinkRecord *arg0)
  * Called from proplvreset2 when PROPDEF type is PROPDEF_LOCK_DOOR.
  * Address 0x7F001928.
 */
-void initSetLevelLoadPropLockDoor(struct ObjectRecord *arg0)
+void initSetLevelLoadPropLockDoor(struct LockDoorRecord *arg0)
 {
-    *((struct ObjectRecord **)&arg0->flags2) = g_LevelLoadPropLockDoor;
+    arg0->next = g_LevelLoadPropLockDoor;
     g_LevelLoadPropLockDoor = arg0;
 }
 
