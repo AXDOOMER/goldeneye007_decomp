@@ -69,28 +69,11 @@ void add_ptr_to_objective(struct objective_entry* objective)
     }
 }
 
-
-#ifdef NONMATCHING
-void *set_parent_cur_obj_enter_room(void *arg0) {
-    // Node 0
-    arg0->unkC = (void *) ptr_last_enter_room_subobject_entry_type20;
+void set_parent_cur_obj_enter_room(struct criteria_roomentered *arg0)
+{
+    arg0->next = ptr_last_enter_room_subobject_entry_type20;
     ptr_last_enter_room_subobject_entry_type20 = arg0;
-    return;
-    // (possible return value: &ptr_last_enter_room_subobject_entry_type20)
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel set_parent_cur_obj_enter_room
-/* 039B24 7F004FF4 3C028007 */  lui   $v0, %hi(ptr_last_enter_room_subobject_entry_type20)
-/* 039B28 7F004FF8 24425D88 */  addiu $v0, %lo(ptr_last_enter_room_subobject_entry_type20) # addiu $v0, $v0, 0x5d88
-/* 039B2C 7F004FFC 8C4E0000 */  lw    $t6, ($v0)
-/* 039B30 7F005000 AC8E000C */  sw    $t6, 0xc($a0)
-/* 039B34 7F005004 03E00008 */  jr    $ra
-/* 039B38 7F005008 AC440000 */   sw    $a0, ($v0)
-)
-#endif
 
 
 #ifdef NONMATCHING
