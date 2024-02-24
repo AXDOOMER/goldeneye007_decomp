@@ -3844,32 +3844,39 @@ struct SetupIntroCredits
 #pragma endregion Player
 
 #pragma region stagesetup.h
-        typedef struct stagesetup
-        {
-            waypoint       *pathwaypoints;
-            waygroup       *waypointgroups;
-            struct SetupIntroEmpty *intro;
-            PropDefHeaderRecord    *propDefs;
-            PathRecord     *patrolpaths;
-            AIListRecord   *ailists;
-            PadRecord      *pads;
-            BoundPadRecord *boundpads;
-            char           *padnames;
-            char           *boundpadnames;
-        } stagesetup;
+    struct pname {
+        union {
+            char *p;
+            s32 offset;
+        };
+    };
+
+    typedef struct stagesetup
+    {
+        waypoint       *pathwaypoints;
+        waygroup       *waypointgroups;
+        struct SetupIntroEmpty *intro;
+        PropDefHeaderRecord    *propDefs;
+        PathRecord     *patrolpaths;
+        AIListRecord   *ailists;
+        PadRecord      *pads;
+        BoundPadRecord *boundpads;
+        struct pname *padnames;
+        struct pname *boundpadnames;
+    } stagesetup;
 
 
 #pragma endregion stagesetup.h
 
-        typedef struct sfxRecord //Need 24 size
-        {
-            ALSoundState *state; //0
-            s32           Volume2;   //4
-            s32           sfxID;     //8
-            s32           Volume;    //12
-            coord3d      *pos;       //16
-            ObjectRecord *Obj;       //20
-        } sfxRecord;
+    typedef struct sfxRecord //Need 24 size
+    {
+        ALSoundState *state; //0
+        s32           Volume2;   //4
+        s32           sfxID;     //8
+        s32           Volume;    //12
+        coord3d      *pos;       //16
+        ObjectRecord *Obj;       //20
+    } sfxRecord;
 
 
 

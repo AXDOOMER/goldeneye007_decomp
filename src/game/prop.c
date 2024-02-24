@@ -19,6 +19,8 @@
 #include "matrixmath.h"
 #include "mp_weapon.h"
 #include "ob.h"
+#include "objective.h"
+#include "objective_status.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "prop.h"
@@ -1162,10 +1164,877 @@ void setupDoor(s32 arg0, struct DoorRecord *door, s32 arg2)
 
 
 #ifdef NONMATCHING
-// https://decomp.me/scratch/lwIUY 68.9%
-void proplvreset2(void) {
 
+// https://decomp.me/scratch/abV9k 99.64%
+
+/*
+* mismatch seems to be related to the index variables.
+* here are some macros to test theories.
+*/
+#define DECLARE_i_01_TOP s32 i1 = 0;
+#define DECLARE_i_01_LOCAL 
+#define V_i_01 i1
+#define DECLARE_i_02_TOP s32 i2 = 0;
+#define DECLARE_i_02_LOCAL 
+#define V_i_02 i2
+#define DECLARE_i_03_TOP s32 i3 = 0;
+#define DECLARE_i_03_LOCAL 
+#define V_i_03 i3
+#define DECLARE_i_04_TOP 
+#define DECLARE_i_04_LOCAL 
+#define V_i_04 i1
+#define DECLARE_i_05_TOP s32 i5 = 0;
+#define DECLARE_i_05_LOCAL 
+#define V_i_05 i5
+#define DECLARE_i_06_TOP
+#define DECLARE_i_06_LOCAL
+#define V_i_06 i1
+#define DECLARE_i_07_TOP 
+#define DECLARE_i_07_LOCAL 
+#define V_i_07 i1
+#define DECLARE_i_08_TOP  s32 i8;
+#define DECLARE_i_08_LOCAL
+#define V_i_08 i8
+#define DECLARE_i_09 s32 i9;
+#define V_i_09 i9
+
+// Perfect Dark void setupLoadFiles(s32 stagenum)
+void proplvreset2(enum LEVELID stageId)
+{
+    ItemModelFileRecord *pitem;
+    s32 withchrs;
+    s32 withobjs;
+
+    withchrs = (tokenFind(1, "-nochr") == NULL && tokenFind(1, "-noprop") == NULL);
+    withobjs = (tokenFind(1, "-noobj") == NULL && tokenFind(1, "-noprop") == NULL);
+
+    g_DoorScale = 1.0f;
+
+    for (pitem = PitemZ_entries; pitem < &PitemZ_entries[sizeof(PitemZ_entries) / sizeof(ItemModelFileRecord) -1]; pitem++)
+    {
+        pitem->header->RootNode = NULL; // modelstate
+    }
+
+    if (stageId <= LEVELID_MAX + 1 && setup_text_pointers[stageId])
+    {
+        char strResource[0x100] = ""; // new empty string
+        s32 guardcount = 0;
+        s32 collectcount = 0;
+
+        DECLARE_i_01_TOP
+        DECLARE_i_02_TOP
+        DECLARE_i_03_TOP
+        DECLARE_i_04_TOP
+        f32 roompos_1; // sp 0x15c
+        DECLARE_i_05_TOP
+        DECLARE_i_06_TOP
+        DECLARE_i_07_TOP
+        DECLARE_i_08_TOP
+        f32 roompos_2; // sp 0x150
+        
+        struct stagesetup *local_stage;
+
+        strResource[0] = setup_text_pointers[stageId][0]; // Get U from "U"setupxxxZ
+        strResource[1] = 0;           // make sure string is terminated
+        
+        if (getPlayerCount() >= 2)
+        {
+            strcat(strResource, "mp_"); //  U + "mp_"
+        }
+
+        strcat(strResource, setup_text_pointers[stageId] + 1); // Add remaining text back U[mp_] + setupxxxZ
+
+        g_ptrStageSetupFile = _fileNameLoadToBank(strResource, FILELOADMETHOD_DEFAULT, 256, 4); // FILELOADMETHOD_DEFAULT get pointer to setup object (10 words)
+        local_stage = g_ptrStageSetupFile;
+
+        langLoadToAddr(langGetLangBankIndexFromStagenum(stageId));
+
+        // deep copy struct, need to manually itterate, as g_CurrentSetup = resource doesnt work
+        // Remember Setups store "Offsets" so we need to convert to RAM Address
+        g_CurrentSetup.pathwaypoints = TRANSFORM3(pathwaypoints);
+        g_CurrentSetup.waypointgroups = TRANSFORM3(waypointgroups);
+        g_CurrentSetup.intro = TRANSFORM3(intro);
+        g_CurrentSetup.propDefs = TRANSFORM3(propDefs);
+        g_CurrentSetup.patrolpaths = TRANSFORM3(patrolpaths);
+        g_CurrentSetup.ailists = TRANSFORM3(ailists);
+        g_CurrentSetup.pads = TRANSFORM3(pads);
+        g_CurrentSetup.boundpads = TRANSFORM3(boundpads);
+
+        if (local_stage->padnames != 0)
+        {
+            g_CurrentSetup.padnames = TRANSFORM3(padnames);
+        }
+        else
+        {
+            g_CurrentSetup.padnames = NULL;
+        }
+
+        if (local_stage->boundpadnames != 0)
+        {
+            g_CurrentSetup.boundpadnames = TRANSFORM3(boundpadnames);
+        }
+        else
+        {
+            g_CurrentSetup.boundpadnames = NULL;
+        }
+
+        // --------------------------------
+
+        if (g_CurrentSetup.pathwaypoints)
+        {
+            DECLARE_i_01_LOCAL
+            
+            for (V_i_01 = 0; g_CurrentSetup.pathwaypoints[V_i_01].padID >= 0; V_i_01++)
+            {
+                g_CurrentSetup.pathwaypoints[V_i_01].neighbours = TRANSFORM4(g_CurrentSetup.pathwaypoints[V_i_01].neighbours);
+            }
+        }
+
+        if (g_CurrentSetup.waypointgroups)
+        {
+            DECLARE_i_02_LOCAL
+            
+            for (V_i_02 = 0; g_CurrentSetup.waypointgroups[V_i_02].neighbours; V_i_02++)
+            {
+                g_CurrentSetup.waypointgroups[V_i_02].neighbours = TRANSFORM4(g_CurrentSetup.waypointgroups[V_i_02].neighbours);
+                g_CurrentSetup.waypointgroups[V_i_02].waypoints = TRANSFORM4(g_CurrentSetup.waypointgroups[V_i_02].waypoints);                
+            }
+        }
+
+        // Convert ailist pointers from file-local to proper pointers
+        if (g_CurrentSetup.ailists)
+        {
+            DECLARE_i_03_LOCAL
+            
+            for (V_i_03 = 0; g_CurrentSetup.ailists[V_i_03].ailist != 0; V_i_03++)
+            {
+                g_CurrentSetup.ailists[V_i_03].ailist = TRANSFORM4(g_CurrentSetup.ailists[V_i_03].ailist);
+            }
+        }
+
+        if (g_CurrentSetup.patrolpaths)
+        {
+            DECLARE_i_04_LOCAL
+            
+            for (V_i_04 = 0; g_CurrentSetup.patrolpaths[V_i_04].waypoints != NULL; V_i_04++)
+            {
+                DECLARE_i_05_LOCAL
+                
+                g_CurrentSetup.patrolpaths[V_i_04].waypoints = TRANSFORM4(g_CurrentSetup.patrolpaths[V_i_04].waypoints);
+                
+                for (V_i_05 = 0; g_CurrentSetup.patrolpaths[V_i_04].waypoints[V_i_05] >= 0; V_i_05++)
+                {
+                }
+                
+                g_CurrentSetup.patrolpaths[V_i_04].len = V_i_05;
+            }
+        }
+
+        // --------------------------------
+
+        if (g_CurrentSetup.pads)
+        {
+            //f32 roompos_1; // sp 0x15c
+            struct PadRecord *pad;
+            //s32 uVar3;
+
+            roompos_1 = get_room_data_float2();
+            pad = g_CurrentSetup.pads;
+
+            for (; pad->plink != NULL; pad++)
+            {
+                pad->plink = TRANSFORM4(pad->plink);
+                pad->pos.f[0] *= roompos_1;
+                pad->pos.f[1] *= roompos_1;
+                pad->pos.f[2] *= roompos_1;
+
+                init_pathtable_something(pad, pad->plink, &pad->stan);
+
+                if (1);
+                //if(pad);
+#ifdef DEBUG
+                if (uVar3 == 0)
+                {
+                    osSyncPrintf("pad number %d has no stan! (%s)\n", i, pad[i].plink);
+                }
+                else if (uVar3 == 2)
+                {
+                    osSyncPrintf("pad number %d changed stan from %s to %s\n", i, pad[i].plink, GetStanName(pad[i].stan));
+                }
+#endif
+            }
+        }
+
+
+        if (g_CurrentSetup.boundpads)
+        {
+            struct BoundPadRecord *vol;
+            //f32 roompos_2; // sp 0x150
+            //s32 uVar3;
+            
+            roompos_2 = get_room_data_float2();
+            vol = g_CurrentSetup.boundpads;
+
+            for (; vol->plink != NULL; vol++)
+            {
+                vol->plink = TRANSFORM4(vol->plink);
+
+                vol->pos.f[0] *= roompos_2;
+                vol->pos.f[1] *= roompos_2;
+                vol->pos.f[2] *= roompos_2;
+                vol->bbox.xmin *= roompos_2;
+                vol->bbox.xmax *= roompos_2;
+                vol->bbox.ymin *= roompos_2;
+                vol->bbox.ymax *= roompos_2;
+                vol->bbox.zmin *= roompos_2;
+                vol->bbox.zmax *= roompos_2;
+
+                init_pathtable_something((struct PadRecord*)vol, vol->plink, &vol->stan);
+
+                if(1);
+                //if (vol);
+                
+#ifdef DEBUG
+                if (uVar3 == 0)
+                {
+                    osSyncPrintf("vol number %d has no stan! (%s)\n", i, vol[i].plink);
+                }
+                else if (uVar3 == 2)
+                {
+                    osSyncPrintf("vol number %d changed stan from %s to %s\n", i, vol[i].plink, GetStanName(vol[i].stan));
+                }
+#endif
+            }
+        }
+
+        {
+            DECLARE_i_06_LOCAL
+            DECLARE_i_07_LOCAL
+                
+            if (g_CurrentSetup.padnames)
+            {
+                for (V_i_06 = 0; g_CurrentSetup.padnames[V_i_06].p; V_i_06++)
+                {
+                    g_CurrentSetup.padnames[V_i_06].p = TRANSFORM4(g_CurrentSetup.padnames[V_i_06].p);
+                }
+            }
+            
+            if (g_CurrentSetup.boundpadnames)
+            {
+                for (V_i_07 = 0; g_CurrentSetup.boundpadnames[V_i_07].p; V_i_07++)
+                {
+                    g_CurrentSetup.boundpadnames[V_i_07].p = TRANSFORM4(g_CurrentSetup.boundpadnames[V_i_07].p);
+                }
+            }
+        }
+
+        // PD rejoins here
+
+        
+        if (withchrs)
+        {
+            alloc_init_GUARDdata_entries(load_proptype(PROPDEF_GUARD));
+            guardcount += load_proptype(PROPDEF_GUARD);
+            collectcount += load_proptype(PROPDEF_COLLECTABLE);
+            collectcount += load_proptype(PROPDEF_KEY);
+            collectcount += load_proptype(PROPDEF_HAT);
+        }
+        else
+        {
+            alloc_init_GUARDdata_entries(0); // chrmgrConfigure
+        }
+
+        if (withobjs)
+        {
+            // load std props for all stages
+            collectcount += load_proptype(PROPDEF_DOOR);
+            collectcount += load_proptype(PROPDEF_CCTV);
+            collectcount += load_proptype(PROPDEF_AUTOGUN);
+            collectcount += load_proptype(PROPDEF_RACK);
+            collectcount += load_proptype(PROPDEF_MONITOR);
+            collectcount += load_proptype(PROPDEF_MULTI_MONITOR);
+            collectcount += load_proptype(PROPDEF_ARMOUR);
+            collectcount += load_proptype(PROPDEF_PROP);
+            collectcount += load_proptype(PROPDEF_GLASS);
+            collectcount += load_proptype(PROPDEF_TINTED_GLASS);
+            collectcount += load_proptype(PROPDEF_SAFE);
+            collectcount += load_proptype(PROPDEF_UNK41);
+            collectcount += load_proptype(PROPDEF_GAS_RELEASING);
+            collectcount += load_proptype(PROPDEF_ALARM);
+            collectcount += load_proptype(PROPDEF_MAGAZINE);
+            collectcount += load_proptype(PROPDEF_AMMO);
+            collectcount += load_proptype(PROPDEF_VEHICHLE);
+            collectcount += load_proptype(PROPDEF_TANK);
+            guardcount += load_proptype(PROPDEF_AIRCRAFT);
+        }
+        
+        sub_GAME_7F005540(collectcount); // without plane
+        sub_GAME_7F005624(guardcount);
+
+        //if (1)
+        {
+            DECLARE_i_08_LOCAL
+
+            for (V_i_08 = 0; V_i_08 < getPlayerCount(); V_i_08++)
+            {
+                set_cur_player(V_i_08);
+                alloc_additional_item_slots(load_proptype(PROPDEF_LINK));
+            }
+        }
+
+        if (g_CurrentSetup.propDefs)
+        {
+            PropDefHeaderRecord *phead;
+            s32 flags;
+            s32 pdefIndex;
+            //s32 padding;
+            
+            flags = 1 << (lvlGetSelectedDifficulty() + 4);
+
+            if (getPlayerCount() >= 2)
+            {
+                flags |= 1 << (getPlayerCount() + 20);
+            }
+
+            phead = g_CurrentSetup.propDefs;
+            pdefIndex = 0;
+
+            while (phead->type != PROPDEF_END)
+            {
+                switch (phead->type)
+                {
+                    // switch 1
+                    case PROPDEF_GUARD_ATTRIBUTE: // switch 1
+                    {
+                        GuardAttributeRecord *pdef_guarda;
+                        u8 prob;
+                        ChrRecord *chr;
+                        
+                        pdef_guarda = (GuardAttributeRecord *)phead;
+                        prob = (u8)pdef_guarda->GrenadeProb;
+                        chr  = chrFindByLiteralId(pdef_guarda->chrnum);
+                        
+                        if (chr && chr->prop && chr->model)
+                        {
+                            chr->grenadeprob = prob;
+                        }
+#ifdef DEBUG
+                        else
+                        {
+                            osSyncPrintf("grenade prob: no chr number %d for obj number %d! ", phead->unkB, pdefIndex + 1);
+                        }
+#endif
+                        break;
+                    }
+                    case PROPDEF_GUARD: // switch 1
+                        if (withchrs)
+                        {
+                            expand_09_characters(stageId, (struct GuardRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_DOOR: // switch 1
+                        if (withobjs && !(((struct DoorRecord *)phead)->flags2 & flags))
+                        {
+                            setupDoor(stageId, (struct DoorRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_DOOR_SCALE: // switch 1
+                        g_DoorScale = ((struct GlobalDoorScaleRecord *)phead)->Scale / 65536.0f;
+                        break;
+                    case PROPDEF_COLLECTABLE: // switch 1
+                        if (withchrs && !(((struct WeaponObjRecord *)phead)->flags2 & flags))
+                        {
+                            weaponAssignToHome(stageId, (struct WeaponObjRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_KEY: // switch 1
+                        if (withchrs && !(((struct KeyRecord *)phead)->flags2 & flags))
+                        {
+                            setupKey(stageId, (struct ObjectRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_HAT: // switch 1
+                        if (withchrs && !(((struct ObjectRecord *)phead)->flags2 & flags))
+                        {
+                            setupHat(stageId, (struct ObjectRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_CCTV: // switch 1
+                        if (withobjs && !(((struct CCTVRecord *)phead)->flags2 & flags))
+                        {
+                            setupCctv(stageId, (struct CCTVRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_AUTOGUN: // switch 1
+                        if (withobjs && !(((struct AutogunRecord *)phead)->flags2 & flags))
+                        {
+                            setupAutogun(stageId, (struct AutogunRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_RACK: // switch 1
+                        if (withobjs && !(((struct ObjectRecord *)phead)->flags2 & flags))
+                        {
+                            setupHangingMonitors(stageId, (struct ObjectRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_MONITOR: // switch 1
+                        if (withobjs && !(((struct MonitorObjRecord *)phead)->flags2 & flags))
+                        {
+                            setupSingleMonitor(stageId, (struct MonitorObjRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_MULTI_MONITOR: // switch 1
+                        if (withobjs && !(((struct MultiMonitorObjRecord *)phead)->flags2 & flags))
+                        {
+                            setupMultiMonitor(stageId, (struct MultiMonitorObjRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_ARMOUR: // switch 1
+                    {
+                        struct BodyArmourRecord *pdef_ba = (struct BodyArmourRecord *)phead;
+
+#if defined(VERSION_US)
+                        if (withobjs && (pdef_ba->flags2 & flags) == 0)
+#elif defined(VERSION_JP) || defined(VERSION_EU)
+                        if (withobjs && ((pdef_ba->flags2 & flags) == 0 || j_text_trigger))
+#else
+    #error version
+#endif
+                        {
+                            pdef_ba->initialamount = *(s32 *)&pdef_ba->initialamount / 65536.0f;
+                            pdef_ba->amount        = pdef_ba->initialamount;
+
+                            domakedefaultobj(stageId, (struct ObjectRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    }
+                    case PROPDEF_TINTED_GLASS: // switch 1
+                    {
+                        struct TintedGlassRecord *pdef_tintg = (struct TintedGlassRecord *)phead;
+                        if (withobjs && !((pdef_tintg)->flags2 & flags))
+                        {
+                            if (pdef_tintg->flags & PROPFLAG_GLASS_HASPORTAL)
+                            {
+                                if (!(isNotBoundPad(pdef_tintg->pad)))
+                                {
+                                    struct coord3d up;
+                                    struct coord3d up2;
+                                    BoundPadRecord *pad3d;
+                                    f32 scale;
+
+                                    pad3d = &g_CurrentSetup.boundpads[getBoundPadNum(pdef_tintg->pad)];
+                                    
+                                    sub_GAME_7F001BD4(pad3d, &up);
+
+                                    if(pad3d);
+                                    
+                                    scale = 10.0f;
+
+                                    up2.x = (scale * pad3d->up.x) + up.x;
+                                    up2.y = (scale * pad3d->up.y) + up.y;
+                                    up2.z = (scale * pad3d->up.z) + up.z;
+                                    up.x -= scale * pad3d->up.x;
+                                    up.y -= scale * pad3d->up.y;
+                                    up.z -= scale * pad3d->up.z;
+                                    pdef_tintg->portalnum = sub_GAME_7F0B9E04(&up, &up2);
+                                    pdef_tintg->unk90 = *(s32 *)&pdef_tintg->unk90 / 65536.0f;
+                                }
+                            }
+                            domakedefaultobj(stageId, (struct ObjectRecord *)pdef_tintg, pdefIndex);
+                        }
+                        break;
+                    }
+                    case PROPDEF_PROP:          // switch 1
+                    case PROPDEF_ALARM:         // switch 1
+                    case PROPDEF_MAGAZINE:      // switch 1
+                    case PROPDEF_GAS_RELEASING: // switch 1
+                    case PROPDEF_UNK41:         // switch 1
+                    case PROPDEF_GLASS:         // switch 1
+                    case PROPDEF_SAFE:          // switch 1
+                        if (withobjs && !(((ObjectRecord *)phead)->flags2 & flags))
+                        {
+                            domakedefaultobj(stageId, (struct ObjectRecord *)phead, pdefIndex);
+                        }
+                        break;
+                    case PROPDEF_AMMO: // switch 1
+                    {
+                        struct MultiAmmoCrateRecord *pdef_macr = (struct MultiAmmoCrateRecord *)phead;
+                        
+                        s32 ammoqty = 1;
+                        DECLARE_i_09
+                        
+                        if (getPlayerCount() >= 2)
+                        {
+                            struct s_mp_weapon_set *mpweapon = &getPtrMPWeaponSetData()[lastmpweaponnum];
+
+                            ammoqty = mpweapon->ammoamount;
+                            if(mpweapon->ammotype);
+                            pdef_macr->slots[mpweapon->ammotype - 1].quantity = ammoqty;
+                        }
+                        
+                        if ((ammoqty > 0) && withobjs && !(pdef_macr->flags2 & flags))
+                        {
+                            for (V_i_09 = 0; V_i_09 < (AMMOTYPE_GLOBAL_MAX ); V_i_09++)
+                            {
+                                if (pdef_macr->slots[V_i_09].quantity > 0 && pdef_macr->slots[V_i_09].modelnum != 0xFFFF)
+                                {
+                                    modelLoad(pdef_macr->slots[V_i_09].modelnum);
+                                }
+                            }
+
+                            domakedefaultobj(stageId, (struct ObjectRecord *)pdef_macr, pdefIndex);
+                        }
+                        break;
+                    }
+                    case PROPDEF_TANK: // switch 1
+                        if (withobjs && !(((struct TankRecord *)phead)->flags2 & flags))
+                        {
+                            struct TankRecord *pdef_tank = (struct TankRecord *)phead;
+                            struct PropRecord *tank_prop;
+                            f32 stan_y = 0.0f;
+                            s32 paddinggg[4];
+                            
+                            weaponLoadProjectileModels(0x20);
+                            domakedefaultobj(stageId, (struct ObjectRecord *)pdef_tank, pdefIndex);
+                            pdef_tank->turret_vertical_angle = 0.0f;
+                            pdef_tank->turret_orientation_angle = 0.0f;
+                            pdef_tank->tank_orientation_angle = M_TAU_F - atan2f(pdef_tank->mtx.m[2][0], pdef_tank->mtx.m[2][2]);
+                            tank_prop = pdef_tank->prop;
+                            if (tank_prop)
+                            {
+                                stan_y = stanGetPositionYValue(tank_prop->stan, tank_prop->pos.f[0], tank_prop->pos.f[2]);
+                            }
+                            pdef_tank->stan_y = stan_y;
+                            pdef_tank->unkD0  = stan_y / 0.17000002f;
+                        }
+                        break;
+                    case PROPDEF_VEHICHLE: // switch 1
+                        if (withobjs && !(((struct VehichleRecord *)phead)->flags2 & flags))
+                        {
+                            struct VehichleRecord *pdef_veh = (struct VehichleRecord *)phead;
+                            //struct Model *model;
+                            domakedefaultobj(stageId, (struct ObjectRecord *)pdef_veh, pdefIndex);
+
+                            //model = pdef_veh->model;
+                            if (pdef_veh->model != NULL)
+                            {
+                                if (pdef_veh->model->obj->Switches[5] != NULL)
+                                {
+                                    modelGetNodeRwData(pdef_veh->model, pdef_veh->model->obj->Switches[5])->Raw.unk00 = (pdef_veh->flags & 0x10000000) == 0;
+                                }
+                            }
+
+                            pdef_veh->speed        = 0.0f;
+                            pdef_veh->wheelxrot    = 0.0f;
+                            pdef_veh->wheelyrot    = 0.0f;
+                            pdef_veh->speedaim     = 0.0f;
+                            pdef_veh->turnrot60    = 0.0f;
+                            pdef_veh->roty         = 0.0f;
+                            pdef_veh->speedtime60  = -1.0f;
+                            pdef_veh->ailist       = ailistFindById(pdef_veh->ailist);
+                            pdef_veh->aioffset     = 0;
+                            pdef_veh->aireturnlist = -1;
+                            pdef_veh->path         = 0;
+                            pdef_veh->nextstep     = 0;
+                            pdef_veh->Sound        = 0;
+                        }
+                        break;
+                    case PROPDEF_AIRCRAFT: // switch 1
+                        if (withobjs && !(((struct AircraftRecord *)phead)->flags2 & flags))
+                        {
+                            struct AircraftRecord *pdef_air = (struct AircraftRecord *)phead;
+                            domakedefaultobj(stageId, (struct ObjectRecord *)pdef_air, pdefIndex);
+                            pdef_air->speed           = 0.0f;
+                            pdef_air->speedaim        = 0.0f;
+                            pdef_air->rotoryrot       = 0.0f;
+                            pdef_air->rotaryspeed     = 0.0f;
+                            pdef_air->rotaryspeedaim  = 0.0f;
+                            pdef_air->yrot            = 0.0f;
+                            pdef_air->speedtime60     = -1.0f;
+                            pdef_air->rotaryspeedtime = -1.0f;
+                            pdef_air->ailist          = ailistFindById(pdef_air->ailist);
+                            pdef_air->aioffset        = 0;
+                            pdef_air->aireturnlist    = -1;
+                            pdef_air->nextstep        = 0;
+                            pdef_air->path            = 0;
+                            pdef_air->Sound           = 0;
+                        }
+                        break;
+                    case PROPDEF_TAG: // switch 1
+                    {
+                        struct TagObjectRecord *pdef_tag;
+                        struct ObjectRecord *taggedobj;
+                        
+                        pdef_tag = (struct TagObjectRecord *)phead;
+                        taggedobj  = setupCommandGetObject(stageId, (s32)pdef_tag->OffsetToObj + pdefIndex);
+                        pdef_tag->TaggedObject = taggedobj;
+                        if (taggedobj)
+                        {
+                            taggedobj->runtime_bitflags |= 0x10; // RUNTIMEBITFLAG_TAGGED
+                        }
+                        set_parent_cur_tag_entry(pdef_tag);
+                        break;
+                    }
+                    case PROPDEF_RENAME: // switch 1
+                    {
+                        struct RenameObjectRecord *pdef_ren;
+                        struct ObjectRecord *targetobj;
+                        
+                        pdef_ren = (struct RenameObjectRecord *)phead;
+                        targetobj = setupCommandGetObject(stageId, pdef_ren->TagID + pdefIndex);
+                        pdef_ren->renobj = targetobj;
+                        if (targetobj)
+                        {
+                            targetobj->runtime_bitflags |= 0x400; // RUNTIMEBITFLAG_HASTEXTOVERRIDE
+                        }
+                        bondinvAddTextOverride((struct textoverride *)pdef_ren);
+                        break;
+                    }
+                    case PROPDEF_WATCH_MENU_OBJECTIVE_TEXT: // switch 1
+                        setup_briefing_text_entry_parent((struct setup_objective_text *)phead);
+                        break;
+                    case PROPDEF_CAMERAPOS: // switch 1
+                    {
+                        struct CutsceneRecord *pdef_cam = (struct CutsceneRecord *)phead;
+                        pdef_cam->pos.f[0] = *(s32 *)&pdef_cam->pos.f[0] / 100.0f;
+                        pdef_cam->pos.f[1] = *(s32 *)&pdef_cam->pos.f[1] / 100.0f;
+                        pdef_cam->pos.f[2] = *(s32 *)&pdef_cam->pos.f[2] / 100.0f;
+                        pdef_cam->theta = *(s32 *)&pdef_cam->theta / 65536.0f;
+                        pdef_cam->verta = *(s32 *)&pdef_cam->verta / 65536.0f;
+                        break;
+                    }
+                    case PROPDEF_OBJECTIVE_START: // switch 1
+                        add_ptr_to_objective((struct objective_entry*)phead);
+                        break;
+                    case PROPDEF_OBJECTIVE_ENTER_ROOM: // switch 1
+                        set_parent_cur_obj_enter_room((struct criteria_roomentered *)phead);
+                        break;
+                    case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM: // switch 1
+                        set_parent_cur_obj_deposited_in_room((struct criteria_deposit *)phead);
+                        break;
+                    case PROPDEF_OBJECTIVE_PHOTOGRAPH: // switch 1
+                        set_parent_cur_obj_photograph((struct criteria_picture *)phead);
+                        break;
+                }
+                //phead = sizepropdef(phead) + phead;
+                phead = (PropDefHeaderRecord *)((u32*)phead + sizepropdef(phead));
+
+                pdefIndex++;
+            }
+
+            phead = g_CurrentSetup.propDefs;
+            pdefIndex = 0;
+
+            while (phead->type != PROPDEF_END)
+            {
+                switch (phead->type)
+                {
+                    case PROPDEF_PROP:
+                    case PROPDEF_KEY:
+                    case PROPDEF_MAGAZINE:
+                    case PROPDEF_COLLECTABLE:
+                    case PROPDEF_MONITOR:
+                    case PROPDEF_AMMO:
+                    case PROPDEF_ARMOUR:
+                    case PROPDEF_GAS_RELEASING:
+                    case PROPDEF_UNK41:
+                    case PROPDEF_GLASS:
+                    case PROPDEF_SAFE:
+                    case PROPDEF_TINTED_GLASS:
+                    {
+                        struct ObjectRecord *pdef_tintg = (struct ObjectRecord *)phead;
+
+                        if (pdef_tintg->prop && (pdef_tintg->flags & PROPFLAG_INSIDEANOTHEROBJ)) // PROPFLAG_INSIDEANOTHEROBJ
+                        {
+                            s32 offset = pdef_tintg->pad;
+                            struct ObjectRecord *inobj = setupCommandGetObject(stageId, offset + pdefIndex);
+                            
+                            if (inobj && inobj->prop)
+                            {
+                                //struct Model *inobjmdl = pdef_tintg->model;
+                                pdef_tintg->runtime_bitflags |= RUNTIMEBITFLAG_HASOWNER; // RUNTIMEBITFLAG_HASOWNER
+                                modelSetScale(pdef_tintg->model, pdef_tintg->model->scale);
+                                chrpropReparent(pdef_tintg->prop, inobj->prop);
+                            }
+#ifdef DEBUG
+
+                            else
+                            {
+                                osSyncPrintf("inobj link not found for object number %d\n", pdefIndex + 1);
+                            }
+#endif
+                        }
+                        break;
+                    }
+                    case PROPDEF_LINK:
+                    {
+                        struct LinkRecord *pdef_link = (struct LinkRecord *)phead;
+                        struct WeaponObjRecord *guna = (struct WeaponObjRecord *)setupGetPtrToCommandByIndex(pdef_link->Index1 + pdefIndex);
+                        struct WeaponObjRecord *gunb = (struct WeaponObjRecord *)setupGetPtrToCommandByIndex(pdef_link->Index2 + pdefIndex);
+                        if (guna && gunb)
+                        {
+                            if (guna->type == PROPDEF_COLLECTABLE && gunb->type == PROPDEF_COLLECTABLE)
+                            {
+                                propweaponSetDual(guna, gunb);
+                            }
+#ifdef DEBUG
+                            else
+                            {
+                                osSyncPrintf("link type wrong for doublegun object number %d\n", pdefIndex + 1);
+                            }
+                        }
+                        else
+                        {
+                            osSyncPrintf("link not found for doublegun object number %d\n", pdefIndex + 1);
+
+#endif
+                        }
+                        break;
+                    }
+                    case PROPDEF_SWITCH:
+                    {
+                        struct LinkRecord *pdef_switch;
+                        struct ObjectRecord *doorA;
+                        struct ObjectRecord *doorB;
+
+                        s32 index1;
+                        s32 index2;
+
+                        pdef_switch  = (struct LinkRecord *)phead;
+
+                        index1 = pdef_switch->Index1;
+                        index2 = pdef_switch->Index2;
+                        
+                        doorA = (struct ObjectRecord *)setupCommandGetObject(stageId, pdefIndex + index1);
+                        doorB = (struct ObjectRecord *)setupGetPtrToCommandByIndex(pdefIndex + index2);
+
+                        if (doorA && doorA->prop && doorB && doorB->type == PROPDEF_DOOR && doorB->prop)
+                        {
+                            pdef_switch->first = doorA->prop;
+                            pdef_switch->second = doorB->prop;
+                            initSetLevelLoadPropSwitch(pdef_switch);
+                            doorA->runtime_bitflags |= RUNTIMEBITFLAG_00000001; // linkeddoor
+                        }
+
+#ifdef DEBUG
+                        else
+                        {
+                            osSyncPrintf("doorlink object number %d not initialised\n", pdefIndex + 1);
+                        }
+#endif
+                        break;
+                    }
+                    case PROPDEF_SAFE_ITEM:
+                    {
+                        
+                        s32 index1;
+                        struct SafeObjectRecord *pdef_safe;
+                        s32 index2;
+                        s32 index3;
+                        struct ObjectRecord *safe_item;
+                        struct SafeRecord *safe;
+                        struct DoorRecord *door;
+                        
+                        pdef_safe = (struct SafeObjectRecord *)phead;
+
+                        index1 = pdef_safe->Index1;
+                        index2 = pdef_safe->Index2;
+                        index3 = pdef_safe->Index3;
+                        
+                        safe_item = setupCommandGetObject(stageId, pdefIndex + index1);
+                        safe = (struct SafeRecord *)setupCommandGetObject(stageId, pdefIndex + index2);
+                        door = (struct DoorRecord *)setupCommandGetObject(stageId, pdefIndex + index3);
+                        
+                        if (safe_item
+                            && safe_item->prop
+                            && safe
+                            && safe->prop
+                            && safe->type == PROPDEF_SAFE
+                            && door
+                            && door->prop
+                            && door->type == PROPDEF_DOOR)
+                        {
+                            pdef_safe->item = safe_item;
+                            pdef_safe->safe = safe;
+                            pdef_safe->door = door;
+
+                            initSetLevelLoadPropSafeItem((struct ObjectRecord *)pdef_safe);
+                            safe_item->flags2 |= PROPFLAG2_LINKEDTOSAFE; // OBJFLAG2_LINKEDTOSAFE
+                            door->flags2 |= PROPFLAG2_LINKEDTOSAFE;
+                        }
+#ifdef DEBUG
+                        else
+                        {
+                            osSyncPrintf("safelink object number %d not initialised\n", pdefIndex + 1);
+                        }
+#endif
+                        break;
+                    }
+                    case PROPDEF_LOCK_DOOR:
+                    {
+                        struct LockDoorRecord *pdef_lock_door;
+                        struct DoorRecord *door;
+                        struct ObjectRecord *lock;
+                        s32 index1;
+                        s32 index2;
+
+                        
+                        pdef_lock_door = (struct LockDoorRecord *)phead;
+
+                        index1 = pdef_lock_door->Index1;
+                        index2 = pdef_lock_door->Index2;
+                        
+                        door = (struct DoorRecord *)setupCommandGetObject(stageId, pdefIndex + index1);
+                        lock = setupCommandGetObject(stageId, pdefIndex + index2);
+                        
+                        if (door
+                            && door->prop
+                            && lock
+                            && lock->prop
+                            && door->type == PROPDEF_DOOR)
+                        {
+                            pdef_lock_door->door = door;
+                            pdef_lock_door->lock = lock;
+                            initSetLevelLoadPropLockDoor(pdef_lock_door);
+                            door->runtime_bitflags |= RUNTIMEBITFLAG_PADLOCKEDDOOR; // padlock
+                        }
+#ifdef DEBUG
+                        else
+                        {
+                            osSyncPrintf("doorlock object number %d not initialised\n", pdefIndex + 1);
+                        }
+#endif
+                        break;
+                    }
+                }
+                //phead = sizepropdef(phead) + phead;
+                phead = (PropDefHeaderRecord *)((u32*)phead + sizepropdef(phead));
+
+                pdefIndex += 1;
+            } //while !PDEF_END
+
+        } //if setup.pdef
+    }
+    else
+    {
+        g_CurrentSetup.pathwaypoints = NULL;
+        g_CurrentSetup.waypointgroups = NULL;
+        g_CurrentSetup.intro = 0;
+        g_CurrentSetup.propDefs = 0;
+        g_CurrentSetup.patrolpaths = NULL;
+        g_CurrentSetup.ailists = NULL;
+        g_CurrentSetup.pads = NULL;
+        g_CurrentSetup.boundpads = NULL;
+        g_CurrentSetup.padnames = NULL;
+        g_CurrentSetup.boundpadnames = NULL;
+        alloc_init_GUARDdata_entries(0);
+        sub_GAME_7F005540(0);
+        sub_GAME_7F005624(0);
+    }
+
+    alloc_false_GUARDdata_to_exec_global_action();
 }
+
 #else
 
 #ifdef VERSION_US
