@@ -49,29 +49,14 @@ void set_parent_cur_tag_entry(struct TagObjectRecord *arg0)
     ptr_last_tag_entry_type16 = arg0;
 }
 
-
-
-#ifdef NONMATCHING
-void *setup_briefing_text_entry_parent(void *arg0) {
-    // Node 0
-    arg0->unkC = (void *) ptr_last_briefing_setup_entry_type23;
+void setup_briefing_text_entry_parent(struct setup_objective_text *arg0)
+{
+    arg0->next = ptr_last_briefing_setup_entry_type23;
     ptr_last_briefing_setup_entry_type23 = arg0;
-    return;
-    // (possible return value: &ptr_last_briefing_setup_entry_type23)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel setup_briefing_text_entry_parent
-/* 039AD0 7F004FA0 3C028007 */  lui   $v0, %hi(ptr_last_briefing_setup_entry_type23)
-/* 039AD4 7F004FA4 24425D84 */  addiu $v0, %lo(ptr_last_briefing_setup_entry_type23) # addiu $v0, $v0, 0x5d84
-/* 039AD8 7F004FA8 8C4E0000 */  lw    $t6, ($v0)
-/* 039ADC 7F004FAC AC8E000C */  sw    $t6, 0xc($a0)
-/* 039AE0 7F004FB0 03E00008 */  jr    $ra
-/* 039AE4 7F004FB4 AC440000 */   sw    $a0, ($v0)
-)
-#endif
+
+
 
 
 void add_ptr_to_objective(struct objective_entry* objective)
