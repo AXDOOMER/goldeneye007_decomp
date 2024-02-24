@@ -1243,6 +1243,12 @@ typedef union
             Gfx *gdl;
         } ModelRwData_DisplayList_CollisionRecord;
 
+        // placeholder struct when need to access offset but don't know type.
+        struct ModelRwData_Raw
+        {
+            s32 unk00;
+        };
+
     #pragma endregion Model Node OpCode Definitions
 
     /*
@@ -1287,6 +1293,7 @@ typedef union
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
         struct ModelRwData_DisplayList_CollisionRecord DisplayListCollisions;
+        struct ModelRwData_Raw Raw;
     };
 
 
@@ -3413,6 +3420,14 @@ typedef union
     {
         inherits PropDefHeaderRecord;
         s32 TagID;
+        s32 unk08;
+        s32 unk0c;
+        s32 unk10;
+        s32 unk14;
+        s32 unk18;
+        s32 unk1c;
+        s32 unk20;
+        ObjectRecord *renobj;
     } RenameObjectRecord;
     #define New_RenameObjectRecord(TagID)          \
         {                                          \
@@ -3484,7 +3499,7 @@ typedef union
         f32           speedaim;        /*0x9c*/
         f32           speedtime60;     /*0xa0*/
         f32           yrot;            /*0xa4*/
-        f32           nextstep;        /*0xa8*/
+        s32           nextstep;        /*0xa8*/
         PathRecord   *path;            /*0xac*/
         struct ALSoundState *Sound;           /*0xb0*/
     } AircraftRecord;
@@ -3513,9 +3528,18 @@ typedef union
     typedef struct SafeObjectRecord
     {
         u32 unk00;
-        struct ObjectRecord *item;
-        struct SafeRecord *safe;
-        struct DoorRecord *door;
+        union {
+            struct ObjectRecord *item;
+            s32 Index1;
+        };
+        union {
+            struct SafeRecord *safe;
+            s32 Index2;
+        };
+        union {
+            struct DoorRecord *door;
+            s32 Index3;
+        };
         struct SafeObjectRecord *next;
     } SafeObjectRecord;
 
@@ -3975,6 +3999,13 @@ struct unkown_gun_struct
     };
 };
 
+struct setup_objective_text {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    struct setup_objective_text *next;
+};
+
 /* matches Perfect Dark */
 struct criteria_roomentered {
     u32 unk00;
@@ -3982,6 +4013,7 @@ struct criteria_roomentered {
     u32 status;
     struct criteria_roomentered *next;
 };
+
 
 /* completely made up */
 struct criteria_deposit {
