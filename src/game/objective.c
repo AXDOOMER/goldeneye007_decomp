@@ -43,29 +43,12 @@ void something_with_stage_objectives(void)
     ptr_last_photo_obj_in_room_subobject_entry_type1E = NULL;
 }
 
-
-
-#ifdef NONMATCHING
-void *set_parent_cur_tag_entry(void *arg0) {
-    // Node 0
-    arg0->unk8 = (void *) ptr_last_tag_entry_type16;
+void set_parent_cur_tag_entry(struct TagObjectRecord *arg0)
+{
+    arg0->NextTag = ptr_last_tag_entry_type16;
     ptr_last_tag_entry_type16 = arg0;
-    return;
-    // (possible return value: &ptr_last_tag_entry_type16)
 }
 
-#else
-GLOBAL_ASM(
-.text
-glabel set_parent_cur_tag_entry
-/* 039AB8 7F004F88 3C028007 */  lui   $v0, %hi(ptr_last_tag_entry_type16)
-/* 039ABC 7F004F8C 24425D80 */  addiu $v0, %lo(ptr_last_tag_entry_type16) # addiu $v0, $v0, 0x5d80
-/* 039AC0 7F004F90 8C4E0000 */  lw    $t6, ($v0)
-/* 039AC4 7F004F94 AC8E0008 */  sw    $t6, 8($a0)
-/* 039AC8 7F004F98 03E00008 */  jr    $ra
-/* 039ACC 7F004F9C AC440000 */   sw    $a0, ($v0)
-)
-#endif
 
 
 #ifdef NONMATCHING
