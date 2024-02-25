@@ -589,8 +589,8 @@ struct player
   */
   s32 watch_pause_time;
 
-  s32 field_1C4;
-  s32 watch_animation_state;
+  /* 0x01c4 */ s32 field_1C4;
+  /* 0x01c8 */ s32 watch_animation_state;
 
   /**
    * 1 = level is active
@@ -1163,11 +1163,11 @@ struct player
   /**
    * Offset 0x12b4.
    */
-  u8 something_with_cheat_text;
-  u8 can_display_cheat_text;
-  u8 bondinvincible;
-  u8 field_12B7;
-  s32 healthdamagetype;
+  /* 0x12B4 */ u8 something_with_cheat_text;
+  /* 0x12B5 */ u8 can_display_cheat_text;
+  /* 0x12B6 */ u8 bondinvincible;
+  /* 0x12B7 */ u8 field_12B7;
+  /* 0x12B8 */ s32 healthdamagetype;
   s32 field_12BC;
   s32 field_12C0;
   s32 field_12C4;
@@ -2610,8 +2610,8 @@ struct player
   s32 field_2A30;
   s32 field_2A34;
   s32 cur_item_weapon_getname;
-  f32 actual_health;
-  f32 actual_armor;
+  /* 0x2a3c */ f32 actual_health;
+  /* 0x2a40 */ f32 actual_armor;
   ITEM_IDS field_2A44[2];
   f32 speedgo;
   s32 lock_hand_model[2];

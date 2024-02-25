@@ -16440,8 +16440,135 @@ s32 sub_GAME_7F0898E8(void)
 
 
 #ifdef NONMATCHING
-void record_damage_kills(void) {
+// functionally equivalent
+// 91% match. https://decomp.me/scratch/hHKvo
+void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectory, s32 playerid, s32 arg4) {
+    f32 damage_dealt = g_playerPerm->handicap * damage_amount;
 
+    if (g_CurrentPlayer->watch_animation_state != 0) 
+	{
+        sub_GAME_7F0A2F30(g_CurrentPlayer->field_12B8, 0x2E, 1, get_BONDdata_watch_armor());
+        sub_GAME_7F0A2F30(g_CurrentPlayer->related_to_health_display, 0x2E, -1, bondviewGetCurrentPlayerHealth());
+    }
+
+    if ((getPlayerCount() < 2) || ((g_stopPlayFlag == 0) && (g_gameOverFlag == 0))) 
+	{
+        if (in_tank_flag == 1) 
+		{
+            damage_dealt *= 0.25f;
+        }
+
+        if ((g_CurrentPlayer->bonddead == 0) && (g_CurrentPlayer->bondinvincible == 0)) 
+		{
+            joyRumblePakStart(get_cur_playernum(), 0.25);
+            if (cur_player_get_control_type() >= 4) 
+			{
+				// rumble second controller
+                joyRumblePakStart(getPlayerCount() + get_cur_playernum(), 0.25);
+            }
+        }
+
+        if ((getPlayerCount() >= 2) && (get_scenario() == 4)) 
+		{
+            damage_dealt = (g_CurrentPlayer->bondhealth * g_CurrentPlayer->actual_health) + (g_CurrentPlayer->bondarmour * g_CurrentPlayer->actual_armor);
+        }
+
+        if (g_CurrentPlayer->bondinvincible == 0 && g_CurrentPlayer->bonddead == 0 && g_PlayerInvincible == 0 && (g_CurrentPlayer->damageshowtime < 0 || (getPlayerCount() >= 2 && g_CurrentPlayer->damageshowtime == 0) ) ) 
+		{
+            if (g_CurrentPlayer->watch_animation_state != 5 && g_CurrentPlayer->watch_animation_state != 0xC)
+			{
+                g_CurrentPlayer->oldhealth = g_CurrentPlayer->bondhealth;
+                g_CurrentPlayer->oldarmour = g_CurrentPlayer->oldarmour;
+
+                if (getPlayerCount() >= 2) 
+				{
+                    f32 angle = g_playerPointers[get_cur_playernum()]->vv_theta - (360.0f - ((atan2f(vectorx, vectory) * 180.0f) / 3.1415927f));
+
+                    if (angle < 0.0f) 
+					{
+                        angle = -angle;
+                    }
+
+                    if ((angle < 90.0f) || (angle > 270.0f)) 
+					{
+                        g_playerPlayerData[playerid].damage_to_backside += 1;
+                    }
+                }
+
+                if (arg4 != 0) 
+				{
+                    f32 temp_f0 = g_CurrentPlayer->bondarmour;
+                    f32 temp_f2 = g_CurrentPlayer->actual_armor; //2a40
+
+                    if (damage_dealt <= temp_f0 * temp_f2)
+					{
+                        g_CurrentPlayer->bondarmour = temp_f0 - (damage_dealt / temp_f2);
+                        goto block_46;
+                    }
+                }
+
+                if (arg4 != 0) 
+				{
+                    damage_dealt -= g_CurrentPlayer->bondarmour / g_CurrentPlayer->actual_armor;
+                    g_CurrentPlayer->bondarmour = 0.0f;
+                    g_CurrentPlayer->actual_armor = 1.0f;
+                }
+
+                g_CurrentPlayer->bondhealth = g_CurrentPlayer->bondhealth - (damage_dealt / g_CurrentPlayer->actual_health);
+
+                if (g_CurrentPlayer->bondhealth <= 0.0f) 
+				{
+                    if (getPlayerCount() >= 2) 
+					{
+                        s32 cur_player_num = get_cur_playernum();
+                        s32 sp28 = 0;
+
+                        if (get_scenario() == 3 && bondinvHasGoldenGun() != 0)
+						{
+                            sp28 = 1;
+                        }
+
+                        if (cur_player_num != playerid) 
+						{
+                            drop_inventory();
+                            increment_num_deaths();
+                        }
+
+                        set_cur_player(playerid);
+
+                        if (cur_player_num == playerid) 
+						{
+                            increment_num_suicides_display_MP();
+                        } 
+						else 
+						{
+                            increment_num_kills_display_text_in_MP();
+
+                            if (sp28 != 0) 
+							{
+                                increment_num_times_killed_MwtGC();
+                            }
+                        }
+
+                        set_cur_player(cur_player_num);
+                        g_playerPlayerData[playerid].kill_counts[cur_player_num] += 1;
+                    }
+
+                    bondviewKillCurrentPlayer();
+                }
+block_46:
+                if (g_CurrentPlayer->damageshowtime < 0) 
+				{
+                    g_CurrentPlayer->bondshotspeed.x = g_CurrentPlayer->bondshotspeed.x + (2.0f * vectorx);
+                    g_CurrentPlayer->bondshotspeed.z = g_CurrentPlayer->bondshotspeed.z + (2.0f * vectory);
+                }
+
+                g_CurrentPlayer->damageshowtime = 0;
+                g_CurrentPlayer->healthshowtime = 0;
+                sndPlaySfx(g_musicSfxBufferPtr, 0x44, 0);
+            }
+        }
+    }
 }
 #else
 #ifdef VERSION_US
