@@ -7454,11 +7454,11 @@ void trigger_solo_watch_menu(s32 arg0)
             sub_GAME_7F07DEFC();
             bondviewTriggerWatchZoomDefault();
 
-            sub_GAME_7F0A2F30(&g_CurrentPlayer->healthdamagetype, 0x2E, 1, get_BONDdata_watch_armor());
-            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_body_armor_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->healthdamagetype), 0x2E);
+            sub_GAME_7F0A2F30(&g_CurrentPlayer->armor_display_values, 0x2E, 1, get_BONDdata_watch_armor());
+            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_body_armor_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->armor_display_values), 0x2E);
 
-            sub_GAME_7F0A2F30(&g_CurrentPlayer->related_to_health_display, 0x2E, -1, bondviewGetCurrentPlayerHealth());
-            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_health_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->related_to_health_display), 0x2E);
+            sub_GAME_7F0A2F30(&g_CurrentPlayer->health_display_values, 0x2E, -1, bondviewGetCurrentPlayerHealth());
+            sub_GAME_7F0A3330(&g_CurrentPlayer->watch_health_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->health_display_values), 0x2E);
             
             sub_GAME_7F0A69A8();
 
@@ -16448,7 +16448,7 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectory, s32 player
     if (g_CurrentPlayer->watch_animation_state != 0) 
 	{
         sub_GAME_7F0A2F30(g_CurrentPlayer->field_12B8, 0x2E, 1, get_BONDdata_watch_armor());
-        sub_GAME_7F0A2F30(g_CurrentPlayer->related_to_health_display, 0x2E, -1, bondviewGetCurrentPlayerHealth());
+        sub_GAME_7F0A2F30(g_CurrentPlayer->health_display_values, 0x2E, -1, bondviewGetCurrentPlayerHealth());
     }
 
     if ((getPlayerCount() < 2) || ((g_stopPlayFlag == 0) && (g_gameOverFlag == 0))) 

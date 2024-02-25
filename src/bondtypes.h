@@ -4050,4 +4050,21 @@ struct FolderSelect {
     s32 unk08;
 };
 
+struct damage_display_val {
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
+    s16 unk08;
+    s16 unk0A;
+    s8 unk0C;
+    s8 unk0D;
+    s8 unk0E;
+    s8 unk0F;
+};
+
+struct damage_display_parent {
+    struct damage_display_val items[2];
+};
+
 #endif
