@@ -151,5 +151,6 @@ void sub_GAME_7F03F90C(Model *model, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4)
 s32 sub_GAME_7F0448A8(struct PropRecord *arg0);
 PropRecord* sub_GAME_7F051DD8(struct ObjectRecord* arg0, ModelFileHeader* arg1);
 void sub_GAME_7F052030(WeaponObjRecord* arg0, ChrRecord* arg1);
+void drop_inventory(void);
 
 #endif

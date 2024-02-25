@@ -40500,70 +40500,32 @@ glabel sub_GAME_7F056690
 
 
 
-#ifdef NONMATCHING
-void drop_inventory(void) {
+void drop_inventory(void)
+{
+    ChrRecord *playerchr;
+    PropRecord *prop;
+    enum ITEM_IDS item;
+    enum PROP propid;
 
+    playerchr = g_CurrentPlayer->prop->chr;
+    
+    chrSetWeaponFlag4(playerchr, GUNRIGHT);
+    chrSetWeaponFlag4(playerchr, GUNLEFT);
+
+    for (item = ITEM_FIST; item != ITEM_IDS_MAX; item++)
+    {
+        propid = getPropForHeldItem(item);
+        
+        if ((propid >= 0) && (bondinvHasInvItem(item) != 0))
+        {
+            prop = something_with_generating_object(playerchr, propid, item, 0x20000000, NULL, NULL);
+            
+            if (prop != NULL)
+            {
+                propobjSetDropped(prop, DROPTYPE_DEFAULT);
+                objDrop(prop);
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel drop_inventory
-/* 08B2AC 7F05677C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 08B2B0 7F056780 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) 
-/* 08B2B4 7F056784 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08B2B8 7F056788 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 08B2BC 7F05678C AFB40030 */  sw    $s4, 0x30($sp)
-/* 08B2C0 7F056790 AFB3002C */  sw    $s3, 0x2c($sp)
-/* 08B2C4 7F056794 AFB20028 */  sw    $s2, 0x28($sp)
-/* 08B2C8 7F056798 AFB10024 */  sw    $s1, 0x24($sp)
-/* 08B2CC 7F05679C AFB00020 */  sw    $s0, 0x20($sp)
-/* 08B2D0 7F0567A0 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 08B2D4 7F0567A4 00002825 */  move  $a1, $zero
-/* 08B2D8 7F0567A8 8DF20004 */  lw    $s2, 4($t7)
-/* 08B2DC 7F0567AC 0FC1487A */  jal   chrSetWeaponFlag4
-/* 08B2E0 7F0567B0 02402025 */   move  $a0, $s2
-/* 08B2E4 7F0567B4 02402025 */  move  $a0, $s2
-/* 08B2E8 7F0567B8 0FC1487A */  jal   chrSetWeaponFlag4
-/* 08B2EC 7F0567BC 24050001 */   li    $a1, 1
-/* 08B2F0 7F0567C0 24100001 */  li    $s0, 1
-/* 08B2F4 7F0567C4 24140059 */  li    $s4, 89
-/* 08B2F8 7F0567C8 3C132000 */  lui   $s3, 0x2000
-.L7F0567CC:
-/* 08B2FC 7F0567CC 0FC26C91 */  jal   getPropForHeldItem
-/* 08B300 7F0567D0 02002025 */   move  $a0, $s0
-/* 08B304 7F0567D4 04400012 */  bltz  $v0, .L7F056820
-/* 08B308 7F0567D8 00408825 */   move  $s1, $v0
-/* 08B30C 7F0567DC 0FC230C5 */  jal   bondinvHasInvItem
-/* 08B310 7F0567E0 02002025 */   move  $a0, $s0
-/* 08B314 7F0567E4 1040000E */  beqz  $v0, .L7F056820
-/* 08B318 7F0567E8 02402025 */   move  $a0, $s2
-/* 08B31C 7F0567EC 02202825 */  move  $a1, $s1
-/* 08B320 7F0567F0 02003025 */  move  $a2, $s0
-/* 08B324 7F0567F4 02603825 */  move  $a3, $s3
-/* 08B328 7F0567F8 AFA00010 */  sw    $zero, 0x10($sp)
-/* 08B32C 7F0567FC 0FC14885 */  jal   something_with_generating_object
-/* 08B330 7F056800 AFA00014 */   sw    $zero, 0x14($sp)
-/* 08B334 7F056804 10400006 */  beqz  $v0, .L7F056820
-/* 08B338 7F056808 00408825 */   move  $s1, $v0
-/* 08B33C 7F05680C 00402025 */  move  $a0, $v0
-/* 08B340 7F056810 0FC12FF4 */  jal   propobjSetDropped
-/* 08B344 7F056814 24050001 */   li    $a1, 1
-/* 08B348 7F056818 0FC1304C */  jal   objDrop
-/* 08B34C 7F05681C 02202025 */   move  $a0, $s1
-.L7F056820:
-/* 08B350 7F056820 26100001 */  addiu $s0, $s0, 1
-/* 08B354 7F056824 1614FFE9 */  bne   $s0, $s4, .L7F0567CC
-/* 08B358 7F056828 00000000 */   nop   
-/* 08B35C 7F05682C 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 08B360 7F056830 8FB00020 */  lw    $s0, 0x20($sp)
-/* 08B364 7F056834 8FB10024 */  lw    $s1, 0x24($sp)
-/* 08B368 7F056838 8FB20028 */  lw    $s2, 0x28($sp)
-/* 08B36C 7F05683C 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 08B370 7F056840 8FB40030 */  lw    $s4, 0x30($sp)
-/* 08B374 7F056844 03E00008 */  jr    $ra
-/* 08B378 7F056848 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
-
 
