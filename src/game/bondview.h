@@ -1166,7 +1166,7 @@ struct player
   /* 0x12B4 */ u8 something_with_cheat_text;
   /* 0x12B5 */ u8 can_display_cheat_text;
   /* 0x12B6 */ u8 bondinvincible;
-  /* 0x12B7 */ u8 field_12B8;
+  /* 0x12B7 */ u8 field_12B7;
   /* 0x12B8 */ s32 healthdamagetype;
   s32 field_12BC;
   s32 field_12C0;
