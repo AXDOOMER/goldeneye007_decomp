@@ -16444,13 +16444,13 @@ s32 sub_GAME_7F0898E8(void)
  * @param vectorx: damage source x coordinate
  * @param vectorz: damage source y coordinate
  * @param playerid: player index of player causing the damage
- * @param arg4: boolean, does the damage apply to body armor (e.g. false when gas)
+ * @param affects_armor: boolean, does the damage apply to body armor (e.g. false when gas)
  *
  * Address US 7F08991C.
  * Address EU 7F089A84.
  * Address JP 7F089FF0.
  */
-void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 playerid, s32 arg4) {
+void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 playerid, s32 affects_armor) {
     f32 damage_dealt = g_playerPerm->handicap * damage_amount;
     s32 cur_player_num;
     f32 angle;
@@ -16476,13 +16476,15 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
             joyRumblePakStart(get_cur_playernum(), 0.25);
             if (cur_player_get_control_type() >= 4)
             {
-                // rumble second controller
+                // rumble second controller in 2.x
                 joyRumblePakStart(get_cur_playernum() + getPlayerCount(), 0.25);
             }
         }
 
-        if (getPlayerCount() >= 2 && get_scenario() == 4)
+        if (getPlayerCount() >= 2 && get_scenario() == SCENARIO_LTK)
         {
+            // the damage dealt is always equivalent to how much health and armor the player has
+            // the result of this is to always kill the player regardless of how much damage he can sustain
             damage_dealt = (g_CurrentPlayer->bondhealth * g_CurrentPlayer->actual_health) + (g_CurrentPlayer->bondarmour * g_CurrentPlayer->actual_armor);
         }
 
@@ -16504,7 +16506,7 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
                         angle = -angle;
                     }
 
-                    if ((angle < 90.0f) || (angle > 270.0f))
+                    if (angle < 90.0f || angle > 270.0f)
                     {
                         // danger: if Bond could be damaged by toxic gas in multiplayer, playerid would be -1
                         // thus causing an out of bounds access
@@ -16512,13 +16514,13 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
                     }
                 }
 
-                if (arg4 && (damage_dealt <= g_CurrentPlayer->bondarmour * g_CurrentPlayer->actual_armor))
+                if (affects_armor && damage_dealt <= g_CurrentPlayer->bondarmour * g_CurrentPlayer->actual_armor)
                 {
                     g_CurrentPlayer->bondarmour = g_CurrentPlayer->bondarmour - (damage_dealt / g_CurrentPlayer->actual_armor);
                 }
                 else
                 {
-                    if (arg4)
+                    if (affects_armor)
                     {
                         damage_dealt -= g_CurrentPlayer->bondarmour / g_CurrentPlayer->actual_armor;
                         g_CurrentPlayer->bondarmour = 0.0f;
@@ -16574,8 +16576,8 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
 
                 if (g_CurrentPlayer->damageshowtime < 0)
                 {
-                    g_CurrentPlayer->bondshotspeed.x = g_CurrentPlayer->bondshotspeed.x + (2.0f * vectorx);
-                    g_CurrentPlayer->bondshotspeed.z = g_CurrentPlayer->bondshotspeed.z + (2.0f * vectorz);
+                    g_CurrentPlayer->bondshotspeed.x = g_CurrentPlayer->bondshotspeed.x + 2.0f * vectorx;
+                    g_CurrentPlayer->bondshotspeed.z = g_CurrentPlayer->bondshotspeed.z + 2.0f * vectorz;
                 }
 
                 g_CurrentPlayer->damageshowtime = 0;
@@ -16588,16 +16590,16 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
 
 
 /**
- * @param arg0: damage amount
+ * @param damage_amount: damage amount
  * @param rad:  damage source angle
- * @param arg2: player index of player causing the damage
- * @param arg3: boolean, does the damage apply to body armor (e.g. false when gas)
+ * @param player_id: player index of player causing the damage
+ * @param affects_armor: boolean, does the damage apply to body armor (e.g. false when gas)
  * 
  * Address 0x7F089E4C.
  */
-void bondviewCallRecordDamageKills(f32 arg0, f32 rad, s32 arg2, s32 arg3)
+void bondviewCallRecordDamageKills(f32 damage_amount, f32 angle, s32 playerid, s32 affects_armor)
 {
-    record_damage_kills(arg0, sinf(rad), cosf(rad), arg2, arg3);
+    record_damage_kills(damage_amount, sinf(angle), cosf(angle), playerid, affects_armor);
 }
 
 
