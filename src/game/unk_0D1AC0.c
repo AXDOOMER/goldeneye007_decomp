@@ -1,9 +1,12 @@
 #include <ultra64.h>
-
+#include "unk_0A1DA0.h"
 
 // data
 f32 D_8004EAF0 = 0.0f;
 f32 D_8004EAF4 = 0.0f;
+
+Gfx *sub_GAME_7F0D1BD0(Gfx *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+Gfx *sub_GAME_7F0D1E98(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 
 
@@ -26,35 +29,10 @@ Gfx * sub_GAME_7F0D1AC0(Gfx *DL)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0D1B94(s32 arg1, ?32 argE) {
-    // Node 0
-    sub_GAME_7F0D1BD0(arg1, arg1, argE, 2, 1);
-    return;
-    // (possible return value: sub_GAME_7F0D1BD0(arg1, arg1, argE, 2, 1))
+Gfx *sub_GAME_7F0D1B94(Gfx *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    return sub_GAME_7F0D1BD0(arg0, arg1, arg2, arg3, arg4, 2, 1);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D1B94
-/* 1066C4 7F0D1B94 44856000 */  mtc1  $a1, $f12
-/* 1066C8 7F0D1B98 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 1066CC 7F0D1B9C 8FAE0038 */  lw    $t6, 0x38($sp)
-/* 1066D0 7F0D1BA0 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 1066D4 7F0D1BA4 240F0002 */  li    $t7, 2
-/* 1066D8 7F0D1BA8 24180001 */  li    $t8, 1
-/* 1066DC 7F0D1BAC 44056000 */  mfc1  $a1, $f12
-/* 1066E0 7F0D1BB0 AFB80018 */  sw    $t8, 0x18($sp)
-/* 1066E4 7F0D1BB4 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 1066E8 7F0D1BB8 0FC346F4 */  jal   sub_GAME_7F0D1BD0
-/* 1066EC 7F0D1BBC AFAE0010 */   sw    $t6, 0x10($sp)
-/* 1066F0 7F0D1BC0 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 1066F4 7F0D1BC4 27BD0028 */  addiu $sp, $sp, 0x28
-/* 1066F8 7F0D1BC8 03E00008 */  jr    $ra
-/* 1066FC 7F0D1BCC 00000000 */   nop   
-)
-#endif
 
 
 
