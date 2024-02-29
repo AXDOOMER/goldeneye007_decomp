@@ -206,45 +206,13 @@ Gfx *sub_GAME_7F0D1DFC(Gfx *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4)
 
 
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0D1E44(s32 arg1, ?32 argE, ?32 argF, ?32 arg10) {
-    // Node 0
-    sub_GAME_7F0D1BD0(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argE, argF, arg10);
-    return;
-    // (possible return value: sub_GAME_7F0D1BD0(arg1, ((D_8004EAF0 + arg1) - D_8004EAF4), argE, argF, arg10))
-    //IDA: return sub_GAME_7F0D1BD0(a1, (float)(D_8004EAF0 + a2) - D_8004EAF4, a3, a4, a5, a6, a7);
+/**
+ * Unreferenced.
+*/
+Gfx *sub_GAME_7F0D1E44(Gfx *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+{
+    return sub_GAME_7F0D1BD0(arg0, (D_8004EAF0 + arg1) - D_8004EAF4, arg2, arg3, arg4, arg5, arg6);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0D1E44
-/* 106974 7F0D1E44 3C018005 */  lui   $at, %hi(D_8004EAF0)
-/* 106978 7F0D1E48 44856000 */  mtc1  $a1, $f12
-/* 10697C 7F0D1E4C C424EAF0 */  lwc1  $f4, %lo(D_8004EAF0)($at)
-/* 106980 7F0D1E50 3C018005 */  lui   $at, %hi(D_8004EAF4)
-/* 106984 7F0D1E54 C428EAF4 */  lwc1  $f8, %lo(D_8004EAF4)($at)
-/* 106988 7F0D1E58 460C2180 */  add.s $f6, $f4, $f12
-/* 10698C 7F0D1E5C 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 106990 7F0D1E60 8FAE0038 */  lw    $t6, 0x38($sp)
-/* 106994 7F0D1E64 8FAF003C */  lw    $t7, 0x3c($sp)
-/* 106998 7F0D1E68 46083281 */  sub.s $f10, $f6, $f8
-/* 10699C 7F0D1E6C 8FB80040 */  lw    $t8, 0x40($sp)
-/* 1069A0 7F0D1E70 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 1069A4 7F0D1E74 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 1069A8 7F0D1E78 44055000 */  mfc1  $a1, $f10
-/* 1069AC 7F0D1E7C AFAF0014 */  sw    $t7, 0x14($sp)
-/* 1069B0 7F0D1E80 0FC346F4 */  jal   sub_GAME_7F0D1BD0
-/* 1069B4 7F0D1E84 AFB80018 */   sw    $t8, 0x18($sp)
-/* 1069B8 7F0D1E88 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 1069BC 7F0D1E8C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 1069C0 7F0D1E90 03E00008 */  jr    $ra
-/* 1069C4 7F0D1E94 00000000 */   nop   
-)
-#endif
-
 
 
 
