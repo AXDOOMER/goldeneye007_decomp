@@ -51,9 +51,9 @@ char dword_CODE_bss_80076AE0[0x2E28];
 char dword_CODE_bss_80079908[0x28];
 
 //CODE.bss:80079930
-void * ptr_allocation_0;
+struct ptr_0_s *ptr_allocation_0;
 //CODE.bss:80079934
-void * ptr_allocation_1;
+struct ptr_1_s *ptr_allocation_1;
 
 
 // data

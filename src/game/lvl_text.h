@@ -17,6 +17,7 @@ struct jpncacheitem {
 
 extern s32 j_text_trigger;
 
+void langLoadToAddr(u32 id);
 void langTick(void);
 u8 * langGet(s32 slotID);
 void langLoadToBank(int id, u8 *target, int size);

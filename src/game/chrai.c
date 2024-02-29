@@ -2410,7 +2410,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         {
                             matrix_scalar_multiply(obj->model->scale, &matrix);
                         }
-                        sub_GAME_7F04088C(obj, pad, &matrix, pad->stan, pad);
+                        sub_GAME_7F04088C(obj, &pad->pos, &matrix, pad->stan, &pad->pos);
                         setupUpdateObjectRoomPosition(obj);
                     }
                     Offset += AI_MoveObject_LENGTH;

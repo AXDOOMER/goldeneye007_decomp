@@ -5259,49 +5259,31 @@ void removed_debug_roomblocks_feature(void)
 }
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03E6A0(void) {
+/**
+ * NTSC address 0x7F03E6A0.
+*/
+void sub_GAME_7F03E6A0(PropRecord *prop)
+{
+    struct LinkRecord *link;
+    struct ObjectRecord *obj;
 
+    obj = prop->obj;
+    
+    if (obj->runtime_bitflags & RUNTIMEBITFLAG_00000001)
+    {
+        for (link = g_LevelLoadPropSwitch; link != NULL; link = link->next)
+        {
+            if (prop == link->first)
+            {
+                if (link->second != NULL)
+                {
+                    doorActivateWrapper(link->second);
+                }
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03E6A0
-/* 0731D0 7F03E6A0 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0731D4 7F03E6A4 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0731D8 7F03E6A8 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0731DC 7F03E6AC AFB00014 */  sw    $s0, 0x14($sp)
-/* 0731E0 7F03E6B0 8C820004 */  lw    $v0, 4($a0)
-/* 0731E4 7F03E6B4 00808825 */  move  $s1, $a0
-/* 0731E8 7F03E6B8 3C108003 */  lui   $s0, %hi(g_LevelLoadPropSwitch)
-/* 0731EC 7F03E6BC 8C4E0064 */  lw    $t6, 0x64($v0)
-/* 0731F0 7F03E6C0 31CF0001 */  andi  $t7, $t6, 1
-/* 0731F4 7F03E6C4 51E00010 */  beql  $t7, $zero, .L7F03E708
-/* 0731F8 7F03E6C8 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 0731FC 7F03E6CC 8E100B00 */  lw    $s0, %lo(g_LevelLoadPropSwitch)($s0)
-/* 073200 7F03E6D0 5200000D */  beql  $s0, $zero, .L7F03E708
-/* 073204 7F03E6D4 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 073208 7F03E6D8 8E180004 */  lw    $t8, 4($s0)
-.L7F03E6DC:
-/* 07320C 7F03E6DC 56380007 */  bnel  $s1, $t8, .L7F03E6FC
-/* 073210 7F03E6E0 8E10000C */   lw    $s0, 0xc($s0)
-/* 073214 7F03E6E4 8E040008 */  lw    $a0, 8($s0)
-/* 073218 7F03E6E8 50800004 */  beql  $a0, $zero, .L7F03E6FC
-/* 07321C 7F03E6EC 8E10000C */   lw    $s0, 0xc($s0)
-/* 073220 7F03E6F0 0FC15667 */  jal   doorActivateWrapper
-/* 073224 7F03E6F4 00000000 */   nop   
-/* 073228 7F03E6F8 8E10000C */  lw    $s0, 0xc($s0)
-.L7F03E6FC:
-/* 07322C 7F03E6FC 5600FFF7 */  bnezl $s0, .L7F03E6DC
-/* 073230 7F03E700 8E180004 */   lw    $t8, 4($s0)
-/* 073234 7F03E704 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F03E708:
-/* 073238 7F03E708 8FB00014 */  lw    $s0, 0x14($sp)
-/* 07323C 7F03E70C 8FB10018 */  lw    $s1, 0x18($sp)
-/* 073240 7F03E710 03E00008 */  jr    $ra
-/* 073244 7F03E714 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
+
 
 
 bool doorIsPadlockFree(DoorRecord* door)
@@ -6554,7 +6536,7 @@ glabel scan_position_data_table_for_normal_object_at_preset
 
 
 
-ObjectRecord * sub_GAME_7F03FAB0(PadRecord * pad, s32 RoomID)
+ObjectRecord * sub_GAME_7F03FAB0(struct coord3d *pos, s32 RoomID)
 {
     s32 unused;
     rect4f * polygon;
@@ -6567,7 +6549,7 @@ ObjectRecord * sub_GAME_7F03FAB0(PadRecord * pad, s32 RoomID)
         if ((prop->type == 1) && (RoomID == prop->stan->room))
         {
             chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
-            if (chrpropTestPointInPolygon(&pad->pos, polygon, edges) != 0)
+            if (chrpropTestPointInPolygon(pos, polygon, edges) != 0)
             {
                 return (ObjectRecord *) prop->chr;
             }

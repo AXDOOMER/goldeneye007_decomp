@@ -15,6 +15,75 @@ struct bondstruct_unk_op07_related {
     s32 unk0C;
 };
 
+struct ptr_0_s {
+    s16 unk00;
+    s16 unk02;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0c;
+    void *unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2c;
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3c;
+    s32 unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4c;
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+    s32 unk5c;
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6c;
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    s32 unk7c;
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8c;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9c;
+    s32 unka0;
+    s32 unka4;
+    s32 unka8;
+    s32 unkac;
+    s32 unkb0;
+    s32 unkb4;
+    s32 unkb8;
+
+    // is this struct size 0xbc or 0xc0 ?
+    //s32 unkbc;
+};
+
+struct ptr_1_s {
+    s16 unk00;
+    s16 unk02;
+    s32 unk04;
+    s32 unk08;
+    s32 unk0c;
+    void *unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1c;
+};
+
+extern struct ptr_0_s *ptr_allocation_0;
+extern struct ptr_1_s *ptr_allocation_1;
+
 extern s32 g_ModelDistanceDisabled;
 extern f32 g_ModelDistanceScale;
 extern u32 g_ModelAnimMergingEnabled;

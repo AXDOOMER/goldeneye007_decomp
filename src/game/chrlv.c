@@ -254,22 +254,20 @@ s32 get_random_head(s32 id)
 */
 void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
 {
-    PadRecord *pad;
-    s32 unused2;
-    StandTile *sp54; // 84
-    s32 unused3;
-    ChrRecord *temp_v0_5;
-    PadRecord *sp48; // 72
-    PropRecord *temp_v0_4;
-    ChrModelFileRecord *cmfr;
+    struct PadRecord *pad;
+    struct ChrRecord *temp_v0_5;
+    struct StandTile *sp54; // 84
+    struct coord3d sp48; // 72
+    struct PropRecord *temp_v0_4;
+    struct ChrModelFileRecord *cmfr;
     f32 sp3C; // 60
-    Model *sp38; //56
+    struct Model *sp38; //56
     s32 bodyid;
     s32 headid;
 
     pad = &g_CurrentSetup.pads[arg1->PadID];
 
-    if (sub_GAME_7F056850(pad, pad->stan, 20.0f, (PadRecord *)&sp48, &sp54) != 0)
+    if (sub_GAME_7F056850(&pad->pos, pad->stan, 20.0f, &sp48, &sp54) != 0)
     {
         headid = -1;
         bodyid = (arg1->BodyID == 0xFFFF) 
@@ -289,7 +287,7 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
         if (sp38 != 0)
         {
             sp3C = atan2f(pad->look.f[0], pad->look.f[2]);
-            temp_v0_4 = chrAllocate(sp38, (PadRecord *)&sp48, sp3C, sp54, ailistFindById(arg1->AIListID));
+            temp_v0_4 = chrAllocate(sp38, &sp48, sp3C, sp54, ailistFindById(arg1->AIListID));
             
             if (temp_v0_4 != 0)
             {
@@ -320,8 +318,6 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
         }
     }
 }
-
-
 
 /**
  * Address 0x7F023910.

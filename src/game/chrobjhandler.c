@@ -823,6 +823,8 @@ u32 monAnim35Taser[] = {
 */
 struct unk_joint_list D_80031FD0 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
 
+
+
 // Forward declarations.
 
 s32 updateDoorDisplacement(DoorRecord* door);
@@ -1462,7 +1464,7 @@ void sub_GAME_7F0407F4(ObjectRecord* obj, coord3d* pos, Mtxf* matrix, StandTile*
 
 
 //moveToPad
-void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, StandTile *stan, PadRecord *pad2)
+void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix, StandTile *stan, struct coord3d *pos2)
 {
     int padd[1];
     ModelRoData_BoundingBoxRecord *modelBoundingBox;
@@ -1481,16 +1483,16 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
     {
         matrix_4x4_set_rotation_around_z(M_PI, &mtxcopy);
         matrix_4x4_multiply_in_place(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * ymin);
-        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * ymin);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * ymin);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * ymin);
+        newPos.y = pos2->f[1] - (mtxcopy.m[1][1] * ymin);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * ymin);
     }
     else if (baseobj->flags & 8)
     {
         matrix_4x4_copy(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
-        newPos.y = pad2->pos.y - (mtxcopy.m[1][1] * xmax);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * xmax);
+        newPos.y = pos2->f[1] - (mtxcopy.m[1][1] * xmax);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * xmax);
     }
     else
     {
@@ -1501,12 +1503,12 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
         f32 byrefC;
         f32 byrefD;
 
-        distfromTileCenter = stanGetPositionYValue(mStan, pad->pos.x, pad->pos.z);
+        distfromTileCenter = stanGetPositionYValue(mStan, pos->f[0], pos->f[2]);
 
         matrix_4x4_copy(matrix, &mtxcopy);
-        newPos.x = pad2->pos.x - (mtxcopy.m[1][0] * xmax);
-        newPos.z = pad2->pos.z - (mtxcopy.m[1][2] * xmax);
-        roomObj  = sub_GAME_7F03FAB0(pad, stan->room);
+        newPos.x = pos2->f[0] - (mtxcopy.m[1][0] * xmax);
+        newPos.z = pos2->f[2] - (mtxcopy.m[1][2] * xmax);
+        roomObj  = sub_GAME_7F03FAB0(pos, stan->room);
 
         if (roomObj)
         {
@@ -1529,13 +1531,13 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, PadRecord *pad, Mtxf *matrix, Stan
         }
     }
 
-    if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pad->pos.x, pad->pos.z, newPos.x, newPos.z))
+    if (!(baseobj->flags2 & 1) && walkTilesBetweenPoints_NoCallback(&mStan, pos->f[0], pos->f[2], newPos.x, newPos.z))
     {
         objChangeShading(baseobj, &newPos, &mtxcopy, mStan);
     }
     else
     {
-        objChangeShading(baseobj, pad, &mtxcopy, stan);
+        objChangeShading(baseobj, pos, &mtxcopy, stan);
         if ((baseobj->flags2 & 1) || (baseobj->flags & 0x1000))
         {
             baseobj->runtime_pos.x = newPos.x;
@@ -1658,9 +1660,9 @@ void objFree(ObjectRecord* obj, s32 freeprop, s32 canregen)
     else if (obj->type == PROPDEF_TINTED_GLASS)
     {
         TintedGlassRecord* record = (TintedGlassRecord*) obj;
-        if (record->unk8c >= 0)
+        if (record->portalnum >= 0)
         {
-            bgToggleDataPortalsContrlBytes1Bit1(record->unk8c, 1);
+            bgToggleDataPortalsContrlBytes1Bit1(record->portalnum, 1);
         }
     }
     else if (obj->type == PROPDEF_AIRCRAFT)
@@ -33187,7 +33189,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
         {
             BodyArmourRecord *armour = propobj;
             char *            text;
-            add_BONDdata_watch_armor(armour->Strength);
+            //add_BONDdata_watch_armor(armour->initialamount);
             sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
             if (showstring)
             {
@@ -36856,7 +36858,7 @@ PropRecord* complete_object_data_block_return_position_entry(WeaponObjRecord* ob
 }
 
 
-PropRecord* sub_GAME_7F051DD8(s32* arg0, ModelFileHeader* arg1)
+PropRecord* sub_GAME_7F051DD8(struct ObjectRecord* arg0, ModelFileHeader* arg1)
 {
     PropRecord* prop;
 
@@ -37235,10 +37237,6 @@ void chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand) //#MATCH
     }
 }
 
-
-
-
-#ifdef NONMATCHING
 WeaponObjRecord blank_08_object_preset_4001 = {
     0x0100, //extrascale
     0x0, //state
@@ -37268,43 +37266,52 @@ WeaponObjRecord blank_08_object_preset_4001 = {
     -1, //timer
     NULL //dualweapon
 };
-//https://decomp.me/scratch/pEmVO
-PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flags, WeaponObjRecord *Weapon, ItemModelFileRecord *PropItem) //#90.8%
+
+/**
+ * NTSC address 0x7F052214.
+*/
+PropRecord *something_with_generating_object(ChrRecord *self, s32 propid, ITEM_IDS itemid, s32 flags, WeaponObjRecord *weapon, ItemModelFileRecord *prop_header)
 {
-    ObjectRecord *objinst;
-    PropRecord   *lastobjentry;
+    Model *objinst;
+    PropRecord *lastobjentry;
 
-    if (!PropItem)
+    if (!prop_header)
     {
-        PropItem = &PitemZ_entries[PropID];
-        modelLoad(PropID); //move a0a1 and  t9,0xd4(sp) swapped here...
+        prop_header = PitemZ_entries[propid].header;
+        modelLoad(propid);
     }
+    
     lastobjentry = propAllocate();
-    objinst      = get_obj_instance_controller_for_header(PropItem);
+    objinst = get_obj_instance_controller_for_header((ModelFileHeader *)prop_header);
 
-    if (!Weapon)
+    if (!weapon)
     {
-        Weapon = weaponCreate(lastobjentry == NULL, objinst == NULL, PropItem);
+        weapon = weaponCreate(lastobjentry == NULL, objinst == NULL, (ModelFileHeader *)prop_header);
     }
+    
     if (!lastobjentry)
     {
         lastobjentry = propAllocate();
     }
+    
     if (!objinst)
     {
-        objinst = get_obj_instance_controller_for_header(PropItem);
+        objinst = get_obj_instance_controller_for_header((ModelFileHeader *)prop_header);
     }
-    if (Weapon && lastobjentry && objinst)
-    { //t regs out by 1
-        WeaponObjRecord New_Weapon = New_WeaponObjRecord(0);
-        *Weapon                    = New_Weapon;
+    
+    if (weapon && lastobjentry && objinst)
+    {
+        WeaponObjRecord new_weapon = blank_08_object_preset_4001;
+        *weapon = new_weapon;
 
-        Weapon->weaponnum = ItemID;
-        Weapon->obj       = PropID;
-        Weapon->flags     = flags | 0x4000;
-        Weapon->pad       = self->chrnum;
-        //match after here
-        lastobjentry      = sub_GAME_7F051F30(Weapon, self, PropItem, lastobjentry, objinst);
+        weapon->weaponnum = itemid;
+        weapon->obj = propid;
+        weapon->flags = flags | 0x4000;
+        
+        // pad = chrnum ???
+        weapon->pad = self->chrnum;
+
+        lastobjentry = sub_GAME_7F051F30(weapon, self, (ModelFileHeader *)prop_header, lastobjentry, objinst);
     }
     else
     {
@@ -37312,172 +37319,18 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 PropID, ITEM_I
         {
             clear_model_obj(objinst);
         }
+        
         if (lastobjentry)
         {
             chrpropFree(lastobjentry);
             lastobjentry = NULL;
         }
     }
+    
     return lastobjentry; //should be new weapon
 }
 
-#else
-WeaponObjRecord blank_08_object_preset_4001 = {
-    0x0100, //extrascale
-    0x0, //state
-    0x08, //type
-    0, //obj
-    0x4001, //pad
-    0x00000000, //flags
-    0, //flags2
-    NULL, //prop
-    NULL, //model
-    {
-       1.0f, 0.0f, 0.0f, 0.0f,
-       0.0f, 1.0f, 0.0f, 0.0f,
-       0.0f, 0.0f, 1.0f, 0.0f,
-       0.0f, 0.0f, 0.0f, 1.0f
-    }, //mtx
-    {0.0, 0.0, 0.0},//runtime_pos
-    {0x00000000}, //runtime_bitflags
-    NULL, //ptr_allocated_collisiondata_block
-    NULL, //projectile/embedment
-    0.0f, //maxdamage
-    1000.0f, //damage
-    { 0xFF, 0xFF, 0xFF, 0x00 }, // shadecol
-    { 0xFF, 0xFF, 0xFF, 0x00 }, // nextcol
-    ITEM_UNARMED, //weaponnu
-    -1, //LinkedWeaponType
-    -1, //timer
-    NULL //dualweapon
-};
-GLOBAL_ASM(
-.text
-glabel something_with_generating_object
-/* 086D44 7F052214 27BDFF40 */  addiu $sp, $sp, -0xc0
-/* 086D48 7F052218 8FAE00D4 */  lw    $t6, 0xd4($sp)
-/* 086D4C 7F05221C AFBF002C */  sw    $ra, 0x2c($sp)
-/* 086D50 7F052220 AFB20028 */  sw    $s2, 0x28($sp)
-/* 086D54 7F052224 AFB10024 */  sw    $s1, 0x24($sp)
-/* 086D58 7F052228 AFB00020 */  sw    $s0, 0x20($sp)
-/* 086D5C 7F05222C AFA400C0 */  sw    $a0, 0xc0($sp)
-/* 086D60 7F052230 AFA500C4 */  sw    $a1, 0xc4($sp)
-/* 086D64 7F052234 AFA600C8 */  sw    $a2, 0xc8($sp)
-/* 086D68 7F052238 15C0000A */  bnez  $t6, .L7F052264
-/* 086D6C 7F05223C AFA700CC */   sw    $a3, 0xcc($sp)
-/* 086D70 7F052240 0005C080 */  sll   $t8, $a1, 2
-/* 086D74 7F052244 0305C023 */  subu  $t8, $t8, $a1
-/* 086D78 7F052248 0018C080 */  sll   $t8, $t8, 2
-/* 086D7C 7F05224C 3C198004 */  lui   $t9, %hi(PitemZ_entries)
-/* 086D80 7F052250 0338C821 */  addu  $t9, $t9, $t8
-/* 086D84 7F052254 8F39A228 */  lw    $t9, %lo(PitemZ_entries)($t9)
-/* 086D88 7F052258 00A02025 */  move  $a0, $a1
-/* 086D8C 7F05225C 0FC15B0E */  jal   modelLoad
-/* 086D90 7F052260 AFB900D4 */   sw    $t9, 0xd4($sp)
-.L7F052264:
-/* 086D94 7F052264 0FC0E90C */  jal   propAllocate
-/* 086D98 7F052268 00000000 */   nop   
-/* 086D9C 7F05226C 00408825 */  move  $s1, $v0
-/* 086DA0 7F052270 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 086DA4 7F052274 8FA400D4 */   lw    $a0, 0xd4($sp)
-/* 086DA8 7F052278 8FB000D0 */  lw    $s0, 0xd0($sp)
-/* 086DAC 7F05227C 00409025 */  move  $s2, $v0
-/* 086DB0 7F052280 2E240001 */  sltiu $a0, $s1, 1
-/* 086DB4 7F052284 16000004 */  bnez  $s0, .L7F052298
-/* 086DB8 7F052288 2C450001 */   sltiu $a1, $v0, 1
-/* 086DBC 7F05228C 0FC1449B */  jal   weaponCreate
-/* 086DC0 7F052290 8FA600D4 */   lw    $a2, 0xd4($sp)
-/* 086DC4 7F052294 00408025 */  move  $s0, $v0
-.L7F052298:
-/* 086DC8 7F052298 16200004 */  bnez  $s1, .L7F0522AC
-/* 086DCC 7F05229C 00000000 */   nop   
-/* 086DD0 7F0522A0 0FC0E90C */  jal   propAllocate
-/* 086DD4 7F0522A4 00000000 */   nop   
-/* 086DD8 7F0522A8 00408825 */  move  $s1, $v0
-.L7F0522AC:
-/* 086DDC 7F0522AC 16400004 */  bnez  $s2, .L7F0522C0
-/* 086DE0 7F0522B0 00000000 */   nop   
-/* 086DE4 7F0522B4 0FC1B025 */  jal   get_obj_instance_controller_for_header
-/* 086DE8 7F0522B8 8FA400D4 */   lw    $a0, 0xd4($sp)
-/* 086DEC 7F0522BC 00409025 */  move  $s2, $v0
-.L7F0522C0:
-/* 086DF0 7F0522C0 12000034 */  beqz  $s0, .L7F052394
-/* 086DF4 7F0522C4 00000000 */   nop   
-/* 086DF8 7F0522C8 12200032 */  beqz  $s1, .L7F052394
-/* 086DFC 7F0522CC 00000000 */   nop   
-/* 086E00 7F0522D0 12400030 */  beqz  $s2, .L7F052394
-/* 086E04 7F0522D4 27A20030 */   addiu $v0, $sp, 0x30
-/* 086E08 7F0522D8 3C088003 */  lui   $t0, %hi(blank_08_object_preset_4001) 
-/* 086E0C 7F0522DC 2508221C */  addiu $t0, %lo(blank_08_object_preset_4001) # addiu $t0, $t0, 0x221c
-/* 086E10 7F0522E0 250A0084 */  addiu $t2, $t0, 0x84
-/* 086E14 7F0522E4 00405825 */  move  $t3, $v0
-.L7F0522E8:
-/* 086E18 7F0522E8 8D010000 */  lw    $at, ($t0)
-/* 086E1C 7F0522EC 2508000C */  addiu $t0, $t0, 0xc
-/* 086E20 7F0522F0 256B000C */  addiu $t3, $t3, 0xc
-/* 086E24 7F0522F4 AD61FFF4 */  sw    $at, -0xc($t3)
-/* 086E28 7F0522F8 8D01FFF8 */  lw    $at, -8($t0)
-/* 086E2C 7F0522FC AD61FFF8 */  sw    $at, -8($t3)
-/* 086E30 7F052300 8D01FFFC */  lw    $at, -4($t0)
-/* 086E34 7F052304 150AFFF8 */  bne   $t0, $t2, .L7F0522E8
-/* 086E38 7F052308 AD61FFFC */   sw    $at, -4($t3)
-/* 086E3C 7F05230C 8D010000 */  lw    $at, ($t0)
-/* 086E40 7F052310 00407025 */  move  $t6, $v0
-/* 086E44 7F052314 0200C025 */  move  $t8, $s0
-/* 086E48 7F052318 244D0084 */  addiu $t5, $v0, 0x84
-/* 086E4C 7F05231C AD610000 */  sw    $at, ($t3)
-.L7F052320:
-/* 086E50 7F052320 8DC10000 */  lw    $at, ($t6)
-/* 086E54 7F052324 25CE000C */  addiu $t6, $t6, 0xc
-/* 086E58 7F052328 2718000C */  addiu $t8, $t8, 0xc
-/* 086E5C 7F05232C AF01FFF4 */  sw    $at, -0xc($t8)
-/* 086E60 7F052330 8DC1FFF8 */  lw    $at, -8($t6)
-/* 086E64 7F052334 AF01FFF8 */  sw    $at, -8($t8)
-/* 086E68 7F052338 8DC1FFFC */  lw    $at, -4($t6)
-/* 086E6C 7F05233C 15CDFFF8 */  bne   $t6, $t5, .L7F052320
-/* 086E70 7F052340 AF01FFFC */   sw    $at, -4($t8)
-/* 086E74 7F052344 8DC10000 */  lw    $at, ($t6)
-/* 086E78 7F052348 02002025 */  move  $a0, $s0
-/* 086E7C 7F05234C 02203825 */  move  $a3, $s1
-/* 086E80 7F052350 AF010000 */  sw    $at, ($t8)
-/* 086E84 7F052354 8FB900C8 */  lw    $t9, 0xc8($sp)
-/* 086E88 7F052358 A2190080 */  sb    $t9, 0x80($s0)
-/* 086E8C 7F05235C 8FAF00C4 */  lw    $t7, 0xc4($sp)
-/* 086E90 7F052360 A60F0004 */  sh    $t7, 4($s0)
-/* 086E94 7F052364 8FA900CC */  lw    $t1, 0xcc($sp)
-/* 086E98 7F052368 352A4000 */  ori   $t2, $t1, 0x4000
-/* 086E9C 7F05236C AE0A0008 */  sw    $t2, 8($s0)
-/* 086EA0 7F052370 8FA800C0 */  lw    $t0, 0xc0($sp)
-/* 086EA4 7F052374 850B0000 */  lh    $t3, ($t0)
-/* 086EA8 7F052378 A60B0006 */  sh    $t3, 6($s0)
-/* 086EAC 7F05237C AFB20010 */  sw    $s2, 0x10($sp)
-/* 086EB0 7F052380 8FA600D4 */  lw    $a2, 0xd4($sp)
-/* 086EB4 7F052384 0FC147CC */  jal   sub_GAME_7F051F30
-/* 086EB8 7F052388 8FA500C0 */   lw    $a1, 0xc0($sp)
-/* 086EBC 7F05238C 1000000A */  b     .L7F0523B8
-/* 086EC0 7F052390 00408825 */   move  $s1, $v0
-.L7F052394:
-/* 086EC4 7F052394 12400003 */  beqz  $s2, .L7F0523A4
-/* 086EC8 7F052398 00000000 */   nop   
-/* 086ECC 7F05239C 0FC1B08D */  jal   clear_model_obj
-/* 086ED0 7F0523A0 02402025 */   move  $a0, $s2
-.L7F0523A4:
-/* 086ED4 7F0523A4 52200005 */  beql  $s1, $zero, .L7F0523BC
-/* 086ED8 7F0523A8 8FBF002C */   lw    $ra, 0x2c($sp)
-/* 086EDC 7F0523AC 0FC0E921 */  jal   chrpropFree
-/* 086EE0 7F0523B0 02202025 */   move  $a0, $s1
-/* 086EE4 7F0523B4 00008825 */  move  $s1, $zero
-.L7F0523B8:
-/* 086EE8 7F0523B8 8FBF002C */  lw    $ra, 0x2c($sp)
-.L7F0523BC:
-/* 086EEC 7F0523BC 02201025 */  move  $v0, $s1
-/* 086EF0 7F0523C0 8FB10024 */  lw    $s1, 0x24($sp)
-/* 086EF4 7F0523C4 8FB00020 */  lw    $s0, 0x20($sp)
-/* 086EF8 7F0523C8 8FB20028 */  lw    $s2, 0x28($sp)
-/* 086EFC 7F0523CC 03E00008 */  jr    $ra
-/* 086F00 7F0523D0 27BD00C0 */   addiu $sp, $sp, 0xc0
-)
-#endif
+
 
 
 
@@ -40422,7 +40275,53 @@ void handle_alarm_gas_timer_calldamage(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056690(void) {
+// https://decomp.me/scratch/COEsd 99.07%
+void sub_GAME_7F056690(void)
+{
+    Model *temp_s3;
+    PropRecord *var_s2;
+    ObjectRecord *temp_s1;
+    ModelNode *temp_v0_2;
+    struct ModelRoData_DisplayList_CollisionRecord *temp_s0;
+    
+    var_s2 = get_ptr_obj_pos_list_current_entry();
+
+    for (; var_s2 != NULL; var_s2 = var_s2->prev)
+    {
+        if ((var_s2->type == 1) && !(var_s2->flags & 2) )
+        {
+            temp_s1 = var_s2->obj;
+
+            if (temp_s1->state & 0x80)
+            {
+                temp_s3 = temp_s1->model;
+                temp_v0_2 = sub_GAME_7F04B478(temp_s1);
+
+                if (temp_v0_2 != NULL)
+                {
+                    temp_s0 = (struct ModelRoData_DisplayList_CollisionRecord *)temp_v0_2->Data;
+                    if (temp_s0 != NULL)
+                    {
+                        if (sub_GAME_7F04B590(temp_s1->model->obj, temp_v0_2))
+                        {
+                            // temp_s3->datas should be struct ModelRwData_DisplayList_CollisionRecord here.
+                            struct ModelRwData_DisplayList_CollisionRecord **cr = (struct ModelRwData_DisplayList_CollisionRecord**)temp_s3->datas;
+
+                            if (temp_s0->Vertices != (Vertex*)cr[temp_s0->RwDataIndex])
+                            {
+                                objFreePermanently(temp_s1, 1);
+                                return;
+                            }
+                        }
+                        
+                        //continue;
+                    }
+                }
+            }
+            
+           // break;
+        }
+    }
 
 }
 #else
@@ -40500,70 +40399,32 @@ glabel sub_GAME_7F056690
 
 
 
-#ifdef NONMATCHING
-void drop_inventory(void) {
+void drop_inventory(void)
+{
+    ChrRecord *playerchr;
+    PropRecord *prop;
+    enum ITEM_IDS item;
+    enum PROP propid;
 
+    playerchr = g_CurrentPlayer->prop->chr;
+    
+    chrSetWeaponFlag4(playerchr, GUNRIGHT);
+    chrSetWeaponFlag4(playerchr, GUNLEFT);
+
+    for (item = ITEM_FIST; item != ITEM_IDS_MAX; item++)
+    {
+        propid = getPropForHeldItem(item);
+        
+        if ((propid >= 0) && (bondinvHasInvItem(item) != 0))
+        {
+            prop = something_with_generating_object(playerchr, propid, item, 0x20000000, NULL, NULL);
+            
+            if (prop != NULL)
+            {
+                propobjSetDropped(prop, DROPTYPE_DEFAULT);
+                objDrop(prop);
+            }
+        }
+    }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel drop_inventory
-/* 08B2AC 7F05677C 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 08B2B0 7F056780 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer) 
-/* 08B2B4 7F056784 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 08B2B8 7F056788 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 08B2BC 7F05678C AFB40030 */  sw    $s4, 0x30($sp)
-/* 08B2C0 7F056790 AFB3002C */  sw    $s3, 0x2c($sp)
-/* 08B2C4 7F056794 AFB20028 */  sw    $s2, 0x28($sp)
-/* 08B2C8 7F056798 AFB10024 */  sw    $s1, 0x24($sp)
-/* 08B2CC 7F05679C AFB00020 */  sw    $s0, 0x20($sp)
-/* 08B2D0 7F0567A0 8DCF00A8 */  lw    $t7, 0xa8($t6)
-/* 08B2D4 7F0567A4 00002825 */  move  $a1, $zero
-/* 08B2D8 7F0567A8 8DF20004 */  lw    $s2, 4($t7)
-/* 08B2DC 7F0567AC 0FC1487A */  jal   chrSetWeaponFlag4
-/* 08B2E0 7F0567B0 02402025 */   move  $a0, $s2
-/* 08B2E4 7F0567B4 02402025 */  move  $a0, $s2
-/* 08B2E8 7F0567B8 0FC1487A */  jal   chrSetWeaponFlag4
-/* 08B2EC 7F0567BC 24050001 */   li    $a1, 1
-/* 08B2F0 7F0567C0 24100001 */  li    $s0, 1
-/* 08B2F4 7F0567C4 24140059 */  li    $s4, 89
-/* 08B2F8 7F0567C8 3C132000 */  lui   $s3, 0x2000
-.L7F0567CC:
-/* 08B2FC 7F0567CC 0FC26C91 */  jal   getPropForHeldItem
-/* 08B300 7F0567D0 02002025 */   move  $a0, $s0
-/* 08B304 7F0567D4 04400012 */  bltz  $v0, .L7F056820
-/* 08B308 7F0567D8 00408825 */   move  $s1, $v0
-/* 08B30C 7F0567DC 0FC230C5 */  jal   bondinvHasInvItem
-/* 08B310 7F0567E0 02002025 */   move  $a0, $s0
-/* 08B314 7F0567E4 1040000E */  beqz  $v0, .L7F056820
-/* 08B318 7F0567E8 02402025 */   move  $a0, $s2
-/* 08B31C 7F0567EC 02202825 */  move  $a1, $s1
-/* 08B320 7F0567F0 02003025 */  move  $a2, $s0
-/* 08B324 7F0567F4 02603825 */  move  $a3, $s3
-/* 08B328 7F0567F8 AFA00010 */  sw    $zero, 0x10($sp)
-/* 08B32C 7F0567FC 0FC14885 */  jal   something_with_generating_object
-/* 08B330 7F056800 AFA00014 */   sw    $zero, 0x14($sp)
-/* 08B334 7F056804 10400006 */  beqz  $v0, .L7F056820
-/* 08B338 7F056808 00408825 */   move  $s1, $v0
-/* 08B33C 7F05680C 00402025 */  move  $a0, $v0
-/* 08B340 7F056810 0FC12FF4 */  jal   propobjSetDropped
-/* 08B344 7F056814 24050001 */   li    $a1, 1
-/* 08B348 7F056818 0FC1304C */  jal   objDrop
-/* 08B34C 7F05681C 02202025 */   move  $a0, $s1
-.L7F056820:
-/* 08B350 7F056820 26100001 */  addiu $s0, $s0, 1
-/* 08B354 7F056824 1614FFE9 */  bne   $s0, $s4, .L7F0567CC
-/* 08B358 7F056828 00000000 */   nop   
-/* 08B35C 7F05682C 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 08B360 7F056830 8FB00020 */  lw    $s0, 0x20($sp)
-/* 08B364 7F056834 8FB10024 */  lw    $s1, 0x24($sp)
-/* 08B368 7F056838 8FB20028 */  lw    $s2, 0x28($sp)
-/* 08B36C 7F05683C 8FB3002C */  lw    $s3, 0x2c($sp)
-/* 08B370 7F056840 8FB40030 */  lw    $s4, 0x30($sp)
-/* 08B374 7F056844 03E00008 */  jr    $ra
-/* 08B378 7F056848 27BD0038 */   addiu $sp, $sp, 0x38
-)
-#endif
-
-
 

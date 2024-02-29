@@ -527,8 +527,6 @@ typedef union
         struct BetaStandFilePoint points[];
     } BetaStandTile;
 
-    StandTilePoint *stanMatchTileName(char *);
-
 #pragma endregion
 
 //Animation controller located in initobjects.h
@@ -1245,6 +1243,12 @@ typedef union
             Gfx *gdl;
         } ModelRwData_DisplayList_CollisionRecord;
 
+        // placeholder struct when need to access offset but don't know type.
+        struct ModelRwData_Raw
+        {
+            s32 unk00;
+        };
+
     #pragma endregion Model Node OpCode Definitions
 
     /*
@@ -1289,6 +1293,7 @@ typedef union
         struct ModelRwData_SwitchRecord Switch;
         struct ModelRwData_HeadPlaceholderRecord HeadPlaceholder;
         struct ModelRwData_DisplayList_CollisionRecord DisplayListCollisions;
+        struct ModelRwData_Raw Raw;
     };
 
 
@@ -2998,7 +3003,7 @@ typedef union
     typedef struct CCTVRecord
     {
         struct ObjectRecord;
-        s32 unk80;
+        s32 pad;
         Mtxf unk84;
         f32 unkC4;
         f32 unkC8;
@@ -3010,7 +3015,7 @@ typedef union
         f32 unkDC;
         
         s32 timer; // 0xe0
-        s32 unkE4;
+        s32 convert_to_f32;
         f32 unkE8;
         s32 unkEC;
         
@@ -3175,9 +3180,18 @@ typedef union
     // PROPDEF_LINK (14)
     typedef struct LinkRecord
     {
-        inherits PropDefHeaderRecord;
-        s32      Index1;
-        s32      Index2;
+        struct PropDefHeaderRecord;
+        union
+        {
+            struct PropRecord *first;
+            s32 Index1;
+        };
+        union
+        {
+            struct PropRecord *second;
+            s32 Index2;
+        };
+        struct LinkRecord *next;
     } LinkRecord;
     #define New_LinkRecord(ID1, ID2)                      \
         {                                                 \
@@ -3207,6 +3221,8 @@ typedef union
         }
 
     // PROPDEF_SWITCH (19) - see LinkRecord
+    typedef LinkRecord SwitchRecord;
+
     #define New_SwitchRecord(ID1, ID2)                    \
         {                                                 \
             New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
@@ -3216,7 +3232,7 @@ typedef union
     typedef struct MultiAmmoCrateRecord
     {
         inherits ObjectRecord;
-        s16      unk80;
+        u16      unk80;
         u16      quantities[AMMOTYPE_GLOBAL_MAX]; // indexed by ammotype /*0x80*/
     } MultiAmmoCrateRecord;
     #define New_MultiAmmoCrateRecord(pad)           \
@@ -3228,7 +3244,8 @@ typedef union
     typedef struct BodyArmourRecord
     {
         inherits ObjectRecord;
-        u32      Strength;
+        f32 initialamount;
+        f32 amount;
     } BodyArmourRecord;
     #define New_BodyArmourRecord(pad)               \
         {                                           \
@@ -3402,7 +3419,15 @@ typedef union
     typedef struct RenameObjectRecord
     {
         inherits PropDefHeaderRecord;
-        //u16 TagID;
+        s32 TagID;
+        s32 unk08;
+        s32 unk0c;
+        s32 unk10;
+        s32 unk14;
+        s32 unk18;
+        s32 unk1c;
+        s32 unk20;
+        ObjectRecord *renobj;
     } RenameObjectRecord;
     #define New_RenameObjectRecord(TagID)          \
         {                                          \
@@ -3413,10 +3438,17 @@ typedef union
     typedef struct LockDoorRecord
     {
         inherits PropDefHeaderRecord;
-        struct DoorRecord*     door;
-        struct ObjectRecord*   lock;
+        union
+        {
+            struct DoorRecord*     door;
+            s32 Index1;
+        };
+        union
+        {
+            struct ObjectRecord*   lock;
+            s32 Index2;
+        };
         struct LockDoorRecord* next;
-        //u16 TagID;
     } LockDoorRecord;
     #define New_RenameObjectRecord(TagID)          \
         {                                          \
@@ -3467,7 +3499,7 @@ typedef union
         f32           speedaim;        /*0x9c*/
         f32           speedtime60;     /*0xa0*/
         f32           yrot;            /*0xa4*/
-        f32           nextstep;        /*0xa8*/
+        s32           nextstep;        /*0xa8*/
         PathRecord   *path;            /*0xac*/
         struct ALSoundState *Sound;           /*0xb0*/
     } AircraftRecord;
@@ -3496,9 +3528,18 @@ typedef union
     typedef struct SafeObjectRecord
     {
         u32 unk00;
-        struct ObjectRecord *item;
-        struct SafeRecord *safe;
-        struct DoorRecord *door;
+        union {
+            struct ObjectRecord *item;
+            s32 Index1;
+        };
+        union {
+            struct SafeRecord *safe;
+            s32 Index2;
+        };
+        union {
+            struct DoorRecord *door;
+            s32 Index3;
+        };
         struct SafeObjectRecord *next;
     } SafeObjectRecord;
 
@@ -3558,7 +3599,7 @@ typedef union
         s32      TintDist;
         s32      CullDist;
         s32      calculatedopacity;
-        s32      unk8c;
+        s32      portalnum;
         f32      unk90;
     } TintedGlassRecord;
     #define New_TintedGlassRecord(pad)              \
@@ -3803,32 +3844,39 @@ struct SetupIntroCredits
 #pragma endregion Player
 
 #pragma region stagesetup.h
-        typedef struct stagesetup
-        {
-            waypoint       *pathwaypoints;
-            waygroup       *waypointgroups;
-            struct SetupIntroEmpty *intro;
-            PropDefHeaderRecord    *propDefs;
-            PathRecord     *patrolpaths;
-            AIListRecord   *ailists;
-            PadRecord      *pads;
-            BoundPadRecord *boundpads;
-            char           *padnames;
-            char           *boundpadnames;
-        } stagesetup;
+    struct pname {
+        union {
+            char *p;
+            s32 offset;
+        };
+    };
+
+    typedef struct stagesetup
+    {
+        waypoint       *pathwaypoints;
+        waygroup       *waypointgroups;
+        struct SetupIntroEmpty *intro;
+        PropDefHeaderRecord    *propDefs;
+        PathRecord     *patrolpaths;
+        AIListRecord   *ailists;
+        PadRecord      *pads;
+        BoundPadRecord *boundpads;
+        struct pname *padnames;
+        struct pname *boundpadnames;
+    } stagesetup;
 
 
 #pragma endregion stagesetup.h
 
-        typedef struct sfxRecord //Need 24 size
-        {
-            ALSoundState *state; //0
-            s32           Volume2;   //4
-            s32           sfxID;     //8
-            s32           Volume;    //12
-            coord3d      *pos;       //16
-            ObjectRecord *Obj;       //20
-        } sfxRecord;
+    typedef struct sfxRecord //Need 24 size
+    {
+        ALSoundState *state; //0
+        s32           Volume2;   //4
+        s32           sfxID;     //8
+        s32           Volume;    //12
+        coord3d      *pos;       //16
+        ObjectRecord *Obj;       //20
+    } sfxRecord;
 
 
 
@@ -3958,6 +4006,13 @@ struct unkown_gun_struct
     };
 };
 
+struct setup_objective_text {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    struct setup_objective_text *next;
+};
+
 /* matches Perfect Dark */
 struct criteria_roomentered {
     u32 unk00;
@@ -3965,6 +4020,7 @@ struct criteria_roomentered {
     u32 status;
     struct criteria_roomentered *next;
 };
+
 
 /* completely made up */
 struct criteria_deposit {
@@ -3992,6 +4048,23 @@ struct FolderSelect {
     s32 unk00;
     s32 unk04;
     s32 unk08;
+};
+
+struct damage_display_val {
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
+    s16 unk08;
+    s16 unk0A;
+    s8 unk0C;
+    s8 unk0D;
+    s8 unk0E;
+    s8 unk0F;
+};
+
+struct damage_display_parent {
+    struct damage_display_val items[2];
 };
 
 #endif

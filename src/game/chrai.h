@@ -250,6 +250,7 @@ extern struct object_animation_controller g_UnknownAnimController;
 extern struct object_animation_controller g_TaserAnimController;
 
 extern stagesetup                        *g_ptrStageSetupFile;
+extern char *setup_text_pointers[];
 
 void          alarmDeactivate(void);
 s32           chraiitemsize(u8 *AIList, s32 offset);
@@ -263,6 +264,7 @@ bool          bond_interact_object(void);
 void          sub_GAME_7F03D0D4(void);
 void          chrpropRegisterRoom(PropRecord *, s16);
 PropRecord*           propAllocate();
+void chrpropReparent(PropRecord *newChild, PropRecord *host);
 void          chrpropDeregisterRooms(PropRecord *);
 void          sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
 void          chrpropRegisterRooms(PropRecord *posData);
@@ -287,7 +289,7 @@ f32           chrpropBBOXGetXmin(ModelRoData_BoundingBoxRecord *modelBoundingBox
 f32           chrpropBBOXGetYmin(ModelRoData_BoundingBoxRecord *modelBoundingBox);
 f32           chrpropBBOXGetYmax(ModelRoData_BoundingBoxRecord *modelBoundingBox);
 f32           chrpropBBOXGetZmin(ModelRoData_BoundingBoxRecord *modelBoundingBox);
-ObjectRecord *sub_GAME_7F03FAB0(PadRecord *pad, s32 RoomID);
+ObjectRecord *sub_GAME_7F03FAB0(struct coord3d *pos, s32 RoomID);
 void          chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4);
 void chrpropGetCollisionBounds(PropRecord *arg0, f32 *arg1, f32 *arg2, f32 *arg3);
 f32 sub_GAME_7F03CFE8(PropRecord *arg0);
@@ -299,4 +301,5 @@ f32 chrpropSumMatrixPosZ(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1)
 f32 chrpropSumMatrixNegZ(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1);
 void sub_GAME_7F03F540(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf *arg1, struct rect4f* arg2, struct collision_data *arg3);
 void sub_GAME_7F03F948(struct coord3d *arg0, struct coord2d *arg1, struct coord2d *arg2, struct coord2d *arg3, struct coord2d *arg4);
+void sub_GAME_7F03E6A0(PropRecord *prop);
 #endif

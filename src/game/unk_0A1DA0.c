@@ -1123,8 +1123,88 @@ glabel sub_GAME_7F0A2C44
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0A2F30(void) {
+// https://decomp.me/scratch/68YEL 85.92%
+void sub_GAME_7F0A2F30(struct damage_display_parent *arg0, s32 arg1, s32 arg2, f32 arg3)
+{
+    s32 sp80;
+    f32 sp74;
+    s32 i;
+    s32 var_s4;
+    
+    f32 temp_f24; // is this real? (probably)
+    
+    f32 temp_f4; // is this real? (maybe not)
+    s16 temp_s1;  // is this real? (maybe not)
 
+    arg3 *= 8.0f;
+    sp74 = (f32) arg2;
+    sp80 = 0;
+
+    for (i=0; i<23; i++)
+    {
+        temp_f24 = ((f32) (s32) (142.5 - (f64) sp80) * 3.1415927f * 2.0f) / 360.0f;
+        
+        for (var_s4 = 0; var_s4 < 2; var_s4++)
+        {
+            temp_s1 = (s16) (s32) (((sinf(temp_f24) * 4.0f * 130.0f * (6 - var_s4)) / 5.0f) * sp74);
+            temp_f4 = cosf(temp_f24) * 4.0f;
+
+            arg0[i].items[var_s4].unk00 = (temp_s1 + 1);
+            arg0[i].items[var_s4].unk02 = 0;
+            arg0[i].items[var_s4].unk04 = (s16) -(s32) (((temp_f4) * 130.0f * (6 - var_s4)) / 5.0f);
+            arg0[i].items[var_s4].unk06 = 0;
+            arg0[i].items[var_s4].unk08 = 0;
+            arg0[i].items[var_s4].unk0A = 0;
+            arg0[i].items[var_s4].unk0C = 0xFF;
+            arg0[i].items[var_s4].unk0D = 0xFF;
+            arg0[i].items[var_s4].unk0E = 0xFF;
+
+            if (arg2 > 0)
+            {
+                arg0[i].items[var_s4].unk0C = 96.0f - (cosf(temp_f24) * 96.0f);
+                arg0[i].items[var_s4].unk0D = 127.0f - (cosf(temp_f24) * 127.0f);
+                arg0[i].items[var_s4].unk0E = 0xFF;
+            }
+            else if (arg2 < 0)
+            {
+                arg0[i].items[var_s4].unk0D = 127.0f - (cosf(temp_f24) * 127.0f);
+                arg0[i].items[var_s4].unk0E = 32.0f - (cosf(temp_f24) * 32.0f);
+            }
+
+            if (i < 10)
+            {
+                if ((((s32) arg3 * 2) - 1) >= i)
+                {
+                    arg0[i].items[var_s4].unk0F = 0xFF;
+                }
+                else if ((i < (s32) (2.0f * arg3)) && ((((s32) arg3 * 2) - 1) < i))
+                {
+                    arg0[i].items[var_s4].unk0F = (s8) ((s32) ((arg3 - (f32) (s32) arg3) * 207.0f) + 0x30);
+                }
+                else
+                {
+                    arg0[i].items[var_s4].unk0F = 0x30;
+                }
+            }
+            else if (i >= 10)
+            {
+                if ((f32) i <= (9.0f + ((arg3 - 5.0f) * 4.0f)))
+                {
+                    arg0[i].items[var_s4].unk0F = 0xFF;
+                }
+                else if ((((s32) (((arg3 - 5.0f) * 4.0f) + 0.5f) + 9) >= i) && ((((s32) (arg3 - 5.0f) * 2) + 8) < i))
+                {
+                    arg0[i].items[var_s4].unk0F = (s8) ((s32) ((arg3 - (f32) (s32) arg3) * 207.0f) + 0x30);
+                }
+                else
+                {
+                    arg0[i].items[var_s4].unk0F = 0x30;
+                }
+            }
+        }
+
+        sp80 += 5;
+    }
 }
 #else
 
