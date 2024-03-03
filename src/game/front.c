@@ -2096,13 +2096,13 @@ void load_walletbond(void)
         {
             struct unk_walletbond_struct *srecord;
             struct unk_walletbond_struct_b *b;
-            s32 arg0;
-
+            Gfx *arg0;
+            
             b = (struct unk_walletbond_struct_b *)mnode;
             srecord = b->unk04;
 
-            arg0 = srecord->unk1C + (srecord->unk00 & 0xffffff);
-            bgLoadFromDynamicCCRMLUT(arg0, 0, 8);
+            arg0 = (s32)srecord->unk1C + (srecord->unk00 & 0xffffff);
+            bgLoadFromDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
         }
     }
 }
