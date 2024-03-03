@@ -40275,7 +40275,53 @@ void handle_alarm_gas_timer_calldamage(void)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F056690(void) {
+// https://decomp.me/scratch/COEsd 99.07%
+void sub_GAME_7F056690(void)
+{
+    Model *temp_s3;
+    PropRecord *var_s2;
+    ObjectRecord *temp_s1;
+    ModelNode *temp_v0_2;
+    struct ModelRoData_DisplayList_CollisionRecord *temp_s0;
+    
+    var_s2 = get_ptr_obj_pos_list_current_entry();
+
+    for (; var_s2 != NULL; var_s2 = var_s2->prev)
+    {
+        if ((var_s2->type == 1) && !(var_s2->flags & 2) )
+        {
+            temp_s1 = var_s2->obj;
+
+            if (temp_s1->state & 0x80)
+            {
+                temp_s3 = temp_s1->model;
+                temp_v0_2 = sub_GAME_7F04B478(temp_s1);
+
+                if (temp_v0_2 != NULL)
+                {
+                    temp_s0 = (struct ModelRoData_DisplayList_CollisionRecord *)temp_v0_2->Data;
+                    if (temp_s0 != NULL)
+                    {
+                        if (sub_GAME_7F04B590(temp_s1->model->obj, temp_v0_2))
+                        {
+                            // temp_s3->datas should be struct ModelRwData_DisplayList_CollisionRecord here.
+                            struct ModelRwData_DisplayList_CollisionRecord **cr = (struct ModelRwData_DisplayList_CollisionRecord**)temp_s3->datas;
+
+                            if (temp_s0->Vertices != (Vertex*)cr[temp_s0->RwDataIndex])
+                            {
+                                objFreePermanently(temp_s1, 1);
+                                return;
+                            }
+                        }
+                        
+                        //continue;
+                    }
+                }
+            }
+            
+           // break;
+        }
+    }
 
 }
 #else

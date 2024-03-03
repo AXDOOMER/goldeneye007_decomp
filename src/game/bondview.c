@@ -16437,14 +16437,12 @@ s32 sub_GAME_7F0898E8(void)
 
 
 
-
-
 /**
  * @param damage_amount: damage amount
  * @param vectorx: damage source x coordinate
  * @param vectorz: damage source y coordinate
  * @param playerid: player index of player causing the damage
- * @param affects_armor: boolean, does the damage apply to body armor (e.g. false when gas)
+ * @param arg4: boolean, does the damage apply to body armor (e.g. false when gas)
  *
  * Address US 7F08991C.
  * Address EU 7F089A84.
@@ -16541,9 +16539,14 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
                                 sp28 = 1;
                             }
 
+#if defined(VERSION_EU) || defined(VERSION_JP)
+                            drop_inventory();
+#endif
                             if (sp2C != playerid)
                             {
+#if defined(VERSION_US)
                                 drop_inventory();
+#endif
                                 increment_num_deaths();
                             }
 
@@ -16574,15 +16577,30 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
                     }
                 }
 
-                if (g_CurrentPlayer->damageshowtime < 0)
+#if defined(VERSION_EU) || defined(VERSION_JP)
+    #define ZERO_7F08991C 0.0f
+#else
+    #define ZERO_7F08991C 0
+#endif
+                if (g_CurrentPlayer->damageshowtime < ZERO_7F08991C)
                 {
                     g_CurrentPlayer->bondshotspeed.x = g_CurrentPlayer->bondshotspeed.x + 2.0f * vectorx;
                     g_CurrentPlayer->bondshotspeed.z = g_CurrentPlayer->bondshotspeed.z + 2.0f * vectorz;
                 }
 
-                g_CurrentPlayer->damageshowtime = 0;
-                g_CurrentPlayer->healthshowtime = 0;
+                g_CurrentPlayer->damageshowtime = ZERO_7F08991C;
+                g_CurrentPlayer->healthshowtime = ZERO_7F08991C;
+
+#undef ZERO_7F08991C
+
+#if defined(VERSION_EU) || defined(VERSION_JP)
+                if (!lvlGetControlsLockedFlag())
+                {
+                    sndPlaySfx(g_musicSfxBufferPtr, 0x44, 0);
+                }
+#else
                 sndPlaySfx(g_musicSfxBufferPtr, 0x44, 0);
+#endif
             }
         }
     }
