@@ -2,6 +2,7 @@
 
 #include <bondtypes.h>
 #include "chrai.h"
+#include "chrobjhandler.h"
 #include "cleanup_objects.h"
 #include "loadobjectmodel.h"
 
@@ -14,45 +15,48 @@
  * - identical instructions: fail
  * - identical registers: fail
  * 
- * notes: something wrong with the comparison to 0x38. Also the first compare to NULL is wrong.
+ * https://decomp.me/scratch/TMJpd 78.79%
  */
 void cleanupObjects(s32 stage)
 {
-    object_standard *obj = g_CurrentSetup.propDefs;
-
+    PropDefHeaderRecord *obj;
+    
+    obj = g_CurrentSetup.propDefs;
+    
     if (obj != NULL)
     {
-        for (; obj->type != 0x30;)
+        while (obj->type != PROPDEF_END)
         {
             switch (obj->type)
             {
-                case 1:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case 17:
-                case 20:
-                case 21:
-                case 36:
-                case 39:
-                case 40:
-                case 41:
-                case 42:
-                case 43:
-                case 45:
-                case 47:
+                case PROPDEF_DOOR:
+                case PROPDEF_PROP:
+                case PROPDEF_KEY:
+                case PROPDEF_ALARM:
+                case PROPDEF_CCTV:
+                case PROPDEF_MAGAZINE:
+                case PROPDEF_COLLECTABLE:
+                case PROPDEF_MONITOR:
+                case PROPDEF_MULTI_MONITOR:
+                case PROPDEF_RACK:
+                case PROPDEF_AUTOGUN:
+                case PROPDEF_HAT:
+                case PROPDEF_AMMO:
+                case PROPDEF_ARMOUR:
+                case PROPDEF_GAS_RELEASING:
+                case PROPDEF_VEHICHLE:
+                case PROPDEF_AIRCRAFT:
+                case PROPDEF_UNK41:
+                case PROPDEF_GLASS:
+                case PROPDEF_SAFE:
+                case PROPDEF_TANK:
+                case PROPDEF_TINTED_GLASS:
                     objFreePermanently((ObjectRecord *)obj, 1);
                     break;
             }
 
-            obj = &(((s32*)obj)[sizepropdef(obj)]);
+            //obj = (PropDefHeaderRecord *)((u32*)obj + sizepropdef(obj));
+            obj = sizepropdef(obj) + obj;
         }
     }
 }
