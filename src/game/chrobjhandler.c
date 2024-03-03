@@ -39292,7 +39292,7 @@ bool sub_GAME_7F054D6C(PropRecord *prop, coord3d *pos, f32 arg2, bool arg3)
 
     while (roomnum >= 0)
     {
-        if (getROOMID_Bitflags(roomnum) != 0)
+        if (getROOMID_isRendered(roomnum) != 0)
         {
             if (fogPositionIsVisibleThroughFog(pos, arg2) && (!arg3 || sub_GAME_7F054C58(pos, arg2)))
             {
