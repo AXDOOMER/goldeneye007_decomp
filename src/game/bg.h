@@ -116,6 +116,7 @@ extern f32 room_data_float2;
 extern bg_room_data * ptr_bgdata_room_fileposition_list;
 extern s_room_info array_room_info[];
 extern Gfx *ptrDynamic_CC_RM_LUT[];
+extern Gfx DL_LUT_PRIMARY_ADDFOG[];
 
 
 void bgInit(void);
