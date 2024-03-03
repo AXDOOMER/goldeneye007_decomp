@@ -528,7 +528,7 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 
                     for (rp = sp48; *rp >= 0; rp++)
                     {
-                        if (getROOMID_Bitflags(*rp))
+                        if (getROOMID_isRendered(*rp))
                         {
                             if (roomid == *rp)
                             {
@@ -567,7 +567,7 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 
                 for (rp = sp48; *rp >= 0; rp++)
                 {
-                    if (getROOMID_Bitflags(*rp))
+                    if (getROOMID_isRendered(*rp))
                     {
                         if (roomid == *rp)
                         {
@@ -672,7 +672,7 @@ glabel chrpropsRenderPass
 /* 06F328 7F03A7F8 00000000 */   nop   
 /* 06F32C 7F03A7FC 8D440000 */  lw    $a0, ($t2)
 .L7F03A800:
-/* 06F330 7F03A800 0FC2D794 */  jal   getROOMID_Bitflags
+/* 06F330 7F03A800 0FC2D794 */  jal   getROOMID_isRendered
 /* 06F334 7F03A804 00000000 */   nop   
 /* 06F338 7F03A808 50400007 */  beql  $v0, $zero, .L7F03A828
 /* 06F33C 7F03A80C 8E040004 */   lw    $a0, 4($s0)
@@ -726,7 +726,7 @@ glabel chrpropsRenderPass
 /* 06F3E8 7F03A8B8 00000000 */   nop   
 /* 06F3EC 7F03A8BC 8F040000 */  lw    $a0, ($t8)
 .L7F03A8C0:
-/* 06F3F0 7F03A8C0 0FC2D794 */  jal   getROOMID_Bitflags
+/* 06F3F0 7F03A8C0 0FC2D794 */  jal   getROOMID_isRendered
 /* 06F3F4 7F03A8C4 00000000 */   nop   
 /* 06F3F8 7F03A8C8 50400007 */  beql  $v0, $zero, .L7F03A8E8
 /* 06F3FC 7F03A8CC 8E040004 */   lw    $a0, 4($s0)
