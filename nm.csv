@@ -237,7 +237,6 @@ src/game/chr.c, disable_sounds_attached_to_player_then_something, 300
 src/game/stan.c, sub_GAME_7F0AF638, 296
 src/game/objecthandler.c, sub_GAME_7F06B120, 296
 src/game/music_0D2720.c, getmusictrack_or_randomtrack, 296
-src/game/math_sincos.s, sinf, 292
 src/game/chrprop.c, sub_GAME_7F03DA50, 288
 src/game/stan.c, sub_GAME_7F0AF808, 284
 src/game/model.c, sub_GAME_7F06D1CC, 280
@@ -368,4 +367,3 @@ src/game/gun.c, sub_GAME_7F0634FC, 32
 src/boot.c, jump_decompressfile, 24
 src/game/chrObjRandom.c, chrObjRandomSetSeed, 24
 src/random.c, randomSetSeed, 20
-src/game/math_sincos.s, cosf, 12
