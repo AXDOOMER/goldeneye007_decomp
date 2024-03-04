@@ -617,25 +617,11 @@ Gfx DL_LUT_FIXFOGALPHA3[] = {
 };
 
 //D:80044D88
-s32 *ptrDynamic_CC_RM_LUT[] = {
+Gfx *ptrDynamic_CC_RM_LUT[] = {
     &DL_LUT_UNKNOWN, &DL_LUT_PRIMARY_ADDFOG, &DL_LUT_BILLBOARD, &DL_LUT_WATER, &DL_LUT_CLOUD,
     &DL_LUT_SECONDARY_ADDFOG, &DL_LUT_PRIMARY, &DL_LUT_SECONDARY, &DL_LUT_WALLETBOND, &DL_LUT_FIXFOGALPHA3
 };
-enum CCRMLUT
-{
-    CCRMLUT_UNKNOWN,
-    CCRMLUT_PRIMARY_ADDFOG,
-    CCRMLUT_BILLBOARD,
-    CCRMLUT_WATER,
-    CCRMLUT_CLOUD,
-    CCRMLUT_SECONDARY_ADDFOG,
-    CCRMLUT_PRIMARY,
-    CCRMLUT_SECONDARY,
-    CCRMLUT_WALLETBOND,
-    CCRMLUT_FIXFOGALPHA3
-};
-//D:80044DB0
-s32 D_80044DB0 = 0;
+
 
 
 // rodata
@@ -922,7 +908,7 @@ void sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize,s32 next)
 {
     int i;
     
-    array_room_info[curroom].bitflags0 = '\x01';
+    array_room_info[curroom].room_rendered = '\x01';
     
     if (array_room_info[curroom].room_loaded_mask == '\0') {
         for (i = 0; i < g_BgNumberOfRoomsDrawn; i++)
@@ -1161,9 +1147,9 @@ glabel sub_GAME_7F0B39BC
 
 
 
-void bgZeroBitflags2ForRoom(s32 roomnum)
+void bgZeroPortalsToRoom(s32 roomnum)
 {
-  array_room_info[roomnum].bitflags2 = '\0';
+  array_room_info[roomnum].portals_to_room_count = '\0';
 }
 
 
@@ -1178,7 +1164,7 @@ s32 sub_GAME_7F0B3B20(void)
     
     for (i=0;i<MAXROOMCOUNT;i++)
     {
-        if (array_room_info[i].bitflags2) {
+        if (array_room_info[i].portals_to_room_count) {
             return i;
         };
     }
@@ -1198,7 +1184,7 @@ void sub_GAME_7F0B3BC4(void)
   g_BgNumberOfRoomsDrawn = 0;
   for (i=0;i!=MAXROOMCOUNT;i++)
   {
-    array_room_info[i].bitflags2 = '\0';
+    array_room_info[i].portals_to_room_count = '\0';
   }
 }
 #else
@@ -3008,7 +2994,7 @@ f32 bgGetLevelVisibilityScale(void) {
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B4884(void) {
+void bgRoomVisibilityRelated(void) {
 
 }
 #else
@@ -3027,7 +3013,7 @@ glabel jpt_80058C58
 .word .L7F0B4914
 
 .text
-glabel sub_GAME_7F0B4884
+glabel bgRoomVisibilityRelated
 /* 0E93B4 7F0B4884 27BDFFC0 */  addiu $sp, $sp, -0x40
 /* 0E93B8 7F0B4888 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E93BC 7F0B488C AFB60030 */  sw    $s6, 0x30($sp)
@@ -4854,17 +4840,17 @@ s32 getMaxNumRooms(void) {
 /*
  * Return butflags0 (confirmed u8)
  */
-u8 getROOMID_Bitflags(s32 roomID)
+u8 getROOMID_isRendered(s32 roomID)
 {
-    return array_room_info[roomID].bitflags0;
+    return array_room_info[roomID].room_rendered;
 }
 
 /*
  * Return butflags1 (confirmed u8)
  */
-u8 getROOMID_Bitflags1(s32 roomID)
+u8 getROOMID_isNeighborToRendered(s32 roomID)
 {
-    return array_room_info[roomID].bitflags1;
+    return array_room_info[roomID].room_neighbor_to_rendered;
 }
 
 
@@ -8397,13 +8383,13 @@ u8 sub_GAME_7F0B7DA8(s32 arg0)
     u8 out;
 
     room_info = &array_room_info[arg0];
-    bitflags = room_info->bitflags2;
+    bitflags = room_info->portals_to_room_count;
     out = bitflags;
 
     if ((s32) bitflags < 0xFF)
     {
         tmp_flags = bitflags + 1;
-        room_info->bitflags2 = tmp_flags;
+        room_info->portals_to_room_count = tmp_flags;
         out = tmp_flags & 0xFF;
     }
 

@@ -1853,7 +1853,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai = AiListp + Offset;
  
-                    if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan))) //embedded func to match, must be s32 not u8
+                    if (getROOMID_isRendered(getTileRoom(ChrEntityp->prop->stan))) //embedded func to match, must be s32 not u8
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }

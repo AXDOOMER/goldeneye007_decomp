@@ -4719,7 +4719,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
 
         for (i=0; i<20; i++)
         {
-            if (ptr_scorch_buf[i].roomid >= 0 && getROOMID_Bitflags(ptr_scorch_buf[i].roomid))
+            if (ptr_scorch_buf[i].roomid >= 0 && getROOMID_isRendered(ptr_scorch_buf[i].roomid))
             {
                 if (phi_s3 != ptr_scorch_buf[i].roomid)
                 {
@@ -5547,7 +5547,7 @@ glabel explosionRenderBulletImpactOnProp
 /* 0D6688 7F0A1B58 26940050 */   addiu $s4, $s4, 0x50
 /* 0D668C 7F0A1B5C 56C00008 */  bnezl $s6, .L7F0A1B80
 /* 0D6690 7F0A1B60 8FB90068 */   lw    $t9, 0x68($sp)
-/* 0D6694 7F0A1B64 0FC2D794 */  jal   getROOMID_Bitflags
+/* 0D6694 7F0A1B64 0FC2D794 */  jal   getROOMID_isRendered
 /* 0D6698 7F0A1B68 00A02025 */   move  $a0, $a1
 /* 0D669C 7F0A1B6C 5040005F */  beql  $v0, $zero, .L7F0A1CEC
 /* 0D66A0 7F0A1B70 26940050 */   addiu $s4, $s4, 0x50

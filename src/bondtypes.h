@@ -2453,7 +2453,7 @@ typedef union
         f32 unkB0; // runtime y position?
         f32 unkB4; // previous pos.y?
         DROPTYPE droptype; // 0xB8
-        u32 refreshrate; // 0xBC;
+        s32 refreshrate; // 0xBC;
 
         f32 unkC0;
         f32 unkC4;

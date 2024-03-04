@@ -3309,7 +3309,7 @@ _AI_CMD(
 _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
-        if (getROOMID_Bitflags(getTileRoom(ChrEntityp->prop->stan)))
+        if (getROOMID_isRendered(getTileRoom(ChrEntityp->prop->stan)))
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
         }

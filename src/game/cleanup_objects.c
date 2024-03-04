@@ -2,6 +2,7 @@
 
 #include <bondtypes.h>
 #include "chrai.h"
+#include "chrobjhandler.h"
 #include "cleanup_objects.h"
 #include "loadobjectmodel.h"
 
@@ -14,20 +15,20 @@
  * - identical instructions: fail
  * - identical registers: fail
  * 
- * notes: something wrong with the comparison to 0x38. Also the first compare to NULL is wrong.
+ * https://decomp.me/scratch/TMJpd 78.79%
  */
 void cleanupObjects(s32 stage)
 {
-    //int size;
-    PropDefHeaderRecord *record = g_CurrentSetup.propDefs;
-    u8 type = record->type;
+    PropDefHeaderRecord *obj;
     
-    if (record != NULL) {
-        //record = 
-        //type = record->type;
-
-        while (type != '0') {
-            switch(type) {
+    obj = g_CurrentSetup.propDefs;
+    
+    if (obj != NULL)
+    {
+        while (obj->type != PROPDEF_END)
+        {
+            switch (obj->type)
+            {
                 case PROPDEF_DOOR:
                 case PROPDEF_PROP:
                 case PROPDEF_KEY:
@@ -50,13 +51,12 @@ void cleanupObjects(s32 stage)
                 case PROPDEF_SAFE:
                 case PROPDEF_TANK:
                 case PROPDEF_TINTED_GLASS:
-                    objFreePermanently(record, 1);
+                    objFreePermanently((ObjectRecord *)obj, 1);
                     break;
             }
 
-            //size = sizepropdef(record);
-            record = (PropDefHeaderRecord *)((char*)record + sizepropdef(record) * sizeof(*record));
-            type = record->type;
+            //obj = (PropDefHeaderRecord *)((u32*)obj + sizepropdef(obj));
+            obj = sizepropdef(obj) + obj;
         }
     }
 }
