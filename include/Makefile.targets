@@ -9,19 +9,19 @@ all: $(APPROM)
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
 ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanclean setupclean,$(MAKECMDGOALS)),)
-# Dont print version on "default" since it will be spat out twice
-		ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
+    # Dont print version on "default" since it will be spat out twice
+    ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
 		#$(info VERSION=$(VERSION))
-		else
+    else
 		$(error VERSION "$(VERSION)" not supported")
-		endif
-		# Make tools if out of date
-		$(info Building tools...)
-		DUMMY != make -s -C tools >&2 || echo FAIL
-		ifeq ($(DUMMY),FAIL)
+    endif
+    # Make tools if out of date
+    $(info Building tools...)
+    DUMMY != make -s -C tools >&2 || echo FAIL
+    ifeq ($(DUMMY),FAIL)
 		$(error Failed to build tools)
-		endif
-		$(info Building $(VERSION) ROM...)
+    endif
+    $(info Building $(VERSION) ROM...)
 
 endif
 
