@@ -106,7 +106,7 @@ $(APPROM):	$(APPBIN)
 ## Phony Recipies - Get Make to do something ##
 
 
-.PHONY: all default codeclean dataclean clean cmdbuidler test help
+.PHONY: all default codeclean dataclean clean cmdbuilder test help
 
 setupclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -170,7 +170,7 @@ help:
 	@echo "                                    from Rare's libultra files"
 	@echo "    stanclean                      Delete only stan build artifacts"
 	@echo "    setupclean                     Delete only setup build artifacts"
-	@echo "    cmdbuidler                     BuildAI Commands"
+	@echo "    cmdbuilder                     BuildAI Commands"
 	@echo "    context [file]                 BuildContext File from [file]"
 	@echo "                                    eg make context src/game/chrai.c"
 	@echo "    test                            Re-Run Data Verification "
