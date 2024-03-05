@@ -36735,7 +36735,7 @@ KeyRecord *check_if_entry_is_collectable(s32 ID, PropRecord *prop) //#MATCH
 ObjectRecord *weaponFindThrown(s32 ID)
 {
     ObjectRecord *obj;
-    PropRecord *  prop;
+    PropRecord *prop;
 
     for (prop = get_ptr_obj_pos_list_current_entry(); prop; prop = prop->prev)
     {

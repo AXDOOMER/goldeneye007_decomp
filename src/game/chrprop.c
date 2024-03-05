@@ -6491,48 +6491,30 @@ void sub_GAME_7F03F948(struct coord3d *arg0, struct coord2d *arg1, struct coord2
 
 
 
+/*
+* Address: 0x7F03FA44
+*/
+ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 PadId) {
+    PropRecord *prop;
+    s16 tempPadId = PadId;
 
-#ifdef NONMATCHING
-void scan_position_data_table_for_normal_object_at_preset(void) {
+    prop = get_ptr_obj_pos_list_current_entry();
+    while (prop != NULL)
+    {
+        if (prop->type == PROP_TYPE_OBJ)
+        {
+            if (tempPadId == prop->obj->pad)
+            {
+                return prop->obj;
+            }
+        }
 
+        prop = prop->prev;
+    }
+
+    return NULL;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel scan_position_data_table_for_normal_object_at_preset
-/* 074574 7F03FA44 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 074578 7F03FA48 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 07457C 7F03FA4C 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 074580 7F03FA50 AFA40018 */   sw    $a0, 0x18($sp)
-/* 074584 7F03FA54 8FA50018 */  lw    $a1, 0x18($sp)
-/* 074588 7F03FA58 10400010 */  beqz  $v0, .L7F03FA9C
-/* 07458C 7F03FA5C 00401825 */   move  $v1, $v0
-/* 074590 7F03FA60 24020001 */  li    $v0, 1
-/* 074594 7F03FA64 906E0000 */  lbu   $t6, ($v1)
-.L7F03FA68:
-/* 074598 7F03FA68 544E000A */  bnel  $v0, $t6, .L7F03FA94
-/* 07459C 7F03FA6C 8C630024 */   lw    $v1, 0x24($v1)
-/* 0745A0 7F03FA70 8C640004 */  lw    $a0, 4($v1)
-/* 0745A4 7F03FA74 00057C00 */  sll   $t7, $a1, 0x10
-/* 0745A8 7F03FA78 000FC403 */  sra   $t8, $t7, 0x10
-/* 0745AC 7F03FA7C 84990006 */  lh    $t9, 6($a0)
-/* 0745B0 7F03FA80 57190004 */  bnel  $t8, $t9, .L7F03FA94
-/* 0745B4 7F03FA84 8C630024 */   lw    $v1, 0x24($v1)
-/* 0745B8 7F03FA88 10000005 */  b     .L7F03FAA0
-/* 0745BC 7F03FA8C 00801025 */   move  $v0, $a0
-/* 0745C0 7F03FA90 8C630024 */  lw    $v1, 0x24($v1)
-.L7F03FA94:
-/* 0745C4 7F03FA94 5460FFF4 */  bnezl $v1, .L7F03FA68
-/* 0745C8 7F03FA98 906E0000 */   lbu   $t6, ($v1)
-.L7F03FA9C:
-/* 0745CC 7F03FA9C 00001025 */  move  $v0, $zero
-.L7F03FAA0:
-/* 0745D0 7F03FAA0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0745D4 7F03FAA4 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0745D8 7F03FAA8 03E00008 */  jr    $ra
-/* 0745DC 7F03FAAC 00000000 */   nop   
-)
-#endif
+
 
 
 
@@ -6546,7 +6528,7 @@ ObjectRecord * sub_GAME_7F03FAB0(struct coord3d *pos, s32 RoomID)
     prop = get_ptr_obj_pos_list_current_entry();
     while (prop != NULL)
     {
-        if ((prop->type == 1) && (RoomID == prop->stan->room))
+        if ((prop->type == PROP_TYPE_OBJ) && (RoomID == prop->stan->room))
         {
             chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
             if (chrpropTestPointInPolygon(pos, polygon, edges) != 0)
