@@ -3489,8 +3489,75 @@ glabel handle_mp_respawn_and_some_things
 
 
 #ifdef NONMATCHING
+/*
+* Address: 0x7F03CA30
+* Notes: What are they attempting to do with 'propprev'?
+*/
 void determing_type_of_object_and_detection(void) {
+    u8 obj_type;
+    u8 ret_var;
+    PropRecord *prop;
+    PropRecord *propprev;
 
+    prop = get_ptr_obj_pos_list_current_entry();
+
+    while (prop != NULL)
+    {
+        obj_type = prop->type;
+
+        if (obj_type == PROP_TYPE_CHR)
+        {
+            ret_var = sub_GAME_7F020EF0(prop, 0U);
+        }
+        else if ((obj_type == PROP_TYPE_OBJ) || (obj_type == PROP_TYPE_WEAPON) || (obj_type == PROP_TYPE_DOOR))
+        {
+            ret_var = object_interaction(prop, 0U);
+        }
+        else if (obj_type == PROP_TYPE_EXPLOSION)
+        {
+            ret_var = sub_GAME_7F09D4EC(prop, 0U);
+        }
+        else if (obj_type == PROP_TYPE_SMOKE)
+        {
+            ret_var = sub_GAME_7F09EF9C(prop, 0U);
+        }
+        else if (obj_type == PROP_TYPE_VIEWER)
+        {
+            ret_var = sub_GAME_7F08B0F0(prop, 0U);
+        }
+
+        if (ret_var == PROP_TYPE_PLAYER)
+        {
+            propprev = prop->prev;
+        }
+        else
+        {
+            propprev = prop->prev;
+            if (ret_var == PROP_TYPE_CHR)
+            {
+                chrpropDelist(prop);
+                chrpropActivateThisFrame(prop);
+
+                if (propprev == NULL)
+                {
+                    propprev = prop;
+                }
+            }
+            else
+            {
+                propExecuteTickOperation(prop, ret_var);
+            }
+        }
+
+        prop = propprev;
+    }
+
+    if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
+    {
+        handle_alarm_gas_timer_calldamage();
+        loop_set_sound_effect_all_slots();
+        propsDefragRoomProps();
+    }
 }
 #else
 GLOBAL_ASM(
