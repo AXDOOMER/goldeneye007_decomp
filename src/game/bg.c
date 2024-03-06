@@ -638,29 +638,46 @@ void bgInit(void) {
 
 
 #ifdef NONMATCHING
-//logically close, not close codegen
-void sub_GAME_7F0B37EC(void) 
-{
-    u8* portals;
-    s32 i;
-    s32 p;
+// 91.60% mostly reg alloc
+// https://decomp.me/scratch/puCqt
+void sub_GAME_7F0B37EC(void) {
+    s_specialportal* currentPortal;
+    u8* portalList;
+    u8 portalId;
+    s32 portalIndex;
+    s32 portalIndex2;
+    bg_portal_data_entry* portalData;
+    u8 controlByte;
+    u8 tempByte;
 
-    for ( i=0; i!=2; i++)
-    {
-        if (levelentry_index == specialportalarray[i].levelid & 0xFF) {
-            portals = specialportalarray[i].portallist;
-            for ( p=0; (portals[p] & 0xFF) != 0xFF; p++)
-            {
-                g_BgPortals[portals[p] & 0xff].controlbytes1 |= 2;
-            }
+    currentPortal = specialportalarray;
+    do {
+        portalList = currentPortal->portallist;
+        if (levelentry_index == currentPortal->levelid) {
+            portalId = *portalList;
+            do {
+                portalIndex = portalId & 0xFF;
+                portalIndex2 = portalIndex;
+                if ((s32) portalList[1] >= portalIndex) {
+                    do {
+                        portalData = &g_BgPortals[portalIndex2];
+                        controlByte = portalData->controlbytes1;
+                        portalIndex2 = (portalIndex + 1) & 0xFF;
+                        portalIndex = portalIndex2;
+                        portalData->controlbytes1 = controlByte | 2;
+                    } while ((s32) portalList[1] >= portalIndex2);
+                }
+                portalId = portalList[2];
+                portalList += 2;
+            } while (portalId != 0xFF);
         } else {
-            portals = specialportalarray[i].portallist;
-            for ( p=0; portals[p] != 0xFF; p++)
-            {
-                ;
-            }
+            do {
+                tempByte = portalList[2];
+                portalList += 2;
+            } while (tempByte != 0xFF);
         }
-    }
+        currentPortal = (s_specialportal* ) (portalList + 1);
+    } while ((u32) currentPortal < (u32) &g_BgCurrentRoom);
 }
 #else
 GLOBAL_ASM(
