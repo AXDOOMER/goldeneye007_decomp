@@ -3508,7 +3508,7 @@ void determing_type_of_object_and_detection(void)
 
         if (prop->type == PROP_TYPE_CHR)
         {
-            tickop = sub_GAME_7F020EF0(prop);
+            tickop = chrTickBeams(prop);
         }
         else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_DOOR))
         {
@@ -3516,15 +3516,15 @@ void determing_type_of_object_and_detection(void)
         }
         else if (prop->type == PROP_TYPE_EXPLOSION)
         {
-            tickop = sub_GAME_7F09D4EC(prop);
+            tickop = explosionTick(prop);
         }
         else if (prop->type == PROP_TYPE_SMOKE)
         {
-            tickop = sub_GAME_7F09EF9C(prop);
+            tickop = smokeTick(prop);
         }
         else if (prop->type == PROP_TYPE_VIEWER)
         {
-            tickop = sub_GAME_7F08B0F0(prop);
+            tickop = playerTickBeams(prop);
         }
 
 		if (tickop == 5)
