@@ -10,7 +10,7 @@
  * Sometimes its nice to be verbose and see the structures instead of
  * random arrays or conglomerate integers.
  *
- * 
+ *
  * While typedefs are used to avoid typing "struct" and to help intellisence
  * they are not foolproof.
  * Using structs before they are declaired need to have the struct keyword or
@@ -19,7 +19,7 @@
  * Structs that "inherit" other structs can use the syntax
  *     struct A {int adef};
  *     struct B {inherits A; int extra};
- * 
+ *
  * using adef from B is as simple as calling B->adef, no need for sub-structs anymore
  */
 #ifndef _BONDTYPES_H_
@@ -31,9 +31,9 @@
 
 /**
  * Syntax Sugar for clarification of intent
- * Inheritance allows child structs to directly use parent elements 
- * without sub-struct style calls 
- *     obj->type and wep->base.type becomes simply 
+ * Inheritance allows child structs to directly use parent elements
+ * without sub-struct style calls
+ *     obj->type and wep->base.type becomes simply
  *     obj->type and wep->type (wep inherits obj)
  * Usage:
  * Define the first entry to the inheriting struct as "inherits xxx"
@@ -58,7 +58,7 @@ struct WeaponObjRecordExtended;
 union ModelRoData;
 
 /**
- * The following region deals with various AI structures that can be applied to 
+ * The following region deals with various AI structures that can be applied to
  * the AI bytestream
  */
 #pragma region AI
@@ -124,7 +124,7 @@ typedef union
                 u8 a;
             };
             u8  rgba[4];
-            s32 word;
+            u32 word; //added to match
         };
     } rgba_u8;
 
@@ -185,7 +185,7 @@ typedef union
         };
     } rgba_s32;
 
-    #pragma endregion 
+    #pragma endregion
     #pragma region coordinates
 
     /**
@@ -381,7 +381,9 @@ typedef union
         inherits coord16; //points for tile
         u16 link; //link to nother tile
     } StandTilePoint;
-
+    /*
+    unused struct for clarity of intent
+    */
     typedef struct StandTileHeaderMid
     {
         u16 special : 4;// 0=normal 1=kneeling 3=ladder
@@ -405,7 +407,7 @@ typedef union
         u16 GroupID : 4;   // a1,a2,a3...z5,z6,z7
         u16 RoomID : 4;    // compared to 0xFF, not -1 in a function. Seen LBUs.
         */
-        u32 name1 : 24;
+        u32 id : 24;
 
         u8  room; // compared to 0xFF, not -1 in a function. Seen LBUs.
 
@@ -438,7 +440,7 @@ typedef union
 
     typedef struct StandFileTile
     {
-        u32 name1 : 24;
+        u32 id : 24;
         //u8 name2;
         u8  room; // compared to 0xFF, not -1 in a function. Seen LBUs.
         union
@@ -520,7 +522,7 @@ typedef union
 
     typedef struct BetaStandTile
     {
-        const char               *debugName;
+        const char               *id;
         StandTileHeaderMid        headerMid;
         u16                       betaUnknown;
         BetaStandTileHeaderTail   hdrTail;
@@ -541,16 +543,29 @@ typedef union
     typedef struct ModelAnimation
     {
         s32 unk00;
-        u16 unk04;
+        u16 unk04; //nextframe
         u16 unk06;
         u16 unk08;
         u16 unk0A;
         u16 unk0C;
         u16 unk0E;
+                int unk10;
+        int unk14;
+        int unk18;
+        int unk1c;
+        int unk20;
+        int unk24;
+        int unk28;
+        int unk2c;
+        int unk30;
+        int unk34;
+        int unk38;
+        int unk3c; //endframe
+
         // ...
     } ModelAnimation;
 
-    
+
     struct object_animation_controller
     {
         void *ptranimation;        // 0x00
@@ -666,27 +681,31 @@ typedef union
     /**
      * Taken from PD, unsure that all of the fields line up
      */
-    typedef struct ModelRenderData {
-        /*0x00*/ Mtxf *unk00;
-        /*0x04*/ bool zbufferenabled;
-        /*0x08*/ u32 flags;
-        /*0x0c*/ Gfx *gdl;
-        /*0x10*/ Mtxf *unk10;
-        /*0x14*/ u32 unk14;
-        /*0x18*/ u32 unk18;
-        /*0x1c*/ u32 unk1c;
-        /*0x20*/ u32 unk20;
-        /*0x24*/ u32 unk24;
-        /*0x28*/ u32 unk28;
-        /*0x2c*/ u32 unk2c;
-        /*0x30*/ s32 unk30;
-        /*0x34*/ u32 envcolour;
-        /*0x38*/ u32 fogcolour;
-        /*0x3c*/ u32 cullmode;
+    typedef struct ModelRenderData
+    {
+        Mtxf   *unk_matrix;     /*0x00 */
+        bool    zbufferenabled; /*0x04*/
+        u32     flags;          /*0x08*/
+        Gfx    *gdl;            /*0x0c*/
+
+        Mtxf   *mtxlist;        /*0x10 */
+        u32     unk14;          /*0x14*/
+        u32     unk18;          /*0x18*/
+        u32     unk1c;          /*0x1c*/
+
+        u32     unk20;          /*0x20*/
+        u32     unk24;          /*0x24*/
+        u32     unk28;          /*0x28*/
+        u32     unk2c;          /*0x2c*/
+
+        s32     unk30;          /*0x30*/
+        rgba_u8 envcolour;      /*0x34*/
+        rgba_u8 fogcolour;      /*0x38*/
+        u32     cullmode;       /*0x3c*/
     } ModelRenderData;
 
     /**
-     * Binary compatible with gbi Vtx but more verbose and  with "collision" 
+     * Binary compatible with gbi Vtx but more verbose and  with "collision"
      * information in place of "flags" for use in Openflight Records below
      */
     typedef struct Vertex
@@ -1421,7 +1440,7 @@ typedef union
         };
 
         /**
-         * I beleve that "datas" is actually " struct modeldata_root" and that 
+         * I beleve that "datas" is actually " struct modeldata_root" and that
          * unk1c is the model node data array
          */
         typedef struct Model
@@ -1596,13 +1615,13 @@ typedef union
     /**
      //##Paths
       Paths are formed by connecting several pads together in 3 tables.
-      The first table is the waypoint node table which lists the pad used, and 
+      The first table is the waypoint node table which lists the pad used, and
       the subset group the waypoint belongs to.
-     
-      Next is the waygroup table which lists the IDs of the waypoints that 
+
+      Next is the waygroup table which lists the IDs of the waypoints that
       belong to each group. waypoints are grouped into subsets to reduce
       calculations on large numbers of nodes.
-      
+
       Finally is the Path table which again lists all the waypoints used in
       the path and gives the path an ID. Paths do not contribute to pathfinding.
 
@@ -1611,7 +1630,7 @@ typedef union
 
 
     /**
-     * The waypoint table lists the pad used, and the group the waypoint 
+     * The waypoint table lists the pad used, and the group the waypoint
      * belongs to as well as any connected waypoints.
      */
     typedef struct waypoint
@@ -1624,7 +1643,7 @@ typedef union
 
 
     /**
-     * The Subset waygroup table which lists the IDs of the waypoints that 
+     * The Subset waygroup table which lists the IDs of the waypoints that
      * belong to each group as well as any connected groups
      */
     typedef struct waygroup
@@ -1726,10 +1745,10 @@ typedef union
     struct act_anim
     {
         u32 unk02c;     /*0x2c*/
-        u32 unk30;      /*0x30*/
-        u32 unk034;     /*0x34*/
-        u32 unk038;     /*0x38*/
-        u32 unk03c;     /*0x3c*/
+        u32 holdLastFrame;      /*0x30*/
+        u32 playSfx;     /*0x34*/
+        u32 idleOnEnd;     /*0x38*/
+        u32 noTranslate;     /*0x3c*/
         u8  unk040;     /*0x40*/
         u8  unk041;     /*0x41*/
         u16 unk042;     /*0x42*/
@@ -2150,7 +2169,7 @@ typedef union
 
 #pragma region Prop, Chr and Definition Records
 
-    
+
 
     /**
      * Prop Record holds the relationship between various "props" on a stage.
@@ -2202,7 +2221,7 @@ typedef union
     } PropRecord;
 
     #pragma region GlobalPropDef
-  
+
     /**
      * sizeof = 0x2c = 44 bytes.
      */
@@ -2242,7 +2261,7 @@ typedef union
             x2
             x1    damaged
         */
-        u8  state;      
+        u8  state;
         u8  type;       /*0x3*/
     } PropDefHeaderRecord;
     #define New_PropDefHeaderRecord(scale, Type) \
@@ -2438,7 +2457,7 @@ typedef union
         f32 unk78[4];
 
         struct PropRecord* ownerprop; // 0x88
-        f32 unk8C; 
+        f32 unk8C;
 
         u32 unk90;
         f32 unk94;
@@ -2593,7 +2612,7 @@ typedef union
         PropRecord *prop;  /*0x10*/
         Model      *model; /*0x14*/
                            // mtx realrot;
-#if 0 
+#if 0
         void *runtime_MATRIX0; /*0x18*/
         void *runtime_MATRIX1; /*0x1c*/
         void *runtime_MATRIX2; /*0x20*/
@@ -2615,41 +2634,43 @@ typedef union
         coord3d runtime_pos; /*0x58 - 0x60*/
         union
         {
-            /*This union is a test but is less efficant than doing binary compare by hand eg runtimebitflags && REMOVED*/
+            #if 0
+            /*This union is a test but is less efficient than doing binary compare by hand eg runtimebitflags && REMOVED*/
             struct
             {
-                bool a00000001     : 1;
-                bool a00000002     : 1;
-                bool remove        : 1; /* removes object when set   */
-                bool a00000008     : 1;
-                bool a00000010     : 1;
-                bool a00000020     : 1;
-                bool a00000040     : 1;
-                bool isDeposited   : 1; /* depositted (thrown)  */
-                bool hasBeenOpened : 1;
-                bool isDestroyed   : 1; /* only set with disabled or destroyed doors    */
-                bool a00000400     : 1;
-                bool a00000800     : 1;
-                bool a00001000     : 1;
-                bool a00002000     : 1;
-                bool isActivated   : 1; /* activated*/
-                bool a00008000     : 1;
-                bool a00010000     : 1;
+                bool _80000000     : 1;
+                bool _40000000     : 1;
+                bool _20000000     : 1;
+                bool _10000000     : 1;
+                bool _08000000     : 1;
+                bool _04000000     : 1;
+                bool _02000000     : 1;
+                bool _01000000     : 1;
+                bool _00800000     : 1;
+                bool _00400000     : 1;
+                bool _00200000     : 1;
+                bool _00100000     : 1;
+                bool _00080000     : 1;
                 s32  owner         : 2; /*Owner 2bit (0-3)*/
-                bool a00080000     : 1;
-                bool a00100000     : 1;
-                bool a00200000     : 1;
-                bool a00400000     : 1;
-                bool a00800000     : 1;
-                bool a01000000     : 1;
-                bool a02000000     : 1;
-                bool a04000000     : 1;
-                bool a08000000     : 1;
-                bool a10000000     : 1;
-                bool a20000000     : 1;
-                bool a40000000     : 1;
-                bool a80000000     : 1;
-            };
+                bool _00010000     : 1;
+                bool _00008000     : 1;
+                bool isActivated   : 1; /* activated*/
+                bool _00002000     : 1;
+                bool _00001000     : 1;
+                bool _00000800     : 1;
+                bool _00000400     : 1;
+                bool isDestroyed   : 1; /* only set with disabled or destroyed doors    */
+                bool hasBeenOpened : 1;
+                bool isDeposited   : 1; /* depositted (thrown)  */
+                bool _00000040     : 1;
+                bool _00000020     : 1;
+                bool _00000010     : 1;
+                bool _00000008     : 1;
+                bool remove        : 1; /* removes object when set   */
+                bool _00000002     : 1;
+                bool _00000001     : 1;
+            } runtime_bitflag;
+            #endif
             /*0x64*
                 10000000
                 00060000    owner (0-3); used to attribute kills to players
@@ -2869,7 +2890,7 @@ typedef union
 
         /**
          * Copy of global timer value.
-         * 
+         *
          * For each sibling, the original frac is backed up into the sibling's
          * lastcalc60 field. The desired frac is then calculated and set in the
          * sibling's frac property. Then collision checks are done, and the original
@@ -2887,13 +2908,13 @@ typedef union
             New_PropDefHeaderRecord(1), New_ObjectRecord(pad) \
         }
 
-   
+
     /** PROPDEF_GLOBAL_DOOR_SCALE (2)
      * The value is used for door calculations.  Changing it will shrink/enlarge doors.
      * Why they ever made it is beyond me.
      * @param Scale: Fixed-Point converted to float and divided by 65536 (0x10000)
      */
-    typedef struct GlobalDoorScaleRecord 
+    typedef struct GlobalDoorScaleRecord
     {
         inherits PropDefHeaderRecord;
         s32      Scale;
@@ -3008,17 +3029,17 @@ typedef union
         f32 unkC4;
         f32 unkC8;
         f32 unkCC;
-        
+
         f32 unkD0;
         s32 unkD4;
         f32 unkD8;
         f32 unkDC;
-        
+
         s32 timer; // 0xe0
         s32 convert_to_f32;
         f32 unkE8;
         s32 unkEC;
-        
+
         s32 unkF0;
         s32 unkF4;
         s32 unkF8;
@@ -3212,17 +3233,16 @@ typedef union
         inherits PropDefHeaderRecord;
         s32      chrnum; //0x4
         s16      unk8; //0x8
-        s8       unkA;   // 0xa  
+        s8       unkA;   // 0xa
         s8       GrenadeProb; //0xb
     } GuardAttributeRecord;
-    #define New_SwitchRecord(ID1, ID2)                    \
+    #define New_GuardAttributeRecord(ID1, ID2)                    \
         {                                                 \
             New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
         }
 
     // PROPDEF_SWITCH (19) - see LinkRecord
     typedef LinkRecord SwitchRecord;
-
     #define New_SwitchRecord(ID1, ID2)                    \
         {                                                 \
             New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
@@ -3339,7 +3359,7 @@ typedef union
             New_PropDefHeaderRecord(28), TagID + 0 \
         }
 
-    // PROPDEF_OBJECTIVE_DEPOSIT_OBJECT (29) 
+    // PROPDEF_OBJECTIVE_DEPOSIT_OBJECT (29)
     typedef struct DepositObjectRecord
     {
         inherits PropDefHeaderRecord;
@@ -3355,6 +3375,9 @@ typedef union
     {
         inherits PropDefHeaderRecord;
         u16      unk4;
+        u16 unk6;
+        u32      unk8;
+        PropRecord *lastprop;
     } PhotographObjectRecord;
     #define New_CollectObjectRecord(TagID)         \
         {                                          \
@@ -3376,6 +3399,8 @@ typedef union
     {
         inherits PropDefHeaderRecord;
         u16      unk4;
+        u32 unk8;
+        s32      lastroomentered;
     } EnterRoomRecord;
     #define New_CollectObjectRecord(TagID)         \
         {                                          \
@@ -3527,7 +3552,7 @@ typedef union
     //PROPDEF_SAFE_ITEM (42)
     typedef struct SafeObjectRecord
     {
-        u32 unk00;
+        inherits PropDefHeaderRecord;
         union {
             struct ObjectRecord *item;
             s32 Index1;
@@ -3561,10 +3586,10 @@ typedef union
         s32 unkA8;
         s32 unkAC;
         s32 unkB0;
-        s32 unkB4;
-        s32 unkB8;
-        s32 unkBC;
-        s32 unkC0;
+        s32 unkB4; // Tank! Acceleration
+        s32 unkB8; // Tank! Top Speed, Low Angle, Gun Type, Gun Check
+        s32 unkBC; // Tank! Ignition sfx, Idle sfx
+        s32 unkC0; // Tank! Motion sfx, crush sfx
         s32 is_firing_tank;
         f32 turret_vertical_angle;
         f32 turret_orientation_angle;
@@ -3959,7 +3984,7 @@ struct MoveData {
     f32 zoomOutFovPersec;
     s32 zooming;
     s32 aiming;
-    
+
     // 0x50
     s32 weaponForwardOffset;
     s32 weaponBackOffset;
@@ -4001,7 +4026,7 @@ struct unkown_gun_struct
         struct
         {
             s32 unk00;
-            s32 unk04;        
+            s32 unk04;
         };
     };
 };

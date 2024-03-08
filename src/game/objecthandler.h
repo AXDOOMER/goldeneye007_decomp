@@ -150,7 +150,7 @@ Mtxf* modelFindNodeMtx(Model *arg0, ModelNode *arg1, s32 arg2);
 
 // called with struct ChrRecord->field_20
 void sub_GAME_7F06B248(void *arg0);
-void drawjointlist(struct unk_joint_list *arg0, void* arg1);
+void drawjointlist(ModelRenderData *arg0, void* arg1);
 void sub_GAME_7F073FC8(s32);
 void modelSetAnimMergingEnabled(s32 arg0);
 u32 modelIsAnimMergingEnabled(void);
@@ -161,11 +161,11 @@ void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*);
 void modelInit(struct Model *, struct ModelFileHeader *, u32 *);
 void animInit(struct Model *, struct ModelFileHeader *, u32 *);
 void modelSetAnimFlipFunction(Model *, void *);
-void subcalcmatrices(struct unk_joint_list *, Model *);
-void instcalcmatrices(struct unk_joint_list *arg0, Model *arg1);
+void subcalcmatrices(ModelRenderData *, Model *);
+void instcalcmatrices(ModelRenderData *arg0, Model *arg1);
 void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, struct texpool * buffer);
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
-void subdraw(struct unk_joint_list *arg0, struct Model *);
+void subdraw(ModelRenderData *arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
 void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
 void modelInitRwData(Model *model, ModelNode *startnode);

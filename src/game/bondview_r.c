@@ -427,7 +427,7 @@ void bondviewLoadSetupIntroSection(void)
 
     bondviewResetIntroCameraMessageDialogs();
     bondviewResetUpperTextDisplay();
-    g_CurrentPlayer->prop = propAllocate();
+    g_CurrentPlayer->prop = chrpropAllocate();
     g_CurrentPlayer->prop->obj = NULL;
     g_CurrentPlayer->prop->type = PROP_TYPE_VIEWER;
     

@@ -132,7 +132,7 @@ INV_ITEM_TYPE        propobjInteract(PropRecord *prop);
 s32                  objGetDestroyedLevel(ObjectRecord *obj);
 void                 doorActivateWrapper(PropRecord *prop);
 bool                 objIsHealthy(ObjectRecord *self);
-ObjectRecord        *weaponFindThrown(s32 ID);
+KeyRecord        *weaponFindThrown(s32 ID);
 bool                 check_if_toxic_gas_activated();
 HatRecord           *hatCreate(bool musthaveprop, bool musthavemodel, ModelFileHeader *modeldef);
 PropRecord*          objInitWithAutoModel(ObjectRecord* obj);

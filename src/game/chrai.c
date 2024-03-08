@@ -40,7 +40,7 @@
 
 
 //hack? used to match as called with 2 args, but decompiled code takes 1
-extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32); 
+extern s32 objectiveGetStatus_WEAK(s32 objectiveNum, s32);
 
 
 //bss
@@ -52,7 +52,7 @@ sfxRecord sfx_related[SFX_RELATED_LEN];
 
 
 /**
- * Play Audio in slot X from Prop or Pad 
+ * Play Audio in slot X from Prop or Pad
  * @param slot: Where audio is loaded
 */
 void audioPlayFromProp2(s32 slot)
@@ -63,10 +63,10 @@ void audioPlayFromProp2(s32 slot)
 
     if ((sfx->state ) && (sndGetPlayingState(sfx->state) ))
     {
-    
+
         if (sfx->pos )
         {
-            sfx->Volume = sub_GAME_7F0539E4(sfx->pos);   
+            sfx->Volume = sub_GAME_7F0539E4(sfx->pos);
         }
         else
         {
@@ -104,7 +104,7 @@ void audioPlayFromProp2(s32 slot)
 
 
 /**
- Play All Sounds in all slots 
+ Play All Sounds in all slots
 */
 void loop_set_sound_effect_all_slots(void)
 {
@@ -121,7 +121,7 @@ void loop_set_sound_effect_all_slots(void)
  * @param slot: where to load sound
  * @param soundIndex: SFX_ID
 */
-void audioPlayFromProp(s32 slot, s16 soundIndex) 
+void audioPlayFromProp(s32 slot, s16 soundIndex)
 {
     sfxRecord *sfx = NULL; //always added to stack anyway, cleaner to use
     //"Existing ai sound number %d!\n"
@@ -143,7 +143,7 @@ void audioPlayFromProp(s32 slot, s16 soundIndex)
 
 
 /**
- Stop All Sounds in all slots 
+ Stop All Sounds in all slots
 */
 void sub_GAME_7F0349BC(s32 slot)
 {
@@ -157,12 +157,12 @@ void sub_GAME_7F0349BC(s32 slot)
 
 
 
-/** 
+/**
  * Get AI Command Size in bytes
  * @param AIList: u8 Pointer to The AI list containing the command
  * @param offset: The offset (in bytes) to the command you want the size of
  * @return The number of bytes of AI command
- * @canonical name 
+ * @canonical name
  */
 s32 chraiitemsize(u8 *AIList, s32 offset)
 {
@@ -192,7 +192,7 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
         case AI_Yield:
             return AI_Yield_LENGTH;
         case AI_EndList:
-            return AI_EndList_LENGTH; 
+            return AI_EndList_LENGTH;
         case AI_SetChrAiList:
             return AI_SetChrAiList_LENGTH;
         case AI_SetReturnAiList:
@@ -361,8 +361,8 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
             return AI_IFBondInRoomWithPad_LENGTH;
         case AI_IFBondCollectedObject:
             return AI_IFBondCollectedObject_LENGTH;
-        case AI_IFItemIsStationaryWithinLevel:
-            return AI_IFItemIsStationaryWithinLevel_LENGTH;
+        case AI_IFKeyDropped:
+            return AI_IFKeyDropped_LENGTH;
         case AI_IFItemIsAttachedToObject:
             return AI_IFItemIsAttachedToObject_LENGTH;
         case AI_IFBondHasItemEquipped:
@@ -604,7 +604,7 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
         case AI_TvChangeScreenBank:
             return AI_TvChangeScreenBank_LENGTH;
         case AI_IFBondInTank:
-            return AI_IFBondInTank_LENGTH; 
+            return AI_IFBondInTank_LENGTH;
         case AI_EndLevel:
             return AI_EndLevel_LENGTH;
         case AI_CameraReturnToBond:
@@ -688,9 +688,9 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
         case AI_ObjectRocketLaunch:
             return AI_ObjectRocketLaunch_LENGTH;
         case AI_PRINT:
-        {   
+        {
             s32 pos = offset + 1;
-            while (AIList[pos] != 0) 
+            while (AIList[pos] != 0)
             {
                 ++pos;
             }
@@ -706,11 +706,11 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
 
 
 /**
- * Get ID of AIList 
+ * Get ID of AIList
  * @param AIList: Ailist to get ID of
- * @return ID of AIList 
+ * @return ID of AIList
  */
-s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList) 
+s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList)
 {
     s32 i;
 
@@ -742,13 +742,13 @@ s32 chraiGetAIListID(AIRecord *AIList, bool *isGlobalAIList)
 
 
 
-/** 
+/**
  * GoTo Label
  * @param AIlist: AIList containing label
  * @param LabelNum: Integer/enum ID to go to
  * @return Offset of label from beggining of AIList.
  */
-s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum) 
+s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum)
 {
     s32   listID;
     char *debAIListTypeString;
@@ -766,7 +766,7 @@ s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum)
         }
         else if (AIList[Offset].cmd == AI_EndList)
         {
-            // restart ai list PC if next label not found - causes infinit loop outside of debug
+            // restart ai list PC if next label not found - causes infinite loop outside of debug
             listID = chraiGetAIListID(AIList, &isGlobalAIList);
 #    ifdef DEBUG
             if (isGlobalAIList)
@@ -789,7 +789,7 @@ s32 chraiGoToLabel(AIRecord *AIList, s32 Offset, u8 LabelNum)
 
 
 
-AIRecord *ailistFindById(s32 ID) 
+AIRecord *ailistFindById(s32 ID)
 {
     s32 i;
 
@@ -833,7 +833,7 @@ PathRecord *pathFindById(s32 ID)
             {
                 return &g_CurrentSetup.patrolpaths[i];
             }
-           
+
         }
 
     return NULL;
@@ -887,7 +887,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
      *    ai(void) enery tune on (%d, %d, %d)
      *    ai(void) enery tune off (%d)
      *
-     * Stack requires that each case declair its own AIRecord variable
+     * Stack requires that each case declare its own AIRecord variable
      *
      */
 
@@ -936,12 +936,12 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
         for (;;)
         {
             /*
-             * GE uses long Switch/case while PD uses Bool functions and tests 
-             * for TRUE/FALSE if(funcpointer[ai]) break; 
+             * GE uses long Switch/case while PD uses Bool functions and tests
+             * for TRUE/FALSE if(funcpointer[ai]) break;
              */
             switch ((AiListp + Offset)->cmd)
             {
-                //unfortunatly we cannot use the cmdbuilder in matching rom as the ordering is not sequential
+                //unfortunately we cannot use the cmdbuilder in matching rom as the ordering is not sequential
 #ifdef USECMDBUILDER
     #define _AI_DEBUG_ID(CMD, AI_NUMBER_OF_PARAMS, PARAM, DESC)
     #define _AI_CMD_POLYMORPH(C, N, P1, P2, D)
@@ -996,8 +996,24 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_EndList:
                 {
-                    //Not an error to be here, same as yield except without pushing offset past it.
-                    return; 
+                    //Not an error to be here, same as yield except without pushing offset past it. (just keeps looping)
+#    ifdef ENABLE_LOG
+#        ifdef IS_PD
+                    listID = chraiGetAIListID(AIList, &isGlobalAIList);
+                    if (isGlobalAIList)
+                    {
+                        debAIListTypeString = "global";
+                    }
+                    else
+                    {
+                        debAIListTypeString = "local";
+                    }
+                    osSyncPrintf("AI error: endlist reached %s list=%d!\n", debAIListTypeString, listID);
+#        endif
+                    osSyncPrintf("AI error: endlist reached!\n");
+#    endif
+
+                    return;
                 }
                 case AI_SetChrAiList:
                 {
@@ -1008,7 +1024,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 
                     if (CHR_NUM == ((u8)CHR_SELF))
                     {
-                        AiListp = ailistFindById(AI_LIST_ID); 
+                        AiListp = ailistFindById(AI_LIST_ID);
                         Offset  = 0;
                     }
                     else
@@ -1643,12 +1659,12 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_RunToPadPreset:
                 {
                     /* PD uses GoTo Pad (speed) which seems better
-                    switch (ai->val[0]) 
-                    { 
-                        case SPEED_WALK: 
+                    switch (ai->val[0])
+                    {
+                        case SPEED_WALK:
                             chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_WALK);
-                            break;  
-                        case SPEED_RUN: 
+                            break;
+                        case SPEED_RUN:
                             etc...
                      */
                     chrGoToPad(ChrEntityp, ChrEntityp->padpreset1, SPEED_RUN);
@@ -1679,7 +1695,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     Offset += AI_StartPatrol_LENGTH;
                     break;
                 }
-                case AI_IFICanHearAlarm: 
+                case AI_IFICanHearAlarm:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (chrCanHearAlarm(ChrEntityp))
@@ -1852,7 +1868,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFMyRoomIsOnScreen:
                 {
                     AIRecord *ai = AiListp + Offset;
- 
+
                     if (getROOMID_isRendered(getTileRoom(ChrEntityp->prop->stan))) //embedded func to match, must be s32 not u8
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
@@ -2120,7 +2136,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     }
                     else
                     {
-#ifdef DEBUG
+#ifdef ENABLE_LOG
                         osSyncPrintf("bond not in room\n");
 #endif
                         Offset += AI_IFBondInRoomWithPad_LENGTH;
@@ -2141,7 +2157,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     }
                     break;
                 }
-                case AI_IFItemIsStationaryWithinLevel:
+                case AI_IFKeyDropped:
                 {
                     AIRecord *ai = AiListp + Offset;
                     if (weaponFindThrown(ai->val[0]))
@@ -2150,7 +2166,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     }
                     else
                     {
-                        Offset += AI_IFItemIsStationaryWithinLevel_LENGTH;
+                        Offset += AI_IFKeyDropped_LENGTH;
                     }
                     break;
                 }
@@ -2293,6 +2309,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         if (!objGetDestroyedLevel(obj))
                         {
                             f32 damage = ((obj->damage - obj->maxdamage) + 1) / 250.0f;
+                            /*
+	                        osSyncPrintf("ai_destroyobj 2 : (def->obj == PROP_ELVIS_SAUCER)\n");
+                            osSyncPrintf("Elvis BOOM\n");
+                            */
 #ifdef ENABLE_LOG
                             osSyncPrintf("ai_destroyobj 3 : adddamageobj\n");
 #endif
@@ -2550,10 +2570,10 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                         u8 val;
                         u8 label;
                     } *ai = AiListp + Offset;
-                    /*  additional PD code for dificulty filtering 
+                    /*  additional PD code for dificulty filtering
                      == OBJECTIVE_COMPLETE && objectivelvlGetSelectedDifficultyBits(ai->val[0]) & (1 << lvlGetSelectedDifficulty()))  *
                     */
-                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val )) 
+                    if (objectiveGetCount() > ai->val && OBJECTIVESTATUS_COMPLETE == objectiveGetStatus_WEAK(ai->val * 1, ai->val ))
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->label);
                     }
@@ -3322,8 +3342,17 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
 #ifdef ENABLE_LOG
                     AIRecord *ai = AiListp + Offset;
-                    //PD = osSyncPrintf("AI_PRINT(void) [%d] %s\n", ai-val);
                     osSyncPrintf("AI_PRINT: %s\n", ai->val);
+                    #ifdef IS_PD
+                    if (ChrEntityp)
+                    {
+                        osSyncPrintf("AI_PRINT(void) [%d] %s\n", ChrEntityp->chrnum, ai->val);
+                    }
+                    else if(VehichleEntityp)
+                    {
+                        osSyncPrintf("AI_PRINT(void) [hover vehicle] %s\n", ai->val);
+                    }
+                    #endif
 #endif
                     Offset += chraiitemsize(AiListp, Offset);
                     break;
@@ -3510,7 +3539,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord   *ai    = AiListp + Offset;
                     s32         flags = CharArrayTo32(ai->val,3);
-                    s32         model = CharArrayTo16(ai->val,0); 
+                    s32         model = CharArrayTo16(ai->val,0);
                     PropRecord *prop  = NULL;
 
                     if (ChrEntityp && ChrEntityp->prop && ChrEntityp->model)
@@ -3745,8 +3774,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
 #ifdef VERSION_EU
                         sfx_related[ai->slotID].sfxID  = (sfxID * 50) / 60;
-#else            
-                        sfx_related[ai->slotID].sfxID  = sfxID;    
+#else
+                        sfx_related[ai->slotID].sfxID  = sfxID;
 #endif
                         sfx_related[ai->slotID].Volume = vol;
                         sfx_related[ai->slotID].pos    = NULL;
@@ -3779,8 +3808,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
 #ifdef VERSION_EU
                         sfx_related[ai->slotID].sfxID  = (sfxID * 50) / 60;
-#else            
-                        sfx_related[ai->slotID].sfxID  = sfxID;    
+#else
+                        sfx_related[ai->slotID].sfxID  = sfxID;
 #endif
                         sfx_related[ai->slotID].Volume = sub_GAME_7F0539B8(vol);
                         sfx_related[ai->slotID].pos    = NULL;
@@ -3807,8 +3836,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
 #ifdef VERSION_EU
                         sfx_related[ai->slotID].sfxID  = (sfxID * 50) / 60;
-#else            
-                        sfx_related[ai->slotID].sfxID  = sfxID;    
+#else
+                        sfx_related[ai->slotID].sfxID  = sfxID;
 #endif
                         sfx_related[ai->slotID].pos   = NULL;
                         sfx_related[ai->slotID].Obj   = obj;
@@ -3972,8 +4001,8 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 {
                     AIRecord *ai = AiListp + Offset;
 #ifdef ENABLE_LOG
-                    osSyncPrintf("ai_ifbondintank\n"); 
-#endif 
+                    osSyncPrintf("ai_ifbondintank\n");
+#endif
                     if (isBondInTank() == TRUE)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
@@ -4566,14 +4595,14 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 #endif
                 default:
                     /*
-                     * No Command found, advance ailist by 1. 
-                     * This is attempting to handle situations where the command 
-                     * type is invalid by passing over them and continuing 
-                     * execution.  
-                     * chraiitemsize returns 1 which is pointless really 
-                     * could have done it here without a jump 
+                     * No Command found, advance ailist by 1.
+                     * This is attempting to handle situations where the command
+                     * type is invalid by passing over them and continuing
+                     * execution.
+                     * chraiitemsize returns 1 which is pointless really
+                     * could have done it here without a jump
                      *
-                     * Outcome:crash 
+                     * Outcome:crash
                      */
                     {
                         Offset += chraiitemsize(AiListp, Offset);

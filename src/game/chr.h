@@ -18,7 +18,7 @@ struct animation_something
     s32 field_10;
     s32 field_14;
     f32 field_18;
-    
+
     struct struck_animation_table *field_1C;
 
     // maybe count of field_1C
@@ -232,11 +232,11 @@ extern s32 show_patrols_flag;
 extern s32 player1_guardID;
 extern ChrRecord *g_ChrSlots;
 extern s32 g_NumChrSlots;
-extern struct unk_joint_list D_8002CC6C;
+extern ModelRenderData D_8002CC6C;
 extern s32 D_8002CCAC;
 extern s32 D_8002CCB0;
 extern s32 D_8002CCB4;
-extern rgba_u8 D_8002CCB8;
+extern rgba_u8 gBloodColour;
 
 extern f32 D_80030984;
 extern f32 D_80030988;
