@@ -1849,7 +1849,10 @@ glabel sub_GAME_7F09CEE8
 #endif
 
 
-u8 sub_GAME_7F09D4EC(PropRecord* prop)
+/*
+* Address: 0x7F09D4EC
+*/
+u8 explosionTick(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
@@ -3629,7 +3632,10 @@ glabel sub_GAME_7F09E8AC
 #endif
 
 
-u8 sub_GAME_7F09EF9C(PropRecord* prop)
+/*
+* Address: 0x7F09EF9C
+*/
+u8 smokeTick(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
