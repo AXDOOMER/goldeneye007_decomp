@@ -41,7 +41,7 @@ void doRomCopy(void *target, void *source, u32 size)
  */
 void romReceiveMesg(void)
 {
-    osRecvMesg(&memoryMesgQueue, 0, 1);
+    osRecvMesg(&memoryMesgQueue, NULL, OS_MESG_BLOCK);
 }
 
 /**

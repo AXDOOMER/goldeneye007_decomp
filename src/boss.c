@@ -39,6 +39,7 @@
 #include "game/textrelated.h"
 #include "game/player.h"
 #include "game/unk_0C0A70.h"
+#include "PR/R4300.h"
 
 /**
  * EU .data, offset from start of data_seg : 0x33e0
@@ -146,7 +147,7 @@ void bossInitMainthreadData(void)
     OSMesg bossmsg;
     OSTimer bosstimer;
     OSMesgQueue bossmq;
-    u32 temp_s0;
+    u32 start;
     u32 unused;
     s32 i;
 
@@ -199,8 +200,8 @@ void bossInitMainthreadData(void)
         g_CurentMMallocValue = (s32) (strtol(tokenFind(1, "-m"), 0, 0) << 0xa);
     }
 
-    temp_s0 = (osVirtualToPhysical(&room_model_buffer) | 0x80000000);
-    mempCheckMemflagTokens(temp_s0, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)temp_s0));
+    start = (PHYS_TO_K0(osVirtualToPhysical(&room_model_buffer)));
+    mempCheckMemflagTokens(start, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)start));
     mempResetBank(MEMPOOL_PERMANENT);
     langInit();
     lvInit();
@@ -495,7 +496,7 @@ void bossMainloop(void)
 			                	g_BossIsDebugMenuOpen = debug_menu_processor(joyStickXPos, joyStickYPos, joyButtons, joyGetButtonsPressedThisFrame(0, ANY_BUTTON));
 			                } else if (joyGetButtons(0, START_BUTTON) == 0) {
                                 g_DebugMode = g_DebugHighlightedOption;
-			                } else 
+			                } else
 #endif
 #ifndef DEBUGMENU
                             if (g_BossIsDebugMenuOpen)
@@ -633,7 +634,7 @@ void bossMainloop(void)
                     break;
             }
         }
-        
+
         lvlUnloadStageTextData();
         stop_demo_playback();
         mempNullNextEntryInBank(MEMPOOL_STAGE);
