@@ -16,7 +16,7 @@ void alloc_shattered_window_pieces(void)
     {
         SHATTERED_WINDOW_PIECES_BUFFER_LEN = (SHATTERED_WINDOW_PIECES_BUFFER_LEN >> 1);
     }
-    ptr_shattered_window_pieces = mempAllocBytesInBank(((SHATTERED_WINDOW_PIECES_BUFFER_LEN * 0x68) + 0xF) & ~0xF, 4U);//MEMPOOL_STAGE
+    ptr_shattered_window_pieces = mempAllocBytesInBank(((SHATTERED_WINDOW_PIECES_BUFFER_LEN * 0x68) + 0xF) & ~0xF, MEMPOOL_STAGE);
     for(i=0; i<SHATTERED_WINDOW_PIECES_BUFFER_LEN; i++)
     {
         ptr_shattered_window_pieces[i].piece = 0;

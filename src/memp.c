@@ -13,7 +13,7 @@
  */
 
 //bss
-MemoryPool g_mempPools[MEMPOOL_COUNT-1];
+MemoryPool g_mempPools[MEMPOOL_COUNT];
 
 //data
 void *ptr_memp_c_debug_debug_notice_list = 0;
@@ -70,10 +70,10 @@ void mempCheckMemflagTokens(s32 poolAreaStart, s32 poolAreaSize)
     mempSetBankStarts((s32*)&poolSizes);
 }
 
-void mempSetBankStarts(s32 poolSizes[MEMPOOL_COUNT])
+void mempSetBankStarts(s32 poolSizes[MEMPOOL_COUNT+1])
 {
     s32 i;
-    s32 bankstarts[MEMPOOL_COUNT-1] = {0};
+    s32 bankstarts[MEMPOOL_COUNT] = {0};
     s32 mempLen;
     s32 mempRequested;
     s32 mempStart;
@@ -86,37 +86,53 @@ void mempSetBankStarts(s32 poolSizes[MEMPOOL_COUNT])
         bankstarts[poolSizes[i]] = poolSizes[i+1];
         i += 2;
     } while (poolSizes[i] != 0); //while sizes not = 0 (bank 7 = 0)
+    //  0 1 2 3            4           5     6
+    // {0,0,0,0,poolAreaSize - 303104, 0, 303104}
 
     //for each bankstart, add current to next
-    for (i = MEMPOOL_MF - 1; i < MEMPOOL_COUNT - 2; i++)
+    for (i = MEMPOOL_TOTAL; i < MEMPOOL_COUNT - 1; i++)
     {
         bankstarts[i + 1] += bankstarts[i];
     }
+    // {0,0,0,0,poolAreaSize - 303104, poolAreaSize - 303104, poolAreaSize}
 
-    mempRequested = bankstarts[MEMPOOL_COUNT - 2]; //total accumulated size of banks
+
+    mempRequested = bankstarts[MEMPOOL_COUNT - 1]; //total accumulated size of banks = poolAreaSize
     mempLen  = (g_mempPools[MEMPOOL_TOTAL].end - g_mempPools[MEMPOOL_TOTAL].start);
 
     //for each bankstart, multiply by total pool size, then divide by size of banks 1-7
     //spread each bank evenly
-    for (i = MEMPOOL_MF - 1; i < MEMPOOL_COUNT - 1; i++)
+    for (i = MEMPOOL_TOTAL; i < MEMPOOL_COUNT; i++)
     {
         bankstarts[i] = ((s64)bankstarts[i] * mempLen) / mempRequested;
-        // eg ml = 83*2522272/97 = 2,158,232; me = 15*2522272/97 = 390,042
     }
+    // {0,0,0,0,poolAreaSize - 303104, poolAreaSize - 303104, poolAreaSize}
 
-    for (i = MEMPOOL_MF - 1; i < MEMPOOL_COUNT - 1; i++)
+    for (i = MEMPOOL_TOTAL; i < MEMPOOL_COUNT; i++)
     {
         bankstarts[i] = ALIGN16_b(bankstarts[i]);
     }
+    // {0,0,0,0,poolAreaSize - 303104, poolAreaSize - 303104, poolAreaSize}
+
 
     mempStart = g_mempPools[MEMPOOL_TOTAL].start;
     //for each bank 1-7, add new start position
-    for (i = MEMPOOL_MF - 1; i < MEMPOOL_COUNT - 2; i++)
+    for (i = MEMPOOL_TOTAL; i < MEMPOOL_COUNT - 1; i++)
     {
         g_mempPools[i + 1].start = bankstarts[i] + mempStart;
         g_mempPools[i + 1].pos   = 0;
         g_mempPools[i + 1].end   = bankstarts[i + 1] + mempStart;
     }
+    /*
+                           rel-start              size
+    g_memPools[TOTAL]      0                      poolArea
+    g_memPools[MF]         0                      0
+    g_memPools[2]          0                      0
+    g_memPools[ML]         0                      0
+    g_memPools[STAGE]      0                      poolAreaSize - 303104
+    g_memPools[ME]         poolAreaSize - 303104  0
+    g_memPools[PERMANENT]  poolAreaSize - 303104  303104
+    */
 }
 
 /**
@@ -127,27 +143,33 @@ void mempSetBankStarts(s32 poolSizes[MEMPOOL_COUNT])
 #ifdef NONMATCHING
 // https://decomp.me/scratch/cdPCZ
 // Non-matching - maybe asm?
-void *mempAllocBytesInBank(s32 bytes, u8 poolnum)
+void *mempAllocBytesInBank(s32 bytes, u8 heap)
 {
+#    ifdef DEBUG
+    if ((heap < 0) || (4 < heap))
+    {
+        osSyncPrintf(__FILE__, __LINE__, "mempAllocBytesInBank from invalid heap %d!", heap);
+    }
+#    endif
     for (;;)
     {
-        u8 *allocation = g_mempPools[poolnum].pos;
+        u8 *allocation = g_mempPools[heap].pos;
 
-        if (g_mempPools[poolnum].pos == 0) // uninitialized
+        if (g_mempPools[heap].pos == 0) // uninitialized
         {
             for (;;);
         }
         else
         {
-            if (g_mempPools[poolnum].pos > g_mempPools[poolnum].end) // overflow
+            if (g_mempPools[heap].pos > g_mempPools[heap].end) // overflow
             {
                 nulled_mempLoopAllMemBanks();
                 for (;;);
             }
 
-            if (g_mempPools[poolnum].pos + bytes > g_mempPools[poolnum].end) // Overflow, try pool 6
+            if (g_mempPools[heap].pos + bytes > g_mempPools[heap].end) // Overflow, try pool 6
             {
-                poolnum = MEMPOOL_PERMANENT;
+                heap = MEMPOOL_PERMANENT;
 
                 if (g_mempPools[MEMPOOL_PERMANENT].pos + bytes <= g_mempPools[MEMPOOL_PERMANENT].end) // good
                 {
@@ -165,8 +187,8 @@ void *mempAllocBytesInBank(s32 bytes, u8 poolnum)
             }
             else // good, allocate the mem and exit
             {
-                g_mempPools[poolnum].pos += bytes;
-                g_mempPools[poolnum].prevpos = allocation;
+                g_mempPools[heap].pos += bytes;
+                g_mempPools[heap].prevpos = allocation;
 
                 if (1);
 
@@ -367,7 +389,7 @@ glabel mempAddEntryOfSizeToBank
 
 void nulled_mempLoopAllMemBanks(void) {
     u8 bank;
-    for (bank = MEMPOOL_MF; bank < MEMPOOL_7; bank++)
+    for (bank = MEMPOOL_MF; bank < MEMPOOL_COUNT; bank++)
     {
     }
 }
