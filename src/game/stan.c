@@ -6,6 +6,7 @@
 #include "chrai.h"
 #include "chr.h"
 #include "unk_0B3200.h"
+#include "assert.h"
 
 // bss
 struct StanPrefixRecord {
@@ -71,10 +72,10 @@ StandTile *bfsTileStack[352];
 // data
 
 //D:80040F30
-u8 D_80040F30[] = { 
-    0x8D, 0x86, 0x04, 0xC5, 
-    0x9D, 0xA4, 0x00, 0x00, 
-    0x00, 0x00, 0x00, 0x00, 
+u8 D_80040F30[] = {
+    0x8D, 0x86, 0x04, 0xC5,
+    0x9D, 0xA4, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00
 };
 
@@ -204,7 +205,7 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0AEF3C
 /* 0E3A6C 7F0AEF3C 3C068004 */  lui   $a2, %hi(D_80040FAC)
 /* 0E3A70 7F0AEF40 8CC60FAC */  lw    $a2, %lo(D_80040FAC)($a2)
-/* 0E3A74 7F0AEF44 3C0F8004 */  lui   $t7, %hi(D_80040F64) 
+/* 0E3A74 7F0AEF44 3C0F8004 */  lui   $t7, %hi(D_80040F64)
 /* 0E3A78 7F0AEF48 27BDFFD8 */  addiu $sp, $sp, -0x28
 /* 0E3A7C 7F0AEF4C 000670C0 */  sll   $t6, $a2, 3
 /* 0E3A80 7F0AEF50 25EF0F64 */  addiu $t7, %lo(D_80040F64) # addiu $t7, $t7, 0xf64
@@ -244,7 +245,7 @@ glabel sub_GAME_7F0AEF3C
 /* 0E3B00 7F0AEFD0 8FA20024 */  lw    $v0, 0x24($sp)
 /* 0E3B04 7F0AEFD4 27BD0028 */  addiu $sp, $sp, 0x28
 /* 0E3B08 7F0AEFD8 03E00008 */  jr    $ra
-/* 0E3B0C 7F0AEFDC 00000000 */   nop   
+/* 0E3B0C 7F0AEFDC 00000000 */   nop
 )
 #endif
 
@@ -435,9 +436,9 @@ glabel sub_GAME_7F0AF038
 /* 0E3BC4 7F0AF094 AC60FFF8 */  sw    $zero, -8($v1)
 /* 0E3BC8 7F0AF098 1462FFFB */  bne   $v1, $v0, .L7F0AF088
 /* 0E3BCC 7F0AF09C AC60FFFC */   sw    $zero, -4($v1)
-/* 0E3BD0 7F0AF0A0 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E3BD0 7F0AF0A0 3C0E8008 */  lui   $t6, %hi(stan_prefix)
 /* 0E3BD4 7F0AF0A4 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
-/* 0E3BD8 7F0AF0A8 3C0D8004 */  lui   $t5, %hi(list_of_tilesizes) 
+/* 0E3BD8 7F0AF0A8 3C0D8004 */  lui   $t5, %hi(list_of_tilesizes)
 /* 0E3BDC 7F0AF0AC 25AD0F4C */  addiu $t5, %lo(list_of_tilesizes) # addiu $t5, $t5, 0xf4c
 /* 0E3BE0 7F0AF0B0 8DC40004 */  lw    $a0, 4($t6)
 /* 0E3BE4 7F0AF0B4 00C02825 */  move  $a1, $a2
@@ -446,8 +447,8 @@ glabel sub_GAME_7F0AF038
 /* 0E3BF0 7F0AF0C0 240B7FFF */  li    $t3, 32767
 /* 0E3BF4 7F0AF0C4 240A000C */  li    $t2, 12
 /* 0E3BF8 7F0AF0C8 11E00048 */  beqz  $t7, .L7F0AF1EC
-/* 0E3BFC 7F0AF0CC 3C098008 */   lui   $t1, %hi(dword_CODE_bss_8007B358) 
-/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007B128) 
+/* 0E3BFC 7F0AF0CC 3C098008 */   lui   $t1, %hi(dword_CODE_bss_8007B358)
+/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007B128)
 /* 0E3C04 7F0AF0D4 2508B128 */  addiu $t0, %lo(dword_CODE_bss_8007B128) # addiu $t0, $t0, -0x4ed8
 /* 0E3C08 7F0AF0D8 2529B358 */  addiu $t1, %lo(dword_CODE_bss_8007B358) # addiu $t1, $t1, -0x4ca8
 /* 0E3C0C 7F0AF0DC 24020006 */  li    $v0, 6
@@ -506,7 +507,7 @@ glabel sub_GAME_7F0AF038
 /* 0E3CC8 7F0AF198 26730002 */  addiu $s3, $s3, 2
 /* 0E3CCC 7F0AF19C 0330082A */  slt   $at, $t9, $s0
 /* 0E3CD0 7F0AF1A0 10200002 */  beqz  $at, .L7F0AF1AC
-/* 0E3CD4 7F0AF1A4 00000000 */   nop   
+/* 0E3CD4 7F0AF1A4 00000000 */   nop
 /* 0E3CD8 7F0AF1A8 A6B00006 */  sh    $s0, 6($s5)
 .L7F0AF1AC:
 /* 0E3CDC 7F0AF1AC 1642FFF1 */  bne   $s2, $v0, .L7F0AF174
@@ -582,9 +583,9 @@ glabel sub_GAME_7F0AF20C
 /* 0E3D94 7F0AF264 C4200F44 */  lwc1  $f0, %lo(level_scale)($at)
 /* 0E3D98 7F0AF268 C4840000 */  lwc1  $f4, ($a0)
 /* 0E3D9C 7F0AF26C 0080A025 */  move  $s4, $a0
-/* 0E3DA0 7F0AF270 3C178004 */  lui   $s7, %hi(list_of_tilesizes) 
+/* 0E3DA0 7F0AF270 3C178004 */  lui   $s7, %hi(list_of_tilesizes)
 /* 0E3DA4 7F0AF274 46002182 */  mul.s $f6, $f4, $f0
-/* 0E3DA8 7F0AF278 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_8007B128) 
+/* 0E3DA8 7F0AF278 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_8007B128)
 /* 0E3DAC 7F0AF27C 3C018006 */  lui   $at, %hi(D_800585D4)
 /* 0E3DB0 7F0AF280 254AB128 */  addiu $t2, %lo(dword_CODE_bss_8007B128) # addiu $t2, $t2, -0x4ed8
 /* 0E3DB4 7F0AF284 26F70F4C */  addiu $s7, %lo(list_of_tilesizes) # addiu $s7, $s7, 0xf4c
@@ -600,7 +601,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3DDC 7F0AF2AC 24040004 */  li    $a0, 4
 /* 0E3DE0 7F0AF2B0 46008482 */  mul.s $f18, $f16, $f0
 /* 0E3DE4 7F0AF2B4 4604103C */  c.lt.s $f2, $f4
-/* 0E3DE8 7F0AF2B8 00000000 */  nop   
+/* 0E3DE8 7F0AF2B8 00000000 */  nop
 /* 0E3DEC 7F0AF2BC 45000002 */  bc1f  .L7F0AF2C8
 /* 0E3DF0 7F0AF2C0 E7B200C0 */   swc1  $f18, 0xc0($sp)
 /* 0E3DF4 7F0AF2C4 E7A200BC */  swc1  $f2, 0xbc($sp)
@@ -639,7 +640,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3E6C 7F0AF33C 00156080 */  sll   $t4, $s5, 2
 /* 0E3E70 7F0AF340 01956023 */  subu  $t4, $t4, $s5
 /* 0E3E74 7F0AF344 8D650000 */  lw    $a1, ($t3)
-/* 0E3E78 7F0AF348 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_8007B358) 
+/* 0E3E78 7F0AF348 3C0D8008 */  lui   $t5, %hi(dword_CODE_bss_8007B358)
 /* 0E3E7C 7F0AF34C 25ADB358 */  addiu $t5, %lo(dword_CODE_bss_8007B358) # addiu $t5, $t5, -0x4ca8
 /* 0E3E80 7F0AF350 10A0007B */  beqz  $a1, .L7F0AF540
 /* 0E3E84 7F0AF354 000C6080 */   sll   $t4, $t4, 2
@@ -676,7 +677,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E3F00 7F0AF3D0 00008025 */  move  $s0, $zero
 /* 0E3F04 7F0AF3D4 01C01021 */  addu  $v0, $t6, $zero
 /* 0E3F08 7F0AF3D8 12CF000D */  beq   $s6, $t7, .L7F0AF410
-/* 0E3F0C 7F0AF3DC 00000000 */   nop   
+/* 0E3F0C 7F0AF3DC 00000000 */   nop
 /* 0E3F10 7F0AF3E0 91C30000 */  lbu   $v1, ($t6)
 .L7F0AF3E4:
 /* 0E3F14 7F0AF3E4 56A30004 */  bnel  $s5, $v1, .L7F0AF3F8
@@ -688,9 +689,9 @@ glabel sub_GAME_7F0AF20C
 /* 0E3F28 7F0AF3F8 26100001 */  addiu $s0, $s0, 1
 /* 0E3F2C 7F0AF3FC 24420001 */  addiu $v0, $v0, 1
 /* 0E3F30 7F0AF400 12C30003 */  beq   $s6, $v1, .L7F0AF410
-/* 0E3F34 7F0AF404 00000000 */   nop   
+/* 0E3F34 7F0AF404 00000000 */   nop
 /* 0E3F38 7F0AF408 1604FFF6 */  bne   $s0, $a0, .L7F0AF3E4
-/* 0E3F3C 7F0AF40C 00000000 */   nop   
+/* 0E3F3C 7F0AF40C 00000000 */   nop
 .L7F0AF410:
 /* 0E3F40 7F0AF410 1000004C */  b     .L7F0AF544
 /* 0E3F44 7F0AF414 8FAE0070 */   lw    $t6, 0x70($sp)
@@ -698,7 +699,7 @@ glabel sub_GAME_7F0AF20C
 .L7F0AF41C:
 /* 0E3F4C 7F0AF41C 00A08825 */  move  $s1, $a1
 /* 0E3F50 7F0AF420 13000044 */  beqz  $t8, .L7F0AF534
-/* 0E3F54 7F0AF424 00000000 */   nop   
+/* 0E3F54 7F0AF424 00000000 */   nop
 /* 0E3F58 7F0AF428 90B90003 */  lbu   $t9, 3($a1)
 /* 0E3F5C 7F0AF42C 16B90041 */  bne   $s5, $t9, .L7F0AF534
 /* 0E3F60 7F0AF430 00008025 */   move  $s0, $zero
@@ -716,9 +717,9 @@ glabel sub_GAME_7F0AF20C
 /* 0E3F88 7F0AF458 4503002B */  bc1tl .L7F0AF508
 /* 0E3F8C 7F0AF45C 86220006 */   lh    $v0, 6($s1)
 /* 0E3F90 7F0AF460 4616003C */  c.lt.s $f0, $f22
-/* 0E3F94 7F0AF464 00000000 */  nop   
+/* 0E3F94 7F0AF464 00000000 */  nop
 /* 0E3F98 7F0AF468 45000002 */  bc1f  .L7F0AF474
-/* 0E3F9C 7F0AF46C 00000000 */   nop   
+/* 0E3F9C 7F0AF46C 00000000 */   nop
 /* 0E3FA0 7F0AF470 24120001 */  li    $s2, 1
 .L7F0AF474:
 /* 0E3FA4 7F0AF474 5613FFF0 */  bnel  $s0, $s3, .L7F0AF438
@@ -749,11 +750,11 @@ glabel sub_GAME_7F0AF20C
 /* 0E4004 7F0AF4D4 8E860008 */   lw    $a2, 8($s4)
 /* 0E4008 7F0AF4D8 C6920004 */  lwc1  $f18, 4($s4)
 /* 0E400C 7F0AF4DC 4600903C */  c.lt.s $f18, $f0
-/* 0E4010 7F0AF4E0 00000000 */  nop   
+/* 0E4010 7F0AF4E0 00000000 */  nop
 /* 0E4014 7F0AF4E4 45030008 */  bc1tl .L7F0AF508
 /* 0E4018 7F0AF4E8 86220006 */   lh    $v0, 6($s1)
 /* 0E401C 7F0AF4EC 4600C03C */  c.lt.s $f24, $f0
-/* 0E4020 7F0AF4F0 00000000 */  nop   
+/* 0E4020 7F0AF4F0 00000000 */  nop
 /* 0E4024 7F0AF4F4 45020004 */  bc1fl .L7F0AF508
 /* 0E4028 7F0AF4F8 86220006 */   lh    $v0, 6($s1)
 /* 0E402C 7F0AF4FC AFB1009C */  sw    $s1, 0x9c($sp)
@@ -768,7 +769,7 @@ glabel sub_GAME_7F0AF20C
 /* 0E4048 7F0AF518 01918821 */  addu  $s1, $t4, $s1
 /* 0E404C 7F0AF51C 8E2D0000 */  lw    $t5, ($s1)
 /* 0E4050 7F0AF520 11A00004 */  beqz  $t5, .L7F0AF534
-/* 0E4054 7F0AF524 00000000 */   nop   
+/* 0E4054 7F0AF524 00000000 */   nop
 /* 0E4058 7F0AF528 922F0003 */  lbu   $t7, 3($s1)
 /* 0E405C 7F0AF52C 52AFFFC1 */  beql  $s5, $t7, .L7F0AF434
 /* 0E4060 7F0AF530 00008025 */   move  $s0, $zero
@@ -856,15 +857,15 @@ glabel stanLoadFile
 /* 0E4134 7F0AF604 AC280FB4 */  sw    $t0, %lo(stanlinelog_flag)($at)
 .L7F0AF608:
 /* 0E4138 7F0AF608 0FC2BC0E */  jal   sub_GAME_7F0AF038
-/* 0E413C 7F0AF60C 00000000 */   nop   
+/* 0E413C 7F0AF60C 00000000 */   nop
 /* 0E4140 7F0AF610 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0E4144 7F0AF614 44816000 */  mtc1  $at, $f12
 /* 0E4148 7F0AF618 0FC2CA54 */  jal   setLevelScale
-/* 0E414C 7F0AF61C 00000000 */   nop   
+/* 0E414C 7F0AF61C 00000000 */   nop
 /* 0E4150 7F0AF620 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E4154 7F0AF624 27BD0018 */  addiu $sp, $sp, 0x18
 /* 0E4158 7F0AF628 03E00008 */  jr    $ra
-/* 0E415C 7F0AF62C 00000000 */   nop   
+/* 0E415C 7F0AF62C 00000000 */   nop
 )
 #endif
 
@@ -1039,7 +1040,7 @@ glabel sub_GAME_7F0AF638
 /* 0E41F0 7F0AF6C0 00054303 */  sra   $t0, $a1, 0xc
 /* 0E41F4 7F0AF6C4 3105000F */  andi  $a1, $t0, 0xf
 /* 0E41F8 7F0AF6C8 18A00017 */  blez  $a1, .L7F0AF728
-/* 0E41FC 7F0AF6CC 00000000 */   nop   
+/* 0E41FC 7F0AF6CC 00000000 */   nop
 .L7F0AF6D0:
 /* 0E4200 7F0AF6D0 9482000E */  lhu   $v0, 0xe($a0)
 /* 0E4204 7F0AF6D4 26100001 */  addiu $s0, $s0, 1
@@ -1109,7 +1110,7 @@ s32 sub_GAME_7F0AF760(StandTile *tile) {
     struct int3 AB;
     struct int3 AC;
 
-    
+
     iA = (tile->hdrTail >> 0x8 & 0xf);     // t1
     iB = (tile->hdrTail >> 0x4 & 0xf);    // t0
     // Actually saving iC somewhere has prevented it being computed early
@@ -1123,9 +1124,9 @@ s32 sub_GAME_7F0AF760(StandTile *tile) {
     AC.x = (tile->points[iC].x - tile->points[iA].x);
     AC.y = 0;
     AC.z = (tile->points[iC].z - tile->points[iA].z);
-    
+
     crossProduct =  ((AB.z * AC.x) - (AB.x * AC.z));    // potential overflow.
-    
+
     return (crossProduct == 0);
 }
 
@@ -1167,8 +1168,8 @@ glabel sub_GAME_7F0AF760
 /* 0E4308 7F0AF7D8 8FAE0014 */  lw    $t6, 0x14($sp)
 /* 0E430C 7F0AF7DC AFB80010 */  sw    $t8, 0x10($sp)
 /* 0E4310 7F0AF7E0 00006012 */  mflo  $t4
-/* 0E4314 7F0AF7E4 00000000 */  nop   
-/* 0E4318 7F0AF7E8 00000000 */  nop   
+/* 0E4314 7F0AF7E4 00000000 */  nop
+/* 0E4318 7F0AF7E8 00000000 */  nop
 /* 0E431C 7F0AF7EC 030E0019 */  multu $t8, $t6
 /* 0E4320 7F0AF7F0 00007812 */  mflo  $t7
 /* 0E4324 7F0AF7F4 018FC023 */  subu  $t8, $t4, $t7
@@ -1228,7 +1229,7 @@ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0AF808
 /* 0E4338 7F0AF808 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 0E433C 7F0AF80C 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E433C 7F0AF80C 3C0E8008 */  lui   $t6, %hi(stan_prefix)
 /* 0E4340 7F0AF810 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
 /* 0E4344 7F0AF814 AFBF0044 */  sw    $ra, 0x44($sp)
 /* 0E4348 7F0AF818 AFB20040 */  sw    $s2, 0x40($sp)
@@ -1274,7 +1275,7 @@ glabel sub_GAME_7F0AF808
 /* 0E43E4 7F0AF8B4 0FC2CA5C */  jal   stanGetPositionYValue
 /* 0E43E8 7F0AF8B8 02002025 */   move  $a0, $s0
 /* 0E43EC 7F0AF8BC 461A003C */  c.lt.s $f0, $f26
-/* 0E43F0 7F0AF8C0 00000000 */  nop   
+/* 0E43F0 7F0AF8C0 00000000 */  nop
 /* 0E43F4 7F0AF8C4 45020004 */  bc1fl .L7F0AF8D8
 /* 0E43F8 7F0AF8C8 86020006 */   lh    $v0, 6($s0)
 /* 0E43FC 7F0AF8CC 1000000B */  b     .L7F0AF8FC
@@ -1361,7 +1362,7 @@ glabel getTileMidPoint
 /* 0E4498 7F0AF968 008D4021 */  addu  $t0, $a0, $t5
 /* 0E449C 7F0AF96C 850C0008 */  lh    $t4, 8($t0)
 /* 0E44A0 7F0AF970 468021A0 */  cvt.s.w $f6, $f4
-/* 0E44A4 7F0AF974 3C0B8004 */  lui   $t3, %hi(inv_level_scale) 
+/* 0E44A4 7F0AF974 3C0B8004 */  lui   $t3, %hi(inv_level_scale)
 /* 0E44A8 7F0AF978 448C9000 */  mtc1  $t4, $f18
 /* 0E44AC 7F0AF97C 256B0F48 */  addiu $t3, %lo(inv_level_scale) # addiu $t3, $t3, 0xf48
 /* 0E44B0 7F0AF980 468042A0 */  cvt.s.w $f10, $f8
@@ -1464,14 +1465,14 @@ glabel getPointJustInsideOfTileTriple
 /* 0E4598 7F0AFA68 844B000A */  lh    $t3, 0xa($v0)
 /* 0E459C 7F0AFA6C C4640000 */  lwc1  $f4, ($v1)
 /* 0E45A0 7F0AFA70 448B8000 */  mtc1  $t3, $f16
-/* 0E45A4 7F0AFA74 00000000 */  nop   
+/* 0E45A4 7F0AFA74 00000000 */  nop
 /* 0E45A8 7F0AFA78 468084A0 */  cvt.s.w $f18, $f16
 /* 0E45AC 7F0AFA7C 46049182 */  mul.s $f6, $f18, $f4
 /* 0E45B0 7F0AFA80 E4C60004 */  swc1  $f6, 4($a2)
 /* 0E45B4 7F0AFA84 844C000C */  lh    $t4, 0xc($v0)
 /* 0E45B8 7F0AFA88 C4700000 */  lwc1  $f16, ($v1)
 /* 0E45BC 7F0AFA8C 448C4000 */  mtc1  $t4, $f8
-/* 0E45C0 7F0AFA90 00000000 */  nop   
+/* 0E45C0 7F0AFA90 00000000 */  nop
 /* 0E45C4 7F0AFA94 468042A0 */  cvt.s.w $f10, $f8
 /* 0E45C8 7F0AFA98 46105482 */  mul.s $f18, $f10, $f16
 /* 0E45CC 7F0AFA9C E4D20008 */  swc1  $f18, 8($a2)
@@ -1491,21 +1492,21 @@ glabel getPointJustInsideOfTileTriple
 /* 0E4604 7F0AFAD4 E4D00000 */  swc1  $f16, ($a2)
 /* 0E4608 7F0AFAD8 C7B20020 */  lwc1  $f18, 0x20($sp)
 /* 0E460C 7F0AFADC 46009102 */  mul.s $f4, $f18, $f0
-/* 0E4610 7F0AFAE0 00000000 */  nop   
+/* 0E4610 7F0AFAE0 00000000 */  nop
 /* 0E4614 7F0AFAE4 46081182 */  mul.s $f6, $f2, $f8
 /* 0E4618 7F0AFAE8 C4C80008 */  lwc1  $f8, 8($a2)
 /* 0E461C 7F0AFAEC 46062280 */  add.s $f10, $f4, $f6
 /* 0E4620 7F0AFAF0 E4CA0004 */  swc1  $f10, 4($a2)
 /* 0E4624 7F0AFAF4 C7B00024 */  lwc1  $f16, 0x24($sp)
 /* 0E4628 7F0AFAF8 46008482 */  mul.s $f18, $f16, $f0
-/* 0E462C 7F0AFAFC 00000000 */  nop   
+/* 0E462C 7F0AFAFC 00000000 */  nop
 /* 0E4630 7F0AFB00 46081102 */  mul.s $f4, $f2, $f8
 /* 0E4634 7F0AFB04 46049180 */  add.s $f6, $f18, $f4
 /* 0E4638 7F0AFB08 E4C60008 */  swc1  $f6, 8($a2)
 /* 0E463C 7F0AFB0C 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E4640 7F0AFB10 27BD0028 */  addiu $sp, $sp, 0x28
 /* 0E4644 7F0AFB14 03E00008 */  jr    $ra
-/* 0E4648 7F0AFB18 00000000 */   nop   
+/* 0E4648 7F0AFB18 00000000 */   nop
 )
 #endif
 
@@ -1514,13 +1515,13 @@ glabel getPointJustInsideOfTileTriple
 
 
 #ifdef NONMATCHING
-// Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all. 
+// Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all.
 f32 sub_GAME_7F0AFB1C(coord3d *p,coord3d *q)
 {
   f32 xDiff = q->x - p->x;
   f32 yDiff = q->y - p->y;
   f32 zDiff = q->z - p->z;
-  
+
   return xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
 }
 #else
@@ -1580,7 +1581,7 @@ glabel sub_GAME_7F0AFB78
 /* 0E46D8 7F0AFBA8 F7B40018 */  sdc1  $f20, 0x18($sp)
 /* 0E46DC 7F0AFBAC AFA00078 */  sw    $zero, 0x78($sp)
 /* 0E46E0 7F0AFBB0 C4840000 */  lwc1  $f4, ($a0)
-/* 0E46E4 7F0AFBB4 3C0E8008 */  lui   $t6, %hi(stan_prefix) 
+/* 0E46E4 7F0AFBB4 3C0E8008 */  lui   $t6, %hi(stan_prefix)
 /* 0E46E8 7F0AFBB8 8DCEB120 */  lw    $t6, %lo(stan_prefix)($t6)
 /* 0E46EC 7F0AFBBC E7A40064 */  swc1  $f4, 0x64($sp)
 /* 0E46F0 7F0AFBC0 C4A60000 */  lwc1  $f6, ($a1)
@@ -1635,7 +1636,7 @@ glabel sub_GAME_7F0AFB78
 /* 0E47A4 7F0AFC74 0FC2BEC7 */  jal   sub_GAME_7F0AFB1C
 /* 0E47A8 7F0AFC78 27A50064 */   addiu $a1, $sp, 0x64
 /* 0E47AC 7F0AFC7C 4614003C */  c.lt.s $f0, $f20
-/* 0E47B0 7F0AFC80 00000000 */  nop   
+/* 0E47B0 7F0AFC80 00000000 */  nop
 /* 0E47B4 7F0AFC84 4502000A */  bc1fl .L7F0AFCB0
 /* 0E47B8 7F0AFC88 26100001 */   addiu $s0, $s0, 1
 /* 0E47BC 7F0AFC8C C7AA0058 */  lwc1  $f10, 0x58($sp)
@@ -1650,7 +1651,7 @@ glabel sub_GAME_7F0AFB78
 /* 0E47DC 7F0AFCAC 26100001 */  addiu $s0, $s0, 1
 .L7F0AFCB0:
 /* 0E47E0 7F0AFCB0 161EFFDE */  bne   $s0, $fp, .L7F0AFC2C
-/* 0E47E4 7F0AFCB4 00000000 */   nop   
+/* 0E47E4 7F0AFCB4 00000000 */   nop
 .L7F0AFCB8:
 /* 0E47E8 7F0AFCB8 86220006 */  lh    $v0, 6($s1)
 .L7F0AFCBC:
@@ -1705,7 +1706,7 @@ f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
     f32 UNUSED;
 
     // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
-    // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC. 
+    // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC.
     nextIndex = (index + 1) % STAN_TAIL_E(tile);
 
     nextPnt = &tile->points[nextIndex];
@@ -1720,7 +1721,7 @@ f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
         // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
         v_x = p_x - (f32)tile->points[nextIndex].x;
         v_z = p_z - (f32)tile->points[nextIndex].z;
-        return sqrtf(v_x * v_x + v_z * v_z);  
+        return sqrtf(v_x * v_x + v_z * v_z);
     }
     else
     {
@@ -1733,7 +1734,7 @@ f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
         );
         return crossProduct / edge_len;
     }
-    
+
 }
 
 
@@ -1752,10 +1753,10 @@ f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32
     s32 end3index;      // types seem correct, changing introduces more instructions
 
     f32 edge_x;       // 0x40 (8)
-    f32 edge_z;       // 0x3C 
+    f32 edge_z;       // 0x3C
     f32 edge_len;
 
-    s32 currPntI;   
+    s32 currPntI;
     s32 nextPntI;
 
     f32 v_x;
@@ -1788,7 +1789,7 @@ f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32
         // They just return the distance between the points, which is sensible and the correct value in 3 dimensions.
         v_x = p_x - (f32)tile->points[nextPntI].x;
         v_z = p_z - (f32)tile->points[nextPntI].z;
-        return sqrtf(v_x * v_x + v_z * v_z);  
+        return sqrtf(v_x * v_x + v_z * v_z);
     }
     else
     {
@@ -1870,7 +1871,7 @@ glabel getShortest2dDispToInfTripleEdge
 /* 0E4A8C 7F0AFF5C 46089001 */  sub.s $f0, $f18, $f8
 /* 0E4A90 7F0AFF60 46065081 */  sub.s $f2, $f10, $f6
 /* 0E4A94 7F0AFF64 46000202 */  mul.s $f8, $f0, $f0
-/* 0E4A98 7F0AFF68 00000000 */  nop   
+/* 0E4A98 7F0AFF68 00000000 */  nop
 /* 0E4A9C 7F0AFF6C 46021102 */  mul.s $f4, $f2, $f2
 /* 0E4AA0 7F0AFF70 0C007DF8 */  jal   sqrtf
 /* 0E4AA4 7F0AFF74 46044300 */   add.s $f12, $f8, $f4
@@ -1881,7 +1882,7 @@ glabel getShortest2dDispToInfTripleEdge
 /* 0E4AB4 7F0AFF84 C7AA0054 */  lwc1  $f10, 0x54($sp)
 /* 0E4AB8 7F0AFF88 84CD0008 */  lh    $t5, 8($a2)
 /* 0E4ABC 7F0AFF8C 448C3000 */  mtc1  $t4, $f6
-/* 0E4AC0 7F0AFF90 00000000 */  nop   
+/* 0E4AC0 7F0AFF90 00000000 */  nop
 /* 0E4AC4 7F0AFF94 46803220 */  cvt.s.w $f8, $f6
 /* 0E4AC8 7F0AFF98 46001187 */  neg.s $f6, $f2
 /* 0E4ACC 7F0AFF9C 46085101 */  sub.s $f4, $f10, $f8
@@ -1896,7 +1897,7 @@ glabel getShortest2dDispToInfTripleEdge
 .L7F0AFFC0:
 /* 0E4AF0 7F0AFFC0 27BD0048 */  addiu $sp, $sp, 0x48
 /* 0E4AF4 7F0AFFC4 03E00008 */  jr    $ra
-/* 0E4AF8 7F0AFFC8 00000000 */   nop   
+/* 0E4AF8 7F0AFFC8 00000000 */   nop
 )
 #endif
 
@@ -1907,7 +1908,7 @@ glabel getShortest2dDispToInfTripleEdge
 f32 getShortest2dDispToInfTileEdgeUnscaled(StandTile *tile, int index,f32 x,f32 z)
 {
   f32 disp;
-  
+
   disp = getShortest2dDispToInfTileEdge(tile, index, x * level_scale, z * level_scale);
   return disp * inv_level_scale;
 }
@@ -1920,7 +1921,7 @@ f32 getShortest2dDispToInfTileEdgeUnscaled(StandTile *tile, int index,f32 x,f32 
 f32 getShortest2dDispToInfTripleEdgeUnscaled(StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
   f32 disp;
-  
+
   disp = getShortest2dDispToInfTripleEdge(tile, start3index, p_x * level_scale, p_z * level_scale);
   return disp * inv_level_scale;
 }
@@ -1931,7 +1932,7 @@ f32 getShortest2dDispToInfTripleEdgeUnscaled(StandTile *tile,s32 start3index,f32
 f32 distToTilePnt2D(StandTile *tile,int pntI,f32 p_x,f32 p_z)
 {
   f32 len;
-  
+
   p_x -= (f32)tile->points[pntI].x;
   p_z -= (f32)tile->points[pntI].z;
   return sqrtf(p_x * p_x + p_z * p_z);
@@ -1946,11 +1947,11 @@ f32 sub_GAME_7F0B00C4(StandTile *tile,s32 index,f32 p_x,f32 p_z)
   f32 v_x;
   f32 v_z;
   f32 dist;
-  
+
   v_x = p_x * level_scale - (f32)tile->points[index].x;
   v_z = p_z * level_scale - (f32)tile->points[index].z;
   dist = sqrtf(v_x * v_x + v_z * v_z);
-  
+
   return dist * inv_level_scale;
 }
 #else
@@ -1977,7 +1978,7 @@ glabel sub_GAME_7F0B00C4
 /* 0E4C38 7F0B0108 46067381 */  sub.s $f14, $f14, $f6
 /* 0E4C3C 7F0B010C 460AA501 */  sub.s $f20, $f20, $f10
 /* 0E4C40 7F0B0110 460E7402 */  mul.s $f16, $f14, $f14
-/* 0E4C44 7F0B0114 00000000 */  nop   
+/* 0E4C44 7F0B0114 00000000 */  nop
 /* 0E4C48 7F0B0118 4614A482 */  mul.s $f18, $f20, $f20
 /* 0E4C4C 7F0B011C 0C007DF8 */  jal   sqrtf
 /* 0E4C50 7F0B0120 46128300 */   add.s $f12, $f16, $f18
@@ -2033,7 +2034,7 @@ glabel sub_GAME_7F0B0140
 /* 0E4CB8 7F0B0188 46124100 */  add.s $f4, $f8, $f18
 /* 0E4CBC 7F0B018C 46062002 */  mul.s $f0, $f4, $f6
 /* 0E4CC0 7F0B0190 03E00008 */  jr    $ra
-/* 0E4CC4 7F0B0194 00000000 */   nop   
+/* 0E4CC4 7F0B0194 00000000 */   nop
 )
 #endif
 
@@ -2157,14 +2158,14 @@ glabel sub_GAME_7F0B0198
 /* 0E4D28 7F0B01F8 46804320 */  cvt.s.w $f12, $f8
 /* 0E4D2C 7F0B01FC 468030A0 */  cvt.s.w $f2, $f6
 /* 0E4D30 7F0B0200 15400002 */  bnez  $t2, .L7F0B020C
-/* 0E4D34 7F0B0204 00000000 */   nop   
+/* 0E4D34 7F0B0204 00000000 */   nop
 /* 0E4D38 7F0B0208 0007000D */  break 7
 .L7F0B020C:
 /* 0E4D3C 7F0B020C 2401FFFF */  li    $at, -1
 /* 0E4D40 7F0B0210 15410004 */  bne   $t2, $at, .L7F0B0224
 /* 0E4D44 7F0B0214 3C018000 */   lui   $at, 0x8000
 /* 0E4D48 7F0B0218 17210002 */  bne   $t9, $at, .L7F0B0224
-/* 0E4D4C 7F0B021C 00000000 */   nop   
+/* 0E4D4C 7F0B021C 00000000 */   nop
 /* 0E4D50 7F0B0220 0006000D */  break 6
 .L7F0B0224:
 /* 0E4D54 7F0B0224 468053A0 */  cvt.s.w $f14, $f10
@@ -2181,9 +2182,9 @@ glabel sub_GAME_7F0B0198
 /* 0E4D80 7F0B0250 460A4080 */  add.s $f2, $f8, $f10
 /* 0E4D84 7F0B0254 46048000 */  add.s $f0, $f16, $f4
 /* 0E4D88 7F0B0258 4600103C */  c.lt.s $f2, $f0
-/* 0E4D8C 7F0B025C 00000000 */  nop   
+/* 0E4D8C 7F0B025C 00000000 */  nop
 /* 0E4D90 7F0B0260 45000002 */  bc1f  .L7F0B026C
-/* 0E4D94 7F0B0264 00000000 */   nop   
+/* 0E4D94 7F0B0264 00000000 */   nop
 /* 0E4D98 7F0B0268 24020001 */  li    $v0, 1
 .L7F0B026C:
 /* 0E4D9C 7F0B026C 5040000B */  beql  $v0, $zero, .L7F0B029C
@@ -2191,32 +2192,32 @@ glabel sub_GAME_7F0B0198
 /* 0E4DA4 7F0B0274 44804000 */  mtc1  $zero, $f8
 /* 0E4DA8 7F0B0278 00001025 */  move  $v0, $zero
 /* 0E4DAC 7F0B027C 4608003C */  c.lt.s $f0, $f8
-/* 0E4DB0 7F0B0280 00000000 */  nop   
+/* 0E4DB0 7F0B0280 00000000 */  nop
 /* 0E4DB4 7F0B0284 45000002 */  bc1f  .L7F0B0290
-/* 0E4DB8 7F0B0288 00000000 */   nop   
+/* 0E4DB8 7F0B0288 00000000 */   nop
 /* 0E4DBC 7F0B028C 24020001 */  li    $v0, 1
 .L7F0B0290:
 /* 0E4DC0 7F0B0290 1440000F */  bnez  $v0, .L7F0B02D0
-/* 0E4DC4 7F0B0294 00000000 */   nop   
+/* 0E4DC4 7F0B0294 00000000 */   nop
 /* 0E4DC8 7F0B0298 44805000 */  mtc1  $zero, $f10
 .L7F0B029C:
 /* 0E4DCC 7F0B029C 00001025 */  move  $v0, $zero
 /* 0E4DD0 7F0B02A0 4600503C */  c.lt.s $f10, $f0
-/* 0E4DD4 7F0B02A4 00000000 */  nop   
+/* 0E4DD4 7F0B02A4 00000000 */  nop
 /* 0E4DD8 7F0B02A8 45000002 */  bc1f  .L7F0B02B4
-/* 0E4DDC 7F0B02AC 00000000 */   nop   
+/* 0E4DDC 7F0B02AC 00000000 */   nop
 /* 0E4DE0 7F0B02B0 24020001 */  li    $v0, 1
 .L7F0B02B4:
 /* 0E4DE4 7F0B02B4 10400006 */  beqz  $v0, .L7F0B02D0
-/* 0E4DE8 7F0B02B8 00000000 */   nop   
+/* 0E4DE8 7F0B02B8 00000000 */   nop
 /* 0E4DEC 7F0B02BC 4602003C */  c.lt.s $f0, $f2
 /* 0E4DF0 7F0B02C0 00001025 */  move  $v0, $zero
 /* 0E4DF4 7F0B02C4 45000002 */  bc1f  .L7F0B02D0
-/* 0E4DF8 7F0B02C8 00000000 */   nop   
+/* 0E4DF8 7F0B02C8 00000000 */   nop
 /* 0E4DFC 7F0B02CC 24020001 */  li    $v0, 1
 .L7F0B02D0:
 /* 0E4E00 7F0B02D0 03E00008 */  jr    $ra
-/* 0E4E04 7F0B02D4 00000000 */   nop   
+/* 0E4E04 7F0B02D4 00000000 */   nop
 )
 #endif
 
@@ -2288,7 +2289,7 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     f32 tempf;
     struct stan_7F0B0E24 *temp_a2;
     struct stan_7F0B0E24 *temp_v1;
-    
+
     if (start3index != 2)
     {
         var_a0 = start3index + 1;
@@ -2298,13 +2299,13 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
         var_a0 = 0;
     }
 
-    var_a0 = tile->tail.half >> (8 - (var_a0 * 4)); 
+    var_a0 = tile->tail.half >> (8 - (var_a0 * 4));
     temp_v1 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( var_a0) & 0xF)));
-    
+
     start3index = tile->tail.half >> (8 - (start3index * 4));
     temp_a2 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( start3index) & 0xF)));
-    
-    
+
+
     temp_f2 = (f32) (temp_v1->unk08 - temp_a2->unk08);
     temp_f14 = (f32) (temp_v1->unk0C - temp_a2->unk0C);
 
@@ -2474,7 +2475,7 @@ s32 sub_GAME_7F0B0688(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
     return
         (
-            (getRotationalDirectionBetween(sp1C, sp18, -sp24, -sp20) 
+            (getRotationalDirectionBetween(sp1C, sp18, -sp24, -sp20)
             * getRotationalDirectionBetween(sp1C, sp18, arg6 - arg0, arg7 - arg1)) < 1)
         &&
         (
@@ -2582,7 +2583,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E537C 7F0B084C AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0E5380 7F0B0850 44074000 */  mfc1  $a3, $f8
 /* 0E5384 7F0B0854 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E5388 7F0B0858 00000000 */   nop   
+/* 0E5388 7F0B0858 00000000 */   nop
 /* 0E538C 7F0B085C 8FAF002C */  lw    $t7, 0x2c($sp)
 /* 0E5390 7F0B0860 C7A60080 */  lwc1  $f6, 0x80($sp)
 /* 0E5394 7F0B0864 C7B00078 */  lwc1  $f16, 0x78($sp)
@@ -2610,7 +2611,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E53EC 7F0B08BC AFA2002C */  sw    $v0, 0x2c($sp)
 /* 0E53F0 7F0B08C0 44075000 */  mfc1  $a3, $f10
 /* 0E53F4 7F0B08C4 0FC2C170 */  jal   getRotationalDirectionBetween
-/* 0E53F8 7F0B08C8 00000000 */   nop   
+/* 0E53F8 7F0B08C8 00000000 */   nop
 /* 0E53FC 7F0B08CC 8FA30088 */  lw    $v1, 0x88($sp)
 /* 0E5400 7F0B08D0 8FB9004C */  lw    $t9, 0x4c($sp)
 /* 0E5404 7F0B08D4 0323082A */  slt   $at, $t9, $v1
@@ -2626,7 +2627,7 @@ glabel sub_GAME_7F0B07BC
 /* 0E5428 7F0B08F8 00004812 */  mflo  $t1
 /* 0E542C 7F0B08FC 0123082A */  slt   $at, $t1, $v1
 /* 0E5430 7F0B0900 14200002 */  bnez  $at, .L7F0B090C
-/* 0E5434 7F0B0904 00000000 */   nop   
+/* 0E5434 7F0B0904 00000000 */   nop
 /* 0E5438 7F0B0908 00002025 */  move  $a0, $zero
 .L7F0B090C:
 /* 0E543C 7F0B090C 03E00008 */  jr    $ra
@@ -2769,25 +2770,25 @@ glabel sub_GAME_7F0B0914
 /* 0E5550 7F0B0A20 46803220 */  cvt.s.w $f8, $f6
 /* 0E5554 7F0B0A24 44802000 */  mtc1  $zero, $f4
 /* 0E5558 7F0B0A28 14800002 */  bnez  $a0, .L7F0B0A34
-/* 0E555C 7F0B0A2C 00000000 */   nop   
+/* 0E555C 7F0B0A2C 00000000 */   nop
 /* 0E5560 7F0B0A30 0007000D */  break 7
 .L7F0B0A34:
 /* 0E5564 7F0B0A34 2401FFFF */  li    $at, -1
 /* 0E5568 7F0B0A38 14810004 */  bne   $a0, $at, .L7F0B0A4C
 /* 0E556C 7F0B0A3C 3C018000 */   lui   $at, 0x8000
 /* 0E5570 7F0B0A40 16410002 */  bne   $s2, $at, .L7F0B0A4C
-/* 0E5574 7F0B0A44 00000000 */   nop   
+/* 0E5574 7F0B0A44 00000000 */   nop
 /* 0E5578 7F0B0A48 0006000D */  break 6
 .L7F0B0A4C:
 /* 0E557C 7F0B0A4C 468084A0 */  cvt.s.w $f18, $f16
 /* 0E5580 7F0B0A50 461E4282 */  mul.s $f10, $f8, $f30
-/* 0E5584 7F0B0A54 00000000 */  nop   
+/* 0E5584 7F0B0A54 00000000 */  nop
 /* 0E5588 7F0B0A58 4612E182 */  mul.s $f6, $f28, $f18
 /* 0E558C 7F0B0A5C 46065200 */  add.s $f8, $f10, $f6
 /* 0E5590 7F0B0A60 4604403E */  c.le.s $f8, $f4
-/* 0E5594 7F0B0A64 00000000 */  nop   
+/* 0E5594 7F0B0A64 00000000 */  nop
 /* 0E5598 7F0B0A68 45000028 */  bc1f  .L7F0B0B0C
-/* 0E559C 7F0B0A6C 00000000 */   nop   
+/* 0E559C 7F0B0A6C 00000000 */   nop
 /* 0E55A0 7F0B0A70 448A8000 */  mtc1  $t2, $f16
 /* 0E55A4 7F0B0A74 44885000 */  mtc1  $t0, $f10
 /* 0E55A8 7F0B0A78 44892000 */  mtc1  $t1, $f4
@@ -2812,15 +2813,15 @@ glabel sub_GAME_7F0B0914
 /* 0E55F4 7F0B0AC4 50400012 */  beql  $v0, $zero, .L7F0B0B10
 /* 0E55F8 7F0B0AC8 86640006 */   lh    $a0, 6($s3)
 /* 0E55FC 7F0B0ACC 9603000E */  lhu   $v1, 0xe($s0)
-/* 0E5600 7F0B0AD0 3C198004 */  lui   $t9, %hi(standTileStart) 
+/* 0E5600 7F0B0AD0 3C198004 */  lui   $t9, %hi(standTileStart)
 /* 0E5604 7F0B0AD4 8F390F58 */  lw    $t9, %lo(standTileStart)($t9)
 /* 0E5608 7F0B0AD8 0003C0C0 */  sll   $t8, $v1, 3
 /* 0E560C 7F0B0ADC 26940001 */  addiu $s4, $s4, 1
 /* 0E5610 7F0B0AE0 03191021 */  addu  $v0, $t8, $t9
 /* 0E5614 7F0B0AE4 12C20009 */  beq   $s6, $v0, .L7F0B0B0C
-/* 0E5618 7F0B0AE8 00000000 */   nop   
+/* 0E5618 7F0B0AE8 00000000 */   nop
 /* 0E561C 7F0B0AEC 12E20007 */  beq   $s7, $v0, .L7F0B0B0C
-/* 0E5620 7F0B0AF0 00000000 */   nop   
+/* 0E5620 7F0B0AF0 00000000 */   nop
 /* 0E5624 7F0B0AF4 00035903 */  sra   $t3, $v1, 4
 /* 0E5628 7F0B0AF8 11600003 */  beqz  $t3, .L7F0B0B08
 /* 0E562C 7F0B0AFC 0220F025 */   move  $fp, $s1
@@ -3096,7 +3097,7 @@ glabel sub_GAME_7F0B0D0C
 /* 0E5944 7F0B0E14 8FB00028 */  lw    $s0, 0x28($sp)
 /* 0E5948 7F0B0E18 27BD0048 */  addiu $sp, $sp, 0x48
 /* 0E594C 7F0B0E1C 03E00008 */  jr    $ra
-/* 0E5950 7F0B0E20 00000000 */   nop   
+/* 0E5950 7F0B0E20 00000000 */   nop
 )
 #endif
 
@@ -3113,16 +3114,16 @@ struct stan_7F0B0E24 {
 };
 /**
  * Can change global variables:
- * 
+ *
  * - D_800413BC
  * - stanSavedColl_pntA
  * - stanSavedColl_pntB
  * - stanSavedColl_tile
  * - stanSavedColl_pointI
  * - stanSavedColl_posData
- * 
+ *
  * US address 7F0B0E24.
- * 
+ *
  * 'testLineUnobstructed'
 */
 s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC)
@@ -3160,7 +3161,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
     sp124 = 0;
     spCC = (unkA <= unkHeight);
     already_set = 0;
-    
+
     sp154 = *pTile;
     sp14C.f[0] = p_x;
     sp14C.f[1] = p_z;
@@ -3178,7 +3179,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
     if (retval == 0)
     {
         /// TODO: fix the horrible casts below.
-        
+
         struct stan_7F0B0E24 * stack_padding_1;
         struct stan_7F0B0E24 * stack_padding_2;
 
@@ -3190,14 +3191,14 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
 
         stanSavedColl_pntB.f[0] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk08 * inv_level_scale;
         stanSavedColl_pntB.f[1] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk0C * inv_level_scale;
-        
+
         sp140 = unkGeometry7F0B3200(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
     }
     else
     {
         //
     }
-    
+
     stanSavedColl_posData = NULL;
 
     if (objFlags != 0)
@@ -3225,19 +3226,19 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
                             sp134.f[1] = spB4->points[i].f[1];
                             sp12C.f[0] = spB4->points[next].f[0];
                             sp12C.f[1] = spB4->points[next].f[1];
-                            
+
                             temp_f0 = unkGeometry7F0B3200(&sp14C, &sp144, &sp134, &sp12C);
 
                             if (temp_f0 < sp140)
                             {
                                 loop_flag = 1;
-                      
+
                                 if (spCC != 0)
                                 {
                                     if (already_set == 0)
                                     {
                                         already_set = 1;
-                                        
+
                                         if (unkC <= unkB)
                                         {
                                             spC4 = unkB - unkHeight;
@@ -3255,7 +3256,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
                                                 dest_z *= sp140;
                                                 dest_z = p_z + dest_z;
                                             }
-                                            
+
                                             temp_f0_2 = stanGetPositionYValue(*pTile, p_x, p_z);
                                             unkHeight += temp_f0_2;
                                             unkA += temp_f0_2;
@@ -3264,7 +3265,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
                                             spC4 = temp_f2;
                                         }
                                     }
-                                    
+
                                     if ((spA4 <= ((spC0 * temp_f0) + unkA)) || (((spC4 * temp_f0) + unkHeight) <= spA0))
                                     {
                                         loop_flag = 0;
@@ -3304,10 +3305,10 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
         dest_z = p_z + dest_z;
         walkTilesBetweenPoints_NoCallback(&sp154, p_x, p_z, dest_x, dest_z);
     }
-    
+
     *pTile = sp154;
     stanSavedColl_someMin = sp140;
-    
+
     return retval;
 }
 
@@ -3394,7 +3395,7 @@ glabel sub_GAME_7F0B1410
 /* 0E6048 7F0B1518 01425023 */  subu  $t2, $t2, $v0
 /* 0E604C 7F0B151C 000A5080 */  sll   $t2, $t2, 2
 /* 0E6050 7F0B1520 01425021 */  addu  $t2, $t2, $v0
-/* 0E6054 7F0B1524 3C0B8007 */  lui   $t3, %hi(pos_data_entry) 
+/* 0E6054 7F0B1524 3C0B8007 */  lui   $t3, %hi(pos_data_entry)
 /* 0E6058 7F0B1528 256B9C38 */  addiu $t3, %lo(pos_data_entry) # addiu $t3, $t3, -0x63c8
 /* 0E605C 7F0B152C 000A5080 */  sll   $t2, $t2, 2
 /* 0E6060 7F0B1530 014B9821 */  addu  $s3, $t2, $t3
@@ -3429,14 +3430,14 @@ glabel sub_GAME_7F0B1410
 /* 0E60D0 7F0B15A0 C4880000 */  lwc1  $f8, ($a0)
 /* 0E60D4 7F0B15A4 4407E000 */  mfc1  $a3, $f28
 /* 0E60D8 7F0B15A8 15800002 */  bnez  $t4, .L7F0B15B4
-/* 0E60DC 7F0B15AC 00000000 */   nop   
+/* 0E60DC 7F0B15AC 00000000 */   nop
 /* 0E60E0 7F0B15B0 0007000D */  break 7
 .L7F0B15B4:
 /* 0E60E4 7F0B15B4 2401FFFF */  li    $at, -1
 /* 0E60E8 7F0B15B8 15810004 */  bne   $t4, $at, .L7F0B15CC
 /* 0E60EC 7F0B15BC 3C018000 */   lui   $at, 0x8000
 /* 0E60F0 7F0B15C0 16410002 */  bne   $s2, $at, .L7F0B15CC
-/* 0E60F4 7F0B15C4 00000000 */   nop   
+/* 0E60F4 7F0B15C4 00000000 */   nop
 /* 0E60F8 7F0B15C8 0006000D */  break 6
 .L7F0B15CC:
 /* 0E60FC 7F0B15CC E7A80018 */  swc1  $f8, 0x18($sp)
@@ -3466,7 +3467,7 @@ glabel sub_GAME_7F0B1410
 /* 0E615C 7F0B162C 0FC2CC80 */  jal   unkGeometry7F0B3200
 /* 0E6160 7F0B1630 E7A600FC */   swc1  $f6, 0xfc($sp)
 /* 0E6164 7F0B1634 4614003C */  c.lt.s $f0, $f20
-/* 0E6168 7F0B1638 00000000 */  nop   
+/* 0E6168 7F0B1638 00000000 */  nop
 /* 0E616C 7F0B163C 45020004 */  bc1fl .L7F0B1650
 /* 0E6170 7F0B1640 8FA2008C */   lw    $v0, 0x8c($sp)
 /* 0E6174 7F0B1644 46000506 */  mov.s $f20, $f0
@@ -3568,7 +3569,7 @@ bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
  * - stanSavedColl_tile
  * - stanSavedColl_pointI
  * - stanSavedColl_posData
- * 
+ *
  * US address 7F0B18B8.
  * Perfect Dark cdTestVolume (from context)
 */
@@ -3579,7 +3580,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
     f32 var_f24; // stack ??
     s32 temp_v0; // stack ??
     s32 next; // stack ??
-    
+
     s32 sp108;
     f32 temp_f0;  // stack ??
     s16 *sp100;
@@ -3597,15 +3598,15 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
     s32 padding2;
 
     sp108 = (arg6 <= arg5);
-    
+
     spFC = 0;
-    
+
     temp_v0 = sub_GAME_7F0B21B0(arg0, arg1, arg2, arg3, &spA8[0], &spFC, 0x14);
     if (temp_v0 >= 0)
     {
         return temp_v0;
     }
-    
+
     if (spFC > 0x14)
     {
         spFC = 0x14;
@@ -3635,7 +3636,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
                 if ((numvertices0 > 0) && ((sp108 == 0) || ((sp90 <= arg5) && (arg6 <= sp94))))
                 {
                     var_f24 = -1.0f;
-                    
+
                     i=0;
                     while(1)
                     {
@@ -3647,12 +3648,12 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
                         {
                             var_f20 = -var_f20;
                         }
-                        
+
                         if (var_f24 < var_f20)
                         {
                             temp_f0_2 = distBetweenPoints2d(spA4->points[i].f[0], spA4->points[i].f[1], arg1, arg2);
                             temp_f0_3 = distBetweenPoints2d(spA4->points[next].f[0], spA4->points[next].f[1], arg1, arg2);
-                            
+
                             if ((var_f20 < arg3)
                                 && (
                                     (temp_f0_2 < arg3)
@@ -3676,7 +3677,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
                         {
                             break;
                         }
-                        
+
                         i = next;
                     }
 
@@ -3688,7 +3689,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
             }
         }
     }
-    
+
     return -2;
 }
 
@@ -3720,7 +3721,7 @@ void getTileEdgePoints(StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d
   StandTilePoint *tilePntA;
   StandTilePoint *tilePntB;
   s32 pointCount;
-  
+
   tilePntA = &tile->points[pointI];
 
   currPntRtn->x = (f32)tilePntA->x * inv_level_scale;
@@ -3734,7 +3735,7 @@ void getTileEdgePoints(StandTile *tile, s32 pointI, coord3d *currPntRtn, coord3d
   nextPointRtn->x = (f32)tilePntB->x * inv_level_scale;
   nextPointRtn->y = (f32)tilePntB->y * inv_level_scale;
   nextPointRtn->z = (f32)tilePntB->z * inv_level_scale;
-  
+
 }
 #else
 GLOBAL_ASM(
@@ -3752,13 +3753,13 @@ glabel getTileEdgePoints
 /* 0E684C 7F0B1D1C E4C80000 */  swc1  $f8, ($a2)
 /* 0E6850 7F0B1D20 8458000A */  lh    $t8, 0xa($v0)
 /* 0E6854 7F0B1D24 44985000 */  mtc1  $t8, $f10
-/* 0E6858 7F0B1D28 00000000 */  nop   
+/* 0E6858 7F0B1D28 00000000 */  nop
 /* 0E685C 7F0B1D2C 46805420 */  cvt.s.w $f16, $f10
 /* 0E6860 7F0B1D30 46008482 */  mul.s $f18, $f16, $f0
 /* 0E6864 7F0B1D34 E4D20004 */  swc1  $f18, 4($a2)
 /* 0E6868 7F0B1D38 8459000C */  lh    $t9, 0xc($v0)
 /* 0E686C 7F0B1D3C 44992000 */  mtc1  $t9, $f4
-/* 0E6870 7F0B1D40 00000000 */  nop   
+/* 0E6870 7F0B1D40 00000000 */  nop
 /* 0E6874 7F0B1D44 468021A0 */  cvt.s.w $f6, $f4
 /* 0E6878 7F0B1D48 46003202 */  mul.s $f8, $f6, $f0
 /* 0E687C 7F0B1D4C E4C80008 */  swc1  $f8, 8($a2)
@@ -3771,30 +3772,30 @@ glabel getTileEdgePoints
 /* 0E6898 7F0B1D68 008C1021 */  addu  $v0, $a0, $t4
 /* 0E689C 7F0B1D6C 844D0008 */  lh    $t5, 8($v0)
 /* 0E68A0 7F0B1D70 15600002 */  bnez  $t3, .L7F0B1D7C
-/* 0E68A4 7F0B1D74 00000000 */   nop   
+/* 0E68A4 7F0B1D74 00000000 */   nop
 /* 0E68A8 7F0B1D78 0007000D */  break 7
 .L7F0B1D7C:
 /* 0E68AC 7F0B1D7C 2401FFFF */  li    $at, -1
 /* 0E68B0 7F0B1D80 15610004 */  bne   $t3, $at, .L7F0B1D94
 /* 0E68B4 7F0B1D84 3C018000 */   lui   $at, 0x8000
 /* 0E68B8 7F0B1D88 15010002 */  bne   $t0, $at, .L7F0B1D94
-/* 0E68BC 7F0B1D8C 00000000 */   nop   
+/* 0E68BC 7F0B1D8C 00000000 */   nop
 /* 0E68C0 7F0B1D90 0006000D */  break 6
 .L7F0B1D94:
 /* 0E68C4 7F0B1D94 448D5000 */  mtc1  $t5, $f10
-/* 0E68C8 7F0B1D98 00000000 */  nop   
+/* 0E68C8 7F0B1D98 00000000 */  nop
 /* 0E68CC 7F0B1D9C 46805420 */  cvt.s.w $f16, $f10
 /* 0E68D0 7F0B1DA0 46008482 */  mul.s $f18, $f16, $f0
 /* 0E68D4 7F0B1DA4 E4F20000 */  swc1  $f18, ($a3)
 /* 0E68D8 7F0B1DA8 844E000A */  lh    $t6, 0xa($v0)
 /* 0E68DC 7F0B1DAC 448E2000 */  mtc1  $t6, $f4
-/* 0E68E0 7F0B1DB0 00000000 */  nop   
+/* 0E68E0 7F0B1DB0 00000000 */  nop
 /* 0E68E4 7F0B1DB4 468021A0 */  cvt.s.w $f6, $f4
 /* 0E68E8 7F0B1DB8 46003202 */  mul.s $f8, $f6, $f0
 /* 0E68EC 7F0B1DBC E4E80004 */  swc1  $f8, 4($a3)
 /* 0E68F0 7F0B1DC0 844F000C */  lh    $t7, 0xc($v0)
 /* 0E68F4 7F0B1DC4 448F5000 */  mtc1  $t7, $f10
-/* 0E68F8 7F0B1DC8 00000000 */  nop   
+/* 0E68F8 7F0B1DC8 00000000 */  nop
 /* 0E68FC 7F0B1DCC 46805420 */  cvt.s.w $f16, $f10
 /* 0E6900 7F0B1DD0 46008482 */  mul.s $f18, $f16, $f0
 /* 0E6904 7F0B1DD4 03E00008 */  jr    $ra
@@ -3873,14 +3874,14 @@ glabel sub_GAME_7F0B1DDC
 /* 0E69E8 7F0B1EB8 00008810 */  mfhi  $s1
 /* 0E69EC 7F0B1EBC 4406D000 */  mfc1  $a2, $f26
 /* 0E69F0 7F0B1EC0 14400002 */  bnez  $v0, .L7F0B1ECC
-/* 0E69F4 7F0B1EC4 00000000 */   nop   
+/* 0E69F4 7F0B1EC4 00000000 */   nop
 /* 0E69F8 7F0B1EC8 0007000D */  break 7
 .L7F0B1ECC:
 /* 0E69FC 7F0B1ECC 2401FFFF */  li    $at, -1
 /* 0E6A00 7F0B1ED0 14410004 */  bne   $v0, $at, .L7F0B1EE4
 /* 0E6A04 7F0B1ED4 3C018000 */   lui   $at, 0x8000
 /* 0E6A08 7F0B1ED8 16A10002 */  bne   $s5, $at, .L7F0B1EE4
-/* 0E6A0C 7F0B1EDC 00000000 */   nop   
+/* 0E6A0C 7F0B1EDC 00000000 */   nop
 /* 0E6A10 7F0B1EE0 0006000D */  break 6
 .L7F0B1EE4:
 /* 0E6A14 7F0B1EE4 4407E000 */  mfc1  $a3, $f28
@@ -3904,13 +3905,13 @@ glabel sub_GAME_7F0B1DDC
 /* 0E6A5C 7F0B1F2C 45020042 */  bc1fl .L7F0B2038
 /* 0E6A60 7F0B1F30 86620006 */   lh    $v0, 6($s3)
 /* 0E6A64 7F0B1F34 461EA03C */  c.lt.s $f20, $f30
-/* 0E6A68 7F0B1F38 00000000 */  nop   
+/* 0E6A68 7F0B1F38 00000000 */  nop
 /* 0E6A6C 7F0B1F3C 4501000B */  bc1t  .L7F0B1F6C
-/* 0E6A70 7F0B1F40 00000000 */   nop   
+/* 0E6A70 7F0B1F40 00000000 */   nop
 /* 0E6A74 7F0B1F44 461E003C */  c.lt.s $f0, $f30
 /* 0E6A78 7F0B1F48 02602025 */  move  $a0, $s3
 /* 0E6A7C 7F0B1F4C 45010007 */  bc1t  .L7F0B1F6C
-/* 0E6A80 7F0B1F50 00000000 */   nop   
+/* 0E6A80 7F0B1F50 00000000 */   nop
 /* 0E6A84 7F0B1F54 4406D000 */  mfc1  $a2, $f26
 /* 0E6A88 7F0B1F58 4407E000 */  mfc1  $a3, $f28
 /* 0E6A8C 7F0B1F5C 0FC2C066 */  jal   sub_GAME_7F0B0198
@@ -3931,7 +3932,7 @@ glabel sub_GAME_7F0B1DDC
 /* 0E6AC0 7F0B1F90 001068C0 */   sll   $t5, $s0, 3
 /* 0E6AC4 7F0B1F94 026D7021 */  addu  $t6, $s3, $t5
 /* 0E6AC8 7F0B1F98 95C4000E */  lhu   $a0, 0xe($t6)
-/* 0E6ACC 7F0B1F9C 3C088004 */  lui   $t0, %hi(standTileStart) 
+/* 0E6ACC 7F0B1F9C 3C088004 */  lui   $t0, %hi(standTileStart)
 /* 0E6AD0 7F0B1FA0 2682FFFF */  addiu $v0, $s4, -1
 /* 0E6AD4 7F0B1FA4 00047903 */  sra   $t7, $a0, 4
 /* 0E6AD8 7F0B1FA8 11E00014 */  beqz  $t7, .L7F0B1FFC
@@ -4047,7 +4048,7 @@ s32 sub_GAME_7F0B2110(StandTile *tile, struct StandTileLocusCallbackRecord* data
             return 0;
         }
     }
-    
+
     if (data->count < data->bufMax) {
         data->roomBuf[data->count] = tile->room;
         data->count++;
@@ -4086,7 +4087,7 @@ glabel sub_GAME_7F0B2110
 /* 0E6C8C 7F0B215C 00001025 */  move  $v0, $zero
 /* 0E6C90 7F0B2160 00D8082A */  slt   $at, $a2, $t8
 /* 0E6C94 7F0B2164 10200009 */  beqz  $at, .L7F0B218C
-/* 0E6C98 7F0B2168 00000000 */   nop   
+/* 0E6C98 7F0B2168 00000000 */   nop
 /* 0E6C9C 7F0B216C 8CA90000 */  lw    $t1, ($a1)
 /* 0E6CA0 7F0B2170 90990003 */  lbu   $t9, 3($a0)
 /* 0E6CA4 7F0B2174 00065080 */  sll   $t2, $a2, 2
@@ -4097,7 +4098,7 @@ glabel sub_GAME_7F0B2110
 /* 0E6CB8 7F0B2188 ACAD0004 */  sw    $t5, 4($a1)
 .L7F0B218C:
 /* 0E6CBC 7F0B218C 03E00008 */  jr    $ra
-/* 0E6CC0 7F0B2190 00000000 */   nop   
+/* 0E6CC0 7F0B2190 00000000 */   nop
 )
 #endif
 
@@ -4160,13 +4161,13 @@ s32 stanIsSpecialBit1Set(StandTile *arg0, struct StandTileLocusCallbackRecord *a
 #ifdef NONMATCHING
 /**
  * Address 0x7F0B2274.
- * 
+ *
  * decomp status:
  * - compiles: yes
  * - stack resize: ok
  * - identical instructions: no
  * - identical registers: fail
- * 
+ *
  * Notes: the SRA 0xc needs to be calculated twice, but below is a move instruction from previous SRA 0xc.
  * Seems to match other than that.
 */
@@ -4209,7 +4210,7 @@ glabel sub_GAME_7F0B2274
 /* 0E6DAC 7F0B227C AFA7000C */  sw    $a3, 0xc($sp)
 /* 0E6DB0 7F0B2280 008E7821 */  addu  $t7, $a0, $t6
 /* 0E6DB4 7F0B2284 95E2000E */  lhu   $v0, 0xe($t7)
-/* 0E6DB8 7F0B2288 3C088004 */  lui   $t0, %hi(standTileStart) 
+/* 0E6DB8 7F0B2288 3C088004 */  lui   $t0, %hi(standTileStart)
 /* 0E6DBC 7F0B228C 0002C103 */  sra   $t8, $v0, 4
 /* 0E6DC0 7F0B2290 5300001E */  beql  $t8, $zero, .L7F0B230C
 /* 0E6DC4 7F0B2294 00001025 */   move  $v0, $zero
@@ -4248,7 +4249,7 @@ glabel sub_GAME_7F0B2274
 /* 0E6E38 7F0B2308 00001025 */  move  $v0, $zero
 .L7F0B230C:
 /* 0E6E3C 7F0B230C 03E00008 */  jr    $ra
-/* 0E6E40 7F0B2310 00000000 */   nop   
+/* 0E6E40 7F0B2310 00000000 */   nop
 )
 #endif
 
@@ -4333,19 +4334,19 @@ glabel sub_GAME_7F0B23AC
 /* 0E6F00 7F0B23D0 3C018004 */  lui   $at, %hi(inv_level_scale)
 /* 0E6F04 7F0B23D4 C4200F48 */  lwc1  $f0, %lo(inv_level_scale)($at)
 /* 0E6F08 7F0B23D8 448A2000 */  mtc1  $t2, $f4
-/* 0E6F0C 7F0B23DC 00000000 */  nop   
+/* 0E6F0C 7F0B23DC 00000000 */  nop
 /* 0E6F10 7F0B23E0 468021A0 */  cvt.s.w $f6, $f4
 /* 0E6F14 7F0B23E4 46003202 */  mul.s $f8, $f6, $f0
 /* 0E6F18 7F0B23E8 E4C80000 */  swc1  $f8, ($a2)
 /* 0E6F1C 7F0B23EC 844B000A */  lh    $t3, 0xa($v0)
 /* 0E6F20 7F0B23F0 448B5000 */  mtc1  $t3, $f10
-/* 0E6F24 7F0B23F4 00000000 */  nop   
+/* 0E6F24 7F0B23F4 00000000 */  nop
 /* 0E6F28 7F0B23F8 46805420 */  cvt.s.w $f16, $f10
 /* 0E6F2C 7F0B23FC 46008482 */  mul.s $f18, $f16, $f0
 /* 0E6F30 7F0B2400 E4D20004 */  swc1  $f18, 4($a2)
 /* 0E6F34 7F0B2404 844C000C */  lh    $t4, 0xc($v0)
 /* 0E6F38 7F0B2408 448C2000 */  mtc1  $t4, $f4
-/* 0E6F3C 7F0B240C 00000000 */  nop   
+/* 0E6F3C 7F0B240C 00000000 */  nop
 /* 0E6F40 7F0B2410 468021A0 */  cvt.s.w $f6, $f4
 /* 0E6F44 7F0B2414 46003202 */  mul.s $f8, $f6, $f0
 /* 0E6F48 7F0B2418 03E00008 */  jr    $ra
@@ -4367,7 +4368,7 @@ GLOBAL_ASM(
 .text
 glabel stanGetMoveBondCollisionTiles
 /* 0E6F50 7F0B2420 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0E6F54 7F0B2424 3C098008 */  lui   $t1, %hi(dword_CODE_bss_8007BA0C) 
+/* 0E6F54 7F0B2424 3C098008 */  lui   $t1, %hi(dword_CODE_bss_8007BA0C)
 /* 0E6F58 7F0B2428 8D29BA0C */  lw    $t1, %lo(dword_CODE_bss_8007BA0C)($t1)
 /* 0E6F5C 7F0B242C AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E6F60 7F0B2430 AFBE0038 */  sw    $fp, 0x38($sp)
@@ -4427,20 +4428,20 @@ glabel stanGetMoveBondCollisionTiles
 /* 0E702C 7F0B24FC 02C02025 */  move  $a0, $s6
 /* 0E7030 7F0B2500 03140019 */  multu $t8, $s4
 /* 0E7034 7F0B2504 16600002 */  bnez  $s3, .L7F0B2510
-/* 0E7038 7F0B2508 00000000 */   nop   
+/* 0E7038 7F0B2508 00000000 */   nop
 /* 0E703C 7F0B250C 0007000D */  break 7
 .L7F0B2510:
 /* 0E7040 7F0B2510 2401FFFF */  li    $at, -1
 /* 0E7044 7F0B2514 16610004 */  bne   $s3, $at, .L7F0B2528
 /* 0E7048 7F0B2518 3C018000 */   lui   $at, 0x8000
 /* 0E704C 7F0B251C 15E10002 */  bne   $t7, $at, .L7F0B2528
-/* 0E7050 7F0B2520 00000000 */   nop   
+/* 0E7050 7F0B2520 00000000 */   nop
 /* 0E7054 7F0B2524 0006000D */  break 6
 .L7F0B2528:
 /* 0E7058 7F0B2528 0000C812 */  mflo  $t9
 /* 0E705C 7F0B252C 02B93021 */  addu  $a2, $s5, $t9
 /* 0E7060 7F0B2530 0FC2C8EB */  jal   sub_GAME_7F0B23AC
-/* 0E7064 7F0B2534 00000000 */   nop   
+/* 0E7064 7F0B2534 00000000 */   nop
 /* 0E7068 7F0B2538 26100001 */  addiu $s0, $s0, 1
 /* 0E706C 7F0B253C 1613FFEB */  bne   $s0, $s3, .L7F0B24EC
 /* 0E7070 7F0B2540 26310001 */   addiu $s1, $s1, 1
@@ -4452,28 +4453,28 @@ glabel stanGetMoveBondCollisionTiles
 /* 0E7088 7F0B2558 00006012 */  mflo  $t4
 /* 0E708C 7F0B255C 02AC3021 */  addu  $a2, $s5, $t4
 /* 0E7090 7F0B2560 0FC2C8EB */  jal   sub_GAME_7F0B23AC
-/* 0E7094 7F0B2564 00000000 */   nop   
+/* 0E7094 7F0B2564 00000000 */   nop
 /* 0E7098 7F0B2568 26F70001 */  addiu $s7, $s7, 1
 /* 0E709C 7F0B256C 52F4001C */  beql  $s7, $s4, .L7F0B25E0
 /* 0E70A0 7F0B2570 8FBF003C */   lw    $ra, 0x3c($sp)
 /* 0E70A4 7F0B2574 C6A0001C */  lwc1  $f0, 0x1c($s5)
 /* 0E70A8 7F0B2578 C6A20004 */  lwc1  $f2, 4($s5)
 /* 0E70AC 7F0B257C 4602003C */  c.lt.s $f0, $f2
-/* 0E70B0 7F0B2580 00000000 */  nop   
+/* 0E70B0 7F0B2580 00000000 */  nop
 /* 0E70B4 7F0B2584 4503FFD7 */  bc1tl .L7F0B24E4
 /* 0E70B8 7F0B2588 00008025 */   move  $s0, $zero
 /* 0E70BC 7F0B258C C6AC0010 */  lwc1  $f12, 0x10($s5)
 /* 0E70C0 7F0B2590 460C003C */  c.lt.s $f0, $f12
-/* 0E70C4 7F0B2594 00000000 */  nop   
+/* 0E70C4 7F0B2594 00000000 */  nop
 /* 0E70C8 7F0B2598 4503FFD2 */  bc1tl .L7F0B24E4
 /* 0E70CC 7F0B259C 00008025 */   move  $s0, $zero
 /* 0E70D0 7F0B25A0 C6A00028 */  lwc1  $f0, 0x28($s5)
 /* 0E70D4 7F0B25A4 4602003C */  c.lt.s $f0, $f2
-/* 0E70D8 7F0B25A8 00000000 */  nop   
+/* 0E70D8 7F0B25A8 00000000 */  nop
 /* 0E70DC 7F0B25AC 4503FFCD */  bc1tl .L7F0B24E4
 /* 0E70E0 7F0B25B0 00008025 */   move  $s0, $zero
 /* 0E70E4 7F0B25B4 460C003C */  c.lt.s $f0, $f12
-/* 0E70E8 7F0B25B8 00000000 */  nop   
+/* 0E70E8 7F0B25B8 00000000 */  nop
 /* 0E70EC 7F0B25BC 4503FFC9 */  bc1tl .L7F0B24E4
 /* 0E70F0 7F0B25C0 00008025 */   move  $s0, $zero
 /* 0E70F4 7F0B25C4 10000006 */  b     .L7F0B25E0
@@ -4510,12 +4511,12 @@ glabel stanGetMoveBondCollisionTiles
 */
 s32 sub_GAME_7F0B260C(StandTile *tile, s32 index, f32 p_x, f32 p_z, s32 arg4, struct StandTileLocusCallbackRecord *arg5)
 {
-    if (arg5->unk00 < (f32)tile->points[index].y 
+    if (arg5->unk00 < (f32)tile->points[index].y
         && arg5->unk00 < (f32)tile->points[(index + 1) % STAN_TAIL_E(tile)].y)
     {
         return 1;
     }
-    
+
     return 0;
 
 }
@@ -4534,7 +4535,7 @@ glabel sub_GAME_7F0B260C
 /* 0E7158 7F0B2628 C4C00000 */  lwc1  $f0, ($a2)
 /* 0E715C 7F0B262C 468021A0 */  cvt.s.w $f6, $f4
 /* 0E7160 7F0B2630 4606003C */  c.lt.s $f0, $f6
-/* 0E7164 7F0B2634 00000000 */  nop   
+/* 0E7164 7F0B2634 00000000 */  nop
 /* 0E7168 7F0B2638 4502001D */  bc1fl .L7F0B26B0
 /* 0E716C 7F0B263C 00001025 */   move  $v0, $zero
 /* 0E7170 7F0B2640 84880006 */  lh    $t0, 6($a0)
@@ -4547,21 +4548,21 @@ glabel sub_GAME_7F0B260C
 /* 0E718C 7F0B265C 008B6021 */  addu  $t4, $a0, $t3
 /* 0E7190 7F0B2660 858D000A */  lh    $t5, 0xa($t4)
 /* 0E7194 7F0B2664 15400002 */  bnez  $t2, .L7F0B2670
-/* 0E7198 7F0B2668 00000000 */   nop   
+/* 0E7198 7F0B2668 00000000 */   nop
 /* 0E719C 7F0B266C 0007000D */  break 7
 .L7F0B2670:
 /* 0E71A0 7F0B2670 2401FFFF */  li    $at, -1
 /* 0E71A4 7F0B2674 15410004 */  bne   $t2, $at, .L7F0B2688
 /* 0E71A8 7F0B2678 3C018000 */   lui   $at, 0x8000
 /* 0E71AC 7F0B267C 17210002 */  bne   $t9, $at, .L7F0B2688
-/* 0E71B0 7F0B2680 00000000 */   nop   
+/* 0E71B0 7F0B2680 00000000 */   nop
 /* 0E71B4 7F0B2684 0006000D */  break 6
 .L7F0B2688:
 /* 0E71B8 7F0B2688 448D4000 */  mtc1  $t5, $f8
-/* 0E71BC 7F0B268C 00000000 */  nop   
+/* 0E71BC 7F0B268C 00000000 */  nop
 /* 0E71C0 7F0B2690 468042A0 */  cvt.s.w $f10, $f8
 /* 0E71C4 7F0B2694 460A003C */  c.lt.s $f0, $f10
-/* 0E71C8 7F0B2698 00000000 */  nop   
+/* 0E71C8 7F0B2698 00000000 */  nop
 /* 0E71CC 7F0B269C 45020004 */  bc1fl .L7F0B26B0
 /* 0E71D0 7F0B26A0 00001025 */   move  $v0, $zero
 /* 0E71D4 7F0B26A4 03E00008 */  jr    $ra
@@ -4570,7 +4571,7 @@ glabel sub_GAME_7F0B260C
 /* 0E71DC 7F0B26AC 00001025 */  move  $v0, $zero
 .L7F0B26B0:
 /* 0E71E0 7F0B26B0 03E00008 */  jr    $ra
-/* 0E71E4 7F0B26B4 00000000 */   nop   
+/* 0E71E4 7F0B26B4 00000000 */   nop
 )
 #endif
 
@@ -4585,7 +4586,7 @@ s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32
     f32 data;
 
     data = param_5 * level_scale;
-    
+
     /// TODO: Why is this cast wrong?
 
     return sub_GAME_7F0B1DDC(tile, target_x, target_z, b_z, NULL, sub_GAME_7F0B260C, NULL, (struct StandTileLocusCallbackRecord*)&data);
@@ -4704,7 +4705,7 @@ glabel sub_GAME_7F0B2718
 /* 0E728C 7F0B275C 02801025 */   move  $v0, $s4
 .L7F0B2760:
 /* 0E7290 7F0B2760 240E0001 */  li    $t6, 1
-/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(bfsTileStack) 
+/* 0E7294 7F0B2764 3C178008 */  lui   $s7, %hi(bfsTileStack)
 /* 0E7298 7F0B2768 3C168004 */  lui   $s6, %hi(standTileStart)
 /* 0E729C 7F0B276C AC34BA10 */  sw    $s4, %lo(bfsTileStack)($at)
 /* 0E72A0 7F0B2770 24110001 */  li    $s1, 1
@@ -4714,7 +4715,7 @@ glabel sub_GAME_7F0B2718
 /* 0E72B0 7F0B2780 0000F025 */  move  $fp, $zero
 .L7F0B2784:
 /* 0E72B4 7F0B2784 1A200037 */  blez  $s1, .L7F0B2864
-/* 0E72B8 7F0B2788 3C0F8008 */   lui   $t7, %hi(bfsTileStack) 
+/* 0E72B8 7F0B2788 3C0F8008 */   lui   $t7, %hi(bfsTileStack)
 /* 0E72BC 7F0B278C 25EFBA10 */  addiu $t7, %lo(bfsTileStack) # addiu $t7, $t7, -0x45f0
 /* 0E72C0 7F0B2790 AFAF0044 */  sw    $t7, 0x44($sp)
 .L7F0B2794:
@@ -4851,7 +4852,7 @@ void setLevelScale(f32 ls) {
 
 /**
  * Calculates y value on a tile, according to (x,z) position.
- * 
+ *
  * Address 0x7F0B2970.
  */
 f32 stanGetPositionYValue(StandTile *tile, f32 p_x, f32 p_z)
@@ -4943,7 +4944,7 @@ glabel sub_GAME_7F0B2C74
 /* 0E77BC 7F0B2C8C 00994021 */  addu  $t0, $a0, $t9
 /* 0E77C0 7F0B2C90 8509000A */  lh    $t1, 0xa($t0)
 /* 0E77C4 7F0B2C94 44892000 */  mtc1  $t1, $f4
-/* 0E77C8 7F0B2C98 00000000 */  nop   
+/* 0E77C8 7F0B2C98 00000000 */  nop
 /* 0E77CC 7F0B2C9C 468020A0 */  cvt.s.w $f2, $f4
 /* 0E77D0 7F0B2CA0 4602103C */  c.lt.s $f2, $f2
 /* 0E77D4 7F0B2CA4 46001006 */  mov.s $f0, $f2
@@ -4954,7 +4955,7 @@ glabel sub_GAME_7F0B2C74
 /* 0E77E8 7F0B2CB8 46001406 */  mov.s $f16, $f2
 .L7F0B2CBC:
 /* 0E77EC 7F0B2CBC 4610703C */  c.lt.s $f14, $f16
-/* 0E77F0 7F0B2CC0 00000000 */  nop   
+/* 0E77F0 7F0B2CC0 00000000 */  nop
 /* 0E77F4 7F0B2CC4 45020003 */  bc1fl .L7F0B2CD4
 /* 0E77F8 7F0B2CC8 460C003C */   c.lt.s $f0, $f12
 /* 0E77FC 7F0B2CCC 46007406 */  mov.s $f16, $f14
@@ -4966,7 +4967,7 @@ glabel sub_GAME_7F0B2C74
 /* 0E7810 7F0B2CE0 46006086 */  mov.s $f2, $f12
 /* 0E7814 7F0B2CE4 460E103C */  c.lt.s $f2, $f14
 .L7F0B2CE8:
-/* 0E7818 7F0B2CE8 00000000 */  nop   
+/* 0E7818 7F0B2CE8 00000000 */  nop
 /* 0E781C 7F0B2CEC 45020003 */  bc1fl .L7F0B2CFC
 /* 0E7820 7F0B2CF0 C4460000 */   lwc1  $f6, ($v0)
 /* 0E7824 7F0B2CF4 46007086 */  mov.s $f2, $f14
@@ -5007,198 +5008,101 @@ Gfx * sub_GAME_7F0B2D48(Gfx *arg0) {
 
 
 
-#ifdef NONMATCHING
-void stanConvertNameStringToS32(void *arg0, void *arg1, void *arg2) {
-    s32 sp30;
-    void *sp38;
-    s32 temp_v1;
-    ? temp_ret;
-    s32 temp_v1_2;
-    s32 phi_v1;
+ /**
+ * Get 24bit id stanIdHi from id string
+ * @param stanIdHi: 1bit Type, 15bit Integer ID.
+ * @param stanIdLo: 5bit stanIdLo File (a-z) and 3bit subtri 0-7
+ * canonically Named
+ */
+void stanPackId(char *id, u16 *stanIdHi, u8 *stanIdLo)
+{
+    u32   bitsnumber; // sp3c
+    char *str_end;    // sp38
+    s32   y;          // sp34
+    s32   bitsletter; // sp30
+    s32   bitsfile;   // sp2c
+    s32   bitssubtri; // sp28
+    s32   var1;       // sp24
 
-    // Node 0
-    temp_v1 = (*arg0 + -0x70);
-    if (temp_v1 < 0)
+    var1 = id[0] - 'p';
+
+    if (var1 < 0 || var1 > 1) // is p or q the first char (q never used?)
     {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
+        #ifdef ENABLE_LOG
+            osSyncPrintf("stanPackId(): Bad letter chr \'%c\' in \"%s\"\n", id[0], id);
+        #endif
     }
-    // Node 1
-    if (temp_v1 >= 2)
+    else
     {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 2
-    sp30 = temp_v1;
-    temp_ret = strtol((arg0 + 1), &sp38, 0xa);
-    if (sp38 == sp1C)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 3
-    if (temp_ret >= 0x8000U)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 4
-    temp_v1_2 = (*sp38 + -0x61);
-    if (temp_v1_2 < 0)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 5
-    if (temp_v1_2 >= 0x1a)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 6
-    phi_v1 = sp38->unk1;
-    if (sp38->unk1 != 0)
-    {
-        // Node 7
-        phi_v1 = sp38->unk1;
-        if (sp38->unk1 != 0x30)
+        bitsletter = id[0] - 'p'; // yes this is right, Im duplicated.
+        bitsnumber = strtol(id + 1, &str_end, 10);
+
+        if (id == str_end - 1)
         {
-            // Node 8
-            phi_v1 = (sp38->unk1 + -0x30);
+            #ifdef ENABLE_LOG
+                osSyncPrintf("stanPackId(): Bad integer in \"%s\"\n", id);
+            #endif
+        }
+        else if (bitsnumber <= 32767)
+        {
+            if (str_end[0] - 'a' < 0 || str_end[0] - 'a' >= 26)
+            {
+                #ifdef ENABLE_LOG
+                    osSyncPrintf("stanPackId(): Bad file chr \'%c\' in \"%s\"\n", str_end[0], id);
+                #endif
+            }
+            else
+            {
+                bitsfile = str_end[0] - 'a';
+                if (1)
+                    ;
+                bitssubtri = str_end[1];
+
+                if (bitssubtri != 0 && bitssubtri != '0')
+                {
+                    bitssubtri -= '0';
+                }
+
+                if (bitssubtri < 0 || bitssubtri >= 8)
+                {
+                    #ifdef ENABLE_LOG
+                        osSyncPrintf("stanPackId(): Bad subtri chr \'%c\' in \"%s\"\n", str_end[1], id);
+                    #endif
+                }
+                else
+                {
+                    if (str_end[1] == 0 || str_end[2] == 0)
+                    {
+                        #ifdef DEBUG
+                        assert(bitsletter>=0&&bitsletter<=1);     // # 1094 "stan.c"
+                        assert(bitsnumber>=0&&bitsnumber<=32767); // # 1095 "stan.c"
+                        assert(bitsfile >=0&&bitsfile <=31);      // # 1096 "stan.c"
+                        assert(bitssubtri>=0&&bitssubtri<=7);     // # 1097 "stan.c"
+                        #endif
+                        *stanIdHi = bitsletter << 0xf | bitsnumber;
+                        *stanIdLo = bitsfile << 3 | bitssubtri;
+                        return;
+                    }
+                    else
+                    {
+                        #ifdef ENABLE_LOG
+                            osSyncPrintf("stanPackId(): Stan id too long \"%s\"\n", id);
+                        #endif
+                    }
+                }
+            }
+        }
+        else
+        {
+            #ifdef ENABLE_LOG
+                osSyncPrintf("stanPackId(): Integer %d out of range in \"%s\"\n", bitsnumber, id);
+            #endif
         }
     }
-    // Node 9
-    if (phi_v1 < 0)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 10
-    if (phi_v1 >= 8)
-    {
-        // Node 14
-        *arg1 = (u16)0xffff;
-        *arg2 = (u8)0xff;
-        // Node 15
-        return;
-    }
-    // Node 11
-    if (sp38->unk1 != 0)
-    {
-        // Node 12
-        if (sp38->unk2 != 0)
-        {
-            // Node 14
-            *arg1 = (u16)0xffff;
-            *arg2 = (u8)0xff;
-            // Node 15
-            return;
-        }
-    }
-    // Node 13
-    *arg1 = (s16) ((sp30 << 0xf) | temp_ret);
-    *arg2 = (s8) ((temp_v1_2 * 8) | phi_v1);
+    *stanIdHi = -1;
+    *stanIdLo = -1;
     return;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel stanConvertNameStringToS32
-/* 0E7880 7F0B2D50 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0E7884 7F0B2D54 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E7888 7F0B2D58 AFA50044 */  sw    $a1, 0x44($sp)
-/* 0E788C 7F0B2D5C AFA60048 */  sw    $a2, 0x48($sp)
-/* 0E7890 7F0B2D60 90830000 */  lbu   $v1, ($a0)
-/* 0E7894 7F0B2D64 2463FF90 */  addiu $v1, $v1, -0x70
-/* 0E7898 7F0B2D68 04600031 */  bltz  $v1, .L7F0B2E30
-/* 0E789C 7F0B2D6C 28610002 */   slti  $at, $v1, 2
-/* 0E78A0 7F0B2D70 1020002F */  beqz  $at, .L7F0B2E30
-/* 0E78A4 7F0B2D74 24840001 */   addiu $a0, $a0, 1
-/* 0E78A8 7F0B2D78 AFA30030 */  sw    $v1, 0x30($sp)
-/* 0E78AC 7F0B2D7C 27A50038 */  addiu $a1, $sp, 0x38
-/* 0E78B0 7F0B2D80 2406000A */  li    $a2, 10
-/* 0E78B4 7F0B2D84 0C002A78 */  jal   strtol
-/* 0E78B8 7F0B2D88 AFA4001C */   sw    $a0, 0x1c($sp)
-/* 0E78BC 7F0B2D8C 8FA4001C */  lw    $a0, 0x1c($sp)
-/* 0E78C0 7F0B2D90 8FAE0038 */  lw    $t6, 0x38($sp)
-/* 0E78C4 7F0B2D94 34018000 */  li    $at, 32768
-/* 0E78C8 7F0B2D98 0041082B */  sltu  $at, $v0, $at
-/* 0E78CC 7F0B2D9C 51C40025 */  beql  $t6, $a0, .L7F0B2E34
-/* 0E78D0 7F0B2DA0 8FB90044 */   lw    $t9, 0x44($sp)
-/* 0E78D4 7F0B2DA4 10200022 */  beqz  $at, .L7F0B2E30
-/* 0E78D8 7F0B2DA8 8FAF0038 */   lw    $t7, 0x38($sp)
-/* 0E78DC 7F0B2DAC 91E30000 */  lbu   $v1, ($t7)
-/* 0E78E0 7F0B2DB0 2463FF9F */  addiu $v1, $v1, -0x61
-/* 0E78E4 7F0B2DB4 0460001E */  bltz  $v1, .L7F0B2E30
-/* 0E78E8 7F0B2DB8 2861001A */   slti  $at, $v1, 0x1a
-/* 0E78EC 7F0B2DBC 1020001C */  beqz  $at, .L7F0B2E30
-/* 0E78F0 7F0B2DC0 8FB80038 */   lw    $t8, 0x38($sp)
-/* 0E78F4 7F0B2DC4 93040001 */  lbu   $a0, 1($t8)
-/* 0E78F8 7F0B2DC8 00602825 */  move  $a1, $v1
-/* 0E78FC 7F0B2DCC 24010030 */  li    $at, 48
-/* 0E7900 7F0B2DD0 10800004 */  beqz  $a0, .L7F0B2DE4
-/* 0E7904 7F0B2DD4 00801825 */   move  $v1, $a0
-/* 0E7908 7F0B2DD8 10610002 */  beq   $v1, $at, .L7F0B2DE4
-/* 0E790C 7F0B2DDC 00000000 */   nop   
-/* 0E7910 7F0B2DE0 2463FFD0 */  addiu $v1, $v1, -0x30
-.L7F0B2DE4:
-/* 0E7914 7F0B2DE4 04600012 */  bltz  $v1, .L7F0B2E30
-/* 0E7918 7F0B2DE8 28610008 */   slti  $at, $v1, 8
-/* 0E791C 7F0B2DEC 50200011 */  beql  $at, $zero, .L7F0B2E34
-/* 0E7920 7F0B2DF0 8FB90044 */   lw    $t9, 0x44($sp)
-/* 0E7924 7F0B2DF4 10800004 */  beqz  $a0, .L7F0B2E08
-/* 0E7928 7F0B2DF8 8FB90038 */   lw    $t9, 0x38($sp)
-/* 0E792C 7F0B2DFC 93280002 */  lbu   $t0, 2($t9)
-/* 0E7930 7F0B2E00 5500000C */  bnezl $t0, .L7F0B2E34
-/* 0E7934 7F0B2E04 8FB90044 */   lw    $t9, 0x44($sp)
-.L7F0B2E08:
-/* 0E7938 7F0B2E08 8FA90030 */  lw    $t1, 0x30($sp)
-/* 0E793C 7F0B2E0C 8FAC0044 */  lw    $t4, 0x44($sp)
-/* 0E7940 7F0B2E10 000568C0 */  sll   $t5, $a1, 3
-/* 0E7944 7F0B2E14 000953C0 */  sll   $t2, $t1, 0xf
-/* 0E7948 7F0B2E18 01425825 */  or    $t3, $t2, $v0
-/* 0E794C 7F0B2E1C A58B0000 */  sh    $t3, ($t4)
-/* 0E7950 7F0B2E20 8FAF0048 */  lw    $t7, 0x48($sp)
-/* 0E7954 7F0B2E24 01A37025 */  or    $t6, $t5, $v1
-/* 0E7958 7F0B2E28 10000007 */  b     .L7F0B2E48
-/* 0E795C 7F0B2E2C A1EE0000 */   sb    $t6, ($t7)
-.L7F0B2E30:
-/* 0E7960 7F0B2E30 8FB90044 */  lw    $t9, 0x44($sp)
-.L7F0B2E34:
-/* 0E7964 7F0B2E34 3418FFFF */  li    $t8, 65535
-/* 0E7968 7F0B2E38 240800FF */  li    $t0, 255
-/* 0E796C 7F0B2E3C A7380000 */  sh    $t8, ($t9)
-/* 0E7970 7F0B2E40 8FA90048 */  lw    $t1, 0x48($sp)
-/* 0E7974 7F0B2E44 A1280000 */  sb    $t0, ($t1)
-.L7F0B2E48:
-/* 0E7978 7F0B2E48 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E797C 7F0B2E4C 27BD0040 */  addiu $sp, $sp, 0x40
-/* 0E7980 7F0B2E50 03E00008 */  jr    $ra
-/* 0E7984 7F0B2E54 00000000 */   nop   
-)
-#endif
 
 
 
@@ -5218,13 +5122,13 @@ glabel stanMatchTileName
 /* 0E7990 7F0B2E60 908E0000 */  lbu   $t6, ($a0)
 /* 0E7994 7F0B2E64 27A50022 */  addiu $a1, $sp, 0x22
 /* 0E7998 7F0B2E68 15C00003 */  bnez  $t6, .L7F0B2E78
-/* 0E799C 7F0B2E6C 00000000 */   nop   
+/* 0E799C 7F0B2E6C 00000000 */   nop
 /* 0E79A0 7F0B2E70 1000001F */  b     .L7F0B2EF0
 /* 0E79A4 7F0B2E74 00001025 */   move  $v0, $zero
 .L7F0B2E78:
-/* 0E79A8 7F0B2E78 0FC2CB54 */  jal   stanConvertNameStringToS32
+/* 0E79A8 7F0B2E78 0FC2CB54 */  jal stanPackId
 /* 0E79AC 7F0B2E7C 27A60021 */   addiu $a2, $sp, 0x21
-/* 0E79B0 7F0B2E80 3C0F8008 */  lui   $t7, %hi(stan_prefix) 
+/* 0E79B0 7F0B2E80 3C0F8008 */  lui   $t7, %hi(stan_prefix)
 /* 0E79B4 7F0B2E84 8DEFB120 */  lw    $t7, %lo(stan_prefix)($t7)
 /* 0E79B8 7F0B2E88 3C058004 */  lui   $a1, %hi(list_of_tilesizes)
 /* 0E79BC 7F0B2E8C 24A50F4C */  addiu $a1, %lo(list_of_tilesizes) # addiu $a1, $a1, 0xf4c
@@ -5258,7 +5162,7 @@ glabel stanMatchTileName
 /* 0E7A20 7F0B2EF0 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 0E7A24 7F0B2EF4 27BD0028 */  addiu $sp, $sp, 0x28
 /* 0E7A28 7F0B2EF8 03E00008 */  jr    $ra
-/* 0E7A2C 7F0B2EFC 00000000 */   nop   
+/* 0E7A2C 7F0B2EFC 00000000 */   nop
 )
 #endif
 
@@ -5336,7 +5240,7 @@ loop_4:
 GLOBAL_ASM(
 .text
 glabel stanDetermineEOF
-/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(stan_prefix) 
+/* 0E7A5C 7F0B2F2C 3C088008 */  lui   $t0, %hi(stan_prefix)
 /* 0E7A60 7F0B2F30 2508B120 */  addiu $t0, %lo(stan_prefix) # addiu $t0, $t0, -0x4ee0
 /* 0E7A64 7F0B2F34 AD040000 */  sw    $a0, ($t0)
 /* 0E7A68 7F0B2F38 8C8E0004 */  lw    $t6, 4($a0)
@@ -5368,7 +5272,7 @@ glabel stanDetermineEOF
 /* 0E7AC8 7F0B2F98 8C4C0000 */  lw    $t4, ($v0)
 /* 0E7ACC 7F0B2F9C 24A50F60 */  addiu $a1, %lo(D_80040F60) # addiu $a1, $a1, 0xf60
 /* 0E7AD0 7F0B2FA0 1180000B */  beqz  $t4, .L7F0B2FD0
-/* 0E7AD4 7F0B2FA4 00000000 */   nop   
+/* 0E7AD4 7F0B2FA4 00000000 */   nop
 /* 0E7AD8 7F0B2FA8 ACA20000 */  sw    $v0, ($a1)
 .L7F0B2FAC:
 /* 0E7ADC 7F0B2FAC 84430006 */  lh    $v1, 6($v0)
@@ -5492,7 +5396,7 @@ glabel sub_GAME_7F0B3138
 /* 0E7CC4 7F0B3194 8FBF002C */  lw    $ra, 0x2c($sp)
 /* 0E7CC8 7F0B3198 27BD0030 */  addiu $sp, $sp, 0x30
 /* 0E7CCC 7F0B319C 03E00008 */  jr    $ra
-/* 0E7CD0 7F0B31A0 00000000 */   nop   
+/* 0E7CD0 7F0B31A0 00000000 */   nop
 )
 #endif
 
@@ -5528,7 +5432,7 @@ glabel sub_GAME_7F0B31A4
 /* 0E7D18 7F0B31E8 8FBF0024 */  lw    $ra, 0x24($sp)
 /* 0E7D1C 7F0B31EC 27BD0028 */  addiu $sp, $sp, 0x28
 /* 0E7D20 7F0B31F0 03E00008 */  jr    $ra
-/* 0E7D24 7F0B31F4 00000000 */   nop   
+/* 0E7D24 7F0B31F4 00000000 */   nop
 )
 #endif
 
