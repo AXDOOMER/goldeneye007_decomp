@@ -1,12 +1,8 @@
 # Makefile to rebuild Goldeneye 007
 
 ### Default target ###
-ifeq ($(PERMUTER), 1)
-  default: all
-  VERBOSE := 1
-else
-  default: colour
-endif
+default: all
+
 ### Default Build Options ###
 # Version of the game to build
 FINAL := YES
@@ -18,23 +14,11 @@ VERBOSE := 2
 # If compare is 2, it will just compare the sha1sum.
 COMPARE := 1
 
-include tools/makemodules/VT100Codes.make
+# Include Terminal Codes for colourising text.
+include include/make/VT100Codes.make
+include include/make/gui.make
 
-### Build Functions ###
-# Common build print status function
-PRINT_STATUS = @echo "$(call SET_TEXTATTRIB,$(FG_GREEN))$(1) $(call SET_TEXTATTRIB,$(FG_OLIVE))$(2)$(call SET_TEXTATTRIB,$(FG_GRAY)) $(if $3, -> $(call SET_TEXTATTRIB,$(FG_NAVY))$(3))$(RESTORECOLOUR)"
-
-include tools/makemodules/Gui.make
-
-# Convert AI Print commands from readable strings to byte arrays automatically.
-ConvertAIPRINT = sed -E -e ':loop s/PRINT\("(..*?)(.)"/PRINT\("\1",\x27\2\x27/g; tloop; \
-                s/(PRINT\(.*?)\x27\\\x27,\x27(.)\x27(.*)\)/\1\x27\\\2\x27\3\)/g; \
-                s/(PRINT\()"(.)"(.*)\)/\1\x27\2\x27\3\)/g; \
-                s/PRINT\((.*)\)/PRINT\(\1,\x27\\0\x27\,)/g; \
-                s/PRINT\((.*)\)/AI_PRINT,\1/g'
-
-## More Build Variables (Auto) ##
-
+# set tooolchain based on current OS
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   TOOLCHAIN := mips-linux-gnu-
 else ifeq ($(shell type mips64-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
@@ -43,6 +27,7 @@ else
   TOOLCHAIN := mips64-elf-
 endif
 
+# Use IDO Recomp UNLESS specified otherwise
 ifeq ($(IDO_RECOMP), NO)
   QEMU_IRIX := $(shell which qemu-irix 2>/dev/null)
   ifeq (, $(QEMU_IRIX))
@@ -52,6 +37,7 @@ ifeq ($(IDO_RECOMP), NO)
 else
   IRIX_ROOT := tools/ido5.3_recomp
 endif
+
 # other tools
 TOOLS_DIR := tools
 DATASEG_COMP := $(TOOLS_DIR)/data_compress.sh
@@ -64,7 +50,14 @@ else
  SHA1SUM = sha1sum --quiet
 endif
 
-# VERSION flags
+# Convert AI Print commands from readable strings to byte arrays automatically.
+ConvertAIPRINT = sed -E -e ':loop s/PRINT\("(..*?)(.)"/PRINT\("\1",\x27\2\x27/g; tloop; \
+                s/(PRINT\(.*?)\x27\\\x27,\x27(.)\x27(.*)\)/\1\x27\\\2\x27\3\)/g; \
+                s/(PRINT\()"(.)"(.*)\)/\1\x27\2\x27\3\)/g; \
+                s/PRINT\((.*)\)/PRINT\(\1,\x27\\0\x27\,)/g; \
+                s/PRINT\((.*)\)/AI_PRINT,\1/g'
+
+# per VERSION flags
 ifeq ($(FINAL), YES)
  OPTIMIZATION := -O2
  LCDEFS :=
@@ -237,11 +230,20 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
 
-#Now using cursor commands for better look  original was //"\033[5;42;97m%80s\r\n%43s%37s\r\n%80s\007\033[0;0m\n"
+
 #                        Rsrv   Up 3                                                        80  Dn 1 Return      Dn 1 Ret 80ch
 #                        Lines Lines                                                        ch  Line SoL midway  Line SoL      Bell
-PRINTNOMATCH := printf "\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_MAROON),$(FG_WHITE))%80s$(call VT_CUD,1)\r%45s%35s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)$(call SET_TEXTATTRIB,$(FG_RED))\n\n\n" "" "NOT MATCH!" "" ""
-PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(FG_WHITE))%80s$(call VT_CUD,1)\r%43s%37s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)\n" "" "MATCH!" "" ""
+PRINTNOMATCH := printf "\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_MAROON),$(FG_WHITE))%80s$(call VT_CUD,1)\r%45s%35s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)\n" "" "NOT MATCH!" "" ""
+PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(FG_WHITE))%80s$(call VT_CUD,1)\r%43s%37s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)\n\n" "" "MATCH!" "" ""
+
+
+
+
+
+
+
+
+
 
 ## Build Recipes ##
 
@@ -249,22 +251,16 @@ PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_
 # this file defines $(ULTRAOBJECTS)
 include src/libultrare/Makefile.libultrare
 
-all: $(APPROM)
-ifeq ($(VERBOSE),0)
-	@$(call DrawProgressBar,100)
-endif
-ifeq ($(COMPARE),1)
 
-	@echo "\n"
-#   Calculate Checksum                      if fail                                         Allow overspill                                    Which File failed                       Quick Check (data)                    Slow Check (extract .text binary)
-	@$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || ($(PRINTNOMATCH) && echo "$(SAVECURSOR)$(RESTORESCROLLREGION)$(RESTORECURSOR)$(call VT_CUB,2) " && $(call ContinuePrompt,"Do you want to check Source Files?",echo "Please wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv,,,3) && exit 1)
-#   Else complete
-	@$(PRINTMATCH)
-endif
-ifeq ($(COMPARE),2)
-	@$(SHA1SUM) -c ge007.$(COUNTRYCODE).sha1
-endif
-	@echo "\n Rom File Generated in Build Directory. \n\n"
+all: $(APPROM)
+	@echo "Rom File Generated in Build Directory."
+	@if [ -f ge007.$(OUTCODE).sha1 ]; then \
+		$(SHA1SUM) -c ge007.$(OUTCODE).sha1 && $(PRINTMATCH) || ($(PRINTNOMATCH) && echo "$(call VT_CUB,2) " && \
+			$(call ContinuePrompt,"Do you want to check Source Files?", \
+				echo "$(call VT_CUU,2)Please wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv, \
+				,,1) \
+			&& exit 1); \
+	fi
 
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -272,9 +268,8 @@ endif
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
 ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
-# Don't print version on "default" since it will be spat out twice
     ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-      #$(info VERSION=$(VERSION))
+      $(info VERSION=$(VERSION))
     else
       $(error VERSION "$(VERSION)" not supported")
     endif
@@ -289,72 +284,60 @@ ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanc
 endif
 
 # Build RSP
-$(BUILD_DIR)/rsp/%.bin: rsp/*.s pb1
-	$(call PRINT_STATUS,Assembling1:,$<,$@)
+$(BUILD_DIR)/rsp/%.bin: rsp/*.s
 	$(ARMIPS) -sym $@.sym -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
 
 $(BUILD_DIR)/src/rspboot.o: $(BUILD_DIR)/rsp/rspboot.bin
 
 #Build asm files in root
-$(BUILD_DIR)/%.o: src/%.s pb2
-	$(call PRINT_STATUS,Assembling2:,$<,$@)
+$(BUILD_DIR)/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build asm files in src/
-$(BUILD_DIR)/src/%.o: src/%.s pb3
-	$(call PRINT_STATUS,Assembling3:,$<,$@)
+$(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Images
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin pb5
-	$(call PRINT_STATUS,Compiling5:,$<,$@)
+$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 	$(LD) -r -b binary $< -o $@
 
 
 #Compress Obseg
-$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS) pb6
-	$(call PRINT_STATUS,Compressing6:,$<,$@)
+$(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
+
 
 
 #Build C files in src/
+# convert AI_PRINT commands from readable to byte-array
 $(BUILD_DIR)/src/%.o: src/%.c
-	$(call PRINT_STATUS,Compiling8:,$<,$@)
 	@if grep -q 'GLOBAL_ASM(' $<; then \
 		$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); \
 		$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s; \
+	elif [ "$$(basename $<)" = "chraidata.c" ]; then \
+		$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); \
 	else \
 		$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<; \
 	fi
-    # convert AI_PRINT commands from readable to byte-array
-    #	echo $<
-    #	echo filter =  $(filter-out %chraidata.c,$<)
-    # for some reason, normal ifeq doesn't work, so has to be single line...
-	# $(if $(filter %chraidata.c,$<), $(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION), $(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); $(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s)
 
 
 #Build RamRom
-$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s pb9
-	$(call PRINT_STATUS,Assembling9:,$<,$@)
+$(BUILD_DIR)/assets/ramrom/%.o: assets/ramrom/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build fonts
-$(BUILD_DIR)/assets/font/%.o: assets/font/%.c pb10
-	$(call PRINT_STATUS,Compiling10:,$<,$@)
+$(BUILD_DIR)/assets/font/%.o: assets/font/%.c
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
 
 #Build asm files in assets/
-$(BUILD_DIR)/assets/%.o: assets/%.s pb11
-	$(call PRINT_STATUS,Assembling11:,$<,$@)
+$(BUILD_DIR)/assets/%.o: assets/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Obseg
-$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ) pb12
-	$(call PRINT_STATUS,Assembling12:,$<,$@)
+$(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build C files in assets/
-$(BUILD_DIR)/assets/%.o: assets/%.c pb4
-	$(call PRINT_STATUS,Compiling4:,$<,$@)
+$(BUILD_DIR)/assets/%.o: assets/%.c
 ifeq ($(filter-out %setup%,$<),)
 	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
 else
@@ -368,26 +351,18 @@ endif
 #	$(CC) -c -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm $(CFLAGWARNING) -woff 819,820,852,821,838,649 -signed $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64 $(OPTIMIZATION) -o $@ $<
 
 #Link Files
-$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) pb14 ge007.ld
+$(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) ge007.ld
 	cpp $(LDFILEOPTS) -P ge007.ld -o build/ge007.$(OUTCODE).ld
 	@echo "Linking Files into ELF"
 	$(LD) $(LDFLAGS) -o $@
 
 $(APPBIN): $(APPELF)
-  ifeq ($(VERBOSE),0)
-	@$(call DrawProgressBar,98)
-  endif
 	@echo "Building ROM"
 	$(OBJCOPY) $< $@ -O binary --gap-fill=0xff
 
 $(APPROM):	$(APPBIN)
 	@echo "Compressing ROM"
-  ifeq ($(VERBOSE),0)
-	@$(call DrawProgressBar,100)
-	$(DATASEG_COMP) $< $(OUTCODE) > /dev/null
-  else
 	$(DATASEG_COMP) $< $(OUTCODE)
-  endif
 	@echo "Finalizing ROM"
 	$(N64CKSUM) $< $@
 
@@ -399,42 +374,28 @@ $(APPROM):	$(APPBIN)
 ## Phony Recipes - Get Make to do something ##
 
 
-.PHONY: all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help colour context textures
-# Don't declare as phony otherwise make will re-evaluate every build including the recipes associated with them - just make sure no file is ever called pbx
-# pb1 pb2 pb3 pb4 pb5 pb6 pb7 pb8 pb9 pb10 pb11 pb12 pb13 pb14
+.PHONY: all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
 
 commonclean:
-	@$(call SetupProgressBar)
-	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map  & $(call IncrementProgressBarFromAtRate,0,0.125)
+	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map
 
 setupclean: commonclean
-	rm -f $(SETUP_BUILD_FILES) & $(call IncrementProgressBarFromAtRate,15,0.125)
+	rm -f $(SETUP_BUILD_FILES)
 
 stanclean: commonclean
-	rm -f $(STAN_BUILD_FILES) & $(call IncrementProgressBarFromAtRate,65,0.125)
+	rm -f $(STAN_BUILD_FILES)
+
+dataclean: commonclean stanclean setupclean
+	rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
 libultraclean: commonclean
-	rm -f $(ULTRAOBJECTS) & $(call IncrementProgressBarFromAtRate,25,0.125)
+	rm -f $(ULTRAOBJECTS)
 
-codeclean: commonclean libultraclean setupclean
-ifneq ($(filter codeclean,$(MAKECMDGOALS)),)
-	@echo "\n\n\nDeleting All Code Binaries Only [Assets will be left from previous compile]"
-	rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS) & $(call IncrementProgressBarFromAtRate,45,0.006125)
-	@echo "$(VT_ED)$(RESTORESCROLLREGION)\nCode Binaries Cleared! Make will Re-Build these next time.\n"
-else
-	rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS) & $(call IncrementProgressBarFromAtRate,45,0.125)
-endif
-dataclean: commonclean stanclean setupclean
-	rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES) & $(call IncrementProgressBarFromAtRate,75,0.125)
-
-# "Conditionals control what 'make' actually "sees" in the makefile, so they cannot be used to control recipes at the time of execution."
-# https://www.gnu.org/software/make/manual/html_node/Conditionals.html
+codeclean: commonclean libultraclean
+	rm -f $(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(RSPOBJECTS)
 
 clean: codeclean dataclean
-	@echo "\n\n\nDeleting All Code and Asset Binaries"
-	@$(call DrawProgressBar,100)
-	@echo "$(VT_ED)$(RESTORESCROLLREGION)\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
-
+	@echo "\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
 nuke: clean
 	@echo deleting files specified from make clean ...
@@ -449,25 +410,24 @@ nuke: clean
 	rm -r -f -d "assets/images/split/"
 	rm -r -f "assets/music/*.bin" "assets/obseg/bg/*.bin" "assets/obseg/brief/*.bin" "assets/obseg/chr/*.bin" "assets/obseg/gun/*.bin" "assets/obseg/prop/*.bin" "assets/obseg/setup/*.bin" "assets/obseg/setup/e/*.bin" "assets/obseg/setup/u/*.bin" "assets/obseg/setup/j/*.bin" "assets/obseg/stan/*.bin" "assets/obseg/text/*.bin" "assets/obseg/text/e/*.bin" "assets/obseg/text/u/*.bin" "assets/obseg/text/j/*.bin" "assets/ramrom/*.bin" "assets/ramrom/e/*.bin" "assets/ramrom/u/*.bin" "assets/ramrom/j/*.bin"
 
-#         0    4                             35                                            80             80(with colour codes)
 help:
-	@echo "\n\033[1;4mmakefile help$(RESTORECOLOUR)"
+	@echo "mmakefile help"
 	@echo ""
 	@echo "  supported targets:"
 	@echo ""
-	@echo "    all                            $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) all (default)"
-	@echo "    clean                          $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) known build artifacts"
-	@echo "    nuke                           $(call SET_TEXTATTRIB,$(FG_RED)) Delete all$(RESTORECOLOUR) files explicitly listed in Makefile (same as make clean),"
+	@echo "    all                            Build all (default)"
+	@echo "    clean                          Delete all known build artifacts"
+	@echo "    nuke                           Delete all files explicitly listed in Makefile (same as make clean),"
 	@echo "                                    all build output for all versions, any .bin file in assets folders,"
 	@echo "                                    and asp/rsp bin."
-	@echo "    dataclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only asset build artifacts"
-	@echo "    codeclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts"
-	@echo "    libultraclean                  $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only code (asm, .c) build artifacts "
+	@echo "    dataclean                      Delete only asset build artifacts"
+	@echo "    codeclean                      Delete only code (asm, .c) build artifacts"
+	@echo "    libultraclean                  Delete only code (asm, .c) build artifacts "
 	@echo "                                    from Rare's libultra files"
-	@echo "    stanclean                      $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only stan build artifacts"
-	@echo "    setupclean                     $(call SET_TEXTATTRIB,$(FG_RED)) Delete$(RESTORECOLOUR) only setup build artifacts"
-	@echo "    cmdbuidler                     $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) AI Commands"
-	@echo "    context [file]                 $(call SET_TEXTATTRIB,$(FG_LIME)) Build$(RESTORECOLOUR) Context File from [file]"
+	@echo "    stanclean                      Delete only stan build artifacts"
+	@echo "    setupclean                     Delete only setup build artifacts"
+	@echo "    cmdbuidler                     BuildAI Commands"
+	@echo "    context [file]                 BuildContext File from [file]"
 	@echo "                                    eg make context src/game/chrai.c"
 	@echo "    test                            Re-Run Data Verification "
 	@echo ""
@@ -477,15 +437,11 @@ help:
 	@echo "    VERSION=v                       Region version. (US is default)"
 	@echo "                                    Supported values: ${ALLOWED_VERSIONS}\n"
 
-include tools/makemodules/cmd.make
+include include/make/cmd.make
 
 
 test:
-	@$(SHA1SUM) --quiet -c checksums.txt
-	@printf "\033[1;92m All Checked Files Match\033[0m\n\n"
-#	@$(SHA1SUM) $(BG__SEG_FILES) $(BRIEF_RZ_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) \
-	$(PROP_RZ_FILES) $(SETUP_BIN_FILES) $(STAN_RZ_FILES) $(TEXT_RZ_FILES) > checksums.txt
-
+	@$(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -v -i ge007.$(OUTCODE)-test_basis.csv
 
 ifneq ($(filter-out context,$(MAKECMDGOALS)),)
  CONTEXTFILE := $(filter-out context ,$(MAKECMDGOALS))
@@ -506,29 +462,6 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
-testPB:
-	$(call SetupProgressBar)
-	$(call IncrementProgressBarFromAtRate,0,0.125)
-
 textures:
 	$(foreach x,$(IMAGE_BINS),tools/mktex/build/tex2png $(x) assets/images/out ${\n})
-
-colour:
-  ifeq ($(VERBOSE),0)
-	@clear
-	@echo "$(call VT_CUD,3)"
-	@$(call SetupProgressBar)
-	@$(call DrawProgressBar,0)
-	@-$(MAKE) --no-print-directory all 2> build/err.txt | $(CLR_OUT) && echo "$(RESTORESCROLLREGION2)" || clear && echo "$(RESTORESCROLLREGION2)" && $(CLR_OUT) build/err.txt
-  else
-	@echo "$(call VT_CUU,3)"
-	@$(MAKE) --no-print-directory all 2>&1 | $(CLR_OUT)
-  endif
-
-# hide output by default, unless this one of the following targets
-ifeq ($(VERBOSE),0)
-  .SILENT:
-endif
-
-include tools/makemodules/pbars.make
 

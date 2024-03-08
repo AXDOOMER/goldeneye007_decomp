@@ -65,7 +65,8 @@ IncrementProgressBarFromAtRate =         \
 endif #Verbose No Draw PBar
 
 # Ask to continue
-# (1) Prompt, (2) Do if Yes,
+# (1) Prompt,
+# (2) Do if Yes,
 # (3) Do if No [can be blank],
 # (4) Do if anything else [can be blank]
 # (5) Timeout [can be blank]
