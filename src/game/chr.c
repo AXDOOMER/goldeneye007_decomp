@@ -4292,7 +4292,13 @@ void chrPositionRelated7F020E40(ChrRecord *chr, s32 arg1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F020EF0(void) {
+/*
+* Address: 
+*   US: 0x7F020EF0
+*   JP: 0x7F021188
+*   EU: 0x7F020E68
+*/
+void chrTickBeams(void) {
 
 }
 #else
@@ -4300,7 +4306,7 @@ void sub_GAME_7F020EF0(void) {
 #ifdef VERSION_US
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F020EF0
+glabel chrTickBeams
 /* 055A20 7F020EF0 27BDFEA8 */  addiu $sp, $sp, -0x158
 /* 055A24 7F020EF4 3C0F8003 */  lui   $t7, %hi(D_8002CC6C) 
 /* 055A28 7F020EF8 25EFCC6C */  addiu $t7, %lo(D_8002CC6C) # addiu $t7, $t7, -0x3394
@@ -5152,7 +5158,7 @@ glabel sub_GAME_7F020EF0
 #ifdef VERSION_JP
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F020EF0
+glabel chrTickBeams
 /* 055CF8 7F021188 27BDFEA8 */  addiu $sp, $sp, -0x158
 /* 055CFC 7F02118C 3C0F8003 */  lui   $t7, %hi(D_8002CC6C) # $t7, 0x8003
 /* 055D00 7F021190 25EFCCAC */  addiu $t7, %lo(D_8002CC6C) # addiu $t7, $t7, -0x3354
@@ -6078,7 +6084,7 @@ glabel D_80051D84
 glabel D_80051D88
 .word 0x41aa6666 /*21.299999*/
 .text
-glabel sub_GAME_7F020EF0
+glabel chrTickBeams
 /* 053858 7F020E68 27BDFEA8 */  addiu $sp, $sp, -0x158
 /* 05385C 7F020E6C 3C0F8003 */  lui   $t7, %hi(D_8002CC6C) # $t7, 0x8003
 /* 053860 7F020E70 25EF81BC */  addiu $t7, %lo(D_8002CC6C) # addiu $t7, $t7, -0x7e44

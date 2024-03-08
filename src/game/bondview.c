@@ -18538,7 +18538,10 @@ glabel sub_GAME_7F08AAE8
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F08B0F0(void) {
+/*
+* Address: 0x7F08B0F0
+*/
+void playerTickBeams(void) {
 
 }
 #else
@@ -18557,7 +18560,7 @@ glabel D_800552CC
 glabel D_800552D0
 .word 0x40c90fdb /*6.2831855*/
 .text
-glabel sub_GAME_7F08B0F0
+glabel playerTickBeams
 /* 0BFC20 7F08B0F0 27BDFF08 */  addiu $sp, $sp, -0xf8
 /* 0BFC24 7F08B0F4 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0BFC28 7F08B0F8 AFB10020 */  sw    $s1, 0x20($sp)
@@ -18604,7 +18607,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BFCC4 7F08B194 8E390000 */  lw    $t9, ($s1)
 .L7F08B198:
 /* 0BFCC8 7F08B198 AF2000AC */  sw    $zero, 0xac($t9)
-/* 0BFCCC 7F08B19C 0FC083BC */  jal   sub_GAME_7F020EF0
+/* 0BFCCC 7F08B19C 0FC083BC */  jal   chrTickBeams
 /* 0BFCD0 7F08B1A0 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0BFCD4 7F08B1A4 8E2A0000 */  lw    $t2, ($s1)
 /* 0BFCD8 7F08B1A8 AFA200E8 */  sw    $v0, 0xe8($sp)
@@ -19286,7 +19289,7 @@ glabel sub_GAME_7F08B0F0
 /* 0C0688 7F08BB58 24050001 */  li    $a1, 1
 /* 0C068C 7F08BB5C 0FC0B446 */  jal   chrSetFiring
 /* 0C0690 7F08BB60 81C60C25 */   lb    $a2, 0xc25($t6)
-/* 0C0694 7F08BB64 0FC083BC */  jal   sub_GAME_7F020EF0
+/* 0C0694 7F08BB64 0FC083BC */  jal   chrTickBeams
 /* 0C0698 7F08BB68 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0C069C 7F08BB6C AFA200A0 */  sw    $v0, 0xa0($sp)
 /* 0C06A0 7F08BB70 00003825 */  move  $a3, $zero
@@ -19395,7 +19398,7 @@ glabel D_8004AEA4
 .word 0x40c90fdb
 
 .text
-glabel sub_GAME_7F08B0F0
+glabel playerTickBeams
 /* 0BDDD4 7F08B3E4 27BDFF08 */  addiu $sp, $sp, -0xf8
 /* 0BDDD8 7F08B3E8 AFBF0024 */  sw    $ra, 0x24($sp)
 /* 0BDDDC 7F08B3EC AFB10020 */  sw    $s1, 0x20($sp)
@@ -19442,7 +19445,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BDE78 7F08B488 8E390000 */  lw    $t9, ($s1)
 .L7F08B48C:
 /* 0BDE7C 7F08B48C AF2000AC */  sw    $zero, 0xac($t9)
-/* 0BDE80 7F08B490 0FC0839A */  jal   sub_GAME_7F020EF0
+/* 0BDE80 7F08B490 0FC0839A */  jal   chrTickBeams
 /* 0BDE84 7F08B494 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0BDE88 7F08B498 8E2A0000 */  lw    $t2, ($s1)
 /* 0BDE8C 7F08B49C AFA200E8 */  sw    $v0, 0xe8($sp)
@@ -20124,7 +20127,7 @@ glabel sub_GAME_7F08B0F0
 /* 0BE83C 7F08BE4C 24050001 */  li    $a1, 1
 /* 0BE840 7F08BE50 0FC0B453 */  jal   chrSetFiring
 /* 0BE844 7F08BE54 81C60C1D */   lb    $a2, 0xc1d($t6)
-/* 0BE848 7F08BE58 0FC0839A */  jal   sub_GAME_7F020EF0
+/* 0BE848 7F08BE58 0FC0839A */  jal   chrTickBeams
 /* 0BE84C 7F08BE5C 8FA400F8 */   lw    $a0, 0xf8($sp)
 /* 0BE850 7F08BE60 AFA200A0 */  sw    $v0, 0xa0($sp)
 /* 0BE854 7F08BE64 00003825 */  move  $a3, $zero

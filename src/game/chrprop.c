@@ -3488,68 +3488,70 @@ glabel handle_mp_respawn_and_some_things
 
 
 
-#ifdef NONMATCHING
 /*
 * Address: 0x7F03CA30
-* Notes: What are they attempting to do with 'propprev'?
+* PD: propsTick (src/game/proptick.c)
 */
-void determing_type_of_object_and_detection(void) {
-    u8 obj_type;
-    u8 ret_var;
+void determing_type_of_object_and_detection(void)
+{
+    s32 tickop;
     PropRecord *prop;
+    PropRecord *prev;
     PropRecord *propprev;
 
     prop = get_ptr_obj_pos_list_current_entry();
 
     while (prop != NULL)
     {
-        obj_type = prop->type;
+        tickop = 0;
+        prev = prop->prev;
 
-        if (obj_type == PROP_TYPE_CHR)
+        if (prop->type == PROP_TYPE_CHR)
         {
-            ret_var = sub_GAME_7F020EF0(prop, 0U);
+            tickop = chrTickBeams(prop);
         }
-        else if ((obj_type == PROP_TYPE_OBJ) || (obj_type == PROP_TYPE_WEAPON) || (obj_type == PROP_TYPE_DOOR))
+        else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_DOOR))
         {
-            ret_var = object_interaction(prop, 0U);
+            tickop = object_interaction(prop);
         }
-        else if (obj_type == PROP_TYPE_EXPLOSION)
+        else if (prop->type == PROP_TYPE_EXPLOSION)
         {
-            ret_var = sub_GAME_7F09D4EC(prop, 0U);
+            tickop = explosionTick(prop);
         }
-        else if (obj_type == PROP_TYPE_SMOKE)
+        else if (prop->type == PROP_TYPE_SMOKE)
         {
-            ret_var = sub_GAME_7F09EF9C(prop, 0U);
+            tickop = smokeTick(prop);
         }
-        else if (obj_type == PROP_TYPE_VIEWER)
+        else if (prop->type == PROP_TYPE_VIEWER)
         {
-            ret_var = sub_GAME_7F08B0F0(prop, 0U);
+            tickop = playerTickBeams(prop);
         }
 
-        if (ret_var == PROP_TYPE_PLAYER)
+		if (tickop == 5)
         {
-            propprev = prop->prev;
-        }
+			propprev = prev;
+		}
         else
         {
-            propprev = prop->prev;
-            if (ret_var == PROP_TYPE_CHR)
-            {
-                chrpropDelist(prop);
-                chrpropActivateThisFrame(prop);
+			propprev = prop->prev;
 
-                if (propprev == NULL)
+			if (tickop == 3)
+            {
+				chrpropDelist(prop);
+				chrpropActivateThisFrame(prop);
+
+				if (propprev == NULL)
                 {
-                    propprev = prop;
-                }
-            }
+					propprev = prop;
+				}
+			}
             else
             {
-                propExecuteTickOperation(prop, ret_var);
-            }
-        }
+				propExecuteTickOperation(prop, tickop);
+			}
+		}
 
-        prop = propprev;
+		prop = propprev;
     }
 
     if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
@@ -3559,112 +3561,7 @@ void determing_type_of_object_and_detection(void) {
         propsDefragRoomProps();
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel determing_type_of_object_and_detection
-/* 071560 7F03CA30 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 071564 7F03CA34 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 071568 7F03CA38 AFB30020 */  sw    $s3, 0x20($sp)
-/* 07156C 7F03CA3C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 071570 7F03CA40 AFB10018 */  sw    $s1, 0x18($sp)
-/* 071574 7F03CA44 0FC0E909 */  jal   get_ptr_obj_pos_list_current_entry
-/* 071578 7F03CA48 AFB00014 */   sw    $s0, 0x14($sp)
-/* 07157C 7F03CA4C 1040003C */  beqz  $v0, .L7F03CB40
-/* 071580 7F03CA50 00408025 */   move  $s0, $v0
-/* 071584 7F03CA54 24130003 */  li    $s3, 3
-.L7F03CA58:
-/* 071588 7F03CA58 92020000 */  lbu   $v0, ($s0)
-/* 07158C 7F03CA5C 00002825 */  move  $a1, $zero
-/* 071590 7F03CA60 8E120024 */  lw    $s2, 0x24($s0)
-/* 071594 7F03CA64 16620005 */  bne   $s3, $v0, .L7F03CA7C
-/* 071598 7F03CA68 24010001 */   li    $at, 1
-/* 07159C 7F03CA6C 0FC083BC */  jal   sub_GAME_7F020EF0
-/* 0715A0 7F03CA70 02002025 */   move  $a0, $s0
-/* 0715A4 7F03CA74 1000001F */  b     .L7F03CAF4
-/* 0715A8 7F03CA78 00402825 */   move  $a1, $v0
-.L7F03CA7C:
-/* 0715AC 7F03CA7C 10410005 */  beq   $v0, $at, .L7F03CA94
-/* 0715B0 7F03CA80 24010004 */   li    $at, 4
-/* 0715B4 7F03CA84 10410003 */  beq   $v0, $at, .L7F03CA94
-/* 0715B8 7F03CA88 24010002 */   li    $at, 2
-/* 0715BC 7F03CA8C 54410006 */  bnel  $v0, $at, .L7F03CAA8
-/* 0715C0 7F03CA90 24010007 */   li    $at, 7
-.L7F03CA94:
-/* 0715C4 7F03CA94 0FC114B5 */  jal   object_interaction
-/* 0715C8 7F03CA98 02002025 */   move  $a0, $s0
-/* 0715CC 7F03CA9C 10000015 */  b     .L7F03CAF4
-/* 0715D0 7F03CAA0 00402825 */   move  $a1, $v0
-/* 0715D4 7F03CAA4 24010007 */  li    $at, 7
-.L7F03CAA8:
-/* 0715D8 7F03CAA8 54410006 */  bnel  $v0, $at, .L7F03CAC4
-/* 0715DC 7F03CAAC 24010008 */   li    $at, 8
-/* 0715E0 7F03CAB0 0FC2753B */  jal   sub_GAME_7F09D4EC
-/* 0715E4 7F03CAB4 02002025 */   move  $a0, $s0
-/* 0715E8 7F03CAB8 1000000E */  b     .L7F03CAF4
-/* 0715EC 7F03CABC 00402825 */   move  $a1, $v0
-/* 0715F0 7F03CAC0 24010008 */  li    $at, 8
-.L7F03CAC4:
-/* 0715F4 7F03CAC4 54410006 */  bnel  $v0, $at, .L7F03CAE0
-/* 0715F8 7F03CAC8 24010006 */   li    $at, 6
-/* 0715FC 7F03CACC 0FC27BE7 */  jal   sub_GAME_7F09EF9C
-/* 071600 7F03CAD0 02002025 */   move  $a0, $s0
-/* 071604 7F03CAD4 10000007 */  b     .L7F03CAF4
-/* 071608 7F03CAD8 00402825 */   move  $a1, $v0
-/* 07160C 7F03CADC 24010006 */  li    $at, 6
-.L7F03CAE0:
-/* 071610 7F03CAE0 54410005 */  bnel  $v0, $at, .L7F03CAF8
-/* 071614 7F03CAE4 24010005 */   li    $at, 5
-/* 071618 7F03CAE8 0FC22C3C */  jal   sub_GAME_7F08B0F0
-/* 07161C 7F03CAEC 02002025 */   move  $a0, $s0
-/* 071620 7F03CAF0 00402825 */  move  $a1, $v0
-.L7F03CAF4:
-/* 071624 7F03CAF4 24010005 */  li    $at, 5
-.L7F03CAF8:
-/* 071628 7F03CAF8 14A10003 */  bne   $a1, $at, .L7F03CB08
-/* 07162C 7F03CAFC 00000000 */   nop   
-/* 071630 7F03CB00 1000000D */  b     .L7F03CB38
-/* 071634 7F03CB04 02408825 */   move  $s1, $s2
-.L7F03CB08:
-/* 071638 7F03CB08 14B30009 */  bne   $a1, $s3, .L7F03CB30
-/* 07163C 7F03CB0C 8E110024 */   lw    $s1, 0x24($s0)
-/* 071640 7F03CB10 0FC0E94E */  jal   chrpropDelist
-/* 071644 7F03CB14 02002025 */   move  $a0, $s0
-/* 071648 7F03CB18 0FC0E93C */  jal   chrpropActivateThisFrame
-/* 07164C 7F03CB1C 02002025 */   move  $a0, $s0
-/* 071650 7F03CB20 16200005 */  bnez  $s1, .L7F03CB38
-/* 071654 7F03CB24 00000000 */   nop   
-/* 071658 7F03CB28 10000003 */  b     .L7F03CB38
-/* 07165C 7F03CB2C 02008825 */   move  $s1, $s0
-.L7F03CB30:
-/* 071660 7F03CB30 0FC0F0AF */  jal   propExecuteTickOperation
-/* 071664 7F03CB34 02002025 */   move  $a0, $s0
-.L7F03CB38:
-/* 071668 7F03CB38 1620FFC7 */  bnez  $s1, .L7F03CA58
-/* 07166C 7F03CB3C 02208025 */   move  $s0, $s1
-.L7F03CB40:
-/* 071670 7F03CB40 0FC26C54 */  jal   get_cur_playernum
-/* 071674 7F03CB44 00000000 */   nop   
-/* 071678 7F03CB48 0FC26D36 */  jal   sub_GAME_7F09B4D8
-/* 07167C 7F03CB4C 00402025 */   move  $a0, $v0
-/* 071680 7F03CB50 54400008 */  bnezl $v0, .L7F03CB74
-/* 071684 7F03CB54 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 071688 7F03CB58 0FC1597C */  jal   handle_alarm_gas_timer_calldamage
-/* 07168C 7F03CB5C 00000000 */   nop   
-/* 071690 7F03CB60 0FC0D239 */  jal   loop_set_sound_effect_all_slots
-/* 071694 7F03CB64 00000000 */   nop   
-/* 071698 7F03CB68 0FC0F93C */  jal   propsDefragRoomProps
-/* 07169C 7F03CB6C 00000000 */   nop   
-/* 0716A0 7F03CB70 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F03CB74:
-/* 0716A4 7F03CB74 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0716A8 7F03CB78 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0716AC 7F03CB7C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0716B0 7F03CB80 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0716B4 7F03CB84 03E00008 */  jr    $ra
-/* 0716B8 7F03CB88 27BD0028 */   addiu $sp, $sp, 0x28
-)
-#endif
+
 
 
 
