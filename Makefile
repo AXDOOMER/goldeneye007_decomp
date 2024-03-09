@@ -16,7 +16,7 @@ COMPARE := 1
 
 # Include Terminal Codes for colourising text.
 include include/make/VT100Codes.make
-include include/make/gui.make
+include include/make/Gui.make
 
 # set tooolchain based on current OS
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
@@ -123,20 +123,6 @@ BUILD_DIR_BASE := build
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(OUTCODE)
 include assets/Makefile.obseg
 include assets/Makefile.music
-BUILD_SUB_DIRS := \
-	rsp src src/game src/inflate \
-	src/libultra src/libultra/audio src/libultra/gt src/libultra/gu src/libultra/io \
-	src/libultra/libc src/libultra/os src/libultra/rg src/libultra/sched src/libultra/sp \
-	src/libultrare src/libultrare/audio src/libultrare/gt src/libultrare/gu src/libultrare/io \
-	src/libultrare/libc src/libultrare/os src/libultrare/rg src/libultrare/sched src/libultrare/sp \
-	assets assets/obseg \
-	assets/obseg/brief assets/obseg/chr assets/obseg/gun assets/obseg/prop \
-	assets/obseg/text assets/obseg/bg assets/obseg/setup assets/obseg/setup/$(COUNTRYCODE) assets/obseg/stan \
-	assets/music assets/ramrom assets/images assets/images/split assets/font \
-	assets/embedded assets/embedded/skeletons assets/embedded/player_gait_object
-# create build directories
-$(shell mkdir -p $(BUILD_DIR))
-$(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))
 
 ## Collect Objects ##
 
@@ -252,7 +238,12 @@ PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_
 include src/libultrare/Makefile.libultrare
 
 
-all: $(APPROM)
+create_directories:
+	scripts/make/create_directories.sh $(BUILD_DIR) $(COUNTRYCODE)
+
+prerequisites: create_directories
+
+all: prerequisites $(APPROM)
 	@echo "Rom File Generated in Build Directory."
 	@if [ -f ge007.$(OUTCODE).sha1 ]; then \
 		$(SHA1SUM) -c ge007.$(OUTCODE).sha1 && $(PRINTMATCH) || ($(PRINTNOMATCH) && echo "$(call VT_CUB,2) " && \
@@ -369,12 +360,10 @@ $(APPROM):	$(APPBIN)
 .PRECIOUS: %.bin  %.o
 
 
-
-
 ## Phony Recipes - Get Make to do something ##
 
 
-.PHONY: all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
+.PHONY: prerequisites all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
 
 commonclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map
