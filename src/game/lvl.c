@@ -1229,6 +1229,10 @@ void lvlSetMultipliersForDifficulty(void)
  *
  * notes: there is one big `if` block that is very wrong. A few places where two instructions are swapped.
  * Otherwise just lots of regalloc.
+ * 
+ * mismatch section is probably Perfect Dark void mpCalculateAwards(void)
+ * 
+ * https://decomp.me/scratch/YWqVR 63.28%
  */
 void lvlManageMpGame(void)
 {
