@@ -237,11 +237,18 @@ PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_
 # this file defines $(ULTRAOBJECTS)
 include src/libultrare/Makefile.libultrare
 
+print_info:
+	$(info VERSION=$(VERSION))
+	$(info Building $(VERSION) ROM...)
 
 create_directories:
 	scripts/make/create_directories.sh $(BUILD_DIR) $(COUNTRYCODE)
 
-prerequisites: create_directories
+build_tools:
+	$(info Building tools...)
+	scripts/make/build_tools.sh
+
+prerequisites: print_info create_directories build_tools
 
 all: prerequisites $(APPROM)
 	@echo "Rom File Generated in Build Directory."
@@ -257,22 +264,6 @@ all: prerequisites $(APPROM)
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
-
-ifeq ($(filter clean nuke dataclean help codeclean context cmdbuilder test stanclean setupclean colour print-%,$(MAKECMDGOALS)),)
-    ifneq ($(filter $(VERSION),$(ALLOWED_VERSIONS)),)
-      $(info VERSION=$(VERSION))
-    else
-      $(error VERSION "$(VERSION)" not supported")
-    endif
-    # Make tools if out of date
-    $(info Building tools...)
-    DUMMY != make -s -C tools >&2 || echo FAIL
-    ifeq ($(DUMMY),FAIL)
-      $(error Failed to build tools)
-    endif
-    $(info Building $(VERSION) ROM...)
-
-endif
 
 # Build RSP
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
