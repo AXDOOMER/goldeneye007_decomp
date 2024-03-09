@@ -107,3 +107,5 @@ assets/obseg/em/data/pssst.seg
 assets/obseg/em/data/sabre.seg
 assets/obseg/em/data/spec_rom.seg
 assets/obseg/em/data/under.seg
+
+scripts/local/
