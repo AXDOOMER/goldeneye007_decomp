@@ -217,10 +217,6 @@ ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
 OBJCOPY := $(TOOLCHAIN)objcopy
 
 
-#                        Rsrv   Up 3                                                        80  Dn 1 Return      Dn 1 Ret 80ch
-#                        Lines Lines                                                        ch  Line SoL midway  Line SoL      Bell
-PRINTNOMATCH := printf "\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_MAROON),$(FG_WHITE))%80s$(call VT_CUD,1)\r%45s%35s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)\n" "" "NOT MATCH!" "" ""
-PRINTMATCH := printf "\n\n\n$(call VT_CUU,3)$(call SET_TEXTATTRIB,$(BLINK),$(BG_GREEN),$(FG_WHITE))%80s$(call VT_CUD,1)\r%43s%37s$(call VT_CUD,1)\r%80s$(BELL)$(RESTORECOLOUR)\n\n" "" "MATCH!" "" ""
 
 
 
@@ -242,23 +238,20 @@ print_info:
 	$(info Building $(VERSION) ROM...)
 
 create_directories:
-	scripts/make/create_directories.sh $(BUILD_DIR) $(COUNTRYCODE)
+	scripts/make/create_directories.sh "$(BUILD_DIR)" "$(COUNTRYCODE)"
 
 build_tools:
 	$(info Building tools...)
-	scripts/make/build_tools.sh
+	scripts/make/build_tools.sh "$(MAKE)"
 
 prerequisites: print_info create_directories build_tools
 
-all: prerequisites $(APPROM)
+checksum:
+	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)"
+
+all: prerequisites $(APPROM) checksum
 	@echo "Rom File Generated in Build Directory."
-	@if [ -f ge007.$(OUTCODE).sha1 ]; then \
-		$(SHA1SUM) -c ge007.$(OUTCODE).sha1 && $(PRINTMATCH) || ($(PRINTNOMATCH) && echo "$(call VT_CUB,2) " && \
-			$(call ContinuePrompt,"Do you want to check Source Files?", \
-				echo "$(call VT_CUU,2)Please wait while we determine which files are affected..." && $(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -i ge007.$(OUTCODE)-test_basis.csv, \
-				,,1) \
-			&& exit 1); \
-	fi
+
 
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -356,6 +349,8 @@ $(APPROM):	$(APPBIN)
 
 .PHONY: prerequisites all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
 
+.NOTPARALLEL: checksum
+
 commonclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map
 
@@ -378,17 +373,7 @@ clean: codeclean dataclean
 	@echo "\nAll Code and Asset Binaries Cleared! Make will Re-Build these next time.\n"
 
 nuke: clean
-	@echo deleting files specified from make clean ...
-	@echo
-	@echo make: deleting build folders and files
-	$(foreach x,$(ALLOWED_COUNTRYCODE),rm -r -f -d "$(BUILD_DIR_BASE)/$(x)/"${\n})
-	@echo
-	@echo make: deleting bin / rsp / asp
-	rm -r -f -d "bin/"
-	@echo
-	@echo make: deleting assets
-	rm -r -f -d "assets/images/split/"
-	rm -r -f "assets/music/*.bin" "assets/obseg/bg/*.bin" "assets/obseg/brief/*.bin" "assets/obseg/chr/*.bin" "assets/obseg/gun/*.bin" "assets/obseg/prop/*.bin" "assets/obseg/setup/*.bin" "assets/obseg/setup/e/*.bin" "assets/obseg/setup/u/*.bin" "assets/obseg/setup/j/*.bin" "assets/obseg/stan/*.bin" "assets/obseg/text/*.bin" "assets/obseg/text/e/*.bin" "assets/obseg/text/u/*.bin" "assets/obseg/text/j/*.bin" "assets/ramrom/*.bin" "assets/ramrom/e/*.bin" "assets/ramrom/u/*.bin" "assets/ramrom/j/*.bin"
+	scripts/make/clean_nuke.sh "$(ALLOWED_COUNTRYCODE)" "$(BUILD_DIR_BASE)"
 
 help:
 	@echo "mmakefile help"

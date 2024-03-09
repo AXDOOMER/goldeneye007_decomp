@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# execute from the root source control directory.
+dirname=$(pwd)
+shopt -s extglob           # enable +(...) glob syntax
+result=${dirname%%+(/)}    # trim however many trailing slashes exist
+result=${result##*/}       # remove everything before the last / that still remains
+result=${result:-/}        # correct for dirname=/ case
+
+if [ $result = "scripts" ] ; then
+    cd ..
+fi
+
 SRC=
 CONTINUE_ON_ERROR=0
 VERBOSE=0

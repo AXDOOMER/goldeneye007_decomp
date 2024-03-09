@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# no arguments
+# arg1: make command passthrough, per make user manual.
 
-make -s -C tools >&2
+MAKECMD=$1
+
+if [ -z ${MAKECMD} ]; then echo "$0: missing argument: MAKECMD"; exit 1; fi
+
+$MAKECMD -s -C tools >&2
 
 retVal=$?
 if [ $retVal -ne 0 ]; then
