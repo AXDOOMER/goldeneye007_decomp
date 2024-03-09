@@ -115,6 +115,8 @@ extern f32 room_data_float2;
 
 extern bg_room_data * ptr_bgdata_room_fileposition_list;
 extern s_room_info array_room_info[];
+extern Gfx *ptrDynamic_CC_RM_LUT[];
+extern Gfx DL_LUT_PRIMARY_ADDFOG[];
 
 
 void bgInit(void);
@@ -150,6 +152,6 @@ void sub_GAME_7F0B5CC0(struct bbox2d *a, struct bbox2d *b);
 f32 get_room_data_float2(void);
 s32 sub_GAME_7F0B9CC8(s32 arg0, s32 arg1, struct coord3d *arg2, struct coord3d *arg3);
 void sub_GAME_7F0B96CC(s32 arg0, struct PortalMetric *arg1);
-void bgLoadFromDynamicCCRMLUT(s32 arg0, s32 arg1, s32 arg2);
+void bgLoadFromDynamicCCRMLUT(Gfx *arg0, Gfx *arg1, enum CCRMLUT arg2);
 
 #endif

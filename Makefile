@@ -1,4 +1,4 @@
-# Makefile to rebuild Goldeneye 007
+# Makefile to build Goldeneye 007
 
 ### Default target ###
 default: all

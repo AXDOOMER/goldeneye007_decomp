@@ -539,11 +539,11 @@ struct mp_stage_setup multi_stage_setups[] = {
     {getStringID(LTITLE, TITLE_STR_168_MILITARYARCHIVES), getStringID(LTITLE, TITLE_STR_169_ARCHIVES), IMG_MP_ARCHIVES, LEVELID_ARCHIVES, SP_LEVEL_ARCHIVES, 1, 3},
     {getStringID(LTITLE, TITLE_STR_170_WATERCAVERNS), getStringID(LTITLE, TITLE_STR_171_CAVERNS), IMG_MP_CAVERNS, LEVELID_CAVERNS, SP_LEVEL_CAVERNS, 1, 3},
     {getStringID(LTITLE, TITLE_STR_172_EGYPTIANTEMPLEMP), getStringID(LTITLE, TITLE_STR_173_EGYPTIANMP), IMG_MP_EGYPT, LEVELID_EGYPT, SP_LEVEL_EGYPT, 1, 2}
-  //{TEXT(LTITLE, TITLE_STR_174), TEXT(LTITLE, TITLE_STR_175), IMG_MP_RANDOM, LEVELID_CITADEL, -1, 1, 4}, //Citadel
-  //{TEXT(LTITLE, TITLE_STR_176), TEXT(LTITLE, TITLE_STR_177), IMG_MP_FRIGATE, LEVELID_FRIGATE, -1, 1, 4}, //dest
-  //{TEXT(LTITLE, TITLE_STR_178), TEXT(LTITLE, TITLE_STR_179), IMG_MP_STATUE, LEVELID_STATUE, -1, 1, 4}, //stat
-  //{TEXT(LTITLE, TITLE_STR_180), TEXT(LTITLE, TITLE_STR_181), IMG_MP_CRADLE, LEVELID_CRADLE, -1, 1, 4}, //crad
-  //{TEXT(LTITLE, TITLE_STR_182), TEXT(LTITLE, TITLE_STR_183), IMG_MP_AZTEC, LEVELID_AZTEC, -1, 1, 4}, //azt
+  //{getStringID(LTITLE, TITLE_STR_174_CITADEL), getStringID(LTITLE, TITLE_STR_175_CITADEL2), IMG_MP_RANDOM, LEVELID_CITADEL, -1, 1, 4}, //Citadel (old format setup)
+  //{getStringID(LTITLE, TITLE_STR_176_DEST), getStringID(LTITLE, TITLE_STR_177_DEST2), IMG_MP_FRIGATE, LEVELID_FRIGATE, -1, 1, 4}, //dest (needs setup)
+  //{getStringID(LTITLE, TITLE_STR_178_STAT), getStringID(LTITLE, TITLE_STR_179_STAT2), IMG_MP_STATUE, LEVELID_STATUE, -1, 1, 2}, //stat (works)
+  //{getStringID(LTITLE, TITLE_STR_180_CRAD), getStringID(LTITLE, TITLE_STR_181_CRADLE2), IMG_MP_CRADLE, LEVELID_CRADLE, -1, 1, 2}, //crad (works)
+  //{getStringID(LTITLE, TITLE_STR_182_AZT), getStringID(LTITLE, TITLE_STR_183_AZT2), IMG_MP_AZTEC, LEVELID_AZTEC, -1, 1, 4}, //azt (needs setup)
 
 };
 
@@ -2209,13 +2209,13 @@ void load_walletbond(void)
         {
             struct unk_walletbond_struct *srecord;
             struct unk_walletbond_struct_b *b;
-            s32 arg0;
-
+            Gfx *arg0;
+            
             b = (struct unk_walletbond_struct_b *)mnode;
             srecord = b->unk04;
 
-            arg0 = srecord->unk1C + (srecord->unk00 & 0xffffff);
-            bgLoadFromDynamicCCRMLUT(arg0, 0, 8);
+            arg0 = (s32)srecord->unk1C + (srecord->unk00 & 0xffffff);
+            bgLoadFromDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
         }
     }
 }

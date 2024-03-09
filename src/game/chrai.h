@@ -282,6 +282,7 @@ void          roomGetProps(s32 *roomids);
 ObjectRecord *scan_position_data_table_for_normal_object_at_preset(s32 arg0);
 Gfx          *chrpropsRenderPass(Gfx *arg0, s32 roomid, s32 arg2);
 PropRecord   *get_ptr_obj_pos_list_current_entry(void);
+void          propsDefragRoomProps(void);
 void          chraiGetPropRoomIds(PropRecord *self, s32 *roomids);
 void          chrpropFree(PropRecord *prop);
 void          chrpropDisable(PropRecord *prop);

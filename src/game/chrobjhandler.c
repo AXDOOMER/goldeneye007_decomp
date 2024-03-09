@@ -5794,6 +5794,8 @@ s32 glassCalculateOpacity(coord3d *pos, f32 xludist, f32 opadist, f32 arg3)
 #define AUTOGUN_P2_MAXSPEED 0.00034906587f
 
 // https://decomp.me/scratch/c9RKZ 65.91%
+// PD name: objTick
+// Address: 7F0452D4
 s32 object_interaction(struct PropRecord *arg0)
 {
     struct coord3d sp694;
