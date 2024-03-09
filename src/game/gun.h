@@ -274,6 +274,9 @@ struct EarWhistleSounds {
 };
 
 extern CasingRecord g_Casings[20];
+extern u32 size_item_buffer[];
+extern WeaponStats sniperrifle_stats;
+extern WeaponStats camera_stats;
 
 f32 bondwalkItemGetForceOfImpact(ITEM_IDS item);
 
