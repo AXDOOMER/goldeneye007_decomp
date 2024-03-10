@@ -56,8 +56,6 @@ fi
 
 OLDIFS=$IFS
 IFS=","
-MATCHING=1
-NOFILES=1
 TMP=$(mktemp /tmp/ge_test_files.XXXXXX)
 TMP2=$(mktemp /tmp/ge_test_files.XXXXXX)
 
@@ -73,19 +71,17 @@ do
         EXPECTED=$(echo "${MD5}" | tr '[:upper:]' '[:lower:]')
         FILENAME=$(echo $FILE | sed -E -e 's/build\/[uje]\/src\//src\//g;');
         VERSION=$(echo $FILE | sed -E -e 's/build\/([uje])\/.*/\1/g;');
-        if [ ! -f "build/${VERSION}-match/${FILENAME}" ]; then
-            NOFILES=0
-        fi
 
         if [ "${ACTUAL}" != "${EXPECTED}" ] ; then
-            MATCHING=0
             #if [ "${SECTION}" == ".data" ] || [ "${SECTION}" == ".rodata" ] ; then
             #    echo -e "\033[93m\033[1A";
             #fi
-            echo "checksums differ, section'${SECTION}', file: '${FILE}'.\nComparing Files..."
+            echo "checksums differ, section'${SECTION}', file: '${FILE}'."
+            echo "Comparing Files..."
+            echo "Original                              | New"
             if [ -f "build/${VERSION}-match/${FILENAME}" ]; then
                 mips-linux-gnu-objcopy -j "${SECTION}" -O binary "build/${VERSION}-match/${FILENAME}" "${TMP2}"
-                (diff -y --suppress-common-lines <(xxd -c8 $TMP) <(xxd -c8 $TMP2) && echo -e "\033[92mFiles Identical!") || \
+                (diff -y -W 80 --suppress-common-lines <(xxd -c8 $TMP2) <(xxd -c8 $TMP) && echo -e "\033[92mFiles Identical!") || \
                 (\
                     echo -e "\033[91mDifference Found, Dumping assembly! (${FILE}New.mips)" && touch "${FILE}New.mips" &&  touch "${FILE}Match.mips" &&  \
                     mips-linux-gnu-objdump --all-headers --disassemble --debugging --source --full-contents --line-numbers "build/${VERSION}-match/${FILENAME}" > "${FILE}Match.mips" && \
@@ -94,7 +90,6 @@ do
             else
                 echo -e "\033[93mNo Previously matching files to compare... Please run this test again on a matching build to generate."
             fi
-
 
             if [ ${CONTINUE_ON_ERROR} -eq 0 ] ; then
                 IFS=$OLDIFS
@@ -107,14 +102,9 @@ do
                 echo -e "\033[92mpass: section'${SECTION}' ${FILE}"
             fi
         fi
-        echo -e "\033[m\033[1A"
+        echo -e -n "\033[m"
     fi
 done < "${SRC}"
-
-if [ ${MATCHING} -eq 1 ] && [ ${NOFILES} -eq 1 ] ; then
-    cp -r build/${VERSION}/* build/${VERSION}-match
-    ./make_test_files_basis.sh "ge007.${VERSION}-test_basis.csv" -v ${VERSION}
-fi
 
 IFS=$OLDIFS
 rm -f "${TMP}"

@@ -193,7 +193,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/token.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/token.o
 517c562ef69db9b195e72398e86df2e8,.data,build/u/src/token.o
 a42d56e2d5c450108bc25059309dde97,.rodata,build/u/src/token.o
-f81bfd37943c8e95ff91746c28512459,.text,build/u/src/usb.o
+88df3b22747a0669007e5dc45395eb36,.text,build/u/src/usb.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/usb.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/usb.o
 4a00906b1a7d23084c88deff78bc4925,.data,build/u/src/usb.o
@@ -211,12 +211,12 @@ d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/alloc_window_pieces.o
 68a7438bd0d19d37c608750626578bdb,.text,build/u/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/bg.o
-93fe81e18003cc3f6f539ee109b07482,.data,build/u/src/game/bg.o
+bd127dd2e420266918d4e0fc29c3aec1,.data,build/u/src/game/bg.o
 acbd92f46e58f485783dd7990993e722,.rodata,build/u/src/game/bg.o
 a147ff55f19da8d2fed990b18129a648,.text,build/u/src/game/bg2.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/bg2.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/bg2.o
+4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/bg2.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/bg2.o
 fe503f7412d15ae04b09165052627104,.text,build/u/src/game/blood_animation.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/blood_animation.o
@@ -453,7 +453,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/indy_comms.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/indy_comms.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/indy_comms.o
 8b739a82297d5b19e4cf48c594c782f7,.rodata,build/u/src/game/indy_comms.o
-72fdafd90bc5656f024847c8c39304e2,.text,build/u/src/game/initBondDATA.o
+1d041d34492b00d9ffc6b8e575235636,.text,build/u/src/game/initBondDATA.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/initBondDATA.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/initBondDATA.o
 f1a3cd21448026b51237816257ec0cd5,.data,build/u/src/game/initBondDATA.o

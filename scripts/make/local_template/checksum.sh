@@ -12,19 +12,21 @@ ${SHA1SUM} -c ge007.${OUTCODE}.sha1
 retVal=$?
 
 if [ $retVal -ne 0 ]; then
-    echo -e "\n\n"
-    echo -e "\033[41m\033[37m                                                                                \033[0m"
-    echo -e "\033[41m\033[37m    ERROR: NOT MATCH!                                                           \033[0m"
-    echo -e "\033[41m\033[37m                                                                                \033[0m"
+    echo -e "\n\n\033[1;41;37m"
+    echo -e "                                                                                "
+    echo -e "                                ERROR: NOT MATCH!                               "
+    echo -e "                                                                                \033[m"
     echo -e "\n\n"
 
     RESPONSE=0
     read -t 5 -p "Do you want to check Source Files (y/n)? " choice
-    case "$choice" in 
+    case "$choice" in
     y|Y ) RESPONSE=1; ;;
     n|N ) RESPONSE=2; ;;
     * ) RESPONSE=3; ;;
     esac
+
+    echo ""
 
     if [ $RESPONSE -eq 1 ]; then
         echo "Please wait while we determine which files are affected..."
@@ -33,11 +35,28 @@ if [ $retVal -ne 0 ]; then
     fi
 
 else
+    echo -e "\n\n\033[1;42;37m"
+    echo -e "                                                                                "
+    echo -e "                                     MATCH!                                     "
+    echo -e "                                                                                \033[m"
     echo -e "\n\n"
-    echo -e "\033[42m\033[37m                                                                                \033[0m"
-    echo -e "\033[42m\033[37m    MATCH!                                                                      \033[0m"
-    echo -e "\033[42m\033[37m                                                                                \033[0m"
-    echo -e "\n\n"
+
+    RESPONSE=0
+    read -t 5 -p "Do you want to update the matching hashtable (recommended but slow) (y/n)?" choice
+    case "$choice" in
+    y|Y ) RESPONSE=1; ;;
+    n|N ) RESPONSE=2; ;;
+    * ) RESPONSE=3; ;;
+    esac
+
+    echo ""
+
+    if [ $RESPONSE -eq 1 ]; then
+        echo "Please wait while we rebuild the hashtable..."
+        cp -r build/${OUTCODE}/* build/${OUTCODE}-match
+        # scripts file relative to root source control directory
+        ./scripts/make_test_files_basis.sh -v ${OUTCODE} -o scripts/ge007.${OUTCODE}-test_basis.csv
+    fi
 fi
 
 exit $retVal

@@ -247,7 +247,7 @@ build_tools:
 prerequisites: print_info create_directories build_tools
 
 checksum:
-	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)"
+	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)" "$(BUILD_DIR)"
 
 all: prerequisites $(APPROM) checksum
 	@echo "Rom File Generated in Build Directory."
@@ -405,8 +405,8 @@ help:
 include include/make/cmd.make
 
 
-test:
-	@$(SHA1SUM) --quiet -c checksums.txt && ./test_files.sh -c -v -i ge007.$(OUTCODE)-test_basis.csv
+test: checksum
+
 
 ifneq ($(filter-out context,$(MAKECMDGOALS)),)
  CONTEXTFILE := $(filter-out context ,$(MAKECMDGOALS))
