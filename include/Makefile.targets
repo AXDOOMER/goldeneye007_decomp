@@ -1,7 +1,6 @@
 all: $(APPROM)
 	@if [ -f ge007.$(OUTCODE).sha1 ]; then \
-		$(SHA1SUM) -c ge007.$(OUTCODE).sha1 || (echo "\n    ERROR!\n\n\n    NOT MATCH!\n\n" && exit 1); \
-		echo "\n    MATCH!\n\n"; \
+		$(SHA1SUM) -c ge007.$(OUTCODE).sha1 && echo "\n    MATCH!\n\n" || (echo "\n    ERROR!\n\n\n    NOT MATCH!\n\n" && exit 1); \
 	fi
 	@echo "\nRom File Generated in Build Directory. \n\n"
 
