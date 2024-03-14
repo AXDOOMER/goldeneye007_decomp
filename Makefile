@@ -246,18 +246,6 @@ build_tools:
 
 prerequisites: print_info create_directories build_tools
 
-checksum:
-	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)" "$(BUILD_DIR)"
-
-#all: prerequisites $(APPROM) .WAIT checksum
-#	@echo "Rom File Generated in Build Directory."
-
-.WAIT:
-pp2: prerequisites
-pp1: pp2 .WAIT $(APPROM)
-all: pp1 .WAIT checksum
-	@echo "Rom File Generated in Build Directory."
-
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
@@ -284,7 +272,6 @@ $(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
 
 #Compress Obseg
 $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
-
 
 
 #Build C files in src/
@@ -346,12 +333,17 @@ $(APPROM):	$(APPBIN)
 	@echo "Finalizing ROM"
 	$(N64CKSUM) $< $@
 
+checksum: $(APPROM)
+	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)" "$(BUILD_DIR)"
+
+all_p1: prerequisites
+all: all_p1 $(APPROM) checksum
+	@echo "Rom File Generated in Build Directory."
+
 .PRECIOUS: %.bin  %.o
 
 
 ## Phony Recipes - Get Make to do something ##
-
-
 .PHONY: prerequisites all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
 
 .NOTPARALLEL: print_info create_directories
