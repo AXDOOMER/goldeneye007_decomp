@@ -249,9 +249,14 @@ prerequisites: print_info create_directories build_tools
 checksum:
 	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)" "$(BUILD_DIR)"
 
-all: prerequisites $(APPROM) checksum
-	@echo "Rom File Generated in Build Directory."
+#all: prerequisites $(APPROM) .WAIT checksum
+#	@echo "Rom File Generated in Build Directory."
 
+.WAIT:
+pp2: prerequisites
+pp1: pp2 .WAIT $(APPROM)
+all: pp1 .WAIT checksum
+	@echo "Rom File Generated in Build Directory."
 
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
@@ -349,7 +354,7 @@ $(APPROM):	$(APPBIN)
 
 .PHONY: prerequisites all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
 
-.NOTPARALLEL: checksum
+.NOTPARALLEL: print_info create_directories
 
 commonclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map
