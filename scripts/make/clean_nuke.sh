@@ -21,7 +21,7 @@ for cc in ${ALLOWED_COUNTRYCODE[@]}; do
 done
 
 echo "deleting bin / rsp / asp"
-echo  "rm -r -f -d bin/"
+rm -r -f -d bin/
 rm -r -f -d assets/images/split/
 
 # delete binary files according to current source control directory structure.
