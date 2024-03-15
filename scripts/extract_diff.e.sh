@@ -25,7 +25,7 @@ if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
         else
             echo "skip $name"
         fi
-    done < filediff.e.csv
+    done < scripts/filediff.e.csv
     #filediff.e.csv should follow pattern of:
     #offset,size,name,compressed,extract
     #formatting matters, no comments, no extra lines, unix line endings only
