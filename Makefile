@@ -11,7 +11,6 @@ IDO_RECOMP := YES
 VERBOSE := 2
 # If COMPARE is 1, check the output sha1sum when building 'all', and if fail to match
 # then compare ELF sections to known md5 checksums.
-# If compare is 2, it will just compare the sha1sum.
 COMPARE := 1
 
 # Include Terminal Codes for colourising text.
@@ -121,7 +120,12 @@ ALLOWED_COUNTRYCODE := u e j
 BUILD_DIR_BASE := build
 # BUILD_DIR is the location where all build artefacts are placed
 BUILD_DIR      := $(BUILD_DIR_BASE)/$(OUTCODE)
+
+# this file references variables defined above: BUILD_DIR, RZ_COMP
+# this file defines and builds $(MUSIC_RZ_FILES)
 include assets/Makefile.obseg
+# this file references variables defined above: BUILD_DIR, RZ_COMP, COUNTRYCODE, LD, CC, CFLAGS, OBJCOPY, ConvertAIPRINT, OPTIMIZATION
+# this file defines and builds OBSEGMENT, BG_SEG_FILES, BRIEF_RZ_FILES, CHR_RZ_FILES, GUN_RZ_FILES, PROP_RZ_FILES, ,SETUP_BUILD_FILES, STAN_BUILD_FILES, TEXT_RZ_FILES
 include assets/Makefile.music
 
 ## Collect Objects ##
@@ -199,10 +203,10 @@ endif
 CFLAGS := -Wab,-r4300_mul -non_shared -Olimit 2000 -G 0 -Xcpluscomm $(CFLAGWARNING) $(WOFF) $(INCLUDE) $(MIPSISET) $(LCDEFS) -DTARGET_N64
 
 LD := $(TOOLCHAIN)ld
-LD_SCRIPT := build/ge007.$(OUTCODE).ld
+LD_SCRIPT := $(BUILD_DIR)/ge007.$(OUTCODE).ld
 
 # --no-warn-mismatch is needed to link -mips3 object files (some libultra math) with the regular files compiled with -mips2
-LDFLAGS := -T $(LD_SCRIPT) -Map build/ge007.$(OUTCODE).map --no-warn-mismatch
+LDFLAGS := -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.$(OUTCODE).map --no-warn-mismatch
 
 AS := $(TOOLCHAIN)as
 ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
@@ -229,27 +233,25 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 
 ## Build Recipes ##
 
-# this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
-# this file defines $(ULTRAOBJECTS)
-include src/libultrare/Makefile.libultrare
-
-print_info:
-	$(info VERSION=$(VERSION))
-	$(info Building $(VERSION) ROM...)
-
-create_directories:
-	scripts/make/create_directories.sh "$(BUILD_DIR)" "$(COUNTRYCODE)"
-
-build_tools:
-	$(info Building tools...)
-	scripts/make/build_tools.sh "$(MAKE)"
-
-prerequisites: print_info create_directories build_tools
-
+# Dont delete intermediate files from these targets on make completion.
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
+
+# Dont delete these intermediate targets on make cancelation.
+.PRECIOUS: %.bin  %.o
+
+# Run the following targets sequentialy in this order (unnamed targets will still run in parallel)
+.NOTPARALLEL: print_info create_directories $(APPROM) checksum
+
+# Phony Recipes - These targets are not files, Get Make to do something
+.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context textures
+
+
+# this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
+# this file defines and builds $(ULTRAOBJECTS)
+include src/libultrare/Makefile.libultrare
 
 # Build RSP
 $(BUILD_DIR)/rsp/%.bin: rsp/*.s
@@ -319,7 +321,7 @@ endif
 
 #Link Files
 $(APPELF): $(RSPOBJECTS) $(ULTRAOBJECTS) $(HEADEROBJECTS) $(OBSEG_RZ) $(BUILD_DIR)/$(OBSEGMENT) $(MUSIC_RZ_FILES) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) $(ROMOBJECTS) $(ASSET_DATAOBJECTS) $(ROMOBJECTS2) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(OBSEG_OBJECTS) ge007.ld
-	cpp $(LDFILEOPTS) -P ge007.ld -o build/ge007.$(OUTCODE).ld
+	cpp $(LDFILEOPTS) -P ge007.ld -o $(BUILD_DIR)/ge007.$(OUTCODE).ld
 	@echo "Linking Files into ELF"
 	$(LD) $(LDFLAGS) -o $@
 
@@ -333,20 +335,30 @@ $(APPROM):	$(APPBIN)
 	@echo "Finalizing ROM"
 	$(N64CKSUM) $< $@
 
+
+## Phony Recipes below - Get Make to do something ##
+
+print_info:
+	$(info VERSION=$(VERSION))
+	$(info Building $(VERSION) ROM...)
+
+create_directories:
+	scripts/make/create_directories.sh "$(BUILD_DIR)" "$(COUNTRYCODE)"
+
+build_tools:
+	$(info Building tools...)
+	scripts/make/build_tools.sh "$(MAKE)"
+
+prerequisites: print_info create_directories build_tools
+
 checksum: $(APPROM)
+ifeq ($(COMPARE), 1)
 	scripts/make/checksum.sh "$(SHA1SUM)" "$(OUTCODE)" "$(BUILD_DIR)"
+endif
 
 all_p1: prerequisites
 all: all_p1 $(APPROM) checksum
 	@echo "Rom File Generated in Build Directory."
-
-.PRECIOUS: %.bin  %.o
-
-
-## Phony Recipes - Get Make to do something ##
-.PHONY: prerequisites all default commonclean setupclean stanclean codeclean dataclean clean nuke cmdbuidler test help context textures
-
-.NOTPARALLEL: print_info create_directories
 
 commonclean:
 	rm -f $(APPELF) $(APPROM) $(APPBIN) $(BUILD_DIR)/ge007.$(OUTCODE).map

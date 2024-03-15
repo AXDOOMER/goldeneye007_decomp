@@ -53,7 +53,7 @@ in `assets/obseg/ob_seg.s` and music is bundled in `assets/music/music.s`.
 
 Once all code and assets are compiled into .o files, these are combined into one .elf file. The layout of the object files
 is given by the `ge007.*.ld` files in the root of the project. For a list of individual methods, assets, and files see
-the map file in `build/ge007.*.map` (where `*` is the country code, `u`, `e`, or `j`).
+the map file in `build/[uje]/ge007.*.map` (where `*` is the country code, `u`, `e`, or `j`).
 
 The toolchain `-objcopy` program is then used to create the bundled .bin of the entire ROM.
 

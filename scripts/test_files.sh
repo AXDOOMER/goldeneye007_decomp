@@ -16,7 +16,7 @@ CONTINUE_ON_ERROR=0
 VERBOSE=0
 
 usage() {
-    echo "checks md5s generated from make_test_files_basis.sh"
+    echo "checks md5s generated from make/build_hashtable.sh"
     echo ""
     echo "$0 usage:"
     echo ""

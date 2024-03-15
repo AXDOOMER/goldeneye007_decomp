@@ -11,6 +11,6 @@ if [ $result = "scripts" ] ; then
     cd ..
 fi
 
-./scripts/make_test_files_basis.sh -v u -o scripts/ge007.u-test_basis.csv
-./scripts/make_test_files_basis.sh -v j -o scripts/ge007.j-test_basis.csv
-./scripts/make_test_files_basis.sh -v e -o scripts/ge007.e-test_basis.csv
+./scripts/make/build_hashtable.sh -v u -o scripts/ge007.u-test_basis.csv
+./scripts/make/build_hashtable.sh -v j -o scripts/ge007.j-test_basis.csv
+./scripts/make/build_hashtable.sh -v e -o scripts/ge007.e-test_basis.csv
