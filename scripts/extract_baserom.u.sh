@@ -93,4 +93,4 @@ if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     #and always end with a newline
 fi
 mkdir -p ./bin
-./extract_asp_gsp_rsp.sh
+./scripts/extract_asp_gsp_rsp.sh

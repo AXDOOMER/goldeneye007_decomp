@@ -48,10 +48,10 @@ jobs:
         run: wget -O baserom.j.z64 $FILE_JP
 
       - name: Extract US Assets
-        run: ./extract_baserom.u.sh
+        run: ./scripts/extract_baserom.u.sh
 
       - name: Extract JP Assets
-        run: ./extract_diff.j.sh
+        run: ./scripts/extract_diff.j.sh
 
       - name: Make JP 
         run: make all -j IDO_RECOMP=YES VERSION=JP VERBOSE=1

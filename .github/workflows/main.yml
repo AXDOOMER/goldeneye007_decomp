@@ -69,7 +69,7 @@ jobs:
 
       - name: Extract US Assets
         #if: steps.cache-assets.outputs.cache-hit != 'true'
-        run: ./extract_baserom.u.sh
+        run: ./scripts/extract_baserom.u.sh
       
       - name: Make US 
         run: make all -j IDO_RECOMP=YES VERSION=US VERBOSE=1
