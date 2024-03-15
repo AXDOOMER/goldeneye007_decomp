@@ -51,7 +51,7 @@ jobs:
         run: ./scripts/extract_baserom.u.sh
 
       - name: Extract EU Assets
-        run: ./scriptsextract_diff.e.sh
+        run: ./scripts/extract_diff.e.sh
 
       - name: Make EU 
         run: make all -j IDO_RECOMP=YES VERSION=EU VERBOSE=1
