@@ -8,7 +8,7 @@ usage() {
     echo ""
     echo "$0 -v u [-o results_file]"
     echo ""
-    echo "    -o        output filename. Optional. Defaults to make_test_files_basis_out"
+    echo "    -o        output filename. Optional. Defaults to full_hashtable_{version}.csv"
     echo "    -v        version. Supported options are: US,u, JP,j, EU,e"
     echo ""
     exit 0;
@@ -31,7 +31,7 @@ while getopts "o:hv:" arg; do
         elif [ "${OPTARG,,}" = "e" ]; then
             COUNTRY_CODE="e"
         fi
-        
+
         ARG_VERSION="${OPTARG}"
       ;;
     o) # out file
@@ -50,8 +50,8 @@ then
     exit 1
 fi
 
-if [ "${OUTFILE}" = "" ] ; then 
-    OUTFILE="make_test_files_basis_out"
+if [ "${OUTFILE}" = "" ] ; then
+    OUTFILE="full_hashtable_${version}.csv"
 fi
 
 TMP=$(mktemp /tmp/ge_test_files.XXXXXX)
@@ -68,19 +68,19 @@ touch "${OUTFILE}"
 for FILE in build/${COUNTRY_CODE}/src/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .text -O binary "${FILE}" "${TMP}"
     printf "%s,.text,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .code -O binary "${FILE}" "${TMP}"
     printf "%s,.code,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -88,19 +88,19 @@ done
 for FILE in build/${COUNTRY_CODE}/src/game/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .text -O binary "${FILE}" "${TMP}"
     printf "%s,.text,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .code -O binary "${FILE}" "${TMP}"
     printf "%s,.code,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -108,13 +108,13 @@ done
 for FILE in build/${COUNTRY_CODE}/assets/obseg/bg/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -122,13 +122,13 @@ done
 for FILE in build/${COUNTRY_CODE}/assets/obseg/brief/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -136,13 +136,13 @@ done
 for FILE in build/${COUNTRY_CODE}/assets/obseg/setup/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -150,13 +150,13 @@ done
 for FILE in build/${COUNTRY_CODE}/assets/obseg/stan/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done
@@ -164,13 +164,13 @@ done
 for FILE in build/${COUNTRY_CODE}/assets/obseg/text/*.o
 do
     echo "adding ${FILE}"
-    
+
     mips-linux-gnu-objcopy -j .bss -O binary "${FILE}" "${TMP}"
     printf "%s,.bss,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .data -O binary "${FILE}" "${TMP}"
     printf "%s,.data,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
-    
+
     mips-linux-gnu-objcopy -j .rodata -O binary "${FILE}" "${TMP}"
     printf "%s,.rodata,%s\n" $(md5sum -b "${TMP}" | cut -c -32) "${FILE}" >> "${OUTFILE}"
 done

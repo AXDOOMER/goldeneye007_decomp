@@ -85,8 +85,8 @@
 
  //### AI commands with CHR_NUM argument
 ==============================================================================
- Most commands with "chr" in the name use a CHR_NUM argument. For the most 
- part, this can be used with any loaded chr number and it will work fine.  
+ Most commands with "chr" in the name use a CHR_NUM argument. For the most
+ part, this can be used with any loaded chr number and it will work fine.
  There is however one exception to this and that is the special CHR_XXX ID :
  CHR_BOND_CINEMA.
  This ID only works when bond has a third person model assigned (intro/exit
@@ -201,7 +201,7 @@
             |'-.`
             |    `-
          Z+ ```````` N 0
- 
+
 
      10x10 Grid showing angles at distance from origin (Chr)
 
@@ -246,6 +246,7 @@
 #define AI_LIST_CHR_START 0x0401
 #define AI_LIST_OBJ_START 0x1000
 
+// Print Helpful Compile-time error messages
 #if defined(__INTELLISENSE__)
 #    define AI_ERR_SUB (GAILIST_DEAD_AI)
 #    define AI_ERR_NOTSUB (GAILIST_DEAD_AI)
@@ -266,7 +267,7 @@
 
 /**
  * Is the called AI List a subroutine (will it return)
- * Per Setup Subroutines should be added to SETUPSUBROUTINES at the top of the 
+ * Per Setup Subroutines should be added to SETUPSUBROUTINES at the top of the
  * setup.
  * eg
  * #define SETUPSUBROUTINES(ID) (ID == ACTIVATE_OBJECT) |\
@@ -292,16 +293,16 @@ typedef enum GAILISTID
     GAILIST_AIM_AT_BOND,
 
     /**
-      Dead or Removed AI. 
+      Dead or Removed AI.
       Use when AI has no more to do (or use YIELD_FOREVER)
       @return No Return - AI List can only be changed by a 3rd party via SetChrAiList
     */
     GAILIST_DEAD_AI,
 
     /**
-      Stand Guard and Kill Time or patrol (Not typicaly used for patrolling). 
-      While killing time, play Idle animations 
-      On detecting Bond, Send a clone OR Run to Bond and Attack. 
+      Stand Guard and Kill Time or patrol (Not typicaly used for patrolling).
+      While killing time, play Idle animations
+      On detecting Bond, Send a clone OR Run to Bond and Attack.
       This AI List is used by nearly all guards either as default or as a result
       of detecting Bond or finnishing their assigned behaivior.
       @return No Return - AI List can only be changed by a 3rd party via SetChrAiList
@@ -310,7 +311,7 @@ typedef enum GAILISTID
 
     /**
       Play one random idle animation
-      @return to caller if called with CALL 
+      @return to caller if called with CALL
       -or-
       return to List set by SetReturnAiList - If not set will crash
      */
@@ -318,7 +319,7 @@ typedef enum GAILISTID
 
     /**
       Bash that Keyboard once with a random animation
-      @return to caller if called with CALL 
+      @return to caller if called with CALL
       -or-
       return to List set by SetReturnAiList - If not set will crash
      */
@@ -326,7 +327,7 @@ typedef enum GAILISTID
 
     /**
       Stand Guard Statically (No Clones, No animations) or patrol.
-      On detecting Bond (sight/near-miss only), Act like a Standard Guard. 
+      On detecting Bond (sight/near-miss only), Act like a Standard Guard.
       @return to Standard Guard
      */
     GAILIST_SIMPLE_GUARD_DEAF,
@@ -340,7 +341,7 @@ typedef enum GAILISTID
     GAILIST_ATTACK_BOND,
 
     /**
-      Stand Guard Statically (No Clones, No animations) or patrol (Typical use of this type). 
+      Stand Guard Statically (No Clones, No animations) or patrol (Typical use of this type).
       On detecting Bond, Act like a Standard Guard.
       @return to Standard Guard
      */
@@ -355,8 +356,8 @@ typedef enum GAILISTID
     GAILIST_RUN_TO_BOND,
 
     /**
-      Stand Guard Statically (No Clones, No animations) or patrol. 
-      On detecting Bond, Run to padpreset1 and activate alarm. 
+      Stand Guard Statically (No Clones, No animations) or patrol.
+      On detecting Bond, Run to padpreset1 and activate alarm.
       Act like a Standard Guard thereafter
       @return to Standard Guard
      */
@@ -563,8 +564,56 @@ IF_VA(NOT(IS_EMPTY(CASE_CONTENT2)))(IF_VA(NOT(IS_EMPTY(CASE_CONTENT3)))(Label(lb
 IF_VA(NOT(IS_EMPTY(CASE_CONTENT1)))(IF_VA(NOT(IS_EMPTY(CASE_CONTENT2)))(Label(lblNext)) CASE0 (CASE_VAL0,lblNext) EXPAND_ARGS_STACK(CASE_CONTENT1)(lblDone))\
 IF_VA(NOT(IS_EMPTY(CASE_CONTENT0)))(IF_VA(NOT(IS_EMPTY(CASE_CONTENT1)))(Label(lblNext))                           EXPAND_ARGS_STACK(CASE_CONTENT0)(lblDone) \
 Label(lblDone))
- 
- 
+
+ /**
+   Simple AND Statement.
+   Test should separate Command from value.
+   Empty Test is equivelant to a switch default:.
+   Limited to 16 compares.
+   Format: AND(Fail_Label,
+                  TEST_COMMAND, TEST_VALUE,
+                  TEST_COMMAND, TEST_VALUE,...)
+                do stuff
+            Label(FAIL)
+                do stuff
+ */
+#define AND(FAIL_LBL,\
+               CASE0, CASE_VAL0, \
+               CASE1, CASE_VAL1, \
+               CASE2, CASE_VAL2, \
+               CASE3, CASE_VAL3, \
+               CASE4, CASE_VAL4, \
+               CASE5, CASE_VAL5, \
+               CASE6, CASE_VAL6, \
+               CASE7, CASE_VAL7, \
+               CASE8, CASE_VAL8, \
+               CASE9, CASE_VAL9, \
+               CASEA, CASE_VALA, \
+               CASEB, CASE_VALB, \
+               CASEC, CASE_VALC, \
+               CASED, CASE_VALD, \
+               CASEE, CASE_VALE, \
+               CASEF, CASE_VALF)\
+IF_VA(NOT(IS_EMPTY(CASEF)))(0}; Error: And Limited to 15 elements                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \
+                                     /*This is here to stop the spread of errors*/  u8 CASEF[] = {)\
+IF_VA(NOT(IS_EMPTY(CASE_VALF)))(                                                    CASEE (CASE_VALE,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VALE)))(IF_VA(NOT(IS_EMPTY(CASE_VALF)))(BREAK(FAIL_LBL) Label(lblNext)) CASED (CASE_VALD,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VALD)))(IF_VA(NOT(IS_EMPTY(CASE_VALE)))(BREAK(FAIL_LBL) Label(lblNext)) CASEC (CASE_VALC,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VALC)))(IF_VA(NOT(IS_EMPTY(CASE_VALD)))(BREAK(FAIL_LBL) Label(lblNext)) CASEB (CASE_VALB,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VALB)))(IF_VA(NOT(IS_EMPTY(CASE_VALC)))(BREAK(FAIL_LBL) Label(lblNext)) CASEA (CASE_VALA,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VALA)))(IF_VA(NOT(IS_EMPTY(CASE_VALB)))(BREAK(FAIL_LBL) Label(lblNext)) CASE9 (CASE_VAL9,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL9)))(IF_VA(NOT(IS_EMPTY(CASE_VALA)))(BREAK(FAIL_LBL) Label(lblNext)) CASE8 (CASE_VAL8,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL8)))(IF_VA(NOT(IS_EMPTY(CASE_VAL9)))(BREAK(FAIL_LBL) Label(lblNext)) CASE7 (CASE_VAL7,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL7)))(IF_VA(NOT(IS_EMPTY(CASE_VAL8)))(BREAK(FAIL_LBL) Label(lblNext)) CASE6 (CASE_VAL6,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL6)))(IF_VA(NOT(IS_EMPTY(CASE_VAL7)))(BREAK(FAIL_LBL) Label(lblNext)) CASE5 (CASE_VAL5,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL5)))(IF_VA(NOT(IS_EMPTY(CASE_VAL6)))(BREAK(FAIL_LBL) Label(lblNext)) CASE4 (CASE_VAL4,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL4)))(IF_VA(NOT(IS_EMPTY(CASE_VAL5)))(BREAK(FAIL_LBL) Label(lblNext)) CASE3 (CASE_VAL3,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL3)))(IF_VA(NOT(IS_EMPTY(CASE_VAL4)))(BREAK(FAIL_LBL) Label(lblNext)) CASE2 (CASE_VAL2,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL2)))(IF_VA(NOT(IS_EMPTY(CASE_VAL3)))(BREAK(FAIL_LBL) Label(lblNext)) CASE1 (CASE_VAL1,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL1)))(IF_VA(NOT(IS_EMPTY(CASE_VAL2)))(BREAK(FAIL_LBL) Label(lblNext)) CASE0 (CASE_VAL0,lblNext) )\
+IF_VA(NOT(IS_EMPTY(CASE_VAL0)))(IF_VA(NOT(IS_EMPTY(CASE_VAL1)))(BREAK(FAIL_LBL) Label(lblNext))                           )
+
 #include "aicommands2.h"
 
 #if 1

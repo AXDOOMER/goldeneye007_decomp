@@ -1,3 +1,0 @@
-# create build directories
-$(shell mkdir -p $(BUILD_DIR))
-$(foreach subdir,$(BUILD_SUB_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(subdir)))

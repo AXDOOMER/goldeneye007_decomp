@@ -27,7 +27,7 @@ void alloc_init_GUARDdata_entries(s32 count)
 {
     s32 i;
     
-    g_NumChrSlots = count + 0xA;
+    g_NumChrSlots = count + 10; //special guards?
 
     g_ChrSlots = mempAllocBytesInBank(align_addr_zero(g_NumChrSlots * sizeof(ChrRecord)), MEMPOOL_STAGE);
     for(i = 0; g_NumChrSlots > i; i++)

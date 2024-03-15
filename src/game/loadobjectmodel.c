@@ -315,9 +315,9 @@ void setupUpdateObjectRoomPosition(ObjectRecord *obj)
 /**
  * Address 0x7F056EA0.
 */
-struct ObjectRecord *setupCommandGetObject(s32 stageID, s32 index)
+ ObjectRecord *setupCommandGetObject(s32 stageID, s32 index)
 {
-    struct PropDefHeaderRecord *obj;
+     PropDefHeaderRecord *obj;
 
     obj = setupGetPtrToCommandByIndex(index);
 

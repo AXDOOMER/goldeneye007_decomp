@@ -49,7 +49,7 @@ done
 if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
     echo "Processing Files"
     if [ -x tools/extractor/extractor ]; then
-        tools/extractor/extractor "$BASEROM" filelist.u.csv
+        tools/extractor/extractor "$BASEROM" scripts/filelist.u.csv
     else
         while IFS=, read -r offset size name compressed extract
         do
@@ -67,7 +67,7 @@ if [ "$DOALL" == "1" ] || [ $1 == 'files' ]; then
             else
                 echo "skip $name"
             fi
-        done < filelist.u.csv
+        done < scripts/filelist.u.csv
     fi
     #filelist.u.csv should follow pattern of:
     #offset,size,name,compressed,extract
@@ -93,4 +93,4 @@ if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     #and always end with a newline
 fi
 mkdir -p ./bin
-./extract_asp_gsp_rsp.sh
+./scripts/extract_asp_gsp_rsp.sh

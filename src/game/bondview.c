@@ -96,7 +96,7 @@
 
 
 #if defined(VERSION_EU)
-    #define TANKUPDATEROTATION_SCALE 0.904799997807f      
+    #define TANKUPDATEROTATION_SCALE 0.904799997807f
     #define TANKTURRETVERTICALANGLERELATED_SCALE 0.928399980068f
     #define TANK_UNKD0_SCALE 0.79960000515f
     #define CHR_OBJ_ACCEL_SPEED_FACTOR 0.6f
@@ -391,7 +391,7 @@ f32 D_80036468 = 0.0f;
 
 /**
  * Argument to sinf,cosf.
- * 
+ *
  * Address 0x8003646C.
  */
 f32 g_TankTurretVerticalAngle = 0;
@@ -461,7 +461,7 @@ struct SetupIntroCamera *ptr_random06cam_entry = NULL;
  * Flag to toggle invisibility cheat.
  * 1 = visible to guards
  * 0 = not visible to guards
- * 
+ *
  * Address 0x800364C4.
  */
 s32 g_VisibleToGuardsFlag = 1;
@@ -526,11 +526,11 @@ WeaponObjRecord dummy_08_pp7_obj[] = {
     0x00,
     0x08,
     PROP_CHRWPPK,
-    0x4000, 
-    0x00000000, 
+    0x4000,
     0x00000000,
-    NULL, 
-    NULL, 
+    0x00000000,
+    NULL,
+    NULL,
     {
         1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
@@ -539,9 +539,9 @@ WeaponObjRecord dummy_08_pp7_obj[] = {
     },
     {0.0f, 0.0f, 0.0f},
     {0x00000000},
-    NULL, 
     NULL,
-    0.0f, 
+    NULL,
+    0.0f,
     1000.0f,
     {0xff, 0xff, 0xff, 0x00},
     0xff,
@@ -617,7 +617,23 @@ s32 D_80036834 = 0;
 //D:80036838
 s32 D_80036838 = 0;
 //D:8003683C
-struct unk_joint_list D_8003683C = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData D_8003683C = {NULL,
+                              TRUE,
+                              0x00000003,
+                              NULL,
+                              NULL,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              {0, 0, 0, 0},
+                              {0, 0, 0, 0},
+                              CULLMODE_BOTH};
+
 //D:8003687C
 s32 D_8003687C = 0;
 
@@ -892,7 +908,7 @@ void transform3DCoordinatesWithAngle(coord3d *in, coord3d *out, f32 value1, f32 
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x7F078258.
  */
 void transform3DCoordinatesWithAngleAndValue(coord3d *in, coord3d *out, f32 angle, f32 value)
@@ -1577,7 +1593,7 @@ void currentPlayerSetField00(s32 value) {
  * Compares current player position to parameters. If different, sets current
  * player position values to parameter values.
  * Also updates related room pointer.
- * 
+ *
  * Address 0x7F079A60.
  */
 void bondviewSetCurrentPlayerPosition(coord3d *pos, coord3d *pos2, coord3d *offset, StandTile *tile, coord3d *stan_walk_start)
@@ -1793,7 +1809,7 @@ void solo_char_load(void)
             p_bodyEntryHeader = p_bodyEntry->header;
 
             pBody = p_bodyHeader;
-            
+
             p_bodyHeader->RootNode = p_bodyEntryHeader->RootNode;
             p_bodyHeader->Skeleton = p_bodyEntryHeader->Skeleton;
             p_bodyHeader->Switches = p_bodyEntryHeader->Switches;
@@ -1802,7 +1818,7 @@ void solo_char_load(void)
             p_bodyHeader->unk14 = p_bodyEntryHeader->unk14;
             p_bodyHeader->Textures = p_bodyEntryHeader->Textures;
             p_bodyHeader->isLoaded = p_bodyEntryHeader->isLoaded;
-            
+
             p_modelEntry = p_bodyEntry;
             load_object_fill_header(p_bodyHeader, p_bodyEntry->filename, bodyBuffer, bodyBufSize, &texPool);
 
@@ -1821,7 +1837,7 @@ void solo_char_load(void)
             p_headHeader->unk14 = p_headEntryHeader->unk14;
             p_headHeader->Textures = p_headEntryHeader->Textures;
             p_headHeader->isLoaded = p_headEntryHeader->isLoaded;
-            
+
             totalsize = bodyalignedSizeRemainPlus0x5F;
             pHead = p_headHeader;
             p_modelEntry = p_headEntry;
@@ -1834,9 +1850,9 @@ void solo_char_load(void)
             modelCalculateRwDataLen(pBody);
             modelCalculateRwDataLen(pHead);
             numRecords = pBody->numRecords + pHead->numRecords + 0xA;
-            
+
             totalsize = ALIGN64_V3((numRecords * 4) + totalsize + 0x3F);
-            
+
             animInit(model, pBody, bodyBuffer + totalsize);
             model->Type = numRecords; //???
             //goto block_46;
@@ -1857,7 +1873,7 @@ void solo_char_load(void)
 //            &c_item_entries[head]->header = pHead;
         }
         g_CurrentPlayer->ptr_char_objectinstance = makeonebody(body, head, pBody, &c_item_entries[head]->header/*pHead maybe?*/, 0, model);
-        
+
         modelSetScale((Model *) g_CurrentPlayer->ptr_char_objectinstance, g_CurrentPlayer->ptr_char_objectinstance->unk14 * 0.97f);
         init_GUARDdata_with_set_values(g_CurrentPlayer->prop, g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos, hRot, g_CurrentPlayer->prop->stan, 0);
         g_CurrentPlayer->prop->type = VIEWER;
@@ -4069,10 +4085,10 @@ void bondviewSetCameraMode(s32 arg0)
 {
     s32 padding;
     s32 padding2;
-    
+
     g_CameraMode = arg0;
     g_CameraAfterCinema = 0;
-    
+
     if (g_CameraMode == CAMERAMODE_INTRO)
     {
         if ((ptr_random06cam_entry != NULL) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
@@ -4085,7 +4101,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
-            bondviewSetCameraMode(CAMERAMODE_SWIRL);            
+            bondviewSetCameraMode(CAMERAMODE_SWIRL);
         }
     }
     else if (g_CameraMode == CAMERAMODE_FADESWIRL)
@@ -4108,12 +4124,12 @@ void bondviewSetCameraMode(s32 arg0)
         f32 ftemp_3;
         f32 ftemp_1;
         struct ChrRecord *temp_v1;
-        
+
         D_8003649C = 0;
         currentPlayerSetFadeColour(0, 0, 0, 1.0f);
         currentPlayerSetFadeFrac(60.0f, 0.0f);
         fogLoadLevelEnvironment(bossGetStageNum(), 0);
-        
+
         if ((g_IntroSwirl != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
         {
             D_800364A4 = 0.0f;
@@ -4134,7 +4150,7 @@ void bondviewSetCameraMode(s32 arg0)
                 ftemp_1,
                 ftemp_3,
                 0.0f);
-            
+
             if (sp78 > 0.0f)
             {
                 modelSetAnimEndFrame(g_CurrentPlayer->ptr_char_objectinstance, sp78);
@@ -4147,7 +4163,7 @@ void bondviewSetCameraMode(s32 arg0)
         }
         else
         {
-            bondviewSetCameraMode(CAMERAMODE_FP);            
+            bondviewSetCameraMode(CAMERAMODE_FP);
         }
     }
     else if (g_CameraMode == CAMERAMODE_FP)
@@ -4162,18 +4178,18 @@ void bondviewSetCameraMode(s32 arg0)
             currentPlayerSetFadeColour(0, 0, 0, 1.0f);
             currentPlayerSetFadeFrac(60.0f, 0.0f);
         }
-        
+
         if (getPlayerCount() >= 2)
         {
             fogLoadLevelEnvironment(bossGetStageNum(), 0);
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 0)
         {
             currentPlayerEquipWeaponWrapper(GUNLEFT, starting_weapon[GUNLEFT]);
             currentPlayerEquipWeaponWrapper(GUNRIGHT, starting_weapon[GUNRIGHT]);
         }
-        
+
         stop_time_flag = 0;
     }
     else if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
@@ -4185,12 +4201,12 @@ void bondviewSetCameraMode(s32 arg0)
         struct coord3d sp48;
         PropRecord *var_a2;
         struct ChrRecord *temp_v1_2;
-        
+
         D_800364A4 = 0.0f;
         D_800364A8 = CAMERAMODE_INTRO;
         currentPlayerSetFadeColour(0, 0, 0, 1.0f);
         currentPlayerSetFadeFrac(60.0f, 0.0f);
-        
+
         if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
             // removed
@@ -4202,14 +4218,14 @@ void bondviewSetCameraMode(s32 arg0)
 
             // struct copy
             g_CurrentPlayer->field_488 = g_CurrentPlayer->previous_collision_info;
-            
+
             g_CurrentPlayer->vv_theta = g_CurrentPlayer->thetadie;
             g_CurrentPlayer->vv_verta = g_CurrentPlayer->vertadie;
             g_CurrentPlayer->prop->pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
             g_CurrentPlayer->prop->pos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
             g_CurrentPlayer->prop->pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
             g_CurrentPlayer->prop->stan = g_CurrentPlayer->field_488.current_tile_ptr;
-            
+
             bondviewApplyVertaTheta();
             bondviewMoveAnimationTick(0, 0, 0);
             bondviewUpdatePlayerCollisionPositionFields();
@@ -4223,17 +4239,17 @@ void bondviewSetCameraMode(s32 arg0)
                 0.0f,
                 0.5f,
                 0.0f);
- 
+
             temp_v1_2 = g_CurrentPlayer->prop->chr;
             temp_v1_2->actiontype = ACT_BONDDIE;
             temp_v1_2->sleep = 0;
             temp_v1_2->chrflags |= 1;
-            
+
             setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
             var_f0 = get_curplay_horizontal_rotation_in_degrees();
             setsubroty(g_CurrentPlayer->ptr_char_objectinstance, var_f0);
         }
-        
+
         if (g_ExplodeTankOnDeathFlag && (g_PlayerTankProp != NULL))
         {
             sp64 = g_PlayerTankProp;
@@ -4260,7 +4276,7 @@ void bondviewSetCameraMode(s32 arg0)
             sp48.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
             var_v1 = g_CurrentPlayer->field_488.current_tile_ptr;
         }
-        
+
         if (pickDeathCameraAngles(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
         {
             if (D_80036510 == 0)
@@ -4268,7 +4284,7 @@ void bondviewSetCameraMode(s32 arg0)
                 musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0.5f);
             }
-            
+
             if ((g_ExplodeTankOnDeathFlag != 0) && (g_PlayerTankProp != NULL))
             {
                 explosionCreate(g_PlayerTankProp, &g_PlayerTankProp->pos, g_PlayerTankProp->stan, 0xD, 0, get_cur_playernum(), g_PlayerTankProp->rooms, 0);
@@ -4285,12 +4301,12 @@ void bondviewSetCameraMode(s32 arg0)
     {
         currentPlayerSetFadeColour(0, 0, 0, 0.0f);
         currentPlayerSetFadeFrac(60.0f, 1.0f);
-    }    
+    }
     else if (g_CameraMode == CAMERAMODE_POSEND)
     {
         solo_char_load();
         g_CurrentPlayer->room_pointer = NULL;
-    }    
+    }
     else if (g_CameraMode == CAMERAMODE_FP_NOINPUT)
     {
         maybe_solo_intro_camera_handler();
@@ -4299,14 +4315,14 @@ void bondviewSetCameraMode(s32 arg0)
     else if (g_CameraMode == CAMERAMODE_FADE_TO_TITLE)
     {
         s32 var_s0;
-        
+
         for (var_s0 = 0; var_s0 < getPlayerCount(); var_s0++)
         {
             set_cur_player(var_s0);
             currentPlayerSetFadeColour(0, 0, 0, 0.0f);
             currentPlayerSetFadeFrac(60.0f, 1.0f);
         }
-        
+
         set_cur_player(0);
     }
 }
@@ -4620,7 +4636,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
     f32 zero = 0.0f;
     void *p;
     struct PadRecord *setupPad;
-    
+
     if ((g_CameraMode == CAMERAMODE_INTRO) || (g_CameraMode == CAMERAMODE_FADESWIRL))
     {
         if (g_CameraMode == CAMERAMODE_INTRO)
@@ -4645,7 +4661,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                     hudmsgBottomShow(ptr_random06cam_entry->lang20.lang_ptr, ptrFontZurichBoldChars, ptrFontZurichBold);
 #endif
                 }
-                
+
                 if (D_800364A4 > 480.0f)
                 {
                     g_CameraAfterCinema = CAMERAMODE_INTRO;
@@ -4676,11 +4692,11 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         pos2->f[0] = pos->f[0] + (cosf(ptr_random06cam_entry->unk14.fval) * sinf(ptr_random06cam_entry->unk10.fval));
         pos2->f[1] = pos->f[1] + sinf(ptr_random06cam_entry->unk14.fval);
         pos2->f[2] = pos->f[2] - (cosf(ptr_random06cam_entry->unk14.fval) * cosf(ptr_random06cam_entry->unk10.fval));
-        
+
         p = &g_CurrentSetup.pads[ptr_random06cam_entry->unk18];
         setupPad = p;
         *stan = setupPad->stan;
-        
+
         arg6->f[0] = setupPad->pos.f[0];
         arg6->f[1] = setupPad->pos.f[1];
         arg6->f[2] = setupPad->pos.f[2];
@@ -4700,12 +4716,12 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                     {
                         g_MpSwirlRotateSpeed += 0.1f;
                     }
-                    
+
                     if (g_MpSwirlAngleDegrees > 110.0f)
                     {
                         g_MpSwirlRotateSpeed -= 0.1f;
                     }
-                    
+
                     g_MpSwirlAngleDegrees += g_MpSwirlRotateSpeed;
                 }
 #if defined(VERSION_EU)
@@ -4716,7 +4732,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 {
                     g_MpSwirlAngleDegrees = 180.0f;
                 }
-            
+
                 if (g_MpSwirlAngleDegrees > 80.0f)
                 {
                     if (g_MpSwirlDistance > 60.0f)
@@ -4727,9 +4743,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                     {
                         g_MpSwirlForwardSpeed += 0.015f;
                     }
-                    
+
                     g_MpSwirlDistance += g_MpSwirlForwardSpeed;
-                    
+
                     if (g_MpSwirlDistance < 1.0f)
                     {
                         g_MpSwirlDistance = 1.0f;
@@ -4739,7 +4755,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         }
 
         sp38 = ((g_MpSwirlAngleDegrees - g_CurrentPlayer->vv_theta) * M_PI_F) / 180.0f;
-        
+
         pos->f[0] = g_CurrentPlayer->field_488.pos.f[0] + (sinf(sp38) * g_MpSwirlDistance);
         pos->f[1] = g_CurrentPlayer->field_488.pos.f[1] + (g_MpSwirlDistance * 0.08f);
         pos->f[2] = g_CurrentPlayer->field_488.pos.f[2] + (cosf(sp38) * g_MpSwirlDistance);
@@ -4747,9 +4763,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         pos2->f[0] = g_CurrentPlayer->field_488.pos.f[0];
         pos2->f[1] = g_CurrentPlayer->field_488.pos.f[1];
         pos2->f[2] = g_CurrentPlayer->field_488.pos.f[2];
-        
+
         *stan = g_CurrentPlayer->prop->stan;
-        
+
         arg6->f[0] = g_CurrentPlayer->field_488.pos.f[0];
         arg6->f[1] = g_CurrentPlayer->field_488.pos.f[1] + (g_MpSwirlDistance * 0.08f);
         arg6->f[2] = g_CurrentPlayer->field_488.pos.f[2];
@@ -4769,7 +4785,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
     else if (g_CameraMode == CAMERAMODE_SWIRL)
     {
         D_800364A4 += g_GlobalTimerDelta;
-        
+
         while (g_IntroSwirl[D_800364A8].unk18.fval <= D_800364A4)
         {
             if (!(g_IntroSwirl[D_800364A8 + 3].unk04 & 1))
@@ -4784,7 +4800,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 break;
             }
         }
-        
+
         sp30 += (g_IntroSwirl[D_800364A8].unk18.fval - D_800364A4);
 
         for (i = D_800364A8 + 1; !(g_IntroSwirl[i+2].unk04 & 1); i++)
@@ -4807,12 +4823,12 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
 
         if ((sp30 > 60.0f) && (D_8003649C == 0))
         {
-            if ((lvlGetControlsLockedFlag() == 0) 
+            if ((lvlGetControlsLockedFlag() == 0)
                 && (buttons & ~oldbuttons & (A_BUTTON | B_BUTTON | Z_TRIG | START_BUTTON | L_TRIG | R_TRIG)))
             {
                 D_8003649C = 1;
                 currentPlayerSetFadeColour(0, 0, 0, g_CurrentPlayer->colourscreenfrac);
-                        
+
                 if (currentPlayerIsFadeComplete() != 0)
                 {
                     currentPlayerSetFadeFrac(60.0f, 1.0f);
@@ -4831,7 +4847,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             p = &g_CurrentSetup.pads[g_IntroSwirl[D_800364A8].unk1C];
             setupPad = p;
             *stan = setupPad->stan;
-            
+
             arg6->f[0] = setupPad->pos.f[0];
             arg6->f[1] = setupPad->pos.f[1];
             arg6->f[2] = setupPad->pos.f[2];
@@ -4849,7 +4865,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
         {
             D_800364A4 += g_GlobalTimerDelta;
-            
+
             if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
             {
                 if (objecthandlerGetModelField28((Model *) g_CurrentPlayer->ptr_char_objectinstance)
@@ -4862,7 +4878,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
             }
-            
+
             if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
                 && (g_CurrentPlayer->bonddead != 0)
                 && (g_CurrentPlayer->redbloodfinished != 0)
@@ -4875,12 +4891,12 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
         {
             D_800364A4 += g_GlobalTimerDelta;
-            
+
             if (g_CurrentPlayer->colourfadetimemax60 < 0.0f)
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
             }
-            
+
             if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
                 && (g_CurrentPlayer->bonddead != 0)
                 && (g_CurrentPlayer->redbloodfinished != 0)
@@ -4893,7 +4909,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         pos->f[0] = flt_CODE_bss_800799E8.f[0];
         pos->f[1] = flt_CODE_bss_800799E8.f[1];
         pos->f[2] = flt_CODE_bss_800799E8.f[2];
-    
+
         if (dword_CODE_bss_800799F4 == g_CurrentPlayer->prop)
         {
             pos2->f[0] = g_CurrentPlayer->field_3C4;
@@ -4906,9 +4922,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             pos2->f[1] = dword_CODE_bss_800799F4->pos.f[1];
             pos2->f[2] = dword_CODE_bss_800799F4->pos.f[2];
         }
-    
+
         *stan = g_CurrentPlayer->field_488.current_tile_ptr;
-    
+
         arg6->f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
         arg6->f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
         arg6->f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
@@ -4920,20 +4936,20 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             pos->f[0] = dword_CODE_bss_800799F8->pos.f[0];
             pos->f[1] = dword_CODE_bss_800799F8->pos.f[1];
             pos->f[2] = dword_CODE_bss_800799F8->pos.f[2];
-            
+
             pos2->f[0] = g_CurrentPlayer->field_3C4;
             pos2->f[1] = g_CurrentPlayer->field_3C8;
             pos2->f[2] = g_CurrentPlayer->field_3CC;
-            
+
             *stan = dword_CODE_bss_800799F8->stan;
-            
+
             arg6->f[0] = dword_CODE_bss_800799F8->pos.f[0];
             arg6->f[1] = dword_CODE_bss_800799F8->pos.f[1];
             arg6->f[2] = dword_CODE_bss_800799F8->pos.f[2];
-            
+
             return;
         }
-        
+
         if (gBondViewCutscene != NULL)
         {
             if (isNotBoundPad(gBondViewCutscene->pad))
@@ -4944,18 +4960,18 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             {
                 p = &g_CurrentSetup.boundpads[getBoundPadNum(gBondViewCutscene->pad)];
             }
-            
+
             pos->f[0] = gBondViewCutscene->pos.f[0];
             pos->f[1] = gBondViewCutscene->pos.f[1];
             pos->f[2] = gBondViewCutscene->pos.f[2];
-            
+
             setupPad = p;
             *stan = setupPad->stan;
-        
+
             arg6->f[0] = setupPad->pos.f[0];
             arg6->f[1] = setupPad->pos.f[1];
             arg6->f[2] = setupPad->pos.f[2];
-            
+
             if (dword_CODE_bss_80079A18 == CAMERAMODE_INTRO)
             {
                 pos2->f[0] = g_CurrentPlayer->field_3C4;
@@ -4968,7 +4984,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 pos2->f[1] = pos->f[1] + sinf(gBondViewCutscene->verta);
                 pos2->f[2] = pos->f[2] - (cosf(gBondViewCutscene->verta) * cosf(gBondViewCutscene->theta));
             }
-            
+
             return;
         }
 
@@ -4980,9 +4996,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         {
             setupPad = (struct PadRecord*)&g_CurrentSetup.boundpads[getBoundPadNum(dword_CODE_bss_80079A14)];
         }
-        
+
         *stan = setupPad->stan;
-        
+
         arg6->f[0] = setupPad->pos.f[0];
         arg6->f[1] = setupPad->pos.f[1];
         arg6->f[2] = setupPad->pos.f[2];
@@ -4990,18 +5006,18 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         pos2->f[0] = setupPad->pos.f[0] + cosf(flt_CODE_bss_80079A00) * 0.0f;
         pos2->f[1] = setupPad->pos.f[1] + flt_CODE_bss_80079A10;
         pos2->f[2] = setupPad->pos.f[2] + sinf(flt_CODE_bss_80079A00) * 0.0f;
-        
+
         pos->f[0] = setupPad->pos.f[0] + (sinf(flt_CODE_bss_80079A00) * flt_CODE_bss_80079A08) + cosf(flt_CODE_bss_80079A00) * 0.0f;
         pos->f[1] = setupPad->pos.f[1] + flt_CODE_bss_80079A10 + flt_CODE_bss_80079A0C;
         pos->f[2] = setupPad->pos.f[2] + (cosf(flt_CODE_bss_80079A00) * flt_CODE_bss_80079A08) + sinf(flt_CODE_bss_80079A00) * 0.0f;
 
         flt_CODE_bss_80079A00 += flt_CODE_bss_80079A04 * g_GlobalTimerDelta;
-        
+
         while (flt_CODE_bss_80079A00 >= M_TAU_F)
         {
             flt_CODE_bss_80079A00 -= M_TAU_F;
         }
-        
+
         while (flt_CODE_bss_80079A00 < 0.0f)
         {
             flt_CODE_bss_80079A00 += M_TAU_F;
@@ -5070,7 +5086,7 @@ s32 get_BONDdata_is_aiming(void) {
 /**
  * Updates autoyaimtime60 by g_ClockTimer.
  * Will update player->autoaimy if new autoyaimtime60 < 0 or autoaim_target != g_CurrentPlayer->autoaim_target_y.
- * 
+ *
  * Address 0x7F07C5F0.
  */
 void bondviewUpdateYAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_y)
@@ -5138,7 +5154,7 @@ int redirect_get_BONDdata_autoaim_x(void) {
 /**
  * Updates autoxaimtime60 by g_ClockTimer.
  * Will update player->autoaimx if new autoxaimtime60 < 0 or autoaim_target_x != g_CurrentPlayer->autoaim_target_x.
- * 
+ *
  * Address 0x7F07C6C8.
  */
 void bondviewUpdateXAutoAimTime(struct PropRecord *autoaim_target, f32 auto_aim_x)
@@ -5213,7 +5229,7 @@ void bondviewTankModelRotationRelated(void) {
     if (g_PlayerTankProp != NULL)
     {
         obj = g_PlayerTankProp->obj;
-        
+
         /// TODO: Fix Model struct Data type.
         temp_v0 = obj->model->obj->Switches;
         sp68 = (struct coord3d *)temp_v0[2]->Data;
@@ -5251,13 +5267,13 @@ void bondviewGetTankCollisionBounds(struct rect4f *tank_collision_bounds, struct
 
     sp44 = bbox->Bounds.xmin - g_TankModelPositionOffset.f[0];
     sp40 = bbox->Bounds.xmax - g_TankModelPositionOffset.f[0];
-    
+
     sp3C = bbox->Bounds.zmin - g_TankModelPositionOffset.f[2];
     sp38 = bbox->Bounds.zmax - g_TankModelPositionOffset.f[2];
 
     sp34 = sp4C->model->scale * cosf(tank_orientation_angle);
     sp48 = sp4C->model->scale * sinf(tank_orientation_angle);
-    
+
     tank_collision_bounds->points[0].f[0] = collision_position->f[0] + (-sp3C * sp48) + (sp44 * sp34);
     tank_collision_bounds->points[0].f[1] = collision_position->f[2] + (sp3C * sp34) + (sp44 * sp48);
 
@@ -5266,7 +5282,7 @@ void bondviewGetTankCollisionBounds(struct rect4f *tank_collision_bounds, struct
 
     tank_collision_bounds->points[2].f[0] = collision_position->f[0] + (-sp38 * sp48) + (sp40 * sp34);
     tank_collision_bounds->points[2].f[1] = collision_position->f[2] + (sp38 * sp34) + (sp40 * sp48);
-    
+
     tank_collision_bounds->points[3].f[0] = collision_position->f[0] + (-sp38 * sp48) + (sp44 * sp34);
     tank_collision_bounds->points[3].f[1] = collision_position->f[2] + (sp38 * sp34) + (sp44 * sp48);
 }
@@ -5308,7 +5324,7 @@ s32 bondviewTankCollisionStatus(struct coord3d *collision_position, StandTile *a
     struct rect4f tank_collision_bounds;
     s32 sp94;
     f32 temp_f0;
-    
+
     Model *sp8C;
 
     ModelNode **switches;
@@ -5322,14 +5338,14 @@ s32 bondviewTankCollisionStatus(struct coord3d *collision_position, StandTile *a
     sp94 = 0;
 
     bondviewGetTankCollisionBounds(&tank_collision_bounds, collision_position, tank_orientation_angle);
-    
+
     if (g_PlayerTankProp != NULL)
     {
         sub_GAME_7F03D058(g_PlayerTankProp, 0);
     }
 
-    if ((bondviewTestLineUnobstructed(&spBC, collision_position->f[0], collision_position->f[2], tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], 0x213, arg3, arg4) != 0) 
-        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], tank_collision_bounds.points[1].f[0], tank_collision_bounds.points[1].f[1], 0x213, arg3, arg4) != 0) 
+    if ((bondviewTestLineUnobstructed(&spBC, collision_position->f[0], collision_position->f[2], tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], 0x213, arg3, arg4) != 0)
+        && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], tank_collision_bounds.points[1].f[0], tank_collision_bounds.points[1].f[1], 0x213, arg3, arg4) != 0)
         && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[1].f[0], tank_collision_bounds.points[1].f[1], tank_collision_bounds.points[2].f[0], tank_collision_bounds.points[2].f[1], 0x213, arg3, arg4) != 0)
         && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[2].f[0], tank_collision_bounds.points[2].f[1], tank_collision_bounds.points[3].f[0], tank_collision_bounds.points[3].f[1], 0x213, arg3, arg4) != 0)
         && (bondviewTestLineUnobstructed(&spBC, tank_collision_bounds.points[3].f[0], tank_collision_bounds.points[3].f[1], tank_collision_bounds.points[0].f[0], tank_collision_bounds.points[0].f[1], 0x213, arg3, arg4) != 0))
@@ -5372,7 +5388,7 @@ s32 bondviewTankCollisionStatus(struct coord3d *collision_position, StandTile *a
             sp74.f[2] += collision_position->f[2];
 
             spBC = arg1;
-            
+
             if (bondviewTestLineUnobstructed(&spBC, collision_position->f[0], collision_position->f[2], sp74.f[0], sp74.f[2], 0x213, arg3, arg4) == 0)
             {
                 sp94 = 0;
@@ -5418,7 +5434,7 @@ s32 sub_GAME_7F07CDD4(struct coord3d *arg0, f32 arg1, StandTile **arg2)
         stanTestLineUnobstructed(
             &sp3C,
             g_CurrentPlayer->field_488.collision_position.f[0],
-            g_CurrentPlayer->field_488.collision_position.f[2], 
+            g_CurrentPlayer->field_488.collision_position.f[2],
             arg0->f[0],
             arg0->f[2],
             0,
@@ -5465,7 +5481,7 @@ struct PropRecord *get_ptr_for_players_tank(void)
 
 /**
  * Sets paraameter position based on global variables g_TankOrientationAngle, g_TankTurretOrientationAngleRad, g_TankTurretVerticalAngle.
- * 
+ *
  * Address 0x7F07CEB0.
  */
 void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
@@ -5496,9 +5512,9 @@ void bondviewSet3dCoord7F07CEB0(coord3d *arg0)
 
 /**
  * Unreferenced.
- * 
+ *
  * Returns global variable g_TankTurretVerticalAngle, which is in radians.
- * 
+ *
  * Address 0x7F07CF80.
  */
 f32 bondviewGet8003646CRad(void)
@@ -5552,7 +5568,7 @@ s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
 
         sub_GAME_7F03D058(g_CurrentPlayer->prop, 0);
         sp7C = stanTileDistanceRelated(&sp90, arg0->f[0], arg0->f[2], collision_radius, &sp3C);
-        
+
         if (stanGetLocusField0(&sp3C) != 0)
         {
             g_CurrentPlayer->autocrouchpos = 0;
@@ -5580,7 +5596,7 @@ s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
                 else
                 {
                     *stan = sp90;
-                    sp94 = 1;                
+                    sp94 = 1;
                 }
             }
             else
@@ -5619,13 +5635,13 @@ block_20:
 
 /**
  * Calculates collision with current player.
- * 
+ *
  * @param next_pos: 3d coordinate to attempt to move to.
  * @param collision_pt0: Out parameter. Will set {x,0,z} position of first point (from line edge) if Bond is in collision, otherwise {0}.
  * @param collision_pt1: Out parameter. Will set {x,0,z} position of second point (from line edge) if Bond is in collision, otherwise ... Bond's look angle?
- * 
+ *
  * @return 1 if able to update stan and collision position, zero otherwise.
- * 
+ *
  * Address 0x7F07D234.
  */
 s32 bondviewTrySimpleMovePlayerCollision(coord3d *next_pos, coord3d *collision_pt0, coord3d *collision_pt1)
@@ -5654,15 +5670,15 @@ s32 bondviewTrySimpleMovePlayerCollision(coord3d *next_pos, coord3d *collision_p
  * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
  * Instead of moving to the full coordinate specified by `next_pos`, it will
  * scale the position using `unkGeometry7F0B33DC` and try to move to that position.
- * 
+ *
  * @param next_pos: 3d coordinate to attempt to move to.
  * @param collision1_pt0: Prior collision point 0.
  * @param collision1_pt1: Prior collision point 1.
  * @param collision2_pt0: Out parameter. Will set {x,0,z} position of first point (from line edge) if Bond is in collision, otherwise {0}.
  * @param collision2_pt1: Out parameter. Will set {x,0,z} position of second point (from line edge) if Bond is in collision, otherwise ... Bond's look angle?
- * 
+ *
  * @return 1 if able to update stan and collision position, zero if still unable to move by failing on the same collision edge, -1 otherwise (still unable to move).
- * 
+ *
  * US address 7F07D2B4.
  * Perfect Dark, see bondwalk.c bwalk0f0c47d0, bondbike.c bbike0f0d36d4.
 */
@@ -5684,41 +5700,41 @@ s32 bondviewTryFractionMovePlayerCollision(
     struct coord2d sp38;
     f32 temp_f0;
     f32 collision_radius;
-    
+
     bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
-    
+
     delta_pos.f[0] = next_pos->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
     delta_pos.f[2] = next_pos->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
-    
+
     sp50.f[0] = collision_radius;
     sp50.f[1] = g_CurrentPlayer->field_488.collision_position.f[0];
     sp50.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
-    
+
     sp48.f[0] = collision1_pt0->f[0];
     sp48.f[1] = collision1_pt0->f[2];
-    
+
     sp40.f[0] = collision1_pt1->f[0];
     sp40.f[1] = collision1_pt1->f[2];
-    
+
     sp38.f[0] = delta_pos.f[0];
     sp38.f[1] = delta_pos.f[2];
-    
+
     temp_f0 = unkGeometry7F0B33DC(&sp50, &sp48, &sp40, &sp38);
-    
+
     try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (delta_pos.f[0] * temp_f0 * 0.25f);
     try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (delta_pos.f[2] * temp_f0 * 0.25f);
-    
+
     if (bondviewTryMoveToStan(&try_next_pos, &stan) != 0)
     {
         g_CurrentPlayer->field_488.current_tile_ptr = stan;
         g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
         g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
-        
+
         return 1;
     }
-    
+
     getCollisionEdge_maybe(collision2_pt0, collision2_pt1);
-    
+
     if (collision2_pt0->f[0] != collision1_pt0->f[0]
         || collision2_pt0->f[1] != collision1_pt0->f[1]
         || collision2_pt0->f[2] != collision1_pt0->f[2]
@@ -5728,7 +5744,7 @@ s32 bondviewTryFractionMovePlayerCollision(
     {
         return 0;
     }
-    
+
     return -1;
 }
 
@@ -5739,13 +5755,13 @@ s32 bondviewTryFractionMovePlayerCollision(
  * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
  * Instead of moving to the full coordinate specified by `next_pos`, it will
  * attempt to move along the collision edge.
- * 
+ *
  * @param prior_next_pos: Prior 3d coordinate that Bond failed to move to.
  * @param collision1_pt0: Prior collision point 0.
  * @param collision1_pt1: Prior collision point 1.
- * 
+ *
  * @return -1 if either x or z coordinates are the same for the collision points, 1 if able to update stan and collision position, zero otherwise.
- * 
+ *
  * US address 7F07D4C0.
  */
 s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1)
@@ -5784,7 +5800,7 @@ s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct co
             g_CurrentPlayer->field_488.current_tile_ptr = stan;
             g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
             g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
-            
+
             return 1;
         }
 
@@ -5801,15 +5817,15 @@ s32 bondviewTryEdgeMovePlayerCollision(struct coord3d *prior_next_pos, struct co
  * If Bond previously failed to move because of a collision, this will check
  * if Bond is near the end point of the collision edge. If within the collision
  * radius of Bond to the edge endpoint, then allow movement.
- * 
+ *
  * @param prior_next_pos: Prior 3d coordinate that Bond failed to move to.
  * @param collision1_pt0: Prior collision point 0.
  * @param collision1_pt1: Prior collision point 1.
- * 
+ *
  * @return 1 if able to update stan and collision position, zero otherwise.
- * 
+ *
  * US address 7F07D61C.
- * 
+ *
  * Perfect Dark bwalk0f0c4a5c.
 */
 s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coord3d *collision_pt0, struct coord3d *collision_pt1)
@@ -5824,7 +5840,7 @@ s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coor
     f32 collision_radius;
 
     bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
-    
+
     delta_pos.f[0] = prior_next_pos->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
     delta_pos.f[2] = prior_next_pos->f[2] - g_CurrentPlayer->field_488.collision_position.f[2];
 
@@ -5837,24 +5853,24 @@ s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coor
         {
             sp50.f[0] = -(collision_pt0->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
             sp50.f[2] = collision_pt0->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
-    
+
             tempf = (sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2]);
             tempf =  1.0f / sqrtf(tempf);
             sp50.f[0] *= tempf;
             sp50.f[2] *= tempf;
-    
+
             tempf = (delta_pos.f[0] * sp50.f[0]) + (delta_pos.f[2] * sp50.f[2]);
             sp50.f[0] *= tempf;
             sp50.f[2] *= tempf;
             try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
             try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
-    
+
             if (bondviewTryMoveToStan(&try_next_pos, &stan))
             {
                 g_CurrentPlayer->field_488.current_tile_ptr = stan;
                 g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
                 g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
-                
+
                 return 1;
             }
         }
@@ -5863,46 +5879,46 @@ s32 bondviewTryEndHopPlayerCollision(struct coord3d *prior_next_pos, struct coor
     {
         sp50.f[0] = collision_pt1->f[0] - prior_next_pos->f[0];
         sp50.f[2] = collision_pt1->f[2] - prior_next_pos->f[2];
-    
+
         if (((sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2])) <= (collision_radius * collision_radius))
         {
             if (collision_pt1->f[0] != g_CurrentPlayer->field_488.collision_position.f[0] || collision_pt1->f[2] != g_CurrentPlayer->field_488.collision_position.f[2])
             {
                 sp50.f[0] = -(collision_pt1->f[2] - g_CurrentPlayer->field_488.collision_position.f[2]);
                 sp50.f[2] = collision_pt1->f[0] - g_CurrentPlayer->field_488.collision_position.f[0];
-        
+
                 tempf = (sp50.f[0] * sp50.f[0]) + (sp50.f[2] * sp50.f[2]);
                 tempf =  1.0f / sqrtf(tempf);
                 sp50.f[0] *= tempf;
                 sp50.f[2] *= tempf;
-        
+
                 tempf = (delta_pos.f[0] * sp50.f[0]) + (delta_pos.f[2] * sp50.f[2]);
                 sp50.f[0] *= tempf;
                 sp50.f[2] *= tempf;
                 try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (sp50.f[0]);
                 try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (sp50.f[2]);
-        
+
                 if (bondviewTryMoveToStan(&try_next_pos, &stan))
                 {
                     g_CurrentPlayer->field_488.current_tile_ptr = stan;
                     g_CurrentPlayer->field_488.collision_position.f[0] = try_next_pos.f[0];
                     g_CurrentPlayer->field_488.collision_position.f[2] = try_next_pos.f[2];
-                    
+
                     return 1;
                 }
             }
         }
     }
-    
+
     return 0;
 }
 
 
 /**
  * Unreferenced.
- * 
+ *
  * Bitwise convert 32bit int to float.
- * 
+ *
  * Address 0x7F07D954.
  */
 f32 bondviewBitconvertIntToFloat(s32 arg0)
@@ -5920,10 +5936,10 @@ struct dummy_struct {
 
 /**
  * Sets Bond bondprevpos, attempts to move by `offset`.
- * 
+ *
  * @param offset: Attempt to move Bond by {x,0,z} amount.
  * @param allow_scoot: If movement causes collision, when set will allow Bond to scoot along the collision edge and to bump around corner edges. Otherwise, any collision will stop movement.
- * 
+ *
  * US address 7F07D960.
  * JP address 7F07DA34 (maybe).
  */
@@ -5961,7 +5977,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
     g_BondCanEnterTank = 0;
 
     g_CurrentPlayer->autocrouchpos = CROUCH_STAND;
-    
+
     if (g_WorldTankProp != NULL)
     {
         chraiGetCollisionBoundsWithoutY(g_WorldTankProp, &sp98, &sp94);
@@ -5970,10 +5986,10 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
             || (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, sp98, sp94) != 0)
             || ((chrobjTestPointPolygonCollision(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
         {
-            
+
             obj = g_WorldTankProp->obj;
             tank_objrecord = (struct TankRecord *)g_WorldTankProp->obj;
-            
+
             /// TODO: replace with ModelNode structs
             farr5 = (f32*)obj->model->obj->Switches[5]->Data;
             farr6 = (f32*)obj->model->obj->Switches[6]->Data;
@@ -5999,7 +6015,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
                 {
                     return;
                 }
-                
+
                 g_PlayerTankYOffset = temp_f2;
             }
             else
@@ -6038,7 +6054,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
         //   zero if still unable to move by failing on the same collision edge
         //   -1 otherwise (still unable to move).
         temp_v0_7 = bondviewTryFractionMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1, &collision2_pt0, &collision2_pt1);
-        
+
         if ((temp_v0_7 > 0) || (temp_v0_7 < 0))
         {
             if ((allow_scoot != 0)
@@ -6051,7 +6067,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
         else if (temp_v0_7 == 0)
         {
             bondviewTryFractionMovePlayerCollision(&next_pos, &collision2_pt0, &collision2_pt1, &collision3_pt0, &collision3_pt1);
-            
+
             if ((allow_scoot != 0)
                 && (bondviewTryEdgeMovePlayerCollision(&next_pos, &collision2_pt0, &collision2_pt1) <= 0)
                 && (bondviewTryEdgeMovePlayerCollision(&next_pos, &collision1_pt0, &collision1_pt1) <= 0)
@@ -6072,9 +6088,9 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
             g_CurrentPlayer->field_488.collision_position.f[2]) == 0)
     {
         if(1);
-        
+
         stan = g_CurrentPlayer->field_488.current_tile_ptr;
-        
+
         for (tile_count=0; tile_count<5; tile_count++)
         {
             /// TODO: fix the horrible casts below.
@@ -6107,7 +6123,7 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
                     phi_a0_3++;
                 }
             }
-            
+
             if(1);
 
             if (stanTestPointWithinTileBoundsMaybe(
@@ -6170,9 +6186,9 @@ void sub_GAME_7F07DEFC(void)
 
 /**
  * Pause angle related.
- * 
+ *
  * @param arg0: When set, pause_target_angle will be -40.0f, otherwise g_CurrentPlayer->vv_verta.
- * 
+ *
  * Address 0x7F07DF28.
  */
 f32 bondviewPauseAngleRelated(s32 arg0)
@@ -6494,9 +6510,9 @@ f32 bondviewGetWatchZoomFovy(void) {
 
 /**
  * Triggers watch zoom if new value.
- * 
+ *
  * @param zoominfovy: watch zoom fovy.
- * 
+ *
  * Address 0x7F07E46C.
  */
 void bondviewTriggerWatchZoom(f32 zoominfovy)
@@ -6517,7 +6533,7 @@ void bondviewTriggerWatchZoom(f32 zoominfovy)
 
 /**
  * Trigger watch zoom with default angle.
- * 
+ *
  * Address 0x7F07E504.
  */
 void bondviewTriggerWatchZoomDefault(void)
@@ -6549,7 +6565,7 @@ void bondviewZoomToWatchOnOpen(void)
 #else
     trigger_watch_zoom(5.9f, f);
 #endif
-    
+
 }
 
 
@@ -6593,7 +6609,7 @@ void bondviewUpdateWatchZoomIn(void)
         if ((g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5) || (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc))
         {
 #if defined(BUGFIX_R1)
-            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;      
+            g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) jpD_800484D0;
 #else
             g_CurrentPlayer->zoomintime = g_CurrentPlayer->zoomintime + (f32) speedgraphframes;
 #endif
@@ -6613,7 +6629,7 @@ void bondviewUpdateWatchZoomIn(void)
         }
 
         g_CurrentPlayer->zoominfovy =
-            g_CurrentPlayer->zoominfovyold + 
+            g_CurrentPlayer->zoominfovyold +
             (
                 (g_CurrentPlayer->zoomintime *
                     (g_CurrentPlayer->zoominfovynew - g_CurrentPlayer->zoominfovyold)
@@ -6902,7 +6918,7 @@ f32 bondviewGetPauseAnimationPercent(void)
     {
         return g_CurrentPlayer->pause_animation_counter / 20.0f;
     }
-    
+
     if (g_CurrentPlayer->step_in_view_watch_animation == 3)
     {
         return 1.0f;
@@ -6932,7 +6948,7 @@ void bondviewPlayerStopAudioForPause(void)
 	s32 i;
     ObjectRecord *obj;
     PropRecord *prop;
-    
+
     deactivate_alarm_sound_effect();
     check_deactivate_gas_sound();
 
@@ -6957,14 +6973,14 @@ void bondviewPlayerStopAudioForPause(void)
         if (prop->type != PROP_TYPE_DOOR && prop->type == PROP_TYPE_OBJ)
         {
             obj = prop->obj;
-            
+
             if (obj->type == PROPDEF_VEHICHLE)
             {
                 VehichleRecord *vehicle = (VehichleRecord *)prop->obj;
                 if (vehicle->Sound && sndGetPlayingState(vehicle->Sound) != AL_STOPPED) {
                     sndDeactivate(vehicle->Sound);
                 }
-            }            
+            }
             else if (obj->type == PROPDEF_AIRCRAFT)
             {
                 AircraftRecord *aircraft = (AircraftRecord *)prop->obj;
@@ -6972,7 +6988,7 @@ void bondviewPlayerStopAudioForPause(void)
                     sndDeactivate(aircraft->Sound);
                 }
             }
-            
+
             if(1);
         }
     }
@@ -7021,7 +7037,7 @@ void bondviewWatchAnimationTick(void)
 #else
         sp38 = (sp34) ? WATCH_VAR_UPPER : WATCH_VAR_LOWER;
 #endif
-        
+
         g_CurrentPlayer->field_1C4 += g_ClockTimer;
         g_CurrentPlayer->watch_pause_time += 1;
         g_CurrentPlayer->pausing_flag = 0;
@@ -7029,7 +7045,7 @@ void bondviewWatchAnimationTick(void)
         if (g_CurrentPlayer->watch_animation_state == 1)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 draw_item_in_hand(GUNLEFT, ITEM_SUIT_LF_HAND);
@@ -7059,11 +7075,11 @@ void bondviewWatchAnimationTick(void)
                 }
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 2)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 gunSetSightVisible(GUNAMMOREASON_DAMAGE, FALSE);
@@ -7071,64 +7087,64 @@ void bondviewWatchAnimationTick(void)
                 hudmsgsSetOff(PLAYERFLAG_LOCKCONTROLS);
                 bondviewSetUpperTextDisplayFlag(PLAYERFLAG_LOCKCONTROLS);
                 countdownTimerSetVisible(4, 0);
-                
+
                 if ((g_CurrentPlayer->field_218 == 0) || (g_CurrentPlayer->field_218 == 2) || (g_CurrentPlayer->field_218 == 3))
                 {
                     sp20 = bondviewPauseAngleRelated(1);
-                    
+
                     if (sp20 < 30.0f)
                     {
                         sp20 = 30.0f;
                     }
-                    
+
                     sub_GAME_7F07E010(sp20);
                 }
             }
-            
+
             if ((g_CurrentPlayer->field_214 - g_CurrentPlayer->field_210) < 30.0f)
             {
                 g_CurrentPlayer->watch_animation_state = 3;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
-                
+
                 sub_GAME_7F07E7CC();
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 3)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 sp30 = 40.0f;
-                
+
                 if ((g_CurrentPlayer->step_in_view_watch_animation != 0) && (g_CurrentPlayer->step_in_view_watch_animation != 3))
                 {
                     sp30 = ((20.0f - g_CurrentPlayer->pause_watch_related_adjust) * 40.0f) / 20.0f;
                 }
-                
+
                 if ((g_CurrentPlayer->field_218 == 0) || (g_CurrentPlayer->field_218 == 2) || (g_CurrentPlayer->field_218 == 3))
                 {
                     sp2c = bondviewPauseAngleRelated(1);
                     sp20 = sp30 - 10.0f;
-                    
+
                     if (sp2c < sp20)
                     {
                         sp2c = sp20;
                     }
-                    
+
                     sub_GAME_7F07E010(sp2c);
-                    
+
                     sp20 = sp2c + 10.0f;
-                    
+
                     if (sp30 < sp20)
                     {
                         sp30 = sp20;
                     }
                 }
-                
+
                 bondviewSetPauseWatchRelated(sp30);
             }
-            
+
             if (
                 ((g_CurrentPlayer->step_in_view_watch_animation != 0) && (g_CurrentPlayer->step_in_view_watch_animation != 3))
                 ||
@@ -7144,7 +7160,7 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 4)
         {
             if ((g_CurrentPlayer->watch_pause_time == 1) && (g_CurrentPlayer->field_21C != 0))
@@ -7152,9 +7168,9 @@ void bondviewWatchAnimationTick(void)
                 sndPlaySfx(g_musicSfxBufferPtr, 0xED, NULL);
                 g_CurrentPlayer->field_21C = 0;
             }
-            
+
             bondviewZoomToWatchOnOpen();
-            
+
             if (check_watch_page_transistion_running() != 0)
             {
                 g_CurrentPlayer->pausing_flag = 1;
@@ -7167,21 +7183,21 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_21C = 1;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 5)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 sub_GAME_7F0C1310();
             }
-            
+
             g_CurrentPlayer->pausing_flag = 1;
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 12)
         {
             g_CurrentPlayer->pausing_flag = 1;
-            
+
             if (g_CurrentPlayer->watch_pause_time >= 3)
             {
                 g_CurrentPlayer->watch_animation_state = 6;
@@ -7190,7 +7206,7 @@ void bondviewWatchAnimationTick(void)
                 sndPlaySfx(g_musicSfxBufferPtr, 0xEE, NULL);
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 6)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
@@ -7217,26 +7233,26 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_21C = 1;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 7)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 sp28 = 40.0f;
                 sp24 = bondviewPauseAngleRelated(0);
-                
+
                 if ((g_CurrentPlayer->step_in_view_watch_animation != 0) && (g_CurrentPlayer->step_in_view_watch_animation != 3))
                 {
                     sp28 = (g_CurrentPlayer->pause_watch_related_adjust * 40.0f) / 20.0f;
                 }
-                
+
                 sp20 = sp28 + 20.0f;
-                
+
                 if (sp24 < sp20)
                 {
                     sp24 = sp20;
                 }
-                
+
                 sub_GAME_7F07E03C(sp24);
                 bondviewSetPauseWatchRelatedAlt(sp28);
             }
@@ -7252,19 +7268,19 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 8)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
-                
+
                 if ((get_item_in_hand_or_watch_menu(GUNLEFT) != getCurrentPlayerWeaponId(GUNLEFT)) && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED))
                 {
                     draw_item_in_hand(GUNLEFT, getCurrentPlayerWeaponId(GUNLEFT));
                 }
-                
+
                 if (sp3c)
                 {
                     if ((get_item_in_hand_or_watch_menu(GUNRIGHT) != getCurrentPlayerWeaponId(GUNRIGHT)) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))
@@ -7276,36 +7292,36 @@ void bondviewWatchAnimationTick(void)
             else if (sub_GAME_7F07E068() == 0)
             {
                 if (
-                    (get_item_in_hand_or_watch_menu(GUNLEFT) == getCurrentPlayerWeaponId(GUNLEFT)) 
-                    && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
+                    (get_item_in_hand_or_watch_menu(GUNLEFT) == getCurrentPlayerWeaponId(GUNLEFT))
+                    && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
                     && (
-                        (sp3c == 0) 
+                        (sp3c == 0)
                         || (((get_item_in_hand_or_watch_menu(GUNRIGHT) == getCurrentPlayerWeaponId(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
                 {
                     sub_GAME_7F05DAE4(1);
-                    
+
                     if (sp3c)
                     {
                         sub_GAME_7F05DAE4(0);
                     }
-                    
+
                     gunSetSightVisible(GUNAMMOREASON_DAMAGE, TRUE);
                     gunSetGunAmmoVisible(GUNSIGHTREASON_NOCONTROL, TRUE);
                     hudmsgsSetOn(1);
                     bondviewClearUpperTextDisplayFlag(1);
                     countdownTimerSetVisible(4, 1);
-                    
+
                     g_CurrentPlayer->watch_animation_state = 0;
                     g_CurrentPlayer->watch_pause_time = 0;
                     g_CurrentPlayer->field_1C4 = 0;
                 }
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 9)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (
                 (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT))
                 && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
@@ -7318,19 +7334,19 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 10)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 sub_GAME_7F07E03C(bondviewPauseAngleRelated(0));
             }
-            
+
             if (
-                (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT)) 
-                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
+                (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT))
+                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
                 && (
                     (sp3c == 0)
                     || (((getCurrentPlayerWeaponId(GUNRIGHT) != get_item_in_hand_or_watch_menu(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
@@ -7340,18 +7356,18 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 11)
         {
             g_CurrentPlayer->pausing_flag = 0;
 
             if (
-                (getCurrentPlayerWeaponId(GUNLEFT) == get_item_in_hand_or_watch_menu(GUNLEFT)) 
-                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED) 
+                (getCurrentPlayerWeaponId(GUNLEFT) == get_item_in_hand_or_watch_menu(GUNLEFT))
+                && (Gun_hand_without_item(GUNLEFT) != ITEM_UNARMED)
                 && (
-                    (sp3c == 0) 
+                    (sp3c == 0)
                     || (
-                        ( (getCurrentPlayerWeaponId(GUNRIGHT) == get_item_in_hand_or_watch_menu(GUNRIGHT))) 
+                        ( (getCurrentPlayerWeaponId(GUNRIGHT) == get_item_in_hand_or_watch_menu(GUNRIGHT)))
                         && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
                 g_CurrentPlayer->watch_animation_state = 1;
@@ -7359,11 +7375,11 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
-        
+
         if (g_CurrentPlayer->watch_animation_state == 13)
         {
             g_CurrentPlayer->pausing_flag = 0;
-            
+
             if (Gun_hand_without_item(GUNLEFT)
                 && Gun_hand_without_item(GUNRIGHT))
             {
@@ -7447,10 +7463,10 @@ void trigger_solo_watch_menu(s32 arg0)
             {
                 g_CurrentPlayer->watch_animation_state = 0xD;
             }
-            
+
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
-            
+
             sub_GAME_7F07DEFC();
             bondviewTriggerWatchZoomDefault();
 
@@ -7459,7 +7475,7 @@ void trigger_solo_watch_menu(s32 arg0)
 
             sub_GAME_7F0A2F30(&g_CurrentPlayer->health_display_values, 0x2E, -1, bondviewGetCurrentPlayerHealth());
             sub_GAME_7F0A3330(&g_CurrentPlayer->watch_health_bar_gdl, OS_K0_TO_PHYSICAL(&g_CurrentPlayer->health_display_values), 0x2E);
-            
+
             sub_GAME_7F0A69A8();
 
             /**
@@ -7688,7 +7704,7 @@ void bondviewCurrentPlayerUpdateSpeedVerta(f32 value)
 {
     f32 mult = viGetFovY() / FOV_Y_F;
     f32 limit = sub_GAME_7F07FF74(value);
-    
+
     if (value > 0.0f)
     {
         if (g_CurrentPlayer->speedverta > 0.0f)
@@ -7767,7 +7783,7 @@ void bondviewCurrentPlayerUpdateSpeedTheta(f32 value)
 {
     f32 mult = viGetFovY() / FOV_Y_F;
     f32 limit = sub_GAME_7F080228(value);
-    
+
     if (value > 0.0f)
     {
         if (g_CurrentPlayer->speedtheta > 0.0f)
@@ -7993,7 +8009,7 @@ void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
         bheadSetSpeed(0.5f);
         speedsideways = 0.0f;
     }
-    
+
     bheadUpdate(percent_speed, speedsideways);
 
     matrix_4x4_set_rotation_around_x((360.0f - g_CurrentPlayer->vv_verta360) * DegToRad1Fact(1), &sp8C);
@@ -8005,7 +8021,7 @@ void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
     g_CurrentPlayer->field_488.applied_view.f[0] = sp8C.m[2][0];
     g_CurrentPlayer->field_488.applied_view.f[1] = sp8C.m[2][1];
     g_CurrentPlayer->field_488.applied_view.f[2] = sp8C.m[2][2];
-    
+
     g_CurrentPlayer->field_488.applied_view2.f[0] = sp8C.m[1][0];
     g_CurrentPlayer->field_488.applied_view2.f[1] = sp8C.m[1][1];
     g_CurrentPlayer->field_488.applied_view2.f[2] = sp8C.m[1][2];
@@ -8026,7 +8042,7 @@ f32 bondviewYPositionRelated(StandTile *arg0, f32 arg1, f32 arg2)
         PropRecord *p = obj->prop;
 
         ret = stanGetPositionYValue(p->stan, p->pos.x, p->pos.z);
-            
+
         ret += g_PlayerTankYOffset;
     }
     else
@@ -8093,7 +8109,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
                 g_CurrentPlayer->field_488.current_tile_ptr,
                 g_CurrentPlayer->field_488.collision_position.f[0],
                 g_CurrentPlayer->field_488.collision_position.f[2]);
-            
+
             if (g_CurrentPlayer->stanHeight < temp_f0)
             {
                 g_CurrentPlayer->stanHeight = temp_f0;
@@ -8104,7 +8120,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
             stan = g_CurrentPlayer->field_488.current_tile_ptr;
 
             bondviewGetCollisionRadius(g_CurrentPlayer->prop, &collision_radius, &height, &always_30);
-            
+
             sp64 = bondviewYPositionRelated(
                 g_CurrentPlayer->field_488.current_tile_ptr,
                 g_CurrentPlayer->field_488.collision_position.f[0],
@@ -8123,7 +8139,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
                     sp64 = g_CurrentPlayer->stanHeight;
                 }
             }
-            
+
             g_CurrentPlayer->stanHeight = sp64;
         }
 
@@ -8153,7 +8169,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
         {
             new_field_7c = g_CurrentPlayer->field_7C;
             new_field_70 = g_CurrentPlayer->field_70;
-            
+
             if ((get_debug_fast_bond_flag() != 0) && (g_ForceBondMoveOffset.f[0] == 0.0f) && (g_ForceBondMoveOffset.f[2] == 0.0f))
             {
                 sp40 = 1.388889f;
@@ -8162,7 +8178,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
             {
                 sp40 = 0.27777779f;
             }
-            
+
             ftemp2 = new_field_7c - (g_GlobalTimerDelta * sp40);
             new_field_70 += (g_GlobalTimerDelta * (new_field_7c + ftemp2) * 0.5f);
             new_field_7c = ftemp2;
@@ -8228,7 +8244,7 @@ void bondviewUpdatePlayerY(s32 use_stanHeight, f32 stanHeight_offset)
             if (g_CurrentPlayer->vertical_bounce_adjust < 0.0f)
             {
                 g_CurrentPlayer->vertical_bounce_adjust -= CLIPPING_FIELD90_VALUE;
-                
+
                 if (0.0f <= g_CurrentPlayer->vertical_bounce_adjust)
                 {
                     g_CurrentPlayer->vertical_bounce_adjust = 0.0f;
@@ -8259,16 +8275,16 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
 
     g_CurrentPlayer->field_29BC = (g_CurrentPlayer->headpos.f[1] * g_playerPerm->player_perspective_height) + 7.0f;
 
-    phi_f0 = g_CurrentPlayer->field_29BC + 
+    phi_f0 = g_CurrentPlayer->field_29BC +
         ((g_CurrentPlayer->field_88 + g_CurrentPlayer->ducking_height_offset) * g_playerPerm->player_perspective_height);
-    
+
     if (phi_f0 < 30.0f)
     {
         phi_f0 = 30.0f;
     }
 
     g_CurrentPlayer->field_488.collision_position.f[1] = g_CurrentPlayer->field_70 + phi_f0;
-    
+
     if (((g_CameraMode != CAMERAMODE_DEATH_CAM_SP) && (g_CameraMode != CAMERAMODE_DEATH_CAM_MP) && (g_CameraMode != CAMERAMODE_POSEND))
         || (g_CurrentPlayer->ptr_char_objectinstance == 0))
     {
@@ -8276,7 +8292,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
         g_CurrentPlayer->field_488.pos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
         g_CurrentPlayer->field_488.pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
     }
-    
+
     if (g_CurrentPlayer->bonddead != 0)
     {
         if (g_CurrentPlayer->field_29C0 > 0.0f)
@@ -8305,25 +8321,25 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
         g_CurrentPlayer->field_488.collision_position.f[2],
         g_CurrentPlayer->field_488.pos.f[0],
         g_CurrentPlayer->field_488.pos.f[2]);
-    
+
     stanlinelog_flag = sp28;
-    
+
     g_CurrentPlayer->field_488.current_tile_ptr_for_portals = sp2C;
-    
+
     g_CurrentPlayer->field_488.pos3.f[0] = g_CurrentPlayer->field_488.pos.f[0];
     g_CurrentPlayer->field_488.pos3.f[2] = g_CurrentPlayer->field_488.pos.f[2];
-    
+
     g_CurrentPlayer->field_488.pos3.f[1] = bondviewYPositionRelated(
         g_CurrentPlayer->field_488.current_tile_ptr_for_portals,
         g_CurrentPlayer->field_488.pos.f[0],
         g_CurrentPlayer->field_488.pos.f[2]);
-    
+
     g_CurrentPlayer->prop->stan = g_CurrentPlayer->field_488.current_tile_ptr;
-    
+
     g_CurrentPlayer->prop->pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0];
     g_CurrentPlayer->prop->pos.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
     g_CurrentPlayer->prop->pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
-    
+
 #if defined(VERSION_EU)
 #define S7F081478_FACTOR_1 0.881200015545f
 #else
@@ -8354,7 +8370,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
  * Fixes vv_verta within -90 and +90.
  * Updates vv_costheta, vv_sintheta, vv_verta360, vv_cosverta, vv_sinverta, field_488.theta_transform.
  * Address 0x7F081790.
- * 
+ *
  * Perfect Dark function bmoveUpdateVerta.
 */
 void bondviewApplyVertaTheta(void)
@@ -8408,7 +8424,7 @@ void bondviewApplyVertaTheta(void)
 void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
     struct MoveData moveData; // sp120
-    
+
     s8 player_joyGetStickX; // sp11F
     s8 player_joyGetStickY; // sp11E
     u16 player_joyGetButtons; // sp11C
@@ -8472,7 +8488,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.speedVertaDown = 0;
     moveData.speedVertaUp = 0;
     moveData.aimTurnLeftSpeed = 0;
-    moveData.aimTurnRightSpeed = 0;    
+    moveData.aimTurnRightSpeed = 0;
     moveData.weaponBackOffset = 0;
     moveData.weaponForwardOffset = 0;
     moveData.aiming = 0;
@@ -8506,8 +8522,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     moveData.controlStickXRaw = (s32)stick_x;
     moveData.controlStickYRaw = (s32)stick_y;
-    
-    moveData.analogTurn = moveData.controlStickXSafe;    
+
+    moveData.analogTurn = moveData.controlStickXSafe;
     moveData.analogPitch = moveData.controlStickYSafe;
     moveData.analogStrafe = moveData.controlStickXSafe;
     moveData.analogWalk = moveData.controlStickYSafe;
@@ -8515,9 +8531,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     if (g_CurrentPlayer->bonddead == 0
         && g_bondviewForceDisarm <= 0
         && (
-            (g_CurrentPlayer->watch_animation_state != 5 
+            (g_CurrentPlayer->watch_animation_state != 5
                 && ((buttons & ~oldbuttons) & START_BUTTON)
-            ) 
+            )
             ||
             (g_CurrentPlayer->watch_animation_state == 5
                 && g_CurrentPlayer->open_close_solo_watch_menu)
@@ -8546,7 +8562,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             player_joyGetButtons = joyGetButtons(get_cur_playernum() + getPlayerCount() , (u32)ANY_BUTTON);
 
             copy_prev_buttons_pressed = g_CurrentPlayer->prev_buttons_pressed;
-            
+
             if (player_joyGetStickX < -5)
             {
                 tmpc2stickx = player_joyGetStickX + 5;
@@ -8559,7 +8575,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 tmpc2stickx = 0;
             }
-            
+
             if (player_joyGetStickY < -5)
             {
                 tmpc2sticky = player_joyGetStickY + 5;
@@ -8589,7 +8605,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     moveData.analogStrafe = tmpc2stickx;
                 }
-                
+
                 moveData.analogWalk = tmpc2sticky;
             }
 
@@ -8622,7 +8638,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 moveData.canSwivelGun = !g_CurrentPlayer->insightaimmode;
                 moveData.canAutoAim = !g_CurrentPlayer->insightaimmode;
-                
+
                 moveData.canManualAim = g_CurrentPlayer->insightaimmode;
 
                 moveData.btap = (
@@ -8630,7 +8646,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     ||
                     ((((player_joyGetButtons & ~copy_prev_buttons_pressed) & B_BUTTON)) != 0)
                     );
-                
+
                 moveData.canLookAhead = !g_CurrentPlayer->insightaimmode;
                 moveData.canTurnTank = 1;
                 moveData.canNaturalTurn = !g_CurrentPlayer->insightaimmode;
@@ -8662,7 +8678,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     //moveData.speedVertaUp = 0;
                 }
 
-                
+
                 if (g_CurrentPlayer->insightaimmode && (stick_x < -60))
                 {
                     moveData.aimTurnLeftSpeed = (f32) (-60 - stick_x) / FLOAT_TEN_B;
@@ -8675,7 +8691,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     //moveData.aimTurnLeftSpeed = 0;
                 }
-                
+
                 if (g_CurrentPlayer->insightaimmode && (stick_x > 60) )
                 {
                     moveData.aimTurnRightSpeed = (f32) (stick_x - 60) / FLOAT_TEN_B;
@@ -8688,14 +8704,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     //moveData.aimTurnRightSpeed = 0;
                 }
-                
+
                 moveData.weaponBackOffset = (
                         ((buttons & A_BUTTON) != 0)
                         ||
                         ((player_joyGetButtons & A_BUTTON) != 0)
                     )
                     && (sp108);
-                
+
                moveData.weaponForwardOffset = (
                     (
                        (((buttons & ~oldbuttons) & A_BUTTON) != 0)
@@ -8706,7 +8722,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 moveData.aiming = g_CurrentPlayer->insightaimmode;
                 moveData.zooming = g_CurrentPlayer->insightaimmode;
-                
+
                 if ((bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH))
                     && g_CurrentPlayer->insightaimmode)
                 {
@@ -8717,10 +8733,10 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.zoomOutFovPersec = 1.0f;
                         }
-                        
+
                         moveData.zoomOutFovPersec *= 2.0f;
                     }
-                    
+
                     if (tmpc2sticky > 0)
                     {
                         moveData.zoomInFovPersec = (f32) tmpc2sticky / 70.0f;
@@ -8728,11 +8744,11 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.zoomInFovPersec = 1.0f;
                         }
-                        
+
                         moveData.zoomInFovPersec *= 2.0f;
                     }
                 }
-                
+
                 moveData.crouchDown = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                     && (g_CurrentPlayer->insightaimmode)
                     && (player_joyGetStickY < -30);
@@ -8753,13 +8769,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     moveData.weaponForwardOffset = 0;
                     moveData.btap = 0;
                 }
-                
+
                 if (in_tank_flag == 1 && g_CurrentPlayer->insightaimmode)
                 {
                     if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
                     {
                         moveData.controlStickXRaw = 0;
-                        
+
                         if (moveData.analogStrafe == 0)
                         {
                             moveData.analogStrafe = moveData.analogTurn;
@@ -8771,13 +8787,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.tankTurnLeftSpeed = moveData.aimTurnLeftSpeed;
                         }
-                        
+
                         if (moveData.aimTurnRightSpeed > 0)
                         {
                             moveData.tankTurnRightSpeed = moveData.aimTurnRightSpeed;
                         }
                     }
-                    
+
                     moveData.aimTurnLeftSpeed = 0;
                     moveData.aimTurnRightSpeed = 0;
                 }
@@ -8848,7 +8864,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                                 moveData.tankTurnLeftSpeed = 1.0f;
                             }
                         }
-                        
+
                         if ((buttons & (R_JPAD | R_CBUTTONS)) != 0)
                         {
                             if (!g_CurrentPlayer->insightaimmode)
@@ -8870,12 +8886,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                         moveData.digitalStepForward = (!g_CurrentPlayer->insightaimmode)
                             && ((buttons & (U_JPAD | U_CBUTTONS)) );
-                        
+
                         moveData.digitalStepBack = (!g_CurrentPlayer->insightaimmode)
                             && ((buttons & (D_JPAD | D_CBUTTONS)));
 
                         moveData.canNaturalPitch = !g_CurrentPlayer->insightaimmode;
-                        
+
                         if (in_tank_flag == 1)
                         {
                             moveData.canTurnTank = !g_CurrentPlayer->insightaimmode;
@@ -8896,7 +8912,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.tankTurnLeftSpeed = 0;
                         }
-                        
+
                         if ((buttons & (s32)(R_JPAD | R_CBUTTONS)) != 0)
                         {
                             moveData.tankTurnRightSpeed = 1.0f;
@@ -8906,28 +8922,28 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.tankTurnRightSpeed = 0;
                         }
-                        
+
                         moveData.digitalStepLeft = (!g_CurrentPlayer->insightaimmode)
                             && ((buttons & (s32)(L_JPAD | L_CBUTTONS)) );
-                        
+
                         moveData.digitalStepRight = (!g_CurrentPlayer->insightaimmode)
                             && ((buttons & (s32)(R_JPAD | R_CBUTTONS)));
-                        
+
                         moveData.canLookAhead = !g_CurrentPlayer->insightaimmode;
 
                         if ((!g_CurrentPlayer->insightaimmode) && (buttons & (U_JPAD | U_CBUTTONS)) )
                         {
                             moveData.speedVertaDown = 1.0f;
                         }
-                        
+
                         if ((!g_CurrentPlayer->insightaimmode) && (buttons & (D_JPAD | D_CBUTTONS)))
                         {
                             moveData.speedVertaUp = 1.0f;
                         }
-                        
+
                         moveData.canNaturalTurn = !g_CurrentPlayer->insightaimmode;
                     }
-                    
+
                     if ((g_CurrentPlayer->insightaimmode) && (stick_y > 60))
                     {
                         moveData.speedVertaDown = (f32) (stick_y - 60) / FLOAT_TEN_B;
@@ -8944,7 +8960,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             moveData.speedVertaUp = 1.0f;
                         }
                     }
-                    
+
                     if ((g_CurrentPlayer->insightaimmode) && (stick_x < -60))
                     {
                         moveData.aimTurnLeftSpeed = (f32) (-60 - stick_x) / FLOAT_TEN_B;
@@ -8953,7 +8969,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             moveData.aimTurnLeftSpeed = 1.0f;
                         }
                     }
-                    
+
                     if ((g_CurrentPlayer->insightaimmode) && (stick_x > 60))
                     {
                         moveData.aimTurnRightSpeed = (f32) (stick_x - 60) / FLOAT_TEN_B;
@@ -8968,13 +8984,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         &&
                         (((buttons & ~oldbuttons) & shootButtons) != 0)
                         ;
-                    
-                    moveData.weaponForwardOffset = 
+
+                    moveData.weaponForwardOffset =
                         (((buttons & ~oldbuttons) & invButtons) != 0)
                         &&
                         ((buttons & shootButtons) == 0)
                         ;
-                    
+
                     moveData.aiming = g_CurrentPlayer->insightaimmode;
                     moveData.zooming = g_CurrentPlayer->insightaimmode;
 
@@ -8987,17 +9003,17 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             moveData.zoomOutFovPersec = 1.0f;
                         }
-                        
+
                         if ((buttons & (U_JPAD | U_CBUTTONS)) != 0)
                         {
                             moveData.zoomInFovPersec = 1.0f;
                         }
                     }
-                    
+
                     moveData.crouchDown = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
                         && ((buttons & (D_JPAD | D_CBUTTONS)));
-                        
+
                     moveData.crouchUp = (bondwalkItemCheckBitflags(getCurrentPlayerWeaponId(GUNRIGHT), WEAPONSTATBITFLAG_DISABLE_CROUCH) == 0)
                         && (g_CurrentPlayer->insightaimmode)
                         && ((~buttons & (U_JPAD | U_CBUTTONS)));
@@ -9009,7 +9025,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         && ((buttons & (R_JPAD | R_CBUTTONS)));
 
                     if (
-                        ((((buttons & invButtons) != 0) && (((buttons & ~oldbuttons) & B_BUTTON) != 0)) 
+                        ((((buttons & invButtons) != 0) && (((buttons & ~oldbuttons) & B_BUTTON) != 0))
                             || ((buttons & B_BUTTON) && (((buttons & ~oldbuttons) & invButtons) != 0)))
                         && (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_REMOTEMINE))
                     {
@@ -9032,7 +9048,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                             {
                                 moveData.tankTurnLeftSpeed = moveData.aimTurnLeftSpeed;
                             }
-                            
+
                             if (moveData.aimTurnRightSpeed > 0)
                             {
                                 moveData.tankTurnRightSpeed = moveData.aimTurnRightSpeed;
@@ -9066,16 +9082,16 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             spF4 = (struct TankRecord *)g_PlayerTankProp->obj;
             spF4->unkD8 = get_ammo_count_for_weapon(ITEM_TANKSHELLS);
-            
+
             add_ammo_to_weapon(ITEM_TANKSHELLS, 0);
             bondinvRemoveItemByID(ITEM_TANKSHELLS);
-            
+
             if (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             {
                 spF4->unkD8 += get_ammo_in_hands_magazine(GUNRIGHT);
                 autoadvance_on_deplete_all_ammo();
             }
-            
+
             spF4->is_firing_tank = 0;
             in_tank_flag = 0;
             g_CurrentPlayer->speedsideways = 0;
@@ -9086,7 +9102,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 g_CurrentPlayer->bondshotspeed.f[i_0] = 0;
             }
-            
+
             g_CurrentPlayer->crouchpos = 2;
         }
         /* If Bond is standing on the tank and pressed B, enter the tank. */
@@ -9096,7 +9112,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             && g_BondCanEnterTank)
         {
             spEC = (struct TankRecord *)g_PlayerTankProp->obj;
-            
+
             bondinvAddInvItem(ITEM_TANKSHELLS);
             add_ammo_to_weapon(ITEM_TANKSHELLS, spEC->unkD8);
             spEC->unkD8 = 0;
@@ -9122,7 +9138,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_EnterTankCoord.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
             g_EnterTankCoord.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
             g_TankDamagePenaltyTicks = 0;
-            
+
             bondviewTankModelRotationRelated();
         }
         else
@@ -9134,7 +9150,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     if (moveData.invertPitch == 0)
     {
         f32 ftemp_nostack_spE8;
-        
+
         moveData.controlStickYRaw = (s32) -stick_y;
         moveData.analogPitch = -moveData.analogPitch;
         ftemp_nostack_spE8 = moveData.speedVertaDown;
@@ -9154,27 +9170,27 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             || get_hands_firing_status(GUNLEFT)))
     {
         noiseRadius = 0;
-        
+
         if (get_hands_firing_status(GUNRIGHT) && getCurrentPlayerNoise(GUNRIGHT) > noiseRadius)
         {
             noiseRadius = getCurrentPlayerNoise(GUNRIGHT);
         }
-        
+
         if (get_hands_firing_status(GUNLEFT) && noiseRadius < getCurrentPlayerNoise(GUNLEFT))
         {
             noiseRadius = getCurrentPlayerNoise(GUNLEFT);
         }
-        
+
         chrCheckGuardsHeardSound(noiseRadius);
     }
 
     gunSetSightVisible(GUNSIGHTREASON_NOTAIMING, moveData.aiming);
-    
+
     if (moveData.zoomOutFovPersec > 0)
     {
         camera_sniper_zoom_out(moveData.zoomOutFovPersec);
     }
-    
+
     if (moveData.zoomInFovPersec > 0)
     {
         camera_sniper_zoom_in(moveData.zoomInFovPersec);
@@ -9193,11 +9209,11 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 ftemp_nostack_spE0 = 60.0f;
             }
         }
-        
+
         bondviewTriggerWatchZoom(ftemp_nostack_spE0);
         bondviewUpdateWatchZoomIn();
     }
-    
+
     if (in_tank_flag == 1)
     {
         g_TankTurretTurn = 0;
@@ -9215,26 +9231,26 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             else if (moveData.canTurnTank)
             {
                 targetSpeed = (f32) moveData.analogStrafe / 70.0f;
-                
+
                 if (targetSpeed > 1.0f)
                 {
                     targetSpeed = 1.0f;
                 }
-                
+
                 if (targetSpeed < -1.0f)
                 {
                     targetSpeed = -1.0f;
                 }
-                
+
                 g_TankTurretTurn += DegToRad1Fact(1) * targetSpeed * g_GlobalTimerDelta;
             }
-            
+
             if (!g_CurrentPlayer->insightaimmode)
             {
                 ftemp_nostack_spD8 = 0;
                 targetSpeed = 1.0f;
                 ftemp_nostack_spE8 = 1.0f;
-                
+
                 if (moveData.canLookAhead)
                 {
                     ftemp_nostack_spD8 = (f32) moveData.analogWalk / 70.0f;
@@ -9247,7 +9263,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     ftemp_nostack_spD8 = -1.0f;
                 }
-                
+
                 if (ftemp_nostack_spD8 > 1.0f)
                 {
                     ftemp_nostack_spD8 = 1.0f;
@@ -9256,7 +9272,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     ftemp_nostack_spD8 = -1.0f;
                 }
-                
+
                 unadjustedTargetSpeed = ftemp_nostack_spD8 * TANK_MAX_SPEED;
                 targetSpeed = unadjustedTargetSpeed;
 
@@ -9274,7 +9290,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         unadjustedTargetSpeed = ((((((targetSpeed - g_CurrentPlayer->speedforwards) / 4.0f) / TANK_MAX_SPEED) + 0.5f) * ftemp_nostack_spE8 * FLOAT_TEN_A) / 60.0f);
 
                         g_CurrentPlayer->speedforwards += (unadjustedTargetSpeed) * g_GlobalTimerDelta;
-                        
+
                         if (targetSpeed < g_CurrentPlayer->speedforwards)
                         {
                             g_CurrentPlayer->speedforwards = targetSpeed;
@@ -9285,7 +9301,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         unadjustedTargetSpeed = ((((((g_CurrentPlayer->speedforwards - targetSpeed) / 4.0f) / TANK_MAX_SPEED) + 0.5f) * ftemp_nostack_spE8 * -FLOAT_TEN_A) / 60.0f);
 
                         g_CurrentPlayer->speedforwards += (unadjustedTargetSpeed) * g_GlobalTimerDelta;
-                        
+
                         if (g_CurrentPlayer->speedforwards < targetSpeed)
                         {
                             g_CurrentPlayer->speedforwards = targetSpeed;
@@ -9309,12 +9325,12 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             bondviewUpdateSpeedSideways(0);
         }
-        
+
         if (moveData.canTurnTank) // ?? not sure why this tank property is used here. Is the name wrong?
         {
             g_CurrentPlayer->speedsideways = (f32) moveData.analogStrafe / 70.0f;
         }
-        
+
         if (moveData.digitalStepForward)
         {
             bondviewUpdateSpeedForwards(1);
@@ -9328,11 +9344,11 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             bondviewUpdateSpeedForwards(0);
         }
-        
+
         if (moveData.canLookAhead)
         {
             g_CurrentPlayer->speedforwards = (f32) moveData.analogWalk / 70.0f;
-            
+
             if (moveData.analogWalk > 60)
             {
                 g_CurrentPlayer->speedmaxtime60 += g_ClockTimer;
@@ -9347,7 +9363,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->speedforwards = 1;
         }
-        
+
         if (g_CurrentPlayer->speedforwards < -1.0f)
         {
             g_CurrentPlayer->speedforwards = -1.0f;
@@ -9357,20 +9373,20 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->speedsideways = 1;
         }
-        
+
         if (g_CurrentPlayer->speedsideways < -1)
         {
             g_CurrentPlayer->speedsideways = -1;
         }
-        
+
         g_CurrentPlayer->speedforwards *= 1.08f;
         g_CurrentPlayer->speedforwards *= g_CurrentPlayer->speedboost;
-        
+
         if ((moveData.canLookAhead == 0) && (moveData.digitalStepForward == 0))
         {
             g_CurrentPlayer->speedmaxtime60 = 0;
         }
-        
+
         if (moveData.rLeanLeft)
         {
             currentPlayerSetSwayTarget(-1);
@@ -9383,7 +9399,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             currentPlayerSetSwayTarget(0);
         }
-        
+
         if (moveData.crouchDown)
         {
             currentPlayerAdjustCrouchPos(-2);
@@ -9400,7 +9416,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->speedboost += (SPEED_TICK_ADJUST * g_GlobalTimerDelta);
         }
-        
+
         if (g_CurrentPlayer->speedboost > SPEED_RUN_MAX)
         {
             g_CurrentPlayer->speedboost = SPEED_RUN_MAX;
@@ -9412,7 +9428,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->speedboost -= (SPEED_TICK_ADJUST * g_GlobalTimerDelta);
         }
-        
+
         if (g_CurrentPlayer->speedboost < SPEED_REGULAR_MAX)
         {
             g_CurrentPlayer->speedboost = SPEED_REGULAR_MAX;
@@ -9422,21 +9438,21 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     if (g_CurrentPlayer->watch_animation_state == 0)
     {
         spC4 = -4.0f;
-        
+
         if (g_CurrentPlayer->lookaheadcentreenabled)
         {
             spC0 = g_CurrentPlayer->field_488.current_tile_ptr;
             spBC = 300.0f;
-            
+
             // prop, f32 *collision_radius, f32 *height, f32 *always_30
             bondviewGetCollisionRadius(g_CurrentPlayer->prop, &spA0.f[0], &spA0.f[2], &spA0.f[1]);
-            
+
             spAC.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (g_CurrentPlayer->field_488.theta_transform.f[0] * 300.0f);
             spAC.f[1] = g_CurrentPlayer->field_488.collision_position.f[1];
             spAC.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (g_CurrentPlayer->field_488.theta_transform.f[2] * 300.0f);
-           
+
             sub_GAME_7F0B1CC4();
-            
+
             if (stanTestLineUnobstructed(&spC0, g_CurrentPlayer->field_488.collision_position.f[0], g_CurrentPlayer->field_488.collision_position.f[2], spAC.f[0], spAC.f[2], 0x1000, spA0.f[2], spA0.f[1], 0, 1.0f))
             {
                 spAC.f[1] = bondviewYPositionRelated(spC0, spAC.f[0], spAC.f[2]);
@@ -9453,7 +9469,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             if (spBC > 0)
             {
                 ftemp_nostack_spC8 = spAC.f[1] - g_CurrentPlayer->stanHeight;
-                
+
                 if ((ftemp_nostack_spC8 > -300.0f) && (ftemp_nostack_spC8 < 500.0f))
                 {
                     spC4 = ((atan2f(ftemp_nostack_spC8, spBC) * 360.0f) / M_TAU_F) + -4.0f;
@@ -9496,7 +9512,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         g_CurrentPlayer->automovecentre = 1;
                     }
-                    
+
                     if ((
                         g_CurrentPlayer->automovecentre)
                         && (( ((spC4 + 5.0f) < g_CurrentPlayer->vv_verta)) || (g_CurrentPlayer->vv_verta < (spC4 + -FLOAT_TEN_A)))
@@ -9517,7 +9533,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     g_CurrentPlayer->field_104 = 1;
                 }
-                
+
                 g_CurrentPlayer->field_10C = 0;
             }
         }
@@ -9527,7 +9543,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             if (in_tank_flag == 0)
             {
                 ftemp_nostack_spB8 = (g_CurrentPlayer->speedverta * g_CurrentPlayer->speedverta * 0.5f) / 0.05f;
-                
+
                 if ((spC4 + ftemp_nostack_spB8) < g_CurrentPlayer->vv_verta)
                 {
                     bondviewCurrentPlayerUpdateSpeedVerta(1.0f);
@@ -9540,9 +9556,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     bondviewCurrentPlayerUpdateSpeedVerta(0);
                 }
-                
+
                 ftemp_nostack_spB8 = g_CurrentPlayer->vv_verta + (2.0f * (g_CurrentPlayer->speedverta * g_GlobalTimerDelta));
-                
+
                 if ((spC4 < g_CurrentPlayer->vv_verta) && (spC4 < ftemp_nostack_spB8))
                 {
                     g_CurrentPlayer->vv_verta = ftemp_nostack_spB8;
@@ -9555,7 +9571,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     g_CurrentPlayer->vv_verta = spC4;
                     g_CurrentPlayer->speedverta = 0;
-                    
+
                     if (g_CurrentPlayer->field_10C == 0)
                     {
                         g_CurrentPlayer->field_104 = 0;
@@ -9569,7 +9585,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 ftemp_nostack_sp98 = viGetFovY() / 60.0f;
                 ftemp_nostack_sp94 = (f32) moveData.analogPitch / 70.0f;
-                
+
                 if (ftemp_nostack_sp94 > 1)
                 {
                     ftemp_nostack_sp94 = 1;
@@ -9578,7 +9594,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     ftemp_nostack_sp94 = -1;
                 }
-                
+
                 if (ftemp_nostack_sp94 >= 0)
                 {
                     ftemp_nostack_sp94 *= ftemp_nostack_sp94;
@@ -9587,13 +9603,13 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     ftemp_nostack_sp94 *= -ftemp_nostack_sp94;
                 }
-                
+
                 g_CurrentPlayer->speedverta = -ftemp_nostack_sp94 * ftemp_nostack_sp98;
             }
             else if (moveData.speedVertaDown > 0)
             {
                 bondviewCurrentPlayerUpdateSpeedVerta(moveData.speedVertaDown);
-                
+
                 if ((moveData.canLookAhead) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
                     g_CurrentPlayer->movecentrerelease = 1;
@@ -9602,7 +9618,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             else if (moveData.speedVertaUp > 0)
             {
                 bondviewCurrentPlayerUpdateSpeedVerta(-moveData.speedVertaUp);
-                
+
                 if ((moveData.canLookAhead) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
                     g_CurrentPlayer->movecentrerelease = 1;
@@ -9612,9 +9628,9 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 bondviewCurrentPlayerUpdateSpeedVerta(0);
             }
-            
+
             g_CurrentPlayer->vv_verta += g_CurrentPlayer->speedverta * g_GlobalTimerDelta * 3.5f;
-            
+
             if ((in_tank_flag == 1) && (g_EnterTankAudioState == TANK_RUN_STATE_RUNNING) && (g_CurrentPlayer->vv_verta < -20.0f))
             {
                 g_CurrentPlayer->vv_verta = -20.0f;
@@ -9626,7 +9642,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     {
         ftemp_nostack_sp8C = viGetFovY();
         ftemp_nostack_sp84 = (f32) moveData.analogTurn / 70.0f;
-        
+
         if (ftemp_nostack_sp84 > 1)
         {
             ftemp_nostack_sp84 = 1;
@@ -9635,7 +9651,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             ftemp_nostack_sp84 = -1;
         }
-        
+
         if (ftemp_nostack_sp84 >= 0)
         {
             ftemp_nostack_sp84 *= ftemp_nostack_sp84;
@@ -9701,7 +9717,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     }
 
     canCycleWeapons = 1;
-    
+
     if ((getPlayerCount() >= 2) && (get_scenario() == 2) && (bondinvIsAliveWithFlag()))
     {
         canCycleWeapons = 0;
@@ -9732,7 +9748,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     if (g_CurrentPlayer->controldef == 0)
     {
         gunSetAimType(0);
-        
+
         if (moveData.canAutoAim
             && redirect_get_BONDdata_autoaim_x()
             && g_CurrentPlayer->autoaim_target_x
@@ -9771,7 +9787,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
 /**
  * Perfect Dark playerTickDamageAndHealth
- * 
+ *
  * NTSC address 7F083FC8.
  * NTSC-J address 7F0845D8.
  * EU address 7F08406C.
@@ -9791,7 +9807,7 @@ void bondviewPlayerTickDamageAndHealth(void)
             countdownTimerSetVisible(8, 0);
 
             g_CurrentPlayer->damagetype = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
-            
+
             if (g_CurrentPlayer->damagetype >= 8)
             {
                 g_CurrentPlayer->damagetype = 7;
@@ -9807,7 +9823,7 @@ void bondviewPlayerTickDamageAndHealth(void)
 
 #ifdef VERSION_US
         if (
-            (g_DamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
+            (g_DamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime)
             || (g_DamageTypes[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime))
         {
             if (!g_CurrentPlayer->bonddead)
@@ -9815,7 +9831,7 @@ void bondviewPlayerTickDamageAndHealth(void)
 #else
         if (!g_CurrentPlayer->bonddead
             && (
-                (g_DamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime) 
+                (g_DamageTypes[g_CurrentPlayer->damagetype].field_0x8 >= g_CurrentPlayer->damageshowtime)
                 || (g_DamageTypes[g_CurrentPlayer->damagetype].flashEndFrame >= g_CurrentPlayer->damageshowtime)))
         {
 #endif
@@ -9832,7 +9848,7 @@ void bondviewPlayerTickDamageAndHealth(void)
                 f32 totalframes;
                 f32 flashfullframe;
 #endif
-                
+
                 flashdoneframes = g_CurrentPlayer->damageshowtime - g_DamageTypes[g_CurrentPlayer->damagetype].flashStartFrame;
                 flashfullframe = g_DamageTypes[g_CurrentPlayer->damagetype].flashFullFrame;
                 totalframes = g_DamageTypes[g_CurrentPlayer->damagetype].flashEndFrame - g_DamageTypes[g_CurrentPlayer->damagetype].flashStartFrame;
@@ -9877,7 +9893,7 @@ void bondviewPlayerTickDamageAndHealth(void)
         {
             g_CurrentPlayer->damageshowtime = -1;
             currentPlayerSetFadeColour(0xFF, 0xFF, 0xFF, 0);
-            
+
             if (!g_CurrentPlayer->bonddead)
             {
                 gunSetGunAmmoVisible(GUNAMMOREASON_DAMAGE, TRUE);
@@ -9896,7 +9912,7 @@ void bondviewPlayerTickDamageAndHealth(void)
         if (g_CurrentPlayer->healthshowtime == 0)
         {
             g_CurrentPlayer->healthDamageType = (s32)(bondviewGetCurrentPlayerHealth() * 8.0f);
-            
+
             if (g_CurrentPlayer->healthDamageType >= 8)
             {
                 g_CurrentPlayer->healthDamageType = 7;
@@ -9912,7 +9928,7 @@ void bondviewPlayerTickDamageAndHealth(void)
 
         if (!g_CurrentPlayer->bonddead)
         {
-            if ((g_CurrentPlayer->healthshowtime >= g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateStartFrame) 
+            if ((g_CurrentPlayer->healthshowtime >= g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateStartFrame)
                 && (g_HealthDamageTypes[g_CurrentPlayer->healthDamageType].updateEndFrame >= g_CurrentPlayer->healthshowtime))
             {
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->oldhealth;
@@ -9936,7 +9952,7 @@ void bondviewPlayerTickDamageAndHealth(void)
             }
             else
             {
-                g_CurrentPlayer->healthshowtime = -1;                
+                g_CurrentPlayer->healthshowtime = -1;
             }
         }
         else
@@ -9987,23 +10003,23 @@ void bondviewPlayerTickExplode(void)
 /**
  * NTSC Address 0x7F084648.
  * NTSC-J address 0x7F084CF8.
- * 
+ *
  * Met by Saint Jon The Archangel in the writhing pits of hell, the beast was
  * pinned, prone on the floor. He had taken many forms throughout the ages.
  * From the creator of man to the far reaches of the universe, his perpetual
  * reincarnations reigned throughout space and time... until now. His form was
  * weak, the opposition strong. The time for atonement had finally come.
- * 
+ *
  * Battered, torn, exposed, the beast slacked his gaping maw.
- * 
+ *
  * "I'm sorry, Jon" he whispered.
- * 
+ *
  * The archangel raised his flaming blade.
- * 
+ *
  * "You are forgiven, Garfield"
- * 
+ *
  * And the beast exhaled his last.
- * 
+ *
  * 10 months of off and on work to match.
  * Thanks Trevor.
  * - Ben Burns
@@ -10079,12 +10095,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             // boost sideways
             f32 shotboost_sideways; // sp388
             f32 shotboost_norm; // sp384
-            
+
             // Assigning these two variables is done in Perfect Dark bmove0f0cba88.
-            shotboost_forward = 
+            shotboost_forward =
                 (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_sintheta)
                 + (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_costheta);
-            shotboost_sideways = 
+            shotboost_sideways =
                 (-g_CurrentPlayer->bondshotspeed.f[0] * g_CurrentPlayer->vv_costheta)
                 - (g_CurrentPlayer->bondshotspeed.f[2] * g_CurrentPlayer->vv_sintheta);
 
@@ -10104,7 +10120,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] -=
                             ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
-                        
+
                         if (g_CurrentPlayer->bondshotspeed.f[i] < 0.0f)
                         {
                             g_CurrentPlayer->bondshotspeed.f[i] = 0.0f;
@@ -10114,7 +10130,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         g_CurrentPlayer->bondshotspeed.f[i] -=
                             ((0.06666667f * g_GlobalTimerDelta * g_CurrentPlayer->bondshotspeed.f[i]) / shotboost_norm);
-                        
+
                         if (g_CurrentPlayer->bondshotspeed.f[i] > 0.0f)
                         {
                             g_CurrentPlayer->bondshotspeed.f[i] = 0.0f;
@@ -10143,15 +10159,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         struct coord3d tank_collision_pt2;
         f32 tank_collision_dx;
         f32 tank_collision_dz;
-        
+
         tankChangeInAngle = DegToRad1Fact(g_CurrentPlayer->speedtheta * g_GlobalTimerDelta) * 3.5f;
         curTankAngleRad = g_TankOrientationAngle + tankChangeInAngle;
-        
+
         if (curTankAngleRad >= M_TAU_F)
         {
             curTankAngleRad -= M_TAU_F;
         }
-        
+
         if (curTankAngleRad < 0.0f)
         {
             curTankAngleRad += M_TAU_F;
@@ -10180,12 +10196,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             f32 sp30C;
             f32 sp308;
             f32 sp304;
-            
+
             sp31C = -1; //sp31C: scope within this block, used throughout
             sp304 = -1; //sp304: scope within this block, used throughout
 
             getCollisionEdge_maybe(&tank_collision_pt1, &tank_collision_pt2);
-            
+
             tank_collision_dx = (tank_collision_pt2.f[0] - tank_collision_pt1.f[0]);
             tank_collision_dz = (tank_collision_pt2.f[2] - tank_collision_pt1.f[2]);
 
@@ -10202,7 +10218,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             sp210 =
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0]) * sp324) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2]) * sp320);
-            
+
             if (sp210 < 0.0f)
             {
                 sp210 = -sp210;
@@ -10211,7 +10227,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
 
             // sp20C: very short lived variable
-            sp20C = 
+            sp20C =
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - tank_collision_pt1.f[0]) * sp324) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - tank_collision_pt1.f[2]) * sp320);
 
@@ -10219,7 +10235,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 sp31C = sp210 - sp20C;
             }
-            
+
             tank_collision_dx = check_collision_p2.f[0] - check_collision_p1.f[0];
             tank_collision_dz = check_collision_p2.f[2] - check_collision_p1.f[2];
 
@@ -10233,7 +10249,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             sp308 = -tank_collision_dx;
 
             // sp1F8 -> sp210: short lived variable
-            sp210 = 
+            sp210 =
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - check_collision_p2.f[0]) * sp30C) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - check_collision_p2.f[2]) * sp308);
 
@@ -10252,7 +10268,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             sp1E4 =
                 ((g_CurrentPlayer->field_488.collision_position.f[0] - tank_collision_pt2.f[0]) * sp30C) +
                 ((g_CurrentPlayer->field_488.collision_position.f[2] - tank_collision_pt2.f[2]) * sp308);
-        
+
             if (sp1E4 < sp1FC)
             {
                 sp1FC = sp1E4;
@@ -10262,21 +10278,21 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 sp304 = sp210 - sp1FC;
             }
-     
+
             if ((sp304 >= 0.0f) && ((sp304 < sp31C) || (sp31C < 0.0f)))
             {
                 sp324 = sp30C;
                 sp320 = sp308;
                 sp31C = sp304;
             }
-            
+
             if (sp31C >= 0.0f)
             {
                 move_offset.f[0] = sp31C * sp324 * 1.01f;
                 move_offset.f[2] = sp31C * sp320 * 1.01f;
-                
+
                 bondviewCalcUpdatePlayerCollision(&move_offset, 1);
-                
+
                 move_offset.f[0] = 0.0f;
                 move_offset.f[2] = 0.0f;
 
@@ -10313,12 +10329,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
 
         ftemp = (DegToRad1Fact(g_CurrentPlayer->speedtheta * 3.5f) * 4.0f) + g_TankTurretAngle;
-       
+
         if (ftemp < 0.0f)
         {
             ftemp += M_TAU_F;
         }
-        
+
         if (ftemp >= M_TAU_F)
         {
             ftemp -= M_TAU_F;
@@ -10345,13 +10361,13 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_TankTurretOrientationAngleRad -= M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
         }
-        
+
         if (g_TankTurretOrientationAngleRad < 0.0f)
         {
             g_TankTurretOrientationAngleRad += M_TAU_F;
             D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
         }
-        
+
         if (bondviewCallTankCollisionStatus(
             &g_CurrentPlayer->field_488.collision_position,
             g_CurrentPlayer->field_488.current_tile_ptr,
@@ -10369,9 +10385,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             struct coord3d tank_move_offset;
             Mtxf sp2B4;
             f32 stack_padding_4;
-            
+
             temp_tank = (struct TankRecord *)g_PlayerTankProp->obj;
-            
+
             tank_move_offset.f[1] = 0.0f;
             tank_move_offset.f[0] = g_TankModelPositionOffset.f[0];
             tank_move_offset.f[2] = g_TankModelPositionOffset.f[2];
@@ -10379,9 +10395,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             matrix_4x4_set_rotation_around_y(tankChangeInAngle, &sp2B4);
             mtx4RotateVecInPlace(&sp2B4, &tank_move_offset);
             bondviewTankModelRotationRelated();
-            
+
             if (0) { }
-            
+
             tank_move_offset.f[1] = 0.0f;
             tank_move_offset.f[0] = g_TankModelPositionOffset.f[0] - tank_move_offset.f[0];
             tank_move_offset.f[2] = g_TankModelPositionOffset.f[2] - tank_move_offset.f[2];
@@ -10440,7 +10456,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     {
         f32 sp2AC;
         f32 stack_padding_15;
-        
+
         sp2AC = 0.0f;
         if (currentPlayerGetCrouchPos() == CROUCH_SQUAT)
         {
@@ -10466,7 +10482,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 CHR_OBJ_ACCEL_SPEED_FACTOR,
                 CHR_OBJ_MAXSPEED);
         }
-    
+
         if (sp2AC == g_CurrentPlayer->ducking_height_offset)
         {
             g_CurrentPlayer->field_A4 = 0.0f;
@@ -10504,12 +10520,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 tank_obj = g_PlayerTankProp->obj;
                 matrix_4x4_set_rotation_around_y(M_TAU_F - g_TankOrientationAngle, &sp268);
                 matrix_scalar_multiply(tank_obj->model->scale, &sp268);
-                
+
                 sp25C.f[0] = g_TankModelPositionOffset.f[0];
                 sp25C.f[1] = g_TankModelPositionOffset.f[1];
                 sp25C.f[2] = g_TankModelPositionOffset.f[2];
                 mtx4RotateVecInPlace(&sp268, (f32*)&sp25C);
-                
+
                 sp25C.f[0] += tank_obj->runtime_pos.f[0];
                 sp25C.f[1] += tank_obj->runtime_pos.f[1];
                 sp25C.f[2] += tank_obj->runtime_pos.f[2];
@@ -10529,9 +10545,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 g_TankEnteringSitHeightRemain = (cosf(g_TankEnteringSitHeight * M_TAU_F * 0.5f) + 1.0f) * 0.5f;
 
-                g_CurrentPlayer->vv_verta = 
-                    (g_TankEnteringSitHeightRemain * g_TankEnterBondVertAngleDeg) 
-                    + ((1.0f - g_TankEnteringSitHeightRemain) * sp254); 
+                g_CurrentPlayer->vv_verta =
+                    (g_TankEnteringSitHeightRemain * g_TankEnterBondVertAngleDeg)
+                    + ((1.0f - g_TankEnteringSitHeightRemain) * sp254);
 
                 ftemp_5 = sp258 - g_TankEnterBondHorizAngleDeg;
                 if (ftemp_5 > 180.0f)
@@ -10545,7 +10561,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 g_CurrentPlayer->vv_theta =
                     (g_TankEnteringSitHeightRemain * g_TankEnterBondHorizAngleDeg)
-                    + ((1.0f - g_TankEnteringSitHeightRemain) * sp258); 
+                    + ((1.0f - g_TankEnteringSitHeightRemain) * sp258);
 
                 if (g_CurrentPlayer->vv_theta >= 360.0f)
                 {
@@ -10558,9 +10574,9 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
 
                 move_offset.f[0] = (
-                        (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[0]) + 
+                        (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[0]) +
                         ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[0])
-                    ) - 
+                    ) -
                     g_CurrentPlayer->field_488.collision_position.f[0];
 
                 move_offset.f[1] = 0.0f;
@@ -10568,7 +10584,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 move_offset.f[2] = (
                     (g_TankEnteringSitHeightRemain * g_EnterTankCoord.f[2]) +
                     ((1.0f - g_TankEnteringSitHeightRemain) * sp25C.f[2])
-                    ) - 
+                    ) -
                     g_CurrentPlayer->field_488.collision_position.f[2];
             }
 
@@ -10595,7 +10611,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 {
                     sndPlaySfx(g_musicSfxBufferPtr, TRUCK_START_SFX, &g_TankSfxState[0]);
                 }
-                
+
                 sndCreatePostEvent(g_TankSfxState[0], 8, 0x61A8);
                 g_TankEngineSfxVolume = 0x61A8;
             }
@@ -10609,10 +10625,10 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 f32 tank_scaled_speedforwards;
                 f32 tank_scaled_speedtheta;
                 f32 tank_vertical_angle;
-                
+
                 tank_scaled_speedforwards = g_CurrentPlayer->speedforwards / TANK_MAX_SPEED;
                 tank_scaled_speedtheta = g_CurrentPlayer->speedtheta / 0.3f;
-                
+
                 if (tank_scaled_speedforwards < 0.0f)
                 {
                     tank_scaled_speedforwards = -tank_scaled_speedforwards;
@@ -10634,7 +10650,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     {
                         tank_engine_utilization_percent = 1.0f;
                     }
-                    
+
                     if (g_TankSfxState[1] == NULL)
                     {
                         if (lvlGetControlsLockedFlag() == 0)
@@ -10656,7 +10672,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         {
                             phi_a2 = (s32) ((((tank_engine_utilization_percent - 0.15f) * 12767.0f) / 0.75f) + 20000.0f);
                         }
-                        
+
                         sndCreatePostEvent(g_TankSfxState[1], 8, phi_a2);
                     }
                 }
@@ -10718,7 +10734,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 g_TankTurretVerticalAngle = g_TankTurretVerticalAngleRelated * (1.0f - TANKTURRETVERTICALANGLERELATED_SCALE);
             }
-            
+
         }
 
         g_CurrentPlayer->bondbreathing -= (0.750f * g_GlobalTimerDelta) / 2700.0f;
@@ -10727,14 +10743,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->bondbreathing = 0.0f;
         }
-        
+
         bondviewMoveAnimationTick(0.0f, 0.0f, 0.0f);
 
         move_offset.f[0] += g_CurrentPlayer->speedforwards * sinf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
         move_offset.f[2] += g_CurrentPlayer->speedforwards * cosf(M_TAU_F - g_TankOrientationAngle) * g_GlobalTimerDelta;
 
         bondviewCalcUpdatePlayerCollision(&move_offset, 1);
-        
+
         if ((g_EnterTankAudioState == TANK_RUN_STATE_RUNNING) && (g_ClockTimer > 0))
         {
             f32 calc_x;
@@ -10751,16 +10767,16 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 #endif
             }
 #endif
-            
+
             calc_x = (g_CurrentPlayer->field_488.collision_position.f[0] - g_CurrentPlayer->bondprevpos.f[0]) / g_GlobalTimerDelta;
             calc_z = (g_CurrentPlayer->field_488.collision_position.f[2] - g_CurrentPlayer->bondprevpos.f[2]) / g_GlobalTimerDelta;
             calc_speedforwards = sqrtf((calc_x * calc_x) + (calc_z * calc_z));
-            
+
             if (g_CurrentPlayer->speedforwards < 0.0f)
             {
                 calc_speedforwards = -calc_speedforwards;
             }
-            
+
             g_CurrentPlayer->speedforwards = calc_speedforwards;
         }
     }
@@ -10834,13 +10850,13 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         /*
             The following is similar to a block of Perfect Dark bwalk0f0c69b8.
         */
-        
+
         ftemp_26 = -g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.theta_transform.f[2];
         ftemp_11 = g_CurrentPlayer->swaytarget * g_CurrentPlayer->field_488.theta_transform.f[0];
-        
+
         sp220 = (ftemp_26) - g_CurrentPlayer->swayoffset0;
         sp21C = (ftemp_11) - g_CurrentPlayer->swayoffset2;
-        
+
         dist = (sp220 * sp220) + (sp21C * sp21C);
 
         if (dist >= 100.0f)
@@ -10867,7 +10883,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
 
         maxspeed = speedforwards;
-        
+
 #if defined(VERSION_EU)
         if (maxspeed < speedsideways && 1)
 #else
@@ -10894,7 +10910,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->bondbreathing -= (0.750f - maxspeed) * g_GlobalTimerDelta / 2700.0f;
         }
-        
+
         if (g_CurrentPlayer->bondbreathing < 0.0f)
         {
             g_CurrentPlayer->bondbreathing = 0.0f;
@@ -10903,48 +10919,48 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             g_CurrentPlayer->bondbreathing = 1.0f;
         }
-        
+
         // perfect dark call: bmove0f0cc654
         bondviewMoveAnimationTick(maxspeed, g_CurrentPlayer->speedforwards, sp3A0);
 
         headpos_x = g_CurrentPlayer->headpos.f[0];
         headpos_z = g_CurrentPlayer->headpos.f[2];
 
-        move_offset.f[0] += 
+        move_offset.f[0] +=
             (
                 (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[0]) -
                 (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[2])
             ) * g_GlobalTimerDelta;
 
-        move_offset.f[2] += 
+        move_offset.f[2] +=
             (
                 (headpos_z * g_CurrentPlayer->field_488.theta_transform.f[2]) +
                 (headpos_x * g_CurrentPlayer->field_488.theta_transform.f[0])
             ) * g_GlobalTimerDelta;
 
- 
+
         move_offset.f[0] += sp220;
         move_offset.f[2] += sp21C;
 
         start_collision_pos_x = g_CurrentPlayer->field_488.collision_position.f[0];
         start_collision_pos_z = g_CurrentPlayer->field_488.collision_position.f[2];
         sp200 = g_CurrentPlayer->field_488.current_tile_ptr;
-        
+
         if (get_debug_fast_bond_flag())
         {
-            move_offset.f[0] += 
+            move_offset.f[0] +=
                 (
                     (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedforwards) -
                     (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
 
-            move_offset.f[2] += 
+            move_offset.f[2] +=
                 (
                     (g_CurrentPlayer->field_488.theta_transform.f[2] * g_CurrentPlayer->speedforwards) +
                     (g_CurrentPlayer->field_488.theta_transform.f[0] * g_CurrentPlayer->speedsideways)
                 ) * g_GlobalTimerDelta * 10.0f;
         }
-        
+
         bondviewCalcUpdatePlayerCollision(&move_offset, (g_CurrentPlayer->swaytarget == 0.0f));
 
         stanTileDistanceRelated(
@@ -10953,7 +10969,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             start_collision_pos_z,
             g_CurrentPlayer->field_488.collision_radius * 1.16f,
             &curLocus);
-        
+
         /* almost never true */
         if (stanGetLocusCount(&curLocus) != 0)
         {
@@ -10979,7 +10995,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->field_488.collision_position.f[2],
             g_CurrentPlayer->field_488.collision_radius,
             &curLocus);
-        
+
         /* almost always true */
         if (stanGetLocusCount(&curLocus) == 0)
         {
@@ -10990,7 +11006,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 g_CurrentPlayer->field_488.collision_radius * 0.990099f,
                 &curLocus);
         }
-        
+
         /* almost never true */
         if (stanGetLocusCount(&curLocus))
         {
@@ -11004,23 +11020,23 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 f32 sp250;
                 f32 sp310;
                 f32 sp314;
-                
+
                 sp168 = bondCollision.bondCollision.f[0] - bondCollision.sp190.f[0];
                 sp16C = bondCollision.sp190.f[2] - bondCollision.bondCollision.f[2];
 
                 nd = sqrtf((sp16C * sp16C) + (sp168 * sp168));
-                
+
                 sp168 = sp168 / nd;
                 sp16C = sp16C / nd;
 
                 sp164 =
                     ((start_collision_pos_x - bondCollision.bondCollision.f[0]) * sp16C) +
                     ((start_collision_pos_z - bondCollision.bondCollision.f[2]) * sp168);
-                
-                sp2B0 = 
+
+                sp2B0 =
                     (((start_collision_pos_x + move_offset.f[0]) - bondCollision.bondCollision.f[0]) * sp16C) +
                     (((start_collision_pos_z + move_offset.f[2]) - bondCollision.bondCollision.f[2]) * sp168);
-                
+
                 if ((sp164 * sp2B0) <= 0.0f)
                 {
                     shorten = 0.0f;
@@ -11055,7 +11071,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 if (sp2A8 > 0.0f)
                 {
                     f32 sp318;
-                    
+
                     sp318 = (1.0f - shorten) * sp2A8;
                     sp390 = sp318 * 0.25f;
 
@@ -11084,7 +11100,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 g_CurrentPlayer->field_488.collision_position.f[0] = start_collision_pos_x;
                 g_CurrentPlayer->field_488.collision_position.f[2] = start_collision_pos_z;
                 g_CurrentPlayer->field_488.current_tile_ptr = sp200;
-                
+
                 bondviewCalcUpdatePlayerCollision(&move_offset, (g_CurrentPlayer->swaytarget == 0.0f));
             }
         }
@@ -11106,17 +11122,17 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         f32 breathing;
         f32 sp14C_temp;
         f32 weapon_speed_verta;
-        
+
         sp14C_temp = g_CurrentPlayer->speedtheta;
         weapon_speed_verta =
             (g_CurrentPlayer->speedverta / 0.7f) +
             (g_CurrentPlayer->field_A4 / CHR_OBJ_MAXSPEED);
-    
+
         /*
         Following matches the end of Perfect Dark bwalk0f0c69b8
         */
-        breathing = bheadGetBreathingValue();    
-        
+        breathing = bheadGetBreathingValue();
+
         if (weapon_speed_verta > 1.0f)
         {
             weapon_speed_verta = 1.0f;
@@ -11125,12 +11141,12 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             weapon_speed_verta = -1.0f;
         }
-    
+
         if (g_CurrentPlayer->headanim == 1)
         {
             breathing *= 1.2f;
         }
-    
+
         // Perfect Dark call bgun0f09d8dc
         gunSetBondWeaponSway(breathing, maxspeed, weapon_speed_verta, sp14C_temp);
 
@@ -11154,20 +11170,20 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         struct ModelNode_BoundingBoxRecord *sp130;
         Mtxf spF0;
         struct coord3d spE4;
-        s32 stack_padding_13; 
-        s32 i_4; 
-        s32 stemp; 
-        void *stack_padding_8; 
+        s32 stack_padding_13;
+        s32 i_4;
+        s32 stemp;
+        void *stack_padding_8;
         struct rect4f spB4_tank_collision_bounds;
         // roomids
         s32 sp94[8];
         s32 stanlineret;
         s16 *lookup_index;
-        
+
         sp140_tank_as_TankRecord = ((struct TankRecord *)g_PlayerTankProp->obj);
         sp138_tank_as_ObjectRecord = (struct  ObjectRecord*)g_PlayerTankProp->obj;
         sp130 = (struct ModelNode_BoundingBoxRecord *)((struct ModelNode *)sp138_tank_as_ObjectRecord->model->obj->Switches)->Child->Data;
-        
+
         sp140_tank_as_TankRecord->is_firing_tank = (getCurrentPlayerWeaponId(GUNRIGHT) == ITEM_TANKSHELLS)
             && get_hands_firing_status(GUNRIGHT);
 
@@ -11181,7 +11197,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         spE4.f[0] = -g_TankModelPositionOffset.f[0];
         spE4.f[1] = -g_TankModelPositionOffset.f[1];
         spE4.f[2] = -g_TankModelPositionOffset.f[2];
-        
+
         mtx4RotateVecInPlace(&spF0, &spE4);
 
         spE4.f[0] += g_CurrentPlayer->field_488.collision_position.f[0];
@@ -11205,14 +11221,14 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         {
             sp140_tank_as_TankRecord->unkD0 = (sp140_tank_as_TankRecord->unkD0 * TANK_UNKD0_SCALE) + sp140_tank_as_TankRecord->stan_y;
         }
-        
+
         ftemp_12 = (sp140_tank_as_TankRecord->unkD0 * (1.0f - TANK_UNKD0_SCALE));
         spE4.f[1] = ftemp_12
             - (chrpropBBOXGetYmin(sp130) * sp138_tank_as_ObjectRecord->model->scale)
             + 4.0f;
 
         matrix_4x4_copy(&spF0,  &sp138_tank_as_ObjectRecord->mtx);
-        
+
         sp138_tank_as_ObjectRecord->runtime_pos.f[0] = sp138_tank_as_ObjectRecord->prop->pos.f[0] = spE4.f[0];
         sp138_tank_as_ObjectRecord->runtime_pos.f[1] = sp138_tank_as_ObjectRecord->prop->pos.f[1] = spE4.f[1];
         sp138_tank_as_ObjectRecord->runtime_pos.f[2] = sp138_tank_as_ObjectRecord->prop->pos.f[2] = spE4.f[2];
@@ -11221,7 +11237,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         chrobjCollisionRelated(sp138_tank_as_ObjectRecord);
         bondviewGetTankCollisionBounds(&spB4_tank_collision_bounds, &g_CurrentPlayer->field_488.collision_position, g_TankOrientationAngle);
         chraiGetPropRoomIds(sp138_tank_as_ObjectRecord->prop, &sp94);
-        
+
         // update num_obj_position_data_entries
         roomGetProps(&sp94);
 
@@ -11239,11 +11255,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                     struct coord3d sp70;
                     struct ChrRecord *sp6C;
                     f32 stack_padding_28;
-                    
+
                     sp7C = 1;
                     sp6C = prop->chr;
                     chrpropGetCollisionBounds(prop, &sp80_collision_radius, &sp88_collision_bound_height, &sp84_collision_bound_z);
-                    
+
                     if (chrpropTestPointInPolygon(&prop->pos, &spB4_tank_collision_bounds, 4))
                     {
                         sp7C = 0;
@@ -11280,15 +11296,15 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         sp70.f[0] = sp138_tank_as_ObjectRecord->runtime_pos.f[0];
                         sp70.f[1] = prop->pos.f[1];
                         sp70.f[2] = sp138_tank_as_ObjectRecord->runtime_pos.f[2];
-                        
+
                         chrlvExplosionDamage(prop->chr, &sp70, 3.0f, 1);
-                    }                    
+                    }
                 }
                 else if (prop->type == PROP_TYPE_OBJ)
                 {
                     struct rect4f *sp64;
                     s32 sp60;
-                    
+
                     chraiGetCollisionBoundsWithoutY(prop, &sp64, &sp60);
                     if ((sp60 > 0) && sub_GAME_7F0446B8(sp64, sp60, &spB4_tank_collision_bounds, 4))
                     {
@@ -11337,32 +11353,32 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     property_pos2 = g_DefaultFrozenPlayerPos2;
     property_offset = g_DefaultFrozenPlayerOffset;
     offset = g_DefaultFrozenMoveOffset;
-    
+
     bondviewPlayerTickDamageAndHealth();
     bondviewPlayerTickExplode();
     bondviewProcessInput(0, 0, 0, 0);
     bondviewApplyVertaTheta();
     bondviewMoveAnimationTick(0, 0, 0);
-    
+
     if ((g_ForceBondMoveOffset.f[0] != 0.0f) || (g_ForceBondMoveOffset.f[2] != 0.0f))
     {
         offset.f[0] += g_ForceBondMoveOffset.f[0] * g_GlobalTimerDelta;
         offset.f[2] += g_ForceBondMoveOffset.f[2] * g_GlobalTimerDelta;
     }
-    
+
     offset.f[0] += ((g_CurrentPlayer->headpos.f[2] * g_CurrentPlayer->field_488.theta_transform.f[0]) - (g_CurrentPlayer->headpos.f[0] * g_CurrentPlayer->field_488.theta_transform.f[2])) * g_GlobalTimerDelta;
     offset.f[2] += ((g_CurrentPlayer->headpos.f[2] * g_CurrentPlayer->field_488.theta_transform.f[2]) + (g_CurrentPlayer->headpos.f[0] * g_CurrentPlayer->field_488.theta_transform.f[0])) * g_GlobalTimerDelta;
-    
+
     bondviewCalcUpdatePlayerCollision(&offset, 1);
     bondviewUpdatePlayerY(0, 0.0f);
     bondviewUpdatePlayerCollisionPositionFields();
-    
+
     if ((g_CameraMode == CAMERAMODE_FP_NOINPUT) || (g_CameraMode == CAMERAMODE_FP) || (g_CameraMode == CAMERAMODE_FADE_TO_TITLE))
     {
         currentPlayerSetField00(0);
         return;
     }
-    
+
     bondviewFrozenCameraTick(buttons, oldbuttons, &property_pos, &property_pos2, &property_offset, &room_pointer_tile, &stan_walk_start);
     currentPlayerSetField00(1);
     bondviewSetCurrentPlayerPosition(&property_pos, &property_pos2, &property_offset, room_pointer_tile, &stan_walk_start);
@@ -11554,12 +11570,12 @@ s16 bondviewGetCurrentPlayerViewportUly(void)
  * Arguments are passed into MoveBond or bondviewFrozenMoveBond.
  * Checks if necessary to call bossReturnTitleStage.
  * Set player->buttons_pressed to arg2.
- * 
+ *
  * Address 0x7F086F9C (VERSION_US).
  * Address 0x7F0870BC (VERSION_EU).
  * Address 0x7F087668 (VERSION_JP).
  */
-void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
+void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
 {
 #ifdef VERSION_EU
     f32 faspect;
@@ -11615,12 +11631,12 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
     {
         faspect = (f32) bondviewGetCurrentPlayerViewportWidth() / (f32) bondviewGetCurrentPlayerViewportHeight();
     }
-    
+
     if (camera_8003642C == 0)
     {
         faspect *= EU_CAMERA_8003642C_ASPECT;
     }
-    
+
     set_cur_player_aspect(faspect);
     viSetAspect(faspect);
 
@@ -11668,23 +11684,23 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             mission_timer += g_ClockTimer;
         }
 
-        MoveBond(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
+        MoveBond(stick_x, stick_y, buttons, (u16) g_CurrentPlayer->buttons_pressed);
     }
     else
     {
-        bondviewFrozenMoveBond(arg0, arg1, arg2, (u16) g_CurrentPlayer->buttons_pressed);
+        bondviewFrozenMoveBond(stick_x, stick_y, buttons, (u16) g_CurrentPlayer->buttons_pressed);
     }
-    
+
 #if defined(BUGFIX_R1)
     watch_time_0 += jpD_800484D0;
 #else
     // VERSION_US
     watch_time_0 += speedgraphframes;
 #endif
-    
+
     if (stop_time_flag != 0)
     {
-        if ((lvlGetControlsLockedFlag() == 0) && ((arg2 & ~(g_CurrentPlayer->buttons_pressed) & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON | CONT_R | CONT_L))))
+        if ((lvlGetControlsLockedFlag() == 0) && ((buttons & ~(g_CurrentPlayer->buttons_pressed) & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON | CONT_R | CONT_L))))
         {
             stop_time_flag = 2;
 
@@ -11710,12 +11726,12 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
             bossReturnTitleStage();
         }
     }
-    
+
     if (g_CameraAfterCinema)
     {
         sub_GAME_7F07B1A4();
     }
-    
+
     if (g_CurrentPlayer->bonddead)
     {
         if (g_CurrentPlayer->redbloodfinished == 0)
@@ -11740,7 +11756,7 @@ void bondviewMovePlayerUpdateViewport(s8 arg0, s8 arg1, u16 arg2)
         bossRunTitleStage();
     }
 
-    g_CurrentPlayer->buttons_pressed = arg2;
+    g_CurrentPlayer->buttons_pressed = buttons;
 }
 
 
@@ -13814,9 +13830,9 @@ glabel sub_GAME_7F087E74
 /* 0BABB0 7F0881C0 460A2202 */  mul.s $f8, $f4, $f10
 /* 0BABB4 7F0881C4 44054000 */  mfc1  $a1, $f8
 /* 0BABB8 7F0881C8 0FC1625E */  jal   matrix_4x4_set_position_and_rotation_around_y
-/* 0BABBC 7F0881CC 00000000 */   nop   
+/* 0BABBC 7F0881CC 00000000 */   nop
 /* 0BABC0 7F0881D0 0FC1E111 */  jal   camGetWorldToScreenMtxf
-/* 0BABC4 7F0881D4 00000000 */   nop   
+/* 0BABC4 7F0881D4 00000000 */   nop
 /* 0BABC8 7F0881D8 00402025 */  move  $a0, $v0
 /* 0BABCC 7F0881DC 0FC16150 */  jal   matrix_4x4_multiply_homogeneous_in_place
 /* 0BABD0 7F0881E0 27A50178 */   addiu $a1, $sp, 0x178
@@ -13859,7 +13875,7 @@ glabel sub_GAME_7F087E74
 /* 0BAC64 7F088274 C44A0258 */  lwc1  $f10, 0x258($v0)
 /* 0BAC68 7F088278 46085383 */  div.s $f14, $f10, $f8
 /* 0BAC6C 7F08827C 460E003C */  c.lt.s $f0, $f14
-/* 0BAC70 7F088280 00000000 */  nop   
+/* 0BAC70 7F088280 00000000 */  nop
 /* 0BAC74 7F088284 45020003 */  bc1fl .L7F088294
 /* 0BAC78 7F088288 C4660000 */   lwc1  $f6, ($v1)
 /* 0BAC7C 7F08828C 46000386 */  mov.s $f14, $f0
@@ -13959,14 +13975,14 @@ glabel sub_GAME_7F087E74
 /* 0BADF0 7F088400 00006812 */  mflo  $t5
 /* 0BADF4 7F088404 468042A0 */  cvt.s.w $f10, $f8
 /* 0BADF8 7F088408 14600002 */  bnez  $v1, .L7F088414
-/* 0BADFC 7F08840C 00000000 */   nop   
+/* 0BADFC 7F08840C 00000000 */   nop
 /* 0BAE00 7F088410 0007000D */  break 7
 .L7F088414:
 /* 0BAE04 7F088414 2401FFFF */  li    $at, -1
 /* 0BAE08 7F088418 14610004 */  bne   $v1, $at, .L7F08842C
 /* 0BAE0C 7F08841C 3C018000 */   lui   $at, 0x8000
 /* 0BAE10 7F088420 14810002 */  bne   $a0, $at, .L7F08842C
-/* 0BAE14 7F088424 00000000 */   nop   
+/* 0BAE14 7F088424 00000000 */   nop
 /* 0BAE18 7F088428 0006000D */  break 6
 .L7F08842C:
 /* 0BAE1C 7F08842C 01A3001A */  div   $zero, $t5, $v1
@@ -13976,14 +13992,14 @@ glabel sub_GAME_7F087E74
 /* 0BAE2C 7F08843C 00007810 */  mfhi  $t7
 /* 0BAE30 7F088440 46065103 */  div.s $f4, $f10, $f6
 /* 0BAE34 7F088444 14600002 */  bnez  $v1, .L7F088450
-/* 0BAE38 7F088448 00000000 */   nop   
+/* 0BAE38 7F088448 00000000 */   nop
 /* 0BAE3C 7F08844C 0007000D */  break 7
 .L7F088450:
 /* 0BAE40 7F088450 2401FFFF */  li    $at, -1
 /* 0BAE44 7F088454 14610004 */  bne   $v1, $at, .L7F088468
 /* 0BAE48 7F088458 3C018000 */   li    $at, 0x80000000 # -0.000000
 /* 0BAE4C 7F08845C 14410002 */  bne   $v0, $at, .L7F088468
-/* 0BAE50 7F088460 00000000 */   nop   
+/* 0BAE50 7F088460 00000000 */   nop
 /* 0BAE54 7F088464 0006000D */  break 6
 .L7F088468:
 /* 0BAE58 7F088468 3C014270 */  li    $at, 0x42700000 # 60.000000
@@ -14001,14 +14017,14 @@ glabel sub_GAME_7F087E74
 /* 0BAE88 7F088498 4610903C */  c.lt.s $f18, $f16
 /* 0BAE8C 7F08849C 46009306 */  mov.s $f12, $f18
 /* 0BAE90 7F0884A0 14600002 */  bnez  $v1, .L7F0884AC
-/* 0BAE94 7F0884A4 00000000 */   nop   
+/* 0BAE94 7F0884A4 00000000 */   nop
 /* 0BAE98 7F0884A8 0007000D */  break 7
 .L7F0884AC:
 /* 0BAE9C 7F0884AC 2401FFFF */  li    $at, -1
 /* 0BAEA0 7F0884B0 14610004 */  bne   $v1, $at, .L7F0884C4
 /* 0BAEA4 7F0884B4 3C018000 */   li    $at, 0x80000000 # -0.000000
 /* 0BAEA8 7F0884B8 15A10002 */  bne   $t5, $at, .L7F0884C4
-/* 0BAEAC 7F0884BC 00000000 */   nop   
+/* 0BAEAC 7F0884BC 00000000 */   nop
 /* 0BAEB0 7F0884C0 0006000D */  break 6
 .L7F0884C4:
 /* 0BAEB4 7F0884C4 3C014270 */  li    $at, 0x42700000 # 60.000000
@@ -14047,29 +14063,29 @@ glabel sub_GAME_7F087E74
 /* 0BAF38 7F088548 46026300 */  add.s $f12, $f12, $f2
 .L7F08854C:
 /* 0BAF3C 7F08854C 4610603C */  c.lt.s $f12, $f16
-/* 0BAF40 7F088550 00000000 */  nop   
+/* 0BAF40 7F088550 00000000 */  nop
 /* 0BAF44 7F088554 4503FFFD */  bc1tl .L7F08854C
 /* 0BAF48 7F088558 46026300 */   add.s $f12, $f12, $f2
 .L7F08855C:
 /* 0BAF4C 7F08855C 4610503C */  c.lt.s $f10, $f16
-/* 0BAF50 7F088560 00000000 */  nop   
+/* 0BAF50 7F088560 00000000 */  nop
 /* 0BAF54 7F088564 45020007 */  bc1fl .L7F088584
 /* 0BAF58 7F088568 4610303C */   c.lt.s $f6, $f16
 /* 0BAF5C 7F08856C 46027380 */  add.s $f14, $f14, $f2
 .L7F088570:
 /* 0BAF60 7F088570 4610703C */  c.lt.s $f14, $f16
-/* 0BAF64 7F088574 00000000 */  nop   
+/* 0BAF64 7F088574 00000000 */  nop
 /* 0BAF68 7F088578 4503FFFD */  bc1tl .L7F088570
 /* 0BAF6C 7F08857C 46027380 */   add.s $f14, $f14, $f2
 /* 0BAF70 7F088580 4610303C */  c.lt.s $f6, $f16
 .L7F088584:
-/* 0BAF74 7F088584 00000000 */  nop   
+/* 0BAF74 7F088584 00000000 */  nop
 /* 0BAF78 7F088588 45020007 */  bc1fl .L7F0885A8
 /* 0BAF7C 7F08858C 8F380008 */   lw    $t8, 8($t9)
 /* 0BAF80 7F088590 46020000 */  add.s $f0, $f0, $f2
 .L7F088594:
 /* 0BAF84 7F088594 4610003C */  c.lt.s $f0, $f16
-/* 0BAF88 7F088598 00000000 */  nop   
+/* 0BAF88 7F088598 00000000 */  nop
 /* 0BAF8C 7F08859C 4503FFFD */  bc1tl .L7F088594
 /* 0BAF90 7F0885A0 46020000 */   add.s $f0, $f0, $f2
 /* 0BAF94 7F0885A4 8F380008 */  lw    $t8, 8($t9)
@@ -14162,12 +14178,12 @@ glabel sub_GAME_7F087E74
 /* 0BB0E0 7F0886F0 0FC16144 */  jal   matrix_4x4_multiply_in_place
 /* 0BB0E4 7F0886F4 27A5004C */   addiu $a1, $sp, 0x4c
 /* 0BB0E8 7F0886F8 0FC16443 */  jal   matrix_4x4_7F058C64
-/* 0BB0EC 7F0886FC 00000000 */   nop   
+/* 0BB0EC 7F0886FC 00000000 */   nop
 /* 0BB0F0 7F088700 27A4004C */  addiu $a0, $sp, 0x4c
 /* 0BB0F4 7F088704 0FC16451 */  jal   matrix_4x4_f32_to_s32
 /* 0BB0F8 7F088708 8FA50048 */   lw    $a1, 0x48($sp)
 /* 0BB0FC 7F08870C 0FC1644C */  jal   matrix_4x4_7F058C88
-/* 0BB100 7F088710 00000000 */   nop   
+/* 0BB100 7F088710 00000000 */   nop
 /* 0BB104 7F088714 3C0C8007 */  lui   $t4, %hi(g_CurrentPlayer) # $t4, 0x8007
 /* 0BB108 7F088718 8D8C8BC0 */  lw    $t4, %lo(g_CurrentPlayer)($t4)
 /* 0BB10C 7F08871C 8FA401F8 */  lw    $a0, 0x1f8($sp)
@@ -14175,7 +14191,7 @@ glabel sub_GAME_7F087E74
 /* 0BB114 7F088724 38660005 */  xori  $a2, $v1, 5
 /* 0BB118 7F088728 2CC60001 */  sltiu $a2, $a2, 1
 /* 0BB11C 7F08872C 14C00003 */  bnez  $a2, .L7F08873C
-/* 0BB120 7F088730 00000000 */   nop   
+/* 0BB120 7F088730 00000000 */   nop
 /* 0BB124 7F088734 3866000C */  xori  $a2, $v1, 0xc
 /* 0BB128 7F088738 2CC60001 */  sltiu $a2, $a2, 1
 .L7F08873C:
@@ -14190,14 +14206,14 @@ glabel sub_GAME_7F087E74
 /* 0BB14C 7F08875C 0FC2300F */  jal   bondviewTransformManyPosToViewMatrix
 /* 0BB150 7F088760 85E5000E */   lh    $a1, 0xe($t7)
 /* 0BB154 7F088764 0FC1644C */  jal   matrix_4x4_7F058C88
-/* 0BB158 7F088768 00000000 */   nop   
+/* 0BB158 7F088768 00000000 */   nop
 .L7F08876C:
 /* 0BB15C 7F08876C 8FBF002C */  lw    $ra, 0x2c($sp)
 .L7F088770:
 /* 0BB160 7F088770 8FA201F8 */  lw    $v0, 0x1f8($sp)
 /* 0BB164 7F088774 27BD01F8 */  addiu $sp, $sp, 0x1f8
 /* 0BB168 7F088778 03E00008 */  jr    $ra
-/* 0BB16C 7F08877C 00000000 */   nop   
+/* 0BB16C 7F08877C 00000000 */   nop
 )
 #endif
 
@@ -14501,7 +14517,7 @@ glabel sub_GAME_7F088618
 /* 0BB1F0 7F088800 0FC28A1C */  jal   sub_GAME_7F0A3330
 /* 0BB1F4 7F088804 26242120 */   addiu $a0, $s1, 0x2120
 /* 0BB1F8 7F088808 0FC2F2A4 */  jal   dynAllocateMatrix
-/* 0BB1FC 7F08880C 00000000 */   nop   
+/* 0BB1FC 7F08880C 00000000 */   nop
 /* 0BB200 7F088810 0FC2F2A4 */  jal   dynAllocateMatrix
 /* 0BB204 7F088814 AFA200BC */   sw    $v0, 0xbc($sp)
 /* 0BB208 7F088818 3C018003 */  lui   $at, %hi(D_800364CC) # $at, 0x8003
@@ -15000,7 +15016,7 @@ glabel mp_respawn_handler
 /* 0BB478 7F088A88 0FC1E51B */  jal   init_player_BONDdata
 /* 0BB47C 7F088A8C 8E104C48 */   lw    $s0, %lo(g_CurrentSetup+8)($s0)
 /* 0BB480 7F088A90 0FC1E64E */  jal   bondviewPlayerSpawnRelated
-/* 0BB484 7F088A94 00000000 */   nop   
+/* 0BB484 7F088A94 00000000 */   nop
 /* 0BB488 7F088A98 3C118007 */  lui   $s1, %hi(g_CurrentPlayer) # $s1, 0x8007
 /* 0BB48C 7F088A9C 26318BC0 */  addiu $s1, %lo(g_CurrentPlayer) # addiu $s1, $s1, -0x7440
 /* 0BB490 7F088AA0 8E290000 */  lw    $t1, ($s1)
@@ -15027,7 +15043,7 @@ glabel mp_respawn_handler
 /* 0BB4E4 7F088AF4 0FC22ADC */  jal   bondviewClearUpperTextDisplayFlag
 /* 0BB4E8 7F088AF8 2404FFFF */   li    $a0, -1
 /* 0BB4EC 7F088AFC 0FC26669 */  jal   getPlayerCount
-/* 0BB4F0 7F088B00 00000000 */   nop   
+/* 0BB4F0 7F088B00 00000000 */   nop
 /* 0BB4F4 7F088B04 28410002 */  slti  $at, $v0, 2
 /* 0BB4F8 7F088B08 14200008 */  bnez  $at, .L7F088B2C
 /* 0BB4FC 7F088B0C 3C098007 */   lui   $t1, %hi(startpadcount) # $t1, 0x8007
@@ -15035,7 +15051,7 @@ glabel mp_respawn_handler
 /* 0BB504 7F088B14 59200006 */  blezl $t1, .L7F088B30
 /* 0BB508 7F088B18 00001825 */   move  $v1, $zero
 /* 0BB50C 7F088B1C 0FC1E45C */  jal   bondviewGetRandomSpawnPadIndex
-/* 0BB510 7F088B20 00000000 */   nop   
+/* 0BB510 7F088B20 00000000 */   nop
 /* 0BB514 7F088B24 10000002 */  b     .L7F088B30
 /* 0BB518 7F088B28 00401825 */   move  $v1, $v0
 .L7F088B2C:
@@ -15069,7 +15085,7 @@ glabel mp_respawn_handler
 /* 0BB584 7F088B94 468084A0 */   cvt.s.w $f18, $f16
 /* 0BB588 7F088B98 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
 /* 0BB58C 7F088B9C 44812000 */  mtc1  $at, $f4
-/* 0BB590 7F088BA0 00000000 */  nop   
+/* 0BB590 7F088BA0 00000000 */  nop
 /* 0BB594 7F088BA4 46049480 */  add.s $f18, $f18, $f4
 .L7F088BA8:
 /* 0BB598 7F088BA8 3C012F80 */  li    $at, 0x2F800000 # 0.000000
@@ -15081,7 +15097,7 @@ glabel mp_respawn_handler
 /* 0BB5B0 7F088BC0 3C018005 */  lui   $at, %hi(D_80055288) # $at, 0x8005
 /* 0BB5B4 7F088BC4 27A5004C */  addiu $a1, $sp, 0x4c
 /* 0BB5B8 7F088BC8 460C4002 */  mul.s $f0, $f8, $f12
-/* 0BB5BC 7F088BCC 00000000 */  nop   
+/* 0BB5BC 7F088BCC 00000000 */  nop
 /* 0BB5C0 7F088BD0 460A0402 */  mul.s $f16, $f0, $f10
 /* 0BB5C4 7F088BD4 E7A00048 */  swc1  $f0, 0x48($sp)
 /* 0BB5C8 7F088BD8 460C8103 */  div.s $f4, $f16, $f12
@@ -15179,19 +15195,19 @@ glabel mp_respawn_handler
 /* 0BB730 7F088D40 00290821 */  addu  $at, $at, $t1
 /* 0BB734 7F088D44 8C29AE64 */  lw    $t1, %lo(jpt_mpspawntype)($at)
 /* 0BB738 7F088D48 01200008 */  jr    $t1
-/* 0BB73C 7F088D4C 00000000 */   nop   
+/* 0BB73C 7F088D4C 00000000 */   nop
 mp_spawntype_spawn:
 /* 0BB740 7F088D50 10000024 */  b     .L7F088DE4
 /* 0BB744 7F088D54 2610000C */   addiu $s0, $s0, 0xc
 mp_spawntype_weapon:
 /* 0BB748 7F088D58 0FC2FFA8 */  jal   check_ramrom_flags
-/* 0BB74C 7F088D5C 00000000 */   nop   
+/* 0BB74C 7F088D5C 00000000 */   nop
 /* 0BB750 7F088D60 8E0A000C */  lw    $t2, 0xc($s0)
 /* 0BB754 7F088D64 144A000A */  bne   $v0, $t2, .L7F088D90
-/* 0BB758 7F088D68 00000000 */   nop   
+/* 0BB758 7F088D68 00000000 */   nop
 /* 0BB75C 7F088D6C 8E050008 */  lw    $a1, 8($s0)
 /* 0BB760 7F088D70 04A00005 */  bltz  $a1, .L7F088D88
-/* 0BB764 7F088D74 00000000 */   nop   
+/* 0BB764 7F088D74 00000000 */   nop
 /* 0BB768 7F088D78 0FC23221 */  jal   bondinvAddDoublesInvItem
 /* 0BB76C 7F088D7C 8E040004 */   lw    $a0, 4($s0)
 /* 0BB770 7F088D80 10000018 */  b     .L7F088DE4
@@ -15204,10 +15220,10 @@ mp_spawntype_weapon:
 /* 0BB784 7F088D94 26100010 */   addiu $s0, $s0, 0x10
 mp_spawntype_ammo:
 /* 0BB788 7F088D98 0FC2FFA8 */  jal   check_ramrom_flags
-/* 0BB78C 7F088D9C 00000000 */   nop   
+/* 0BB78C 7F088D9C 00000000 */   nop
 /* 0BB790 7F088DA0 8E0B000C */  lw    $t3, 0xc($s0)
 /* 0BB794 7F088DA4 144B0004 */  bne   $v0, $t3, .L7F088DB8
-/* 0BB798 7F088DA8 00000000 */   nop   
+/* 0BB798 7F088DA8 00000000 */   nop
 /* 0BB79C 7F088DAC 8E040004 */  lw    $a0, 4($s0)
 /* 0BB7A0 7F088DB0 0FC1A631 */  jal   give_cur_player_ammo
 /* 0BB7A4 7F088DB4 8E050008 */   lw    $a1, 8($s0)
@@ -15985,9 +16001,9 @@ glabel maybe_mp_interface
 /* 0BBD74 7F089384 8DCF0000 */  lw    $t7, ($t6)
 /* 0BBD78 7F089388 24010001 */  li    $at, 1
 /* 0BBD7C 7F08938C 15E10014 */  bne   $t7, $at, .L7F0893E0
-/* 0BBD80 7F089390 00000000 */   nop   
+/* 0BBD80 7F089390 00000000 */   nop
 /* 0BBD84 7F089394 0FC229C0 */  jal   bondviewIntroCameraTextTick
-/* 0BBD88 7F089398 00000000 */   nop   
+/* 0BBD88 7F089398 00000000 */   nop
 /* 0BBD8C 7F08939C 0FC22A06 */  jal   sub_GAME_7F08A5FC
 /* 0BBD90 7F0893A0 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BBD94 7F0893A4 0FC22B10 */  jal   bondviewUpperTextWindowTimerTick
@@ -16007,7 +16023,7 @@ glabel maybe_mp_interface
 /* 0BBDCC 7F0893DC 8FBF001C */   lw    $ra, 0x1c($sp)
 .L7F0893E0:
 /* 0BBDD0 7F0893E0 0FC18779 */  jal   bondwalkFireBothHands
-/* 0BBDD4 7F0893E4 00000000 */   nop   
+/* 0BBDD4 7F0893E4 00000000 */   nop
 /* 0BBDD8 7F0893E8 0FC1A608 */  jal   sub_GAME_7F06908C
 /* 0BBDDC 7F0893EC 27A40058 */   addiu $a0, $sp, 0x58
 /* 0BBDE0 7F0893F0 0FC18C2A */  jal   sub_GAME_7F062BE4
@@ -16019,9 +16035,9 @@ glabel maybe_mp_interface
 /* 0BBDF8 7F089408 AFA20058 */  sw    $v0, 0x58($sp)
 /* 0BBDFC 7F08940C 8F1929BC */  lw    $t9, 0x29bc($t8)
 /* 0BBE00 7F089410 1320001F */  beqz  $t9, .L7F089490
-/* 0BBE04 7F089414 00000000 */   nop   
+/* 0BBE04 7F089414 00000000 */   nop
 /* 0BBE08 7F089418 0C000FD9 */  jal   viGetViewLeft
-/* 0BBE0C 7F08941C 00000000 */   nop   
+/* 0BBE0C 7F08941C 00000000 */   nop
 /* 0BBE10 7F089420 0C000FDD */  jal   viGetViewTop
 /* 0BBE14 7F089424 AFA20054 */   sw    $v0, 0x54($sp)
 /* 0BBE18 7F089428 0C000FD9 */  jal   viGetViewLeft
@@ -16052,22 +16068,22 @@ glabel maybe_mp_interface
 /* 0BBE7C 7F08948C AFA20058 */  sw    $v0, 0x58($sp)
 .L7F089490:
 /* 0BBE80 7F089490 0FC2281C */  jal   bondviewGetIfCurrentPlayerHealthShowTime
-/* 0BBE84 7F089494 00000000 */   nop   
+/* 0BBE84 7F089494 00000000 */   nop
 /* 0BBE88 7F089498 10400009 */  beqz  $v0, .L7F0894C0
 /* 0BBE8C 7F08949C 3C0E8007 */   lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
 /* 0BBE90 7F0894A0 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
 /* 0BBE94 7F0894A4 8DCF01C8 */  lw    $t7, 0x1c8($t6)
 /* 0BBE98 7F0894A8 15E00005 */  bnez  $t7, .L7F0894C0
-/* 0BBE9C 7F0894AC 00000000 */   nop   
+/* 0BBE9C 7F0894AC 00000000 */   nop
 /* 0BBEA0 7F0894B0 0FC221E0 */  jal   sub_GAME_7F088618
 /* 0BBEA4 7F0894B4 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BBEA8 7F0894B8 10000017 */  b     .L7F089518
 /* 0BBEAC 7F0894BC AFA20058 */   sw    $v0, 0x58($sp)
 .L7F0894C0:
 /* 0BBEB0 7F0894C0 0FC31557 */  jal   sub_GAME_7F0C6048
-/* 0BBEB4 7F0894C4 00000000 */   nop   
+/* 0BBEB4 7F0894C4 00000000 */   nop
 /* 0BBEB8 7F0894C8 10400013 */  beqz  $v0, .L7F089518
-/* 0BBEBC 7F0894CC 00000000 */   nop   
+/* 0BBEBC 7F0894CC 00000000 */   nop
 /* 0BBEC0 7F0894D0 0FC221E0 */  jal   sub_GAME_7F088618
 /* 0BBEC4 7F0894D4 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BBEC8 7F0894D8 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
@@ -16076,7 +16092,7 @@ glabel maybe_mp_interface
 /* 0BBED4 7F0894E4 3C188004 */  lui   $t8, %hi(g_ClockTimer) # $t8, 0x8004
 /* 0BBED8 7F0894E8 8C6429F8 */  lw    $a0, 0x29f8($v1)
 /* 0BBEDC 7F0894EC 18800007 */  blez  $a0, .L7F08950C
-/* 0BBEE0 7F0894F0 00000000 */   nop   
+/* 0BBEE0 7F0894F0 00000000 */   nop
 /* 0BBEE4 7F0894F4 8F180FF4 */  lw    $t8, %lo(g_ClockTimer)($t8)
 /* 0BBEE8 7F0894F8 0098C823 */  subu  $t9, $a0, $t8
 /* 0BBEEC 7F0894FC AC7929F8 */  sw    $t9, 0x29f8($v1)
@@ -16085,26 +16101,26 @@ glabel maybe_mp_interface
 /* 0BBEF8 7F089508 8C6429F8 */  lw    $a0, 0x29f8($v1)
 .L7F08950C:
 /* 0BBEFC 7F08950C 04810002 */  bgez  $a0, .L7F089518
-/* 0BBF00 7F089510 00000000 */   nop   
+/* 0BBF00 7F089510 00000000 */   nop
 /* 0BBF04 7F089514 AC6029F8 */  sw    $zero, 0x29f8($v1)
 .L7F089518:
 /* 0BBF08 7F089518 0FC26669 */  jal   getPlayerCount
-/* 0BBF0C 7F08951C 00000000 */   nop   
+/* 0BBF0C 7F08951C 00000000 */   nop
 /* 0BBF10 7F089520 24010001 */  li    $at, 1
 /* 0BBF14 7F089524 14410003 */  bne   $v0, $at, .L7F089534
-/* 0BBF18 7F089528 00000000 */   nop   
+/* 0BBF18 7F089528 00000000 */   nop
 /* 0BBF1C 7F08952C 0FC15E0C */  jal   display_objective_status_text_on_status_change
-/* 0BBF20 7F089530 00000000 */   nop   
+/* 0BBF20 7F089530 00000000 */   nop
 .L7F089534:
 /* 0BBF24 7F089534 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0BBF28 7F089538 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
 /* 0BBF2C 7F08953C 8C6200D8 */  lw    $v0, 0xd8($v1)
 /* 0BBF30 7F089540 1040009F */  beqz  $v0, .L7F0897C0
-/* 0BBF34 7F089544 00000000 */   nop   
+/* 0BBF34 7F089544 00000000 */   nop
 /* 0BBF38 7F089548 8C680428 */  lw    $t0, 0x428($v1)
 /* 0BBF3C 7F08954C 24010001 */  li    $at, 1
 /* 0BBF40 7F089550 15000045 */  bnez  $t0, .L7F089668
-/* 0BBF44 7F089554 00000000 */   nop   
+/* 0BBF44 7F089554 00000000 */   nop
 /* 0BBF48 7F089558 14410004 */  bne   $v0, $at, .L7F08956C
 /* 0BBF4C 7F08955C 00002025 */   move  $a0, $zero
 /* 0BBF50 7F089560 24090002 */  li    $t1, 2
@@ -16116,16 +16132,16 @@ glabel maybe_mp_interface
 /* 0BBF64 7F089574 0FC07039 */  jal   die_blood_image_routine
 /* 0BBF68 7F089578 00002025 */   move  $a0, $zero
 /* 0BBF6C 7F08957C 0FC26669 */  jal   getPlayerCount
-/* 0BBF70 7F089580 00000000 */   nop   
+/* 0BBF70 7F089580 00000000 */   nop
 /* 0BBF74 7F089584 24010001 */  li    $at, 1
 /* 0BBF78 7F089588 14410013 */  bne   $v0, $at, .L7F0895D8
-/* 0BBF7C 7F08958C 00000000 */   nop   
+/* 0BBF7C 7F08958C 00000000 */   nop
 /* 0BBF80 7F089590 0FC3028E */  jal   musicStopSlot
 /* 0BBF84 7F089594 2404FFFF */   li    $a0, -1
 /* 0BBF88 7F089598 0FC3003F */  jal   set_missionstate
 /* 0BBF8C 7F08959C 00002025 */   move  $a0, $zero
 /* 0BBF90 7F0895A0 0FC3002C */  jal   sub_GAME_7F0C0BF0
-/* 0BBF94 7F0895A4 00000000 */   nop   
+/* 0BBF94 7F0895A4 00000000 */   nop
 /* 0BBF98 7F0895A8 0C001927 */  jal   musicTrack1ApplySeqpVol
 /* 0BBF9C 7F0895AC 3044FFFF */   andi  $a0, $v0, 0xffff
 /* 0BBFA0 7F0895B0 3C018002 */  lui   $at, %hi(g_musicXTrack1Fade) # $at, 0x8002
@@ -16137,7 +16153,7 @@ glabel maybe_mp_interface
 /* 0BBFB8 7F0895C8 0C0018B7 */  jal   musicTrack1Play
 /* 0BBFBC 7F0895CC 2404001B */   li    $a0, 27
 /* 0BBFC0 7F0895D0 10000003 */  b     .L7F0895E0
-/* 0BBFC4 7F0895D4 00000000 */   nop   
+/* 0BBFC4 7F0895D4 00000000 */   nop
 .L7F0895D8:
 /* 0BBFC8 7F0895D8 0FC3003F */  jal   set_missionstate
 /* 0BBFCC 7F0895DC 24040006 */   li    $a0, 6
@@ -16163,12 +16179,12 @@ glabel maybe_mp_interface
 /* 0BC010 7F089620 8D8C0FF4 */  lw    $t4, %lo(g_ClockTimer)($t4)
 /* 0BC014 7F089624 24040002 */  li    $a0, 2
 /* 0BC018 7F089628 19800003 */  blez  $t4, .L7F089638
-/* 0BC01C 7F08962C 00000000 */   nop   
+/* 0BC01C 7F08962C 00000000 */   nop
 /* 0BC020 7F089630 10000001 */  b     .L7F089638
 /* 0BC024 7F089634 24040001 */   li    $a0, 1
 .L7F089638:
 /* 0BC028 7F089638 0FC07039 */  jal   die_blood_image_routine
-/* 0BC02C 7F08963C 00000000 */   nop   
+/* 0BC02C 7F08963C 00000000 */   nop
 /* 0BC030 7F089640 10400004 */  beqz  $v0, .L7F089654
 /* 0BC034 7F089644 3C0E8007 */   lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
 /* 0BC038 7F089648 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
@@ -16191,13 +16207,13 @@ glabel maybe_mp_interface
 /* 0BC074 7F089684 C7A40024 */  lwc1  $f4, 0x24($sp)
 /* 0BC078 7F089688 3C038007 */  lui   $v1, %hi(g_CurrentPlayer) # $v1, 0x8007
 /* 0BC07C 7F08968C 4604003E */  c.le.s $f0, $f4
-/* 0BC080 7F089690 00000000 */  nop   
+/* 0BC080 7F089690 00000000 */  nop
 /* 0BC084 7F089694 4500004A */  bc1f  .L7F0897C0
-/* 0BC088 7F089698 00000000 */   nop   
+/* 0BC088 7F089698 00000000 */   nop
 /* 0BC08C 7F08969C 8C638BC0 */  lw    $v1, %lo(g_CurrentPlayer)($v1)
 /* 0BC090 7F0896A0 8C6F0424 */  lw    $t7, 0x424($v1)
 /* 0BC094 7F0896A4 11E00046 */  beqz  $t7, .L7F0897C0
-/* 0BC098 7F0896A8 00000000 */   nop   
+/* 0BC098 7F0896A8 00000000 */   nop
 /* 0BC09C 7F0896AC 8C780428 */  lw    $t8, 0x428($v1)
 /* 0BC0A0 7F0896B0 24190001 */  li    $t9, 1
 /* 0BC0A4 7F0896B4 3C014270 */  li    $at, 0x42700000 # 60.000000
@@ -16215,24 +16231,24 @@ glabel maybe_mp_interface
 /* 0BC0D4 7F0896E4 44816000 */  mtc1  $at, $f12
 /* 0BC0D8 7F0896E8 44807000 */  mtc1  $zero, $f14
 /* 0BC0DC 7F0896EC 0FC202AD */  jal   currentPlayerStartChrFade
-/* 0BC0E0 7F0896F0 00000000 */   nop   
+/* 0BC0E0 7F0896F0 00000000 */   nop
 .L7F0896F4:
 /* 0BC0E4 7F0896F4 0FC2024C */  jal   currentPlayerIsFadeComplete
-/* 0BC0E8 7F0896F8 00000000 */   nop   
+/* 0BC0E8 7F0896F8 00000000 */   nop
 /* 0BC0EC 7F0896FC 10400030 */  beqz  $v0, .L7F0897C0
-/* 0BC0F0 7F089700 00000000 */   nop   
+/* 0BC0F0 7F089700 00000000 */   nop
 /* 0BC0F4 7F089704 0FC26669 */  jal   getPlayerCount
-/* 0BC0F8 7F089708 00000000 */   nop   
+/* 0BC0F8 7F089708 00000000 */   nop
 /* 0BC0FC 7F08970C 24010001 */  li    $at, 1
 /* 0BC100 7F089710 14410005 */  bne   $v0, $at, .L7F089728
-/* 0BC104 7F089714 00000000 */   nop   
+/* 0BC104 7F089714 00000000 */   nop
 /* 0BC108 7F089718 0FC1EA94 */  jal   bondviewSetCameraMode
 /* 0BC10C 7F08971C 24040005 */   li    $a0, 5
 /* 0BC110 7F089720 10000027 */  b     .L7F0897C0
-/* 0BC114 7F089724 00000000 */   nop   
+/* 0BC114 7F089724 00000000 */   nop
 .L7F089728:
 /* 0BC118 7F089728 0FC051B2 */  jal   get_scenario
-/* 0BC11C 7F08972C 00000000 */   nop   
+/* 0BC11C 7F08972C 00000000 */   nop
 /* 0BC120 7F089730 0FC269A4 */  jal   get_cur_playernum
 /* 0BC124 7F089734 AFA20040 */   sw    $v0, 0x40($sp)
 /* 0BC128 7F089738 0FC26669 */  jal   getPlayerCount
@@ -16259,22 +16275,22 @@ glabel maybe_mp_interface
 /* 0BC174 7F089784 15810003 */  bne   $t4, $at, .L7F089794
 /* 0BC178 7F089788 28810002 */   slti  $at, $a0, 2
 /* 0BC17C 7F08978C 1020000C */  beqz  $at, .L7F0897C0
-/* 0BC180 7F089790 00000000 */   nop   
+/* 0BC180 7F089790 00000000 */   nop
 .L7F089794:
 /* 0BC184 7F089794 0FC269A4 */  jal   get_cur_playernum
-/* 0BC188 7F089798 00000000 */   nop   
+/* 0BC188 7F089798 00000000 */   nop
 /* 0BC18C 7F08979C 00022600 */  sll   $a0, $v0, 0x18
 /* 0BC190 7F0897A0 00046E03 */  sra   $t5, $a0, 0x18
 /* 0BC194 7F0897A4 01A02025 */  move  $a0, $t5
 /* 0BC198 7F0897A8 0C002C20 */  jal   joyGetButtons
 /* 0BC19C 7F0897AC 3405B000 */   li    $a1, 45056
 /* 0BC1A0 7F0897B0 10400003 */  beqz  $v0, .L7F0897C0
-/* 0BC1A4 7F0897B4 00000000 */   nop   
+/* 0BC1A4 7F0897B4 00000000 */   nop
 /* 0BC1A8 7F0897B8 0FC22294 */  jal   mp_respawn_handler
-/* 0BC1AC 7F0897BC 00000000 */   nop   
+/* 0BC1AC 7F0897BC 00000000 */   nop
 .L7F0897C0:
 /* 0BC1B0 7F0897C0 0FC229C0 */  jal   bondviewIntroCameraTextTick
-/* 0BC1B4 7F0897C4 00000000 */   nop   
+/* 0BC1B4 7F0897C4 00000000 */   nop
 /* 0BC1B8 7F0897C8 0FC22A06 */  jal   sub_GAME_7F08A5FC
 /* 0BC1BC 7F0897CC 8FA40058 */   lw    $a0, 0x58($sp)
 /* 0BC1C0 7F0897D0 0FC22B10 */  jal   bondviewUpperTextWindowTimerTick
@@ -16299,7 +16315,7 @@ glabel maybe_mp_interface
 .L7F08981C:
 /* 0BC20C 7F08981C 27BD0058 */  addiu $sp, $sp, 0x58
 /* 0BC210 7F089820 03E00008 */  jr    $ra
-/* 0BC214 7F089824 00000000 */   nop   
+/* 0BC214 7F089824 00000000 */   nop
 )
 #endif
 #endif
@@ -16426,7 +16442,7 @@ void bondviewKillCurrentPlayer(void)
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x7F0898E8.
  */
 s32 sub_GAME_7F0898E8(void)
@@ -16612,7 +16628,7 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
  * @param rad:  damage source angle
  * @param player_id: player index of player causing the damage
  * @param affects_armor: boolean, does the damage apply to body armor (e.g. false when gas)
- * 
+ *
  * Address 0x7F089E4C.
  */
 void bondviewCallRecordDamageKills(f32 damage_amount, f32 angle, s32 playerid, s32 affects_armor)
@@ -16858,7 +16874,7 @@ void bondviewUpdatePlayerCollisionBounds(void)
  * @param width: out parameter, will be set to field_488.collision_radius
  * @param height: out parameter, will be set to character height - 30
  * @param always_30: out parameter, will be set to 30
- * 
+ *
  * Address 0x7F08A274.
  */
 void bondviewGetCollisionRadius(PropRecord* arg0, f32 *collision_radius, f32 *height, f32 *always_30)
@@ -18102,7 +18118,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD740 7F08AD50 8DEF1DF8 */  lw    $t7, %lo(upper_text_window_timer)($t7)
 /* 0BD744 7F08AD54 3C188003 */  lui   $t8, %hi(upper_text_buffer_index) # $t8, 0x8003
 /* 0BD748 7F08AD58 05E000AD */  bltz  $t7, .L7F08B010
-/* 0BD74C 7F08AD5C 00000000 */   nop   
+/* 0BD74C 7F08AD5C 00000000 */   nop
 /* 0BD750 7F08AD60 8F181DF0 */  lw    $t8, %lo(upper_text_buffer_index)($t8)
 /* 0BD754 7F08AD64 3C088007 */  lui   $t0, %hi(dword_CODE_bss_80079DC8)
 /* 0BD758 7F08AD68 3C098007 */  lui   $t1, %hi(g_CurrentPlayer) # $t1, 0x8007
@@ -18115,13 +18131,13 @@ glabel sub_GAME_7F08AAE8
 /* 0BD774 7F08AD84 01194021 */  addu  $t0, $t0, $t9
 /* 0BD778 7F08AD88 910887A8 */  lbu   $t0, %lo(dword_CODE_bss_80079DC8)($t0)
 /* 0BD77C 7F08AD8C 110000A0 */  beqz  $t0, .L7F08B010
-/* 0BD780 7F08AD90 00000000 */   nop   
+/* 0BD780 7F08AD90 00000000 */   nop
 /* 0BD784 7F08AD94 8D298BC0 */  lw    $t1, %lo(g_CurrentPlayer)($t1)
 /* 0BD788 7F08AD98 8D2A29BC */  lw    $t2, 0x29bc($t1)
 /* 0BD78C 7F08AD9C 1540009C */  bnez  $t2, .L7F08B010
-/* 0BD790 7F08ADA0 00000000 */   nop   
+/* 0BD790 7F08ADA0 00000000 */   nop
 /* 0BD794 7F08ADA4 0FC2B016 */  jal   microcode_constructor
-/* 0BD798 7F08ADA8 00000000 */   nop   
+/* 0BD798 7F08ADA8 00000000 */   nop
 /* 0BD79C 7F08ADAC 3C0B8003 */  lui   $t3, %hi(upper_text_buffer_index) # $t3, 0x8003
 /* 0BD7A0 7F08ADB0 8D6B1DF0 */  lw    $t3, %lo(upper_text_buffer_index)($t3)
 /* 0BD7A4 7F08ADB4 3C0E8004 */  lui   $t6, %hi(ptrFontZurichBold) # $t6, 0x8004
@@ -18148,9 +18164,9 @@ glabel sub_GAME_7F08AAE8
 /* 0BD7F8 7F08AE08 3C0F8003 */  lui   $t7, %hi(camera_8003642C) # $t7, 0x8003
 /* 0BD7FC 7F08AE0C 8DEF197C */  lw    $t7, %lo(camera_8003642C)($t7)
 /* 0BD800 7F08AE10 11E0001B */  beqz  $t7, .L7F08AE80
-/* 0BD804 7F08AE14 00000000 */   nop   
+/* 0BD804 7F08AE14 00000000 */   nop
 /* 0BD808 7F08AE18 0C000FD9 */  jal   viGetViewLeft
-/* 0BD80C 7F08AE1C 00000000 */   nop   
+/* 0BD80C 7F08AE1C 00000000 */   nop
 /* 0BD810 7F08AE20 24580046 */  addiu $t8, $v0, 0x46
 /* 0BD814 7F08AE24 0C000FDD */  jal   viGetViewTop
 /* 0BD818 7F08AE28 AFB800E4 */   sw    $t8, 0xe4($sp)
@@ -18159,19 +18175,19 @@ glabel sub_GAME_7F08AAE8
 /* 0BD824 7F08AE34 2404000B */  li    $a0, 11
 /* 0BD828 7F08AE38 0064001A */  div   $zero, $v1, $a0
 /* 0BD82C 7F08AE3C 14800002 */  bnez  $a0, .L7F08AE48
-/* 0BD830 7F08AE40 00000000 */   nop   
+/* 0BD830 7F08AE40 00000000 */   nop
 /* 0BD834 7F08AE44 0007000D */  break 7
 .L7F08AE48:
 /* 0BD838 7F08AE48 2401FFFF */  li    $at, -1
 /* 0BD83C 7F08AE4C 14810004 */  bne   $a0, $at, .L7F08AE60
 /* 0BD840 7F08AE50 3C018000 */   lui   $at, 0x8000
 /* 0BD844 7F08AE54 14610002 */  bne   $v1, $at, .L7F08AE60
-/* 0BD848 7F08AE58 00000000 */   nop   
+/* 0BD848 7F08AE58 00000000 */   nop
 /* 0BD84C 7F08AE5C 0006000D */  break 6
 .L7F08AE60:
 /* 0BD850 7F08AE60 00001812 */  mflo  $v1
-/* 0BD854 7F08AE64 00000000 */  nop   
-/* 0BD858 7F08AE68 00000000 */  nop   
+/* 0BD854 7F08AE64 00000000 */  nop
+/* 0BD858 7F08AE68 00000000 */  nop
 /* 0BD85C 7F08AE6C 00640019 */  multu $v1, $a0
 /* 0BD860 7F08AE70 00001812 */  mflo  $v1
 /* 0BD864 7F08AE74 2463FFFE */  addiu $v1, $v1, -2
@@ -18179,7 +18195,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD86C 7F08AE7C 8FA800D8 */   lw    $t0, 0xd8($sp)
 .L7F08AE80:
 /* 0BD870 7F08AE80 0C000FD9 */  jal   viGetViewLeft
-/* 0BD874 7F08AE84 00000000 */   nop   
+/* 0BD874 7F08AE84 00000000 */   nop
 /* 0BD878 7F08AE88 2459001E */  addiu $t9, $v0, 0x1e
 /* 0BD87C 7F08AE8C 0C000FDD */  jal   viGetViewTop
 /* 0BD880 7F08AE90 AFB900E4 */   sw    $t9, 0xe4($sp)
@@ -18204,9 +18220,9 @@ glabel sub_GAME_7F08AAE8
 /* 0BD8C8 7F08AED8 8D8C1150 */  lw    $t4, %lo(j_text_trigger)($t4)
 /* 0BD8CC 7F08AEDC 00408025 */  move  $s0, $v0
 /* 0BD8D0 7F08AEE0 11800026 */  beqz  $t4, .L7F08AF7C
-/* 0BD8D4 7F08AEE4 00000000 */   nop   
+/* 0BD8D4 7F08AEE4 00000000 */   nop
 /* 0BD8D8 7F08AEE8 0C000F9B */  jal   viGetX
-/* 0BD8DC 7F08AEEC 00000000 */   nop   
+/* 0BD8DC 7F08AEEC 00000000 */   nop
 /* 0BD8E0 7F08AEF0 0C000F9F */  jal   viGetY
 /* 0BD8E4 7F08AEF4 A7A20048 */   sh    $v0, 0x48($sp)
 /* 0BD8E8 7F08AEF8 3C0D8003 */  lui   $t5, %hi(upper_text_buffer_index) # $t5, 0x8003
@@ -18244,7 +18260,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD968 7F08AF78 00408025 */   move  $s0, $v0
 .L7F08AF7C:
 /* 0BD96C 7F08AF7C 0C000F9B */  jal   viGetX
-/* 0BD970 7F08AF80 00000000 */   nop   
+/* 0BD970 7F08AF80 00000000 */   nop
 /* 0BD974 7F08AF84 0C000F9F */  jal   viGetY
 /* 0BD978 7F08AF88 A7A20048 */   sh    $v0, 0x48($sp)
 /* 0BD97C 7F08AF8C 3C0B8003 */  lui   $t3, %hi(upper_text_buffer_index) # $t3, 0x8003
@@ -18283,7 +18299,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD9FC 7F08B00C 00408025 */   move  $s0, $v0
 .L7F08B010:
 /* 0BDA00 7F08B010 0FC2410E */  jal   get_debug_testingmanpos_flag
-/* 0BDA04 7F08B014 00000000 */   nop   
+/* 0BDA04 7F08B014 00000000 */   nop
 /* 0BDA08 7F08B018 104000ED */  beqz  $v0, .L7F08B3D0
 /* 0BDA0C 7F08B01C 3C028007 */   lui   $v0, %hi(g_CurrentPlayer) # $v0, 0x8007
 /* 0BDA10 7F08B020 8C428BC0 */  lw    $v0, %lo(g_CurrentPlayer)($v0)
@@ -18303,7 +18319,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDA48 7F08B058 46083283 */  div.s $f10, $f6, $f8
 /* 0BDA4C 7F08B05C 4600540D */  trunc.w.s $f16, $f10
 /* 0BDA50 7F08B060 44098000 */  mfc1  $t1, $f16
-/* 0BDA54 7F08B064 00000000 */  nop   
+/* 0BDA54 7F08B064 00000000 */  nop
 /* 0BDA58 7F08B068 AFA90068 */  sw    $t1, 0x68($sp)
 /* 0BDA5C 7F08B06C 8D610000 */  lw    $at, ($t3)
 /* 0BDA60 7F08B070 8D6E0004 */  lw    $t6, 4($t3)
@@ -18338,7 +18354,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDAD4 7F08B0E4 44072000 */  mfc1  $a3, $f4
 /* 0BDAD8 7F08B0E8 44062800 */  mfc1  $a2, $f5
 /* 0BDADC 7F08B0EC 0C00283D */  jal   sprintf
-/* 0BDAE0 7F08B0F0 00000000 */   nop   
+/* 0BDAE0 7F08B0F0 00000000 */   nop
 /* 0BDAE4 7F08B0F4 3C088007 */  lui   $t0, %hi(g_CurrentPlayer) # $t0, 0x8007
 /* 0BDAE8 7F08B0F8 8D088BC0 */  lw    $t0, %lo(g_CurrentPlayer)($t0)
 /* 0BDAEC 7F08B0FC 3C058005 */  lui   $a1, %hi(aY4_0f) # $a1, 0x8005
@@ -18349,7 +18365,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDB00 7F08B110 44074000 */  mfc1  $a3, $f8
 /* 0BDB04 7F08B114 44064800 */  mfc1  $a2, $f9
 /* 0BDB08 7F08B118 0C00283D */  jal   sprintf
-/* 0BDB0C 7F08B11C 00000000 */   nop   
+/* 0BDB0C 7F08B11C 00000000 */   nop
 /* 0BDB10 7F08B120 3C098007 */  lui   $t1, %hi(g_CurrentPlayer) # $t1, 0x8007
 /* 0BDB14 7F08B124 8D298BC0 */  lw    $t1, %lo(g_CurrentPlayer)($t1)
 /* 0BDB18 7F08B128 3C058005 */  lui   $a1, %hi(aZ4_0f) # $a1, 0x8005
@@ -18360,7 +18376,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDB2C 7F08B13C 44078000 */  mfc1  $a3, $f16
 /* 0BDB30 7F08B140 44068800 */  mfc1  $a2, $f17
 /* 0BDB34 7F08B144 0C00283D */  jal   sprintf
-/* 0BDB38 7F08B148 00000000 */   nop   
+/* 0BDB38 7F08B148 00000000 */   nop
 /* 0BDB3C 7F08B14C 8FA70068 */  lw    $a3, 0x68($sp)
 /* 0BDB40 7F08B150 2401002D */  li    $at, 45
 /* 0BDB44 7F08B154 3C058005 */  lui   $a1, %hi(aS3d) # $a1, 0x8005
@@ -18375,7 +18391,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BDB68 7F08B178 0C00283D */  jal   sprintf
 /* 0BDB6C 7F08B17C 27A40084 */   addiu $a0, $sp, 0x84
 /* 0BDB70 7F08B180 0C000FD9 */  jal   viGetViewLeft
-/* 0BDB74 7F08B184 00000000 */   nop   
+/* 0BDB74 7F08B184 00000000 */   nop
 /* 0BDB78 7F08B188 244E0011 */  addiu $t6, $v0, 0x11
 /* 0BDB7C 7F08B18C 0C000FDD */  jal   viGetViewTop
 /* 0BDB80 7F08B190 AFAE0080 */   sw    $t6, 0x80($sp)
@@ -19411,7 +19427,7 @@ glabel playerTickBeams
 /* 0BDDF8 7F08B408 11E0000B */  beqz  $t7, .L7F08B438
 /* 0BDDFC 7F08B40C AFAF00F0 */   sw    $t7, 0xf0($sp)
 /* 0BDE00 7F08B410 0FC269A4 */  jal   get_cur_playernum
-/* 0BDE04 7F08B414 00000000 */   nop   
+/* 0BDE04 7F08B414 00000000 */   nop
 /* 0BDE08 7F08B418 0FC26A86 */  jal   sub_GAME_7F09B4D8
 /* 0BDE0C 7F08B41C 00402025 */   move  $a0, $v0
 /* 0BDE10 7F08B420 54400006 */  bnezl $v0, .L7F08B43C
@@ -19434,7 +19450,7 @@ glabel playerTickBeams
 /* 0BDE4C 7F08B45C 51C00048 */  beql  $t6, $zero, .L7F08B580
 /* 0BDE50 7F08B460 8FAF00F0 */   lw    $t7, 0xf0($sp)
 /* 0BDE54 7F08B464 0FC240F8 */  jal   get_debug_render_raster
-/* 0BDE58 7F08B468 00000000 */   nop   
+/* 0BDE58 7F08B468 00000000 */   nop
 /* 0BDE5C 7F08B46C 50400007 */  beql  $v0, $zero, .L7F08B48C
 /* 0BDE60 7F08B470 8E390000 */   lw    $t9, ($s1)
 /* 0BDE64 7F08B474 8E2F0000 */  lw    $t7, ($s1)
@@ -19473,7 +19489,7 @@ glabel playerTickBeams
 /* 0BDEE4 7F08B4F4 93190001 */  lbu   $t9, 1($t8)
 /* 0BDEE8 7F08B4F8 33290002 */  andi  $t1, $t9, 2
 /* 0BDEEC 7F08B4FC 1120001D */  beqz  $t1, .L7F08B574
-/* 0BDEF0 7F08B500 00000000 */   nop   
+/* 0BDEF0 7F08B500 00000000 */   nop
 /* 0BDEF4 7F08B504 8E2A0000 */  lw    $t2, ($s1)
 /* 0BDEF8 7F08B508 8D4B00D4 */  lw    $t3, 0xd4($t2)
 /* 0BDEFC 7F08B50C 0FC1E131 */  jal   currentPlayerGetMatrix10D4
@@ -19519,12 +19535,12 @@ glabel playerTickBeams
 /* 0BDF90 7F08B5A0 51600279 */  beql  $t3, $zero, .L7F08BF88
 /* 0BDF94 7F08B5A4 8FAA00F8 */   lw    $t2, 0xf8($sp)
 /* 0BDF98 7F08B5A8 0FC26669 */  jal   getPlayerCount
-/* 0BDF9C 7F08B5AC 00000000 */   nop   
+/* 0BDF9C 7F08B5AC 00000000 */   nop
 /* 0BDFA0 7F08B5B0 28410002 */  slti  $at, $v0, 2
 /* 0BDFA4 7F08B5B4 54200274 */  bnezl $at, .L7F08BF88
 /* 0BDFA8 7F08B5B8 8FAA00F8 */   lw    $t2, 0xf8($sp)
 /* 0BDFAC 7F08B5BC 0FC269A4 */  jal   get_cur_playernum
-/* 0BDFB0 7F08B5C0 00000000 */   nop   
+/* 0BDFB0 7F08B5C0 00000000 */   nop
 /* 0BDFB4 7F08B5C4 8FAC00F4 */  lw    $t4, 0xf4($sp)
 /* 0BDFB8 7F08B5C8 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0BDFBC 7F08B5CC 24050001 */  li    $a1, 1
@@ -19601,7 +19617,7 @@ glabel playerTickBeams
 /* 0BE0C8 7F08B6D8 0044082B */  sltu  $at, $v0, $a0
 /* 0BE0CC 7F08B6DC 01435821 */  addu  $t3, $t2, $v1
 /* 0BE0D0 7F08B6E0 14CB0002 */  bne   $a2, $t3, .L7F08B6EC
-/* 0BE0D4 7F08B6E4 00000000 */   nop   
+/* 0BE0D4 7F08B6E4 00000000 */   nop
 /* 0BE0D8 7F08B6E8 24050001 */  li    $a1, 1
 .L7F08B6EC:
 /* 0BE0DC 7F08B6EC 5420FFF9 */  bnezl $at, .L7F08B6D4
@@ -19633,28 +19649,28 @@ glabel playerTickBeams
 /* 0BE13C 7F08B74C 44816000 */  mtc1  $at, $f12
 /* 0BE140 7F08B750 C7A20094 */  lwc1  $f2, 0x94($sp)
 /* 0BE144 7F08B754 15800002 */  bnez  $t4, .L7F08B760
-/* 0BE148 7F08B758 00000000 */   nop   
+/* 0BE148 7F08B758 00000000 */   nop
 /* 0BE14C 7F08B75C 0007000D */  break 7
 .L7F08B760:
 /* 0BE150 7F08B760 8D06127C */  lw    $a2, 0x127c($t0)
 .L7F08B764:
 /* 0BE154 7F08B764 44807000 */  mtc1  $zero, $f14
-/* 0BE158 7F08B768 00000000 */  nop   
+/* 0BE158 7F08B768 00000000 */  nop
 /* 0BE15C 7F08B76C E7AE008C */  swc1  $f14, 0x8c($sp)
 /* 0BE160 7F08B770 100000F6 */  b     .L7F08BB4C
 /* 0BE164 7F08B774 E7AE0088 */   swc1  $f14, 0x88($sp)
 .L7F08B778:
 /* 0BE168 7F08B778 12000005 */  beqz  $s0, .L7F08B790
-/* 0BE16C 7F08B77C 00000000 */   nop   
+/* 0BE16C 7F08B77C 00000000 */   nop
 /* 0BE170 7F08B780 10A00003 */  beqz  $a1, .L7F08B790
-/* 0BE174 7F08B784 00000000 */   nop   
+/* 0BE174 7F08B784 00000000 */   nop
 /* 0BE178 7F08B788 1000002E */  b     .L7F08B844
 /* 0BE17C 7F08B78C 24100003 */   li    $s0, 3
 .L7F08B790:
 /* 0BE180 7F08B790 16000005 */  bnez  $s0, .L7F08B7A8
-/* 0BE184 7F08B794 00000000 */   nop   
+/* 0BE184 7F08B794 00000000 */   nop
 /* 0BE188 7F08B798 14A00003 */  bnez  $a1, .L7F08B7A8
-/* 0BE18C 7F08B79C 00000000 */   nop   
+/* 0BE18C 7F08B79C 00000000 */   nop
 /* 0BE190 7F08B7A0 10000028 */  b     .L7F08B844
 /* 0BE194 7F08B7A4 24100002 */   li    $s0, 2
 .L7F08B7A8:
@@ -19671,7 +19687,7 @@ glabel playerTickBeams
 /* 0BE1BC 7F08B7CC 8FA20058 */  lw    $v0, 0x58($sp)
 /* 0BE1C0 7F08B7D0 24050200 */  li    $a1, 512
 /* 0BE1C4 7F08B7D4 10400008 */  beqz  $v0, .L7F08B7F8
-/* 0BE1C8 7F08B7D8 00000000 */   nop   
+/* 0BE1C8 7F08B7D8 00000000 */   nop
 /* 0BE1CC 7F08B7DC 80440080 */  lb    $a0, 0x80($v0)
 /* 0BE1D0 7F08B7E0 0FC1795B */  jal   bondwalkItemCheckBitflags
 /* 0BE1D4 7F08B7E4 AFA3005C */   sw    $v1, 0x5c($sp)
@@ -19742,7 +19758,7 @@ glabel playerTickBeams
 /* 0BE2C0 7F08B8D0 45020087 */  bc1fl .L7F08BAF0
 /* 0BE2C4 7F08B8D4 00107900 */   sll   $t7, $s0, 4
 /* 0BE2C8 7F08B8D8 44815000 */  mtc1  $at, $f10
-/* 0BE2CC 7F08B8DC 00000000 */  nop   
+/* 0BE2CC 7F08B8DC 00000000 */  nop
 /* 0BE2D0 7F08B8E0 460A0480 */  add.s $f18, $f0, $f10
 /* 0BE2D4 7F08B8E4 E5121278 */  swc1  $f18, 0x1278($t0)
 /* 0BE2D8 7F08B8E8 10000080 */  b     .L7F08BAEC
@@ -19768,7 +19784,7 @@ glabel playerTickBeams
 /* 0BE324 7F08B934 4502006E */  bc1fl .L7F08BAF0
 /* 0BE328 7F08B938 00107900 */   sll   $t7, $s0, 4
 /* 0BE32C 7F08B93C 44813000 */  mtc1  $at, $f6
-/* 0BE330 7F08B940 00000000 */  nop   
+/* 0BE330 7F08B940 00000000 */  nop
 /* 0BE334 7F08B944 46060201 */  sub.s $f8, $f0, $f6
 /* 0BE338 7F08B948 E5081278 */  swc1  $f8, 0x1278($t0)
 /* 0BE33C 7F08B94C 10000067 */  b     .L7F08BAEC
@@ -19778,7 +19794,7 @@ glabel playerTickBeams
 .L7F08B958:
 /* 0BE348 7F08B958 3C018005 */  lui   $at, %hi(D_8004AE94) # $at, 0x8005
 /* 0BE34C 7F08B95C 460E103C */  c.lt.s $f2, $f14
-/* 0BE350 7F08B960 00000000 */  nop   
+/* 0BE350 7F08B960 00000000 */  nop
 /* 0BE354 7F08B964 45020003 */  bc1fl .L7F08B974
 /* 0BE358 7F08B968 C5000174 */   lwc1  $f0, 0x174($t0)
 /* 0BE35C 7F08B96C 46001087 */  neg.s $f2, $f2
@@ -19787,13 +19803,13 @@ glabel playerTickBeams
 /* 0BE364 7F08B974 C42AAE94 */  lwc1  $f10, %lo(D_8004AE94)($at)
 /* 0BE368 7F08B978 3C018005 */  lui   $at, %hi(D_8004AE9C)
 /* 0BE36C 7F08B97C 460A003C */  c.lt.s $f0, $f10
-/* 0BE370 7F08B980 00000000 */  nop   
+/* 0BE370 7F08B980 00000000 */  nop
 /* 0BE374 7F08B984 4500001D */  bc1f  .L7F08B9FC
-/* 0BE378 7F08B988 00000000 */   nop   
+/* 0BE378 7F08B988 00000000 */   nop
 /* 0BE37C 7F08B98C 46001087 */  neg.s $f2, $f2
 /* 0BE380 7F08B990 3C018005 */  lui   $at, %hi(D_8004AE9C) # $at, 0x8005
 /* 0BE384 7F08B994 4602003C */  c.lt.s $f0, $f2
-/* 0BE388 7F08B998 00000000 */  nop   
+/* 0BE388 7F08B998 00000000 */  nop
 /* 0BE38C 7F08B99C 45020003 */  bc1fl .L7F08B9AC
 /* 0BE390 7F08B9A0 8D0D04E8 */   lw    $t5, 0x4e8($t0)
 /* 0BE394 7F08B9A4 46000086 */  mov.s $f2, $f0
@@ -19804,16 +19820,16 @@ glabel playerTickBeams
 /* 0BE3A4 7F08B9B4 C432AE98 */  lwc1  $f18, %lo(D_8004AE98)($at)
 /* 0BE3A8 7F08B9B8 24040002 */  li    $a0, 2
 /* 0BE3AC 7F08B9BC 4600903C */  c.lt.s $f18, $f0
-/* 0BE3B0 7F08B9C0 00000000 */  nop   
+/* 0BE3B0 7F08B9C0 00000000 */  nop
 /* 0BE3B4 7F08B9C4 4500000B */  bc1f  .L7F08B9F4
-/* 0BE3B8 7F08B9C8 00000000 */   nop   
+/* 0BE3B8 7F08B9C8 00000000 */   nop
 /* 0BE3BC 7F08B9CC 46021300 */  add.s $f12, $f2, $f2
 .L7F08B9D0:
 /* 0BE3C0 7F08B9D0 3C01BF80 */  li    $at, 0xBF800000 # -1.000000
 /* 0BE3C4 7F08B9D4 44818000 */  mtc1  $at, $f16
 /* 0BE3C8 7F08B9D8 24040001 */  li    $a0, 1
 /* 0BE3CC 7F08B9DC 4610603C */  c.lt.s $f12, $f16
-/* 0BE3D0 7F08B9E0 00000000 */  nop   
+/* 0BE3D0 7F08B9E0 00000000 */  nop
 /* 0BE3D4 7F08B9E4 4502002D */  bc1fl .L7F08BA9C
 /* 0BE3D8 7F08B9E8 C5001278 */   lwc1  $f0, 0x1278($t0)
 /* 0BE3DC 7F08B9EC 1000002A */  b     .L7F08BA98
@@ -19824,7 +19840,7 @@ glabel playerTickBeams
 .L7F08B9FC:
 /* 0BE3EC 7F08B9FC C42CAE9C */  lwc1  $f12, %lo(D_8004AE9C)($at)
 /* 0BE3F0 7F08BA00 4600603C */  c.lt.s $f12, $f0
-/* 0BE3F4 7F08BA04 00000000 */  nop   
+/* 0BE3F4 7F08BA04 00000000 */  nop
 /* 0BE3F8 7F08BA08 45030006 */  bc1tl .L7F08BA24
 /* 0BE3FC 7F08BA0C 4600103C */   c.lt.s $f2, $f0
 /* 0BE400 7F08BA10 4602603C */  c.lt.s $f12, $f2
@@ -19844,9 +19860,9 @@ glabel playerTickBeams
 /* 0BE430 7F08BA40 C424AEA0 */  lwc1  $f4, %lo(D_8004AEA0)($at)
 /* 0BE434 7F08BA44 24040002 */  li    $a0, 2
 /* 0BE438 7F08BA48 4604003C */  c.lt.s $f0, $f4
-/* 0BE43C 7F08BA4C 00000000 */  nop   
+/* 0BE43C 7F08BA4C 00000000 */  nop
 /* 0BE440 7F08BA50 4500000D */  bc1f  .L7F08BA88
-/* 0BE444 7F08BA54 00000000 */   nop   
+/* 0BE444 7F08BA54 00000000 */   nop
 /* 0BE448 7F08BA58 46021300 */  add.s $f12, $f2, $f2
 .L7F08BA5C:
 /* 0BE44C 7F08BA5C 3C013F80 */  li    $at, 0x3F800000 # 1.000000
@@ -19854,7 +19870,7 @@ glabel playerTickBeams
 /* 0BE454 7F08BA64 24040001 */  li    $a0, 1
 /* 0BE458 7F08BA68 3C013F80 */  li    $at, 0x3F800000 # 1.000000
 /* 0BE45C 7F08BA6C 460C303C */  c.lt.s $f6, $f12
-/* 0BE460 7F08BA70 00000000 */  nop   
+/* 0BE460 7F08BA70 00000000 */  nop
 /* 0BE464 7F08BA74 45020009 */  bc1fl .L7F08BA9C
 /* 0BE468 7F08BA78 C5001278 */   lwc1  $f0, 0x1278($t0)
 /* 0BE46C 7F08BA7C 44816000 */  mtc1  $at, $f12
@@ -19871,11 +19887,11 @@ glabel playerTickBeams
 .L7F08BA9C:
 /* 0BE48C 7F08BA9C 3C014170 */  li    $at, 0x41700000 # 15.000000
 /* 0BE490 7F08BAA0 4600703C */  c.lt.s $f14, $f0
-/* 0BE494 7F08BAA4 00000000 */  nop   
+/* 0BE494 7F08BAA4 00000000 */  nop
 /* 0BE498 7F08BAA8 45020008 */  bc1fl .L7F08BACC
 /* 0BE49C 7F08BAAC 460E003C */   c.lt.s $f0, $f14
 /* 0BE4A0 7F08BAB0 44814000 */  mtc1  $at, $f8
-/* 0BE4A4 7F08BAB4 00000000 */  nop   
+/* 0BE4A4 7F08BAB4 00000000 */  nop
 /* 0BE4A8 7F08BAB8 46080281 */  sub.s $f10, $f0, $f8
 /* 0BE4AC 7F08BABC E50A1278 */  swc1  $f10, 0x1278($t0)
 /* 0BE4B0 7F08BAC0 8E280000 */  lw    $t0, ($s1)
@@ -19886,7 +19902,7 @@ glabel playerTickBeams
 /* 0BE4C0 7F08BAD0 45020007 */  bc1fl .L7F08BAF0
 /* 0BE4C4 7F08BAD4 00107900 */   sll   $t7, $s0, 4
 /* 0BE4C8 7F08BAD8 44819000 */  mtc1  $at, $f18
-/* 0BE4CC 7F08BADC 00000000 */  nop   
+/* 0BE4CC 7F08BADC 00000000 */  nop
 /* 0BE4D0 7F08BAE0 46120100 */  add.s $f4, $f0, $f18
 /* 0BE4D4 7F08BAE4 E5041278 */  swc1  $f4, 0x1278($t0)
 /* 0BE4D8 7F08BAE8 8E280000 */  lw    $t0, ($s1)
@@ -19943,20 +19959,20 @@ glabel playerTickBeams
 /* 0BE58C 7F08BB9C 24020001 */   li    $v0, 1
 /* 0BE590 7F08BBA0 C48A0090 */  lwc1  $f10, 0x90($a0)
 /* 0BE594 7F08BBA4 460A1032 */  c.eq.s $f2, $f10
-/* 0BE598 7F08BBA8 00000000 */  nop   
+/* 0BE598 7F08BBA8 00000000 */  nop
 /* 0BE59C 7F08BBAC 45030003 */  bc1tl .L7F08BBBC
 /* 0BE5A0 7F08BBB0 460E103C */   c.lt.s $f2, $f14
 /* 0BE5A4 7F08BBB4 24020001 */  li    $v0, 1
 .L7F08BBB8:
 /* 0BE5A8 7F08BBB8 460E103C */  c.lt.s $f2, $f14
 .L7F08BBBC:
-/* 0BE5AC 7F08BBBC 00000000 */  nop   
+/* 0BE5AC 7F08BBBC 00000000 */  nop
 /* 0BE5B0 7F08BBC0 45000006 */  bc1f  .L7F08BBDC
-/* 0BE5B4 7F08BBC4 00000000 */   nop   
+/* 0BE5B4 7F08BBC4 00000000 */   nop
 /* 0BE5B8 7F08BBC8 8D1900D4 */  lw    $t9, 0xd4($t0)
 /* 0BE5BC 7F08BBCC 832A0026 */  lb    $t2, 0x26($t9)
 /* 0BE5C0 7F08BBD0 11400002 */  beqz  $t2, .L7F08BBDC
-/* 0BE5C4 7F08BBD4 00000000 */   nop   
+/* 0BE5C4 7F08BBD4 00000000 */   nop
 /* 0BE5C8 7F08BBD8 24020001 */  li    $v0, 1
 .L7F08BBDC:
 /* 0BE5CC 7F08BBDC 50400035 */  beql  $v0, $zero, .L7F08BCB4
@@ -19998,11 +20014,11 @@ glabel playerTickBeams
 /* 0BE658 7F08BC68 0FC1BFDB */  jal   modelSetAnimLooping
 /* 0BE65C 7F08BC6C 8DE400D4 */   lw    $a0, 0xd4($t7)
 /* 0BE660 7F08BC70 44807000 */  mtc1  $zero, $f14
-/* 0BE664 7F08BC74 00000000 */  nop   
+/* 0BE664 7F08BC74 00000000 */  nop
 .L7F08BC78:
 /* 0BE668 7F08BC78 C7A40090 */  lwc1  $f4, 0x90($sp)
 /* 0BE66C 7F08BC7C 4604703E */  c.le.s $f14, $f4
-/* 0BE670 7F08BC80 00000000 */  nop   
+/* 0BE670 7F08BC80 00000000 */  nop
 /* 0BE674 7F08BC84 45020008 */  bc1fl .L7F08BCA8
 /* 0BE678 7F08BC88 8E290000 */   lw    $t1, ($s1)
 /* 0BE67C 7F08BC8C 8E380000 */  lw    $t8, ($s1)
@@ -20010,7 +20026,7 @@ glabel playerTickBeams
 /* 0BE684 7F08BC94 0FC1BFE2 */  jal   modelSetAnimEndFrame
 /* 0BE688 7F08BC98 8F0400D4 */   lw    $a0, 0xd4($t8)
 /* 0BE68C 7F08BC9C 44807000 */  mtc1  $zero, $f14
-/* 0BE690 7F08BCA0 00000000 */  nop   
+/* 0BE690 7F08BCA0 00000000 */  nop
 /* 0BE694 7F08BCA4 8E290000 */  lw    $t1, ($s1)
 .L7F08BCA8:
 /* 0BE698 7F08BCA8 10000011 */  b     .L7F08BCF0
@@ -20018,7 +20034,7 @@ glabel playerTickBeams
 /* 0BE6A0 7F08BCB0 C5061280 */  lwc1  $f6, 0x1280($t0)
 .L7F08BCB4:
 /* 0BE6A4 7F08BCB4 46066032 */  c.eq.s $f12, $f6
-/* 0BE6A8 7F08BCB8 00000000 */  nop   
+/* 0BE6A8 7F08BCB8 00000000 */  nop
 /* 0BE6AC 7F08BCBC 4503000D */  bc1tl .L7F08BCF4
 /* 0BE6B0 7F08BCC0 8FAB009C */   lw    $t3, 0x9c($sp)
 /* 0BE6B4 7F08BCC4 8D0400D4 */  lw    $a0, 0xd4($t0)
@@ -20109,7 +20125,7 @@ glabel playerTickBeams
 /* 0BE7F4 7F08BE04 46003103 */  div.s $f4, $f6, $f0
 /* 0BE7F8 7F08BE08 44052000 */  mfc1  $a1, $f4
 /* 0BE7FC 7F08BE0C 0FC1B49D */  jal   setsubroty
-/* 0BE800 7F08BE10 00000000 */   nop   
+/* 0BE800 7F08BE10 00000000 */   nop
 /* 0BE804 7F08BE14 8FA400F0 */  lw    $a0, 0xf0($sp)
 /* 0BE808 7F08BE18 240A0019 */  li    $t2, 25
 /* 0BE80C 7F08BE1C 00002825 */  move  $a1, $zero
@@ -20276,7 +20292,7 @@ Gfx* bondviewGfxPlayerField5cMatrix(Gfx* gdl)
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x7F08BD18.
  */
 void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
@@ -20291,9 +20307,9 @@ void bondviewTransformPosToViewMatrix(RenderPosView *arg0)
 
 /**
  * Address 0x7F08BD48.
- * 
+ *
  * Notes: Similar to sub_GAME_7F08BE2C.
- * 
+ *
  */
 void bondviewTransformManyPosToViewMatrix(RenderPosView * arg0, s32 arg1)
 {
@@ -20319,7 +20335,7 @@ void bondviewTransformManyPosToViewMatrix(RenderPosView * arg0, s32 arg1)
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x7F08BDC4.
  */
 void sub_GAME_7F08BDC4(Mtxf *arg0)

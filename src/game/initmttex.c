@@ -9,7 +9,7 @@ void set_mt_tex_alloc(void)
 
     if (tokenFind(1, "-mt"))
     {
-        bytes = strtol(tokenFind(1, "-mt"), 0x0, 0) << 10;
+        bytes = strtol(tokenFind(1, "-mt"), 0x0, 0) * 1024; //get KB
     }
 
     texInitPool(&ptr_texture_alloc_start, mempAllocBytesInBank(bytes, MEMPOOL_STAGE), bytes);

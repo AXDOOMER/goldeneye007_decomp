@@ -48,10 +48,10 @@ jobs:
         run: wget -O baserom.e.z64 $FILE_EU
 
       - name: Extract US Assets
-        run: ./extract_baserom.u.sh
+        run: ./scripts/extract_baserom.u.sh
 
       - name: Extract EU Assets
-        run: ./extract_diff.e.sh
+        run: ./scripts/extract_diff.e.sh
 
       - name: Make EU 
         run: make all -j IDO_RECOMP=YES VERSION=EU VERBOSE=1

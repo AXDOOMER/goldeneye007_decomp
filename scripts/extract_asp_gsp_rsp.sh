@@ -29,7 +29,7 @@ OUT_FILENAME="baserom.u.cdata"
 MD5_US="70c525880240c1e838b8b1be35666c3b"
 if [ -f "${ROM_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${ROM_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_US}" ]; then
         echo "extracting US compressed data segment"
         dd bs=1 skip=137616 count=71760 if="${ROM_FILENAME}" of="${OUT_FILENAME}" status=none
@@ -73,7 +73,7 @@ START=${rspbootTextStart_ADDR}
 SIZE=${rspbootTextSize}
 if [ -f "${DATA_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${DATA_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_DATA_US}" ]; then
         echo "extracting ${OUT_FILENAME}"
         dd bs=1 skip=${START} count=${SIZE} if="${DATA_FILENAME}" of="${OUT_FILENAME}" status=none
@@ -91,7 +91,7 @@ START=${gsp3DTextStart_ADDR}
 SIZE=${gsp3DTextSize}
 if [ -f "${DATA_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${DATA_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_DATA_US}" ]; then
         echo "extracting ${OUT_FILENAME}"
         dd bs=1 skip=${START} count=${SIZE} if="${DATA_FILENAME}" of="${OUT_FILENAME}" status=none
@@ -109,7 +109,7 @@ START=${gsp3DDataStart_ADDR}
 SIZE=${gsp3DDataSize}
 if [ -f "${DATA_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${DATA_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_DATA_US}" ]; then
         echo "extracting ${OUT_FILENAME}"
         dd bs=1 skip=${START} count=${SIZE} if="${DATA_FILENAME}" of="${OUT_FILENAME}" status=none
@@ -127,7 +127,7 @@ START=${aspMainTextStart_ADDR}
 SIZE=${aspMainTextSize}
 if [ -f "${DATA_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${DATA_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_DATA_US}" ]; then
         echo "extracting ${OUT_FILENAME}"
         dd bs=1 skip=${START} count=${SIZE} if="${DATA_FILENAME}" of="${OUT_FILENAME}" status=none
@@ -145,7 +145,7 @@ START=${aspMainDataStart_ADDR}
 SIZE=${aspMainDataSize}
 if [ -f "${DATA_FILENAME}" ]; then
     ROM_MD5=$(md5sum "${DATA_FILENAME}" | cut -d " " -f1)
-    
+
     if [ "${ROM_MD5}" = "${MD5_DATA_US}" ]; then
         echo "extracting ${OUT_FILENAME}"
         dd bs=1 skip=${START} count=${SIZE} if="${DATA_FILENAME}" of="${OUT_FILENAME}" status=none

@@ -31,7 +31,7 @@
  *  A single list can be made into an enum and string array for debug.
  *  Also Known as X-Macros
  *
- *  Usage: CREATE_TYPES(ENUM, ACT, ACT_TYPES)
+ *  Usage: `CREATE_TYPES(ENUM, ACT, ACT_TYPES)`
  *
  *  @param type: ENUM or STRINGS
  *  @param prefix: Prefix to be applied to Enum, eg ACT for ACT_INIT
@@ -55,7 +55,7 @@
  *  A single list can be made into an enum and string array for debug.
  *  Also Known as X-Macros
  *
- *  Usage: CREATE_TYPES1(ACT, ACT_TYPES)
+ *  Usage: `CREATE_TYPES1(ACT, ACT_TYPES)`
  *
  *  @param prefix: Prefix to be applied to Enum, eg ACT for ACT_INIT
  *  @param name: Name of list to use for Enum or String  Array
@@ -77,11 +77,12 @@ typedef enum prefix                                                             
 #define CREATE_STRINGS1(prefix, name) IF_VA(DEFINED(DEBUG))(IF_ELSE(prefix)              \
 (#prefix "_" #name)(#name)COMMA())
 
-
+#ifdef __sgi
 /**
  * Auto Generate Bitflag enums. (up to 32bit) - Unfortunatly we loose intellisense comments
  * @param NAME: Name of bitflag
  * @param a-af: bitfield names (will be appended to bitflag name for every field)
+ * @return Enum of bitflags
  */
 #define BITFLAG(NAME,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,aa,ab,ac,ad,ae,af)\
 typedef enum NAME \
@@ -120,7 +121,9 @@ typedef enum NAME \
   */IF(NOT(IS_EMPTY(ae)))(NAME ## _ ## ae = 1 << 30) EVAL1(COMMA_IF_I(NOT(IS_EMPTY(af))))/*\
   */IF(NOT(IS_EMPTY(af)))(NAME ## _ ## af = 1 << 31)                   /*\
 */} NAME;
-
+#else
+#    define BITFLAG(...)
+#endif
 
 #pragma endregion
 
@@ -199,7 +202,7 @@ typedef enum CHRFLAG
     CHRFLAG_CAN_SHOOT_CHRS               = 0x00000040 , // can shoot other guards
     CHRFLAG_00000080                     = 0x00000080 , // unknown
     CHRFLAG_WAS_DAMAGED                  = 0x00000100 , // chr has taken damage (not invincible)
-    CHRFLAG_00000200                     = 0x00000200 , // unknown
+    CHRFLAG_00000200                     = 0x00000200 , // Possibly isBGAI
     CHRFLAG_HIDDEN                       = 0x00000400 , // hidden
     CHRFLAG_NO_AUTOAIM                   = 0x00000800 , // no autoaim
     CHRFLAG_LOCK_Y_POS                   = 0x00001000 , // lock y position (no gravity, used for dam/cradle jump)
@@ -216,7 +219,7 @@ typedef enum CHRFLAG
     CHRFLAG_CULL_USING_HITBOX            = 0x00800000 , // cull chr using hitbox instead of tile/clipping (useful with lock y pos flag)
     CHRFLAG_01000000                     = 0x01000000 , // unknown
     CHRFLAG_02000000                     = 0x02000000 , // unknown
-    CHRFLAG_04000000                     = 0x04000000 , // unknown
+    CHRFLAG_04000000                     = 0x04000000 , // unknown NoFade
     CHRFLAG_08000000                     = 0x08000000 , // unknown
     CHRFLAG_10000000                     = 0x10000000 , // unknown
     CHRFLAG_20000000                     = 0x20000000 , // unknown
@@ -309,18 +312,18 @@ typedef enum PROPFLAG
     PROPFLAG_CANNOT_ACTIVATE             = 0x02000000, // Cannot Activate Door/Object
     PROPFLAG_04000000                    = 0x04000000, // AI Sees Through Door/Object
     PROPFLAG_DOOR_TWOWAY                 = 0x08000000, // Open Away From Player
-    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Area Behind Door Invisible/Monitor Fixed/Left-Handed weapon/Disable security camera/drone gun*/
-    PROPFLAG_CULL_BEHIND_DOOR            = 0x10000000,
-    PROPFLAG_FIXED_MONITOR               = 0x10000000,
-    PROPFLAG_CCTV_DISABLED               = 0x10000000,
-    PROPFLAG_IS_DRONE_GUN                = 0x10000000,
-    PROPFLAG_GLASS_HASPORTAL             = 0x10000000,
-    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Open Backwards/Special Function/Conceal Weapon*/
-    PROPFLAG_SPECIAL_FUNC                = 0x20000000,
-    PROPFLAG_CONCEAL_GUN                 = 0x20000000,
-    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000, /* No Ammo on pickup / Area Behind Door Visible*/
-    PROPFLAG_NO_PORTAL_CLOSE             = 0x40000000,
-    PROPFLAG_NO_AMMO                     = 0x40000000,
+    PROPFLAG_WEAPON_LEFTHANDED           = 0x10000000, /* Left-Handed weapon*/
+    PROPFLAG_GLASS_HASPORTAL             = 0x10000000, /* Glass Has Portal*/
+    PROPFLAG_CULL_BEHIND_DOOR            = 0x10000000, // Area Behind Door Invisible
+    PROPFLAG_FIXED_MONITOR               = 0x10000000, // Monitor Fixed
+    PROPFLAG_CCTV_DISABLED               = 0x10000000, // Disable security camera
+    PROPFLAG_IS_DRONE_GUN                = 0x10000000, // drone gun
+    PROPFLAG_DOOR_OPENTOFRONT            = 0x20000000, /* Open Backwards*/
+    PROPFLAG_SPECIAL_FUNC                = 0x20000000, //Special Function
+    PROPFLAG_CONCEAL_GUN                 = 0x20000000, //Conceal Weapon
+    PROPFLAG_MONITOR_RENDERPOSTBG        = 0x40000000,
+    PROPFLAG_NO_PORTAL_CLOSE             = 0x40000000, // Area Behind Door Visible
+    PROPFLAG_NO_AMMO                     = 0x40000000,/* No Ammo on pickup */
     PROPFLAG_80000000                    = 0x80000000, // Open By Default/Weapon Paired for Player
     PROPFLAG_IS_DOUBLE                   = 0x80000000
 }PROPFLAG;
@@ -400,21 +403,21 @@ typedef enum DOORSTATE
 
 #define DOORTYPE_SLIDING    0
 // GE only - Bunker flexi door
-#define DOORTYPE_FLEXI1     1  
+#define DOORTYPE_FLEXI1     1
 #define DOORTYPE_FLEXI2     2
 #define DOORTYPE_FLEXI3     3
 #define DOORTYPE_VERTICAL   4
 #define DOORTYPE_SWINGING   5
 // GE only - Caverns
-#define DOORTYPE_EYE        6  
+#define DOORTYPE_EYE        6
 // GE only - Caverns
-#define DOORTYPE_IRIS       7  
+#define DOORTYPE_IRIS       7
 // GE only - Surface grate and Train floor panel
-#define DOORTYPE_FALLAWAY   8  
+#define DOORTYPE_FALLAWAY   8
 // GE only
-#define DOORTYPE_AZTECCHAIR 9  
+#define DOORTYPE_AZTECCHAIR 9
 // Attack Ship windows
-#define DOORTYPE_HULL       10 
+#define DOORTYPE_HULL       10
 #define DOORTYPE_LASER      11
 
 typedef enum DOOR_OPEN_SOUND
@@ -482,7 +485,7 @@ BITFLAG(DOOR_LOCK,
         6,
         7
 )
-
+//PropDef State
 BITFLAG(PROPSTATE,
         DAMAGED,
         02,
@@ -500,13 +503,13 @@ BITFLAG(PLAYERFLAG,
         NOCONTROL,
         NOTIMER
 )
-
+//PropDef bitflag
 BITFLAG(RUNTIMEBITFLAG,
         00000001,
         00000002,
         REMOVE, /* removes object when set                                     */
         ISRETICK,
-        00000010,
+        TAGGED,
         THROWING_KNIFE_RELATED,
         EMBEDDED,
         DEPOSIT, /* depositted (thrown/launching)                               */
@@ -621,6 +624,7 @@ BITFLAG(WEAPONSTATBITFLAG,
 #define QUADRANT_2NDWPTOTARGET 0x10 // second waypoint on route to target
 #define QUADRANT_20            0x20 // second waypoint on route to target
 
+#define CULLMODE_BOTH  0
 #define CULLMODE_NONE  1
 #define CULLMODE_FRONT 2
 #define CULLMODE_BACK  3
@@ -666,19 +670,28 @@ typedef enum AI_CMD
 #ifndef _SYNHILITE
 
 // makes enum list
-#    define _AI_CMD(C) CAT(AI_, CMDNAME),
+#    ifdef __sgi
+#        define _AI_CMD(C) CAT(AI_, CMDNAME),
+#        define _AI_DEBUG(C) CAT(AI_, CMDNAME),
+#        define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
+#        define DEFINE(x)
+#    else
+#        define _AI_CMD(...)   CAT(AI_, CMDNAME),
+#        define _AI_DEBUG(...) CAT(AI_, CMDNAME),
+#        define _AI_CMD_POLYMORPH(...)
+#        define DEFINE(...)
+#    endif
 
-#    define _AI_DEBUG(C) CAT(AI_, CMDNAME),
-
-#    define _AI_CMD_POLYMORPH(CMD, A, P, Q, D)
-
-#    define DEFINE(x)
 
 #    include "aicommands.def"
 #endif /* !_SYNHILITE */
 
     AI_CMD_COUNT
 } AI_CMD;
+
+// Number of bytes for AI cmds, GE 1, PD 2
+#define AICMDSIZE ((u8)(AI_CMD_COUNT / 255) + 1)
+
 
 /* Motion capture actor:      Duncan Botwood
  * Motion capture assistance: B Jones
@@ -1280,8 +1293,23 @@ typedef enum HIT_TYPE
     HIT_CHR,
     HIT_GLASS_XLU,
     HIT_TYPE_COUNT
-} HIT_TYPE;
-
+}HIT_TYPE;
+#ifdef DEBUG
+    char *HIT_TYPE_ToString[] = {
+         "HIT_DEFAULT",
+        "HIT_STONE",
+        "HIT_WOOD",
+        "HIT_METAL",
+        "HIT_GLASS",
+        "HIT_WATER",
+        "HIT_SNOW",
+        "HIT_DIRT",
+        "HIT_MUD",
+        "HIT_TILE",
+        "HIT_METALOBJ",
+        "HIT_CHR",
+        "HIT_GLASS_XLU"};
+#endif
 
 #define IMAGE(NAME, SZ, HS, HT, F3, F4, F5, F6) IMAGE_ ## NAME,
 typedef enum IMAGEIDS
@@ -2943,7 +2971,12 @@ enum CCRMLUT
         PROP_MAX
     } PROP;
 
-    typedef enum PROJECTILES
+        #define MAX_MULTI_PROP_IDS 600
+    #define MAX_DROPPED_PROP_IDS 1000
+#define DROPPED_PROP_ID_NUMBIT 0x1fff
+#define GUNTYPE_NUMBITS 127
+
+typedef enum PROJECTILES
     {
         PROJECTILES_MAX                = 0x2E,
         PROJECTILES_TYPE_KNIFE         = PROP_CHRKNIFE,
@@ -2975,6 +3008,19 @@ enum CCRMLUT
         PROP_TYPE_SMOKE,
         PROP_TYPE_MAX
     } PROP_TYPE;
+
+#ifdef DEBUG
+    char *PROP_TYPE_ToString[] = {
+        "PROP_TYPE_NUL",
+        "PROP_TYPE_OBJ",
+        "PROP_TYPE_DOOR",
+        "PROP_TYPE_CHR",
+        "PROP_TYPE_WEAPON",
+        "PROP_TYPE_PLAYER",
+        "PROP_TYPE_VIEWER",
+        "PROP_TYPE_EXPLOSION",
+        "PROP_TYPE_SMOKE" };
+    #endif
 
 #pragma endregion
 
@@ -3020,7 +3066,43 @@ enum CCRMLUT
         ACT_STATUS_UNARMEDATTACK,
         ACT_STATUS_MAX
     } ACT_STATUS;
-
+    #ifdef DEBUG
+    char *ACT_STATUS_ToString[] = {
+    "NONE",
+        "NORMAL",
+        "COVERWAIT",
+        "GRENADEWAIT",
+        "WAITING",
+        "COVERGOTO",
+        "COVERBREAK",
+        "COVERSEEN",
+        "FLANKLEFT",
+        "FLANKRIGHT",
+        "DODGE",
+        "GRENADE",
+        "WAITSEEN",
+        "WITHDRAW",
+        "SHOOTING",
+        "SYNCSHOOT",
+        "WAITTIMEOUT",
+        "COVERTIMEOUT",
+        "TRACKING",
+        "RETREAT",
+        "SURRENDER",
+        "TALKING",
+        "LISTENING",
+        "GOTOALARM",
+        "BOTFRIENDFOLLOW",
+        "BOTHIDE",
+        "BOTPATH",
+        "BOTINJURED",
+        "BOTNORMAL",
+        "BOTSHOOTING",
+        "DRUGGED",
+        "PANIC",
+        "RUNFROMGRENADE",
+        "UNARMEDATTACK"};
+    #endif
     /*Action Type to be performed by chr (canonical names)*/
     typedef enum ACT_TYPE
     {
@@ -3064,6 +3146,37 @@ enum CCRMLUT
         ACT_NULL,
         ACT_TYPE_MAX
     } ACT_TYPE;
+
+        #ifdef DEBUG
+    char *ACT_TYPE_ToString[] = {
+        "ACT_INIT",
+        "ACT_STAND",
+        "ACT_KNEEL",
+        "ACT_ANIM",
+        "ACT_DIE",
+        "ACT_DEAD",
+        "ACT_ARGH",
+        "ACT_PREARGH",
+        "ACT_ATTACK",
+        "ACT_ATTACKWALK",
+        "ACT_ATTACKROLL", // 10
+        "ACT_SIDESTEP",
+        "ACT_JUMPOUT",
+        "ACT_RUNPOS",
+        "ACT_PATROL",
+        "ACT_GOPOS",
+        "ACT_SURRENDER",
+        "ACT_LOOKATTARGET",
+        "ACT_SURPRISED",
+        "ACT_STARTALARM",
+        "ACT_THROWGRENADE", // 20
+        "ACT_TURNDIR",
+        "ACT_TEST",
+        "ACT_BONDINTRO",
+        "ACT_BONDDIE",
+        "ACT_BONDMULTI",
+        "ACT_NULL"};
+    #endif
 
 
     typedef enum AMMOTYPE
@@ -3464,15 +3577,15 @@ enum CCRMLUT
 #define getBoundPadNum(pad)       pad - 10000
 #define setBoundPadNum(pad)       pad + 10000
     /* AI Catagory */
-#define isGlobalAIListID(ID)      ((ID) < 1025)
-#define isBGAIListID(ID)          ((ID) > 4097)
+#define isGlobalAIListID(ID)      ((ID) <= 1024)
+#define isBGAIListID(ID)          ((ID) >= 4096)
 #define isChrAIListID(ID)         (!isGlobalAIListID(ID) && !isBGAIListID(ID))
 #define setGlobalAIListID(ID)     ((ID) + 0)
 #define setChrAIListID(ID)        ((ID) + 1025)
 #define setBGAIListID(ID)         ((ID) + 4096)
-#define getGlobalAIListID(ID)     ((ID)-0)
-#define getChrAIListID(ID)        ((ID)-1025)
-#define getBGAIListID(ID)         ((ID)-4096)
+#define getGlobalAIListID(ID)     ((ID) - 0)
+#define getChrAIListID(ID)        ((ID) - 1025)
+#define getBGAIListID(ID)         ((ID) - 4096)
 
     /* language file to slot allocation */
 #define getStringID(TEXTBANK, TEXTSLOT) ((TEXTBANK * 0x0400U) + TEXTSLOT)

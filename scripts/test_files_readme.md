@@ -10,7 +10,7 @@ This is a tool suite to identify discrepancies between builds. It will extract r
 
 This consists of two bash scripts:
 
-    make_test_files_basis.sh
+    make/build_hashtable.sh
     test_files.sh
 
 The first is used to generate a list of md5 checksums. This should only be used if a new build is added, or you want to generate checksums against a particular variant.
@@ -53,9 +53,9 @@ The supported versions have already had the md5 checksums extracted from known g
 
 **build test file example**
 
-    ./make_test_files_basis.sh -v u -o ge007.u-test_basis.csv
-    ./make_test_files_basis.sh -v j -o ge007.j-test_basis.csv
-    ./make_test_files_basis.sh -v e -o ge007.e-test_basis.csv
+    ./make/build_hashtable.sh -v u -o ge007.u-test_basis.csv
+    ./make/build_hashtable.sh -v j -o ge007.j-test_basis.csv
+    ./make/build_hashtable.sh -v e -o ge007.e-test_basis.csv
 
 ### Testing build ###
 

@@ -2555,7 +2555,7 @@ extern s32 D_80036834;
 //D:80036838
 extern s32 D_80036838;
 //D:8003683C
-extern struct unk_joint_list D_8003683C;
+extern ModelRenderData D_8003683C;
 
 //D:8003687C
 extern s32 D_8003687C;

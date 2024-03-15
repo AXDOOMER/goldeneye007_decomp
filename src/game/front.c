@@ -336,16 +336,72 @@ struct legal_screen_text legalpage_text_array[] = {
     { 80, 280, LEFT_ALIGN, CENTER_ALIGN, getStringID(LTITLE, TITLE_STR_18_EMI), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
-struct unk_joint_list D_8002AABC = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData       D_8002AABC = {NULL,
+                                    TRUE,
+                                    0x00000003,
+                                    NULL,
+
+                                    NULL,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    {0, 0, 0, 0},
+                                    {0, 0, 0, 0},
+                                    CULLMODE_BOTH};
+
 
 struct coord3d nintendologo_pos = {0};
 
-struct unk_joint_list D_8002AB08 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData       D_8002AB08 = {NULL,
+                                    TRUE,
+                                    0x00000003,
+                                    NULL,
+
+                                    NULL,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    {0, 0, 0, 0},
+                                    {0, 0, 0, 0},
+                                    CULLMODE_BOTH};
 
 
 struct coord3d goldeneyelogo_pos = { 0 };
 
-struct unk_joint_list D_8002AB54 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData       D_8002AB54 = {NULL,
+                                    TRUE,
+                                    0x00000003,
+                                    NULL,
+
+                                    NULL,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+
+                                    0,
+                                    {0, 0, 0, 0},
+                                    {0, 0, 0, 0},
+                                    CULLMODE_BOTH};
+
 
 struct coord3d D_8002AB94[] = {
     {-900.0f, 800.0f, 0.0f},
@@ -394,8 +450,46 @@ struct FolderSelect unknown_folderselect_constructor = { 0x14, 0x14, 0x14 };
 struct FolderSelect unknown_folderselect_constructor_0 = { 0x32, 0x32, 0x32 };
 
 
-struct unk_joint_list unknown_folderselect = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
-struct unk_joint_list D_8002AF84 = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData     unknown_folderselect = {NULL,
+                                            TRUE,
+                                            0x00000003,
+                                            NULL,
+
+                                            NULL,
+                                            0,
+                                            0,
+                                            0,
+
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+
+                                            0,
+                                            {0, 0, 0, 0},
+                                            {0, 0, 0, 0},
+                                            CULLMODE_BOTH};
+
+ModelRenderData       D_8002AF84           = {NULL,
+                                              TRUE,
+                                              0x00000003,
+                                              NULL,
+
+                                              NULL,
+                                              0,
+                                              0,
+                                              0,
+
+                                              0,
+                                              0,
+                                              0,
+                                              0,
+
+                                              0,
+                                              {0, 0, 0, 0},
+                                              {0, 0, 0, 0},
+                                              CULLMODE_BOTH};
+
 
 f32 D_8002AFC4 = 0;
 f32 D_8002AFC8 = 190.0;
@@ -780,7 +874,26 @@ struct coord3d D_8002BA78 = { 0.0f, 0.0f, 1.0f };
 struct coord3d D_8002BA84 = { 0.0f, 0.0f, 0.0f };
 struct coord3d D_8002BA90 = { 0.0f, 1.0f, 0.0f };
 
-struct unk_joint_list D_8002BA9C = {NULL, 1, 3, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0, 0, 0, 0}, 0};
+ModelRenderData D_8002BA9C = {NULL,
+                              TRUE,
+                              0x00000003,
+                              NULL,
+
+                              NULL,
+                              0,
+                              0,
+                              0,
+
+                              0,
+                              0,
+                              0,
+                              0,
+
+                              0,
+                              {0, 0, 0, 0},
+                              {0, 0, 0, 0},
+                              CULLMODE_BOTH};
+
 
 struct coord3d D_8002BADC = { 0.0f, 40.0f, 25.0f };
 
@@ -1376,7 +1489,7 @@ Gfx *display_aligned_white_text_to_screen(Gfx *dl, s32 arg1, s32 arg2, s32 halig
 Gfx *constructor_menu00_legalscreen(Gfx *DL)
 {
     s32 padding;
-    struct unk_joint_list spE4;
+    ModelRenderData spE4;
     Mtxf *temp;
     Mtxf spA0;
     s32 i;
@@ -1678,7 +1791,7 @@ void interface_menu01_nintendo(void)
 
 Gfx *constructor_menu01_nintendo(Gfx *DL)
 {
-    struct unk_joint_list sp128;
+    ModelRenderData sp128;
     s32 padding;
     s32 var_v1;
     Mtxf spE0;
@@ -1756,8 +1869,8 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
 
     sub_GAME_7F06EFC4(logoinst);
 
-    sp128.unk08 = 3;
-    sp128.unk04 = 0;
+    sp128.flags = 3;
+    sp128.zbufferenabled = FALSE;
     sp128.gdl = DL;
 
     subdraw(&sp128, logoinst);
@@ -1941,7 +2054,7 @@ void interface_menu04_goldeneyelogo(void)
 
 Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
 {
-    struct unk_joint_list sp140;
+    ModelRenderData sp140;
     s32 padding[2];
     Mtxf spF8;
     s32 i;
@@ -1974,8 +2087,8 @@ Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
 
     sub_GAME_7F06EFC4(logoinst);
 
-    sp140.unk08 = 3;
-    sp140.unk04 = 0;
+    sp140.flags = 3;
+    sp140.zbufferenabled = FALSE;
     sp140.gdl = DL;
 
     subdraw(&sp140, logoinst);
@@ -2447,7 +2560,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
     s32 i;
     u8 *langp;
     s32 var_s2_2;
-    struct unk_joint_list sp14C;
+    ModelRenderData sp14C;
     s32 var_s1_2;
     Mtxf sp108;
     f32 temp_f4;
@@ -2475,8 +2588,8 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         // struct copy
         sp14C = unknown_folderselect;
 
-        sp14C.unk08 = 3;
-        sp14C.unk04 = 0;
+        sp14C.flags = 3;
+        sp14C.zbufferenabled = FALSE;
         sp14C.gdl = DL;
 
         subdraw(&sp14C, walletinst[j]);
@@ -2826,7 +2939,7 @@ Gfx *sub_GAME_7F00D5E8(Gfx *DL)
     s32 padding;
     f32 temp_f0;
     f32 temp_f2;
-    struct unk_joint_list sp10C;
+    ModelRenderData sp10C;
     s32 i;
     Mtxf spC8;
     Mtxf sp88;
@@ -2853,8 +2966,8 @@ Gfx *sub_GAME_7F00D5E8(Gfx *DL)
 
     walletinst[0]->render_pos = (union RenderPosView*)sp10C.mtxlist;
 
-    sp10C.unk08 = 3;
-    sp10C.unk04 = 0;
+    sp10C.flags = 3;
+    sp10C.zbufferenabled = FALSE;
     sp10C.gdl = DL;
 
     subdraw(&sp10C, walletinst[0]);
@@ -9972,7 +10085,7 @@ Gfx * constructor_menu18_displaycast(Gfx *DL)
     struct coord3d sp22C;
     s32 padding;
     Mtxf sp1E8;
-    struct unk_joint_list sp1A8;
+    ModelRenderData sp1A8;
     s32 padding3;
     Mtxf sp160;
     s32 sp15C;
@@ -10176,7 +10289,7 @@ Gfx * constructor_menu18_displaycast(Gfx *DL)
 
     sp1A8.unk_matrix = &sp1E8;
     sp1A8.mtxlist = dynAllocate(cast_model->obj->numMatrices << 6);
-    subcalcmatrices((struct unk_joint_list *) &sp1A8, cast_model);
+    subcalcmatrices((ModelRenderData *) &sp1A8, cast_model);
 
     if (cast_model_weapon != NULL)
     {
@@ -10190,18 +10303,18 @@ Gfx * constructor_menu18_displaycast(Gfx *DL)
         }
 
         sp1A8.mtxlist = dynAllocate(cast_model_weapon->obj->numMatrices << 6);
-        instcalcmatrices((struct unk_joint_list *) &sp1A8, cast_model_weapon);
+        instcalcmatrices((ModelRenderData *) &sp1A8, cast_model_weapon);
     }
 
     sp1A8.unk20 = 7;
     sp1A8.unk04 = 1;
     sp1A8.gdl = DL++;
     sp1A8.unk08 = 3;
-    subdraw((struct unk_joint_list *) &sp1A8, cast_model);
+    subdraw((ModelRenderData *) &sp1A8, cast_model);
 
     if (cast_model_weapon != NULL)
     {
-        subdraw((struct unk_joint_list *) &sp1A8, cast_model_weapon);
+        subdraw((ModelRenderData *) &sp1A8, cast_model_weapon);
     }
 
     modelSetDistanceDisabled(0);
