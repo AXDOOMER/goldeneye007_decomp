@@ -1,12 +1,7 @@
 #!/bin/bash
 
-# execute from the root source control directory.
-dirname=$(pwd)
-shopt -s extglob           # enable +(...) glob syntax
-result=${dirname%%+(/)}    # trim however many trailing slashes exist
-result=${result##*/}       # remove everything before the last / that still remains
-result=${result:-/}        # correct for dirname=/ case
-
+# This script should execute from root source control directory.
+result=$(basename "$PWD")
 if [ $result = "scripts" ] ; then
     cd ..
 fi
