@@ -24146,7 +24146,7 @@ Gfx *process_monitor_animation_microcode(Model *model, ModelNode *node, MonitorR
         // Render the image
         gSPSetGeometryMode(gdl++, G_CULL_BACK);
 
-        likely_generate_DL_for_image_declaration(&gdl, tconfig, arg5, arg4, 2);
+        insertImageIntoDL(&gdl, tconfig, arg5, arg4, 2);
 
         gSPMatrix(gdl++, osVirtualToPhysical(model->render_pos), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPSegment(gdl++, SPSEGMENT_MODEL_VTX, osVirtualToPhysical(vertices));
@@ -24699,7 +24699,7 @@ void *process_monitor_animation_microcode(Model *arg0, ModelNode *arg1, MonitorR
         arg3            = temp_t2_3 + 8;
         temp_t2_3->unk4 = 0x2000;
         temp_t2_3->unk0 = 0xB7000000;
-        likely_generate_DL_for_image_declaration(temp_a0_2, phi_s1_2, arg5, arg4, 2);
+        insertImageIntoDL(temp_a0_2, phi_s1_2, arg5, arg4, 2);
         temp_s0         = arg3;
         arg3            = temp_s0 + 8;
         temp_s0->unk0   = 0x1020040;
@@ -25586,7 +25586,7 @@ def_7F04A01C:
 /* 07F658 7F04AB28 AD4D0000 */  sw    $t5, ($t2)
 /* 07F65C 7F04AB2C AFAE0010 */  sw    $t6, 0x10($sp)
 /* 07F660 7F04AB30 8FA700C0 */  lw    $a3, 0xc0($sp)
-/* 07F664 7F04AB34 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 07F664 7F04AB34 0FC1DB5A */  jal   insertImageIntoDL
 /* 07F668 7F04AB38 8FA600C4 */   lw    $a2, 0xc4($sp)
 /* 07F66C 7F04AB3C 8FB000BC */  lw    $s0, 0xbc($sp)
 /* 07F670 7F04AB40 3C190102 */  lui   $t9, (0x01020040 >> 16) # lui $t9, 0x102
@@ -26507,7 +26507,7 @@ def_7F04A01C:
 /* 07F658 7F04AB28 AD4D0000 */  sw    $t5, ($t2)
 /* 07F65C 7F04AB2C AFAE0010 */  sw    $t6, 0x10($sp)
 /* 07F660 7F04AB30 8FA700C0 */  lw    $a3, 0xc0($sp)
-/* 07F664 7F04AB34 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 07F664 7F04AB34 0FC1DB5A */  jal   insertImageIntoDL
 /* 07F668 7F04AB38 8FA600C4 */   lw    $a2, 0xc4($sp)
 /* 07F66C 7F04AB3C 8FB000BC */  lw    $s0, 0xbc($sp)
 /* 07F670 7F04AB40 3C190102 */  lui   $t9, (0x01020040 >> 16) # lui $t9, 0x102
@@ -27428,7 +27428,7 @@ def_7F04A01C:
 /* 07F658 7F04AB28 AD4D0000 */  sw    $t5, ($t2)
 /* 07F65C 7F04AB2C AFAE0010 */  sw    $t6, 0x10($sp)
 /* 07F660 7F04AB30 8FA700C0 */  lw    $a3, 0xc0($sp)
-/* 07F664 7F04AB34 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 07F664 7F04AB34 0FC1DB5A */  jal   insertImageIntoDL
 /* 07F668 7F04AB38 8FA600C4 */   lw    $a2, 0xc4($sp)
 /* 07F66C 7F04AB3C 8FB000BC */  lw    $s0, 0xbc($sp)
 /* 07F670 7F04AB40 3C190102 */  lui   $t9, (0x01020040 >> 16) # lui $t9, 0x102

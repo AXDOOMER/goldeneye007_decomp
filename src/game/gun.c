@@ -9872,7 +9872,7 @@ glabel sub_GAME_7F061E18
 /* 097524 7F0629F4 27A40160 */  addiu $a0, $sp, 0x160
 /* 097528 7F0629F8 8D050000 */  lw    $a1, ($t0)
 /* 09752C 7F0629FC 24060004 */  li    $a2, 4
-/* 097530 7F062A00 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 097530 7F062A00 0FC1DB5A */  jal   insertImageIntoDL
 /* 097534 7F062A04 8FA70168 */   lw    $a3, 0x168($sp)
 /* 097538 7F062A08 8FB10160 */  lw    $s1, 0x160($sp)
 /* 09753C 7F062A0C 3C0D0470 */  lui   $t5, (0x04700080 >> 16) # lui $t5, 0x470
@@ -9896,7 +9896,7 @@ glabel sub_GAME_7F061E18
 /* 097584 7F062A54 8FA70168 */  lw    $a3, 0x168($sp)
 /* 097588 7F062A58 8FA500B0 */  lw    $a1, 0xb0($sp)
 /* 09758C 7F062A5C 27A40160 */  addiu $a0, $sp, 0x160
-/* 097590 7F062A60 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 097590 7F062A60 0FC1DB5A */  jal   insertImageIntoDL
 /* 097594 7F062A64 24060004 */   li    $a2, 4
 /* 097598 7F062A68 8FAA0160 */  lw    $t2, 0x160($sp)
 /* 09759C 7F062A6C 3C0FB100 */  lui   $t7, (0xB1000013 >> 16) # lui $t7, 0xb100          # gSP4Triangles(0,2,3,3,2,1,1,0,0,0,0
@@ -9911,7 +9911,7 @@ glabel sub_GAME_7F061E18
 /* 0975BC 7F062A8C 24190002 */  li    $t9, 2
 /* 0975C0 7F062A90 AFB90010 */  sw    $t9, 0x10($sp)
 /* 0975C4 7F062A94 24060004 */  li    $a2, 4
-/* 0975C8 7F062A98 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 0975C8 7F062A98 0FC1DB5A */  jal   insertImageIntoDL
 /* 0975CC 7F062A9C 8FA70168 */   lw    $a3, 0x168($sp)
 /* 0975D0 7F062AA0 8FB10160 */  lw    $s1, 0x160($sp)
 /* 0975D4 7F062AA4 3C180430 */  lui   $t8, (0x04300040 >> 16) # lui $t8, 0x430
@@ -10747,7 +10747,7 @@ glabel sub_GAME_7F061E18
 /* 0958A8 7F062EB8 27A40160 */  addiu $a0, $sp, 0x160
 /* 0958AC 7F062EBC 8D050000 */  lw    $a1, ($t0)
 /* 0958B0 7F062EC0 24060004 */  li    $a2, 4
-/* 0958B4 7F062EC4 0FC1DB7A */  jal   likely_generate_DL_for_image_declaration
+/* 0958B4 7F062EC4 0FC1DB7A */  jal   insertImageIntoDL
 /* 0958B8 7F062EC8 8FA70168 */   lw    $a3, 0x168($sp)
 /* 0958BC 7F062ECC 8FB10160 */  lw    $s1, 0x160($sp)
 /* 0958C0 7F062ED0 3C0D0470 */  lui   $t5, (0x04700080 >> 16) # lui $t5, 0x470
@@ -10771,7 +10771,7 @@ glabel sub_GAME_7F061E18
 /* 095908 7F062F18 8FA70168 */  lw    $a3, 0x168($sp)
 /* 09590C 7F062F1C 8FA500B0 */  lw    $a1, 0xb0($sp)
 /* 095910 7F062F20 27A40160 */  addiu $a0, $sp, 0x160
-/* 095914 7F062F24 0FC1DB7A */  jal   likely_generate_DL_for_image_declaration
+/* 095914 7F062F24 0FC1DB7A */  jal   insertImageIntoDL
 /* 095918 7F062F28 24060004 */   li    $a2, 4
 /* 09591C 7F062F2C 8FAA0160 */  lw    $t2, 0x160($sp)
 /* 095920 7F062F30 3C0FB100 */  lui   $t7, (0xB1000013 >> 16) # lui $t7, 0xb100
@@ -10786,7 +10786,7 @@ glabel sub_GAME_7F061E18
 /* 095940 7F062F50 24190002 */  li    $t9, 2
 /* 095944 7F062F54 AFB90010 */  sw    $t9, 0x10($sp)
 /* 095948 7F062F58 24060004 */  li    $a2, 4
-/* 09594C 7F062F5C 0FC1DB7A */  jal   likely_generate_DL_for_image_declaration
+/* 09594C 7F062F5C 0FC1DB7A */  jal   insertImageIntoDL
 /* 095950 7F062F60 8FA70168 */   lw    $a3, 0x168($sp)
 /* 095954 7F062F64 8FB10160 */  lw    $s1, 0x160($sp)
 /* 095958 7F062F68 3C180430 */  lui   $t8, (0x04300040 >> 16) # lui $t8, 0x430
@@ -24343,7 +24343,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
         phi_a2 = 2;
     }
     // Node 19
-    likely_generate_DL_for_image_declaration(arg3, arg2, &arg0, arg1, phi_a2, 0, 0);
+    insertImageIntoDL(arg3, arg2, &arg0, arg1, phi_a2, 0, 0);
     display_image_at_on_screen_coord(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
@@ -24616,7 +24616,7 @@ glabel microcode_generation_ammo_related
 /* 09E3A4 7F069874 10000001 */  b     .L7F06987C
 /* 09E3A8 7F069878 24060002 */   li    $a2, 2
 .L7F06987C:
-/* 09E3AC 7F06987C 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 09E3AC 7F06987C 0FC1DB5A */  jal   insertImageIntoDL
 /* 09E3B0 7F069880 AFA00010 */   sw    $zero, 0x10($sp)
 /* 09E3B4 7F069884 92180005 */  lbu   $t8, 5($s0)
 /* 09E3B8 7F069888 92070004 */  lbu   $a3, 4($s0)
@@ -26452,7 +26452,7 @@ void gunDrawSight(s32 *gdl) {
 
     if ((g_CurrentPlayer->gunsightmode == 0) && (g_CurrentPlayer->mpmenuon == 0)) {
         sp54 = *gdl;
-        likely_generate_DL_for_image_declaration(&sp54, crosshairimage, 4, 0, 0);
+        insertImageIntoDL(&sp54, crosshairimage, 4, 0, 0);
 
         xypos[0] = g_CurrentPlayer->crosshair_angle.f[0];
         xypos[1] = g_CurrentPlayer->crosshair_angle.f[1];

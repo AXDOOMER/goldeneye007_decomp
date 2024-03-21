@@ -306,7 +306,7 @@ void texSetRenderMode(Gfx **gdlptr, s32 arg1, s32 numcycles, s32 arg3)
 // First pass mips2c output (initial guess at variables, everything compiles).
 // Display list commands are probably correct, but almost every single one has wrong arguments.
 // https://decomp.me/scratch/Q6Ss8 28%
-void likely_generate_DL_for_image_declaration(Gfx **arg0, sImageTableEntry *arg1, s32 arg2, s32 arg3, s32 arg4)
+void insertImageIntoDL(Gfx **arg0, sImageTableEntry *arg1, s32 arg2, s32 arg3, s32 arg4)
 {
     Gfx *sp16C;
     u32 sp144;
@@ -692,7 +692,7 @@ void likely_generate_DL_for_image_declaration(Gfx **arg0, sImageTableEntry *arg1
 #else
 GLOBAL_ASM(
 .text
-glabel likely_generate_DL_for_image_declaration
+glabel insertImageIntoDL
 /* 0AB898 7F076D68 27BDFE90 */  addiu $sp, $sp, -0x170
 /* 0AB89C 7F076D6C AFBF0034 */  sw    $ra, 0x34($sp)
 /* 0AB8A0 7F076D70 AFB70030 */  sw    $s7, 0x30($sp)
