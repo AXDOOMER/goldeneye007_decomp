@@ -3003,7 +3003,7 @@ def_7F0C40C0:
 /* 0FA3B8 7F0C5888 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0FA3BC 7F0C588C 00408825 */  move  $s1, $v0
 /* 0FA3C0 7F0C5890 8FA400D4 */  lw    $a0, 0xd4($sp)
-/* 0FA3C4 7F0C5894 0FC026D4 */  jal   getplayerfavoredweapon
+/* 0FA3C4 7F0C5894 0FC026D4 */  jal   frontGetPlayersFavoriteWeaponInHand
 /* 0FA3C8 7F0C5898 00002825 */   move  $a1, $zero
 /* 0FA3CC 7F0C589C 3C188004 */  lui   $t8, %hi(ptrFontBankGothic) 
 /* 0FA3D0 7F0C58A0 8F180EAC */  lw    $t8, %lo(ptrFontBankGothic)($t8)
@@ -5178,7 +5178,7 @@ def_7F0C40C0:
 /* 0FB0A8 7F0C6538 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0FB0AC 7F0C653C 00408825 */  move  $s1, $v0
 /* 0FB0B0 7F0C6540 8FA400D4 */  lw    $a0, 0xd4($sp)
-/* 0FB0B4 7F0C6544 0FC026DC */  jal   getplayerfavoredweapon
+/* 0FB0B4 7F0C6544 0FC026DC */  jal   frontGetPlayersFavoriteWeaponInHand
 /* 0FB0B8 7F0C6548 00002825 */   move  $a1, $zero
 /* 0FB0BC 7F0C654C 3C198004 */  lui   $t9, %hi(ptrFontBankGothic) # $t9, 0x8004
 /* 0FB0C0 7F0C6550 8F390EDC */  lw    $t9, %lo(ptrFontBankGothic)($t9)
@@ -7365,7 +7365,7 @@ text_exit:
 /* 0F7758 7F0C4D68 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0F775C 7F0C4D6C 00408825 */  move  $s1, $v0
 /* 0F7760 7F0C4D70 8FA400D4 */  lw    $a0, 0xd4($sp)
-/* 0F7764 7F0C4D74 0FC02694 */  jal   getplayerfavoredweapon
+/* 0F7764 7F0C4D74 0FC02694 */  jal   frontGetPlayersFavoriteWeaponInHand
 /* 0F7768 7F0C4D78 00002825 */   move  $a1, $zero
 /* 0F776C 7F0C4D7C 3C198004 */  lui   $t9, %hi(ptrFontBankGothic) # $t9, 0x8004
 /* 0F7770 7F0C4D80 8F39AAFC */  lw    $t9, %lo(ptrFontBankGothic)($t9)
