@@ -1223,7 +1223,7 @@ Gfx *load_draw_selected_icon_folder_select(Gfx *DL)
         image = mainfolderimages + IMG_DEL;
     }
 
-    likely_generate_DL_for_image_declaration(&DL, image, 4, 0, 0);
+    texSelect(&DL, image, 4, 0, 0);
 
     xypos[0] = floorFloat(cursor_h_pos + 0.5f);
     xypos[1] = floorFloat(cursor_v_pos + 0.5f);
@@ -2779,7 +2779,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         spA4.f[0] = (f32) (mainfolderimages + IMG_COPY)->width * 0.5f;
         spA4.f[1] = (f32) (mainfolderimages + IMG_COPY)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages, 4, 0, 0);
+        texSelect(&DL, mainfolderimages, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &spAC.f[0], &spA4.f[0], mainfolderimages->width, mainfolderimages->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) mainfolderimages->level > 0, 0);
 
         folder_option_COPY_bound.left = spAC.f[0] - spA4.f[0];
@@ -2792,7 +2792,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp94.f[0] = (mainfolderimages + IMG_DEL)->width * 0.5f;
         sp94.f[1] = (mainfolderimages + IMG_DEL)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
+        texSelect(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &sp9C.f[0], &sp94.f[0], (mainfolderimages + IMG_DEL)->width, (mainfolderimages + IMG_DEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_DEL)->level > 0, 0);
 
         folder_option_ERASE_bound.left = (f32) (sp9C.f[0] - sp94.f[0]);
@@ -2805,7 +2805,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp84.f[0] = (mainfolderimages + IMG_SEL)->width * 0.5f;
         sp84.f[1] = (mainfolderimages + IMG_SEL)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
+        texSelect(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &sp8C.f[0], &sp84.f[0], (mainfolderimages + IMG_SEL)->width, (mainfolderimages + IMG_SEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_SEL)->level > 0, 0);
     }
 
@@ -3771,7 +3771,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
             halfedxy[0] = image->width * 0.5f;
             halfedxy[1] = image->height * 0.5f;
 
-            likely_generate_DL_for_image_declaration(&DL, image, 4, 0, 0);
+            texSelect(&DL, image, 4, 0, 0);
             display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xB4, 0, 0, 0xFF, image->level > 0, 0);
         }
     }
@@ -5203,25 +5203,25 @@ Gfx *sub_GAME_7F01231C(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 2, 2, 0, 2);
+    texSelect(&DL, simage + 2, 2, 0, 2);
     gSP1Triangle(DL++, 0, 1, 4, 0);
     gSP1Triangle(DL++, 4, 1, 5, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 3, 2, 0, 2);
+    texSelect(&DL, simage + 3, 2, 0, 2);
     gSP1Triangle(DL++, 2, 3, 6, 0);
     gSP1Triangle(DL++, 6, 3, 7, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 0, 2, 0, 2);
+    texSelect(&DL, simage + 0, 2, 0, 2);
     gSP1Triangle(DL++, 8, 9, 12, 0);
     gSP1Triangle(DL++, 12, 9, 13, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 1, 2, 0, 2);
+    texSelect(&DL, simage + 1, 2, 0, 2);
     gSP1Triangle(DL++, 10, 11, 14, 0);
     gSP1Triangle(DL++, 14, 11, 15, 0);
 
@@ -6438,7 +6438,7 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
     gDPSetTextureFilter(DL++, G_TF_POINT);
 
     simage = mainfolderimages + 5;
-    likely_generate_DL_for_image_declaration(&DL, simage, 1, 0, 2); // IMAGE_DOT
+    texSelect(&DL, simage, 1, 0, 2); // IMAGE_DOT
 
     spF8.f[0] = 176.0f;
     spF8.f[1] = 4.0f;
@@ -6470,7 +6470,7 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
             {
                 simage = &mpstageselimages[multi_stage_setups[count].photo];
 
-                likely_generate_DL_for_image_declaration(&DL, simage, 1, 0, 2);
+                texSelect(&DL, simage, 1, 0, 2);
 
                 if (count == current_mp_stage_highlighted)
                 {

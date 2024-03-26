@@ -6240,7 +6240,7 @@ void dorottex(ModelRenderData *renderdata, ModelNode *node)
 
 void sub_GAME_7F073038(ModelRenderData *renderdata, struct sImageTableEntry *tconfig, s32 arg2)
 {
-	likely_generate_DL_for_image_declaration(&renderdata->gdl, tconfig, arg2, renderdata->zbufferenabled, 2);
+	texSelect(&renderdata->gdl, tconfig, arg2, renderdata->zbufferenabled, 2);
 }
 
 
