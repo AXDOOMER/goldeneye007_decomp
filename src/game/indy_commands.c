@@ -45,23 +45,19 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
 // /include/PR/region.h
 // #define ALIGN(s, align) (((u32)(s) + (align-1)) & ~(align-1))
 
-#ifdef NONMATCHING
-/***
- * https://decomp.me/scratch/CJXVL 99.62%
-*/
 s32 indycmdSendCommand(u8 *buffer, u32 size)
 {
     u8 sp40[0x500];
-    s32 padding5; // needed to fix sp44
+    u8 *address;
     u32 i;
     u8 *source;
-    u8 *address;
     u8 *pbuffer;
     u8 *padding1;
     u8 *end;
+    u8 *padding5;
 
-    pbuffer = sp40; // var_a3
     address = sp40; // var_v1
+    pbuffer = sp40; // var_a3
 
     // if argument isn't 8 byte aligned
     if ((s32)(buffer) & 7)
@@ -74,11 +70,13 @@ s32 indycmdSendCommand(u8 *buffer, u32 size)
         // if local buffer isn't 8 byte aligned
         if ((s32)(pbuffer) & 7)
         {
-            pbuffer += 4; // var_a3 = &sp44;
             address += 4; // var_v1 = var_a3;
+            pbuffer += 4; // var_a3 = &sp44;
         }
 
-        end = pbuffer + size;
+        if(pbuffer);
+        
+        end = address + size;
         for (source = buffer; address < end; )
         {
             *address++ = *source++;
@@ -109,107 +107,6 @@ s32 indycmdSendCommand(u8 *buffer, u32 size)
         return 1;
     }
 }
-#else
-GLOBAL_ASM(
-.text
-glabel indycmdSendCommand
-/* 104D50 7F0D0220 27BDFAC0 */  addiu $sp, $sp, -0x540
-/* 104D54 7F0D0224 27A20040 */  addiu $v0, $sp, 0x40
-/* 104D58 7F0D0228 308F0007 */  andi  $t7, $a0, 7
-/* 104D5C 7F0D022C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 104D60 7F0D0230 AFA40540 */  sw    $a0, 0x540($sp)
-/* 104D64 7F0D0234 00A03025 */  move  $a2, $a1
-/* 104D68 7F0D0238 00401825 */  move  $v1, $v0
-/* 104D6C 7F0D023C 11E0002B */  beqz  $t7, .L7F0D02EC
-/* 104D70 7F0D0240 00403825 */   move  $a3, $v0
-/* 104D74 7F0D0244 2CA10501 */  sltiu $at, $a1, 0x501
-/* 104D78 7F0D0248 14200003 */  bnez  $at, .L7F0D0258
-/* 104D7C 7F0D024C 30580007 */   andi  $t8, $v0, 7
-/* 104D80 7F0D0250 1000003D */  b     .L7F0D0348
-/* 104D84 7F0D0254 00001025 */   move  $v0, $zero
-.L7F0D0258:
-/* 104D88 7F0D0258 13000003 */  beqz  $t8, .L7F0D0268
-/* 104D8C 7F0D025C 3C088005 */   lui   $t0, %hi(indy_status) 
-/* 104D90 7F0D0260 27A70044 */  addiu $a3, $sp, 0x44
-/* 104D94 7F0D0264 00E01825 */  move  $v1, $a3
-.L7F0D0268:
-/* 104D98 7F0D0268 00662021 */  addu  $a0, $v1, $a2
-/* 104D9C 7F0D026C 0064082B */  sltu  $at, $v1, $a0
-/* 104DA0 7F0D0270 10200007 */  beqz  $at, .L7F0D0290
-/* 104DA4 7F0D0274 8FA20540 */   lw    $v0, 0x540($sp)
-.L7F0D0278:
-/* 104DA8 7F0D0278 90590000 */  lbu   $t9, ($v0)
-/* 104DAC 7F0D027C 24630001 */  addiu $v1, $v1, 1
-/* 104DB0 7F0D0280 0064082B */  sltu  $at, $v1, $a0
-/* 104DB4 7F0D0284 24420001 */  addiu $v0, $v0, 1
-/* 104DB8 7F0D0288 1420FFFB */  bnez  $at, .L7F0D0278
-/* 104DBC 7F0D028C A079FFFF */   sb    $t9, -1($v1)
-.L7F0D0290:
-/* 104DC0 7F0D0290 8D08EAC4 */  lw    $t0, %lo(indy_status)($t0)
-/* 104DC4 7F0D0294 24C50003 */  addiu $a1, $a2, 3
-/* 104DC8 7F0D0298 2401FFFC */  li    $at, -4
-/* 104DCC 7F0D029C 31090020 */  andi  $t1, $t0, 0x20
-/* 104DD0 7F0D02A0 1120000D */  beqz  $t1, .L7F0D02D8
-/* 104DD4 7F0D02A4 00A15024 */   and   $t2, $a1, $at
-/* 104DD8 7F0D02A8 10C0000B */  beqz  $a2, .L7F0D02D8
-/* 104DDC 7F0D02AC 00001025 */   move  $v0, $zero
-/* 104DE0 7F0D02B0 30C40003 */  andi  $a0, $a2, 3
-/* 104DE4 7F0D02B4 10800005 */  beqz  $a0, .L7F0D02CC
-/* 104DE8 7F0D02B8 00801825 */   move  $v1, $a0
-/* 104DEC 7F0D02BC 24420001 */  addiu $v0, $v0, 1
-.L7F0D02C0:
-/* 104DF0 7F0D02C0 5462FFFF */  bnel  $v1, $v0, .L7F0D02C0
-/* 104DF4 7F0D02C4 24420001 */   addiu $v0, $v0, 1
-/* 104DF8 7F0D02C8 10460003 */  beq   $v0, $a2, .L7F0D02D8
-.L7F0D02CC:
-/* 104DFC 7F0D02CC 24420004 */   addiu $v0, $v0, 4
-.L7F0D02D0:
-/* 104E00 7F0D02D0 5446FFFF */  bnel  $v0, $a2, .L7F0D02D0
-/* 104E04 7F0D02D4 24420004 */   addiu $v0, $v0, 4
-.L7F0D02D8:
-/* 104E08 7F0D02D8 00E02025 */  move  $a0, $a3
-/* 104E0C 7F0D02DC 0FC34074 */  jal   indy_buffer_write_command
-/* 104E10 7F0D02E0 01402825 */   move  $a1, $t2
-/* 104E14 7F0D02E4 10000018 */  b     .L7F0D0348
-/* 104E18 7F0D02E8 24020001 */   li    $v0, 1
-.L7F0D02EC:
-/* 104E1C 7F0D02EC 3C0B8005 */  lui   $t3, %hi(indy_status) 
-/* 104E20 7F0D02F0 8D6BEAC4 */  lw    $t3, %lo(indy_status)($t3)
-/* 104E24 7F0D02F4 24C50003 */  addiu $a1, $a2, 3
-/* 104E28 7F0D02F8 2401FFFC */  li    $at, -4
-/* 104E2C 7F0D02FC 316C0020 */  andi  $t4, $t3, 0x20
-/* 104E30 7F0D0300 1180000D */  beqz  $t4, .L7F0D0338
-/* 104E34 7F0D0304 00A16824 */   and   $t5, $a1, $at
-/* 104E38 7F0D0308 10C0000B */  beqz  $a2, .L7F0D0338
-/* 104E3C 7F0D030C 00001025 */   move  $v0, $zero
-/* 104E40 7F0D0310 30C40003 */  andi  $a0, $a2, 3
-/* 104E44 7F0D0314 10800005 */  beqz  $a0, .L7F0D032C
-/* 104E48 7F0D0318 00801825 */   move  $v1, $a0
-/* 104E4C 7F0D031C 24420001 */  addiu $v0, $v0, 1
-.L7F0D0320:
-/* 104E50 7F0D0320 5462FFFF */  bnel  $v1, $v0, .L7F0D0320
-/* 104E54 7F0D0324 24420001 */   addiu $v0, $v0, 1
-/* 104E58 7F0D0328 10460003 */  beq   $v0, $a2, .L7F0D0338
-.L7F0D032C:
-/* 104E5C 7F0D032C 24420004 */   addiu $v0, $v0, 4
-.L7F0D0330:
-/* 104E60 7F0D0330 5446FFFF */  bnel  $v0, $a2, .L7F0D0330
-/* 104E64 7F0D0334 24420004 */   addiu $v0, $v0, 4
-.L7F0D0338:
-/* 104E68 7F0D0338 8FA40540 */  lw    $a0, 0x540($sp)
-/* 104E6C 7F0D033C 0FC34074 */  jal   indy_buffer_write_command
-/* 104E70 7F0D0340 01A02825 */   move  $a1, $t5
-/* 104E74 7F0D0344 24020001 */  li    $v0, 1
-.L7F0D0348:
-/* 104E78 7F0D0348 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 104E7C 7F0D034C 27BD0540 */  addiu $sp, $sp, 0x540
-/* 104E80 7F0D0350 03E00008 */  jr    $ra
-/* 104E84 7F0D0354 00000000 */   nop   
-)
-#endif
-
-
-
 
 
 
