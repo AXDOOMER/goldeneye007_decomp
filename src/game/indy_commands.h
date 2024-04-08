@@ -138,7 +138,7 @@ s32 indycmdSendRamRomLoad(char *strptr,u32 ptarget,u32 filesize);
 s32 indycmdSendHostExportFile(char *strptr,u8 *phwaddr,u32 size);
 s32 indycmdSendHostCmdPacket(char *strptr);
 
-s32 indycmdRecieveCommand(struct indy_resource_entry_header *resource,u32 size);
+s32 indycmdRecieveCommand(u8 *buffer, u32 size);
 
 s32 indycmdAckHostCheckFileExists(u8 *response1,u8 *response2);
 s32 indycmdReceiveFile(u8 *response1,u8 *response2,u32 childsize,u8 *child);
