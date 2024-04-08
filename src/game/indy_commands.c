@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "indy_commands.h"
 #include <PR/os.h>
+#include <PR/region.h>
 #include "rmon.h"
 // data
 //D:8004EAC0
@@ -41,47 +42,73 @@ void indy_buffer_write_command(u8 *buffer,u32 size)
 
 
 
+// /include/PR/region.h
+// #define ALIGN(s, align) (((u32)(s) + (align-1)) & ~(align-1))
 
 #ifdef NONMATCHING
-s32 indycmdSendCommand(indy_resource_entry_header *cmd,u32 size)
+/***
+ * https://decomp.me/scratch/CJXVL 99.62%
+*/
+s32 indycmdSendCommand(u8 *buffer, u32 size)
 {
-    s32 i;
-    u32 uVar1;
+    u8 sp40[0x500];
+    s32 padding5; // needed to fix sp44
+    u32 i;
+    u8 *source;
     u8 *address;
     u8 *pbuffer;
-    u8 buffer [1280];
-    u32 *id;
-    
-    pbuffer = buffer;
-    if ((cmd->resourceID & 7) != 0) {
-        if (0x500 < size) {
+    u8 *padding1;
+    u8 *end;
+
+    pbuffer = sp40; // var_a3
+    address = sp40; // var_v1
+
+    // if argument isn't 8 byte aligned
+    if ((s32)(buffer) & 7)
+    {
+        if (size > 0x500)
+        {
             return 0;
         }
-        if ((*buffer & 7) != 0) {
-            pbuffer = buffer + 4;
-        }
-        for (address = pbuffer; address < pbuffer + size; address = address + 1) {
-            id = &cmd->resourceID;
-            cmd = &cmd->resourceID + 1;
-            *address = *id;
-        }
-        if (((indy_status & 0x20) != 0) && (size != 0)) {
-            for (i = 1; (size & 3) != i; i += 1) {}
+
+        // if local buffer isn't 8 byte aligned
+        if ((s32)(pbuffer) & 7)
+        {
+            pbuffer += 4; // var_a3 = &sp44;
+            address += 4; // var_v1 = var_a3;
         }
 
-        indy_buffer_write_command(pbuffer,size + 3 & 0xfffffffc);
+        end = pbuffer + size;
+        for (source = buffer; address < end; )
+        {
+            *address++ = *source++;
+        }
+        
+        if (indy_status & 0x20)
+        {
+            for (i = 0; i < size; i++)
+            {
+            }
+        }
+
+        indy_buffer_write_command(pbuffer, ALIGN(size, 4));
+        
         return 1;
     }
-    if (((indy_status & 0x20) != 0) && (size != 0)) {
-
-        for (i = 1; (size & 3) != i; i += 1) {}
-
+    else // else it is aligned
+    {
+        if (indy_status & 0x20)
+        {
+            for (i = 0; i < size; i++)
+            {
+            }
+        }
+    
+        indy_buffer_write_command(buffer, ALIGN(size, 4));
+        
+        return 1;
     }
-
-    indy_buffer_write_command(cmd,size + 3 & 0xfffffffc);
-    return 1;
 }
-//#ifdef NONMATCHING
 #else
 GLOBAL_ASM(
 .text
@@ -188,13 +215,13 @@ glabel indycmdSendCommand
 
 s32 send2indyresourcecommands(indy_resource_entry_header * entry1, u32 size1, indy_resource_entry_header * entry2, u32 size2)
 {
-    indycmdSendCommand(entry1,size1);
-    indycmdSendCommand(entry2,size2);
+    indycmdSendCommand((u8 *)entry1, size1);
+    indycmdSendCommand((u8 *)entry2, size2);
     return TRUE;
 }
 
 
-void indyrescmdStartCmdSeq(s32 readsize,s32 writesize)
+void indyrescmdStartCmdSeq(s32 readsize, s32 writesize)
 {
     indy_resource_entry_type1 cmd;
 
@@ -203,7 +230,7 @@ void indyrescmdStartCmdSeq(s32 readsize,s32 writesize)
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -216,7 +243,7 @@ void indyrescmdEndCmdSeq(s32 readsize,s32 writesize)
     cmd.entry.size = sizeof(cmd);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -228,7 +255,7 @@ void indyrescmdInit(s32 readsize,s32 writesize)
     cmd.entry.size = sizeof(indy_resource_entry_type0);
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
-    indycmdSendCommand(&cmd,sizeof(indy_resource_entry_type0));
+    indycmdSendCommand((u8 *)&cmd, sizeof(indy_resource_entry_type0));
 }
 
 void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
@@ -242,7 +269,7 @@ void post_type3_indyrescmd(s32 rsize,s32 wsize,char *strptr)
     cmd.entry.writesize = wsize;
     strncpy(cmd.strbuffer,strptr, sizeof(cmd.strbuffer));
     cmd.strbuffer[255] = 0;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
@@ -256,22 +283,22 @@ void post_type4_indyrescmd_data_recieved(s32 readsize,s32 writesize,s32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
 void indyrescmdCheckFileExists(s32 rsize,s32 wsize,char *name)
 {
-  indy_resource_entry_type5 cmd;
-  
-  cmd.entry.resourceID = INDYMAGIC;
-  cmd.entry.type = INDY_SENDCHECKFILEEXISTS;
-  cmd.entry.size = sizeof(cmd);
-  cmd.entry.readsize = rsize;
-  cmd.entry.writesize = wsize;
-  strncpy(cmd.strbuffer,name,sizeof(cmd.strbuffer));
-  cmd.strbuffer[255] = '\0';
-  indycmdSendCommand(&cmd,sizeof(cmd));
+    indy_resource_entry_type5 cmd;
+
+    cmd.entry.resourceID = INDYMAGIC;
+    cmd.entry.type = INDY_SENDCHECKFILEEXISTS;
+    cmd.entry.size = sizeof(cmd);
+    cmd.entry.readsize = rsize;
+    cmd.entry.writesize = wsize;
+    strncpy(cmd.strbuffer,name,sizeof(cmd.strbuffer));
+    cmd.strbuffer[255] = '\0';
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -286,7 +313,7 @@ void post_type6_indyrescmd_printfrecieved(s32 readsize,s32 writesize,u32 data1,u
     cmd.entry.writesize = writesize;
     cmd.data1 = data1;
     cmd.data2 = data2;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
@@ -302,7 +329,7 @@ void indyrescmdSendFileLoad(u32 rsize,u32 wsize,u8 *filename,u32 size)
     strncpy(cmd.strbuffer,filename,sizeof(cmd.strbuffer));
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -352,7 +379,7 @@ void post_typeA_indyrescmd_app_command_recieved(s32 readsize,s32 writesize,u32 d
   cmd.entry.readsize = readsize;
   cmd.entry.writesize = writesize;
   cmd.data = data;
-  indycmdSendCommand(&cmd.entry,sizeof(cmd));
+  indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
@@ -370,7 +397,7 @@ void indyrescmdRamRomLoad(u32 rsize,u32 wsize,char *name,u32 filesize,u32 ptarge
   cmd.size = filesize;
   cmd.hwaddress = ptarget;
   
-  indycmdSendCommand(&cmd,sizeof(cmd));
+  indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 
 }
 
@@ -387,7 +414,7 @@ void post_type10_indyrescmd_fault_ack_by_host(s32 rsize,s32 wsize,u32 data1,u32 
     cmd.data1 = data1;
     cmd.data2 = data2;
     cmd.data3 = data3;
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -404,7 +431,7 @@ void indyrescmdSendExportFile(u32 rsize,u32 wsize,u8 *ptrstr,u32 size,u8 *hwaddr
     cmd.strbuffer[255] = '\0';
     cmd.size = size;
     cmd.hwaddress = hwaddress;
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -418,7 +445,7 @@ void post_typeE_indyrescmd_prof_recv(s32 readsize,s32 writesize,u32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
@@ -433,7 +460,7 @@ void indyrescmdSendHostCmd(s32 rsize,s32 wsize,char *strptr)
     cmd.entry.writesize = wsize;
     strncpy(cmd.strbuffer,strptr,sizeof(cmd.strbuffer));
     cmd.strbuffer[1023] = '\0';
-    indycmdSendCommand(&cmd,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd, sizeof(cmd));
 }
 
 
@@ -447,7 +474,7 @@ void post_typeC_indyrescmd_prof_send(s32 readsize,s32 writesize,u32 data)
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 
@@ -461,7 +488,7 @@ void post_typeA_indyrescmd_app_data_recieved(s32 readsize,s32 writesize,u32 data
     cmd.entry.readsize = readsize;
     cmd.entry.writesize = writesize;
     cmd.data = data;
-    indycmdSendCommand(&cmd.entry,sizeof(cmd));
+    indycmdSendCommand((u8 *)&cmd.entry, sizeof(cmd));
 }
 
 

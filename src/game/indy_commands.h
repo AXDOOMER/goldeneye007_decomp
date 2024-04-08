@@ -128,7 +128,7 @@ typedef struct indy_resource_entry_type10 {
 
 extern s32 indy_ready;
 
-s32 indycmdSendCommand(struct indy_resource_entry_header *cmd,u32 size);
+s32 indycmdSendCommand(u8 *buffer, u32 size);
 
 s32 indycmdSendInitPacket(void);
 s32 indycmdSendHostCheckFileExists(char *strptr);
