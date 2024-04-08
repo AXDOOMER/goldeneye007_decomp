@@ -4727,7 +4727,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
         gSPClearGeometryMode(arg0++, G_CULL_FRONT | G_FOG);
         gDPSetColorDither(arg0++, G_CD_NOISE);
 
-        insertImageIntoDL(&arg0, genericimage, 4, 1, 2);
+        texSelect(&arg0, genericimage, 4, 1, 2);
 
         for (i=0; i<20; i++)
         {
@@ -5640,7 +5640,7 @@ glabel explosionRenderBulletImpactOnProp
 /* 0D67B4 7F0A1C84 92060009 */  lbu   $a2, 9($s0)
 /* 0D67B8 7F0A1C88 9207000A */  lbu   $a3, 0xa($s0)
 /* 0D67BC 7F0A1C8C AFAF0010 */  sw    $t7, 0x10($sp)
-/* 0D67C0 7F0A1C90 0FC1DB5A */  jal   insertImageIntoDL
+/* 0D67C0 7F0A1C90 0FC1DB5A */  jal   texSelect
 /* 0D67C4 7F0A1C94 024E2821 */   addu  $a1, $s2, $t6
 /* 0D67C8 7F0A1C98 AFB30048 */  sw    $s3, 0x48($sp)
 .L7F0A1C9C:

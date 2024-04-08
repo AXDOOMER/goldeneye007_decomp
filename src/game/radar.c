@@ -77,7 +77,7 @@ Gfx *display_red_blue_on_radar(Gfx *DL)
         start_left += 0xF;
     }
     
-    insertImageIntoDL(&DL, mpradarimages, 2, 0, 2);
+    texSelect(&DL, mpradarimages, 2, 0, 2);
 
     DL = microcode_constructor(DL);
 

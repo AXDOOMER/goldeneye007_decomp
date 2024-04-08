@@ -25,6 +25,10 @@ extern u32 *_gameSegmentVaddrEnd;
 extern u32 *_gameSegmentRomStart;
 extern u32 *_gameSegmentRomEnd;
 
+extern u32* _animation_dataSegmentRomStart;
+extern u32* _animation_dataSegmentStart;
+extern u32* _animation_dataSegmentEnd;
+
 extern u32* _alt_startSegmentRomStart;
 extern u32* _alt_startSegmentStart;
 
