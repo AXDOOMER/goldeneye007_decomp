@@ -3,6 +3,7 @@
 #include "music_0D2720.h"
 #include "watch.h"
 #include "mp_music.h"
+#include "lvl.h"
 
 #ifdef VERSION_EU
 #define MP_MUSIC_FRAMERATE 50
@@ -386,106 +387,68 @@ void sub_GAME_7F0C1364(void)
 
 
 
-#ifdef NONMATCHING
-void reset_all_music_slots(void) {
+void reset_all_music_slots(void)
+{
+    s32 i;
+    s32 var_t2;
 
+    var_t2 = 0;
+
+    for (i=0; i<4; i++)
+    {
+        if (music_slot_active_0[i] || music_slot_minutes_0[i] > 0)
+        {
+            if (music_slot_minutes_0[i] >= g_ClockTimer)
+            {
+                music_slot_minutes_0[i] -= g_ClockTimer;
+            }
+            else
+            {
+                music_slot_minutes_0[i] = 0;
+            }
+
+            if (music_slot_seconds_0[i])
+            {
+                if (music_slot_seconds_0[i] >= g_ClockTimer)
+                {
+                    music_slot_seconds_0[i] -= g_ClockTimer;
+                }
+                else
+                {
+                    music_slot_seconds_0[i] = 0;
+                }
+
+                if (music_slot_seconds_0[i])
+                {
+                    if ((music_slot_active_0[i]) || (music_slot_minutes_0[i]))
+                    {
+                        var_t2 = 1;
+                    }
+                }
+                else
+                {
+                    music_slot_active_0[i] = 0;
+                }
+            }
+        }
+    }
+
+    if (g_ClockTimer != 0)
+    {
+        if ((get_mission_state() == MISSION_STATE_2) || (get_mission_state() == MISSION_STATE_5))
+        {
+            if (var_t2 == 0)
+            {
+                sub_GAME_7F0C12CC();
+            }
+        }
+        else if (var_t2 != 0)
+        {
+            sub_GAME_7F0C1288();
+        }
+    }
+    
 }
-#else
-GLOBAL_ASM(
-.text
-glabel reset_all_music_slots
-/* 0F5EF8 7F0C13C8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0F5EFC 7F0C13CC 3C078009 */  lui   $a3, %hi(music_slot_active_0)
-/* 0F5F00 7F0C13D0 3C048009 */  lui   $a0, %hi(music_slot_minutes_0)
-/* 0F5F04 7F0C13D4 3C068005 */  lui   $a2, %hi(g_ClockTimer)
-/* 0F5F08 7F0C13D8 3C098009 */  lui   $t1, %hi(music_slot_seconds_0)
-/* 0F5F0C 7F0C13DC AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0F5F10 7F0C13E0 00005025 */  move  $t2, $zero
-/* 0F5F14 7F0C13E4 2529C628 */  addiu $t1, %lo(music_slot_seconds_0) # addiu $t1, $t1, -0x39d8
-/* 0F5F18 7F0C13E8 8CC68374 */  lw    $a2, %lo(g_ClockTimer)($a2)
-/* 0F5F1C 7F0C13EC 2484C618 */  addiu $a0, %lo(music_slot_minutes_0) # addiu $a0, $a0, -0x39e8
-/* 0F5F20 7F0C13F0 24E7C608 */  addiu $a3, %lo(music_slot_active_0) # addiu $a3, $a3, -0x39f8
-/* 0F5F24 7F0C13F4 00004025 */  move  $t0, $zero
-.L7F0C13F8:
-/* 0F5F28 7F0C13F8 8CE50000 */  lw    $a1, ($a3)
-/* 0F5F2C 7F0C13FC 54A00005 */  bnezl $a1, .L7F0C1414
-/* 0F5F30 7F0C1400 8C820000 */   lw    $v0, ($a0)
-/* 0F5F34 7F0C1404 8C8E0000 */  lw    $t6, ($a0)
-/* 0F5F38 7F0C1408 59C0001F */  blezl $t6, .L7F0C1488
-/* 0F5F3C 7F0C140C 24840004 */   addiu $a0, $a0, 4
-/* 0F5F40 7F0C1410 8C820000 */  lw    $v0, ($a0)
-.L7F0C1414:
-/* 0F5F44 7F0C1414 3C0F8009 */  lui   $t7, %hi(music_slot_seconds_0)
-/* 0F5F48 7F0C1418 25EFC628 */  addiu $t7, %lo(music_slot_seconds_0) # addiu $t7, $t7, -0x39d8
-/* 0F5F4C 7F0C141C 0046082A */  slt   $at, $v0, $a2
-/* 0F5F50 7F0C1420 14200004 */  bnez  $at, .L7F0C1434
-/* 0F5F54 7F0C1424 010F1821 */   addu  $v1, $t0, $t7
-/* 0F5F58 7F0C1428 0046C023 */  subu  $t8, $v0, $a2
-/* 0F5F5C 7F0C142C 10000002 */  b     .L7F0C1438
-/* 0F5F60 7F0C1430 AC980000 */   sw    $t8, ($a0)
-.L7F0C1434:
-/* 0F5F64 7F0C1434 AC800000 */  sw    $zero, ($a0)
-.L7F0C1438:
-/* 0F5F68 7F0C1438 8C620000 */  lw    $v0, ($v1)
-/* 0F5F6C 7F0C143C 10400011 */  beqz  $v0, .L7F0C1484
-/* 0F5F70 7F0C1440 0046082A */   slt   $at, $v0, $a2
-/* 0F5F74 7F0C1444 14200003 */  bnez  $at, .L7F0C1454
-/* 0F5F78 7F0C1448 0046C823 */   subu  $t9, $v0, $a2
-/* 0F5F7C 7F0C144C 10000002 */  b     .L7F0C1458
-/* 0F5F80 7F0C1450 AC790000 */   sw    $t9, ($v1)
-.L7F0C1454:
-/* 0F5F84 7F0C1454 AC600000 */  sw    $zero, ($v1)
-.L7F0C1458:
-/* 0F5F88 7F0C1458 8C6B0000 */  lw    $t3, ($v1)
-/* 0F5F8C 7F0C145C 51600009 */  beql  $t3, $zero, .L7F0C1484
-/* 0F5F90 7F0C1460 ACE00000 */   sw    $zero, ($a3)
-/* 0F5F94 7F0C1464 14A00004 */  bnez  $a1, .L7F0C1478
-/* 0F5F98 7F0C1468 00000000 */   nop
-/* 0F5F9C 7F0C146C 8C8C0000 */  lw    $t4, ($a0)
-/* 0F5FA0 7F0C1470 51800005 */  beql  $t4, $zero, .L7F0C1488
-/* 0F5FA4 7F0C1474 24840004 */   addiu $a0, $a0, 4
-.L7F0C1478:
-/* 0F5FA8 7F0C1478 10000002 */  b     .L7F0C1484
-/* 0F5FAC 7F0C147C 240A0001 */   li    $t2, 1
-/* 0F5FB0 7F0C1480 ACE00000 */  sw    $zero, ($a3)
-.L7F0C1484:
-/* 0F5FB4 7F0C1484 24840004 */  addiu $a0, $a0, 4
-.L7F0C1488:
-/* 0F5FB8 7F0C1488 25080004 */  addiu $t0, $t0, 4
-/* 0F5FBC 7F0C148C 1489FFDA */  bne   $a0, $t1, .L7F0C13F8
-/* 0F5FC0 7F0C1490 24E70004 */   addiu $a3, $a3, 4
-/* 0F5FC4 7F0C1494 50C00016 */  beql  $a2, $zero, .L7F0C14F0
-/* 0F5FC8 7F0C1498 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F5FCC 7F0C149C 0FC3030C */  jal   get_mission_state
-/* 0F5FD0 7F0C14A0 AFAA0018 */   sw    $t2, 0x18($sp)
-/* 0F5FD4 7F0C14A4 24010002 */  li    $at, 2
-/* 0F5FD8 7F0C14A8 10410006 */  beq   $v0, $at, .L7F0C14C4
-/* 0F5FDC 7F0C14AC 8FAA0018 */   lw    $t2, 0x18($sp)
-/* 0F5FE0 7F0C14B0 0FC3030C */  jal   get_mission_state
-/* 0F5FE4 7F0C14B4 AFAA0018 */   sw    $t2, 0x18($sp)
-/* 0F5FE8 7F0C14B8 24010005 */  li    $at, 5
-/* 0F5FEC 7F0C14BC 14410007 */  bne   $v0, $at, .L7F0C14DC
-/* 0F5FF0 7F0C14C0 8FAA0018 */   lw    $t2, 0x18($sp)
-.L7F0C14C4:
-/* 0F5FF4 7F0C14C4 5540000A */  bnezl $t2, .L7F0C14F0
-/* 0F5FF8 7F0C14C8 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F5FFC 7F0C14CC 0FC304B3 */  jal   sub_GAME_7F0C12CC
-/* 0F6000 7F0C14D0 00000000 */   nop
-/* 0F6004 7F0C14D4 10000006 */  b     .L7F0C14F0
-/* 0F6008 7F0C14D8 8FBF0014 */   lw    $ra, 0x14($sp)
-.L7F0C14DC:
-/* 0F600C 7F0C14DC 51400004 */  beql  $t2, $zero, .L7F0C14F0
-/* 0F6010 7F0C14E0 8FBF0014 */   lw    $ra, 0x14($sp)
-/* 0F6014 7F0C14E4 0FC304A2 */  jal   sub_GAME_7F0C1288
-/* 0F6018 7F0C14E8 00000000 */   nop
-/* 0F601C 7F0C14EC 8FBF0014 */  lw    $ra, 0x14($sp)
-.L7F0C14F0:
-/* 0F6020 7F0C14F0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0F6024 7F0C14F4 03E00008 */  jr    $ra
-/* 0F6028 7F0C14F8 00000000 */   nop
-)
-#endif
-
 
 
 
