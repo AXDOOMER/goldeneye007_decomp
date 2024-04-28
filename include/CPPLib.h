@@ -513,11 +513,11 @@ IF_VA(NOT(IS_EMPTY(A)))/*
 /**
  * Logical AND. Simply performs a lookup.
  */
-#define AND(a, b) CAT(CAT(_AND_, a), b)
-#define _AND_00   0
-#define _AND_01   0
-#define _AND_10   0
-#define _AND_11   1
+#define AND_CPPLIB(a, b) CAT(CAT(_AND_CPPLIB_, a), b)
+#define _AND_CPPLIB_00   0
+#define _AND_CPPLIB_01   0
+#define _AND_CPPLIB_10   0
+#define _AND_CPPLIB_11   1
 
 /**
  * Macro if statement.

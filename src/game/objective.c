@@ -87,3 +87,4 @@ void set_parent_cur_obj_photograph(struct criteria_picture *arg0)
     arg0->next = ptr_last_photo_obj_in_room_subobject_entry_type1E;
     ptr_last_photo_obj_in_room_subobject_entry_type1E = arg0;
 }
+

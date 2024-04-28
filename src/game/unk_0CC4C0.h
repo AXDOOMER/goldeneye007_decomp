@@ -2,6 +2,8 @@
 #define _UNK_0CC4C0_H_
 #include <ultra64.h>
 
+#include "image.h"
+
 struct image_sound
 {
     /**
@@ -48,5 +50,9 @@ typedef struct s_bss_8008D2A8
 
 
 extern struct image_sound *D_8004E86C[];
+
+s32 texGetHeightAtLod(struct tex *tex, s32 lod);
+void sub_GAME_7F0CC9D4(struct tex *tex, s32 *deptharg, s32 *lenarg);
+
 
 #endif

@@ -314,10 +314,10 @@ f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
 
-rgba_u8 D_8002A9B0 = { 0xA0, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9B4 = { 0x96, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9B8 = { 0x28, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9BC = { 0x8C, 0x00, 0x00, 0x00 };
+rgba_u8 D_8002A9B0 = { 160, 0x00, 0x00, 0x00 };
+rgba_u8 D_8002A9B4 = { 150, 0x00, 0x00, 0x00 };
+rgba_u8 D_8002A9B8 = { 40, 0x00, 0x00, 0x00 };
+rgba_u8 D_8002A9BC = { 140, 0x00, 0x00, 0x00 };
 
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 
@@ -905,7 +905,7 @@ u16 color_palette_entries_50_percent[] = {1, 0x1F, 0x3C1, 0x3DF, 0x7801, 0x781F,
 
 // forward declarations
 
-Gfx* add_tab3_previous(Gfx* DL);
+Gfx* frontAddPreviousTabText(Gfx* DL);
 s32 check_if_stage_completed_on_difficulty(int stage, DIFFICULTY difficulty);
 s32 get_highest_unlocked_difficulty_for_level(s32 arg0);
 Gfx *constructor_menu00_legalscreen(Gfx *DL);
@@ -945,7 +945,7 @@ void set_cursor_pos_difficulty(int difficulty);
 
 
 
-Gfx *write_text_at_abs_coord(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s32 first_font_table, s32 arg6, s32 view_x, s32 view_y, s32 arg9, s32 arga)
+Gfx *frontPrintText(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s32 first_font_table, s32 arg6, s32 view_x, s32 view_y, s32 arg9, s32 arga)
 {
     if (j_text_trigger != 0)
     {
@@ -986,7 +986,7 @@ Gfx *write_text_at_abs_coord(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font
 
 
 
-s32 check_if_cheat_available(s32 cheat)
+s32 frontCheckIfCheatIsUnlocked(s32 cheat)
 {
     switch(cheat)
     {
@@ -1120,14 +1120,14 @@ s32 check_if_cheat_available(s32 cheat)
 }
 
 
-int getplayerfavoredweapon(int player,int hand) {
+int frontGetPlayersFavoriteWeaponInHand(int player,int hand) {
     return get_ptr_long_watch_text_for_item(array_favweapon[player][hand]);
 }
 
 
 
 
-void menu_control_stick_tracking(void) {
+void frontUpdateControlStickPosition(void) {
     s8 stickx = joyGetStickX(PLAYER_1);
     s8 sticky = -joyGetStickY(PLAYER_1);
 
@@ -1204,7 +1204,7 @@ void menu_control_stick_tracking(void) {
 
 
 
-Gfx *load_draw_selected_icon_folder_select(Gfx *DL)
+Gfx *frontDrawCursor(Gfx *DL)
 {
     f32 xypos[2];
     f32 halfedxy[2];
@@ -1223,7 +1223,7 @@ Gfx *load_draw_selected_icon_folder_select(Gfx *DL)
         image = mainfolderimages + IMG_DEL;
     }
 
-    likely_generate_DL_for_image_declaration(&DL, image, 4, 0, 0);
+    texSelect(&DL, image, 4, 0, 0);
 
     xypos[0] = floorFloat(cursor_h_pos + 0.5f);
     xypos[1] = floorFloat(cursor_v_pos + 0.5f);
@@ -1231,47 +1231,51 @@ Gfx *load_draw_selected_icon_folder_select(Gfx *DL)
     halfedxy[0] = image->width * 0.5f;
     halfedxy[1] = image->height * 0.5f;
 
-    display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xDC, (image->level > 0), 0);
+    display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 255, 255, 255, 220, (image->level > 0), 0);
 
     return DL;
 }
 
 
+//********************************************************************************************************
+// TABS
+//********************************************************************************************************
 
-Gfx* add_tab1_start(Gfx* DL)
+Gfx* frontAddStartTabText(Gfx* DL)
 {
-    s32 x;
-    s32 y;
+    s32 v;
+    s32 h;
 
-    s32 y2;
-    s32 x2;
+    s32 textWidth; 
+    s32 textHeight;
 
     g_textPtrTAB1 = langGet(getStringID(LTITLE, TITLE_STR_04_START));
     setTextSpacingInverted(TRUE);
-    x2 = 0;
-    y2 = 0;
-    textMeasure(&y2, &x2, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 51;
-    y = 411 - (y2 / 2);
+    textHeight = 0;
+    textWidth = 0;
+    //text is sideways so textWidth and textHeight are flipped
+    textMeasure(&textWidth, &textHeight, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0);
+    v = STARTTAB_TEXT_TOP; 
+    h = TABS_RIGHT_EDGE - (textWidth / 2); 
 
     if (tab_start_highlight)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 51, y, 117, 50);
+        DL = microcode_constructor_related_to_menus(DL, (h - textWidth) + 1, STARTTAB_TEXT_TOP, h, STARTTAB_TEXT_BOTTOM, 50);
     }
 
-    setTextOrientation(1);
+    setTextOrientation(ROT_90CW);
 
-    x = 84 - (x2 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
-    setTextOrientation(0);
+    v = STARTTAB_TEXT_HALF - (textHeight / 2);
+    DL = textRender(DL, &v, &h, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
+    setTextOrientation(ROT_NORMAL);
     setTextSpacingInverted(FALSE);
     return DL;
 }
 
 
-s32 isontab1(void)
+s32 frontCheckCursorOnStartTab(void)
 {
-    if ((390.0f < cursor_h_pos) && (cursor_v_pos <= 130.5f))
+    if ((TABS_LEFT_EDGE < cursor_h_pos) && (cursor_v_pos <= STARTTAB_TAB_BOTTOM))
     {
         return TRUE;
     }
@@ -1280,41 +1284,42 @@ s32 isontab1(void)
 }
 
 
-Gfx* add_tab3_previous(Gfx* DL)
+Gfx* frontAddPreviousTabText(Gfx* DL)
 {
-    s32 x;
-    s32 y;
+    s32 v;
+    s32 h;
 
-    s32 y2;
-    s32 sp48;
+    s32 textWidth;
+    s32 textHeight;
 
     g_textPtrTAB3 = langGet(getStringID(LTITLE, TITLE_STR_06_PREVIOUS));
     setTextSpacingInverted(TRUE);
-    sp48 = 0;
-    y2 = 0;
-    textMeasure(&y2, &sp48, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 236;
-    y = 411 - (y2 / 2);
+    textHeight = 0;
+    textWidth = 0;
+    //text is sideways so textWidth and textHeight are flipped
+    textMeasure(&textWidth, &textHeight, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0);
+    v = PREVTAB_TEXT_TOP;
+    h = TABS_RIGHT_EDGE - (textWidth / 2);
 
     if (tab_prev_highlight != 0)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - y2) + 1, 236, y, 302, 50);
+        DL = microcode_constructor_related_to_menus(DL, (h - textWidth) + 1, PREVTAB_TEXT_TOP, h, PREVTAB_TEXT_BOTTOM, 50);
     }
 
-    setTextOrientation(1);
+    setTextOrientation(ROT_90CW);
 
-    x = 269 - (sp48 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
-    setTextOrientation(0);
+    v = PREVTAB_TEXT_HALF - (textHeight / 2);
+    DL = textRender(DL, &v, &h, g_textPtrTAB3, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
+    setTextOrientation(ROT_NORMAL);
     setTextSpacingInverted(FALSE);
 
     return DL;
 }
 
 
-u32 isontab3(void)
+u32 frontCheckCursorOnPreviousTab(void)
 {
-    if ((390.0f < cursor_h_pos) && (223.0f < cursor_v_pos))
+    if ((TABS_LEFT_EDGE < cursor_h_pos) && (PREVTAB_TAB_TOP < cursor_v_pos))
     {
         return 1;
     }
@@ -1324,47 +1329,48 @@ u32 isontab3(void)
     }
 }
 
-void set_cursor_pos_tab2(void)
+void frontSetCursorPositionToNextTab(void)
 {
-    cursor_h_pos = 399.0f;
-    cursor_v_pos = 144.0f;
+    cursor_h_pos = NEXTTAB_CURSOR_HPOS;
+    cursor_v_pos = NEXTTAB_CURSOR_VPOS;
 }
 
 
-Gfx* add_tab2_next(Gfx* DL)
+Gfx* frontAddNextTabText(Gfx* DL)
 {
-    s32 x;
-    s32 y;
+    s32 v;
+    s32 h;
 
-    s32 sp4C;
-    s32 sp48;
+    s32 textWidth;
+    s32 textHeight;
 
     g_textPtrTAB2 = langGet(getStringID(LTITLE, TITLE_STR_05_NEXT)); //"NEXT\n"
     setTextSpacingInverted(TRUE);
-    sp48 = 0;
-    sp4C = 0;
-    textMeasure(&sp4C, &sp48, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    x = 144;
-    y = 411 - (sp4C / 2);
+    textHeight = 0;
+    textWidth = 0;
+    //text is sideways so textWidth and textHeight are flipped
+    textMeasure(&textWidth, &textHeight, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0);
+    v = NEXTTAB_TEXT_TOP;
+    h = TABS_RIGHT_EDGE - (textWidth / 2);
 
     if (tab_next_highlight != 0)
     {
-        DL = microcode_constructor_related_to_menus(DL, (y - sp4C) + 1, 144, y, 210, 50);
+        DL = microcode_constructor_related_to_menus(DL, (h - textWidth) + 1, NEXTTAB_TEXT_TOP, h, NEXTTAB_TEXT_BOTTOM, 50);
     }
 
-    setTextOrientation(1);
+    setTextOrientation(ROT_90CW);
 
-    x = 177 - (sp48 / 2);
-    DL = textRender(DL, &x, &y, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
-    setTextOrientation(0);
+    v = NEXTTAB_TEXT_HALF - (textHeight / 2);
+    DL = textRender(DL, &v, &h, g_textPtrTAB2, ptrFontBankGothicChars, ptrFontBankGothic, 0xFF, viGetY(), viGetX(), 0, 0);
+    setTextOrientation(ROT_NORMAL);
     setTextSpacingInverted(FALSE);
     return DL;
 }
 
 
-u32 isontab2(void)
+u32 frontCheckCursorOnNextTab(void)
 {
-    if (((390.0f < cursor_h_pos) && (130.5f < cursor_v_pos)) && (cursor_v_pos <= 223.0f))
+    if (((TABS_LEFT_EDGE < cursor_h_pos) && (NEXTTAB_TAB_TOP < cursor_v_pos)) && (cursor_v_pos <= PREVTAB_TAB_TOP))
     {
         return TRUE;
     }
@@ -2502,7 +2508,7 @@ s32 interface_menu05_fileselect(void)
             sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, GUN_M60AMMGUN_3_SFX, NULL);
         }
 
-        menu_control_stick_tracking();
+        frontUpdateControlStickPosition();
     }
 
     if (selected_folder_num >= 0)
@@ -2779,7 +2785,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         spA4.f[0] = (f32) (mainfolderimages + IMG_COPY)->width * 0.5f;
         spA4.f[1] = (f32) (mainfolderimages + IMG_COPY)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages, 4, 0, 0);
+        texSelect(&DL, mainfolderimages, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &spAC.f[0], &spA4.f[0], mainfolderimages->width, mainfolderimages->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) mainfolderimages->level > 0, 0);
 
         folder_option_COPY_bound.left = spAC.f[0] - spA4.f[0];
@@ -2792,7 +2798,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp94.f[0] = (mainfolderimages + IMG_DEL)->width * 0.5f;
         sp94.f[1] = (mainfolderimages + IMG_DEL)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
+        texSelect(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &sp9C.f[0], &sp94.f[0], (mainfolderimages + IMG_DEL)->width, (mainfolderimages + IMG_DEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_DEL)->level > 0, 0);
 
         folder_option_ERASE_bound.left = (f32) (sp9C.f[0] - sp94.f[0]);
@@ -2805,13 +2811,13 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp84.f[0] = (mainfolderimages + IMG_SEL)->width * 0.5f;
         sp84.f[1] = (mainfolderimages + IMG_SEL)->height * 0.5f;
 
-        likely_generate_DL_for_image_declaration(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
+        texSelect(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
         display_image_at_on_screen_coord(&DL, &sp8C.f[0], &sp84.f[0], (mainfolderimages + IMG_SEL)->width, (mainfolderimages + IMG_SEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_SEL)->level > 0, 0);
     }
 
     if (folder_selected_for_deletion < 0)
     {
-        DL = load_draw_selected_icon_folder_select(DL);
+        DL = frontDrawCursor(DL);
     }
 
     return DL;
@@ -2841,9 +2847,9 @@ void interface_menu06_modesel(void)
     u32 i;
 
     is_cheat_menu_available = FALSE;
-    for (i=1; i != 75; i++)
+    for (i=1; i != CHEAT_INVALID; i++)
     {
-        if (check_if_cheat_available(i))
+        if (frontCheckIfCheatIsUnlocked(i))
         {
             cheat_available[i] = TRUE;
             is_cheat_menu_available = TRUE;
@@ -2867,7 +2873,7 @@ void interface_menu06_modesel(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_EYESONLY, 1);
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
-    if (isontab3())
+    if (frontCheckCursorOnPreviousTab())
     {
         tab_prev_highlight = TRUE;
         if (joyGetButtonsPressedThisFrame(PLAYER_1, START_BUTTON|Z_TRIG|A_BUTTON))
@@ -2909,7 +2915,7 @@ void interface_menu06_modesel(void)
         tab_prev_selected = TRUE;
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, 0);
     }
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
     if (gamemode == GAMEMODE_SOLO)
     {
         frontChangeMenu(MENU_MISSION_SELECT, FALSE);
@@ -3016,7 +3022,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
 
     x = 0x96;
     y = 0xdc;
-    DL = write_text_at_abs_coord(DL, &x, &y, "1.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, "1.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     textstring = langGet((g_AppendCheatSinglePlayer != 0) ? getStringID(LTITLE, TITLE_STR_117_CHEATSELECTMISSION) : getStringID(LTITLE, TITLE_STR_29_SELECTMISSION));
 
@@ -3029,7 +3035,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
         DL = microcode_constructor_related_to_menus(DL, 0x94, 0xDA, y2 + 0xAF, 0xEA, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     x = 0x96;
     y = 0xFC;
@@ -3041,7 +3047,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
     {
         text_color = 0x70;
     }
-    DL = write_text_at_abs_coord(DL, &x, &y, "2.\n", ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, "2.\n", ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
 
     textstring = langGet((g_AppendCheatMultiPlayer != 0) ? getStringID(LTITLE, TITLE_STR_276_CHEATMULTIPLAYER) : getStringID(LTITLE, TITLE_STR_30_MULTIPLAYER));
 
@@ -3053,13 +3059,13 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
     {
         DL = microcode_constructor_related_to_menus(DL, 0x94, 0xFA, y2 + 0xAF, 0x10A, 0x32);
     }
-    DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, text_color, viGetX(), viGetY(), 0, 0);
 
     if (is_cheat_menu_available != 0)
     {
         x = 0x96;
         y = 0x11C;
-        DL = write_text_at_abs_coord(DL, &x, &y, "3.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, "3.\n", ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         textstring = langGet(getStringID(LTITLE, TITLE_STR_31_CHEATOPTIONS));
 
         textMeasure(&x2, &y2, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
@@ -3070,11 +3076,11 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
         {
             DL = microcode_constructor_related_to_menus(DL, 0x94, 0x11A, y2 + 0xAF, 0x12A, 0x32);
         }
-        DL = write_text_at_abs_coord(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, textstring, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     }
 
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
     return DL;
 }
 
@@ -3196,7 +3202,7 @@ void interface_menu07_missionsel(void)
     tab_prev_highlight = 0;
     mission_difficulty_highlighted = -1;
 
-    if (isontab3() != 0)
+    if (frontCheckCursorOnPreviousTab() != 0)
     {
         tab_prev_highlight = 1;
     }
@@ -3337,7 +3343,7 @@ void interface_menu07_missionsel(void)
         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
 
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (tab_next_selected != 0)
     {
@@ -3452,8 +3458,8 @@ Gfx *constructor_menu07_missionsel(Gfx *DL)
         }
     }
 
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
 }
 
 
@@ -3491,7 +3497,7 @@ void interface_menu08_difficulty(void)
     tab_prev_highlight = FALSE;
     mission_difficulty_highlighted = DIFFICULTY_MULTI;
 
-    if (isontab3())
+    if (frontCheckCursorOnPreviousTab())
     {
         tab_prev_highlight = TRUE;
     }
@@ -3537,20 +3543,20 @@ void interface_menu08_difficulty(void)
         sndPlaySfx(g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
     }
 
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (tab_next_selected)
     {
         if (selected_difficulty == DIFFICULTY_007)
         {
             frontChangeMenu(MENU_007_OPTIONS, FALSE);
-            set_cursor_pos_tab2();
+            frontSetCursorPositionToNextTab();
 
             return;
         }
 
         frontChangeMenu(MENU_BRIEFING, FALSE);
-        set_cursor_pos_tab2();
+        frontSetCursorPositionToNextTab();
 
         return;
     }
@@ -3575,7 +3581,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
         strcat(text, langGet(getStringID(LTITLE, TITLE_STR_32_JB)));
         x = 0x37;
         y = 0x57;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     }
 
     chapter = get_chapter_briefing_entry(briefingpage);
@@ -3588,7 +3594,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
         strcat(text, "\n");
         x = 0x37;
         y = 0x67;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     }
 
     strcpy(text, langGet(getStringID(LTITLE, TITLE_STR_34_PART)));
@@ -3598,7 +3604,7 @@ Gfx * print_current_solo_briefing_stage_name(Gfx *DL, char *text)
     strcat(text, "\n");
     x = 0x37;
     y = 0x77;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
     return DL;
 }
 
@@ -3680,7 +3686,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
     text_sp3180 = langGet(getStringID(LTITLE, TITLE_STR_35_DIFFICULTY));
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text_sp3180, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text_sp3180, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (mission_difficulty_highlighted >= 0)
     {
@@ -3729,7 +3735,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
 
             x = 0x82 - (j_text_trigger ? (sp9C - 0xA) : 0);
             y = (i * 0x1E) + 0xB4;
-            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
             switch (i)
             {
@@ -3749,11 +3755,11 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
 
             x = 0x96;
             y = (i * 0x1E) + 0xB4;
-            DL = write_text_at_abs_coord(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &x, &y, text_sp160, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
     }
 
-    DL = add_tab3_previous(DL);
+    DL = frontAddPreviousTabText(DL);
 
     /**
      * Draw the checkmark for completed difficulties.
@@ -3771,12 +3777,12 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
             halfedxy[0] = image->width * 0.5f;
             halfedxy[1] = image->height * 0.5f;
 
-            likely_generate_DL_for_image_declaration(&DL, image, 4, 0, 0);
+            texSelect(&DL, image, 4, 0, 0);
             display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xB4, 0, 0, 0xFF, image->level > 0, 0);
         }
     }
 
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }
@@ -3822,16 +3828,16 @@ void interface_menu09_007options(void)
         highlight_enemy_health = FALSE;
         highlight_enemy_accuracy = FALSE;
         highlight_enemy_damage = FALSE;
-        if (isontab3())
+        if (frontCheckCursorOnPreviousTab())
         {
             tab_prev_highlight = TRUE;
         }
-        else if (isontab2())
+        else if (frontCheckCursorOnNextTab())
         {
 
             tab_next_highlight = TRUE;
         }
-        else if (isontab1())
+        else if (frontCheckCursorOnStartTab())
         {
             tab_start_highlight = TRUE;
         }
@@ -3919,7 +3925,7 @@ void interface_menu09_007options(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
     if (tab_start_selected)
     {
         frontChangeMenu(MENU_RUN_STAGE, TRUE);
@@ -3974,7 +3980,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC10 = 0x37;
     spC0C = 0x8f;
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8 *)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8 *)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     spC14 = langGet(getStringID(LTITLE, TITLE_STR_42_HEALTH));
 
@@ -3990,7 +3996,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
         DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C - 1, 0xC7, spC0C + 0xE, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8 *)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8 *)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_health * 100.0f));
 
@@ -4002,7 +4008,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC10 = 0x11D - sp4C;
     spC0C = 0xA4;
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     spC14 = langGet(getStringID(LTITLE, TITLE_STR_43_DAMAGE));
 
@@ -4018,7 +4024,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
         DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C - 1, 0xC7, spC0C + 0xE, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_accuracy * 100.0f));
 
@@ -4030,7 +4036,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC10 = 0x11D - sp4C;
     spC0C = 0xC5;
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     spC14 = langGet(getStringID(LTITLE, TITLE_STR_44_ACCURACY));
 
@@ -4046,7 +4052,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
         DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C - 1, 0xC7, spC0C + 0xE, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_damage * 10.0f));
 
@@ -4058,7 +4064,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC10 = 0x11D - sp4C;
     spC0C = 0xE6;
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     spC14 = langGet(getStringID(LTITLE, TITLE_STR_41_REACTION));
 
@@ -4073,7 +4079,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
         DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C - 1, 0xC7, spC0C + 0xE, 0x32);
     }
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_reaction * 100.0f));
 
@@ -4085,12 +4091,12 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC10 = 0x11D - sp4C;
     spC0C = 0x107;
 
-    DL = write_text_at_abs_coord(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC10, &spC0C, (s8*)&sp54, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    DL = add_tab1_start(DL);
-    DL = add_tab3_previous(DL);
-    DL = add_tab2_next(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddStartTabText(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontAddNextTabText(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }
@@ -4428,11 +4434,11 @@ void interface_menu0E_mpoptions(void)
         highlight_controlstyle = 0;
         highlight_aimadjustment = 0;
 
-        if (isontab3())
+        if (frontCheckCursorOnPreviousTab())
         {
             tab_prev_highlight = 1;
         }
-        else if (isontab1())
+        else if (frontCheckCursorOnStartTab())
         {
             tab_start_highlight = 1;
         }
@@ -4544,7 +4550,7 @@ void interface_menu0E_mpoptions(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CONFIDENTIAL2, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (tab_prev_selected)
     {
@@ -4659,7 +4665,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   text = langGet(getStringID(LTITLE, TITLE_STR_76_MPOPTIONS));
   x = 0x37;
   y = 0x5f;
-  DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
+  DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_77_PLAYERS));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4668,7 +4674,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   if (highlight_players) {
     DL = microcode_constructor_related_to_menus(DL,0x37,0x78,iStack28 + 0x3c,0x87,0x32);
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_78_SCENARIO));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4677,7 +4683,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   if (highlight_scenario) {
     DL = microcode_constructor_related_to_menus(DL,0x37,0x8c,iStack28 + 0x3c,0x9b,0x32);
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_79_LEVEL));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4692,7 +4698,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_80_GAMELENGTH));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4707,7 +4713,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_81_WEAPONS));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4722,7 +4728,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_82_CHARACTER));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4737,7 +4743,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_83_HEALTH));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4752,7 +4758,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_286_CONTROLSTYLE));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4767,7 +4773,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(getStringID(LTITLE, TITLE_STR_84_AIM));
   textMeasure(&iStack24,&iStack28,text,ptrFontZurichBoldChars,ptrFontZurichBold,0);
@@ -4782,17 +4788,17 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   sprintf(acStack12,"%d",selected_num_players);
   x = 0xa0;
   y = 0x79;
-  DL = write_text_at_abs_coord(DL, &x, &y, acStack12, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
+  DL = frontPrintText(DL, &x, &y, acStack12, ptrFontZurichBoldChars, ptrFontZurichBold, 0xff, viGetX(), viGetY(), 0, 0);
 
   text = langGet(mp_player_counts[scenario].stage);
   x = 0xa0;
   y = 0x8d;
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,0xff,viGetX(),viGetY(),0,0);
 
   text = langGet(multi_stage_setups[MP_stage_selected].folder_text_preset);
   x = 0xa0;
@@ -4803,7 +4809,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(multi_game_lengths[game_length].text_preset);
   x = 0xa0;
@@ -4814,7 +4820,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
 
   text = langGet(*(getPtrMPWeaponSetTextID()));
@@ -4826,7 +4832,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
 
   text = langGet(mp_sight_adjust_table[aim_sight_adjustment].anonymous_0);
   x = 0xa0;
@@ -4837,10 +4843,10 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   else {
     entry = 0x70;
   }
-  DL = write_text_at_abs_coord(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
-  DL = add_tab3_previous(DL);
-  DL = add_tab1_start(DL);
-  DL = load_draw_selected_icon_folder_select(DL);
+  DL = frontPrintText(DL,&x,&y,text,ptrFontZurichBoldChars,ptrFontZurichBold,entry,viGetX(),viGetY(),0,0);
+  DL = frontAddPreviousTabText(DL);
+  DL = frontAddStartTabText(DL);
+  DL = frontDrawCursor(DL);
   return DL;
 }
 
@@ -5075,7 +5081,7 @@ void interface_menu0F_mpcharsel(void)
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (ready_players == numplayers)
     {
@@ -5203,25 +5209,25 @@ Gfx *sub_GAME_7F01231C(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 2, 2, 0, 2);
+    texSelect(&DL, simage + 2, 2, 0, 2);
     gSP1Triangle(DL++, 0, 1, 4, 0);
     gSP1Triangle(DL++, 4, 1, 5, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 3, 2, 0, 2);
+    texSelect(&DL, simage + 3, 2, 0, 2);
     gSP1Triangle(DL++, 2, 3, 6, 0);
     gSP1Triangle(DL++, 6, 3, 7, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 0, 2, 0, 2);
+    texSelect(&DL, simage + 0, 2, 0, 2);
     gSP1Triangle(DL++, 8, 9, 12, 0);
     gSP1Triangle(DL++, 12, 9, 13, 0);
 
     selected_photo = mp_chr_setup[arg5].select_photo * 4;
     simage = &mpcharselimages[mp_chr_setup[arg5].select_photo * 4];
-    likely_generate_DL_for_image_declaration(&DL, simage + 1, 2, 0, 2);
+    texSelect(&DL, simage + 1, 2, 0, 2);
     gSP1Triangle(DL++, 10, 11, 14, 0);
     gSP1Triangle(DL++, 14, 11, 15, 0);
 
@@ -5323,7 +5329,7 @@ Gfx * constructor_menu0F_mpcharsel(Gfx *DL)
             spB0 = var_s7 + 5;
 
             DL = microcode_constructor(DL);
-            DL = write_text_at_abs_coord(DL, &spB4, &spB0, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &spB4, &spB0, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
 
         text = langGet(mp_chr_setup[mp_char_cur_select_player[i]].text_preset);
@@ -5333,7 +5339,7 @@ Gfx * constructor_menu0F_mpcharsel(Gfx *DL)
         sp9C = var_s7 + 0x78;
 
         DL = microcode_constructor(DL);
-        DL = write_text_at_abs_coord(DL, &spA0, &sp9C, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &spA0, &sp9C, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, (var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i], var_s7 + 0x46, mp_char_prev_select_player[i], size_mp_select_image_player[i]);
 
         if ((player_has_selected_char[i] == 0 && size_mp_select_image_player[i] == 0) || (mp_char_prev_select_player[i] != mp_char_cur_select_player[i]))
@@ -5574,7 +5580,7 @@ glabel constructor_menu0F_mpcharsel
 /* 0475A4 7F012A74 AFA00024 */  sw    $zero, 0x24($sp)
 /* 0475A8 7F012A78 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0475AC 7F012A7C AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0475B0 7F012A80 0FC025D8 */  jal   write_text_at_abs_coord
+/* 0475B0 7F012A80 0FC025D8 */  jal   frontPrintText
 /* 0475B4 7F012A84 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0475B8 7F012A88 00408825 */  move  $s1, $v0
 /* 0475BC 7F012A8C 8FAE0080 */  lw    $t6, 0x80($sp)
@@ -5629,7 +5635,7 @@ glabel constructor_menu0F_mpcharsel
 /* 04767C 7F012B4C AFA00024 */  sw    $zero, 0x24($sp)
 /* 047680 7F012B50 AFA00028 */  sw    $zero, 0x28($sp)
 /* 047684 7F012B54 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 047688 7F012B58 0FC025D8 */  jal   write_text_at_abs_coord
+/* 047688 7F012B58 0FC025D8 */  jal   frontPrintText
 /* 04768C 7F012B5C AFAA0010 */   sw    $t2, 0x10($sp)
 /* 047690 7F012B60 8FB90074 */  lw    $t9, 0x74($sp)
 /* 047694 7F012B64 8FAB0070 */  lw    $t3, 0x70($sp)
@@ -5917,7 +5923,7 @@ void interface_menu10_mphandicap(void)
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (var_fp == sp44)
     {
@@ -6001,7 +6007,7 @@ Gfx * constructor_menu10_mphandicap(Gfx *DL)
             sp98 = padding5 - (spA4 >> 1) - 0xf;
 
             DL = microcode_constructor(DL);
-            DL = write_text_at_abs_coord(DL, &sp9C, &sp98, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp9C, &sp98, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
 
         {
@@ -6011,7 +6017,7 @@ Gfx * constructor_menu10_mphandicap(Gfx *DL)
             sp84 = padding5 - (sp90 >> 1) + 0xf;
 
             DL = microcode_constructor(DL);
-            DL = write_text_at_abs_coord(DL, &sp88, &sp84, (s8*)text2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp88, &sp84, (s8*)text2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
     }
 
@@ -6174,7 +6180,7 @@ void interface_menu11_mpcontrols(void)
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (var_fp == sp44)
     {
@@ -6261,7 +6267,7 @@ Gfx * constructor_menu11_mpcontrol(Gfx *DL)
             sp98 = padding5 - (spA4 >> 1) - 0xf;
 
             DL = microcode_constructor(DL);
-            DL = write_text_at_abs_coord(DL, &sp9C, &sp98, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp9C, &sp98, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
 
         {
@@ -6271,7 +6277,7 @@ Gfx * constructor_menu11_mpcontrol(Gfx *DL)
             sp84 = padding5 - (sp90 >> 1) + 0xf;
 
             DL = microcode_constructor(DL);
-            DL = write_text_at_abs_coord(DL, &sp88, &sp84, (s8*)text2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp88, &sp84, (s8*)text2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
     }
 
@@ -6317,7 +6323,7 @@ void interface_menu12_mpstage(void)
         tab_prev_highlight = FALSE;
         tab_next_highlight = FALSE;
         tab_start_highlight = FALSE;
-        if (isontab3())
+        if (frontCheckCursorOnPreviousTab())
         {
             tab_prev_highlight = TRUE;
         }
@@ -6384,7 +6390,7 @@ void interface_menu12_mpstage(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS,  1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS,  1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
     if (tab_next_selected)
     {
         frontChangeMenu(MENU_MP_OPTIONS, FALSE);
@@ -6438,7 +6444,7 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
     gDPSetTextureFilter(DL++, G_TF_POINT);
 
     simage = mainfolderimages + 5;
-    likely_generate_DL_for_image_declaration(&DL, simage, 1, 0, 2); // IMAGE_DOT
+    texSelect(&DL, simage, 1, 0, 2); // IMAGE_DOT
 
     spF8.f[0] = 176.0f;
     spF8.f[1] = 4.0f;
@@ -6470,7 +6476,7 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
             {
                 simage = &mpstageselimages[multi_stage_setups[count].photo];
 
-                likely_generate_DL_for_image_declaration(&DL, simage, 1, 0, 2);
+                texSelect(&DL, simage, 1, 0, 2);
 
                 if (count == current_mp_stage_highlighted)
                 {
@@ -6552,8 +6558,8 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
     }
 
     DL = microcode_constructor(DL);
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }
@@ -6607,7 +6613,7 @@ void interface_menu13_mpscenario(void)
         tab_next_highlight = FALSE;
         tab_start_highlight = FALSE;
 
-        if (isontab3())
+        if (frontCheckCursorOnPreviousTab())
         {
             tab_prev_highlight = TRUE;
             dword_CODE_bss_80069780 = SCENARIO_NORMAL;
@@ -6665,7 +6671,7 @@ void interface_menu13_mpscenario(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (isTeam)
     {
@@ -6709,7 +6715,7 @@ Gfx * constructor_menu13_mpscenario(Gfx *DL)
 
     x = 0x37;
     y = 0x66;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     for (i = 0; i < 8; i++)
     {
@@ -6731,11 +6737,11 @@ Gfx * constructor_menu13_mpscenario(Gfx *DL)
             DL = microcode_constructor_related_to_menus(DL, 0x37, y - 1, sp78 + 0x3C, y + 0xE, 0x32);
         }
 
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s3, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s3, viGetX(), viGetY(), 0, 0);
     }
 
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }
@@ -6869,7 +6875,7 @@ void interface_menu14_mpteams(void)
     disable_all_switches(walletinst[0]);
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (joyGetButtonsPressedThisFrame(0, A_BUTTON|Z_TRIG|START_BUTTON)) // 0xb000
     {
@@ -6972,7 +6978,7 @@ Gfx * constructor_menu14_mpteams(Gfx *DL)
             sp98 = temp_s6 + 5;
             sp9C = spB4 - (spA0 >> 1);
 
-            DL = write_text_at_abs_coord(DL, &sp9C, &sp98, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp9C, &sp98, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         }
 
         if (scenario == 5)
@@ -6997,7 +7003,7 @@ Gfx * constructor_menu14_mpteams(Gfx *DL)
 
             if ((i != teamsize) || ((i == teamsize) && (D_8002B560 < 0xA)))
             {
-                DL = write_text_at_abs_coord(DL, &sp88, &sp84, text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
+                DL = frontPrintText(DL, &sp88, &sp84, text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -7162,7 +7168,7 @@ glabel constructor_menu14_mpteams
 /* 049EA0 7F015370 AFA00024 */  sw    $zero, 0x24($sp)
 /* 049EA4 7F015374 AFA00028 */  sw    $zero, 0x28($sp)
 /* 049EA8 7F015378 AFA80010 */  sw    $t0, 0x10($sp)
-/* 049EAC 7F01537C 0FC025D8 */  jal   write_text_at_abs_coord
+/* 049EAC 7F01537C 0FC025D8 */  jal   frontPrintText
 /* 049EB0 7F015380 AFB80014 */   sw    $t8, 0x14($sp)
 /* 049EB4 7F015384 0040A825 */  move  $s5, $v0
 .L7F015388:
@@ -7250,7 +7256,7 @@ glabel constructor_menu14_mpteams
 /* 049FDC 7F0154AC AFA00024 */  sw    $zero, 0x24($sp)
 /* 049FE0 7F0154B0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 049FE4 7F0154B4 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 049FE8 7F0154B8 0FC025D8 */  jal   write_text_at_abs_coord
+/* 049FE8 7F0154B8 0FC025D8 */  jal   frontPrintText
 /* 049FEC 7F0154BC AFAD0014 */   sw    $t5, 0x14($sp)
 /* 049FF0 7F0154C0 0040A825 */  move  $s5, $v0
 .L7F0154C4:
@@ -7355,15 +7361,15 @@ void interface_menu0A_briefing(void)
     tab_prev_highlight = FALSE;
     tab_next_highlight = FALSE;
     tab_start_highlight = FALSE;
-    if (isontab3())
+    if (frontCheckCursorOnPreviousTab())
     {
         tab_prev_highlight = TRUE;
     }
-    else if ((isontab2()) && (current_menu_briefing_page < (final_menu_briefing_page - 1)))
+    else if ((frontCheckCursorOnNextTab()) && (current_menu_briefing_page < (final_menu_briefing_page - 1)))
     {
         tab_next_highlight = TRUE;
     }
-    else if (isontab1())
+    else if (frontCheckCursorOnStartTab())
     {
         tab_start_highlight = TRUE;
     }
@@ -7422,7 +7428,7 @@ void interface_menu0A_briefing(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
     if (tab_next_selected)
     {
         frontChangeMenu(MENU_RUN_STAGE, TRUE);
@@ -7473,7 +7479,7 @@ Gfx *print_objectives_and_status_to_menu(Gfx *DL, s32 arg1, u8 *arg2, s32 arg3)
 
             sp8C = 0x37;
             sp88 = (sp94 * var_fp) + arg1 + (i*0);
-            DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp8C, &sp88, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
             sp8C = 0x4B;
             sp88 = (sp94 * var_fp) + arg1 + (i*0);
@@ -7489,7 +7495,7 @@ Gfx *print_objectives_and_status_to_menu(Gfx *DL, s32 arg1, u8 *arg2, s32 arg3)
                 sub_GAME_7F0AEB64(0x140, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
             }
 
-            DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)arg2,  ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp8C, &sp88, (s8*)arg2,  ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
             if (arg3)
             {
@@ -7510,7 +7516,7 @@ Gfx *print_objectives_and_status_to_menu(Gfx *DL, s32 arg1, u8 *arg2, s32 arg3)
                 sp8C = 0x136;
                 sp88 = (sp94 * var_fp) + arg1 + (i*0);
 
-                DL = write_text_at_abs_coord(DL, &sp8C, &sp88, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
+                DL = frontPrintText(DL, &sp8C, &sp88, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, var_s2, viGetX(), viGetY(), 0, 0);
             }
 
             var_fp += sub_GAME_7F0AC0E8(arg2);
@@ -7574,7 +7580,7 @@ Gfx *constructor_menu0A_briefing(Gfx *DL)
 
     spC08 = 0x37;
     spC04 = 0x8F;
-    DL = write_text_at_abs_coord(DL, &spC08, &spC04, (s8*)spC0C, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &spC08, &spC04, (s8*)spC0C, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (current_menu_briefing_page == BRIEFING_TITLE)
     {
@@ -7605,19 +7611,19 @@ Gfx *constructor_menu0A_briefing(Gfx *DL)
         spC04 = 0xA7;
         sub_GAME_7F0AEB64(0x140, (s8*)spC0C, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold);
         setTextOverlapCorrection(8);
-        DL = write_text_at_abs_coord(DL, &spC08, &spC04, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &spC08, &spC04, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         setTextOverlapCorrection(-1);
     }
 
-    DL = add_tab1_start(DL);
-    DL = add_tab3_previous(DL);
+    DL = frontAddStartTabText(DL);
+    DL = frontAddPreviousTabText(DL);
 
     if (current_menu_briefing_page < BRIEFING_MONEYPENNY)
     {
-        DL = add_tab2_next(DL);
+        DL = frontAddNextTabText(DL);
     }
 
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }
@@ -7643,7 +7649,7 @@ void init_menu0C_missionfailed(void)
   tab_prev_selected = FALSE;
   load_walletbond();
   load_briefing_text_for_stage();
-  set_cursor_pos_tab2();
+  frontSetCursorPositionToNextTab();
   if (maybe_is_in_menu != FALSE) {
     sndApplyVolumeAllSfxSlot(0x7fff);
     musicTrack1ApplySeqpVol(0x7fff);
@@ -7666,13 +7672,13 @@ void interface_menu0C_missionfailed(void)
     viSetUseZBuf(FALSE);
     tab_next_highlight = FALSE;
     tab_prev_highlight = FALSE;
-    if (isontab3())
+    if (frontCheckCursorOnPreviousTab())
     {
         tab_prev_highlight = TRUE;
     }
     else
     {
-        if (isontab2())
+        if (frontCheckCursorOnNextTab())
         {
             tab_next_highlight = TRUE;
         }
@@ -7710,7 +7716,7 @@ void interface_menu0C_missionfailed(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
     if (tab_next_selected)
     {
         frontChangeMenu(MENU_MISSION_COMPLETE, FALSE);
@@ -7778,7 +7784,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
     text = langGet(getStringID(LTITLE, TITLE_STR_98_REPORT)); //REPORT:*
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     text = langGet(getStringID(LTITLE, TITLE_STR_99_MISSIONSTATUS)); //Mission status:*
     x2 = 0;
@@ -7786,7 +7792,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
     textMeasure(&y2, &x2, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0);
     x = 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (g_isBondKIA)
     {
@@ -7812,12 +7818,12 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
 
     x = x2 + 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, phi_v1, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, phi_v1, viGetX(), viGetY(), 0, 0);
 
     DL = print_objectives_and_status_to_menu(DL, 0xBF, &stagename, 1);
-    DL = add_tab2_next(DL);
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddNextTabText(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
     return DL;
 }
 
@@ -7857,13 +7863,13 @@ void interface_menu0D_missioncomplete()
     tab_prev_highlight = FALSE;
     tab_next_highlight = FALSE;
 
-    if (isontab3())
+    if (frontCheckCursorOnPreviousTab())
     {
         tab_prev_highlight = 1;
     }
     else
     {
-        if (isontab2())
+        if (frontCheckCursorOnNextTab())
         {
             tab_next_highlight = 1;
         }
@@ -7897,7 +7903,7 @@ void interface_menu0D_missioncomplete()
     set_item_visibility_in_objinstance(walletinst[0], SW_PAPER, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_OHMSS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (tab_next_selected)
     {
@@ -8002,7 +8008,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     text = langGet(getStringID(LTITLE, TITLE_STR_104_STATS)); //STATISTICS:*
     x = 0x37;
     y = 0x8F;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     x2 = 0;
     y2 = 0;
@@ -8011,7 +8017,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     text = langGet(getStringID(LTITLE, TITLE_STR_105_TIME)); //Time:*
     x = 0x37;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     besttime = fileGetSaveStageDifficultyTime( fileGetSaveForFoldernum(selected_folder_num), mission_folder_setup_entries[briefingpage].mission_num, selected_difficulty);
     if ((besttime == 0) || (!(besttime < 0x3FF))) {
@@ -8029,12 +8035,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     sprintf(stagename, "%02d:%02d", missiontime / 60, missiontime % 60);
     x = 0x82;
     y = 0xA7;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
     if (g_NewCheatUnlocked) {
         stagename[0] = '\0';
         sprintf(stagename, "     [%s]", langGet(getStringID(LTITLE, TITLE_STR_275_NEWCHEATAVAILABLE))); //New Cheat Available
-        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xA00000FF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xA00000FF, viGetX(), viGetY(), 0, 0);
     }
 
 
@@ -8042,12 +8048,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
         text = langGet(getStringID(LTITLE, TITLE_STR_274_TARGET)); //Target:
         x = 0x37;
         y = y2 + 0xA9;
-        DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         stagename[0] = '\0';
         sprintf(stagename, "%02d:%02d", targettime / 60, targettime % 60);
         x = 0x82;
         y = y2 + 0xA9;
-        DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         if (besttime >= 0) {
             if (besttime < 0x3FF) {
                 stagename[0] = '\0';
@@ -8057,7 +8063,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
                 else {
                     sprintf(stagename, "");
                 }
-                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -8067,12 +8073,12 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
                 text = langGet(getStringID(LTITLE, TITLE_STR_273_BESTTIME)); //Best Time:
                 x = 0x37;
                 y = y2 + 0xA9;
-                DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
                 stagename[0] = '\0';
                 sprintf(stagename, "%02d:%02d", besttime / 60, besttime % 60);
                 x = 0x82;
                 y = y2 + 0xA9;
-                DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+                DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -8081,7 +8087,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     text = langGet(getStringID(LTITLE, TITLE_STR_106_ACCURACY)); //Accuracy:*
     x = 0x37;
     y = 0xCC;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     if (shotsfired > 0) {
         hitPct = (hitshots * 100.0f) / shotsfired;
     }
@@ -8091,14 +8097,14 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     sprintf(stagename, "%.1f%%",  hitPct);
     x = 0x82;
     y = 0xCC;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_107_WEAPONOFCHOICE)); //Weapon of choice:*
     x = 0x37;
     y = 0xDC;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
-    strcpy(stagename, getplayerfavoredweapon(0, 0));
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    strcpy(stagename, frontGetPlayersFavoriteWeaponInHand(0, 0));
     if ((array_favweapon[0][0] > 0) && (array_favweapon[0][1] == array_favweapon[0][0]))
     {
         temp = strlen(stagename)-1;
@@ -8106,73 +8112,73 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
     }
     x = 0xBE;
     y = 0xDC;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_108_SHOTTOTAL)); //Shot total:*
     x = 0x37;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d", shotsfired);
     x = 0x82;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_109_HEADHITS)); //Head hits:*
     x = 0xB4;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", headshots, (s32)(floorFloat(((headshots * 100.0f) / allhits) + 0.5f)));
     x = 0x12C;
     y = 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_110_BODYHITS)); //Body hits:*
     x = 0xB4;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", bodyshots, (s32)floorFloat(((bodyshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_111_LIMBHITS)); //Limb hits:*
     x = 0xB4;
     y = (y2 * 2) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", limbshots, (s32)floorFloat(((limbshots * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 2) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_112_OTHER)); //Others:*
     x = 0xB4;
     y = (y2 * 3) + 0xF4;
     temp = reg5 + reg4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d (%d%%)", temp, (s32)floorFloat(((temp * 100.0f) / allhits) + 0.5f));
     x = 0x12C;
     y = (y2 * 3) + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
     text = langGet(getStringID(LTITLE, TITLE_STR_113_KILLTOTAL)); //Kill total:*
     x = 0x37;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
     sprintf(stagename, "%d", killcount);
     x = 0x82;
     y = y2 + 0xF4;
-    DL = write_text_at_abs_coord(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+    DL = frontPrintText(DL, &x, &y, stagename, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
 
-    DL = add_tab2_next(DL);
-    DL = add_tab3_previous(DL);
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontAddNextTabText(DL);
+    DL = frontAddPreviousTabText(DL);
+    DL = frontDrawCursor(DL);
 }
 
 
@@ -8251,7 +8257,7 @@ void interface_menu15_cheat(void)
         tab_start_highlight = 0;
         D_8002B5E0 = 0;
 
-        if (isontab3())
+        if (frontCheckCursorOnPreviousTab())
         {
             tab_prev_highlight = 1;
         }
@@ -8314,7 +8320,7 @@ void interface_menu15_cheat(void)
     set_item_visibility_in_objinstance(walletinst[0], SW_TABS, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_BLANK, 1);
     set_item_visibility_in_objinstance(walletinst[0], SW_CLASSIFIED, 1);
-    menu_control_stick_tracking();
+    frontUpdateControlStickPosition();
 
     if (tab_prev_selected)
     {
@@ -8363,12 +8369,12 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
 
         sp88 = 0x37;
         sp84 = (var_fp * 0x14) + 0x35;
-        if ((var_fp == D_8002B5E0) && (isontab3() == 0))
+        if ((var_fp == D_8002B5E0) && (frontCheckCursorOnPreviousTab() == 0))
         {
             DL = microcode_constructor_related_to_menus(DL, sp88 - 2, sp84 - 1, sp88 + sp7C + 5, sp84 + 0xE, 0x32);
         }
 
-        DL = write_text_at_abs_coord(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
         strID  = (g_CheatActivated[arrayUnlockedCheats[var_fp]]) ? getStringID(LTITLE, TITLE_STR_115_ON) : getStringID(LTITLE, TITLE_STR_116_OFF);
         temp_v0 = langGet(strID);
@@ -8377,7 +8383,7 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
         sp88 = 0xB3;
         sp84 = (var_fp * 0x14) + 0x35;
 
-        DL = write_text_at_abs_coord(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, (g_CheatActivated[arrayUnlockedCheats[var_fp]]) ? 0xA00000FF : 0xFF, viGetX(), viGetY(), 0, 0);
+        DL = frontPrintText(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, (g_CheatActivated[arrayUnlockedCheats[var_fp]]) ? 0xA00000FF : 0xFF, viGetX(), viGetY(), 0, 0);
     }
 
     if (totalunlockedcheats >= 0xd)
@@ -8389,12 +8395,12 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
 
             sp88 = 0xDC;
             sp84 = (var_fp * 0x14) + 0x35;
-            if ((var_fp + 0xc == D_8002B5E0) && (isontab3() == 0))
+            if ((var_fp + 0xc == D_8002B5E0) && (frontCheckCursorOnPreviousTab() == 0))
             {
                 DL = microcode_constructor_related_to_menus(DL, sp88 - 2, sp84 - 1, sp88 + sp7C + 5, sp84 + 0xE, 0x32);
             }
 
-            DL = write_text_at_abs_coord(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
             strID  = (g_CheatActivated[arrayUnlockedCheats[var_fp + 12]]) ? getStringID(LTITLE, TITLE_STR_115_ON) : getStringID(LTITLE, TITLE_STR_116_OFF);
             temp_v0 = langGet(strID);
@@ -8404,13 +8410,13 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
             sp84 = (var_fp * 0x14) + 0x35;
             strID = (g_CheatActivated[arrayUnlockedCheats[var_fp + 12]]) ? 0xA00000FF : 0xFF;
 
-            DL = write_text_at_abs_coord(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, strID, viGetX(), viGetY(), 0, 0);
+            DL = frontPrintText(DL, &sp88, &sp84, temp_v0, ptrFontZurichBoldChars, ptrFontZurichBold, strID, viGetX(), viGetY(), 0, 0);
         }
     }
 
-    DL = add_tab3_previous(DL);
+    DL = frontAddPreviousTabText(DL);
 
-    DL = load_draw_selected_icon_folder_select(DL);
+    DL = frontDrawCursor(DL);
 
     return DL;
 }

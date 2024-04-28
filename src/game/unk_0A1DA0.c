@@ -944,7 +944,7 @@ glabel sub_GAME_7F0A2C44
 /* 0D77B4 7F0A2C84 27A400D0 */  addiu $a0, $sp, 0xd0
 /* 0D77B8 7F0A2C88 24060002 */  li    $a2, 2
 /* 0D77BC 7F0A2C8C 24070001 */  li    $a3, 1
-/* 0D77C0 7F0A2C90 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 0D77C0 7F0A2C90 0FC1DB5A */  jal   texSelect
 /* 0D77C4 7F0A2C94 24A5000C */   addiu $a1, $a1, 0xc
 /* 0D77C8 7F0A2C98 8FAF00D0 */  lw    $t7, 0xd0($sp)
 /* 0D77CC 7F0A2C9C 3C19BB00 */  lui   $t9, (0xBB001001 >> 16) # lui $t9, 0xbb00
@@ -3633,7 +3633,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D8FB4 7F0A4484 27A400A0 */  addiu $a0, $sp, 0xa0
 /* 0D8FB8 7F0A4488 24060004 */  li    $a2, 4
 /* 0D8FBC 7F0A448C 8FA700C0 */  lw    $a3, 0xc0($sp)
-/* 0D8FC0 7F0A4490 0FC1DB5A */  jal   likely_generate_DL_for_image_declaration
+/* 0D8FC0 7F0A4490 0FC1DB5A */  jal   texSelect
 /* 0D8FC4 7F0A4494 016D2821 */   addu  $a1, $t3, $t5
 /* 0D8FC8 7F0A4498 8FB000A0 */  lw    $s0, 0xa0($sp)
 /* 0D8FCC 7F0A449C 3C0F0430 */  lui   $t7, (0x04300040 >> 16) # lui $t7, 0x430
