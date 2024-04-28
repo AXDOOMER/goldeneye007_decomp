@@ -64,8 +64,7 @@ EnvironmentRecord * g_EnvironmentAltp;
 s32 D_800825F4;
 
 #if defined(VERSION_EU)
-struct NearFogRecordF dword_CODE_bss_800825F8;
-s32 bss_800825F8_padding[7];
+struct NearFogRecordF eu_loadCurrentNearFog;
 #endif
 
 /**
@@ -345,10 +344,10 @@ void fogLoadCurrentEnvironment(EnvironmentRecord *arg0)
     else
     {
 #if defined(VERSION_EU)
-        dword_CODE_bss_800825F8.NearFog = arg0->Visibility.Nfd.NearFog;
-        dword_CODE_bss_800825F8.MaxVisRange = arg0->Visibility.Nfd.MaxVisRange;
-        dword_CODE_bss_800825F8.MaxObfuscationRange = arg0->Visibility.Nfd.MaxObfuscationRange;
-        g_NearFogValuesP = &dword_CODE_bss_800825F8;
+        eu_loadCurrentNearFog.NearFog = arg0->Visibility.Nfd.NearFog;
+        eu_loadCurrentNearFog.MaxVisRange = arg0->Visibility.Nfd.MaxVisRange;
+        eu_loadCurrentNearFog.MaxObfuscationRange = arg0->Visibility.Nfd.MaxObfuscationRange;
+        g_NearFogValuesP = &eu_loadCurrentNearFog;
 #else
         g_NearFogValuesP = &arg0->Visibility.Nfd;
 #endif
@@ -493,7 +492,6 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
     g_EnvironmentFoundp = NULL;
 }
 
-#if defined(VERSION_US) || defined(VERSION_JP)
 /**
  * Address 0x7F0BACA8.
  * Switch to next Environment. 
@@ -501,13 +499,11 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
  */
 void fogSwitchToSolosky2(f32 arg0)
 {
-#if defined(VERSION_US) || defined(VERSION_JP)
-    static EnvironmentRecord dword_CODE_bss_800825F8;
-#endif
+    static EnvironmentRecord static_envr;
 
-    dword_CODE_bss_800825F8 = *g_EnvironmentMainp;
+    static_envr = *g_EnvironmentMainp;
 
-    dword_CODE_bss_800825F8.Visibility.BlendMultiplier = 
+    static_envr.Visibility.BlendMultiplier = 
         g_EnvironmentMainp->Visibility.BlendMultiplier
 #if defined(VERSION_EU)
         + (arg0 * ((f32)g_EnvironmentAltp->Visibility.BlendMultiplier - (f32)g_EnvironmentMainp->Visibility.BlendMultiplier));
@@ -515,7 +511,7 @@ void fogSwitchToSolosky2(f32 arg0)
         + (arg0 * (g_EnvironmentAltp->Visibility.BlendMultiplier - g_EnvironmentMainp->Visibility.BlendMultiplier));
 #endif
 
-    dword_CODE_bss_800825F8.Visibility.FarFog = 
+    static_envr.Visibility.FarFog = 
         g_EnvironmentMainp->Visibility.FarFog
 #if defined(VERSION_EU)
         + (arg0 * ((f32)g_EnvironmentAltp->Visibility.FarFog - (f32)g_EnvironmentMainp->Visibility.FarFog));
@@ -523,328 +519,32 @@ void fogSwitchToSolosky2(f32 arg0)
         + (arg0 * (g_EnvironmentAltp->Visibility.FarFog - g_EnvironmentMainp->Visibility.FarFog));
 #endif
 
-    dword_CODE_bss_800825F8.Fog.DifferenceFromFarIntensity = 
+    static_envr.Fog.DifferenceFromFarIntensity = 
         (f32)g_EnvironmentMainp->Fog.DifferenceFromFarIntensity
         + (arg0 * ((f32)g_EnvironmentAltp->Fog.DifferenceFromFarIntensity - (f32)g_EnvironmentMainp->Fog.DifferenceFromFarIntensity));
 
-    dword_CODE_bss_800825F8.Fog.FarIntensity = 
+    static_envr.Fog.FarIntensity = 
         (f32)g_EnvironmentMainp->Fog.FarIntensity
         + (arg0 * ((f32)g_EnvironmentAltp->Fog.FarIntensity - (f32)g_EnvironmentMainp->Fog.FarIntensity));
     
-    dword_CODE_bss_800825F8.Sky.Red = 
+    static_envr.Sky.Red = 
         (f32)g_EnvironmentMainp->Sky.Red
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Red - (f32)g_EnvironmentMainp->Sky.Red));
 
-    dword_CODE_bss_800825F8.Sky.Green = 
+    static_envr.Sky.Green = 
         (f32)g_EnvironmentMainp->Sky.Green
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Green - (f32)g_EnvironmentMainp->Sky.Green));
 
-    dword_CODE_bss_800825F8.Sky.Blue = 
+    static_envr.Sky.Blue = 
         (f32)g_EnvironmentMainp->Sky.Blue
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Blue - (f32)g_EnvironmentMainp->Sky.Blue));
 
-    dword_CODE_bss_800825F8.Sky.Red &= 0xf8;
-    dword_CODE_bss_800825F8.Sky.Green &= 0xf8;
-    dword_CODE_bss_800825F8.Sky.Blue &= 0xf8;
+    static_envr.Sky.Red &= 0xf8;
+    static_envr.Sky.Green &= 0xf8;
+    static_envr.Sky.Blue &= 0xf8;
 
-    fogLoadCurrentEnvironment(&dword_CODE_bss_800825F8);
+    fogLoadCurrentEnvironment(&static_envr);
 }
-
-#else
-
-/**
- * 
- * .bss
-glabel dword_CODE_bss_800825F8
-.word 0,0,0,0
-.word 0,0,0,0
-.word 0,0,0,0
- * 
-*/
-/**
- * hack:
- * variables referenced in the following asm are wrong, just used
- * to get matching addresses.
-*/
-GLOBAL_ASM(
-
-
-
-
-.text
-glabel fogSwitchToSolosky2
-/* 0ECA68 7F0BA078 3C028007 */  lui   $v0, %hi(g_EnvironmentMainp) # $v0, 0x8007
-/* 0ECA6C 7F0BA07C 8C42CF8C */  lw    $v0, %lo(g_EnvironmentMainp)($v0)
-/* 0ECA70 7F0BA080 3C048007 */  lui   $a0, %hi(g_EnvironmentMainp + 0x1c) # $a0, 0x8007
-/* 0ECA74 7F0BA084 2484CFA8 */  addiu $a0, %lo(g_EnvironmentMainp + 0x1c) # addiu $a0, $a0, -0x3058
-/* 0ECA78 7F0BA088 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0ECA7C 7F0BA08C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0ECA80 7F0BA090 00804025 */  move  $t0, $a0
-/* 0ECA84 7F0BA094 0040C825 */  move  $t9, $v0
-/* 0ECA88 7F0BA098 24580024 */  addiu $t8, $v0, 0x24
-.L7F0BA09C:
-/* 0ECA8C 7F0BA09C 8B210000 */  lwl   $at, ($t9)
-/* 0ECA90 7F0BA0A0 9B210003 */  lwr   $at, 3($t9)
-/* 0ECA94 7F0BA0A4 2739000C */  addiu $t9, $t9, 0xc
-/* 0ECA98 7F0BA0A8 2508000C */  addiu $t0, $t0, 0xc
-/* 0ECA9C 7F0BA0AC AD01FFF4 */  sw    $at, -0xc($t0)
-/* 0ECAA0 7F0BA0B0 8B21FFF8 */  lwl   $at, -8($t9)
-/* 0ECAA4 7F0BA0B4 9B21FFFB */  lwr   $at, -5($t9)
-/* 0ECAA8 7F0BA0B8 AD01FFF8 */  sw    $at, -8($t0)
-/* 0ECAAC 7F0BA0BC 8B21FFFC */  lwl   $at, -4($t9)
-/* 0ECAB0 7F0BA0C0 9B21FFFF */  lwr   $at, -1($t9)
-/* 0ECAB4 7F0BA0C4 1738FFF5 */  bne   $t9, $t8, .L7F0BA09C
-/* 0ECAB8 7F0BA0C8 AD01FFFC */   sw    $at, -4($t0)
-/* 0ECABC 7F0BA0CC 3C038007 */  lui   $v1, %hi(g_EnvironmentMainp) # $v1, 0x8007
-/* 0ECAC0 7F0BA0D0 8C63CF90 */  lw    $v1, %lo(g_EnvironmentMainp+4)($v1)
-/* 0ECAC4 7F0BA0D4 84490002 */  lh    $t1, 2($v0)
-/* 0ECAC8 7F0BA0D8 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+4) # $at, 0x8007
-/* 0ECACC 7F0BA0DC 846A0002 */  lh    $t2, 2($v1)
-/* 0ECAD0 7F0BA0E0 44892000 */  mtc1  $t1, $f4
-/* 0ECAD4 7F0BA0E4 448A3000 */  mtc1  $t2, $f6
-/* 0ECAD8 7F0BA0E8 46802020 */  cvt.s.w $f0, $f4
-/* 0ECADC 7F0BA0EC 46803220 */  cvt.s.w $f8, $f6
-/* 0ECAE0 7F0BA0F0 46004281 */  sub.s $f10, $f8, $f0
-/* 0ECAE4 7F0BA0F4 460A6102 */  mul.s $f4, $f12, $f10
-/* 0ECAE8 7F0BA0F8 46040180 */  add.s $f6, $f0, $f4
-/* 0ECAEC 7F0BA0FC 4600320D */  trunc.w.s $f8, $f6
-/* 0ECAF0 7F0BA100 440C4000 */  mfc1  $t4, $f8
-/* 0ECAF4 7F0BA104 00000000 */  nop   
-/* 0ECAF8 7F0BA108 A42CCFAA */  sh    $t4, %lo(g_EnvironmentMainp+0x1e)($at)
-/* 0ECAFC 7F0BA10C 844D0004 */  lh    $t5, 4($v0)
-/* 0ECB00 7F0BA110 846F0004 */  lh    $t7, 4($v1)
-/* 0ECB04 7F0BA114 448D5000 */  mtc1  $t5, $f10
-/* 0ECB08 7F0BA118 448F2000 */  mtc1  $t7, $f4
-/* 0ECB0C 7F0BA11C 468050A0 */  cvt.s.w $f2, $f10
-/* 0ECB10 7F0BA120 468021A0 */  cvt.s.w $f6, $f4
-/* 0ECB14 7F0BA124 46023201 */  sub.s $f8, $f6, $f2
-/* 0ECB18 7F0BA128 46086282 */  mul.s $f10, $f12, $f8
-/* 0ECB1C 7F0BA12C 460A1100 */  add.s $f4, $f2, $f10
-/* 0ECB20 7F0BA130 4600218D */  trunc.w.s $f6, $f4
-/* 0ECB24 7F0BA134 44183000 */  mfc1  $t8, $f6
-/* 0ECB28 7F0BA138 00000000 */  nop   
-/* 0ECB2C 7F0BA13C A438CFAC */  sh    $t8, %lo(g_EnvironmentMainp+0x20)($at)
-/* 0ECB30 7F0BA140 8459000C */  lh    $t9, 0xc($v0)
-/* 0ECB34 7F0BA144 8468000C */  lh    $t0, 0xc($v1)
-/* 0ECB38 7F0BA148 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x20) # $at, 0x8007
-/* 0ECB3C 7F0BA14C 44994000 */  mtc1  $t9, $f8
-/* 0ECB40 7F0BA150 44885000 */  mtc1  $t0, $f10
-/* 0ECB44 7F0BA154 468043A0 */  cvt.s.w $f14, $f8
-/* 0ECB48 7F0BA158 46805120 */  cvt.s.w $f4, $f10
-/* 0ECB4C 7F0BA15C 460E2181 */  sub.s $f6, $f4, $f14
-/* 0ECB50 7F0BA160 46066202 */  mul.s $f8, $f12, $f6
-/* 0ECB54 7F0BA164 46087280 */  add.s $f10, $f14, $f8
-/* 0ECB58 7F0BA168 4600510D */  trunc.w.s $f4, $f10
-/* 0ECB5C 7F0BA16C 440A2000 */  mfc1  $t2, $f4
-/* 0ECB60 7F0BA170 00000000 */  nop   
-/* 0ECB64 7F0BA174 A42ACFB4 */  sh    $t2, %lo(g_EnvironmentMainp+0x28)($at)
-/* 0ECB68 7F0BA178 844B000E */  lh    $t3, 0xe($v0)
-/* 0ECB6C 7F0BA17C 846C000E */  lh    $t4, 0xe($v1)
-/* 0ECB70 7F0BA180 448B3000 */  mtc1  $t3, $f6
-/* 0ECB74 7F0BA184 448C4000 */  mtc1  $t4, $f8
-/* 0ECB78 7F0BA188 46803420 */  cvt.s.w $f16, $f6
-/* 0ECB7C 7F0BA18C 468042A0 */  cvt.s.w $f10, $f8
-/* 0ECB80 7F0BA190 46105101 */  sub.s $f4, $f10, $f16
-/* 0ECB84 7F0BA194 46046182 */  mul.s $f6, $f12, $f4
-/* 0ECB88 7F0BA198 46068200 */  add.s $f8, $f16, $f6
-/* 0ECB8C 7F0BA19C 4600428D */  trunc.w.s $f10, $f8
-/* 0ECB90 7F0BA1A0 440F5000 */  mfc1  $t7, $f10
-/* 0ECB94 7F0BA1A4 00000000 */  nop   
-/* 0ECB98 7F0BA1A8 A42FCFB6 */  sh    $t7, %lo(g_EnvironmentMainp+0x2a)($at)
-/* 0ECB9C 7F0BA1AC 904E0010 */  lbu   $t6, 0x10($v0)
-/* 0ECBA0 7F0BA1B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECBA4 7F0BA1B4 448E2000 */  mtc1  $t6, $f4
-/* 0ECBA8 7F0BA1B8 05C10004 */  bgez  $t6, .L7F0BA1CC
-/* 0ECBAC 7F0BA1BC 468024A0 */   cvt.s.w $f18, $f4
-/* 0ECBB0 7F0BA1C0 44813000 */  mtc1  $at, $f6
-/* 0ECBB4 7F0BA1C4 00000000 */  nop   
-/* 0ECBB8 7F0BA1C8 46069480 */  add.s $f18, $f18, $f6
-.L7F0BA1CC:
-/* 0ECBBC 7F0BA1CC 90780010 */  lbu   $t8, 0x10($v1)
-/* 0ECBC0 7F0BA1D0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECBC4 7F0BA1D4 44984000 */  mtc1  $t8, $f8
-/* 0ECBC8 7F0BA1D8 07010004 */  bgez  $t8, .L7F0BA1EC
-/* 0ECBCC 7F0BA1DC 468042A0 */   cvt.s.w $f10, $f8
-/* 0ECBD0 7F0BA1E0 44812000 */  mtc1  $at, $f4
-/* 0ECBD4 7F0BA1E4 00000000 */  nop   
-/* 0ECBD8 7F0BA1E8 46045280 */  add.s $f10, $f10, $f4
-.L7F0BA1EC:
-/* 0ECBDC 7F0BA1EC 46125181 */  sub.s $f6, $f10, $f18
-/* 0ECBE0 7F0BA1F0 24080001 */  li    $t0, 1
-/* 0ECBE4 7F0BA1F4 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
-/* 0ECBE8 7F0BA1F8 46066202 */  mul.s $f8, $f12, $f6
-/* 0ECBEC 7F0BA1FC 46089100 */  add.s $f4, $f18, $f8
-/* 0ECBF0 7F0BA200 4459F800 */  cfc1  $t9, $31
-/* 0ECBF4 7F0BA204 44C8F800 */  ctc1  $t0, $31
-/* 0ECBF8 7F0BA208 00000000 */  nop   
-/* 0ECBFC 7F0BA20C 460022A4 */  cvt.w.s $f10, $f4
-/* 0ECC00 7F0BA210 4448F800 */  cfc1  $t0, $31
-/* 0ECC04 7F0BA214 00000000 */  nop   
-/* 0ECC08 7F0BA218 31080078 */  andi  $t0, $t0, 0x78
-/* 0ECC0C 7F0BA21C 51000013 */  beql  $t0, $zero, .L7F0BA26C
-/* 0ECC10 7F0BA220 44085000 */   mfc1  $t0, $f10
-/* 0ECC14 7F0BA224 44815000 */  mtc1  $at, $f10
-/* 0ECC18 7F0BA228 24080001 */  li    $t0, 1
-/* 0ECC1C 7F0BA22C 460A2281 */  sub.s $f10, $f4, $f10
-/* 0ECC20 7F0BA230 44C8F800 */  ctc1  $t0, $31
-/* 0ECC24 7F0BA234 00000000 */  nop   
-/* 0ECC28 7F0BA238 460052A4 */  cvt.w.s $f10, $f10
-/* 0ECC2C 7F0BA23C 4448F800 */  cfc1  $t0, $31
-/* 0ECC30 7F0BA240 00000000 */  nop   
-/* 0ECC34 7F0BA244 31080078 */  andi  $t0, $t0, 0x78
-/* 0ECC38 7F0BA248 15000005 */  bnez  $t0, .L7F0BA260
-/* 0ECC3C 7F0BA24C 00000000 */   nop   
-/* 0ECC40 7F0BA250 44085000 */  mfc1  $t0, $f10
-/* 0ECC44 7F0BA254 3C018000 */  lui   $at, 0x8000
-/* 0ECC48 7F0BA258 10000007 */  b     .L7F0BA278
-/* 0ECC4C 7F0BA25C 01014025 */   or    $t0, $t0, $at
-.L7F0BA260:
-/* 0ECC50 7F0BA260 10000005 */  b     .L7F0BA278
-/* 0ECC54 7F0BA264 2408FFFF */   li    $t0, -1
-/* 0ECC58 7F0BA268 44085000 */  mfc1  $t0, $f10
-.L7F0BA26C:
-/* 0ECC5C 7F0BA26C 00000000 */  nop   
-/* 0ECC60 7F0BA270 0500FFFB */  bltz  $t0, .L7F0BA260
-/* 0ECC64 7F0BA274 00000000 */   nop   
-.L7F0BA278:
-/* 0ECC68 7F0BA278 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2c) # $at, 0x8007
-/* 0ECC6C 7F0BA27C A028CFB8 */  sb    $t0, %lo(g_EnvironmentMainp+0x2c)($at)
-/* 0ECC70 7F0BA280 90490011 */  lbu   $t1, 0x11($v0)
-/* 0ECC74 7F0BA284 44D9F800 */  ctc1  $t9, $31
-/* 0ECC78 7F0BA288 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECC7C 7F0BA28C 44893000 */  mtc1  $t1, $f6
-/* 0ECC80 7F0BA290 05210004 */  bgez  $t1, .L7F0BA2A4
-/* 0ECC84 7F0BA294 46803220 */   cvt.s.w $f8, $f6
-/* 0ECC88 7F0BA298 44812000 */  mtc1  $at, $f4
-/* 0ECC8C 7F0BA29C 00000000 */  nop   
-/* 0ECC90 7F0BA2A0 46044200 */  add.s $f8, $f8, $f4
-.L7F0BA2A4:
-/* 0ECC94 7F0BA2A4 E7A80018 */  swc1  $f8, 0x18($sp)
-/* 0ECC98 7F0BA2A8 906A0011 */  lbu   $t2, 0x11($v1)
-/* 0ECC9C 7F0BA2AC C7A80018 */  lwc1  $f8, 0x18($sp)
-/* 0ECCA0 7F0BA2B0 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECCA4 7F0BA2B4 448A5000 */  mtc1  $t2, $f10
-/* 0ECCA8 7F0BA2B8 310900F8 */  andi  $t1, $t0, 0xf8
-/* 0ECCAC 7F0BA2BC 05410004 */  bgez  $t2, .L7F0BA2D0
-/* 0ECCB0 7F0BA2C0 468051A0 */   cvt.s.w $f6, $f10
-/* 0ECCB4 7F0BA2C4 44812000 */  mtc1  $at, $f4
-/* 0ECCB8 7F0BA2C8 00000000 */  nop   
-/* 0ECCBC 7F0BA2CC 46043180 */  add.s $f6, $f6, $f4
-.L7F0BA2D0:
-/* 0ECCC0 7F0BA2D0 46083281 */  sub.s $f10, $f6, $f8
-/* 0ECCC4 7F0BA2D4 240C0001 */  li    $t4, 1
-/* 0ECCC8 7F0BA2D8 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
-/* 0ECCCC 7F0BA2DC 460A6102 */  mul.s $f4, $f12, $f10
-/* 0ECCD0 7F0BA2E0 46044180 */  add.s $f6, $f8, $f4
-/* 0ECCD4 7F0BA2E4 444BF800 */  cfc1  $t3, $31
-/* 0ECCD8 7F0BA2E8 44CCF800 */  ctc1  $t4, $31
-/* 0ECCDC 7F0BA2EC 00000000 */  nop   
-/* 0ECCE0 7F0BA2F0 460032A4 */  cvt.w.s $f10, $f6
-/* 0ECCE4 7F0BA2F4 444CF800 */  cfc1  $t4, $31
-/* 0ECCE8 7F0BA2F8 00000000 */  nop   
-/* 0ECCEC 7F0BA2FC 318C0078 */  andi  $t4, $t4, 0x78
-/* 0ECCF0 7F0BA300 51800013 */  beql  $t4, $zero, .L7F0BA350
-/* 0ECCF4 7F0BA304 440C5000 */   mfc1  $t4, $f10
-/* 0ECCF8 7F0BA308 44815000 */  mtc1  $at, $f10
-/* 0ECCFC 7F0BA30C 240C0001 */  li    $t4, 1
-/* 0ECD00 7F0BA310 460A3281 */  sub.s $f10, $f6, $f10
-/* 0ECD04 7F0BA314 44CCF800 */  ctc1  $t4, $31
-/* 0ECD08 7F0BA318 00000000 */  nop   
-/* 0ECD0C 7F0BA31C 460052A4 */  cvt.w.s $f10, $f10
-/* 0ECD10 7F0BA320 444CF800 */  cfc1  $t4, $31
-/* 0ECD14 7F0BA324 00000000 */  nop   
-/* 0ECD18 7F0BA328 318C0078 */  andi  $t4, $t4, 0x78
-/* 0ECD1C 7F0BA32C 15800005 */  bnez  $t4, .L7F0BA344
-/* 0ECD20 7F0BA330 00000000 */   nop   
-/* 0ECD24 7F0BA334 440C5000 */  mfc1  $t4, $f10
-/* 0ECD28 7F0BA338 3C018000 */  lui   $at, 0x8000
-/* 0ECD2C 7F0BA33C 10000007 */  b     .L7F0BA35C
-/* 0ECD30 7F0BA340 01816025 */   or    $t4, $t4, $at
-.L7F0BA344:
-/* 0ECD34 7F0BA344 10000005 */  b     .L7F0BA35C
-/* 0ECD38 7F0BA348 240CFFFF */   li    $t4, -1
-/* 0ECD3C 7F0BA34C 440C5000 */  mfc1  $t4, $f10
-.L7F0BA350:
-/* 0ECD40 7F0BA350 00000000 */  nop   
-/* 0ECD44 7F0BA354 0580FFFB */  bltz  $t4, .L7F0BA344
-/* 0ECD48 7F0BA358 00000000 */   nop   
-.L7F0BA35C:
-/* 0ECD4C 7F0BA35C 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2d) # $at, 0x8007
-/* 0ECD50 7F0BA360 A02CCFB9 */  sb    $t4, %lo(g_EnvironmentMainp+0x2d)($at)
-/* 0ECD54 7F0BA364 904D0012 */  lbu   $t5, 0x12($v0)
-/* 0ECD58 7F0BA368 44CBF800 */  ctc1  $t3, $31
-/* 0ECD5C 7F0BA36C 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECD60 7F0BA370 448D4000 */  mtc1  $t5, $f8
-/* 0ECD64 7F0BA374 318B00F8 */  andi  $t3, $t4, 0xf8
-/* 0ECD68 7F0BA378 05A10004 */  bgez  $t5, .L7F0BA38C
-/* 0ECD6C 7F0BA37C 46804120 */   cvt.s.w $f4, $f8
-/* 0ECD70 7F0BA380 44813000 */  mtc1  $at, $f6
-/* 0ECD74 7F0BA384 00000000 */  nop   
-/* 0ECD78 7F0BA388 46062100 */  add.s $f4, $f4, $f6
-.L7F0BA38C:
-/* 0ECD7C 7F0BA38C E7A4001C */  swc1  $f4, 0x1c($sp)
-/* 0ECD80 7F0BA390 906F0012 */  lbu   $t7, 0x12($v1)
-/* 0ECD84 7F0BA394 C7A4001C */  lwc1  $f4, 0x1c($sp)
-/* 0ECD88 7F0BA398 3C014F80 */  li    $at, 0x4F800000 # 4294967296.000000
-/* 0ECD8C 7F0BA39C 448F5000 */  mtc1  $t7, $f10
-/* 0ECD90 7F0BA3A0 05E10004 */  bgez  $t7, .L7F0BA3B4
-/* 0ECD94 7F0BA3A4 46805220 */   cvt.s.w $f8, $f10
-/* 0ECD98 7F0BA3A8 44813000 */  mtc1  $at, $f6
-/* 0ECD9C 7F0BA3AC 00000000 */  nop   
-/* 0ECDA0 7F0BA3B0 46064200 */  add.s $f8, $f8, $f6
-.L7F0BA3B4:
-/* 0ECDA4 7F0BA3B4 46044281 */  sub.s $f10, $f8, $f4
-/* 0ECDA8 7F0BA3B8 24180001 */  li    $t8, 1
-/* 0ECDAC 7F0BA3BC 3C014F00 */  li    $at, 0x4F000000 # 2147483648.000000
-/* 0ECDB0 7F0BA3C0 460A6182 */  mul.s $f6, $f12, $f10
-/* 0ECDB4 7F0BA3C4 46062200 */  add.s $f8, $f4, $f6
-/* 0ECDB8 7F0BA3C8 444EF800 */  cfc1  $t6, $31
-/* 0ECDBC 7F0BA3CC 44D8F800 */  ctc1  $t8, $31
-/* 0ECDC0 7F0BA3D0 00000000 */  nop   
-/* 0ECDC4 7F0BA3D4 460042A4 */  cvt.w.s $f10, $f8
-/* 0ECDC8 7F0BA3D8 4458F800 */  cfc1  $t8, $31
-/* 0ECDCC 7F0BA3DC 00000000 */  nop   
-/* 0ECDD0 7F0BA3E0 33180078 */  andi  $t8, $t8, 0x78
-/* 0ECDD4 7F0BA3E4 53000013 */  beql  $t8, $zero, .L7F0BA434
-/* 0ECDD8 7F0BA3E8 44185000 */   mfc1  $t8, $f10
-/* 0ECDDC 7F0BA3EC 44815000 */  mtc1  $at, $f10
-/* 0ECDE0 7F0BA3F0 24180001 */  li    $t8, 1
-/* 0ECDE4 7F0BA3F4 460A4281 */  sub.s $f10, $f8, $f10
-/* 0ECDE8 7F0BA3F8 44D8F800 */  ctc1  $t8, $31
-/* 0ECDEC 7F0BA3FC 00000000 */  nop   
-/* 0ECDF0 7F0BA400 460052A4 */  cvt.w.s $f10, $f10
-/* 0ECDF4 7F0BA404 4458F800 */  cfc1  $t8, $31
-/* 0ECDF8 7F0BA408 00000000 */  nop   
-/* 0ECDFC 7F0BA40C 33180078 */  andi  $t8, $t8, 0x78
-/* 0ECE00 7F0BA410 17000005 */  bnez  $t8, .L7F0BA428
-/* 0ECE04 7F0BA414 00000000 */   nop   
-/* 0ECE08 7F0BA418 44185000 */  mfc1  $t8, $f10
-/* 0ECE0C 7F0BA41C 3C018000 */  lui   $at, 0x8000
-/* 0ECE10 7F0BA420 10000007 */  b     .L7F0BA440
-/* 0ECE14 7F0BA424 0301C025 */   or    $t8, $t8, $at
-.L7F0BA428:
-/* 0ECE18 7F0BA428 10000005 */  b     .L7F0BA440
-/* 0ECE1C 7F0BA42C 2418FFFF */   li    $t8, -1
-/* 0ECE20 7F0BA430 44185000 */  mfc1  $t8, $f10
-.L7F0BA434:
-/* 0ECE24 7F0BA434 00000000 */  nop   
-/* 0ECE28 7F0BA438 0700FFFB */  bltz  $t8, .L7F0BA428
-/* 0ECE2C 7F0BA43C 00000000 */   nop   
-.L7F0BA440:
-/* 0ECE30 7F0BA440 3C018007 */  lui   $at, %hi(g_EnvironmentMainp+0x2e) # $at, 0x8007
-/* 0ECE34 7F0BA444 A038CFBA */  sb    $t8, %lo(g_EnvironmentMainp+0x2e)($at)
-/* 0ECE38 7F0BA448 44CEF800 */  ctc1  $t6, $31
-/* 0ECE3C 7F0BA44C 330F00F8 */  andi  $t7, $t8, 0xf8
-/* 0ECE40 7F0BA450 A029CFB8 */  sb    $t1, %lo(g_EnvironmentMainp+0x2c)($at)
-/* 0ECE44 7F0BA454 A02BCFB9 */  sb    $t3, %lo(g_EnvironmentMainp+0x2d)($at)
-/* 0ECE48 7F0BA458 0FC2E67E */  jal   fogLoadCurrentEnvironment
-/* 0ECE4C 7F0BA45C A02FCFBA */   sb    $t7, %lo(g_EnvironmentMainp+0x2e)($at)
-/* 0ECE50 7F0BA460 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0ECE54 7F0BA464 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0ECE58 7F0BA468 03E00008 */  jr    $ra
-/* 0ECE5C 7F0BA46C 00000000 */   nop   
-)
-#endif
 
 
 /**
