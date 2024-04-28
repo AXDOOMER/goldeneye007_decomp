@@ -214,6 +214,9 @@ LEVELID langGetLangBankIndexFromStagenum(LEVELID level)
             break;
         default:
         {
+            #ifdef DEBUG
+                osSyncPrintf("gettextloadnum: level %d unknown. (HANG now.)\n",level);
+            #endif
             /* infinite loop on invalid text bank */
             while(1) {};
         }
@@ -357,7 +360,7 @@ void langClearBank(s32 textBank) {
 }
 
 /**
- * Get pointer of a string based on language of game (E/J) 
+ * Get pointer of a string based on language of game (E/J)
  * @param slotID: UniqueID of string (a combination of Bank ID and string index)
  * @return char* string.
  */
