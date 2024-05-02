@@ -6,6 +6,9 @@
 #include "math_unk_05A9E0.h"
 #include "chrobjdata.h"
 #include "ob.h"
+#include "objecthandler.h"
+#include "unk_0CC4C0.h"
+#include "image.h"
 
 //file split per EU
 #ifdef NONMATCHING
@@ -140,12 +143,12 @@ glabel sub_GAME_7F0762E0
 
 
 
-
-#ifdef NONMATCHING
-void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, u8* dst, s32 size, struct texpool * buffer)
+/***
+ * NTSC addres 0x7F0764A4.
+*/
+void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, u8* dst, s32 size, struct texpool * buffer)
 {
-
-    struct ModelNode *filedata;
+    void *filedata;
 
     if (dst != 0)
     {
@@ -155,64 +158,17 @@ void load_object_fill_header(struct ModelFileHeader *objheader, s8 *name, u8* ds
     {
         filedata = _fileNameLoadToBank(name, 0, 0x100, 4);
     }
-    objheader->Switches = filedata;
-    objheader->Textures = &filedata[objheader->numSwitches];
-    objheader->RootNode = objheader->Textures[objheader->numtextures];
+    
+    objheader->Switches = (struct ModelNode **)filedata;
+    
+    // hmmmmmmmmmmmm
+    objheader->Textures = (struct ModelFileTextures *)&((s32*)filedata)[objheader->numSwitches];
+    
+    objheader->RootNode = (struct ModelNode *)&objheader->Textures[objheader->numtextures];
+    
     sub_GAME_7F075A90(objheader, 0x5000000, filedata);
     sub_GAME_7F0762E0(objheader, name, dst, buffer);
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel load_object_fill_header
-/* 0AAFD4 7F0764A4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0AAFD8 7F0764A8 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0AAFDC 7F0764AC 00808025 */  move  $s0, $a0
-/* 0AAFE0 7F0764B0 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0AAFE4 7F0764B4 AFA50024 */  sw    $a1, 0x24($sp)
-/* 0AAFE8 7F0764B8 10C00006 */  beqz  $a2, .L7F0764D4
-/* 0AAFEC 7F0764BC AFA60028 */   sw    $a2, 0x28($sp)
-/* 0AAFF0 7F0764C0 00A02025 */  move  $a0, $a1
-/* 0AAFF4 7F0764C4 0FC2F350 */  jal   _fileNameLoadToAddr
-/* 0AAFF8 7F0764C8 00002825 */   move  $a1, $zero
-/* 0AAFFC 7F0764CC 10000007 */  b     .L7F0764EC
-/* 0AB000 7F0764D0 00403025 */   move  $a2, $v0
-.L7F0764D4:
-/* 0AB004 7F0764D4 8FA40024 */  lw    $a0, 0x24($sp)
-/* 0AB008 7F0764D8 00002825 */  move  $a1, $zero
-/* 0AB00C 7F0764DC 24060100 */  li    $a2, 256
-/* 0AB010 7F0764E0 0FC2F341 */  jal   _fileNameLoadToBank
-/* 0AB014 7F0764E4 24070004 */   li    $a3, 4
-/* 0AB018 7F0764E8 00403025 */  move  $a2, $v0
-.L7F0764EC:
-/* 0AB01C 7F0764EC 86190016 */  lh    $t9, 0x16($s0)
-/* 0AB020 7F0764F0 860F000C */  lh    $t7, 0xc($s0)
-/* 0AB024 7F0764F4 AE060008 */  sw    $a2, 8($s0)
-/* 0AB028 7F0764F8 00194080 */  sll   $t0, $t9, 2
-/* 0AB02C 7F0764FC 01194023 */  subu  $t0, $t0, $t9
-/* 0AB030 7F076500 000FC080 */  sll   $t8, $t7, 2
-/* 0AB034 7F076504 00D81021 */  addu  $v0, $a2, $t8
-/* 0AB038 7F076508 00084080 */  sll   $t0, $t0, 2
-/* 0AB03C 7F07650C 00484821 */  addu  $t1, $v0, $t0
-/* 0AB040 7F076510 AE020018 */  sw    $v0, 0x18($s0)
-/* 0AB044 7F076514 AE090000 */  sw    $t1, ($s0)
-/* 0AB048 7F076518 02002025 */  move  $a0, $s0
-/* 0AB04C 7F07651C 0FC1D6A4 */  jal   sub_GAME_7F075A90
-/* 0AB050 7F076520 3C050500 */   lui   $a1, 0x500
-/* 0AB054 7F076524 02002025 */  move  $a0, $s0
-/* 0AB058 7F076528 8FA50024 */  lw    $a1, 0x24($sp)
-/* 0AB05C 7F07652C 8FA60028 */  lw    $a2, 0x28($sp)
-/* 0AB060 7F076530 0FC1D8B8 */  jal   sub_GAME_7F0762E0
-/* 0AB064 7F076534 8FA70030 */   lw    $a3, 0x30($sp)
-/* 0AB068 7F076538 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0AB06C 7F07653C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 0AB070 7F076540 27BD0020 */  addiu $sp, $sp, 0x20
-/* 0AB074 7F076544 03E00008 */  jr    $ra
-/* 0AB078 7F076548 00000000 */   nop   
-)
-#endif
-
 
 
 
