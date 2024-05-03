@@ -63,7 +63,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAEB4 7F076384 01262823 */  subu  $a1, $t1, $a2
 /* 0AAEB8 7F076388 00A45023 */  subu  $t2, $a1, $a0
 /* 0AAEBC 7F07638C 02E09825 */  move  $s3, $s7
-/* 0AAEC0 7F076390 0FC339E5 */  jal   sub_GAME_7F0CE794
+/* 0AAEC0 7F076390 0FC339E5 */  jal   texCopyGdls
 /* 0AAEC4 7F076394 AFAA0058 */   sw    $t2, 0x58($sp)
 /* 0AAEC8 7F076398 02A02025 */  move  $a0, $s5
 /* 0AAECC 7F07639C 0FC32F94 */  jal   texLoadFromModelFileHeader

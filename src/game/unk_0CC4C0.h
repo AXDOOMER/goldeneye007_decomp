@@ -54,6 +54,6 @@ extern struct image_sound *D_8004E86C[];
 s32 texGetHeightAtLod(struct tex *tex, s32 lod);
 void sub_GAME_7F0CC9D4(struct tex *tex, s32 *deptharg, s32 *lenarg);
 
-void sub_GAME_7F0CE794(Gfx *arg0, Gfx *arg1, s32 arg2);
+void texCopyGdls(Gfx *arg0, Gfx *arg1, s32 arg2);
 
 #endif
