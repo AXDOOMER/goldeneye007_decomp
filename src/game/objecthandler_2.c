@@ -12,8 +12,82 @@
 
 //file split per EU
 #ifdef NONMATCHING
-void sub_GAME_7F0762E0(void) {
 
+/***
+ * Perfect Dark:
+ * void modeldef0f1a7560(struct modeldef *modeldef, u16 filenum, u32 arg2, struct modeldef *modeldef2, struct texpool *texpool, bool arg5)
+ * 
+ * NTSC address 0x7F0762E0.
+*/
+// https://decomp.me/scratch/9a4EO 69.88
+void sub_GAME_7F0762E0(ModelFileHeader *arg0, char *arg1, void *arg2, s32 arg3)
+{
+    ModelNode *sp74;
+    uintptr_t gdl; // sp6C
+    uintptr_t sp58;
+    ModelNode **sp54;
+    s32 sp50;
+    s32 temp_fp;
+    s32 temp_s0;
+    Gfx *var_s3;
+    Gfx *temp_a0;
+    uintptr_t temp_a2;
+    uintptr_t temp_a1;
+    s32 var_s1;
+    s32 var_s2;
+    
+    sp54 = arg0->Switches;
+    sp50 = fileGetIndex(arg1);
+    temp_s0 = get_rom_remaining_buffer_for_index(sp50);
+    temp_fp = get_pc_remaining_buffer_for_index(sp50);
+    sp74 = NULL;
+    modelIterateDisplayLists(arg0, &sp74, (Gfx**)&gdl);
+
+    if (gdl)
+    {
+        var_s3 = gdl;
+
+        //temp_a0 = ((s32)arg0->Switches + ((s32) gdl & 0xFFFFFF));
+        temp_a2 = ((s32)temp_fp - (s32)((s32)arg0->Switches + ((s32) gdl & 0xFFFFFF))) + (s32)sp54;
+        temp_a1 = ((s32)temp_s0 + (s32)sp54) - (s32)temp_a2;
+
+        sp58 = (s32)temp_a1 - (s32)((s32)arg0->Switches + ((s32) gdl & 0xFFFFFF));
+        
+        // texCopyGdls
+        sub_GAME_7F0CE794(((s32)arg0->Switches + ((s32) gdl & 0xFFFFFF)), temp_a1, (s32) temp_a2);
+        
+        texLoadFromModelFileHeader(arg0, arg3);
+
+        while (sp74 != NULL)
+        {
+            modelIterateDisplayLists(arg0, &sp74, (Gfx**)&gdl);
+            
+            if (gdl)
+            {
+                var_s2 = (s32) gdl * 0;
+                var_s1 = (s32) gdl & 0xFFFFFF;
+            }
+            else
+            {
+                var_s1 = (s32) gdl & 0xFFFFFF;
+                var_s2 = (temp_fp + (s32)arg0->Switches - (s32)arg0->Switches) - (var_s1);
+            }
+            
+            modelNodeReplaceGdl((u32) arg0, sp74, gdl, var_s3);
+            
+            var_s3 += process_microcode_sort_display_modes_expand_image_calls(
+                (Gfx *)((uintptr_t)arg0->Switches + ((s32)(var_s1) + (s32)sp58)),
+                var_s2,
+                (Gfx *)((uintptr_t)arg0->Switches + ((s32) var_s3 & 0xFFFFFF)),
+                arg3);
+        }
+
+        fileSetSize(
+            sp50,
+            (u8*)sp54,
+            (((u32)((s32)arg0->Switches + ((s32) var_s3 & 0xFFFFFF)) - (u32)sp54) + 0xf) & ~0xf,
+            arg2 == NULL);
+    }
 }
 #else
 GLOBAL_ASM(
