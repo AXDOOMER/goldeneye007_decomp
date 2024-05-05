@@ -2049,7 +2049,10 @@ def_7F0CE2B4:
 #endif
 
 
-void sub_GAME_7F0CE794(Gfx *arg0, Gfx *arg1, s32 arg2)
+/***
+ * NTSC address 0x7F0CE794.
+*/
+void texCopyGdls(Gfx *arg0, Gfx *arg1, s32 arg2)
 {
     arg2 = (arg2 >> 3);
     arg0 = arg0 + (arg2 - 1);
