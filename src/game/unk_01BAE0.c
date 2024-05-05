@@ -1,5 +1,13 @@
 #include <ultra64.h>
-
+#include <assets/animationtable_data.h>
+#include "bondtypes.h"
+#include "image.h"
+#include "math.h"
+#include "objecthandler.h"
+#include "ob.h"
+#include "chr_b.h"
+#include "initanitable.h"
+#include "chrobjdata.h"
 
 #ifdef NONMATCHING
 void sub_GAME_7F01BAE0(void) {
@@ -364,74 +372,32 @@ glabel sub_GAME_7F01BAE0
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F01BFF8(void) {
+Gfx *sub_GAME_7F01BFF8(Gfx *arg0, Vtx *arg1, s32 arg2)
+{
+    s8 j;
+    
+    do
+    {
+        j = ((arg2 >= 0x11) ? 0x10 : arg2);
 
+        gSPVertex(arg0++, arg1, j, 0);
+
+        arg1 += 14;
+
+        j -= 3;
+        
+        do
+        {
+            gSP1Triangle(arg0++, j, j+1, j+2, 0);
+        } while (--j >= 0);
+        
+        arg2 -= 14;        
+    } while (arg2 >= 3);
+    
+    gSPEndDisplayList(arg0++);
+
+    return arg0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F01BFF8
-/* 050B28 7F01BFF8 240A000A */  li    $t2, 10
-/* 050B2C 7F01BFFC 3C09BF00 */  lui   $t1, 0xbf00
-/* 050B30 7F01C000 3C080400 */  lui   $t0, 0x400
-/* 050B34 7F01C004 28C10011 */  slti  $at, $a2, 0x11
-.L7F01C008:
-/* 050B38 7F01C008 14200003 */  bnez  $at, .L7F01C018
-/* 050B3C 7F01C00C 00801825 */   move  $v1, $a0
-/* 050B40 7F01C010 10000004 */  b     .L7F01C024
-/* 050B44 7F01C014 24020010 */   li    $v0, 16
-.L7F01C018:
-/* 050B48 7F01C018 00061600 */  sll   $v0, $a2, 0x18
-/* 050B4C 7F01C01C 00027603 */  sra   $t6, $v0, 0x18
-/* 050B50 7F01C020 01C01025 */  move  $v0, $t6
-.L7F01C024:
-/* 050B54 7F01C024 244FFFFF */  addiu $t7, $v0, -1
-/* 050B58 7F01C028 000FC100 */  sll   $t8, $t7, 4
-/* 050B5C 7F01C02C 331900FF */  andi  $t9, $t8, 0xff
-/* 050B60 7F01C030 00026900 */  sll   $t5, $v0, 4
-/* 050B64 7F01C034 00195C00 */  sll   $t3, $t9, 0x10
-/* 050B68 7F01C038 01686025 */  or    $t4, $t3, $t0
-/* 050B6C 7F01C03C 31AEFFFF */  andi  $t6, $t5, 0xffff
-/* 050B70 7F01C040 2442FFFD */  addiu $v0, $v0, -3
-/* 050B74 7F01C044 018E7825 */  or    $t7, $t4, $t6
-/* 050B78 7F01C048 AC650004 */  sw    $a1, 4($v1)
-/* 050B7C 7F01C04C 0002C600 */  sll   $t8, $v0, 0x18
-/* 050B80 7F01C050 AC6F0000 */  sw    $t7, ($v1)
-/* 050B84 7F01C054 24840008 */  addiu $a0, $a0, 8
-/* 050B88 7F01C058 24A500E0 */  addiu $a1, $a1, 0xe0
-/* 050B8C 7F01C05C 00181603 */  sra   $v0, $t8, 0x18
-.L7F01C060:
-/* 050B90 7F01C060 004A0019 */  multu $v0, $t2
-/* 050B94 7F01C064 2442FFFF */  addiu $v0, $v0, -1
-/* 050B98 7F01C068 00801825 */  move  $v1, $a0
-/* 050B9C 7F01C06C AC690000 */  sw    $t1, ($v1)
-/* 050BA0 7F01C070 24840008 */  addiu $a0, $a0, 8
-/* 050BA4 7F01C074 00003812 */  mflo  $a3
-/* 050BA8 7F01C078 24EC000A */  addiu $t4, $a3, 0xa
-/* 050BAC 7F01C07C 318E00FF */  andi  $t6, $t4, 0xff
-/* 050BB0 7F01C080 30EB00FF */  andi  $t3, $a3, 0xff
-/* 050BB4 7F01C084 000B6C00 */  sll   $t5, $t3, 0x10
-/* 050BB8 7F01C088 000E7A00 */  sll   $t7, $t6, 8
-/* 050BBC 7F01C08C 24F90014 */  addiu $t9, $a3, 0x14
-/* 050BC0 7F01C090 332B00FF */  andi  $t3, $t9, 0xff
-/* 050BC4 7F01C094 01AFC025 */  or    $t8, $t5, $t7
-/* 050BC8 7F01C098 00027600 */  sll   $t6, $v0, 0x18
-/* 050BCC 7F01C09C 000E1603 */  sra   $v0, $t6, 0x18
-/* 050BD0 7F01C0A0 030B6025 */  or    $t4, $t8, $t3
-/* 050BD4 7F01C0A4 0441FFEE */  bgez  $v0, .L7F01C060
-/* 050BD8 7F01C0A8 AC6C0004 */   sw    $t4, 4($v1)
-/* 050BDC 7F01C0AC 24C6FFF2 */  addiu $a2, $a2, -0xe
-/* 050BE0 7F01C0B0 28C10003 */  slti  $at, $a2, 3
-/* 050BE4 7F01C0B4 5020FFD4 */  beql  $at, $zero, .L7F01C008
-/* 050BE8 7F01C0B8 28C10011 */   slti  $at, $a2, 0x11
-/* 050BEC 7F01C0BC 3C0FB800 */  lui   $t7, 0xb800
-/* 050BF0 7F01C0C0 AC8F0000 */  sw    $t7, ($a0)
-/* 050BF4 7F01C0C4 24820008 */  addiu $v0, $a0, 8
-/* 050BF8 7F01C0C8 03E00008 */  jr    $ra
-/* 050BFC 7F01C0CC AC800004 */   sw    $zero, 4($a0)
-)
-#endif
 
 
 

@@ -3,6 +3,7 @@
 #include <PR/gu.h>
 #include <PR/os.h>
 #include <assets/font_dl.h>
+#include <assets/animationtable_data.h>
 #include <bondgame.h>
 #include <fr.h>
 #include <macro.h>
@@ -14,6 +15,7 @@
 #include "math_floor.h"
 #include "title.h"
 #include "unk_01B240.h"
+#include "unk_01BAE0.h"
 
 
 
@@ -72,8 +74,8 @@ s32 D_8002A7E8[3] = {0xFF, 0xFF, 0xFF};
 */
 struct FolderSelect D_8002A7DC = { 0x00, 0x00, 0x00 };
 struct FolderSelect D_8002A7E8 = { 0xFF, 0xFF, 0xFF };
-u32 D_8002A7F4 = 0;
-u32 D_8002A7F8 = 0;
+Model *D_8002A7F4 = NULL;
+Model *D_8002A7F8 = NULL;
 u32 D_8002A7FC = 0;
 
 u32 D_8002A800 = 1;
@@ -102,14 +104,7 @@ f32 D_8002A890[3] = {0.0f, 1.0f, 0.0f};
 f32 D_8002A89C = 0.0f;
 s32 intro_eye_counter = 0;
 u32 intro_state_blood_animation = 0;
-u32 D_8002A8A8 = 0;
-u32 D_8002A8AC = 0;
-u32 D_8002A8B0 = 0;
-/*
-                .word 0
-                .word 0
-                .word 0
-*/
+struct coord3d D_8002A8A8 = { 0, 0, 0 };
 
 Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl)
 {
