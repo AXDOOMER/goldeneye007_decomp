@@ -4035,6 +4035,9 @@ void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
 
     if (next_step < 0)
     {
+        #ifdef DEBUG
+        osSyncPrintf("Patrol first step not found for chr number %d\n",self->chrnum + 1);
+        #endif
         next_step = 0;
     }
 
