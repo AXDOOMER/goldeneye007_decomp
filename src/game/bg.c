@@ -5264,7 +5264,7 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
                &ptr_bgdata_room_fileposition_list[roomID] + -0xf000000,len);
     dest = bgDecompress(source,data);
     puVar1 = (size - dest) + data;
-    sub_GAME_7F0CE794(data,puVar1,dest);
+    texCopyGdls(data,puVar1,dest);
     clear_light_fixturetable_in_room(roomID);
     puVar1 = process_microcode_sort_display_modes_expand_image_calls(puVar1,dest,data,NULL);
     if (dest < puVar1) {
@@ -5341,7 +5341,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACAC 7F0B617C 01626823 */  subu  $t5, $t3, $v0
 /* 0EACB0 7F0B6180 01B02821 */  addu  $a1, $t5, $s0
 /* 0EACB4 7F0B6184 AFA50028 */  sw    $a1, 0x28($sp)
-/* 0EACB8 7F0B6188 0FC339E5 */  jal   sub_GAME_7F0CE794
+/* 0EACB8 7F0B6188 0FC339E5 */  jal   texCopyGdls
 /* 0EACBC 7F0B618C 00403025 */   move  $a2, $v0
 /* 0EACC0 7F0B6190 0FC2F131 */  jal   clear_light_fixturetable_in_room
 /* 0EACC4 7F0B6194 8FA40038 */   lw    $a0, 0x38($sp)
@@ -5431,7 +5431,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACAC 7F0B617C 01626823 */  subu  $t5, $t3, $v0
 /* 0EACB0 7F0B6180 01B02821 */  addu  $a1, $t5, $s0
 /* 0EACB4 7F0B6184 AFA50028 */  sw    $a1, 0x28($sp)
-/* 0EACB8 7F0B6188 0FC339E5 */  jal   sub_GAME_7F0CE794
+/* 0EACB8 7F0B6188 0FC339E5 */  jal   texCopyGdls
 /* 0EACBC 7F0B618C 00403025 */   move  $a2, $v0
 /* 0EACC0 7F0B6190 0FC2F131 */  jal   clear_light_fixturetable_in_room
 /* 0EACC4 7F0B6194 8FA40038 */   lw    $a0, 0x38($sp)
@@ -5482,7 +5482,7 @@ u32 sub_GAME_7F0B61DC(s32 roomID, u32 *data, s32 size)
         obLoadBGFileBytesAtOffset(levelinfotable[levelentry_index].bg_seg_filename,source, ptr_bgdata_room_fileposition_list[roomID].pos.z + -0xf000000,len);
         dest = bgDecompress(source,data);
         puVar1 = (size - dest) + data;
-        sub_GAME_7F0CE794(data,puVar1,dest);
+        texCopyGdls(data,puVar1,dest);
         puVar1 = process_microcode_sort_display_modes_expand_image_calls(puVar1,dest,data,NULL);
         if (dest < puVar1) {
             dest = puVar1;
@@ -5558,7 +5558,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADEC 7F0B62BC 01626823 */  subu  $t5, $t3, $v0
 /* 0EADF0 7F0B62C0 01B12821 */  addu  $a1, $t5, $s1
 /* 0EADF4 7F0B62C4 AFA50028 */  sw    $a1, 0x28($sp)
-/* 0EADF8 7F0B62C8 0FC339E5 */  jal   sub_GAME_7F0CE794
+/* 0EADF8 7F0B62C8 0FC339E5 */  jal   texCopyGdls
 /* 0EADFC 7F0B62CC 00403025 */   move  $a2, $v0
 /* 0EAE00 7F0B62D0 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EAE04 7F0B62D4 02002825 */  move  $a1, $s0
@@ -5646,7 +5646,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EADEC 7F0B62BC 01626823 */  subu  $t5, $t3, $v0
 /* 0EADF0 7F0B62C0 01B12821 */  addu  $a1, $t5, $s1
 /* 0EADF4 7F0B62C4 AFA50028 */  sw    $a1, 0x28($sp)
-/* 0EADF8 7F0B62C8 0FC339E5 */  jal   sub_GAME_7F0CE794
+/* 0EADF8 7F0B62C8 0FC339E5 */  jal   texCopyGdls
 /* 0EADFC 7F0B62CC 00403025 */   move  $a2, $v0
 /* 0EAE00 7F0B62D0 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EAE04 7F0B62D4 02002825 */  move  $a1, $s0

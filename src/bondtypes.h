@@ -4092,4 +4092,19 @@ struct damage_display_parent {
     struct damage_display_val items[2];
 };
 
+// is this the same as damage_display_val ?
+struct s_display_list_something
+{
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+    u8 unkD;
+    u8 unkE;
+    u8 unkF;
+};
+
 #endif

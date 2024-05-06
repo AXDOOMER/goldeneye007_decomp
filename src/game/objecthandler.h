@@ -2,6 +2,7 @@
 #define _OBJECTHANDLER_
 #include <ultra64.h>
 #include <bondtypes.h>
+#include <image.h>
 
 struct bondstruct_unk_animation_related {
     char* unk00;
@@ -163,7 +164,7 @@ void animInit(struct Model *, struct ModelFileHeader *, u32 *);
 void modelSetAnimFlipFunction(Model *, void *);
 void subcalcmatrices(ModelRenderData *, Model *);
 void instcalcmatrices(ModelRenderData *arg0, Model *arg1);
-void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, void *targetloc, s32 sizeleft, struct texpool * buffer);
+void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, u8* dst, s32 size, struct texpool * buffer);
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(ModelRenderData *arg0, struct Model *);
 void sub_GAME_7F06EFC4(struct Model *);
@@ -176,5 +177,9 @@ void modelApplyToggleRelations(Model* model, ModelNode* node);
 #ifndef VERSION_EU
 void return_null(void);
 #endif
+
+void modelIterateDisplayLists(ModelFileHeader *fileheader, ModelNode **nodeptr, Gfx **gdlptr);
+void modelNodeReplaceGdl(u32 arg0, ModelNode *node, Gfx *find, Gfx *replacement);
+
 
 #endif
