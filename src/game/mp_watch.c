@@ -36,14 +36,7 @@ u16 g_AwardNames[] = {
     getStringID(LMPMENU, MPMENU_STR_0C_SHORTESTINNINGS),getStringID(LMPMENU, MPMENU_STR_0D_LONGESTINNINGS),getStringID(LMPMENU, MPMENU_STR_0E_DOUBLEKILL),getStringID(LMPMENU, MPMENU_STR_0F_TRIPLEKILL),getStringID(LMPMENU, MPMENU_STR_10_QUADKILL)
 };
 
-//rodata
-/*8005BC20*/
-const char ascii_MP_watch_menu_percentd[] = "%d";
-const char ascii_MP_watch_menu_BLANK[] = "";
-const char ascii_MP_watch_menu_left_chevron[] = "<";
-const char ascii_MP_watch_menu_right_chevron[] = ">";
-const char ascii_pnum_KILLS[] = "%s%d %s";
-const char ascii_pnum_LOSSES[] = "%s%d %s";
+
 
 // rodata
 
@@ -712,6 +705,7 @@ void sub_GAME_7F0C2E80(void)
 }
 
 
+
 Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, TEXTCOLORS text_color) {
     
     s32 sp5C;
@@ -723,7 +717,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
     s16 viX;
     s32 viY;
 
-    sprintf(&sp48, &ascii_MP_watch_menu_percentd, arg3);
+    sprintf(&sp48, "%d", arg3);
 
     textMeasure(&sp50, &sp54, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0);
     
@@ -773,7 +767,13 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
 }
 
 
-
+//rodata
+/*8005BC20*/
+const char ascii_MP_watch_menu_BLANK[] = "";
+const char ascii_MP_watch_menu_left_chevron[] = "<";
+const char ascii_MP_watch_menu_right_chevron[] = ">";
+const char ascii_pnum_KILLS[] = "%s%d %s";
+const char ascii_pnum_LOSSES[] = "%s%d %s";
 
 
 #ifdef NONMATCHING
