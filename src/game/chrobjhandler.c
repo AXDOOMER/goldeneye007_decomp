@@ -65,30 +65,30 @@
 
 
 
-s32 alarm_timer = 0;
-s32 *ptr_alarm_sfx = 0;
-f32 toxic_gas_sound_timer = 0.0;
-s32 activate_gas_sound_timer = FALSE;
-coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
-s32 D_80030ADC = 0;
-f32 D_80030AE0 = 0.0f;
-ALSoundState *ptr_gas_sound = NULL;
-s32 clock_drawn_flag = 1;
-s32 clock_enable = 0;
-f32 clock_time = 0;
-s32 g_RemoteMineOwnerTriggerFlag = 0;
-s32 g_NextWeaponSlot = 0; // numbers between 0 and 30
-s32 g_NextHatSlot = 0;
-ObjectRecord *g_LevelLoadPropSwitch = NULL;
-LockDoorRecord *g_LevelLoadPropLockDoor = NULL;
-ObjectRecord *g_LevelLoadPropSafeItem = NULL;
-struct PropRecord * D_80030B0C = NULL;
-s32 bodypartshot = 0xFFFFFFFF;
-f32 F_80030B14 = 1.0;
-f32 F_80030B18 = 1.0;
-f32 g_AutogunPendingDamageTick = 1.0;
-f32 g_AutogunDamageScalar = 1.0;
-f32 F_80030B24 = 1.0;
+/* 0x80030AC8 */ s32 alarm_timer = 0;
+/* 0x80030ACC */ s32 *ptr_alarm_sfx = 0;
+/* 0x80030AD0 */ f32 toxic_gas_sound_timer = 0.0;
+/* 0x80030AD4 */ s32 activate_gas_sound_timer = FALSE;
+/* 0x80030AD8 */ coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
+/* 0x80030ADC */ s32 D_80030ADC = 0;
+/* 0x80030AE0 */ f32 D_80030AE0 = 0.0f;
+/* 0x80030AE4 */ ALSoundState *ptr_gas_sound = NULL;
+/* 0x80030AE8 */ s32 clock_drawn_flag = 1;
+/* 0x80030AEC */ s32 clock_enable = 0;
+/* 0x80030AF0 */ f32 clock_time = 0;
+/* 0x80030AF4 */ s32 g_RemoteMineOwnerTriggerFlag = 0;
+/* 0x80030AF8 */ s32 g_NextWeaponSlot = 0; // numbers between 0 and 30
+/* 0x80030AFC */ s32 g_NextHatSlot = 0;
+/* 0x80030B00 */ ObjectRecord *g_LevelLoadPropSwitch = NULL;
+/* 0x80030B04 */ LockDoorRecord *g_LevelLoadPropLockDoor = NULL;
+/* 0x80030B08 */ ObjectRecord *g_LevelLoadPropSafeItem = NULL;
+/* 0x80030B0C */ struct PropRecord * D_80030B0C = NULL;
+/* 0x80030B10 */ s32 bodypartshot = 0xFFFFFFFF;
+/* 0x80030B14 */ f32 F_80030B14 = 1.0;
+/* 0x80030B18 */ f32 F_80030B18 = 1.0;
+/* 0x80030B1C */ f32 g_AutogunPendingDamageTick = 1.0;
+/* 0x80030B20 */ f32 g_AutogunDamageScalar = 1.0;
+/* 0x80030B24 */ f32 F_80030B24 = 1.0;
 
 /*
 * Set on level load.
