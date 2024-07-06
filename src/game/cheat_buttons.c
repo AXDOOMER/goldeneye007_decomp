@@ -22,10 +22,6 @@
 //#include "chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss
 
-// This shows up a lot but not quite sure what it represents.
-#define CHEAT_20    20
-
-
 
 u8 g_CheatPlayerTextRelated[CHEAT_INVALID + 1];
 

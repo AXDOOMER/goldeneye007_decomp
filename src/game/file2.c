@@ -7,7 +7,7 @@
 #include "file.h"
 #include "file2.h"
 #include "front.h"
-
+#include "cheat_buttons.h"
 
 
 // bss
@@ -389,7 +389,7 @@ bool fileGetIsCheatUnlocked(save_data *save, s32 cheat)
 {
     s32 bits;
 
-    if (cheat >= 0 && cheat < SP_LEVEL_MAX)
+    if (cheat >= 0 && cheat < CHEAT_20)
     {
         bits = save->unlocked_cheats_1 | save->unlocked_cheats_3 << 0x18 | save->unlocked_cheats_3 << 0x10 | save->unlocked_cheats_2 << 8;
         return ((1 << cheat) & bits) != 0;
@@ -409,7 +409,7 @@ void sub_GAME_7F01DD74(save_data *save, s32 cheat)
     u32 i;
     u32 temp;
 
-    if (cheat >= 0 && cheat < SP_LEVEL_MAX)
+    if (cheat >= 0 && cheat < CHEAT_20)
     {
         temp = 1 << (cheat);
 
@@ -834,7 +834,7 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
     save_data *save;
     save_data new_save;
 
-    if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < SP_LEVEL_MAX))
+    if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < CHEAT_20))
     {
         save = fileGetSaveForFoldernum(foldernum);
 
