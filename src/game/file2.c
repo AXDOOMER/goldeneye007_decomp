@@ -248,19 +248,19 @@ s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
 
         switch(7 - (offset & 7)) //bitmask
         {
-            case 7: //no offset
+            case 7: //no offset agent
                 // first 10 bits 8 + 2                    1111 1111                                      1100 0000
                 time = ((save->times[index] & 0xFF) << 2) | ((save->times[index + 1] & 0xc0) >> 6);
                 break;
-            case 5: //offset 2
+            case 5: //offset 2 secret agent
                 // next 10 bits 6 + 4                     0011 1111                                      1111 0000
                 time =  ((save->times[index] & 0x3f) << 4) | ((save->times[index + 1] & 0xf0) >> 4);
                 break;
-            case 3: //offset 4
+            case 3: //offset 4 00 agent
                 // next 10 bits 4 + 6                     0000 1111                                      1111 1100
                 time =  ((save->times[index] & 0xf) << 6) | ((save->times[index + 1] & 0xfc) >> 2);
                 break;
-            case 1: //offset 6
+            case 1: //offset 6 007
                 // next 10 bits 2 + 8                     0000 0011                                      1111 1111
                 time = ((save->times[index] & 0x3)  << 8) | ((save->times[index + 1] & 0xFFF));
                 break;
@@ -305,25 +305,25 @@ void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFF
 
         switch(7 - (offset & 7)) //bitmask
         {
-            case 7: //no offset 4 8 12 etc
+            case 7: //no offset 4 8 12 etc agent
                 save->times[index] &= 0xff00;
                 save->times[index + 1] &= 0xff3f;
                 save->times[index] |= (newtime >> 2) & 0xff;
                 save->times[index + 1] |= (newtime << 6) & 0xc0;
                 break;
-            case 5: //first offset 5 9 13 etc
+            case 5: //first offset 5 9 13 etc secret agent
                 save->times[index] &= 0xffc0;
                 save->times[index + 1] &= 0xff0f;
                 save->times[index] |= ((newtime >> 4) & 0x3f);
                 save->times[index + 1] |= (newtime << 4) & 0xf0;
                 break;
-            case 3: //second offset 6 10 14 etc
+            case 3: //second offset 6 10 14 etc 00 agent
                 save->times[index] &= 0xfff0;
                 save->times[index + 1] &= 0xff03;
                 save->times[index] |= ((newtime >> 6) & 0xf);
                 save->times[index + 1] |= (newtime << 2) & 0xfC;
                 break;
-            case 1: //third offset 7 11 15 etc
+            case 1: //third offset 7 11 15 etc 007
                 save->times[index] &= 0xfffc;
                 save->times[index + 1] &= 0xff00;
                 save->times[index] |= ((newtime >> 8) & 3);
