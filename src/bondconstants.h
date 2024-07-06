@@ -908,7 +908,7 @@ typedef enum CHEAT_IDS
     CHEAT_INVINCIBILITY,
     CHEAT_ALLGUNS,
     CHEAT_MAXAMMO,
-    CHEAT_DEBUG_RETURN_SAVED_RA, /* unverified */
+    CHEAT_DEBUG_UNK5, /* unverified */
     CHEAT_DEACTIVATE_INVINCIBILITY,
     CHEAT_LINEMODE,
     CHEAT_2X_HEALTH,
@@ -925,7 +925,7 @@ typedef enum CHEAT_IDS
     CHEAT_GOLDEN_GUN,
     CHEAT_SILVER_PP7,
     CHEAT_GOLD_PP7,
-    CHEAT_INVISIBILITY_MP,      /* unverified */
+    CHEAT_BONDPHASE,
     CHEAT_NO_RADAR_MP,
     CHEAT_TURBO_MODE,
     CHEAT_DEBUG_POS,
@@ -2483,11 +2483,11 @@ enum CCRMLUT
         BODY_Russian_Infantry,
         BODY_Janus_Special_Forces,
         BODY_Brosnan_Tuxedo,
-        /*
+        #ifdef ALL_BONDS
         BODY_Connery_Tuxedo,
         BODY_Dalton_Tuxedo,
         BODY_Moore_Tuxedo,
-        */
+        #endif
         BODY_Boris,
         BODY_Ourumov,
         BODY_Trevelyan_Janus,
@@ -2612,11 +2612,11 @@ enum CCRMLUT
         HEAD_Male_Brosnan_Jungle,
         HEAD_Male_Brosnan_Parka,
         HEAD_Male_Brosnan_Tuxedo,
-        /*
+        #ifdef ALL_BONDS
         HEAD_Male_Connery_Tuxedo,
         HEAD_Male_Dalton_Tuxedo,
         HEAD_Male_Moore_Tuxedo,
-        */
+        #endif
         HEAD_Natalya_Jungle_Fatigues,
         HEAD_END,
         /*The following are some maybe helpfull counts (maybe GE doesnt need them, but thought Id ad while here)*/

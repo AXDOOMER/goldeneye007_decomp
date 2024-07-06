@@ -179,12 +179,12 @@ u32 fileGetSelectedBond(save_data *folder)
  * Set the selected bond save flag
  *
  * @param folder
- * @param arg1
+ * @param bond
  */
-void fileSetSelectedBond(save_data *folder, s32 arg1)
+void fileSetSelectedBond(save_data *folder, s32 bond)
 {
     folder->completion_bitflags &= ~0x60;
-    folder->completion_bitflags |= ((arg1 << 5) & 0x60);
+    folder->completion_bitflags |= ((bond << 5) & 0x60);
 }
 
 /**
@@ -1072,8 +1072,11 @@ void fileSetSelectedBondTofolder(s32 folder, s32 bond)
     {
         return;
     }
-
+#ifdef ALL_BONDS
+    save_selected_bond[folder] = bond;
+#else
     save_selected_bond[folder] = 0;
+#endif
 }
 
 /**
@@ -1217,49 +1220,49 @@ void fileSaveSettingsForFolder(save_data *save)
 
     if (get_cur_player_look_vertical_inverted() != 0)
     {
-        bits = 1;
+        bits = OPTION_INVERTLOOK;
     }
 
     if (cur_player_get_autoaim() != 0)
     {
-        bits |= 2;
+        bits |= OPTION_AUTOAIM;
     }
 
     if (cur_player_get_aim_control() != 0)
     {
-        bits |= 4;
+        bits |= OPTION_AIMCONTROL;
     }
 
     if (cur_player_get_sight_onscreen_control() != 0)
     {
-        bits |= 8;
+        bits |= OPTION_SIGHTONSCREEN;
     }
 
     if (cur_player_get_lookahead() != 0)
     {
-        bits |= 0x10;
+        bits |= OPTION_LOOKAHEAD;
     }
 
     if (cur_player_get_ammo_onscreen_setting() != 0)
     {
-        bits |= 0x20;
+        bits |= OPTION_DISPLAYAMMO;
     }
 
     if (cur_player_get_screen_setting() == 1)
     {
-        bits |= 0x40;
+        bits |= OPTION_SCREENWIDE;
     }
     else if (cur_player_get_screen_setting() == 2)
     {
-        bits |= 0x800;
+        bits |= OPTION_SCREENCINEMA;
     }
 
     if (get_screen_ratio() != SCREEN_RATIO_NORMAL)
     {
-        bits |= 0x80;
+        bits |= OPTION_SCREENRATIO;
     }
 
-    temp = ((u16) (cur_player_get_control_type() << 8)) & 0x700;
+    temp = ((u16) (cur_player_get_control_type() << 8)) & OPTION_CONTROLTYPE;
     save->options = bits | temp;
 }
 
@@ -1284,34 +1287,34 @@ void fileLoadSettingsForFolder(u32 folder)
 
         if (getPlayerCount() == 1)
         {
-            cur_player_set_control_type(((s32) (options & 0x700) >> 8) & 0xFFFF);
+            cur_player_set_control_type(((s32) (options & OPTION_CONTROLTYPE) >> 8) & 0xFFFF);
         }
         else
         {
-            cur_player_set_control_type(0);
+            cur_player_set_control_type(CONTROLLER_CONFIG_HONEY);
         }
 
-        set_cur_player_look_vertical_inverted((options & 1) != 0);
-        cur_player_set_autoaim((options & 2) != 0);
-        cur_player_set_aim_control((options & 4) != 0);
-        cur_player_set_sight_onscreen_control((options & 8) != 0);
-        cur_player_set_lookahead((options & 0x10) != 0);
-        cur_player_set_ammo_onscreen_setting((options & 0x20) != 0);
+        set_cur_player_look_vertical_inverted((options & OPTION_INVERTLOOK) != 0);
+        cur_player_set_autoaim((options & OPTION_AUTOAIM) != 0);
+        cur_player_set_aim_control((options & OPTION_AIMCONTROL) != 0);
+        cur_player_set_sight_onscreen_control((options & OPTION_SIGHTONSCREEN) != 0);
+        cur_player_set_lookahead((options & OPTION_LOOKAHEAD) != 0);
+        cur_player_set_ammo_onscreen_setting((options & OPTION_DISPLAYAMMO) != 0);
 
-        if (options & 0x800)
+        if (options & OPTION_SCREENCINEMA)
         {
-            cur_player_set_screen_setting(2);
+            cur_player_set_screen_setting(SCREEN_SIZE_CINEMA);
         }
-        else if (options & 0x40)
+        else if (options & OPTION_SCREENWIDE)
         {
-            cur_player_set_screen_setting(1);
+            cur_player_set_screen_setting(SCREEN_SIZE_WIDESCREEN);
         }
         else
         {
-            cur_player_set_screen_setting(0);
+            cur_player_set_screen_setting(SCREEN_SIZE_FULLSCREEN);
         }
 
-        set_screen_ratio((options & 0x80) != 0);
+        set_screen_ratio((options & OPTION_SCREENRATIO) != 0);
     }
 }
 

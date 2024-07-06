@@ -992,14 +992,14 @@ s32 frontCheckIfCheatIsUnlocked(s32 cheat)
     {
         case CHEAT_EXTRA_MP_CHARS:
         case CHEAT_MAXAMMO:
-        case CHEAT_DEBUG_RETURN_SAVED_RA:
+        case CHEAT_DEBUG_UNK5:
         case CHEAT_DEACTIVATE_INVINCIBILITY:
         case CHEAT_LINEMODE:
         case CHEAT_2X_HEALTH:
         case CHEAT_2X_ARMOR:
         case CHEAT_EXTRA_WEAPONS:
         case CHEAT_10X_HEALTH:
-        case CHEAT_INVISIBILITY_MP:
+        case CHEAT_BONDPHASE:
         case CHEAT_DEBUG_POS:
         case CHEAT_UNLOCK_PAINTBALL:
         case CHEAT_UNLOCK_INVINCIBLE:
@@ -1114,7 +1114,6 @@ s32 frontCheckIfCheatIsUnlocked(s32 cheat)
 
         default:
             do {
-                /* WARNING: Do nothing block with infinite loop */
             } while( 1 );
         }
 }

@@ -142,7 +142,7 @@ u16 mBtnCheatInvisibility[] = {
              R_TRIG | R_JPAD
 };
 //D:8003F4D0
-u16 mBtnCheatInvisibilityMulti[] = {
+u16 mBtnCheatBondPhase[] = {
     L_TRIG |          U_CBUTTONS ,
     L_TRIG | R_TRIG | L_CBUTTONS  ,
              R_TRIG | U_JPAD,
@@ -688,7 +688,7 @@ CheatInfo g_CheatInfo[] = {
     {           CHEAT_INVINCIBILITY,  0xA, 0, 0, mBtnCheatInvincibility,       getStringID(LMISC, MISC_STR_00_INVINCIBLE       ), 0,  /* 0x06 */                                                         CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
     {                 CHEAT_ALLGUNS,  0xA, 0, 0, mBtnCheatAllGuns,             getStringID(LMISC, MISC_STR_01_ALLGUNS          ), 0,  /* 0x02 */                                                                             CHEAT_MASK_SPGAME},
     {                 CHEAT_MAXAMMO,  0xA, 0, 0, mBtnCheatMaxAmmo,                                                             0, 0,  /* 0x16 */                                         CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
-    {   CHEAT_DEBUG_RETURN_SAVED_RA,  0xA, 0, 0, mBtnCheatInvalid,                                                             0, 0,  /* 0x16 */                                         CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
+    {              CHEAT_DEBUG_UNK5,  0xA, 0, 0, mBtnCheatInvalid,           /*getStringID(LMISC, MISC_STR_UNK5             )*/0, 0,  /* 0x16 */                                         CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
     {CHEAT_DEACTIVATE_INVINCIBILITY,  0xA, 0, 0, mBtnCheatDeactivateInvincibilityMulti,                                        0, 0,  /* 0x34 */                     CHEAT_MASK_GLOBAL | CHEAT_MASK_16 | CHEAT_MASK_MPGAME},
     {                CHEAT_LINEMODE,  0xA, 0, 0, mBtnCheatLineMode,            getStringID(LMISC, MISC_STR_37_LINEMODE         ), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL |                 CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
     {               CHEAT_2X_HEALTH,    0, 0, 0,                0,                                                             0, 0,  /* 0x16 */                                         CHEAT_MASK_16 | CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
@@ -705,7 +705,7 @@ CheatInfo g_CheatInfo[] = {
     {              CHEAT_GOLDEN_GUN,    0, 0, 0,                0,             getStringID(LMISC, MISC_STR_0C_GOLDENGUN        ), 0,  /* 0x12 */                                         CHEAT_MASK_16 |                     CHEAT_MASK_SPGAME},
     {              CHEAT_SILVER_PP7,    0, 0, 0,                0,             getStringID(LMISC, MISC_STR_0D_SILVERPPK        ), 0,  /* 0x12 */                                         CHEAT_MASK_16 |                     CHEAT_MASK_SPGAME},
     {                CHEAT_GOLD_PP7,    0, 0, 0,                0,             getStringID(LMISC, MISC_STR_0E_GOLDPPK          ), 0,  /* 0x12 */                                         CHEAT_MASK_16 |                     CHEAT_MASK_SPGAME},
-    {         CHEAT_INVISIBILITY_MP,  0xA, 0, 0, mBtnCheatInvisibilityMulti,                                                   0, 0,  /* 0x12 */                                                         CHEAT_MASK_MPGAME},
+    {               CHEAT_BONDPHASE,  0xA, 0, 0, mBtnCheatBondPhase,                                                           0, 0,  /* 0x12 */                                                         CHEAT_MASK_MPGAME},
     {             CHEAT_NO_RADAR_MP,    0, 0, 0,                0,             getStringID(LMISC, MISC_STR_43_NORADAR          ), 0,  /* 0x64 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL |                 CHEAT_MASK_MPGAME},
     {              CHEAT_TURBO_MODE,    0, 0, 0,                0,             getStringID(LMISC, MISC_STR_40_TURBOMODE        ), 0,  /* 0x66 */ CHEAT_MASK_TOGGLE | CHEAT_MASK_GLOBAL |                 CHEAT_MASK_MPGAME | CHEAT_MASK_SPGAME},
     {               CHEAT_DEBUG_POS,    0, 0, 0,                0,                                                             0, 0,  /* 0x20 */                     CHEAT_MASK_GLOBAL},
@@ -1222,7 +1222,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             }
             return;
 
-        case CHEAT_INVISIBILITY_MP: /* unknown */
+        case CHEAT_BONDPHASE:
             currentPlayerStartChrFade(300.0f, 0.05f);
             return;
 
@@ -1234,7 +1234,11 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                 return;
             }
             return;
-
+        /* easter egg leftover, original usage of string mentioned in an interview
+        case CHEAT_NO_RADAR_MP:
+            HUDMESSAGEBOTTOM((char *)langGet(getStringID(LMISC, MISC_STR_1C_HAPPYNOWKARL_LF)));
+            return;
+        //*/
         case CHEAT_DEBUG_POS:
             if (!get_debug_testingmanpos_flag())
             {
@@ -1507,7 +1511,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
             HUDMESSAGEBOTTOM((char *)langGet(getStringID(LMISC, MISC_STR_25_PAINTBALLMODEOFF_LF)));
             return;
 
-        case CHEAT_INVISIBILITY_MP: /* multiplayer? but the function call is for "fade"? */
+        case CHEAT_BONDPHASE:
             currentPlayerStartChrFade(300.0f, 1.0f);
             return;
 
@@ -1530,7 +1534,7 @@ void cheatButtonHandleCheatsTurnedOff(CHEAT_ID cheat_id)
 
         case CHEAT_EXTRA_MP_CHARS:
         case CHEAT_MAXAMMO:
-        case CHEAT_DEBUG_RETURN_SAVED_RA:
+        case CHEAT_DEBUG_UNK5:
         case CHEAT_DEACTIVATE_INVINCIBILITY:
         case CHEAT_2X_HEALTH:
         case CHEAT_2X_ARMOR:
