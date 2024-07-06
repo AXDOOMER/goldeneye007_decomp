@@ -141,12 +141,12 @@ void fileSetSaveFoldernum(save_data *save, u32 folder)
 }
 
 /**
- * Set save flag 0x18
+ * Get save flag 0x18
  *
  * @param folder
  * @return u32
  */
-u32 fileSetSaveFlag_0x18(save_data *folder)
+u32 fileGetSaveFlag_0x18(save_data *folder)
 {
   return (folder->completion_bitflags & 0x18) >> 3;
 }
@@ -572,11 +572,11 @@ void fileValidateSaves(void)
                     if (jif < 0) // on first 80 do this
                     {
                         jif = j;
-                        flag18 = fileSetSaveFlag_0x18(&saves[j]);
+                        flag18 = fileGetSaveFlag_0x18(&saves[j]);
                     }
                     else
                     {
-                        flag18_2 = fileSetSaveFlag_0x18(&saves[j]);
+                        flag18_2 = fileGetSaveFlag_0x18(&saves[j]);
 
                         if (flag18_2 == (flag18 + 1) % 4)
                         {
@@ -765,7 +765,7 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
 
         if (save1)
         {
-            otherfolder = (s32)( fileSetSaveFlag_0x18(save1) + 1) % 4;
+            otherfolder = (s32)( fileGetSaveFlag_0x18(save1) + 1) % 4;
         }
 
         fileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
