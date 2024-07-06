@@ -1306,7 +1306,6 @@ s32 mpwatchShouldDisplayRank(s32 param_1)
       return param_1 ? 0 : 1;
     default:
       do {
-        /* WARNING: Do nothing block with infinite loop */
       } while(1);
   }
 }
@@ -1329,7 +1328,6 @@ s32 mpwatchShouldDisplayScore(s32 param_1)
       break;
     default:
       do {
-        /* WARNING: Do nothing block with infinite loop */             
       } while(1);
   }
 }
