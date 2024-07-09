@@ -27,29 +27,29 @@ u32 dword_CODE_bss_80069B60;
 s32 save_selected_bond[] = {0,0,0,0};
 
 //D:8002C520
-save_data D_8002C520 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C520 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C580
 // Default Save
-save_data D_8002C580 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C580 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C5E0
-save_data D_8002C5E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C5E0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C640
 smallSave blankSmallSave = {0, 0, 0x42};
 
 //D:8002C660
-save_data D_8002C660 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C660 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C6C0
-save_data D_8002C6C0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C6C0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C720
-save_data D_8002C720 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C720 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C780
-save_data D_8002C780 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C780 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C7E0
-save_data D_8002C7E0 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C7E0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C840
-save_data D_8002C840 = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data D_8002C840 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:8002C8A0
-save_data blank_eeprom = {0, 0, 0x80, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+save_data blank_eeprom = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 /**
@@ -125,7 +125,7 @@ void fileResetSave(save_data *save)
  */
 u32 fileGetSaveFolder(save_data *save)
 {
-  return save->completion_bitflags & 7;
+  return save->completion_bitflags & SAVEFLAG_FOLDER;
 }
 
 /**
@@ -136,8 +136,8 @@ u32 fileGetSaveFolder(save_data *save)
  */
 void fileSetSaveFoldernum(save_data *save, u32 folder)
 {
-    save->completion_bitflags &= ~7;
-    save->completion_bitflags |= folder & 7;
+    save->completion_bitflags &= ~SAVEFLAG_FOLDER;
+    save->completion_bitflags |= folder & SAVEFLAG_FOLDER;
 }
 
 /**
@@ -148,7 +148,7 @@ void fileSetSaveFoldernum(save_data *save, u32 folder)
  */
 u32 fileGetSaveFlag_0x18(save_data *folder)
 {
-  return (folder->completion_bitflags & 0x18) >> 3;
+  return (folder->completion_bitflags & SAVEFLAG_0x18) >> 3;
 }
 
 /**
@@ -159,8 +159,8 @@ u32 fileGetSaveFlag_0x18(save_data *folder)
  */
 void fileResetSaveFlag_0x18(save_data *folder, s32 arg1)
 {
-    folder->completion_bitflags &= ~0x18;
-    folder->completion_bitflags |= ((arg1 * 8) & 0x18);
+    folder->completion_bitflags &= ~SAVEFLAG_0x18;
+    folder->completion_bitflags |= ((arg1 * 8) & SAVEFLAG_0x18);
 }
 
 /**
@@ -171,7 +171,7 @@ void fileResetSaveFlag_0x18(save_data *folder, s32 arg1)
  */
 u32 fileGetSelectedBond(save_data *folder)
 {
-  return (folder->completion_bitflags & 0x60) >> 5;
+  return (folder->completion_bitflags & SAVEFLAG_BOND) >> 5;
 }
 
 /**
@@ -182,8 +182,8 @@ u32 fileGetSelectedBond(save_data *folder)
  */
 void fileSetSelectedBond(save_data *folder, s32 bond)
 {
-    folder->completion_bitflags &= ~0x60;
-    folder->completion_bitflags |= ((bond << 5) & 0x60);
+    folder->completion_bitflags &= ~SAVEFLAG_BOND;
+    folder->completion_bitflags |= ((bond << 5) & SAVEFLAG_BOND);
 }
 
 /**
@@ -194,7 +194,7 @@ void fileSetSelectedBond(save_data *folder, s32 bond)
  */
 bool fileGetSaveFlag_0x80(save_data *folder)
 {
-  return ((folder->completion_bitflags & 0x80) != 0);
+  return ((folder->completion_bitflags & SAVEFLAG_DORESET) != 0);
 }
 
 /**
@@ -208,11 +208,11 @@ void fileSetSaveFlag_0x80(save_data *folder, bool enable)
 {
     if (enable)
     {
-        folder->completion_bitflags |= 0x80;
+        folder->completion_bitflags |= SAVEFLAG_DORESET;
     }
     else
     {
-        folder->completion_bitflags &= ~0x80;
+        folder->completion_bitflags &= ~SAVEFLAG_DORESET;
     }
 }
 
@@ -565,7 +565,7 @@ void fileValidateSaves(void)
             // for each save
             for (j = 0; j < 5; j++)
             {
-                // if save = folder and 80 set
+                // if save = folder and 80 not set
                 if (!fileGetSaveFlag_0x80(&saves[j]) &&
                     fileGetSaveFolder(&saves[j]) == i)
                 {
@@ -592,7 +592,7 @@ void fileValidateSaves(void)
                 }
             }
 
-            // 80 was not set
+            // 80 was  set
             if (jif < 0)
             {
                 sub_GAME_7F01DEB4(i);

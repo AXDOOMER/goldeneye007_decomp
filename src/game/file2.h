@@ -22,6 +22,10 @@
 
 #define DEFAULT_OPTIONS (OPTION_AUTOAIM | OPTION_SIGHTONSCREEN | OPTION_LOOKAHEAD | OPTION_DISPLAYAMMO)
 
+#define SAVEFLAG_FOLDER 0x7
+#define SAVEFLAG_0x18 0x18
+#define SAVEFLAG_BOND 0x60
+#define SAVEFLAG_DORESET 0x80
 
 u8 fileGetBondForFolder(u32 folder);
 void fileValidateSaves(void);
