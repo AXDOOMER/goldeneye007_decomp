@@ -24,32 +24,13 @@ u32 dword_CODE_bss_80069B60;
 
 //data
 //D:8002C510
-s32 save_selected_bond[] = {0,0,0,0};
+#ifdef ALL_BONDS
+s32 save_selected_bond[] = {BOND_BROSNAN,BOND_CONNERY,BOND_DALTON,BOND_MOORE};
+#else
+s32 save_selected_bond[] = {BOND_BROSNAN,BOND_BROSNAN,BOND_BROSNAN,BOND_BROSNAN};
+#endif
 
-//D:8002C520
-save_data D_8002C520 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C580
-// Default Save
-save_data D_8002C580 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C5E0
-save_data D_8002C5E0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C640
-smallSave blankSmallSave = {0, 0, 0x42};
 
-//D:8002C660
-save_data D_8002C660 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C6C0
-save_data D_8002C6C0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C720
-save_data D_8002C720 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C780
-save_data D_8002C780 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C7E0
-save_data D_8002C7E0 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C840
-save_data D_8002C840 = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//D:8002C8A0
-save_data blank_eeprom = {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 /**
@@ -68,7 +49,7 @@ s32 fileGamePakProbe(void)
  */
 void fileResetRamRomSave(void)
 {
-    save_data new_save = D_8002C520;
+    save_data new_save = BLANKSAVEDATA;
 
     saves[5] = new_save;
 }
@@ -80,7 +61,7 @@ void fileResetRamRomSave(void)
  */
 void fileWriteSmallSave(smallSave *save)
 {
-    if (fileGamePakProbe() != 0)
+    if (fileGamePakProbe())
     {
         fileGenerateCRC(&save->unk[0], &save->unk[24], save);
         joyGamePakLongWrite(0, save, sizeof(smallSave));
@@ -96,7 +77,7 @@ void fileWriteSave(save_data *save)
 {
     if (save >= &saves[0] && save < &saves[5])
     {
-        if ( fileGamePakProbe() != 0)
+        if ( fileGamePakProbe())
         {
             fileGenerateCRC(&save->completion_bitflags, save + 1, save);
             joyGamePakLongWrite((((u32)((save - &saves[0]) * 0x60) >> 3) + 4), save, sizeof(save_data));
@@ -111,7 +92,7 @@ void fileWriteSave(save_data *save)
  */
 void fileResetSave(save_data *save)
 {
-    save_data new_save  = D_8002C580;
+    save_data new_save  = BLANKSAVEDATA;
 
     *save = new_save;
     fileWriteSave(save);
@@ -146,9 +127,9 @@ void fileSetSaveFoldernum(save_data *save, u32 folder)
  * @param folder
  * @return u32
  */
-u32 fileGetSaveFlag_0x18(save_data *folder)
+u32 fileGetSaveFlagSlot(save_data *folder)
 {
-  return (folder->completion_bitflags & SAVEFLAG_0x18) >> 3;
+  return (folder->completion_bitflags & SAVEFLAG_SLOT) >> 3;
 }
 
 /**
@@ -157,10 +138,10 @@ u32 fileGetSaveFlag_0x18(save_data *folder)
  * @param folder
  * @param arg1
  */
-void fileResetSaveFlag_0x18(save_data *folder, s32 arg1)
+void fileResetSaveFlagSlot(save_data *folder, s32 slot)
 {
-    folder->completion_bitflags &= ~SAVEFLAG_0x18;
-    folder->completion_bitflags |= ((arg1 * 8) & SAVEFLAG_0x18);
+    folder->completion_bitflags &= ~SAVEFLAG_SLOT;
+    folder->completion_bitflags |= ((slot * 8) & SAVEFLAG_SLOT);
 }
 
 /**
@@ -192,9 +173,9 @@ void fileSetSelectedBond(save_data *folder, s32 bond)
  * @param folder
  * @return TRUE/FALSE
  */
-bool fileGetSaveFlag_0x80(save_data *folder)
+bool fileGetSaveFlagDoReset(save_data *folder)
 {
-  return ((folder->completion_bitflags & SAVEFLAG_DORESET) != 0);
+  return ((folder->completion_bitflags & SAVEFLAG_DORESET) != FALSE);
 }
 
 /**
@@ -204,7 +185,7 @@ bool fileGetSaveFlag_0x80(save_data *folder)
  * @param folder: folder to enable or disable flag
  * @param set: Enable flag if TRUE, Disable flag if FALSE
  */
-void fileSetSaveFlag_0x80(save_data *folder, bool enable)
+void fileSetSaveFlagDoReset(save_data *folder, bool enable)
 {
     if (enable)
     {
@@ -220,11 +201,11 @@ void fileSetSaveFlag_0x80(save_data *folder, bool enable)
  * Get completion time for stage at difficulty
  *
  * @param save
- * @param stagenum
+ * @param levelid
  * @param difficulty
  * @return best time for stage at difficulty
  */
-s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum, DIFFICULTY difficulty)
+s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty)
 {
     s32 offset;
     LEVEL_SOLO_SEQUENCE max_level;
@@ -232,7 +213,7 @@ s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
     s32 index;
 
     max_level = SP_LEVEL_MAX;
-    if ((stagenum >= SP_LEVEL_DAM) && (stagenum < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
+    if ((levelid >= SP_LEVEL_DAM) && (levelid < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
     {
         if (difficulty == DIFFICULTY_007)
         {
@@ -243,7 +224,7 @@ s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
             return 0;
         }
 
-        offset = ((difficulty * max_level) + stagenum) * 10; //startbit
+        offset = ((difficulty * max_level) + levelid) * 10; //startbit
         index = (offset >> 3);
 
         switch(7 - (offset & 7)) //bitmask
@@ -281,18 +262,18 @@ s32 fileGetSaveStageDifficultyTime(save_data* save, LEVEL_SOLO_SEQUENCE stagenum
  * Set completion time for stage at difficulty
  *
  * @param save
- * @param stage
+ * @param levelid
  * @param difficulty
  * @param newtime
  */
-void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty, s32 newtime)
 {
     s32 offset;
     s32 index;
-    u32 max_level;
+    LEVEL_SOLO_SEQUENCE max_level;
 
     max_level = SP_LEVEL_MAX;
-    if ((stage >= 0) && (stage < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_007))
+    if ((levelid >= SP_LEVEL_DAM) && (levelid < SP_LEVEL_MAX ) && (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_007))
     {
         if (newtime == 0) {
             newtime = 0x4f;
@@ -300,7 +281,7 @@ void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFF
             newtime = 0x3ff;
         }
 
-        offset = ((difficulty * max_level) + stage) * 10; //startbit
+        offset = ((difficulty * max_level) + levelid) * 10; //startbit
         index = (offset >> 3);
 
         switch(7 - (offset & 7)) //bitmask
@@ -347,9 +328,9 @@ void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE stage, DIFF
  * @param difficulty
  * @return is stage at diffiuclty completed
  */
-bool fileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFFICULTY difficulty)
+bool fileGetSaveStageCompletedForDifficulty(save_data *folder, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty)
 {
-    if ((levelid >= 0) && (levelid < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    if ((levelid >= SP_LEVEL_DAM) && (levelid < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
     {
         return fileGetSaveStageDifficultyTime(folder, levelid, difficulty) != 0;
     }
@@ -365,15 +346,15 @@ bool fileGetSaveStageCompletedForDifficulty(save_data *folder, s32 levelid, DIFF
  * @param difficulty
  * @param arg4
  */
-void fileCheckSaveStageDifficultyTime(save_data *folder, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
+void fileCheckSaveStageDifficultyTime(save_data *folder, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty, s32 newtime)
 {
-    if ((stage >= 0) && (stage < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
+    if ((levelid >= SP_LEVEL_DAM) && (levelid < SP_LEVEL_MAX) && (difficulty >= DIFFICULTY_AGENT) && (difficulty <= DIFFICULTY_007))
     {
-        s32 time = fileGetSaveStageDifficultyTime(folder, stage, difficulty);
+        s32 time = fileGetSaveStageDifficultyTime(folder, levelid, difficulty);
 
         if ((time == 0) || (newtime < time))
         {
-            fileSetDifficultyStageTime(folder, stage, difficulty, newtime);
+            fileSetDifficultyStageTime(folder, levelid, difficulty, newtime);
         }
     }
 }
@@ -434,7 +415,7 @@ save_data * fileGetSaveForFoldernum(u32 folder)
 
     for (i = 0; i < 5; i++)
     {
-        if ( fileGetSaveFlag_0x80(&saves[i]) == 0 &&
+        if ( fileGetSaveFlagDoReset(&saves[i]) == FALSE &&
                 fileGetSaveFolder(&saves[i]) == folder)
         {
             return &saves[i];
@@ -454,13 +435,13 @@ save_data * fileGetSaveForFoldernum(u32 folder)
  *
  * @return s32
  */
-s32 fileGetSaveFlag_0x80_any_folder(void)
+s32 fileGetSaveFlagDoReset_any_folder(void)
 {
     s32 i;
 
     for(i = 0; i < 5; i++)
     {
-        if ( fileGetSaveFlag_0x80(&saves[i]))
+        if ( fileGetSaveFlagDoReset(&saves[i]))
         {
             return i;
         }
@@ -478,17 +459,16 @@ s32 fileGetSaveFlag_0x80_any_folder(void)
 void sub_GAME_7F01DEB4(u32 folder)
 {
     s32 folder_with_flag;
-    save_data new_save;
 
-    folder_with_flag = fileGetSaveFlag_0x80_any_folder();
+    folder_with_flag = fileGetSaveFlagDoReset_any_folder();
 
     if (folder_with_flag >= 0)
     {
-        new_save = D_8002C5E0;
+        save_data new_save = BLANKSAVEDATA;
         saves[folder_with_flag] = new_save;
 
         fileSetSaveFoldernum(&saves[folder_with_flag], folder);
-        fileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
+        fileSetSaveFlagDoReset(&saves[folder_with_flag], FALSE);
         fileSetSelectedBond(&saves[folder_with_flag], folder);
         fileWriteSave(&saves[folder_with_flag]);
     }
@@ -527,7 +507,7 @@ void fileValidateSaves(void)
         // bad checksum, create a new save and replace damaged one.
         if (!checksumOK)
         {
-            smallSave NewSave = blankSmallSave;
+            smallSave NewSave = {0, 0, 0x42};
             joyChecksum = NewSave;
             fileWriteSmallSave(&joyChecksum);
         }
@@ -566,17 +546,17 @@ void fileValidateSaves(void)
             for (j = 0; j < 5; j++)
             {
                 // if save = folder and 80 not set
-                if (!fileGetSaveFlag_0x80(&saves[j]) &&
+                if (!fileGetSaveFlagDoReset(&saves[j]) &&
                     fileGetSaveFolder(&saves[j]) == i)
                 {
                     if (jif < 0) // on first 80 do this
                     {
                         jif = j;
-                        flag18 = fileGetSaveFlag_0x18(&saves[j]);
+                        flag18 = fileGetSaveFlagSlot(&saves[j]);
                     }
                     else
                     {
-                        flag18_2 = fileGetSaveFlag_0x18(&saves[j]);
+                        flag18_2 = fileGetSaveFlagSlot(&saves[j]);
 
                         if (flag18_2 == (flag18 + 1) % 4)
                         {
@@ -637,30 +617,30 @@ bool fileIsFolderValid(s32 folder)
  * file fileIsStageUnlockedAtDifficulty calls fileIsSavedStageUnlockedAtDifficulty
  *
  * @param foldernum
- * @param stage
+ * @param levelid
  * @param difficulty
  * @return 0, 1, or 3 (STAGESTATUS_LOCKED, STAGESTATUS_UNLOCKED, STAGESTATUS_COMPLETED)
  */
-STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty)
+STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty)
 {
     save_data* save;
     s32 i;
 
     if (( fileIsFolderValid(foldernum)) &&
-        (stage >= SP_LEVEL_DAM && stage < SP_LEVEL_MAX) &&
+        (levelid >= SP_LEVEL_DAM && levelid < SP_LEVEL_MAX) &&
         (difficulty >= DIFFICULTY_AGENT && difficulty < DIFFICULTY_MAX))
     {
         save = fileGetSaveForFoldernum(foldernum);
 
         if (save)
         {
-            if ( fileGetSaveStageCompletedForDifficulty(save, stage, difficulty))
+            if ( fileGetSaveStageCompletedForDifficulty(save, levelid, difficulty))
             {
                 return STAGESTATUS_COMPLETED; //found on first try, stage has been completed and a time saved.
             }
 
-            if ((stage == SP_LEVEL_AZTEC && difficulty < DIFFICULTY_SECRET) ||
-                (stage == SP_LEVEL_EGYPT && difficulty < DIFFICULTY_00))
+            if ((levelid == SP_LEVEL_AZTEC && difficulty < DIFFICULTY_SECRET) ||
+                (levelid == SP_LEVEL_EGYPT && difficulty < DIFFICULTY_00))
             {
                 return STAGESTATUS_LOCKED; //we cant possibly have a completed bonus stage below each set dificulty
             }
@@ -669,7 +649,7 @@ STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE s
             for (i = difficulty; i < DIFFICULTY_MAX ; i++)
             {
                 LEVEL_SOLO_SEQUENCE istage;
-                for (istage = SP_LEVEL_DAM; istage < stage; istage++)
+                for (istage = SP_LEVEL_DAM; istage < levelid; istage++)
                 {
                     if (! fileGetSaveStageCompletedForDifficulty(save, istage, i))
                     {
@@ -677,18 +657,18 @@ STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE s
                     }
                 }
                 //if the first uncomplete stage is not less than current
-                if (stage <= istage)
+                if (levelid <= istage)
                 {
                     return STAGESTATUS_UNLOCKED;
                 }
             }
 
             // if we still cant find it
-            if ((difficulty < DIFFICULTY_007) && (stage < SP_LEVEL_AZTEC))
+            if ((difficulty < DIFFICULTY_007) && (levelid < SP_LEVEL_AZTEC))
             {
                 for (i = difficulty; i < DIFFICULTY_MAX; i++)
                 {
-                    if ( fileGetSaveStageCompletedForDifficulty(save, stage - 1, i))
+                    if ( fileGetSaveStageCompletedForDifficulty(save, levelid - 1, i))
                     {
                         return STAGESTATUS_UNLOCKED;
                     }
@@ -709,7 +689,7 @@ STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE s
                 {
                     for (i = DIFFICULTY_AGENT; i < difficulty; i++)
                     {
-                        if (! fileGetSaveStageCompletedForDifficulty(save, stage, i))
+                        if (! fileGetSaveStageCompletedForDifficulty(save, levelid, i))
                         {
                             break;
                         }
@@ -724,7 +704,7 @@ STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE s
         }// save
 
         // no save, current level is dam, its unlocked.
-        if (stage == SP_LEVEL_DAM)
+        if (levelid == SP_LEVEL_DAM)
         {
             return STAGESTATUS_UNLOCKED;
         }
@@ -757,7 +737,7 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
     s32 otherfolder;
 
     otherfolder = 0;
-    folder_with_flag = fileGetSaveFlag_0x80_any_folder();
+    folder_with_flag = fileGetSaveFlagDoReset_any_folder();
 
     if (folder_with_flag >= 0)
     {
@@ -765,11 +745,11 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
 
         if (save1)
         {
-            otherfolder = (s32)( fileGetSaveFlag_0x18(save1) + 1) % 4;
+            otherfolder = (s32)( fileGetSaveFlagSlot(save1) + 1) % 4;
         }
 
-        fileSetSaveFlag_0x80(&saves[folder_with_flag], 0);
-        fileResetSaveFlag_0x18(&saves[folder_with_flag], otherfolder);
+        fileSetSaveFlagDoReset(&saves[folder_with_flag], FALSE);
+        fileResetSaveFlagSlot(&saves[folder_with_flag], otherfolder);
         fileWriteSave(&saves[folder_with_flag]);
 
         if (save1)
@@ -789,19 +769,15 @@ void sub_GAME_7F01E504(save_data *save1, save_data *save2)
  */
 void fileUnlockStageInFolderAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stage, DIFFICULTY difficulty, s32 newtime)
 {
-    save_data new_save;
-    save_data *save;
-    s32 i;
-
     if ((foldernum >= 0) && (foldernum < 4) &&
         (stage >= SP_LEVEL_DAM) && (stage < SP_LEVEL_MAX) &&
         (difficulty >= DIFFICULTY_AGENT) && (difficulty < DIFFICULTY_MAX))
     {
-        new_save = D_8002C660;
+        save_data new_save = BLANKSAVEDATA;
 
-        save = fileGetSaveForFoldernum(foldernum);
-
-        if (save != 0) {
+        save_data *save = fileGetSaveForFoldernum(foldernum);
+        s32 i;
+        if (save) {
             new_save = *save;
         } else {
             fileSetSaveFoldernum(&new_save, foldernum);
@@ -831,31 +807,30 @@ void fileUnlockStageInFolderAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE stag
  */
 void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
 {
-    save_data *save;
-    save_data new_save;
-
     if ((foldernum >= 0) && (foldernum < 4) && (cheat >= 0) && (cheat < CHEAT_20))
     {
-        save = fileGetSaveForFoldernum(foldernum);
+        save_data *save = fileGetSaveForFoldernum(foldernum);
 
-        if (save != 0 && fileGetIsCheatUnlocked(save, cheat) != 0)
+        if (save && fileGetIsCheatUnlocked(save, cheat))
         {
            return;
         }
 
-        new_save = D_8002C6C0;
-
-        if (save != 0)
         {
-            new_save = *save;
-        }
-        else
-        {
-            fileSetSaveFoldernum(&new_save, foldernum);
-        }
+            save_data new_save = BLANKSAVEDATA;
 
-        sub_GAME_7F01DD74(&new_save, cheat);
-        sub_GAME_7F01E504(save, &new_save);
+            if (save)
+            {
+                new_save = *save;
+            }
+            else
+            {
+                fileSetSaveFoldernum(&new_save, foldernum);
+            }
+
+            sub_GAME_7F01DD74(&new_save, cheat);
+            sub_GAME_7F01E504(save, &new_save);
+        }
     }
 }
 
@@ -867,7 +842,7 @@ void sub_GAME_7F01E760(s32 foldernum, s32 cheat)
  * @param stage
  * @param difficulty
  */
-void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *stage, DIFFICULTY *difficulty)
+void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_SEQUENCE *levelid, DIFFICULTY *difficulty)
 {
     save_data *folder;
     LEVEL_SOLO_SEQUENCE stageid;
@@ -879,18 +854,18 @@ void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_S
     {
         for (difficultyid = DIFFICULTY_007; difficultyid >= 0; difficultyid--)
         {
-            for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
+            for (stageid = SP_LEVEL_EGYPT; stageid >= SP_LEVEL_DAM; stageid--)
             {
                 if ( fileGetSaveStageCompletedForDifficulty(folder, stageid, difficultyid))
                 {
-                    *stage = stageid;
+                    *levelid = stageid;
                     *difficulty = difficultyid;
                     return;
                 }
             }
         }
     }
-    *stage = SP_LEVEL_DAM - 1;
+    *levelid = SP_LEVEL_DAM - 1;
     *difficulty = DIFFICULTY_MULTI;
 }
 
@@ -902,18 +877,18 @@ void fileGetHighestStageDifficultyCompletedForFolder(s32 foldernum, LEVEL_SOLO_S
  */
 LEVEL_SOLO_SEQUENCE fileGetHighestStageUnlockedForFolder(s32 foldernum)
 {
-    LEVEL_SOLO_SEQUENCE stageid;
+    LEVEL_SOLO_SEQUENCE levelid;
     DIFFICULTY difficulty;
 
     if ( fileGetSaveForFoldernum(foldernum) != NULL)
     {
-        for (stageid = SP_LEVEL_EGYPT; stageid >= 0; stageid--)
+        for (levelid = SP_LEVEL_EGYPT; levelid >= SP_LEVEL_DAM; levelid--)
         {
             for (difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_MAX; difficulty++)
             {
-                if ( fileIsStageUnlockedAtDifficulty(foldernum, stageid, difficulty))
+                if ( fileIsStageUnlockedAtDifficulty(foldernum, levelid, difficulty))
                 {
-                    return stageid;
+                    return levelid;
                 }
             }
         }
@@ -924,13 +899,13 @@ LEVEL_SOLO_SEQUENCE fileGetHighestStageUnlockedForFolder(s32 foldernum)
 /**
  * Get the highest stage unlocked in any folder
  *
- * @return stageid
+ * @return levelid
  */
 LEVEL_SOLO_SEQUENCE fileGetHighestStageUnlockedAnyFolder(void)
 {
     int folder;
     LEVEL_SOLO_SEQUENCE isfound;
-    LEVEL_SOLO_SEQUENCE highest = 0;
+    LEVEL_SOLO_SEQUENCE highest = SP_LEVEL_DAM;
 
     for (folder = 0; folder < 4; folder++)
     {
@@ -1056,7 +1031,7 @@ u8 fileGetBondForFolder(u32 folder)
     }
 #endif
 
-    return 0;
+    return BOND_BROSNAN;
 }
 
 /**
@@ -1074,7 +1049,7 @@ void fileSetSelectedBondTofolder(s32 folder, s32 bond)
 #ifdef ALL_BONDS
     save_selected_bond[folder] = bond;
 #else
-    save_selected_bond[folder] = 0;
+    save_selected_bond[folder] = BOND_BROSNAN;
 #endif
 }
 
@@ -1106,22 +1081,21 @@ void sub_GAME_7F01EBFC(u32 unused)
 void fileDeleteSaveForFolder(s32 foldernum)
 {
     save_data *save;
-    LEVEL_SOLO_SEQUENCE stage;
+    LEVEL_SOLO_SEQUENCE levelid;
     DIFFICULTY difficulty;
-    save_data new_save;
 
     if (foldernum >= 0 && foldernum < 4)
     {
         save = fileGetSaveForFoldernum(foldernum);
-        if (save != 0)
+        if (save)
         {
-            fileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
-            if ((stage >= 0) && (difficulty >= 0))
+            fileGetHighestStageDifficultyCompletedForFolder(foldernum, &levelid, &difficulty);
+            if ((levelid >= SP_LEVEL_DAM) && (difficulty >= DIFFICULTY_AGENT))
             {
-                new_save = D_8002C720;
+                save_data new_save = BLANKSAVEDATA;
                 *save = new_save;
                 fileSetSaveFoldernum(save, foldernum);
-                fileSetSaveFlag_0x80(save, 0);
+                fileSetSaveFlagDoReset(save, FALSE);
                 fileSetSelectedBond(save, foldernum);
                 fileSetSelectedBondTofolder(foldernum, foldernum);
                 fileWriteSave(save);
@@ -1139,16 +1113,16 @@ void fileDeleteSaveForFolder(s32 foldernum)
 void fileInitializeAllTimes(u32 folder)
 {
     save_data *save;
-    LEVEL_SOLO_SEQUENCE stagenum;
+    LEVEL_SOLO_SEQUENCE levelid;
     DIFFICULTY difficulty;
 
     save = fileGetSaveForFoldernum(folder);
 
-    for (stagenum = SP_LEVEL_DAM; stagenum < SP_LEVEL_MAX; stagenum++)
+    for (levelid = SP_LEVEL_DAM; levelid < SP_LEVEL_MAX; levelid++)
     {
         for(difficulty = DIFFICULTY_AGENT; difficulty < DIFFICULTY_007; difficulty++)
         {
-            fileCheckSaveStageDifficultyTime(save, stagenum, difficulty, 99999999);
+            fileCheckSaveStageDifficultyTime(save, levelid, difficulty, 99999999);
         }
     }
 }
@@ -1163,26 +1137,24 @@ void fileInitializeAllTimes(u32 folder)
 void sub_GAME_7F01EDA0(s32 foldernum)
 {
     save_data* save;
-    LEVEL_SOLO_SEQUENCE stage;
+    LEVEL_SOLO_SEQUENCE levelid;
     DIFFICULTY difficulty;
     s32 other;
-    save_data new_save;
-    save_data* temp_s2;
 
     if ((foldernum >= 0) && (foldernum < 4))
     {
         save = fileGetSaveForFoldernum(foldernum);
-        if (save != 0)
+        if (save)
         {
-            fileGetHighestStageDifficultyCompletedForFolder(foldernum, &stage, &difficulty);
-            if (stage >= 0)
+            fileGetHighestStageDifficultyCompletedForFolder(foldernum, &levelid, &difficulty);
+            if (levelid >= SP_LEVEL_DAM)
             {
-                if (difficulty >= 0) {
+                if (difficulty >= DIFFICULTY_AGENT) {
                     for(other = 0;other != 4; other++)
                     {
                             if (( fileGetSaveForFoldernum(other) == 0) ||
-                                ( fileGetHighestStageDifficultyCompletedForFolder(other, &stage, &difficulty),
-                                (stage < 0) && (difficulty < 0)))
+                                ( fileGetHighestStageDifficultyCompletedForFolder(other, &levelid, &difficulty),
+                                (levelid < SP_LEVEL_DAM) && (difficulty < DIFFICULTY_AGENT)))
                             {
                                 break;
                             }
@@ -1190,8 +1162,8 @@ void sub_GAME_7F01EDA0(s32 foldernum)
 
                     if ((s32)other < 4)
                     {
-                        new_save = D_8002C780;
-                        temp_s2 = fileGetSaveForFoldernum(other);
+                        save_data new_save = BLANKSAVEDATA;
+                        save_data *temp_s2 = fileGetSaveForFoldernum(other);
                         new_save = *save;
                         fileSetSaveFoldernum(&new_save, other);
                         fileSetSelectedBondTofolder(other, fileGetBondForFolder(foldernum));
@@ -1217,41 +1189,41 @@ void fileSaveSettingsForFolder(save_data *save)
     save->music_vol = get_mTrack2Vol() >> 7;
     save->sfx_vol = (call_sndGetSfxSlotFirstNaturalVolume() >> 7);
 
-    if (get_cur_player_look_vertical_inverted() != 0)
+    if (get_cur_player_look_vertical_inverted())
     {
         bits = OPTION_INVERTLOOK;
     }
 
-    if (cur_player_get_autoaim() != 0)
+    if (cur_player_get_autoaim())
     {
         bits |= OPTION_AUTOAIM;
     }
 
-    if (cur_player_get_aim_control() != 0)
+    if (cur_player_get_aim_control())
     {
         bits |= OPTION_AIMCONTROL;
     }
 
-    if (cur_player_get_sight_onscreen_control() != 0)
+    if (cur_player_get_sight_onscreen_control())
     {
         bits |= OPTION_SIGHTONSCREEN;
     }
 
-    if (cur_player_get_lookahead() != 0)
+    if (cur_player_get_lookahead())
     {
         bits |= OPTION_LOOKAHEAD;
     }
 
-    if (cur_player_get_ammo_onscreen_setting() != 0)
+    if (cur_player_get_ammo_onscreen_setting())
     {
         bits |= OPTION_DISPLAYAMMO;
     }
 
-    if (cur_player_get_screen_setting() == 1)
+    if (cur_player_get_screen_setting() == SCREEN_SIZE_WIDESCREEN)
     {
         bits |= OPTION_SCREENWIDE;
     }
-    else if (cur_player_get_screen_setting() == 2)
+    else if (cur_player_get_screen_setting() == SCREEN_SIZE_CINEMA)
     {
         bits |= OPTION_SCREENCINEMA;
     }
@@ -1293,12 +1265,12 @@ void fileLoadSettingsForFolder(u32 folder)
             cur_player_set_control_type(CONTROLLER_CONFIG_HONEY);
         }
 
-        set_cur_player_look_vertical_inverted((options & OPTION_INVERTLOOK) != 0);
-        cur_player_set_autoaim((options & OPTION_AUTOAIM) != 0);
-        cur_player_set_aim_control((options & OPTION_AIMCONTROL) != 0);
-        cur_player_set_sight_onscreen_control((options & OPTION_SIGHTONSCREEN) != 0);
-        cur_player_set_lookahead((options & OPTION_LOOKAHEAD) != 0);
-        cur_player_set_ammo_onscreen_setting((options & OPTION_DISPLAYAMMO) != 0);
+        set_cur_player_look_vertical_inverted((options & OPTION_INVERTLOOK) != FALSE);
+        cur_player_set_autoaim((options & OPTION_AUTOAIM) != FALSE);
+        cur_player_set_aim_control((options & OPTION_AIMCONTROL) != FALSE);
+        cur_player_set_sight_onscreen_control((options & OPTION_SIGHTONSCREEN) != FALSE);
+        cur_player_set_lookahead((options & OPTION_LOOKAHEAD) != FALSE);
+        cur_player_set_ammo_onscreen_setting((options & OPTION_DISPLAYAMMO) != FALSE);
 
         if (options & OPTION_SCREENCINEMA)
         {
@@ -1313,7 +1285,7 @@ void fileLoadSettingsForFolder(u32 folder)
             cur_player_set_screen_setting(SCREEN_SIZE_FULLSCREEN);
         }
 
-        set_screen_ratio((options & OPTION_SCREENRATIO) != 0);
+        set_screen_ratio((options & OPTION_SCREENRATIO) != FALSE);
     }
 }
 
@@ -1324,17 +1296,13 @@ void fileLoadSettingsForFolder(u32 folder)
  */
 void fileClearSavefileForFolder(s32 folder)
 {
-    save_data *save;
-    save_data save_to_copy;
-    save_data new_save;
-
     if (folder >= 0 && folder < 4)
     {
-        save = fileGetSaveForFoldernum(folder);
+        save_data *save = fileGetSaveForFoldernum(folder);
 
-        save_to_copy = D_8002C7E0;
-
-        if (save != 0)
+        save_data save_to_copy = BLANKSAVEDATA;
+        save_data new_save;
+        if (save)
         {
             save_to_copy = *save;
         }
@@ -1347,7 +1315,7 @@ void fileClearSavefileForFolder(s32 folder)
 
         fileSaveSettingsForFolder(&new_save);
 
-        if (_bcmp(&new_save, &save_to_copy, sizeof(save_data)) != 0)
+        if (_bcmp(&new_save, &save_to_copy, sizeof(save_data)))
         {
             sub_GAME_7F01E504(save, &new_save);
         }
@@ -1361,15 +1329,13 @@ void fileClearSavefileForFolder(s32 folder)
  */
 void fileCopySaveIfSelectedBondDifferent(s32 folder)
 {
-    save_data *save;
-    save_data new_save;
 
     if (folder >= 0 && folder < 4)
     {
-        save = fileGetSaveForFoldernum(folder);
-        new_save = D_8002C840;
+        save_data *save = fileGetSaveForFoldernum(folder);
+        save_data new_save = BLANKSAVEDATA;
 
-        if (save != 0)
+        if (save)
         {
             new_save = *save;
         }
@@ -1394,18 +1360,16 @@ void fileCopySaveIfSelectedBondDifferent(s32 folder)
  */
 void fileCopySave(s32 folder, save_data *out_save)
 {
-    save_data *in_save;
-    save_data new_save;
 
-    in_save = fileGetSaveForFoldernum(folder);
+    save_data *in_save = fileGetSaveForFoldernum(folder);
 
-    if (in_save != 0)
+    if (in_save)
     {
         *out_save = *in_save;
     }
     else
     {
-        new_save = blank_eeprom;
+        save_data new_save = BLANKSAVEDATA;
         *out_save = new_save;
     }
 }
@@ -1432,7 +1396,7 @@ void fileCopyDemoSaveToRamRomSave(u32 folder, save_data *save)
  */
 s32 fileIs007ModeUnlocked(u32 folder)
 {
-    LEVEL_SOLO_SEQUENCE stage;
+    LEVEL_SOLO_SEQUENCE levelid;
     save_data* save;
 
     save = fileGetSaveForFoldernum(folder);
@@ -1444,15 +1408,15 @@ s32 fileIs007ModeUnlocked(u32 folder)
             return TRUE;
         }
 
-        for (stage = SP_LEVEL_DAM; stage < SP_LEVEL_MAX; stage++)
+        for (levelid = SP_LEVEL_DAM; levelid < SP_LEVEL_MAX; levelid++)
         {
-            if (! fileGetSaveStageCompletedForDifficulty(save, stage, DIFFICULTY_00))
+            if (! fileGetSaveStageCompletedForDifficulty(save, levelid, DIFFICULTY_00))
             {
                 break;
             }
         }
 
-        if (stage == SP_LEVEL_MAX)
+        if (levelid == SP_LEVEL_MAX)
         {
             return TRUE;
         }

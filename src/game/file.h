@@ -29,17 +29,6 @@ typedef struct smallSave
 } smallSave;
 
 extern save_data saves[6];
-extern save_data D_8002C520;
-extern save_data D_8002C580;
-extern save_data D_8002C5E0;
-extern smallSave blankSmallSave;
-extern save_data D_8002C660;
-extern save_data D_8002C6C0;
-extern save_data D_8002C720;
-extern save_data D_8002C780;
-extern save_data D_8002C7E0;
-extern save_data D_8002C840;
-extern save_data blank_eeprom;
 
 extern s32 save_selected_bond[];
 
