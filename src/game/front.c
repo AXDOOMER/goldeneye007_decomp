@@ -294,7 +294,6 @@ u8 * ptr_logo_and_walletbond_DL = NULL;
 s32 ptr_menu_videobuffer = 0;
 struct Model *logoinst = NULL;
 struct Model * walletinst[] = { NULL, NULL, NULL, NULL};
-s32 D_8002A96C = 0;
 
 Lights1 gelogolight = gdSPDefLights1(
     0x96, 0x96, 0x96,
