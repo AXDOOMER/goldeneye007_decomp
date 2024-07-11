@@ -1762,6 +1762,7 @@ typedef enum PLAYER_ID
 
 #define MAX_PLAYER_COUNT 4
 
+#define FOLDER_INVALID -1
 #define FOLDER1 0x0
 #define FOLDER2 0x1
 #define FOLDER3 0x2
