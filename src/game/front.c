@@ -279,7 +279,7 @@ s32 g_isBondKIA = FALSE;
 s32 is_first_time_on_legal_screen = TRUE;
 s32 is_first_time_on_main_menu = TRUE;
 
-s32 prev_keypresses = 0;
+s32 prev_keypresses = FALSE;
 s32 ge_logo_bool = FALSE;
 
 s32 maybe_is_in_menu = TRUE;
@@ -1786,7 +1786,7 @@ void interface_menu01_nintendo(void)
         }
         else
         {
-            prev_keypresses = 1;
+            prev_keypresses = TRUE;
             frontChangeMenu(MENU_RAREWARE_LOGO, TRUE);
         }
     }
@@ -1935,7 +1935,7 @@ void interface_menu02_rareware(void)
             frontChangeMenu(MENU_FILE_SELECT, TRUE);
             return;
         }
-        prev_keypresses = 1;
+        prev_keypresses = TRUE;
         frontChangeMenu(MENU_EYE_INTRO, TRUE);
     }
 }
@@ -1978,7 +1978,7 @@ void interface_menu03_eye(void) {
             frontChangeMenu(MENU_FILE_SELECT, TRUE);
             return;
         }
-        prev_keypresses = 1;
+        prev_keypresses = TRUE;
         frontChangeMenu(MENU_GOLDENEYE_LOGO, TRUE);
     }
 }
@@ -2201,7 +2201,7 @@ void load_walletbond(void)
 
         modelCalculateRwDataLen(PitemZ_entries[PROP_WALLETBOND].header);
 
-        for (i = 0; i < 4; i++)
+        for (i = FOLDER1; i < MAX_FOLDER_COUNT; i++)
         {
             walletinst[i]  = get_aircraft_obj_instance_controller(PitemZ_entries[PROP_WALLETBOND].header);
             modelSetScale(walletinst[i], 1.0f);
@@ -2231,7 +2231,7 @@ void sub_GAME_7F00B990(void)
 {
     s32 i;
 
-    for (i = 0; i < 4; i++) {
+    for (i = FOLDER1; i < MAX_FOLDER_COUNT; i++) {
         if (walletinst[i] == NULL) { continue; }
         clear_aircraft_model_obj(walletinst[i]);
         walletinst[i] = NULL;
@@ -2249,17 +2249,17 @@ void init_menu05_fileselect(void)
     Gfx* sp20 = (s32)(ptr_logo_and_walletbond_DL) + (s32)(4096*10);
     int i;
 
-    prev_keypresses = 0;
+    prev_keypresses = FALSE;
 
 
-    if (selected_folder_num < 0)
+    if (selected_folder_num < FOLDER1)
     {
-        selected_folder_num = 0;
+        selected_folder_num = FOLDER1;
     }
     tab_next_selected = FALSE;
     tab_prev_selected = FALSE;
-    folder_selected_for_deletion = -1;
-    folder_selected_for_deletion_choice = 1;
+    folder_selected_for_deletion = FOLDER_INVALID;
+    folder_selected_for_deletion_choice = FOLDER2;
     sub_GAME_7F008DE4(&sp20, &sp24);
     load_walletbond();
     if (maybe_is_in_menu){
@@ -2268,7 +2268,7 @@ void init_menu05_fileselect(void)
     }
     g_MenuTimer = 0;
     for(i=1;i<CHEAT_INVALID;i++){
-        g_CheatActivated[i] = 0;
+        g_CheatActivated[i] = FALSE;
     }
     g_AppendCheatSinglePlayer = FALSE;
     g_AppendCheatMultiPlayer = FALSE;
@@ -2362,16 +2362,16 @@ s32 interface_menu05_fileselect(void)
         set_item_visibility_in_objinstance(walletinst[i1], 0xD, 1);
     }
 
-    if (selected_folder_num >= 0)
+    if (selected_folder_num >= FOLDER1)
     {
-        if (selected_folder_num == 0x64)
+        if (selected_folder_num == RAMROM_FOLDERNUM)
         {
             selected_folder_num = selected_folder_num_copy;
         }
 
-        if ((selected_folder_num < 0) || (selected_folder_num >= 4))
+        if ((selected_folder_num < FOLDER1) || (selected_folder_num >= MAX_FOLDER_COUNT))
         {
-            selected_folder_num = 0;
+            selected_folder_num = FOLDER1;
         }
 
         toggle_deletion_menu_for_folder(selected_folder_num);
@@ -2423,7 +2423,7 @@ s32 interface_menu05_fileselect(void)
     }
     else
     {
-        for (i2 = 0; i2 < 4; i2++)
+        for (i2 = FOLDER1; i2 < MAX_FOLDER_COUNT; i2++)
         {
             f32 sp80;
             f32 sp7C;
@@ -2454,7 +2454,7 @@ s32 interface_menu05_fileselect(void)
                     }
                     else if (folder_selection_screen_option_icon == 1)
                     {
-                        sub_GAME_7F01EDA0(i2);
+                        fileCopyFolderToFirstFree(i2);
                         folder_selection_screen_option_icon = 0;
                         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, COPY_FILE_SFX, NULL);
                     }
@@ -2509,9 +2509,9 @@ s32 interface_menu05_fileselect(void)
         frontUpdateControlStickPosition();
     }
 
-    if (selected_folder_num >= 0)
+    if (selected_folder_num >= FOLDER1)
     {
-        frontChangeMenu(MENU_MODE_SELECT, 0);
+        frontChangeMenu(MENU_MODE_SELECT, FALSE);
         setCursorPOSforMode(0);
 
         return;
@@ -2523,7 +2523,7 @@ s32 interface_menu05_fileselect(void)
     if (g_MenuTimer >= 1801) // NTSC (60fps): 30 seconds + 1 frame
 #endif
     {
-        frontChangeMenu(MENU_LEGAL_SCREEN, 1);
+        frontChangeMenu(MENU_LEGAL_SCREEN, TRUE);
     }
 }
 
@@ -2615,7 +2615,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
     DL = microcode_constructor(DL);
     setTextSpacingInverted(0);
 
-    for (sp1B4 = 0; sp1B4 < 4; sp1B4++)
+    for (sp1B4 = FOLDER1; sp1B4 < MAX_FOLDER_COUNT; sp1B4++)
     {
         // HACK:
         char spD0[4]; // this needs to be at least 14 characters.
@@ -2832,7 +2832,7 @@ void init_menu06_modeselect(void)
     tab_next_selected = FALSE;
     tab_prev_selected = FALSE;
     load_walletbond();
-    copyCurrentEEPROMtoStack();
+    fileUpdateBondInCurrentFolder();
 }
 
 void update_menu06_modesel(void) {
@@ -2845,7 +2845,7 @@ void interface_menu06_modesel(void)
     u32 i;
 
     is_cheat_menu_available = FALSE;
-    for (i=1; i != CHEAT_INVALID; i++)
+    for (i=CHEAT_EXTRA_MP_CHARS; i != CHEAT_INVALID; i++)
     {
         if (frontCheckIfCheatIsUnlocked(i))
         {
@@ -3155,14 +3155,14 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
 //********************************************************************************************************
 void init_menu07_missionselect(void)
 {
-    selected_stage = -1;
-    briefingpage = -1;
-    tab_next_selected = 0;
-    tab_prev_selected = 0;
-    if (maybe_is_in_menu != 0)
+    selected_stage = LEVELID_NONE;
+    briefingpage = BRIEFING_INVALID;
+    tab_next_selected = FALSE;
+    tab_prev_selected = FALSE;
+    if (maybe_is_in_menu)
     {
         musicTrack1Play(M_FOLDERS);
-        maybe_is_in_menu = 0;
+        maybe_is_in_menu = FALSE;
     }
     load_walletbond();
 }

@@ -4471,7 +4471,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_IFFolderActorIsEqual:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (getSelectedFolderBond() == (s8)ai->val[0])
+                    if (fileGetBondForCurrentFolder() == (s8)ai->val[0])
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
                     }

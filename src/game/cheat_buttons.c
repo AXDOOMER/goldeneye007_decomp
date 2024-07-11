@@ -1364,7 +1364,7 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
                 s32 val = cheat_id - CHEAT_UNLOCK_PAINTBALL;
                 if ((selected_folder_num >= 0) && (selected_folder_num < 4))
                 {
-                    sub_GAME_7F01E760(selected_folder_num, val);
+                    fileSaveFolderUnlockCheat(selected_folder_num, val);
                     sndPlaySfx(g_musicSfxBufferPtr, CAMERA_BEEP1_SFX, 0);
                     return;
                 }

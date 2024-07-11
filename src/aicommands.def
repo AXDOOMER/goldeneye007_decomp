@@ -11454,7 +11454,7 @@ _AI_CMD(
 _AI_CMD(
     {
         AIRecord *ai = AiListp + Offset;
-        if (getSelectedFolderBond() == (s8)ai->val[0])
+        if (fileGetBondForCurrentFolder() == (s8)ai->val[0])
         {
             Offset = chraiGoToLabel(AiListp, Offset, ai->val[1]);
         }

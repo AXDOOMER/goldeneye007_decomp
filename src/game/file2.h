@@ -6,7 +6,7 @@
 #include <bondtypes.h>
 #include "file.h"
 
-#define RAMROM_FOLDERNUM 0x64
+
 
 /* EEPROM masks for in-game settings */
 #define OPTION_INVERTLOOK    0x0001
@@ -22,19 +22,13 @@
 
 #define DEFAULT_OPTIONS (OPTION_AUTOAIM | OPTION_SIGHTONSCREEN | OPTION_LOOKAHEAD | OPTION_DISPLAYAMMO)
 
-#define SAVEFLAG_FOLDER 0x7
-#define SAVEFLAG_SLOT 0x18
-#define SAVEFLAG_BOND 0x60
-#define SAVEFLAG_DORESET 0x80
-
-#define BLANKSAVEDATA {0, 0, SAVEFLAG_DORESET, 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 u8 fileGetBondForFolder(u32 folder);
 void fileValidateSaves(void);
 bool fileGetIsCheatUnlocked(save_data *save, s32 cheat);
 STAGESTATUS fileIsStageUnlockedAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty);
 void fileUnlockStageInFolderAtDifficulty(s32 foldernum, LEVEL_SOLO_SEQUENCE levelid, DIFFICULTY difficulty, s32 newtime);
-void sub_GAME_7F01E760(s32 foldernum, s32 cheat);
+void fileSaveFolderUnlockCheat(s32 foldernum, s32 cheat);
 void fileLoadSettingsForFolder(u32 folder);
 void fileDeleteSaveForFolder(s32 foldernum);
 

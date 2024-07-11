@@ -328,7 +328,7 @@ void bossMainloop(void)
     if (g_StageNum != LEVELID_TITLE)
     {
         fileValidateSaves();
-        set_selected_folder_num(0);
+        fileSetCurrentFolder(FOLDER1);
         set_selected_difficulty(DIFFICULTY_AGENT);
         set_solo_and_ptr_briefing(g_StageNum);
 

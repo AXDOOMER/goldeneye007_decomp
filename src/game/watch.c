@@ -694,7 +694,7 @@ void watch_screen0_navigation(void)
         D_800409A4 = 0;
         set_missionstate(MISSION_STATE_0);
         bossRunTitleStage();
-        mission_failed_or_aborted = 1;
+        mission_failed_or_aborted = TRUE;
         deleteCurrentSelectedFolder();
     }
 }

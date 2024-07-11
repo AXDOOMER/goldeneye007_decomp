@@ -1744,8 +1744,30 @@ typedef enum PLAYER_ID
     PLAYER_4
 } PLAYER_ID;
 
+#define SAVESLOT1 0x0
+#define SAVESLOT2 0x1
+#define SAVESLOT3 0x2
+#define SAVESLOT4 0x3
+#define SAVESLOTRAMROM 0x5
+#define SAVESLOTMAX 0x6
+
+#define SAVEFLAG_FOLDER 0x7
+#define SAVEFLAG_SLOT 0x18
+#define SAVEFLAG_BOND 0x60
+#define SAVEFLAG_DORESET 0x80
+
+#define SAVEFLAGS_SET(folder, slot, bond, reset) (((folder << 5) & 0xE0) | ((slot * 8) & 0x18) | ((bond << 1) & 0x6) | (reset & 1 ? SAVEFLAG_DORESET : 0))
+
+#define BLANKSAVEDATA {0, 0, SAVEFLAGS_SET(0,0,BOND_BROSNAN,1), 0x00, 0xFF, 0xFF, DEFAULT_OPTIONS, 0x00, 0x00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
 #define MAX_PLAYER_COUNT 4
+
+#define FOLDER1 0x0
+#define FOLDER2 0x1
+#define FOLDER3 0x2
+#define FOLDER4 0x3
 #define MAX_FOLDER_COUNT 4
+#define RAMROM_FOLDERNUM 0x64
 
 typedef enum RGBA_ENUM
 {

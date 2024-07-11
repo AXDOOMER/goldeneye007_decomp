@@ -474,7 +474,7 @@ s32 ramrom_replay_handler(struct contsample *arg0, s32 arg1)
     if (joyGetButtonsPressedThisFrame(0, 0xFFFFU) != 0)
     {
         ramromFadeToTitle();
-        prev_keypresses = 1;
+        prev_keypresses = TRUE;
     }
     
     joySetContDataIndex(1);
