@@ -1272,7 +1272,8 @@ typedef enum GAMEMODE
 typedef enum GUNHAND //Canonical name
 {
     GUNRIGHT,
-    GUNLEFT
+    GUNLEFT,
+    GUNHANDS
 } GUNHAND;
 
 

@@ -140,14 +140,14 @@ s32 mp_char_prev_select_player[MAX_PLAYER_COUNT];
 /**
  * EU .bss 80068650
 */
-s32 array_favweapon[MAX_PLAYER_COUNT][2];
+s32 array_favweapon[MAX_PLAYER_COUNT][GUNHANDS];
 
 #else
 
 /**
  * Address 800696F0
 */
-s32 array_favweapon[MAX_PLAYER_COUNT][2];
+s32 array_favweapon[MAX_PLAYER_COUNT][GUNHANDS];
 
 /**
  * Address 80069710
@@ -252,8 +252,8 @@ s32 tab_start_highlight = FALSE;
 s32 tab_next_highlight = FALSE;
 s32 tab_prev_highlight = FALSE;
 
-s32 selected_folder_num = 0;
-s32 selected_folder_num_copy = 0;
+s32 selected_folder_num = FOLDER1;
+s32 selected_folder_num_copy = FOLDER1;
 
 GAMEMODE gamemode = GAMEMODE_INTRO;
 s32 selected_stage = LEVELID_NONE;
@@ -270,8 +270,8 @@ s32 final_menu_briefing_page = BRIEFING_M;
 s32 current_menu_briefing_page = BRIEFING_TITLE;
 
 s32 folder_selection_screen_option_icon = 0;
-s32 folder_selected_for_deletion = -1;
-s32 folder_selected_for_deletion_choice = 1;
+s32 folder_selected_for_deletion = FOLDER_INVALID;
+s32 folder_selected_for_deletion_choice = FOLDER2;
 
 s32 mission_failed_or_aborted = FALSE;
 s32 g_isBondKIA = FALSE;
@@ -2167,20 +2167,16 @@ void select_load_bond_picture(Model *objinstance, u32 bondID)
 
 
 struct unk_walletbond_struct {
-    s32 unk00;
+    s32 Primary;
     s32 unk04;
     s32 unk08;
     s32 unk0C;
     s32 unk10;
     s32 unk14;
     s32 unk18;
-    s32 unk1C;
+    s32 BaseAddr;
 };
 
-struct unk_walletbond_struct_b {
-    s32 unk00;
-    struct unk_walletbond_struct *unk04;
-};
 
 /**
  * Address 0x7F00B8AC NTSC
@@ -2207,18 +2203,18 @@ void load_walletbond(void)
             modelSetScale(walletinst[i], 1.0f);
         }
 
-        mnode = PitemZ_entries[PROP_WALLETBOND].header->Switches[0x15];
+        mnode = PitemZ_entries[PROP_WALLETBOND].header->Switches[GFXHIT0_PICS];
 
         if (mnode != NULL)
         {
             struct unk_walletbond_struct *srecord;
-            struct unk_walletbond_struct_b *b;
+            struct ModelNode *b;
             Gfx *arg0;
             
-            b = (struct unk_walletbond_struct_b *)mnode;
-            srecord = b->unk04;
+            b = (struct ModelNode *)mnode;
+            srecord = b->Data;
 
-            arg0 = (s32)srecord->unk1C + (srecord->unk00 & 0xffffff);
+            arg0 = (s32)srecord->BaseAddr + (srecord->Primary & 0xffffff);
             bgLoadFromDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
         }
     }
@@ -2227,12 +2223,14 @@ void load_walletbond(void)
 
 
 
-void sub_GAME_7F00B990(void)
+void frontCleanUpWalletBond(void)
 {
     s32 i;
 
-    for (i = FOLDER1; i < MAX_FOLDER_COUNT; i++) {
+    for (i = FOLDER1; i < MAX_FOLDER_COUNT; i++)
+    {
         if (walletinst[i] == NULL) { continue; }
+
         clear_aircraft_model_obj(walletinst[i]);
         walletinst[i] = NULL;
     }
@@ -2280,7 +2278,7 @@ void update_menu05_filesel(void)
 {
     if ((menu_update == MENU_LEGAL_SCREEN) || (maybe_prev_menu == MENU_LEGAL_SCREEN))
     {
-        sub_GAME_7F00B990();
+        frontCleanUpWalletBond();
     }
 }
 
@@ -7345,7 +7343,7 @@ void update_menu0A_briefing(void)
 {
   langClearBank(langGetLangBankIndexFromStagenum(mission_folder_setup_entries[briefingpage].stage_id));
   if (-1 < menu_update) {
-    sub_GAME_7F00B990();
+    frontCleanUpWalletBond();
   }
 }
 
