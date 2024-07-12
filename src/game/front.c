@@ -2154,14 +2154,29 @@ void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 
 void select_load_bond_picture(Model *objinstance, u32 bondID)
 {
-    set_item_visibility_in_objinstance(objinstance,SW_BROSNAN,1); //brosnan picture
-    set_item_visibility_in_objinstance(objinstance,SW_CONNERY,0);
-    set_item_visibility_in_objinstance(objinstance,SW_DALTON,0);
-    set_item_visibility_in_objinstance(objinstance,SW_MOORE,0);
-    set_item_visibility_in_objinstance(objinstance,SW_BROSNANCOVER,1); //bigger brosnan picture
-    set_item_visibility_in_objinstance(objinstance,SW_CONNERYCOVER,0);
-    set_item_visibility_in_objinstance(objinstance,SW_DALTONCOVER,0);
-    set_item_visibility_in_objinstance(objinstance,SW_MOORECOVER,0);
+#ifdef ALL_BONDS
+    //has to be at least 1 to enable
+    //something like this, zoinkity used 4-1 instead of 1-4
+    //https://github.com/kholdfuzion/goldeneye_docs/blob/master/notes/GE%20Documentation/GameShark%20-%20GE%20specific/WIP%204bond%20folder%20hack.txt
+
+    set_item_visibility_in_objinstance(objinstance, SW_BROSNAN, (bondID == BOND_BROSNAN)); //brosnan picture
+    set_item_visibility_in_objinstance(objinstance, SW_CONNERY, (bondID == BOND_CONNERY));
+    set_item_visibility_in_objinstance(objinstance, SW_DALTON, (bondID == BOND_DALTON));
+    set_item_visibility_in_objinstance(objinstance, SW_MOORE, (bondID == BOND_MOORE));
+    set_item_visibility_in_objinstance(objinstance, SW_BROSNANCOVER, (bondID == BOND_BROSNAN)); //bigger brosnan picture
+    set_item_visibility_in_objinstance(objinstance, SW_CONNERYCOVER, (bondID == BOND_CONNERY));
+    set_item_visibility_in_objinstance(objinstance, SW_DALTONCOVER, (bondID == BOND_DALTON));
+    set_item_visibility_in_objinstance(objinstance, SW_MOORECOVER, (bondID == BOND_MOORE));
+#else
+    set_item_visibility_in_objinstance(objinstance,SW_BROSNAN,TRUE); //brosnan picture
+    set_item_visibility_in_objinstance(objinstance,SW_CONNERY,FALSE);
+    set_item_visibility_in_objinstance(objinstance,SW_DALTON,FALSE);
+    set_item_visibility_in_objinstance(objinstance,SW_MOORE,FALSE);
+    set_item_visibility_in_objinstance(objinstance,SW_BROSNANCOVER,TRUE); //bigger brosnan picture
+    set_item_visibility_in_objinstance(objinstance,SW_CONNERYCOVER,FALSE);
+    set_item_visibility_in_objinstance(objinstance,SW_DALTONCOVER,FALSE);
+    set_item_visibility_in_objinstance(objinstance,SW_MOORECOVER,FALSE);
+#endif
 }
 
 
