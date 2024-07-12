@@ -2155,10 +2155,6 @@ void set_item_visibility_in_objinstance(Model* objinstance, s32 item, s32 mode)
 void select_load_bond_picture(Model *objinstance, u32 bondID)
 {
 #ifdef ALL_BONDS
-    //has to be at least 1 to enable
-    //something like this, zoinkity used 4-1 instead of 1-4
-    //https://github.com/kholdfuzion/goldeneye_docs/blob/master/notes/GE%20Documentation/GameShark%20-%20GE%20specific/WIP%204bond%20folder%20hack.txt
-
     set_item_visibility_in_objinstance(objinstance, SW_BROSNAN, (bondID == BOND_BROSNAN)); //brosnan picture
     set_item_visibility_in_objinstance(objinstance, SW_CONNERY, (bondID == BOND_CONNERY));
     set_item_visibility_in_objinstance(objinstance, SW_DALTON, (bondID == BOND_DALTON));
