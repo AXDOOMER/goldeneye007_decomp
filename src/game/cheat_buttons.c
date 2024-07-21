@@ -1669,13 +1669,13 @@ bool cheatIsActive(CHEAT_ID cheat)
  */
 void cheatButtonSetDkMode(CHEAT_ID cheat_id)
 {
-    s32 g_NumChrSlots;
+    s32 numslots;
     s32 i;
     f32 scale;
     Model *model;
     ChrRecord* guard = g_ChrSlots;
 
-    g_NumChrSlots = get_numguards();
+    numslots = get_numguards();
 
     if (cheat_id)
     {
@@ -1686,7 +1686,7 @@ void cheatButtonSetDkMode(CHEAT_ID cheat_id)
         scale = 1.25f;
     }
 
-    for (i=0; i<g_NumChrSlots; i++, guard++)
+    for (i=0; i<numslots; i++, guard++)
     {
 
 #if defined(VERSION_US)

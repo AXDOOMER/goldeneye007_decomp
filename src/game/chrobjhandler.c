@@ -36867,12 +36867,12 @@ void detonate_proxmine_In_range(coord3d* pos)
 void check_guard_detonate_proxmine(void)
 {
     ChrRecord* guard;
-    s32 g_NumChrSlots;
+    s32 numslots;
     s32 i;
 
-    g_NumChrSlots = get_numguards();
+    numslots = get_numguards();
 
-    for (i = 0; i < g_NumChrSlots; i++)
+    for (i = 0; i < numslots; i++)
     {
         guard = &g_ChrSlots[i];
         if ((guard->model != NULL) && (guard->hidden & 0x200))

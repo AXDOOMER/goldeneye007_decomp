@@ -1445,7 +1445,7 @@ typedef union
          */
         typedef struct Model
         {
-            u8                unk00; /*0x00*/   // objInit() indicates that unk00 is a s16...
+            s16                unk00; /*0x00*/   // objInit() indicates that unk00 is a s16...
             s16                Type;  /*0x01*/  // but modelInit() indicates that Type is a s16...
                                                 // not sure which is correct.
 
@@ -2402,7 +2402,10 @@ typedef union
         // there should be some ALSoundState * pointers in here.
         //
         PropRecord    *weapons_held[3]; /* handle_positiondata 0x0160 0x0164  0x0168 Right, Left, Hat*/
-        s8             fireslot[2];     /* 0x016C 0x0170*/
+        union {
+            s32     fireslot_word;
+            s8      fireslot[2];     /* 0x016C 0x0170*/
+        };
         int           *ptr_SEbuffer3;
         int           *ptr_SEbuffer4;
         int            field_178[2];
