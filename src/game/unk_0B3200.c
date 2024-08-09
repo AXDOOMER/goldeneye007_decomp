@@ -4,6 +4,9 @@
 
 // rodata
 
+/*
+* Address: 0x7f0b3200
+*/
 f32 unkGeometry7F0B3200(coord2d *arg0, coord2d *arg1, coord2d *arg2, coord2d *arg3)
 {
     f32 mult1 = arg2->f[1] - arg3->f[1];
@@ -27,6 +30,9 @@ f32 unkGeometry7F0B3200(coord2d *arg0, coord2d *arg1, coord2d *arg2, coord2d *ar
 }
 
 
+/*
+* Address: 0x7F0B32D8
+*/
 f32 sub_GAME_7F0B32D8(struct coord3d *arg0, coord2d *arg1, coord2d *arg2)
 {
     f32 value2;
@@ -64,6 +70,9 @@ f32 sub_GAME_7F0B32D8(struct coord3d *arg0, coord2d *arg1, coord2d *arg2)
 }
 
 
+/*
+* Address: 0x7f0b33dc
+*/
 f32 unkGeometry7F0B33DC(coord3d *arg0, coord2d *arg1, coord2d *arg2,coord2d *arg3)
 {
     f32 spac;

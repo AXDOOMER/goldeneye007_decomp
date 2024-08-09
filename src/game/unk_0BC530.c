@@ -21,6 +21,9 @@ s32 dword_CODE_bss_80083900[AMT300];
 Mtx mtx_array_bss_80083DB0[AMT300];
 
 
+/*
+* Address: 0x7F0BC530
+*/
 void sub_GAME_7F0BC530(void) 
 {
     int i;
@@ -47,11 +50,17 @@ void sub_GAME_7F0BC530(void)
 }
 
 
+/*
+* Address: 0x7F0BC624
+*/
 void sub_GAME_7F0BC624(s32 param_1) {
   g_CurrentPlayer->field_108C = param_1;
 }
 
 
+/*
+* Address: 0x7F0BC634
+*/
 void sub_GAME_7F0BC634(int param_1,int param_2)
 {
     array_room_info[param_2].field_36 = param_1;
@@ -59,6 +68,9 @@ void sub_GAME_7F0BC634(int param_1,int param_2)
 }
 
 
+/*
+* Address: 0x7F0BC660
+*/
 void sub_GAME_7F0BC660(int param_1,int param_2)
 {
     array_room_info[param_2].field_36 = -1;
@@ -66,6 +78,9 @@ void sub_GAME_7F0BC660(int param_1,int param_2)
 }
 
 
+/*
+* Address: 0x7F0BC690
+*/
 void sub_GAME_7F0BC690(int index)
 {
     if (dword_CODE_bss_80083450[index] != -1) {
@@ -76,6 +91,9 @@ void sub_GAME_7F0BC690(int index)
 }
 
 
+/*
+* Address: 0x7F0BC6F0
+*/
 s32 sub_GAME_7F0BC6F0(void)
 {
     s32 i;
@@ -163,7 +181,9 @@ s32 sub_GAME_7F0BC85C(s32 arg0)
 
 
 
-
+/*
+* Address: 0x7F0BC9C4
+*/
 Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
 {
     s32 i;
@@ -174,12 +194,17 @@ Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
 }
 
 
+/*
+* Address: 0x7f0bca14
+*/
 s32 getRoomIndexPOS(s32 index)
 {
     return &ptr_bgdata_room_fileposition_list[index].pos;
 }
 
-
+/*
+* Address: 0x7F0BCA34
+*/
 void sub_GAME_7F0BCA34(s32 index, coord3d *param_2)
 {
     param_2->x = ptr_bgdata_room_fileposition_list[index].pos.x * room_data_float2;

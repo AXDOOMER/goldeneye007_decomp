@@ -194,13 +194,18 @@ f32 D_8003705C = 1.0f;
 coord3d D_80037060 = {0.0f,0.0f,0.0f};
 
 
-
+/*
+* Address: 0x7F091580
+*/
 Gfx * sub_GAME_7F091580(Gfx * arg0) {
     sub_GAME_7F0876C4(&stanbondx, &D_80037020, &D_8003702C);
     return arg0;
 }
 
 
+/*
+* Address: 0x7F0915BC
+*/
 void sub_GAME_7F0915BC(float scale)
 {
   float fVar1;
@@ -214,6 +219,9 @@ void sub_GAME_7F0915BC(float scale)
 }
 
 
+/*
+* Address: 0x7f091618
+*/
 void handle_debug_intropos(void)
 {
     coord3d* pos; //needed to be declared but not used to match
@@ -228,6 +236,9 @@ void handle_debug_intropos(void)
 }
 
 
+/*
+* Address: 0x7f09166c
+*/
 void debugSetWorldPos(void)
 {
     sqrtf((stanbondx.x - D_80037060.x) * (stanbondx.x - D_80037060.x) +
@@ -239,6 +250,9 @@ void debugSetWorldPos(void)
     D_80037060.z = stanbondx.z;
 }
 
+/*
+* Address: 0x7F0916F4
+*/
 void sub_GAME_7F0916F4(void)
 {
     coord3d *pos;

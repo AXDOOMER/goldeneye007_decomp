@@ -56,9 +56,9 @@ void setup_briefing_text_entry_parent(struct setup_objective_text *arg0)
 }
 
 
-
-
-
+/*
+* Address: 0x7f004fb8
+*/
 void add_ptr_to_objective(struct objective_entry* objective)
 {
     objective_ptrs[objective->menu] = objective;
