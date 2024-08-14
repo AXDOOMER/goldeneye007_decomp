@@ -110,7 +110,7 @@ void                 trigger_remote_mine_detonation(void);
 
 void                 objDetach(PropRecord *prop);
 void                 objFreeEmbedmentOrProjectile(PropRecord *);
-bool                 alarmIsActive();
+bool                 alarmIsActive(void);
 void                 init_trigger_toxic_gas_effect(coord3d *source);
 void                 chrSetWeaponFlag4(ChrRecord *chr, GUNHAND hand);
 void                 door7F053B10(DoorRecord *door);
@@ -133,7 +133,7 @@ s32                  objGetDestroyedLevel(ObjectRecord *obj);
 void                 doorActivateWrapper(PropRecord *prop);
 bool                 objIsHealthy(ObjectRecord *self);
 KeyRecord        *weaponFindThrown(s32 ID);
-bool                 check_if_toxic_gas_activated();
+bool                 check_if_toxic_gas_activated(void);
 HatRecord           *hatCreate(bool musthaveprop, bool musthavemodel, ModelFileHeader *modeldef);
 PropRecord*          objInitWithAutoModel(ObjectRecord* obj);
 PropRecord* objInitWithModelDef(ObjectRecord* object, ModelFileHeader* header);

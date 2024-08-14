@@ -263,7 +263,7 @@ void          chraiCheckUseHeldItems(void);
 bool          bond_interact_object(void);
 void          sub_GAME_7F03D0D4(void);
 void          chrpropRegisterRoom(PropRecord *, s16);
-PropRecord*           chrpropAllocate();
+PropRecord*           chrpropAllocate(void);
 void chrpropReparent(PropRecord *newChild, PropRecord *host);
 void          chrpropDeregisterRooms(PropRecord *);
 void          sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
