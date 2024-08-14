@@ -37,7 +37,7 @@ typedef struct s_explosiontype {
     u16 duration;
     u16 propagationrate;
     f32 flareanimspeed;
-    u16 numshrapnelbits;
+    s16 numshrapnelbits;
     //u16 field_0x26;
     f32 shrapnel_size;
     f32 shrapnel_scatter_dist;
@@ -60,24 +60,27 @@ typedef struct s_impacttype {
 struct ExplosionPart
 {
     coord3d pos;
-    u32 size;
-    u32 rot;
+    f32 size;
+    f32 rot;
     s16 frame;
     u8 bb;
 };
 
 struct Explosion {
     PropRecord *prop;
-    u32 unk04;
+    PropRecord *unk04;
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
-    u32 unk3C8;
-    s8 unk3CC;
+    s16 unk3C8;
+    s16 unk3CA;
+
+    s8 explosion_type;
     u8 unk3CD;
-    u16 unk3CE;
-    u32 unk3D0;
-    u32 unk3D4;
-    u32 unk3D8;
-    u32 unk3DC;
+    s8 player;
+    s8 unk3CF;
+
+    struct coord3d pos;
+    s16 room;
+    s16 unk3DE;
 };
 
 struct SmokePart
@@ -94,8 +97,8 @@ struct SmokePart
 
 struct Smoke {
     PropRecord *prop;
-    s16 unk04;
-    s16 unk06;
+    s16 duration;
+    s16 smoke_type;
     struct SmokePart parts[SMOKE_PARTS_LEN]; /*0x008*/
 };
 

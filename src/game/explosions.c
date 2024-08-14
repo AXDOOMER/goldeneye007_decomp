@@ -1029,10 +1029,10 @@ void sub_GAME_7F09C7C4(coord3d* arg0, coord3d* arg1, coord3d* arg2)
 #ifndef VERSION_US
             dist = sqrtf((diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z));
             if (dist == 0.0f) { dist = 0.0001f; }
-            dist2 = array_explosion_types[ptr_explosion_buf[i].unk3CC].explosion_size / dist;
+            dist2 = array_explosion_types[ptr_explosion_buf[i].explosion_type].explosion_size / dist;
 #else
             dist = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
-            dist2 = array_explosion_types[ptr_explosion_buf[i].unk3CC].explosion_size / sqrtf(dist);
+            dist2 = array_explosion_types[ptr_explosion_buf[i].explosion_type].explosion_size / sqrtf(dist);
 #endif
             explosion_mag += dist2 * 15.0f;
         }
@@ -3096,9 +3096,9 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
         else if (player_count >= 2)
         {
             smoke_tmp = (i + ptr_smoke_buf);
-            if (((smoke_tmp->unk06 != 7) && (smoke_tmp->unk06 != 8)) && (smoke_tmp->unk06 != 9))
+            if (((smoke_tmp->smoke_type != 7) && (smoke_tmp->smoke_type != 8)) && (smoke_tmp->smoke_type != 9))
             {
-                smoke_tmp->unk04 = (s16) array_smoke_types[smoke_tmp->unk06].duration;
+                smoke_tmp->duration = (s16) array_smoke_types[smoke_tmp->smoke_type].duration;
             }
         }
     }
@@ -3130,8 +3130,8 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
     chrpropActivateThisFrame(prop);
     chrpropEnable(prop);
     smoke->prop = prop;
-    smoke->unk04 = 0;
-    smoke->unk06 = arg2;
+    smoke->duration = 0;
+    smoke->smoke_type = arg2;
 }
 
 
