@@ -558,7 +558,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 break;
                 
             case 16: // collisions
-                set_obj_collision_flag(get_obj_collision_flag() == 0);
+                set_obj_collision_flag(get_obj_collision_flag() == FALSE);
                 break;
                 
             case 17: // all guns
@@ -715,7 +715,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 break;
                 
             case 57: // show patrols
-                set_show_patrols_flag(get_show_patrols_flag() == 0);
+                set_show_patrols_flag(get_show_patrols_flag() == FALSE);
                 break;
                 
             case 58: // intro

@@ -290,7 +290,7 @@ void init_player_BONDdata_stats(void)
     g_CurrentPlayer->tileColor.rgba[1] = 0xFF;
     g_CurrentPlayer->tileColor.rgba[2] = 0xFF;
     g_CurrentPlayer->tileColor.rgba[3] = 0;
-    g_CurrentPlayer->resetshadecol = 1;
+    g_CurrentPlayer->resetshadecol = TRUE;
     g_CurrentPlayer->aimtype = 0;
     g_CurrentPlayer->crosshair_angle.f[0] = 0.0f;
     g_CurrentPlayer->crosshair_angle.f[1] = 0.0f;
@@ -305,7 +305,7 @@ void init_player_BONDdata_stats(void)
     g_CurrentPlayer->field_1010.f[0] = 0.0f;
     g_CurrentPlayer->field_1010.f[1] = -3.1415927f;
     g_CurrentPlayer->field_1010.f[2] = 0.0f;
-    g_CurrentPlayer->copiedgoldeneye = 0;
+    g_CurrentPlayer->copiedgoldeneye = FALSE;
     g_CurrentPlayer->magnetattracttime = -1;
     g_CurrentPlayer->gunsync = 0.0f;
     g_CurrentPlayer->syncchange = 0.0f;
@@ -319,7 +319,7 @@ void init_player_BONDdata_stats(void)
     bgunCalculateBlend(GUNLEFT);
     bgunCalculateBlend(GUNLEFT);
     bgunCalculateBlend(GUNLEFT);
-    g_CurrentPlayer->gunammooff = 0;
+    g_CurrentPlayer->gunammooff = FALSE;
     g_CurrentPlayer->gunsightmode = 2;
     g_CurrentPlayer->sniper_zoom = sniperrifle_stats.Zoom;
     g_CurrentPlayer->camera_zoom = camera_stats.Zoom;

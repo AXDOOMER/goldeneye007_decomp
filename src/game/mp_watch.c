@@ -261,7 +261,7 @@ s32 mpFindMinFloat(s32 numplayers, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 
 void pauseAndLockControls(void) {
     lvlSetControlsLockedFlag(1);
-    g_pausedFlag = 1;
+    g_pausedFlag = TRUE;
 }
 
 
@@ -269,26 +269,26 @@ s32 disablePlayerActionsWhenPausedOrInMpMenu(void)
 {
     if (getPlayerCount() == 1)
     {
-        return 1;
+        return TRUE;
     }
 
     if (g_stopPlayFlag)
     {
-        return 0;
+        return FALSE;
     }
     
     if (g_CurrentPlayer->mpmenuon)
     {
-        return 0;
+        return FALSE;
     }
     
-    return 1;
+    return TRUE;
 }
 
 
 void mpwatchSetStopPlayFlag(void)
 {
-    g_stopPlayFlag = 1;
+    g_stopPlayFlag = TRUE;
 }
 
 
@@ -339,7 +339,7 @@ void mpCalculateAwards(s32 arg0)
 
         set_cur_player(i);
 
-        g_CurrentPlayer->mpmenuon = 1;
+        g_CurrentPlayer->mpmenuon = TRUE;
         g_CurrentPlayer->mpmenumode = 3;
         g_CurrentPlayer->ptr_text_first_mp_award = 0;
         g_CurrentPlayer->ptr_text_second_mp_award = 0;
@@ -549,9 +549,9 @@ void sub_GAME_7F0C2E80(void)
 
     if (player_count != 1)
     {
-        if ((g_CurrentPlayer->bonddead != 0) && (g_gameOverFlag == 0))
+        if ((g_CurrentPlayer->bonddead != FALSE) && (g_gameOverFlag == FALSE))
         {
-            g_CurrentPlayer->mpmenuon = 0;
+            g_CurrentPlayer->mpmenuon = FALSE;
             g_CurrentPlayer->healthdisplaytime = 0;
             return;
         }
@@ -586,7 +586,7 @@ void sub_GAME_7F0C2E80(void)
                 g_playerPerm->longest_inning = getMissiontimer() - g_CurrentPlayer->field_29F4;
             }
 
-            if (g_CurrentPlayer->mpmenuon != 0)
+            if (g_CurrentPlayer->mpmenuon != FALSE)
             {
                 if (mpwatchIsPlayerPressingRight(player_num) && mpwatchMenuCanGoRight())
                 {
@@ -628,7 +628,7 @@ void sub_GAME_7F0C2E80(void)
                     if (joyGetButtonsPressedThisFrame(player_num, 0x4000U))
                     {
                         mpwatchPlayBeep();
-                        g_CurrentPlayer->mpmenuon = 1;
+                        g_CurrentPlayer->mpmenuon = TRUE;
                         g_CurrentPlayer->mpmenumode = 3;
                     }
                 }
@@ -655,7 +655,7 @@ void sub_GAME_7F0C2E80(void)
                     }
                     else
                     {
-                        g_CurrentPlayer->mpmenuon = 0;
+                        g_CurrentPlayer->mpmenuon = FALSE;
                         g_CurrentPlayer->healthdisplaytime = (PAL ? 0x32 : 0x3C);
                         if (get_cur_playernum() == who_paused)
                         {
@@ -675,7 +675,7 @@ void sub_GAME_7F0C2E80(void)
                     if ((g_CurrentPlayer->mpmenumode == 6) && (g_CurrentPlayer->mpquitconfirm == 1))
                     {
                         mpwatchPlayBeep();
-                        g_CurrentPlayer->mpmenuon = 0;
+                        g_CurrentPlayer->mpmenuon = FALSE;
                         g_CurrentPlayer->healthdisplaytime = 0;
                         mpCalculateAwards(0);
                     }
@@ -694,7 +694,7 @@ void sub_GAME_7F0C2E80(void)
             if (joyGetButtonsPressedThisFrame(player_num, 0x1000U) != 0)
             {
                 mpwatchPlayBeep();
-                g_CurrentPlayer->mpmenuon = 1;
+                g_CurrentPlayer->mpmenuon = TRUE;
                 g_CurrentPlayer->mpmenumode = 3;
                 g_CurrentPlayer->mpjoywascentre = 1;
                 g_CurrentPlayer->apparenthealth = g_CurrentPlayer->bondhealth;
@@ -7894,7 +7894,7 @@ text_exit:
 
 s32 sub_GAME_7F0C6048(void)
 {
-    return g_gameOverFlag ? 0 : (g_CurrentPlayer->mpmenuon | (g_CurrentPlayer->healthdisplaytime > 0));
+    return g_gameOverFlag ? FALSE : (g_CurrentPlayer->mpmenuon | (g_CurrentPlayer->healthdisplaytime > 0));
 }
 
 s32 checkGamePaused(void) {

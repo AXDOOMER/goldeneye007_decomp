@@ -796,7 +796,7 @@ struct player
    * Offset 0x428.
    */
   s32 deathanimfinished;
-  s32 field_42c;
+  s32 field_42c; 
   s32 controldef; //0x430
 
   struct collision434 previous_collision_info;

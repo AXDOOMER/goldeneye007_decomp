@@ -2398,7 +2398,7 @@ void play_sound_for_shot_actor(ChrRecord *self)
     static s32 male_guard_yelp_counter = 0;
     static s32 female_guard_yelp_counter = 0;
 
-    if ((self->prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[getPlayerPointerIndex(self->prop)]->bonddead == 0))
+    if ((self->prop->type != PROP_TYPE_VIEWER) || (g_playerPointers[getPlayerPointerIndex(self->prop)]->bonddead == FALSE))
     {
         /*
         * decomp issue: mystery section.

@@ -241,7 +241,7 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
 
     sp30 = modelIsAnimMergingEnabled();
 
-    g_CurrentPlayer->resetheadtick = 0;
+    g_CurrentPlayer->resetheadtick = FALSE;
 
     modelSetAnimMergingEnabled(0);
     modelTickAnimQuarterSpeed(&g_CurrentPlayer->model, g_ClockTimer, 1);

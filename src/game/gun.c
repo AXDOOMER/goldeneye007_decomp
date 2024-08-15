@@ -21850,7 +21850,7 @@ void analyzeGEKey(void)
     if (bondinvHasGEKey())
     {
    	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D8_ANALYZINGTHEGOLDENEYEKEY_LF))); //Analyzing the GoldenEye key...
-    	g_CurrentPlayer->copiedgoldeneye = 1;
+    	g_CurrentPlayer->copiedgoldeneye = TRUE;
     	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
     	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
     	currentPlayerEquipWeaponWrapper(GUNLEFT, ITEM_UNARMED);
@@ -22185,10 +22185,10 @@ void gunTickGameplay(s32 triggerOn)
     used_to_load_1st_person_model_on_demand(1);
     sub_GAME_7F0671A4();
 
-    if (g_CurrentPlayer->resetshadecol != 0)
+    if (g_CurrentPlayer->resetshadecol)
     {
         set_color_shading_from_tile(get_curplayer_positiondata(), (struct rgba_u8 *) &g_CurrentPlayer->tileColor);
-        g_CurrentPlayer->resetshadecol = 0;
+        g_CurrentPlayer->resetshadecol = FALSE;
     }
     else
     {
@@ -26450,7 +26450,7 @@ void gunDrawSight(s32 *gdl) {
     f32 xypos[2];
     f32 halfedxy[2];
 
-    if ((g_CurrentPlayer->gunsightmode == 0) && (g_CurrentPlayer->mpmenuon == 0)) {
+    if ((g_CurrentPlayer->gunsightmode == 0) && (g_CurrentPlayer->mpmenuon == FALSE)) {
         sp54 = *gdl;
         texSelect(&sp54, crosshairimage, 4, 0, 0);
 

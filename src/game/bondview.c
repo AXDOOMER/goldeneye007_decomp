@@ -464,10 +464,10 @@ struct SetupIntroCamera *ptr_random06cam_entry = NULL;
  *
  * Address 0x800364C4.
  */
-s32 g_VisibleToGuardsFlag = 1;
+s32 g_VisibleToGuardsFlag = TRUE;
 
 //D:800364C8
-s32 obj_collision_flag = 1;
+s32 obj_collision_flag = TRUE;
 //D:800364CC
 f32 D_800364CC = 1.0;
 //D:800364D0
@@ -1455,8 +1455,8 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->watch_pause_time = 0;
     g_CurrentPlayer->field_1C4 = 0;
     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
-    g_CurrentPlayer->outside_watch_menu = 1;
-    g_CurrentPlayer->open_close_solo_watch_menu = 0;
+    g_CurrentPlayer->outside_watch_menu = TRUE;
+    g_CurrentPlayer->open_close_solo_watch_menu = FALSE;
     g_CurrentPlayer->field_1A0 = 0;
     g_CurrentPlayer->bondbreathing = 0.0f;
     g_CurrentPlayer->speedtheta = 0.0f;
@@ -1483,17 +1483,17 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_104 = 0;
     g_CurrentPlayer->field_108 = 0;
     g_CurrentPlayer->field_10C = 0;
-    g_CurrentPlayer->movecentrerelease = 0;
-    g_CurrentPlayer->lookaheadcentreenabled = 1;
-    g_CurrentPlayer->automovecentreenabled = 1;
-    g_CurrentPlayer->fastmovecentreenabled = 0;
-    g_CurrentPlayer->automovecentre = 1;
-    g_CurrentPlayer->insightaimmode = 0;
-    g_CurrentPlayer->autoyaimenabled = 1;
+    g_CurrentPlayer->movecentrerelease = FALSE;
+    g_CurrentPlayer->lookaheadcentreenabled = TRUE;
+    g_CurrentPlayer->automovecentreenabled = TRUE;
+    g_CurrentPlayer->fastmovecentreenabled = FALSE;
+    g_CurrentPlayer->automovecentre = TRUE;
+    g_CurrentPlayer->insightaimmode = FALSE;
+    g_CurrentPlayer->autoyaimenabled = TRUE;
     g_CurrentPlayer->autoaimy = 0.0f;
     g_CurrentPlayer->autoaim_target_y = NULL;
     g_CurrentPlayer->autoyaimtime60 = -1;
-    g_CurrentPlayer->autoxaimenabled = 1;
+    g_CurrentPlayer->autoxaimenabled = TRUE;
     g_CurrentPlayer->autoaimx = 0.0f;
     g_CurrentPlayer->autoaim_target_x = NULL;
     g_CurrentPlayer->autoxaimtime60 = -1;
@@ -1515,8 +1515,8 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->bondfadetimemax60 = -1.0f;
     g_CurrentPlayer->bondfadefracold = 0.0f;
     g_CurrentPlayer->bondfadefracnew = 0.0f;
-    g_CurrentPlayer->field_42c = 2;
-    g_CurrentPlayer->controldef = 0;
+    g_CurrentPlayer->field_42c = 2; 
+    g_CurrentPlayer->controldef = CONTROLLER_CONFIG_HONEY;
     g_CurrentPlayer->pause_starting_angle = 0.0f;
     g_CurrentPlayer->pause_related = 0.0f;
     g_CurrentPlayer->pause_target_angle = 0.0f;
@@ -1525,7 +1525,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->field_218 = 0;
     g_CurrentPlayer->step_in_view_watch_animation = 0;
     g_CurrentPlayer->pause_animation_counter = 0.0f;
-    g_CurrentPlayer->pausing_flag = 0;
+    g_CurrentPlayer->pausing_flag = FALSE;
     g_CurrentPlayer->buttons_pressed = (u16)0;
     g_CurrentPlayer->prev_buttons_pressed = (u16)0;
     g_CurrentPlayer->field_29C0 = 15.0f;
@@ -4184,7 +4184,7 @@ void bondviewSetCameraMode(s32 arg0)
             fogLoadLevelEnvironment(bossGetStageNum(), 0);
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 0)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
         {
             currentPlayerEquipWeaponWrapper(GUNLEFT, starting_weapon[GUNLEFT]);
             currentPlayerEquipWeaponWrapper(GUNRIGHT, starting_weapon[GUNRIGHT]);
@@ -4880,9 +4880,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             }
 
             if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
-                && (g_CurrentPlayer->bonddead != 0)
-                && (g_CurrentPlayer->redbloodfinished != 0)
-                && (g_CurrentPlayer->deathanimfinished != 0))
+                && (g_CurrentPlayer->bonddead)
+                && (g_CurrentPlayer->redbloodfinished)
+                && (g_CurrentPlayer->deathanimfinished))
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
                 D_80036510 = CAMERAMODE_FADESWIRL;
@@ -4898,9 +4898,9 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             }
 
             if ((buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON))
-                && (g_CurrentPlayer->bonddead != 0)
-                && (g_CurrentPlayer->redbloodfinished != 0)
-                && (g_CurrentPlayer->deathanimfinished != 0))
+                && (g_CurrentPlayer->bonddead)
+                && (g_CurrentPlayer->redbloodfinished)
+                && (g_CurrentPlayer->deathanimfinished))
             {
                 D_80036510 = CAMERAMODE_FADESWIRL;
             }
@@ -5550,7 +5550,7 @@ s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
     {
         sp90 = g_CurrentPlayer->field_488.current_tile_ptr;
 
-        if (obj_collision_flag != 0)
+        if (obj_collision_flag)
         {
             sp8C = 0x1F;
         }
@@ -5571,7 +5571,7 @@ s32 bondviewTryMoveToStan(struct coord3d *arg0, StandTile **stan)
 
         if (stanGetLocusField0(&sp3C) != 0)
         {
-            g_CurrentPlayer->autocrouchpos = 0;
+            g_CurrentPlayer->autocrouchpos = CROUCH_SQUAT;
         }
 
         if ((stanTestLineUnobstructed(
@@ -7040,11 +7040,11 @@ void bondviewWatchAnimationTick(void)
 
         g_CurrentPlayer->field_1C4 += g_ClockTimer;
         g_CurrentPlayer->watch_pause_time += 1;
-        g_CurrentPlayer->pausing_flag = 0;
+        g_CurrentPlayer->pausing_flag = FALSE;
 
-        if (g_CurrentPlayer->watch_animation_state == 1)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x1)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7069,16 +7069,16 @@ void bondviewWatchAnimationTick(void)
                             && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED)))
                     && (g_CurrentPlayer->field_1C4 >= sp38))
                 {
-                    g_CurrentPlayer->watch_animation_state = 2;
+                    g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x2;
                     g_CurrentPlayer->watch_pause_time = 1;
                     g_CurrentPlayer->field_1C4 = 0;
                 }
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 2)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x2)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7103,7 +7103,7 @@ void bondviewWatchAnimationTick(void)
 
             if ((g_CurrentPlayer->field_214 - g_CurrentPlayer->field_210) < 30.0f)
             {
-                g_CurrentPlayer->watch_animation_state = 3;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x3;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
 
@@ -7111,7 +7111,7 @@ void bondviewWatchAnimationTick(void)
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 3)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x3)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7151,17 +7151,17 @@ void bondviewWatchAnimationTick(void)
                 sub_GAME_7F07E068() != 0
                 )
             {
-                g_CurrentPlayer->pausing_flag = 1;
+                g_CurrentPlayer->pausing_flag = TRUE;
             }
             else
             {
-                g_CurrentPlayer->watch_animation_state = 4;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x4;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 4)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x4)
         {
             if ((g_CurrentPlayer->watch_pause_time == 1) && (g_CurrentPlayer->field_21C != 0))
             {
@@ -7173,41 +7173,41 @@ void bondviewWatchAnimationTick(void)
 
             if (check_watch_page_transistion_running() != 0)
             {
-                g_CurrentPlayer->pausing_flag = 1;
+                g_CurrentPlayer->pausing_flag = TRUE;
             }
             else
             {
-                g_CurrentPlayer->watch_animation_state = 5;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x5;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
                 g_CurrentPlayer->field_21C = 1;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 5)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
                 sub_GAME_7F0C1310();
             }
 
-            g_CurrentPlayer->pausing_flag = 1;
+            g_CurrentPlayer->pausing_flag = TRUE;
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 12)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc)
         {
-            g_CurrentPlayer->pausing_flag = 1;
+            g_CurrentPlayer->pausing_flag = TRUE;
 
             if (g_CurrentPlayer->watch_pause_time >= 3)
             {
-                g_CurrentPlayer->watch_animation_state = 6;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x6;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
                 sndPlaySfx(g_musicSfxBufferPtr, 0xEE, NULL);
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 6)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x6)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7223,18 +7223,18 @@ void bondviewWatchAnimationTick(void)
             }
             if (check_watch_page_transistion_running())
             {
-                g_CurrentPlayer->pausing_flag = 1;
+                g_CurrentPlayer->pausing_flag = TRUE;
             }
             else
             {
-                g_CurrentPlayer->watch_animation_state = 7;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x7;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
                 g_CurrentPlayer->field_21C = 1;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 7)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x7)
         {
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7259,19 +7259,19 @@ void bondviewWatchAnimationTick(void)
 
             if ((g_CurrentPlayer->step_in_view_watch_animation != 0) && (g_CurrentPlayer->step_in_view_watch_animation != 3))
             {
-                g_CurrentPlayer->pausing_flag = 1;
+                g_CurrentPlayer->pausing_flag = TRUE;
             }
             else
             {
-                g_CurrentPlayer->watch_animation_state = 8;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 8)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x8)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7311,16 +7311,16 @@ void bondviewWatchAnimationTick(void)
                     bondviewClearUpperTextDisplayFlag(1);
                     countdownTimerSetVisible(4, 1);
 
-                    g_CurrentPlayer->watch_animation_state = 0;
+                    g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
                     g_CurrentPlayer->watch_pause_time = 0;
                     g_CurrentPlayer->field_1C4 = 0;
                 }
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 9)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x9)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (
                 (getCurrentPlayerWeaponId(GUNLEFT) != get_item_in_hand_or_watch_menu(GUNLEFT))
@@ -7329,15 +7329,15 @@ void bondviewWatchAnimationTick(void)
                     (sp3c == 0)
                     || (((getCurrentPlayerWeaponId(GUNRIGHT) != get_item_in_hand_or_watch_menu(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
-                g_CurrentPlayer->watch_animation_state = 8;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 0;
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 10)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xa)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (g_CurrentPlayer->watch_pause_time == 1)
             {
@@ -7351,15 +7351,15 @@ void bondviewWatchAnimationTick(void)
                     (sp3c == 0)
                     || (((getCurrentPlayerWeaponId(GUNRIGHT) != get_item_in_hand_or_watch_menu(GUNRIGHT))) && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
-                g_CurrentPlayer->watch_animation_state = 8;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 0;
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 11)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xb)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (
                 (getCurrentPlayerWeaponId(GUNLEFT) == get_item_in_hand_or_watch_menu(GUNLEFT))
@@ -7370,15 +7370,15 @@ void bondviewWatchAnimationTick(void)
                         ( (getCurrentPlayerWeaponId(GUNRIGHT) == get_item_in_hand_or_watch_menu(GUNRIGHT)))
                         && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED))))
             {
-                g_CurrentPlayer->watch_animation_state = 1;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
                 g_CurrentPlayer->watch_pause_time = 0;
                 g_CurrentPlayer->field_1C4 = 0;
             }
         }
 
-        if (g_CurrentPlayer->watch_animation_state == 13)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xd)
         {
-            g_CurrentPlayer->pausing_flag = 0;
+            g_CurrentPlayer->pausing_flag = FALSE;
 
             if (Gun_hand_without_item(GUNLEFT)
                 && Gun_hand_without_item(GUNRIGHT))
@@ -7388,7 +7388,7 @@ void bondviewWatchAnimationTick(void)
                     && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 7)
                     && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 8))
                 {
-                    g_CurrentPlayer->watch_animation_state = 1;
+                    g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
                     g_CurrentPlayer->watch_pause_time = 0;
                     g_CurrentPlayer->field_1C4 = 0;
                 }
@@ -7400,12 +7400,12 @@ void bondviewWatchAnimationTick(void)
         bondviewUpdateWatchZoomIn();
     }
 
-    if (g_CurrentPlayer->watch_animation_state == 5)
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5)
     {
         lvlSetControlsLockedFlag(TRUE);
         sub_GAME_7F0A6A80();
     }
-    else if (g_CurrentPlayer->watch_animation_state == 12)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc)
     {
         lvlSetControlsLockedFlag(TRUE);
     }
@@ -7421,7 +7421,7 @@ void bondviewWatchAnimationTick(void)
 
 
 void set_open_close_solo_watch_menu_to1(void) {
-    g_CurrentPlayer->open_close_solo_watch_menu = 1;
+    g_CurrentPlayer->open_close_solo_watch_menu = TRUE;
 }
 
 
@@ -7440,7 +7440,7 @@ void trigger_solo_watch_menu(s32 arg0)
     struct WatchVertex *ptr_copy;
     int i;
 
-    if (g_CurrentPlayer->watch_animation_state == 0)
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
     {
         if (arg0 == 0)
         {
@@ -7457,11 +7457,11 @@ void trigger_solo_watch_menu(s32 arg0)
                 && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 7)
                 && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 8))
             {
-                g_CurrentPlayer->watch_animation_state = 1;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
             }
             else
             {
-                g_CurrentPlayer->watch_animation_state = 0xD;
+                g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xd;
             }
 
             g_CurrentPlayer->watch_pause_time = 0;
@@ -7516,100 +7516,100 @@ void trigger_solo_watch_menu(s32 arg0)
             */
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 1)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x1)
     {
-        g_CurrentPlayer->watch_animation_state = 9;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x9;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 2)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x2)
     {
-        g_CurrentPlayer->watch_animation_state = 0xA;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xa;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 3)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x3)
     {
-        g_CurrentPlayer->watch_animation_state = 7;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x7;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 4)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x4)
     {
-        g_CurrentPlayer->watch_animation_state = 6;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x6;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 5)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5)
     {
         deleteCurrentSelectedFolder();
         sub_GAME_7F0C1340();
-        g_CurrentPlayer->watch_animation_state = 0xC;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xc;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
-        g_CurrentPlayer->open_close_solo_watch_menu = 0;
+        g_CurrentPlayer->open_close_solo_watch_menu = FALSE;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 12)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc)
     {
         // removed
     }
-    else if (g_CurrentPlayer->watch_animation_state == 6)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x6)
     {
         if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 4;
+            g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x4;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 7)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x7)
     {
         if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 3;
+            g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x3;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 8)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x8)
     {
         if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 0xB;
+            g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xb;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 9)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x9)
     {
         if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 1;
+            g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 10)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xa)
     {
         if (arg0 == 0)
         {
-            g_CurrentPlayer->watch_animation_state = 1;
+            g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
             g_CurrentPlayer->watch_pause_time = 0;
             g_CurrentPlayer->field_1C4 = 0;
         }
     }
-    else if (g_CurrentPlayer->watch_animation_state == 11)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xb)
     {
-        g_CurrentPlayer->watch_animation_state = 8;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
         g_CurrentPlayer->watch_pause_time = 0;
         g_CurrentPlayer->field_1C4 = 0;
     }
-    else if (g_CurrentPlayer->watch_animation_state == 13)
+    else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xd)
     {
-        g_CurrentPlayer->watch_animation_state = 0;
+        g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
     }
 }
 
@@ -7997,13 +7997,13 @@ void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
     }
     else
     {
-        if (g_CurrentPlayer->startnewbonddie != 0)
+        if (g_CurrentPlayer->startnewbonddie)
         {
             // HACK: ptr_animation_table dereference addition is backwards.
             // this should be:
             // ptr_animation_table->data[g_bondviewBondDeathAnimations[((u32) randomGetNext() % (u32) g_bondviewBondDeathAnimationsCount)]]
             bheadStartDeathAnimation((struct ModelAnimation *) ((s32)g_bondviewBondDeathAnimations[((u32) randomGetNext() % (u32) g_bondviewBondDeathAnimationsCount)] + (s32)&ptr_animation_table->data[0]), randomGetNext() & 1, 0.0f, 1.0f);
-            g_CurrentPlayer->startnewbonddie = 0;
+            g_CurrentPlayer->startnewbonddie = FALSE;
         }
 
         bheadSetSpeed(0.5f);
@@ -8293,7 +8293,7 @@ void bondviewUpdatePlayerCollisionPositionFields(void)
         g_CurrentPlayer->field_488.pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2];
     }
 
-    if (g_CurrentPlayer->bonddead != 0)
+    if (g_CurrentPlayer->bonddead != FALSE)
     {
         if (g_CurrentPlayer->field_29C0 > 0.0f)
         {
@@ -8528,14 +8528,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     moveData.analogStrafe = moveData.controlStickXSafe;
     moveData.analogWalk = moveData.controlStickYSafe;
 
-    if (g_CurrentPlayer->bonddead == 0
+    if (g_CurrentPlayer->bonddead == FALSE
         && g_bondviewForceDisarm <= 0
         && (
-            (g_CurrentPlayer->watch_animation_state != 5
+            (g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0x5
                 && ((buttons & ~oldbuttons) & START_BUTTON)
             )
             ||
-            (g_CurrentPlayer->watch_animation_state == 5
+            (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5
                 && g_CurrentPlayer->open_close_solo_watch_menu)
         )
         && (getPlayerCount() == 1))
@@ -8543,8 +8543,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         trigger_solo_watch_menu(0);
     }
 
-    if (g_CurrentPlayer->watch_animation_state == 0
-        && g_CurrentPlayer->bonddead == 0
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0
+        && g_CurrentPlayer->bonddead == FALSE
         && (
             getPlayerCount() == 1
             || (
@@ -8800,7 +8800,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
 
             moveData.triggerOn = (sp10C)
-                && (g_CurrentPlayer->watch_animation_state == 0)
+                && (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
                 && ((buttons & A_BUTTON) == 0)
                 && ((player_joyGetButtons & A_BUTTON) == 0);
 
@@ -9062,7 +9062,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             }
 
             moveData.triggerOn = ((buttons & shootButtons)  != 0)
-                && (g_CurrentPlayer->watch_animation_state == 0)
+                && (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
                 && ((buttons & invButtons) == 0);
 
             /* 1.2 and 1.4 */
@@ -9103,7 +9103,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 g_CurrentPlayer->bondshotspeed.f[i_0] = 0;
             }
 
-            g_CurrentPlayer->crouchpos = 2;
+            g_CurrentPlayer->crouchpos = CROUCH_STAND;
         }
         /* If Bond is standing on the tank and pressed B, enter the tank. */
         else if (g_PlayerTankProp != NULL
@@ -9129,7 +9129,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_CurrentPlayer->speedsideways = 0;
             g_CurrentPlayer->speedforwards = 0;
             g_CurrentPlayer->speedtheta = 0;
-            g_CurrentPlayer->crouchpos = 1;
+            g_CurrentPlayer->crouchpos = CROUCH_HALF;
             g_TankEnteringSitHeight = 0;
             g_TankEnteringSitHeightRemain = 1.0f;
             g_TankEnterBondHorizAngleDeg = g_CurrentPlayer->vv_theta;
@@ -9196,7 +9196,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         camera_sniper_zoom_in(moveData.zoomInFovPersec);
     }
 
-    if (g_CurrentPlayer->watch_animation_state == 0)
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
     {
         ftemp_nostack_spE0 = 60.0f;
 
@@ -9435,7 +9435,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
     }
 
-    if (g_CurrentPlayer->watch_animation_state == 0)
+    if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
     {
         spC4 = -4.0f;
 
@@ -9489,7 +9489,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         if ((g_CurrentPlayer->movecentrerelease) && (moveData.analogWalk < 40) && (moveData.analogWalk > -40))
         {
-            g_CurrentPlayer->movecentrerelease = 0;
+            g_CurrentPlayer->movecentrerelease = FALSE;
         }
 
         if (in_tank_flag == 0)
@@ -9498,25 +9498,25 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             {
                 g_CurrentPlayer->field_104 = 0;
                 g_CurrentPlayer->field_10C = 1;
-                g_CurrentPlayer->automovecentre = 0;
+                g_CurrentPlayer->automovecentre = FALSE;
             }
             else
             {
                 if (moveData.disableLookAhead)
                 {
-                    g_CurrentPlayer->automovecentre = 0;
+                    g_CurrentPlayer->automovecentre = FALSE;
                 }
                 else if (g_CurrentPlayer->automovecentreenabled)
                 {
                     if ((moveData.canLookAhead) && ((moveData.analogWalk > 60) || (moveData.analogWalk < -60)))
                     {
-                        g_CurrentPlayer->automovecentre = 1;
+                        g_CurrentPlayer->automovecentre = TRUE;
                     }
 
                     if ((
                         g_CurrentPlayer->automovecentre)
                         && (( ((spC4 + 5.0f) < g_CurrentPlayer->vv_verta)) || (g_CurrentPlayer->vv_verta < (spC4 + -FLOAT_TEN_A)))
-                        && (g_CurrentPlayer->movecentrerelease == 0))
+                        && (g_CurrentPlayer->movecentrerelease == FALSE))
                     {
                         g_CurrentPlayer->field_104 = 1;
                     }
@@ -9529,7 +9529,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                         || (moveData.analogWalk < -60)
                     ) && (
                         ( ((spC4 + 5.0f) < g_CurrentPlayer->vv_verta)) || (g_CurrentPlayer->vv_verta < (spC4 + -FLOAT_TEN_A))
-                    ) && (g_CurrentPlayer->movecentrerelease == 0))
+                    ) && (g_CurrentPlayer->movecentrerelease == FALSE))
                 {
                     g_CurrentPlayer->field_104 = 1;
                 }
@@ -9612,7 +9612,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 if ((moveData.canLookAhead) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
-                    g_CurrentPlayer->movecentrerelease = 1;
+                    g_CurrentPlayer->movecentrerelease = TRUE;
                 }
             }
             else if (moveData.speedVertaUp > 0)
@@ -9621,7 +9621,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
                 if ((moveData.canLookAhead) && ((moveData.analogWalk > 60) || (moveData.analogWalk < 60)))
                 {
-                    g_CurrentPlayer->movecentrerelease = 1;
+                    g_CurrentPlayer->movecentrerelease = TRUE;
                 }
             }
             else
@@ -9738,14 +9738,14 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
     if (moveData.canSwivelGun)
     {
-        g_CurrentPlayer->controldef = 0;
+        g_CurrentPlayer->controldef = CONTROLLER_CONFIG_HONEY;
     }
     else if (moveData.canManualAim)
     {
-        g_CurrentPlayer->controldef = 2;
+        g_CurrentPlayer->controldef = CONTROLLER_CONFIG_KISSY;
     }
 
-    if (g_CurrentPlayer->controldef == 0)
+    if (g_CurrentPlayer->controldef == CONTROLLER_CONFIG_HONEY)
     {
         gunSetAimType(0);
 
@@ -9775,7 +9775,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         sub_GAME_7F067F58(sp70, ftemp_nostack_sp78, MAX_AIMLOCK_SPEED_DEFAULT);
     }
-    else if (g_CurrentPlayer->controldef == 2)
+    else if (g_CurrentPlayer->controldef == CONTROLLER_CONFIG_KISSY)
     {
         gunSetAimType(0);
         sub_GAME_7F067FBC(((f32) moveData.controlStickXRaw * 0.65f) / 80.0f, ((f32) moveData.controlStickYRaw * 0.65f) / 80.0f);
@@ -9872,7 +9872,7 @@ void bondviewPlayerTickDamageAndHealth(void)
             }
 #endif
 
-            if (g_CurrentPlayer->watch_animation_state == 0)
+            if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x0)
             {
 #if defined(VERSION_US)
                 g_CurrentPlayer->damageshowtime += g_ClockTimer;
@@ -10069,7 +10069,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         bondviewPlayerStopAudioForPause();
     }
 
-    if (g_CurrentPlayer->watch_animation_state)
+    if (g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0x0)
     {
         bondviewWatchAnimationTick();
     }
@@ -11734,7 +11734,7 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
 
     if (g_CurrentPlayer->bonddead)
     {
-        if (g_CurrentPlayer->redbloodfinished == 0)
+        if (g_CurrentPlayer->redbloodfinished == FALSE)
         {
             currentPlayerEquipWeaponWrapper(GUNLEFT, 0);
             currentPlayerEquipWeaponWrapper(GUNRIGHT, 0);
@@ -11917,7 +11917,7 @@ s32 sub_GAME_7F087A08(s32 arg0) {
         temp_a1 = (temp_v1 + 0x38);
         sp4C.unk4 = (?32) D_80036830.unk4;
         sp4C.unk8 = (?32) D_80036830.unk8;
-        if (g_CurrentPlayer->bonddead == 0)
+        if (g_CurrentPlayer->bonddead == FALSE)
         {
             // Node 3
             sp58 = temp_v1;
@@ -16405,9 +16405,9 @@ PropRecord* get_curplayer_positiondata(void) {
  */
 void bondviewKillCurrentPlayer(void)
 {
-    if ((g_CurrentPlayer->bondinvincible == 0) && (g_CurrentPlayer->bonddead == 0))
+    if ((g_CurrentPlayer->bondinvincible == 0) && (g_CurrentPlayer->bonddead == FALSE))
     {
-        if (g_CurrentPlayer->watch_animation_state != 0)
+        if (g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0x0)
         {
             trigger_solo_watch_menu(1);
         }
@@ -16472,7 +16472,7 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
     s32 sp2C;
     s32 sp28;
 
-    if (g_CurrentPlayer->watch_animation_state != 0)
+    if (g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0x0)
     {
         sub_GAME_7F0A2F30(g_CurrentPlayer->armor_display_values, 0x2E, 1, get_BONDdata_watch_armor());
         sub_GAME_7F0A2F30(g_CurrentPlayer->health_display_values, 0x2E, -1, bondviewGetCurrentPlayerHealth());
@@ -16485,7 +16485,7 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
             damage_dealt *= 0.25f;
         }
 
-        if (g_CurrentPlayer->bonddead == 0 && g_CurrentPlayer->bondinvincible == 0)
+        if (g_CurrentPlayer->bonddead == FALSE && g_CurrentPlayer->bondinvincible == FALSE)
         {
             joyRumblePakStart(get_cur_playernum(), 0.25);
             if (cur_player_get_control_type() >= 4)
@@ -16502,10 +16502,10 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
             damage_dealt = (g_CurrentPlayer->bondhealth * g_CurrentPlayer->actual_health) + (g_CurrentPlayer->bondarmour * g_CurrentPlayer->actual_armor);
         }
 
-        if (g_CurrentPlayer->bondinvincible == 0 && g_CurrentPlayer->bonddead == 0 && g_PlayerInvincible == 0 &&
+        if (g_CurrentPlayer->bondinvincible == FALSE && g_CurrentPlayer->bonddead == FALSE && g_PlayerInvincible == FALSE &&
             (g_CurrentPlayer->damageshowtime < 0 || (getPlayerCount() >= 2 && g_CurrentPlayer->damageshowtime == 0)))
         {
-            if (g_CurrentPlayer->watch_animation_state != 5 && g_CurrentPlayer->watch_animation_state != 0xC)
+            if (g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0x5 && g_CurrentPlayer->watch_animation_state != WATCH_ANIMATION_0xc)
             {
                 g_CurrentPlayer->oldhealth = g_CurrentPlayer->bondhealth;
                 g_CurrentPlayer->oldarmour = g_CurrentPlayer->bondarmour;
@@ -16822,7 +16822,7 @@ void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_
     temp_v0 = getPlayerPointerIndex(arg0);
     if (g_playerPointers[temp_v0]->field_AC != 0)
     {
-        if (getPlayerCount() == 1 || g_playerPointers[temp_v0]->bonddead == 0)
+        if (getPlayerCount() == 1 || g_playerPointers[temp_v0]->bonddead == FALSE)
         {
             if (g_playerPointers[temp_v0]->unknown != 1)
             {
@@ -16927,7 +16927,7 @@ void bondviewAddCurrentPlayerArmor(f32 arg0)
  */
 void bondviewResetIntroCameraMessageDialogs(void)
 {
-    g_CurrentPlayer->hudmessoff = 0;
+    g_CurrentPlayer->hudmessoff = FALSE;
     g_CurrentPlayer->bondmesscnt = -1;
     display_statusbar = 0;
     status_bar_text_buffer_index = 0;
@@ -17043,7 +17043,7 @@ void jp_hudmsgBottomShow(char *string)
  */
 void bondviewIntroCameraTextTick(void)
 {
-    if ((g_CurrentPlayer->hudmessoff == 0) && (g_CurrentPlayer->mpmenuon == 0))
+    if ((g_CurrentPlayer->hudmessoff == FALSE) && (g_CurrentPlayer->mpmenuon == FALSE))
     {
         if (g_CurrentPlayer->bondmesscnt >= 0)
         {
@@ -17087,7 +17087,7 @@ Gfx* sub_GAME_7F08A5FC(Gfx* arg0)
     s32 view_top_offset;
     s32 view_left_offset;
 
-    if ((g_CurrentPlayer->hudmessoff == 0) && (g_CurrentPlayer->bondmesscnt >= 0) && (g_CurrentPlayer->mpmenuon == 0))
+    if ((g_CurrentPlayer->hudmessoff == FALSE) && (g_CurrentPlayer->bondmesscnt >= 0) && (g_CurrentPlayer->mpmenuon == FALSE))
     {
         var_v1 = 0;
         if (getPlayerCount() == 1)
@@ -17208,7 +17208,7 @@ void hudmsgTopShow(char* string)
  */
 void bondviewUpperTextWindowTimerTick(void)
 {
-    if ((g_UpperTextDisplayFlag == 0) && (g_CurrentPlayer->mpmenuon == 0))
+    if ((g_UpperTextDisplayFlag == FALSE) && (g_CurrentPlayer->mpmenuon == FALSE))
     {
         if (upper_text_window_timer >= 0)
         {

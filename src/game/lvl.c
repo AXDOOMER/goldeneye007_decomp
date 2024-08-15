@@ -1309,10 +1309,10 @@ void lvlManageMpGame(void)
             {
                 p = g_playerPointers[i];
 
-                if (p->bonddead != 0)
+                if (p->bonddead != FALSE)
                 {
                     mp_alive_count++;
-                    if (p->redbloodfinished != 0)
+                    if (p->redbloodfinished)
                     {
                         mp_player_field424_count++;
                     }
@@ -1380,8 +1380,8 @@ void lvlManageMpGame(void)
             {
                 p = g_playerPointers[i];
 
-                if (p->bonddead != 0 &&
-                    (p->redbloodfinished == 0 || p->deathanimfinished == 0 || p->colourfadetimemax60 >= 0.0f))
+                if (p->bonddead != FALSE &&
+                    (p->redbloodfinished == FALSE || p->deathanimfinished == FALSE || p->colourfadetimemax60 >= 0.0f))
                 {
                     mp_player_currently_in_dying_animation++;
                 }
@@ -1431,7 +1431,7 @@ void lvlManageMpGame(void)
                         {
                             for (j=0; j<var_player_count2_again; j++)
                             {
-                                if (g_playerPointers[j]->bonddead == 0)
+                                if (g_playerPointers[j]->bonddead == FALSE)
                                 {
                                     not_dead_count++;
                                 }
@@ -1443,28 +1443,28 @@ void lvlManageMpGame(void)
                         {
                             for (j=0; j<var_player_count2_again; j++)
                             {
-                                if (g_playerPointers[0]->bonddead == 0)
+                                if (g_playerPointers[PLAYER_1]->bonddead == FALSE)
                                 {
                                     not_dead_count++;
                                 }
-                                if (g_playerPointers[1]->bonddead == 0)
+                                if (g_playerPointers[PLAYER_2]->bonddead == FALSE)
                                 {
                                     not_dead_count++;
                                 }
-                                if (g_playerPointers[2]->bonddead == 0)
+                                if (g_playerPointers[PLAYER_3]->bonddead == FALSE)
                                 {
                                     not_dead_count++;
                                 }
-                                if (g_playerPointers[3]->bonddead == 0)
+                                if (g_playerPointers[PLAYER_4]->bonddead == FALSE)
                                 {
                                     not_dead_count++;
                                 }
 
                                 killed_count =
-                                    g_playerPlayerData[0].killed_p1 +
-                                    g_playerPlayerData[1].killed_p1 +
-                                    g_playerPlayerData[2].killed_p1 +
-                                    g_playerPlayerData[3].killed_p1;
+                                    g_playerPlayerData[PLAYER_1].killed_p1 +
+                                    g_playerPlayerData[PLAYER_2].killed_p1 +
+                                    g_playerPlayerData[PLAYER_3].killed_p1 +
+                                    g_playerPlayerData[PLAYER_4].killed_p1;
                             }
                         }
                     }
@@ -1476,7 +1476,7 @@ void lvlManageMpGame(void)
                             g_playerPlayerData[i].order_out_in_yolt = (u8) (phi_a2_5 + 1);
                         }
 
-                        if ((g_playerPointers[i]->redbloodfinished != 0) && (g_playerPointers[i]->deathanimfinished != 0) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
+                        if ((g_playerPointers[i]->redbloodfinished) && (g_playerPointers[i]->deathanimfinished) && (g_playerPointers[i]->colourfadetimemax60 < 0.0f))
                         {
                             phi_ra_2 = phi_ra_3 + 1;
                         }

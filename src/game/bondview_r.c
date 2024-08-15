@@ -463,8 +463,8 @@ void bondviewLoadSetupIntroSection(void)
         g_bondviewBondDeathAnimationsCount++;
     }
     
-    g_CurrentPlayer->startnewbonddie = 1;
-    g_CurrentPlayer->redbloodfinished = 0;
-    g_CurrentPlayer->deathanimfinished = 0;
+    g_CurrentPlayer->startnewbonddie = TRUE;
+    g_CurrentPlayer->redbloodfinished = FALSE;
+    g_CurrentPlayer->deathanimfinished = FALSE;
     D_80036510 = CAMERAMODE_NONE;
 }

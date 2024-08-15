@@ -13,7 +13,7 @@ void init_guards(void) {
     D_8002C90C = 0;
     D_8002C910 = 0;
     D_8002CC58 = 0;
-    show_patrols_flag = 0;
+    show_patrols_flag = FALSE;
     player1_guardID = 0x1388;
     g_ChrSlots = 0;
     g_NumChrSlots = 0;

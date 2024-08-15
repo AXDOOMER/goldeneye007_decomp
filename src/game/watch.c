@@ -290,10 +290,10 @@ void init_watch_at_start_of_stage(int stage)
     }
 
     g_CurrentPlayer->neg_vspacing_for_control_type_entry = 0;
-    g_CurrentPlayer->cur_player_control_type_1 = 0;
-    g_CurrentPlayer->cur_player_control_type_0 = 0;
+    g_CurrentPlayer->cur_player_control_type_1 = CONTROLLER_CONFIG_HONEY;
+    g_CurrentPlayer->cur_player_control_type_0 = CONTROLLER_CONFIG_HONEY;
     g_CurrentPlayer->cur_player_control_type_2 = 0.0f;
-    g_CurrentPlayer->has_set_control_type_data = 1;
+    g_CurrentPlayer->has_set_control_type_data = TRUE;
     D_800409D8 = 8;
 
     controlstick_lr_enabled = 0;
@@ -439,7 +439,7 @@ void cur_player_set_control_type(int type)
     langsize = j_text_trigger ? 14 : 10;
 
     g_CurrentPlayer->neg_vspacing_for_control_type_entry = -(langsize * type);
-    g_CurrentPlayer->has_set_control_type_data = 1;
+    g_CurrentPlayer->has_set_control_type_data = TRUE;
 
 }
 
@@ -2399,7 +2399,7 @@ Gfx *draw_background_health_and_armor(Gfx *gdl, Mtx *arg1, s32 zoom_squish)
         scale = 0.05f;
         g_WatchBackgroundGreen = 0xE0;
 
-        if (g_CurrentPlayer->watch_animation_state == 4 || g_CurrentPlayer->watch_animation_state == 6)
+        if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x4 || g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x6)
         {
             scale = bondviewWatchAnimationRelated();
         }
@@ -7867,7 +7867,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0); //action
     }
 
-    if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
+    if ((g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_PLENTY) || (g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_GALORE))
     {
         textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_00_FIRE_LF)); //fire
     }
@@ -7885,7 +7885,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         gdl = sub_GAME_7F0A9398(gdl, 0x5A, YOFFSET_5, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 0);
     }
 
-    if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
+    if ((g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_PLENTY) || (g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_DOMINO))
     {
         textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_05_MOVE_LF)); //move
     }
@@ -7914,7 +7914,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_ACTIONTEXT, langGet(getStringID(LOPTIONS, OPTION_STR_02_ACTION_LF)), 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1); //action
     }
 
-    if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 5))
+    if ((g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_PLENTY) || (g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_GALORE))
     {
         textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_01_AIM_LF)); //aim
     }
@@ -7932,7 +7932,7 @@ Gfx *display_text_buttons_dual_control(Gfx *gdl)
         gdl = sub_GAME_7F0A9398(gdl, 0xE6, YOFFSET_5, textptr_aux, 0xAA00B0, 0, -1, 0, 0, 0x3000B0, 1);
     }
 
-    if ((g_CurrentPlayer->cur_player_control_type_0 == 4) || (g_CurrentPlayer->cur_player_control_type_0 == 6))
+    if ((g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_PLENTY) || (g_CurrentPlayer->cur_player_control_type_0 == CONTROLLER_CONFIG_DOMINO))
     {
         textptr_aux = langGet(getStringID(LOPTIONS, OPTION_STR_06_LOOK_LF)); //look
     }
@@ -11322,7 +11322,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning)
 
     if (watch_transitioning == TRUE)
     {
-        set_BONDdata_outside_watch_menu_flag(0);
+        set_BONDdata_outside_watch_menu_flag(FALSE);
         sub_GAME_7F0BD8FC(0);
 
         // Handle A or Z button click when in any page but inventory page
@@ -11352,7 +11352,7 @@ Gfx *sub_GAME_7F0ACA28(Gfx *gdl, Mtx *arg1, s32 watch_transitioning)
     else if (watch_transitioning == FALSE)
     {
         sub_GAME_7F0BD8FC(1);
-        set_BONDdata_outside_watch_menu_flag(1);
+        set_BONDdata_outside_watch_menu_flag(TRUE);
         gdl = draw_background_health_and_armor_transitioning(gdl, arg1);
     }
 
