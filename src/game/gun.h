@@ -308,7 +308,7 @@ s32 get_max_ammo_for_type(s32);
 void give_cur_player_ammo(s32, s32);
 s8 bondwalkItemGetAutomaticFiringRate(ITEM_IDS item);
 void inc_cur_civilian_casualties(void);
-void increment_num_kills_display_text_in_MP();
+void increment_num_kills_display_text_in_MP(void);
 f32 bondwalkItemGetDestructionAmount(ITEM_IDS item);
 u16 bondwalkItemGetSound(ITEM_IDS item);
 u8 bondwalkItemGetSoundTriggerRate(ITEM_IDS item);

@@ -75,6 +75,9 @@ ObjectRecord *objFindByTagId(s32 TagID) //#MATCH
 
 
 
+/*
+* Address: 0x7f057104
+*/
 u8 * get_ptr_text_for_watch_breifing_page(WATCH_BRIEFING_PAGE page)
 {
     struct watchMenuObjectiveText * curentry;

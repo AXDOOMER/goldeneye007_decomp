@@ -10817,7 +10817,9 @@ glabel sub_GAME_7F061E18
 #endif
 #endif
 
-
+/*
+* Address: 0x7F062B00
+*/
 void sub_GAME_7F062B00(ChrRecord_f180* arg0)
 {
     if (arg0->unk00 >= 0)
@@ -22384,6 +22386,9 @@ void sub_GAME_7F067FBC(f32 turn_x, f32 turn_y)
 
 
 
+/*
+* Address: 0x7f068008
+*/
 void get_bullet_angle(f32* horizontal_angle, f32* vertical_angle) {
 	*horizontal_angle = g_CurrentPlayer->crosshair_angle.f[0];
 	*vertical_angle = g_CurrentPlayer->crosshair_angle.f[1];
@@ -22444,7 +22449,10 @@ void sub_GAME_7F068190(coord3d *zeropos, coord3d *vec)
     transformAndNormalizeByLength2Dto3D(&g_CurrentPlayer->crosshair_angle, vec, 1.0f);
 }
 
-
+/*
+* Address: 0x7f0681cc
+* This function computes the angle the player's bullets are fired at
+*/
 void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND arg2)
 {
     coord2d crosspos;
@@ -22480,6 +22488,9 @@ void bullet_path_from_screen_center(coord3d* arg0, coord3d* result, enum GUNHAND
 }
 
 
+/*
+* Address: 0x7f068420
+*/
 CasingRecord* casingCreate(ModelFileHeader* header, Mtxf* mtx)
 {
     CasingRecord* entry = g_Casings;

@@ -304,6 +304,9 @@ coord3d player_pos_x = {0};
 #endif
 
 
+/*
+* Address: 0x7f090490
+*/
 void debugmenuUpdate(void)
 {
     #if defined(LEFTOVERDEBUG)
@@ -312,6 +315,9 @@ void debugmenuUpdate(void)
 }
 
 #if defined(LEFTOVERDEBUG)
+/*
+* Address: 0x7f0904c4
+*/
 void debmenuHandleMoveView(void)
 {
     sub_GAME_7F0916F4();
@@ -321,6 +327,9 @@ void debmenuHandleMoveView(void)
 #endif
 
 #if defined(LEFTOVERDEBUG)
+/*
+* Address: 0x7f090508
+*/
 void debmenuHandleStanView(void)
 {
     maybe_solo_intro_camera_handler();
@@ -330,6 +339,9 @@ void debmenuHandleStanView(void)
 #endif
 
 #if defined(LEFTOVERDEBUG)
+/*
+* Address: 0x7f09054c
+*/
 void debmenuHandleBondView(void)
 {
     maybe_solo_intro_camera_handler();
@@ -339,12 +351,18 @@ void debmenuHandleBondView(void)
 #endif
 
 #if defined(LEFTOVERDEBUG)
+/*
+* Address: 0x7f090590
+*/
 void removed_do_debug_profile_flag_false(void) {
     return;
 }
 #endif
 
 #if defined(LEFTOVERDEBUG)
+/*
+* Address: 0x7f090598
+*/
 void removed_do_debug_profile_flag_true(void) {
     return;
 }

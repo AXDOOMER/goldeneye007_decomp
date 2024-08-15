@@ -15,7 +15,7 @@ extern struct criteria_picture *ptr_last_photo_obj_in_room_subobject_entry_type1
 extern s32 objective_count;
 extern s32 objective_count_related;
 
-void             objectiveTakePictureHandler();
+void             objectiveTakePictureHandler(void);
 bool             objectiveIsAllComplete(void);
 TagObjectRecord *sub_GAME_7F057080(s32 TagID);
 s32              objectiveGetCount(void);

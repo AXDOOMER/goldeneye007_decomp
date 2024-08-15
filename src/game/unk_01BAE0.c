@@ -9,6 +9,9 @@
 #include "initanitable.h"
 #include "chrobjdata.h"
 
+/*
+* Address: 0x7F01BAE0
+*/
 void sub_GAME_7F01BAE0(struct s_display_list_something *var_s0, s32 arg1)
 {
     s16 cosval;
@@ -66,7 +69,9 @@ void sub_GAME_7F01BAE0(struct s_display_list_something *var_s0, s32 arg1)
 }
 
 
-
+/*
+* Address: 0x7F01BFF8
+*/
 Gfx *sub_GAME_7F01BFF8(Gfx *arg0, Vtx *arg1, s32 arg2)
 {
     s8 j;

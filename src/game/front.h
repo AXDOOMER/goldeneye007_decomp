@@ -341,7 +341,7 @@ int get_mp_timelimit(void);
 int get_mp_pointlimit(void);
 void reset_mp_options_for_scenario(MPSCENARIOS scenarioid);
 void copy_aim_settings_to_playerdata(void);
-void menu_init();
+void menu_init(void);
 Gfx * menu_jump_constructor_handler(Gfx *DL);
 void unlock_all_mp_chars(void);
 u8 get_player_mp_char_gender(int player);

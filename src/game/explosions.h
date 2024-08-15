@@ -37,7 +37,7 @@ typedef struct s_explosiontype {
     u16 duration;
     u16 propagationrate;
     f32 flareanimspeed;
-    u16 numshrapnelbits;
+    s16 numshrapnelbits;
     //u16 field_0x26;
     f32 shrapnel_size;
     f32 shrapnel_scatter_dist;
@@ -60,24 +60,27 @@ typedef struct s_impacttype {
 struct ExplosionPart
 {
     coord3d pos;
-    u32 size;
-    u32 rot;
+    f32 size;
+    f32 rot;
     s16 frame;
     u8 bb;
 };
 
 struct Explosion {
     PropRecord *prop;
-    u32 unk04;
+    PropRecord *unk04;
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
-    u32 unk3C8;
-    s8 unk3CC;
+    s16 unk3C8;
+    s16 unk3CA;
+
+    s8 explosion_type;
     u8 unk3CD;
-    u16 unk3CE;
-    u32 unk3D0;
-    u32 unk3D4;
-    u32 unk3D8;
-    u32 unk3DC;
+    s8 player;
+    s8 unk3CF;
+
+    struct coord3d pos;
+    s16 room;
+    s16 unk3DE;
 };
 
 struct SmokePart
@@ -94,8 +97,8 @@ struct SmokePart
 
 struct Smoke {
     PropRecord *prop;
-    s16 unk04;
-    s16 unk06;
+    s16 duration;
+    s16 smoke_type;
     struct SmokePart parts[SMOKE_PARTS_LEN]; /*0x008*/
 };
 
@@ -220,11 +223,6 @@ extern s32 numParticleEntries;
 extern s32 numScorchEntries;
 extern s32 numImpactEntries;
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
-s32 sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
-#else
-void sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
-#endif
 
 
 void sub_GAME_7F09FD3C(void);
@@ -241,9 +239,11 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
 void update_gray_flying_particles(void);
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
-s32  explosionCreate(void *, struct coord3d *pos, struct StandTile *stan, s16 /* enum EXPLOSION_DEF */ explosionType, s32 flag, s32 playernum, u8 *rooms, s32 flag2);
+s32 explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_stan, s16 /* enum EXPLOSION_DEF */ explosion_type, s32 arg4, s32 player, u8 *rooms, s32 arg7);
+s32 sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
 #else
-void explosionCreate(void *, struct coord3d *pos, struct StandTile *stan, s16 /* enum EXPLOSION_DEF */ explosionType, s32 flag, s32 playernum, u8 *rooms, s32 flag2);
+void explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_stan, s16 /* enum EXPLOSION_DEF */ explosion_type, s32 arg4, s32 player, u8 *rooms, s32 arg7);
+void sub_GAME_7F09C250(s32 arg0, struct coord3d *pos, struct StandTile *stan, s16 arg3, s32 flag4, s32 playernum, u8 *rooms, s32 flag7);
 #endif
 
 #endif

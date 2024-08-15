@@ -243,6 +243,9 @@ void debmenu7000AF98(s32 height)
 }
 
 
+/*
+* Address: 0x7000b040
+*/
 void debmenuSetPos(s32 x, s32 y) {
     #ifdef LEFTOVERDEBUG
     x += g_DebugMenuTextStartX;
@@ -308,7 +311,9 @@ void debmenuSetPositionAndWriteString(s32 x, s32 y, const unsigned char *str) {
 }
 
 
-
+/*
+* Address: 0x7000b27c
+*/
 Gfx *debmenuDraw(Gfx *gdl)
 {
 #if defined(LEFTOVERDEBUG)

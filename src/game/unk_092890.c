@@ -32,6 +32,8 @@ struct coord3d64 {
  * Seems to be almost all f64 math.
  * Very similar to Perfect Dark func0002f490.
  * https://decomp.me/scratch/8EjDL 24.30%
+ * 
+ * Address: 0x7F092890
 */
 s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, struct coord3d *arg4, struct coord3d *arg5, struct coord3d *arg6, struct unk_bg_struct *arg7)
 {
