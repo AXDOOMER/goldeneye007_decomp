@@ -268,7 +268,6 @@ void chrpropReparent(PropRecord *newChild, PropRecord *host);
 void          chrpropDeregisterRooms(PropRecord *);
 void          sub_GAME_7F03E27C(PropRecord *, coord3d *, coord3d *, f32);
 void          chrpropRegisterRooms(PropRecord *posData);
-
 void          chrpropActivate(PropRecord *);
 void          chrpropEnable(PropRecord *);
 void          chrpropActivateThisFrame(PropRecord *);
