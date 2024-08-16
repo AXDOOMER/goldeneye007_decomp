@@ -341,11 +341,11 @@ s32 g_bondviewForceDisarm = 0;
 //D:80036428
 s32 resolution = 0;
 //D:8003642C
-s32 camera_8003642C = 0;
+s32 cameraBufferToggle = 0;
 //D:80036430
-s32 camera_80036430 = 0;
+s32 cameraFrameCounter1 = 0;
 //D:80036434
-s32 camera_80036434 = 0;
+s32 cameraFrameCounter2 = 0;
 //D:80036438
 s32 camera_80036438 = 0;
 //D:8003643C
@@ -506,15 +506,15 @@ s32 g_IntroAnimationIndex = 0;
 
 //D:80036518
 struct struct_4 stage_intro_anim_table[] = {
-    {0x5744, 95.0, -1.0, 0.02},
-    {0x6254, 7.0, 40.0, 0.5},
-    {0x78C8, 0.0, -1.0, 0.5},
-    {0x7AA8, 0.0, -1.0, 0.5},
-    {0x7C4C, 0.0, -1.0, 0.5},
-    {0x7D04, 0.0, -1.0, 0.5},
-    {0x7F0C, 0.0, -1.0, 0.5},
-    {0x7FB4, 0.0, -1.0, 0.5},
-    {0xD89C, 0.0, -1.0, 0.5}
+    {PTR_ANIM_extending_left_hand, 95.0, -1.0, 0.02},
+    {PTR_ANIM_fire_standing_draw_one_handed_weapon_fast, 7.0, 40.0, 0.5},
+    {PTR_ANIM_draw_one_handed_weapon_and_look_around, 0.0, -1.0, 0.5},
+    {PTR_ANIM_draw_one_handed_weapon_and_stand_up, 0.0, -1.0, 0.5},
+    {PTR_ANIM_aim_one_handed_weapon_left_right, 0.0, -1.0, 0.5},
+    {PTR_ANIM_cock_one_handed_weapon_and_turn_around, 0.0, -1.0, 0.5},
+    {PTR_ANIM_cock_one_handed_weapon_turn_around_and_stand_up, 0.0, -1.0, 0.5},
+    {PTR_ANIM_draw_one_handed_weapon_and_turn_around, 0.0, -1.0, 0.5},
+    {PTR_ANIM_bond_eye_fire_alt, 0.0, -1.0, 0.5}
 };
 
 //D:800365A8
@@ -1453,7 +1453,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->damageshowtime = -1;
     g_CurrentPlayer->healthshowtime = -1;
     g_CurrentPlayer->watch_pause_time = 0;
-    g_CurrentPlayer->field_1C4 = 0;
+    g_CurrentPlayer->timer_1C4 = 0;
     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
     g_CurrentPlayer->outside_watch_menu = TRUE;
     g_CurrentPlayer->open_close_solo_watch_menu = FALSE;
@@ -7038,7 +7038,7 @@ void bondviewWatchAnimationTick(void)
         sp38 = (sp34) ? WATCH_VAR_UPPER : WATCH_VAR_LOWER;
 #endif
 
-        g_CurrentPlayer->field_1C4 += g_ClockTimer;
+        g_CurrentPlayer->timer_1C4 += g_ClockTimer;
         g_CurrentPlayer->watch_pause_time += 1;
         g_CurrentPlayer->pausing_flag = FALSE;
 
@@ -7067,11 +7067,11 @@ void bondviewWatchAnimationTick(void)
                         || (
                             (get_item_in_hand_or_watch_menu(0) == ITEM_UNARMED)
                             && (Gun_hand_without_item(GUNRIGHT) != ITEM_UNARMED)))
-                    && (g_CurrentPlayer->field_1C4 >= sp38))
+                    && (g_CurrentPlayer->timer_1C4 >= sp38))
                 {
                     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x2;
                     g_CurrentPlayer->watch_pause_time = 1;
-                    g_CurrentPlayer->field_1C4 = 0;
+                    g_CurrentPlayer->timer_1C4 = 0;
                 }
             }
         }
@@ -7105,7 +7105,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x3;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
 
                 sub_GAME_7F07E7CC();
             }
@@ -7157,7 +7157,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x4;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
             }
         }
 
@@ -7179,7 +7179,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x5;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
                 g_CurrentPlayer->field_21C = 1;
             }
         }
@@ -7202,7 +7202,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x6;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
                 sndPlaySfx(g_musicSfxBufferPtr, 0xEE, NULL);
             }
         }
@@ -7229,7 +7229,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x7;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
                 g_CurrentPlayer->field_21C = 1;
             }
         }
@@ -7265,7 +7265,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 1;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
             }
         }
 
@@ -7313,7 +7313,7 @@ void bondviewWatchAnimationTick(void)
 
                     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x0;
                     g_CurrentPlayer->watch_pause_time = 0;
-                    g_CurrentPlayer->field_1C4 = 0;
+                    g_CurrentPlayer->timer_1C4 = 0;
                 }
             }
         }
@@ -7331,7 +7331,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
             }
         }
 
@@ -7353,7 +7353,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
                 g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
             }
         }
 
@@ -7372,7 +7372,7 @@ void bondviewWatchAnimationTick(void)
             {
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
                 g_CurrentPlayer->watch_pause_time = 0;
-                g_CurrentPlayer->field_1C4 = 0;
+                g_CurrentPlayer->timer_1C4 = 0;
             }
         }
 
@@ -7390,7 +7390,7 @@ void bondviewWatchAnimationTick(void)
                 {
                     g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
                     g_CurrentPlayer->watch_pause_time = 0;
-                    g_CurrentPlayer->field_1C4 = 0;
+                    g_CurrentPlayer->timer_1C4 = 0;
                 }
             }
         }
@@ -7465,7 +7465,7 @@ void trigger_solo_watch_menu(s32 arg0)
             }
 
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
 
             sub_GAME_7F07DEFC();
             bondviewTriggerWatchZoomDefault();
@@ -7520,25 +7520,25 @@ void trigger_solo_watch_menu(s32 arg0)
     {
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x9;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x2)
     {
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xa;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x3)
     {
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x7;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x4)
     {
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x6;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0x5)
     {
@@ -7546,7 +7546,7 @@ void trigger_solo_watch_menu(s32 arg0)
         sub_GAME_7F0C1340();
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xc;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
         g_CurrentPlayer->open_close_solo_watch_menu = FALSE;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xc)
@@ -7559,7 +7559,7 @@ void trigger_solo_watch_menu(s32 arg0)
         {
             g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x4;
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
@@ -7569,7 +7569,7 @@ void trigger_solo_watch_menu(s32 arg0)
         {
             g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x3;
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
@@ -7579,7 +7579,7 @@ void trigger_solo_watch_menu(s32 arg0)
         {
             g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0xb;
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
             sub_GAME_7F0A69A8();
         }
     }
@@ -7589,7 +7589,7 @@ void trigger_solo_watch_menu(s32 arg0)
         {
             g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
         }
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xa)
@@ -7598,14 +7598,14 @@ void trigger_solo_watch_menu(s32 arg0)
         {
             g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x1;
             g_CurrentPlayer->watch_pause_time = 0;
-            g_CurrentPlayer->field_1C4 = 0;
+            g_CurrentPlayer->timer_1C4 = 0;
         }
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xb)
     {
         g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x8;
         g_CurrentPlayer->watch_pause_time = 0;
-        g_CurrentPlayer->field_1C4 = 0;
+        g_CurrentPlayer->timer_1C4 = 0;
     }
     else if (g_CurrentPlayer->watch_animation_state == WATCH_ANIMATION_0xd)
     {
@@ -7845,7 +7845,7 @@ Gfx *currentPlayerDrawFade(Gfx *gdl) {
     s32 r = g_CurrentPlayer->colourscreenred;
     s32 g = g_CurrentPlayer->colourscreengreen;
     s32 b = g_CurrentPlayer->colourscreenblue;
-    if ((camera_80036430 != 0) || (camera_80036434 != 0)) {
+    if ((cameraFrameCounter1 != 0) || (cameraFrameCounter2 != 0)) {
         frac = 1.0f;
         b = 0;
         g = 0;
@@ -8429,7 +8429,7 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
     s8 player_joyGetStickY; // sp11E
     u16 player_joyGetButtons; // sp11C
     u16 copy_prev_buttons_pressed; // sp11A
-    s32 tmpc2stickx;
+    s32 adjustedStickX;
     s32 tmpc2sticky;
     s32 sp10C;
     s32 sp108;
@@ -8565,15 +8565,15 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
             if (player_joyGetStickX < -5)
             {
-                tmpc2stickx = player_joyGetStickX + 5;
+                adjustedStickX = player_joyGetStickX + 5;
             }
             else if (player_joyGetStickX > 5)
             {
-                tmpc2stickx = player_joyGetStickX - 5;
+                adjustedStickX = player_joyGetStickX - 5;
             }
             else
             {
-                tmpc2stickx = 0;
+                adjustedStickX = 0;
             }
 
             if (player_joyGetStickY < -5)
@@ -8592,18 +8592,18 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             /* 2.1 and 2.3 */
             if (cur_player_get_control_type() == CONTROLLER_CONFIG_PLENTY || (cur_player_get_control_type() == CONTROLLER_CONFIG_DOMINO))
             {
-                moveData.analogStrafe = tmpc2stickx;
+                moveData.analogStrafe = adjustedStickX;
                 moveData.analogPitch = tmpc2sticky;
             }
             else
             {
                 if (in_tank_flag == 1 && !g_CurrentPlayer->insightaimmode)
                 {
-                    moveData.analogTurn = tmpc2stickx;
+                    moveData.analogTurn = adjustedStickX;
                 }
                 else
                 {
-                    moveData.analogStrafe = tmpc2stickx;
+                    moveData.analogStrafe = adjustedStickX;
                 }
 
                 moveData.analogWalk = tmpc2sticky;
@@ -11388,7 +11388,7 @@ void bondviewFrozenMoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
 s16 getWidth320or440(void)
 {
-    if (camera_8003642C != 0)
+    if (cameraBufferToggle != 0)
     {
         return SCREEN_WIDTH_440;
     }
@@ -11398,7 +11398,7 @@ s16 getWidth320or440(void)
 
 s16 getHeight330or240(void)
 {
-    if (camera_8003642C != 0)
+    if (cameraBufferToggle != 0)
     {
         return SCREEN_HEIGHT_330;
     }
@@ -11413,7 +11413,7 @@ s16 bondviewGetCurrentPlayerViewportWidth(void)
         return VIEWPORT_WIDTH_4P;
     }
 
-    if (camera_8003642C != 0)
+    if (cameraBufferToggle != 0)
     {
         return SCREEN_WIDTH_440;
     }
@@ -11459,7 +11459,7 @@ s16 bondviewGetCurrentPlayerViewportHeight(void)
         return VIEWPORT_HEIGHT_4P;
     }
 
-    if (camera_8003642C != 0)
+    if (cameraBufferToggle != 0)
     {
         if (cur_player_get_screen_setting() == SCREEN_SIZE_WIDESCREEN)
         {
@@ -11528,7 +11528,7 @@ s16 bondviewGetCurrentPlayerViewportUly(void)
         return VIEWPORT_ULY_4P_PLAYER_34;
     }
 
-    if (camera_8003642C != 0)
+    if (cameraBufferToggle != 0)
     {
         if (cur_player_get_screen_setting() == SCREEN_SIZE_WIDESCREEN)
         {
@@ -11589,35 +11589,35 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
     // the fov....
     viSetFovY(FOV_Y_F);
 
-    if (camera_80036430 != 0)
+    if (cameraFrameCounter1 != 0)
     {
-        if ((camera_80036430 >= 4) && (resolution != 0) && (viGetFrameBuf2() == (u8*)(cfb_16[1])))
+        if ((cameraFrameCounter1 >= 4) && (resolution != 0) && (viGetFrameBuf2() == (u8*)(cfb_16[1])))
         {
-            camera_8003642C = 1;
-            camera_80036430 = 0;
+            cameraBufferToggle = 1;
+            cameraFrameCounter1 = 0;
         }
         else
         {
-            camera_80036430 += 1;
+            cameraFrameCounter1 += 1;
         }
     }
     else
     {
-        if (camera_80036434 != 0)
+        if (cameraFrameCounter2 != 0)
         {
-            if ((camera_80036434 >= 4) && (viGetFrameBuf2() == (u8*)(cfb_16[0])))
+            if ((cameraFrameCounter2 >= 4) && (viGetFrameBuf2() == (u8*)(cfb_16[0])))
             {
-                camera_8003642C = 0;
-                camera_80036434 = 0;
+                cameraBufferToggle = 0;
+                cameraFrameCounter2 = 0;
             }
             else
             {
-                camera_80036434 += 1;
+                cameraFrameCounter2 += 1;
             }
         }
     }
 
-    if ((camera_8003642C != 0) && (viGetFrameBuf2() == (u8*)(cfb_16[1])))
+    if ((cameraBufferToggle != 0) && (viGetFrameBuf2() == (u8*)(cfb_16[1])))
     {
         viSetFrameBuf2((u8 *) resolution);
     }
@@ -11632,7 +11632,7 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
         faspect = (f32) bondviewGetCurrentPlayerViewportWidth() / (f32) bondviewGetCurrentPlayerViewportHeight();
     }
 
-    if (camera_8003642C == 0)
+    if (cameraBufferToggle == 0)
     {
         faspect *= EU_CAMERA_8003642C_ASPECT;
     }
@@ -17311,8 +17311,8 @@ glabel sub_GAME_7F08AAE8
 /* 0BF6E4 7F08ABB4 AFA00014 */  sw    $zero, 0x14($sp)
 /* 0BF6E8 7F08ABB8 0FC2BA63 */  jal   textMeasure
 /* 0BF6EC 7F08ABBC AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0BF6F0 7F08ABC0 3C0F8003 */  lui   $t7, %hi(camera_8003642C)
-/* 0BF6F4 7F08ABC4 8DEF642C */  lw    $t7, %lo(camera_8003642C)($t7)
+/* 0BF6F0 7F08ABC0 3C0F8003 */  lui   $t7, %hi(cameraBufferToggle)
+/* 0BF6F4 7F08ABC4 8DEF642C */  lw    $t7, %lo(cameraBufferToggle)($t7)
 /* 0BF6F8 7F08ABC8 11E0001B */  beqz  $t7, .L7F08AC38
 /* 0BF6FC 7F08ABCC 00000000 */   nop
 /* 0BF700 7F08ABD0 0C001145 */  jal   viGetViewLeft
@@ -17713,8 +17713,8 @@ glabel sub_GAME_7F08AAE8
 /* 0BFF00 7F08B390 AFA00014 */  sw    $zero, 0x14($sp)
 /* 0BFF04 7F08B394 0FC2BD4F */  jal   textMeasure
 /* 0BFF08 7F08B398 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0BFF0C 7F08B39C 3C0F8003 */  lui   $t7, %hi(camera_8003642C) # $t7, 0x8003
-/* 0BFF10 7F08B3A0 8DEF646C */  lw    $t7, %lo(camera_8003642C)($t7)
+/* 0BFF0C 7F08B39C 3C0F8003 */  lui   $t7, %hi(cameraBufferToggle) # $t7, 0x8003
+/* 0BFF10 7F08B3A0 8DEF646C */  lw    $t7, %lo(cameraBufferToggle)($t7)
 /* 0BFF14 7F08B3A4 11E0001B */  beqz  $t7, .Ljp7F08B414
 /* 0BFF18 7F08B3A8 00000000 */   nop
 /* 0BFF1C 7F08B3AC 0C001145 */  jal   viGetViewLeft
@@ -18161,8 +18161,8 @@ glabel sub_GAME_7F08AAE8
 /* 0BD7EC 7F08ADFC AFA00014 */  sw    $zero, 0x14($sp)
 /* 0BD7F0 7F08AE00 0FC2B713 */  jal   textMeasure
 /* 0BD7F4 7F08AE04 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 0BD7F8 7F08AE08 3C0F8003 */  lui   $t7, %hi(camera_8003642C) # $t7, 0x8003
-/* 0BD7FC 7F08AE0C 8DEF197C */  lw    $t7, %lo(camera_8003642C)($t7)
+/* 0BD7F8 7F08AE08 3C0F8003 */  lui   $t7, %hi(cameraBufferToggle) # $t7, 0x8003
+/* 0BD7FC 7F08AE0C 8DEF197C */  lw    $t7, %lo(cameraBufferToggle)($t7)
 /* 0BD800 7F08AE10 11E0001B */  beqz  $t7, .L7F08AE80
 /* 0BD804 7F08AE14 00000000 */   nop
 /* 0BD808 7F08AE18 0C000FD9 */  jal   viGetViewLeft

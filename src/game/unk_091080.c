@@ -14,159 +14,159 @@ s32 dword_CODE_bss_80079E20;
 
 // data
 //D:80037010
-s32 D_80037010 = 0;
+s32 D_80037010 = 0; //unused
 
 // 0x80037014
-coord3d stanbondx = {0.0f,0.0f,0.0f};
+coord3d stanbondpos = {0.0f,0.0f,0.0f};
 
-coord3d D_80037020 = {0.0f,0.0f,-1.0f};
+coord3d stanbondforward = {0.0f,0.0f,-1.0f};
 
 //D:8003702C
-coord3d D_8003702C = {0.0f,1.0f,0.0f};
+coord3d stanbondup = {0.0f,1.0f,0.0f};
 
 //D:80037038
-f32 angle_80037038 = 0.0f;
+f32 stanbondhorzangle = 0.0f;
 //D:8003703C
-f32 D_8003703C = 1.0f;
+f32 stanbondhorzcos = 1.0f;
 //D:80037040
-f32 D_80037040 = 0.0f;
+f32 stanbondhorzsin = 0.0f;
 //D:80037044
-f32 angle_80037044 = 0.0f;
+f32 stanbondvertangle = 0.0f;
 //D:80037048
-f32 D_80037048 = 1.0f;
+f32 stanbondvertcos = 1.0f;
 //D:8003704C
-f32 D_8003704C = 0.0f;
+f32 stanbondvertsin = 0.0f;
 
 /***
  * NTSC address 0x7F091080.
 */
-void sub_GAME_7F091080(s8 arg0, s8 arg1, u16 arg2)
+void debugMoveView(s8 joyX, s8 joyY, u16 joyBtns)
 {
-    f32 var_f2;
+    f32 speedModifier;
     s32 temp_v0;
 
-    static f32 D_80037050 = 1.0f;
-    static u16 buttons_80037054 = 0;
+    static f32 movementSpeed = 1.0f;
+    static u16 previousButtons = 0;
 
-    var_f2 = 1.0f;
+    speedModifier = 1.0f;
     
-    if (arg0 < -3)
+    if (joyX < -3)
     {
-        arg0 += 3;
+        joyX += 3;
     }
-    else if (arg0 > 3)
+    else if (joyX > 3)
     {
-        arg0 -= 3;
+        joyX -= 3;
     }
     else
     {
-        arg0 = 0;
+        joyX = 0;
     }
     
-    if (arg1 < -3)
+    if (joyY < -3)
     {
-        arg1 += 3;
+        joyY += 3;
     }
-    else if (arg1 > 3)
+    else if (joyY > 3)
     {
-        arg1 -= 3;
+        joyY -= 3;
     }
     else
     {
-        arg1 = 0;
+        joyY = 0;
     }
 
-    if (!(arg2 & 0x30))
+    if (!(joyBtns & (R_TRIG|L_TRIG)))
     {
-        if (arg2 & 0x2000)
+        if (joyBtns & Z_TRIG)
         {
-            var_f2 /= 5.0f;
+            speedModifier /= 5.0f;
         }
         
-        temp_v0 = arg2 & ~buttons_80037054;
+        temp_v0 = joyBtns & ~previousButtons;
         
-        if (temp_v0 & 0x8000)
+        if (temp_v0 & A_BUTTON)
         {
-            D_80037050 *= 2.0f;
+            movementSpeed *= 2.0f;
         }
         
-        if (temp_v0 & 0x4000)
+        if (temp_v0 & B_BUTTON)
         {
-            D_80037050 *= 0.5f;
+            movementSpeed *= 0.5f;
         }
         
-        stanbondx.f[0] += ((f32) arg1 * D_80037040 * var_f2 * D_80037050);
-        stanbondx.f[2] += (-(f32) arg1 * D_8003703C * var_f2 * D_80037050);
+        stanbondpos.f[0] += ((f32) joyY * stanbondhorzsin * speedModifier * movementSpeed);
+        stanbondpos.f[2] += (-(f32) joyY * stanbondhorzcos * speedModifier * movementSpeed);
         
-        if (arg2 & 0x202)
+        if (joyBtns & (L_CBUTTONS|L_JPAD))
         {
-            stanbondx.f[0] -= (20.0f * D_8003703C * var_f2 * D_80037050);
-            stanbondx.f[2] -= (20.0f * D_80037040 * var_f2 * D_80037050);
+            stanbondpos.f[0] -= (20.0f * stanbondhorzcos * speedModifier * movementSpeed);
+            stanbondpos.f[2] -= (20.0f * stanbondhorzsin * speedModifier * movementSpeed);
         }
         
-        if (arg2 & 0x101)
+        if (joyBtns & (R_CBUTTONS|R_JPAD))
         {
-            stanbondx.f[0] += (20.0f * D_8003703C * var_f2 * D_80037050);
-            stanbondx.f[2] += (20.0f * D_80037040 * var_f2 * D_80037050);
+            stanbondpos.f[0] += (20.0f * stanbondhorzcos * speedModifier * movementSpeed);
+            stanbondpos.f[2] += (20.0f * stanbondhorzsin * speedModifier * movementSpeed);
         }
         
-        angle_80037038 += (f32) arg0 * var_f2 * 0.125f;
+        stanbondhorzangle += (f32) joyX * speedModifier * 0.125f;
         
-        if (arg2 & 0x800)
+        if (joyBtns & U_JPAD)
         {
-            angle_80037044 -= 2.0f * var_f2;
+            stanbondvertangle -= 2.0f * speedModifier;
         }
         
-        if (arg2 & 0x400)
+        if (joyBtns & D_JPAD)
         {
-            angle_80037044 += 2.0f * var_f2;
+            stanbondvertangle += 2.0f * speedModifier;
         }
         
-        if (arg2 & 8)
+        if (joyBtns & U_CBUTTONS)
         {
-            stanbondx.f[1] += (20.0f * var_f2 * D_80037050);
+            stanbondpos.f[1] += (20.0f * speedModifier * movementSpeed);
         }
         
-        if (arg2 & 4)
+        if (joyBtns & D_CBUTTONS)
         {
-            stanbondx.f[1] -= (20.0f * var_f2 * D_80037050);
+            stanbondpos.f[1] -= (20.0f * speedModifier * movementSpeed);
         }
     }
 
-    while (angle_80037038 < 0.0f)
+    while (stanbondhorzangle < 0.0f)
     {
-        angle_80037038 += 360.0f;            
+        stanbondhorzangle += 360.0f;            
     }
 
-    while (angle_80037038 >= 360.0f)
+    while (stanbondhorzangle >= 360.0f)
     {
-        angle_80037038 -= 360.0f;
+        stanbondhorzangle -= 360.0f;
     }
 
-    while (angle_80037044 < 0.0f)
+    while (stanbondvertangle < 0.0f)
     {
-        angle_80037044 += 360.0f;
+        stanbondvertangle += 360.0f;
     }
 
-    while (angle_80037044 >= 360.0f)
+    while (stanbondvertangle >= 360.0f)
     {
-        angle_80037044 -= 360.0f;            
+        stanbondvertangle -= 360.0f;            
     }
 
-    D_8003703C = cosf(angle_80037038 * DegToRad(1));
-    D_80037040 = sinf(angle_80037038 * DegToRad(1));
-    D_80037048 = cosf(angle_80037044 * DegToRad(1));
-    D_8003704C = sinf(angle_80037044 * DegToRad(1));
+    stanbondhorzcos = cosf(stanbondhorzangle * DegToRad(1));
+    stanbondhorzsin = sinf(stanbondhorzangle * DegToRad(1));
+    stanbondvertcos = cosf(stanbondvertangle * DegToRad(1));
+    stanbondvertsin = sinf(stanbondvertangle * DegToRad(1));
     
-    D_80037020.f[1] = (f32) D_8003704C;
-    D_80037020.f[0] = (f32) (D_80037048 * D_80037040);
-    D_80037020.f[2] = (f32) (-D_80037048 * D_8003703C);
+    stanbondforward.f[1] = (f32) stanbondvertsin;
+    stanbondforward.f[0] = (f32) (stanbondvertcos * stanbondhorzsin);
+    stanbondforward.f[2] = (f32) (-stanbondvertcos * stanbondhorzcos);
     
-    D_8003702C.f[1] = (f32) D_80037048;
-    D_8003702C.f[0] = (f32) (-D_8003704C * D_80037040);
-    D_8003702C.f[2] = (f32) (D_8003704C * D_8003703C);
+    stanbondup.f[1] = (f32) stanbondvertcos;
+    stanbondup.f[0] = (f32) (-stanbondvertsin * stanbondhorzsin);
+    stanbondup.f[2] = (f32) (stanbondvertsin * stanbondhorzcos);
     
-    buttons_80037054 = arg2;
+    previousButtons = joyBtns;
     
     set_cur_player_fovy(FOV_Y_F);
     
@@ -187,18 +187,18 @@ void sub_GAME_7F091080(s8 arg0, s8 arg1, u16 arg2)
 
 
 //D:80037058
-f32 D_80037058 = 1.0f;
+f32 stanbondScale = 1.0f;
 //D:8003705C
-f32 D_8003705C = 1.0f;
+f32 stanbondInverseScale = 1.0f;
 //D:80037060
-coord3d D_80037060 = {0.0f,0.0f,0.0f};
+coord3d stanbondPrevPos = {0.0f,0.0f,0.0f};
 
 
 /*
 * Address: 0x7F091580
 */
 Gfx * sub_GAME_7F091580(Gfx * arg0) {
-    sub_GAME_7F0876C4(&stanbondx, &D_80037020, &D_8003702C);
+    sub_GAME_7F0876C4(&stanbondpos, &stanbondforward, &stanbondup);
     return arg0;
 }
 
@@ -208,14 +208,14 @@ Gfx * sub_GAME_7F091580(Gfx * arg0) {
 */
 void sub_GAME_7F0915BC(float scale)
 {
-  float fVar1;
+  float scaleFactor;
   
-  fVar1 = D_80037058 / scale;
-  D_80037058 = scale;
-  stanbondx.x = stanbondx.x * fVar1;
-  stanbondx.y = stanbondx.y * fVar1;
-  stanbondx.z = stanbondx.z * fVar1;
-  D_8003705C = 1.0f / scale;
+  scaleFactor = stanbondScale / scale;
+  stanbondScale = scale;
+  stanbondpos.x = stanbondpos.x * scaleFactor;
+  stanbondpos.y = stanbondpos.y * scaleFactor;
+  stanbondpos.z = stanbondpos.z * scaleFactor;
+  stanbondInverseScale = 1.0f / scale;
 }
 
 
@@ -241,26 +241,26 @@ void handle_debug_intropos(void)
 */
 void debugSetWorldPos(void)
 {
-    sqrtf((stanbondx.x - D_80037060.x) * (stanbondx.x - D_80037060.x) +
-          (stanbondx.y - D_80037060.y) * (stanbondx.y - D_80037060.y) +
-          (stanbondx.z - D_80037060.z) * (stanbondx.z - D_80037060.z));
+    sqrtf((stanbondpos.x - stanbondPrevPos.x) * (stanbondpos.x - stanbondPrevPos.x) +
+          (stanbondpos.y - stanbondPrevPos.y) * (stanbondpos.y - stanbondPrevPos.y) +
+          (stanbondpos.z - stanbondPrevPos.z) * (stanbondpos.z - stanbondPrevPos.z));
 
-    D_80037060.x = stanbondx.x;
-    D_80037060.y = stanbondx.y;
-    D_80037060.z = stanbondx.z;
+    stanbondPrevPos.x = stanbondpos.x;
+    stanbondPrevPos.y = stanbondpos.y;
+    stanbondPrevPos.z = stanbondpos.z;
 }
 
 /*
 * Address: 0x7F0916F4
 */
-void sub_GAME_7F0916F4(void)
+void resetStanbondPosToPlayerPos(void)
 {
     coord3d *pos;
     
     pos = bondviewGetCurrentPlayersPosition();
-    stanbondx.x = pos->x;
-    stanbondx.y = pos->y;
-    stanbondx.z = pos->z;
+    stanbondpos.x = pos->x;
+    stanbondpos.y = pos->y;
+    stanbondpos.z = pos->z;
     dword_CODE_bss_80079E20 = 0;
 }
 

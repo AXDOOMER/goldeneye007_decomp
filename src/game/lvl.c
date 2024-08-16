@@ -1581,13 +1581,13 @@ void lvlManageMpGame(void)
                 if (joyGetButtonsPressedThisFrame(PLAYER_1, L_CBUTTONS))
                 {
                     sub_GAME_7F0AF630(-1);
-                    sub_GAME_7F0B2D38(0, 0, 0);
+                    debugStanView(0, 0, 0);
                 }
 
                 if (joyGetButtonsPressedThisFrame(PLAYER_1, R_CBUTTONS))
                 {
                     sub_GAME_7F0AF630(1);
-                    sub_GAME_7F0B2D38(0, 0, 0);
+                    debugStanView(0, 0, 0);
                 }
             }
             break;
@@ -2406,7 +2406,7 @@ glabel lvlManageMpGame
 /* 0F4080 7F0BF550 2404FFFF */   li    $a0, -1
 /* 0F4084 7F0BF554 00002025 */  move  $a0, $zero
 /* 0F4088 7F0BF558 00002825 */  move  $a1, $zero
-/* 0F408C 7F0BF55C 0FC2CB4E */  jal   sub_GAME_7F0B2D38
+/* 0F408C 7F0BF55C 0FC2CB4E */  jal   debugStanView
 /* 0F4090 7F0BF560 00003025 */   move  $a2, $zero
 /* 0F4094 7F0BF564 00002025 */  move  $a0, $zero
 .L7F0BF568:
@@ -2418,7 +2418,7 @@ glabel lvlManageMpGame
 /* 0F40AC 7F0BF57C 24040001 */   li    $a0, 1
 /* 0F40B0 7F0BF580 00002025 */  move  $a0, $zero
 /* 0F40B4 7F0BF584 00002825 */  move  $a1, $zero
-/* 0F40B8 7F0BF588 0FC2CB4E */  jal   sub_GAME_7F0B2D38
+/* 0F40B8 7F0BF588 0FC2CB4E */  jal   debugStanView
 /* 0F40BC 7F0BF58C 00003025 */   move  $a2, $zero
 /* 0F40C0 7F0BF590 1000001A */  b     .L7F0BF5FC
 /* 0F40C4 7F0BF594 00000000 */   nop
@@ -3297,7 +3297,7 @@ glabel lvlManageMpGame
 /* 0F4CF8 7F0C0188 2404FFFF */   li    $a0, -1
 /* 0F4CFC 7F0C018C 00002025 */  move  $a0, $zero
 /* 0F4D00 7F0C0190 00002825 */  move  $a1, $zero
-/* 0F4D04 7F0C0194 0FC2CE3A */  jal   sub_GAME_7F0B2D38
+/* 0F4D04 7F0C0194 0FC2CE3A */  jal   debugStanView
 /* 0F4D08 7F0C0198 00003025 */   move  $a2, $zero
 /* 0F4D0C 7F0C019C 00002025 */  move  $a0, $zero
 .Ljp7F0C01A0:
@@ -3309,7 +3309,7 @@ glabel lvlManageMpGame
 /* 0F4D24 7F0C01B4 24040001 */   li    $a0, 1
 /* 0F4D28 7F0C01B8 00002025 */  move  $a0, $zero
 /* 0F4D2C 7F0C01BC 00002825 */  move  $a1, $zero
-/* 0F4D30 7F0C01C0 0FC2CE3A */  jal   sub_GAME_7F0B2D38
+/* 0F4D30 7F0C01C0 0FC2CE3A */  jal   debugStanView
 /* 0F4D34 7F0C01C4 00003025 */   move  $a2, $zero
 /* 0F4D38 7F0C01C8 1000001A */  b     .Ljp7F0C0234
 /* 0F4D3C 7F0C01CC 00000000 */   nop
@@ -4194,7 +4194,7 @@ glabel lvlManageMpGame
 /* 0F1384 7F0BE994 2404FFFF */   li    $a0, -1
 /* 0F1388 7F0BE998 00002025 */  move  $a0, $zero
 /* 0F138C 7F0BE99C 00002825 */  move  $a1, $zero
-/* 0F1390 7F0BE9A0 0FC2C7FE */  jal   sub_GAME_7F0B2D38
+/* 0F1390 7F0BE9A0 0FC2C7FE */  jal   debugStanView
 /* 0F1394 7F0BE9A4 00003025 */   move  $a2, $zero
 /* 0F1398 7F0BE9A8 00002025 */  move  $a0, $zero
 .L7F0BE9AC:
@@ -4206,7 +4206,7 @@ glabel lvlManageMpGame
 /* 0F13B0 7F0BE9C0 24040001 */   li    $a0, 1
 /* 0F13B4 7F0BE9C4 00002025 */  move  $a0, $zero
 /* 0F13B8 7F0BE9C8 00002825 */  move  $a1, $zero
-/* 0F13BC 7F0BE9CC 0FC2C7FE */  jal   sub_GAME_7F0B2D38
+/* 0F13BC 7F0BE9CC 0FC2C7FE */  jal   debugStanView
 /* 0F13C0 7F0BE9D0 00003025 */   move  $a2, $zero
 /* 0F13C4 7F0BE9D4 1000001A */  b     .L7F0BEA40
 /* 0F13C8 7F0BE9D8 00000000 */   nop
@@ -4416,11 +4416,11 @@ void lvlViewMoveTick(void)
         {
             if ((getDebugMode() == DEB_MOVE_VIEW) || ((getDebugMode() == DEB_INTRO_EDIT) && (D_80036ABC < 0)))
             {
-                sub_GAME_7F091080(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+                debugMoveView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
             else
             {
-                sub_GAME_7F091080(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+                debugMoveView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
             }
         }
         break;
@@ -4429,11 +4429,11 @@ void lvlViewMoveTick(void)
         {
             if (getDebugMode() == DEB_STAN_VIEW)
             {
-                sub_GAME_7F0B2D38(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+                debugStanView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
             else
             {
-                sub_GAME_7F0B2D38(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+                debugStanView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
             }
         }
         break;

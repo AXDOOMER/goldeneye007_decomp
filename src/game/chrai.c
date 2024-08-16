@@ -4016,11 +4016,11 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 case AI_EndLevel: // canonical name
                 {
                     /*"aiEndLevel" */
-                    if (camera_8003642C)
+                    if (cameraBufferToggle)
                     {
-                        if (camera_80036434 == FALSE)
+                        if (cameraFrameCounter2 == FALSE)
                         {
-                            camera_80036434 = TRUE;
+                            cameraFrameCounter2 = TRUE;
                         }
                     }
                     else

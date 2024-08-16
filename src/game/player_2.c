@@ -211,7 +211,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->bondbreathing = 0.0f;
     g_playerPointers[player_num]->field_1A0 = 0;
     g_playerPointers[player_num]->watch_pause_time = 0;
-    g_playerPointers[player_num]->field_1C4 = 0;
+    g_playerPointers[player_num]->timer_1C4 = 0;
     g_playerPointers[player_num]->watch_animation_state = WATCH_ANIMATION_0x0;
     g_playerPointers[player_num]->outside_watch_menu = TRUE;
     g_playerPointers[player_num]->open_close_solo_watch_menu = FALSE;

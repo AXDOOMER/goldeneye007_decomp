@@ -519,7 +519,7 @@ void texSelect(Gfx **gdlptr, struct sImageTableEntry *tconfig, u32 arg2, s32 arg
 
             if ((tex != NULL) && (tex->unk0c_02))
             {
-                sub_GAME_7F0CC9D4(tex, &depth2, &lrs);
+                texGetDepthAndSize(tex, &depth2, &lrs);
             }
             else
             {

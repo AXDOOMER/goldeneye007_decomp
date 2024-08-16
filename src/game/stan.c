@@ -4995,7 +4995,7 @@ f32 sub_GAME_7F0B2D14(StandTile *tile) {
 
 
 
-void sub_GAME_7F0B2D38(s8 arg0, s8 arg1, u16 arg2) {
+void debugStanView(s8 joyX, s8 joyY, u16 joyBtns) {
     return;
 }
 

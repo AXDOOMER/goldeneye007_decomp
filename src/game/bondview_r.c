@@ -113,17 +113,17 @@ void bondviewLoadSetupIntroSection(void)
     g_isBondKIA = 0;
     g_bondviewForceDisarm = 0;
     resolution = 0;
-    camera_8003642C = 0;
-    camera_80036430 = 0;
+    cameraBufferToggle = 0;
+    cameraFrameCounter1 = 0;
     set_starting_weapon = 0;
-    camera_80036434 = 0;
+    cameraFrameCounter2 = 0;
     start_look_angle = FLOAT_INIT;
     
     if (bossGetStageNum() == LEVELID_CUBA)
     {
         resolution = (s32)mempAllocBytesInBank(0x46EA0, MEMPOOL_STAGE);
         resolution = (resolution + 0x3f) & ~0x3F;
-        camera_80036430 = 1;
+        cameraFrameCounter1 = 1;
     }
 
     camera_80036438 = 0;

@@ -589,7 +589,7 @@ struct player
   */
   s32 watch_pause_time;
 
-  /* 0x01c4 */ s32 field_1C4;
+  /* 0x01c4 */ s32 timer_1C4;
   /* 0x01c8 */ s32 watch_animation_state;
 
   /**
@@ -2344,11 +2344,11 @@ extern s32 g_bondviewForceDisarm;
 //D:80036428
 extern s32 resolution;
 //D:8003642C
-extern s32 camera_8003642C;
+extern s32 cameraBufferToggle;
 //D:80036430
-extern s32 camera_80036430;
+extern s32 cameraFrameCounter1;
 //D:80036434
-extern s32 camera_80036434;
+extern s32 cameraFrameCounter2;
 //D:80036438
 extern s32 camera_80036438;
 //D:8003643C
