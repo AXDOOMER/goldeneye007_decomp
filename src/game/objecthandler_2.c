@@ -75,7 +75,7 @@ void sub_GAME_7F0762E0(ModelFileHeader *arg0, char *arg1, void *arg2, s32 arg3)
             
             modelNodeReplaceGdl((u32) arg0, sp74, gdl, var_s3);
             
-            var_s3 += process_microcode_sort_display_modes_expand_image_calls(
+            var_s3 += texLoadFromGdl(
                 (Gfx *)((uintptr_t)arg0->Switches + ((s32)(var_s1) + (s32)sp58)),
                 var_s2,
                 (Gfx *)((uintptr_t)arg0->Switches + ((s32) var_s3 & 0xFFFFFF)),
@@ -177,7 +177,7 @@ glabel sub_GAME_7F0762E0
 /* 0AAF48 7F076418 02402825 */  move  $a1, $s2
 /* 0AAF4C 7F07641C 8FA70084 */  lw    $a3, 0x84($sp)
 /* 0AAF50 7F076420 00483021 */  addu  $a2, $v0, $t0
-/* 0AAF54 7F076424 0FC33846 */  jal   process_microcode_sort_display_modes_expand_image_calls
+/* 0AAF54 7F076424 0FC33846 */  jal   texLoadFromGdl
 /* 0AAF58 7F076428 01F92021 */   addu  $a0, $t7, $t9
 /* 0AAF5C 7F07642C 8FA90074 */  lw    $t1, 0x74($sp)
 /* 0AAF60 7F076430 02629821 */  addu  $s3, $s3, $v0

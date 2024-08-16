@@ -5266,7 +5266,7 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
     puVar1 = (size - dest) + data;
     texCopyGdls(data,puVar1,dest);
     clear_light_fixturetable_in_room(roomID);
-    puVar1 = process_microcode_sort_display_modes_expand_image_calls(puVar1,dest,data,NULL);
+    puVar1 = texLoadFromGdl(puVar1,dest,data,NULL);
     if (dest < puVar1) {
       dest = puVar1;
     }
@@ -5348,7 +5348,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACC8 7F0B6198 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EACCC 7F0B619C 02202825 */  move  $a1, $s1
 /* 0EACD0 7F0B61A0 02003025 */  move  $a2, $s0
-/* 0EACD4 7F0B61A4 0FC33846 */  jal   process_microcode_sort_display_modes_expand_image_calls
+/* 0EACD4 7F0B61A4 0FC33846 */  jal   texLoadFromGdl
 /* 0EACD8 7F0B61A8 00003825 */   move  $a3, $zero
 /* 0EACDC 7F0B61AC 0222082A */  slt   $at, $s1, $v0
 /* 0EACE0 7F0B61B0 10200002 */  beqz  $at, .L7F0B61BC
@@ -5438,7 +5438,7 @@ glabel sub_GAME_7F0B609C
 /* 0EACC8 7F0B6198 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EACCC 7F0B619C 02202825 */  move  $a1, $s1
 /* 0EACD0 7F0B61A0 02003025 */  move  $a2, $s0
-/* 0EACD4 7F0B61A4 0FC33846 */  jal   process_microcode_sort_display_modes_expand_image_calls
+/* 0EACD4 7F0B61A4 0FC33846 */  jal   texLoadFromGdl
 /* 0EACD8 7F0B61A8 00003825 */   move  $a3, $zero
 /* 0EACDC 7F0B61AC 0222082A */  slt   $at, $s1, $v0
 /* 0EACE0 7F0B61B0 10200002 */  beqz  $at, .L7F0B61BC
@@ -5483,7 +5483,7 @@ u32 sub_GAME_7F0B61DC(s32 roomID, u32 *data, s32 size)
         dest = bgDecompress(source,data);
         puVar1 = (size - dest) + data;
         texCopyGdls(data,puVar1,dest);
-        puVar1 = process_microcode_sort_display_modes_expand_image_calls(puVar1,dest,data,NULL);
+        puVar1 = texLoadFromGdl(puVar1,dest,data,NULL);
         if (dest < puVar1) {
             dest = puVar1;
         }
@@ -5563,7 +5563,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EAE00 7F0B62D0 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EAE04 7F0B62D4 02002825 */  move  $a1, $s0
 /* 0EAE08 7F0B62D8 02203025 */  move  $a2, $s1
-/* 0EAE0C 7F0B62DC 0FC33846 */  jal   process_microcode_sort_display_modes_expand_image_calls
+/* 0EAE0C 7F0B62DC 0FC33846 */  jal   texLoadFromGdl
 /* 0EAE10 7F0B62E0 00003825 */   move  $a3, $zero
 /* 0EAE14 7F0B62E4 0202082A */  slt   $at, $s0, $v0
 /* 0EAE18 7F0B62E8 10200002 */  beqz  $at, .L7F0B62F4
@@ -5651,7 +5651,7 @@ glabel sub_GAME_7F0B61DC
 /* 0EAE00 7F0B62D0 8FA40028 */  lw    $a0, 0x28($sp)
 /* 0EAE04 7F0B62D4 02002825 */  move  $a1, $s0
 /* 0EAE08 7F0B62D8 02203025 */  move  $a2, $s1
-/* 0EAE0C 7F0B62DC 0FC33846 */  jal   process_microcode_sort_display_modes_expand_image_calls
+/* 0EAE0C 7F0B62DC 0FC33846 */  jal   texLoadFromGdl
 /* 0EAE10 7F0B62E0 00003825 */   move  $a3, $zero
 /* 0EAE14 7F0B62E4 0202082A */  slt   $at, $s0, $v0
 /* 0EAE18 7F0B62E8 10200002 */  beqz  $at, .L7F0B62F4

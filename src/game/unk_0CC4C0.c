@@ -1357,7 +1357,7 @@ Gfx * texHandleType0(Gfx *gdl,struct tex *tex,s32 smode,s32 tmode,s32 offset,u32
 }
 
 
-Gfx * sub_GAME_7F0CE064(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
+Gfx * texHandleType4(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
 {
     DL = texWriteLoadToTmemZero(DL,arg1);
     DL = texWriteTile(DL,arg1,arg2,arg3,arg4,0);
@@ -1365,7 +1365,7 @@ Gfx * sub_GAME_7F0CE064(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
 }
 
 
-Gfx * sub_GAME_7F0CE0AC(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
+Gfx * texHandleType3(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
 {
     DL = texWriteLoadToTmemZero(DL,arg1);
     DL = texWriteTile(DL,arg1,arg2,arg3,arg4,0);
@@ -1378,7 +1378,7 @@ Gfx * sub_GAME_7F0CE0AC(Gfx *DL,u32 *arg1,s32 arg2,s32 arg3,s32 arg4)
 
 
 #ifdef NONMATCHING
-void process_microcode_sort_display_modes_expand_image_calls(void) {
+void texLoadFromGdl(void) {
 
 }
 #else
@@ -1413,7 +1413,7 @@ glabel jpt_tlb_ptr_C0_image_recall_types
 .word .L7F0CE584
 .word .L7F0CE5BC
 .text
-glabel process_microcode_sort_display_modes_expand_image_calls
+glabel texLoadFromGdl
 /* 102C48 7F0CE118 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 102C4C 7F0CE11C AFB20038 */  sw    $s2, 0x38($sp)
 /* 102C50 7F0CE120 AFBF0054 */  sw    $ra, 0x54($sp)
@@ -1723,7 +1723,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 1030D0 7F0CE5A0 01A03825 */  move  $a3, $t5
 /* 1030D4 7F0CE5A4 AFAF0010 */  sw    $t7, 0x10($sp)
 /* 1030D8 7F0CE5A8 02002025 */  move  $a0, $s0
-/* 1030DC 7F0CE5AC 0FC3382B */  jal   sub_GAME_7F0CE0AC
+/* 1030DC 7F0CE5AC 0FC3382B */  jal   texHandleType3
 /* 1030E0 7F0CE5B0 02402825 */   move  $a1, $s2
 /* 1030E4 7F0CE5B4 1000000E */  b     .L7F0CE5F0
 /* 1030E8 7F0CE5B8 00408025 */   move  $s0, $v0
@@ -1738,7 +1738,7 @@ glabel process_microcode_sort_display_modes_expand_image_calls
 /* 103108 7F0CE5D8 03203825 */  move  $a3, $t9
 /* 10310C 7F0CE5DC AFB80010 */  sw    $t8, 0x10($sp)
 /* 103110 7F0CE5E0 02002025 */  move  $a0, $s0
-/* 103114 7F0CE5E4 0FC33819 */  jal   sub_GAME_7F0CE064
+/* 103114 7F0CE5E4 0FC33819 */  jal   texHandleType4
 /* 103118 7F0CE5E8 02402825 */   move  $a1, $s2
 /* 10311C 7F0CE5EC 00408025 */  move  $s0, $v0
 def_7F0CE2B4:
