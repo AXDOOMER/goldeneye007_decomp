@@ -6,5 +6,6 @@ void sub_GAME_7F0BC624(s32 param_1);
 void sub_GAME_7F0BC7D4(void);
 void sub_GAME_7F0BCA34(s32 index, coord3d *param_2);
 Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index);
+s32 getRoomIndexPOS(s32 index);
 
 #endif

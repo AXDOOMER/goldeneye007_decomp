@@ -19,6 +19,7 @@
 #include "fr.h"
 #include "snd.h"
 #include "stan.h"
+#include "unk_0BC530.h"
 #include <assets/GlobalImageTable.h>
 
 // bss
@@ -237,7 +238,8 @@ u32 D_8004093C = 0xDC;
 /*** prototypes */
 
 void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
-
+s32 sub_GAME_7F0A0C74(f32 arg0);
+void sub_GAME_7F0A0E98(s32 arg0);
 
 /*** *************************************************************************************************************/
 
