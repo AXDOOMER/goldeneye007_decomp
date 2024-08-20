@@ -6,7 +6,9 @@
 #include <bondtypes.h>
 #include <limits.h>
 #include "bg.h"
+#include "bondview.h"
 #include "chrai.h"
+#include "chrlv.h"
 #include "chrobjhandler.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"

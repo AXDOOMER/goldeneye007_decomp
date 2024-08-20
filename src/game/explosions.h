@@ -34,7 +34,7 @@ typedef struct s_explosiontype {
     f32 explosion_size;
     f32 explosion_range;
     f32 dmg_range;
-    u16 duration;
+    s16 duration;
     u16 propagationrate;
     f32 flareanimspeed;
     s16 numshrapnelbits;
@@ -67,11 +67,11 @@ struct ExplosionPart
 };
 
 struct Explosion {
-    PropRecord *prop;
-    PropRecord *unk04;
+    PropRecord *prop; // maybe explosion prop
+    PropRecord *unk04; // maybe source prop (e.g., crate)
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
-    s16 unk3C8;
-    s16 unk3CA;
+    s16 unk3C8; // some kind of current tick + total elapsed?
+    s16 unk3CA; // total elapsed?
 
     s8 explosion_type;
     u8 unk3CD;
