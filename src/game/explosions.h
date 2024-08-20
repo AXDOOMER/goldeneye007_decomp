@@ -3,6 +3,10 @@
 #include <ultra64.h>
 #include <bondtypes.h>
 
+// Not sure what this was originally, but it looks like there was a multiplier
+// applied that compiler factors out.
+#define EXPLOSION_DAMAGE_SCALER 1.0f
+
 #define EXPLOSION_BUFFER_LEN 6
 #define EXPLOSION_PARTS_LEN 40
 #define SMOKE_BUFFER_LEN 20
