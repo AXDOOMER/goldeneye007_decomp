@@ -500,8 +500,68 @@ Gfx* texWriteTextureCmd(Gfx* arg0, Gfx* arg1, struct tex* tex, s32 arg3)
 
 
 #ifdef NONMATCHING
-void texWriteLoadToTmemAddr(void) {
+Gfx *texWriteLoadToTmemAddr(Gfx *gdl, struct tex *tex, s32 tmemoffset)
+{
+	s32 depth;
+	s32 len;
 
+	texGetDepthAndSize(tex, &depth, &len);
+
+	if (tex->lutmodeindex == 0) {
+		gDPSetTextureImage(gdl++, tex->gbiformat, depth, 1, tex->data);
+
+		if (!g_TexPipeSynced) {
+			gDPPipeSync(gdl++);
+			g_TexPipeSynced = true;
+		}
+
+		if (depth == G_IM_SIZ_16b && tmemoffset == 0) {
+			gDPLoadSync(gdl++);
+			gDPLoadBlock(gdl++, G_TX_LOADTILE, 0, 0, len - 1, 0);
+		} else {
+			if (texTrySetTileState(5, 0, depth, 0, tmemoffset, 0, 0, 0, 0, 0, 0)) {
+				gDPSetTile(gdl++, G_IM_FMT_RGBA, depth, 0, tmemoffset, 5, 0,
+						G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			}
+
+			gDPLoadSync(gdl++);
+			gDPLoadBlock(gdl++, 5, 0, 0, len - 1, 0);
+		}
+	} else {
+		gDPSetTextureImage(gdl++, tex->gbiformat, depth, 1, tex->data);
+
+		if (!g_TexPipeSynced) {
+			gDPPipeSync(gdl++);
+			g_TexPipeSynced = true;
+		}
+
+		if (depth == G_IM_SIZ_16b && tmemoffset == 0) {
+			gDPLoadSync(gdl++);
+			gDPLoadBlock(gdl++, G_TX_LOADTILE, 0, 0, len - 1, 0);
+		} else {
+			if (texTrySetTileState(5, 0, depth, 0, tmemoffset, 0, 0, 0, 0, 0, 0)) {
+				gDPSetTile(gdl++, G_IM_FMT_RGBA, depth, 0, tmemoffset, 5, 0,
+						G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			}
+
+			gDPLoadSync(gdl++);
+			gDPLoadBlock(gdl++, 5, 0, 0, len - 1, 0);
+		}
+
+		{
+			s32 tmp = len;
+			s32 a2 = (u32)(0x3ff - tex->unk0a) < len ? (u32)(0x3ff - tex->unk0a) : 0;
+
+			tmp -= a2;
+
+			gDPLoadSync(gdl++);
+			gDPLoadTLUT06(gdl++, tmp, a2, tex->unk0a + tmp, a2);
+		}
+	}
+
+	return gdl;
 }
 #else
 GLOBAL_ASM(

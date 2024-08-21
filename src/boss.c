@@ -211,7 +211,7 @@ void bossInitMainthreadData(void)
     default_player_perspective_and_height();
     store_osgetcount();
     null_init_main_1();
-    speedGraphDisplayListRelated();
+    speedgraphInit();
     set_gu_scale();
     null_init_main_2();
     sub_GAME_7F000980();
@@ -426,7 +426,7 @@ void bossMainloop(void)
         viInitBuffers();
         debmenuInit();
         sub_GAME_7F0C0B4C();
-        speedGraphVideoRelated_2();
+        speedgraphMarkerCommit();
 
         if(1); // regalloc
         if(1);
@@ -472,15 +472,9 @@ void bossMainloop(void)
                                 sub_GAME_7F0C0B4C();
                             }
 
-#if defined(VERSION_EU)
-                            profileSetMarker();
-                            speedGraphVideoRelated_2();
-                            speedGraphDisplay(0x20000);
-#else
-                            video_DL_related_4();
-                            speedGraphVideoRelated_2();
-                            profileSetMarker(0x20000);
-#endif
+                            speedgraphRenderGraph();
+                            speedgraphMarkerCommit();
+                            speedgraphMarkerHandler(0x20000);
                             joyConsumeSamplesWrapper();
                             permit_stderr(0);
 
@@ -546,11 +540,7 @@ void bossMainloop(void)
 
                             if (get_memusage_display_flag())
                             {
-#if defined(VERSION_EU)
-                                gdl = video_DL_related_4(gdl);
-#else
-                                gdl = speedGraphDisplay(gdl);
-#endif
+                                gdl = speedgraphDisplayMetrics(gdl);
                             }
 
                             if (g_BossIsDebugMenuOpen)
@@ -614,12 +604,8 @@ void bossMainloop(void)
 #endif
                             toggleFlag ^= 1;
 
-#if defined(VERSION_EU)
-                            speedGraphDisplay(0x10000);
+                            speedgraphMarkerHandler(0x10000);
                             if(1);
-#else
-                            profileSetMarker(0x10000);
-#endif
                         }
                     }
                 }

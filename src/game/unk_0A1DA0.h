@@ -96,12 +96,6 @@ struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, 
 void sub_GAME_7F0A2160(coord3d * arg0, f32 arg1, f32 arg2);
 void sub_GAME_7F0A3EA0(void);
 
-Gfx * sub_GAME_7F0D1AC0(Gfx *DL);
-void sub_GAME_7F0D1DCC(f32 arg0);
-void sub_GAME_7F0D2320(void);
-
-Gfx *sub_GAME_7F0D1BD0(Gfx *arg0, f32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-Gfx *sub_GAME_7F0D1E98(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3);
 void update_bullet_sparks_and_dust_clouds(void);
 
 #endif

@@ -843,11 +843,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0CC4C0.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0CC4C0.o
 3276b0ae12d43e34773e3e7340fd7eb7,.data,build/u/src/game/unk_0CC4C0.o
 649f505c857e9b5f6bc4b652ea1d387e,.rodata,build/u/src/game/unk_0CC4C0.o
-16b4e13d4b5d2c2924a59aff80c5f24a,.text,build/u/src/game/unk_0D1AC0.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0D1AC0.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0D1AC0.o
-4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/unk_0D1AC0.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/unk_0D1AC0.o
+16b4e13d4b5d2c2924a59aff80c5f24a,.text,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/speedgraphrenderer.o
+4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/speedgraphrenderer.o
 7e01bd828f54335aefbf28fc14d26b02,.text,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/viewport.o
