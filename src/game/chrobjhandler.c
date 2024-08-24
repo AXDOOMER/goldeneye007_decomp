@@ -36875,7 +36875,7 @@ void check_guard_detonate_proxmine(void)
     for (i = 0; i < numslots; i++)
     {
         guard = &g_ChrSlots[i];
-        if ((guard->model != NULL) && (guard->hidden & 0x200))
+        if ((guard->model != NULL) && (guard->hidden & CHRHIDDEN_BACKGROUND_AI))
         {
             coord3d pos;
             chrlvGetPatrolPercentOrPosition(guard, &pos);

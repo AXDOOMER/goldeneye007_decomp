@@ -2945,13 +2945,13 @@ s32 chrlvExplosionDamage(ChrRecord *self, coord3d *arg1, f32 damage, s32 arg3)
         if ((self->weapons_held[GUNRIGHT] != NULL) && ((self->weapons_held[GUNRIGHT]->obj->flags & 0x2000) == 0))
         {
             propobjSetDropped(self->weapons_held[GUNRIGHT], 1);
-            self->hidden |= 1;
+            self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
         }
 
         if ((self->weapons_held[GUNLEFT] != NULL) && ((self->weapons_held[GUNLEFT]->obj->flags & 0x2000) == 0))
         {
             propobjSetDropped(self->weapons_held[GUNLEFT], 1);
-            self->hidden |= 1;
+            self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
         }
 
         return 1;
@@ -6742,11 +6742,11 @@ void chrlvToggleHiddenRelated(ChrRecord *self, s32 hand, s32 arg2)
     }
     else if (hand == GUNLEFT)
     {
-        self->hidden &= 0xFFFB; // CHRHIDDEN_FIRE_WEAPON_LEFT
+        self->hidden &= ~CHRHIDDEN_FIRE_WEAPON_LEFT; // CHRHIDDEN_FIRE_WEAPON_LEFT
     }
     else
     {
-        self->hidden &= 0xFFF7; // CHRHIDDEN_FIRE_WEAPON_RIGHT
+        self->hidden &= ~CHRHIDDEN_FIRE_WEAPON_RIGHT; // CHRHIDDEN_FIRE_WEAPON_RIGHT
     }
 
     if (arg2 == 0)
@@ -7368,20 +7368,20 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
 */
 void chrlvTriggerFireWeapon(ChrRecord *self)
 {
-    self->hidden &= 0xFF7F; // CHRHIDDEN_FIRE_WEAPON_RIGHT
+    self->hidden &= ~CHRHIDDEN_FIRE_TRACER;
 
     if (self->hidden & CHRHIDDEN_FIRE_WEAPON_RIGHT)
     {
         chrlvFireWeaponRelated(self, GUNRIGHT);
 
-        self->hidden &= 0xFFF7; // CHRHIDDEN_FIRE_WEAPON_RIGHT
+        self->hidden &= ~CHRHIDDEN_FIRE_WEAPON_RIGHT;
     }
 
      if (self->hidden & CHRHIDDEN_FIRE_WEAPON_LEFT)
     {
         chrlvFireWeaponRelated(self, GUNLEFT);
 
-        self->hidden &= 0xFFFB; // CHRHIDDEN_FIRE_WEAPON_LEFT
+        self->hidden &= ~CHRHIDDEN_FIRE_WEAPON_LEFT;
     }
 }
 
@@ -8074,7 +8074,7 @@ void chrlvTickThrowGrenade(ChrRecord *self)
     if ((temp_f2 >= 119.0f) && (held_prop != NULL))
     {
         propobjSetDropped(self->weapons_held[gunhand], 3);
-        self->hidden |= 1;
+        self->hidden |= CHRHIDDEN_DROP_HELD_ITEMS;
     }
 
     if (objecthandlerGetModelField28(self_model) >= sub_GAME_7F06F5C4(self_model))
@@ -9862,7 +9862,7 @@ void chrlvActionTick(ChrRecord *self)
             self->sleep = 0;
         }
 
-        if ((self->hidden & 0x40) != 0)
+        if ((self->hidden & CHRHIDDEN_TIMER_ACTIVE) != 0)
         {
             self->timer60 += g_ClockTimer;
         }
@@ -9945,7 +9945,7 @@ void chrlvActionTick(ChrRecord *self)
             }
 
             self->chrflags &= ~CHRFLAG_NEAR_MISS;
-            self->hidden &= 0xFDFD;
+            self->hidden &= ~(CHRHIDDEN_ALERT_GUARD_RELATED | CHRHIDDEN_BACKGROUND_AI);
             self->chrseeshot = CHR_FREE;
             self->chrseedie  = CHR_FREE;
         }
@@ -11481,7 +11481,7 @@ bool chrDropItem(ChrRecord *self, s32 modelnum, u8 weaponid)
         chrpropReparent(NewModel->prop, self->prop);
         NewModel->timer = CHRLV_DEFAULT_TIMER;
         propobjSetDropped(NewModel->prop, 1);
-        self->hidden = self->hidden | 1;
+        self->hidden = self->hidden | CHRHIDDEN_DROP_HELD_ITEMS;
 
         return TRUE;
     }
