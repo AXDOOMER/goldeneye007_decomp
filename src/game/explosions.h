@@ -39,7 +39,7 @@ typedef struct s_explosiontype {
     f32 explosion_range;
     f32 dmg_range;
     s16 duration;
-    u16 propagationrate;
+    s16 propagationrate;
     f32 flareanimspeed;
     s16 numshrapnelbits;
     //u16 field_0x26;
@@ -74,11 +74,11 @@ struct Explosion {
     PropRecord *prop; // maybe explosion prop
     PropRecord *unk04; // maybe source prop (e.g., crate)
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
-    s16 unk3C8; // some kind of current tick + total elapsed?
+    s16 age; // some kind of current tick + total elapsed?
     s16 unk3CA; // total elapsed?
 
     s8 explosion_type;
-    u8 unk3CD;
+    s8 unk3CD;
     s8 player;
     s8 unk3CF;
 
@@ -233,7 +233,7 @@ void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);
 Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
 Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
-Gfx *unk09c250RenderPropExplosion(PropRecord *arg0, Gfx *arg1);
+Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha);
 Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
 

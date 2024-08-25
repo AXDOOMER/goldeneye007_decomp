@@ -10,15 +10,14 @@
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
+#include "explosions.h"
+#include "fr.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"
-#include "explosions.h"
-#include "unk_0BC530.h"
 #include "lvl.h"
 #include "music.h"
 #include "player.h"
 #include "random.h"
-#include "fr.h"
 #include "snd.h"
 #include "stan.h"
 #include "unk_0BC530.h"
@@ -243,6 +242,9 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
 s32 sub_GAME_7F0A0C74(f32 arg0);
 void sub_GAME_7F0A0E98(s32 arg0);
 void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2);
+void sub_GAME_7F09C9D8(struct PropRecord *arg0, f32 arg1, f32 arg2);
+void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2);
+Gfx *sub_GAME_7F09D82C(struct ExplosionPart *arg0, Gfx *arg1, struct coord3d *arg2);
 
 /*** *************************************************************************************************************/
 
@@ -327,7 +329,7 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
             chrpropEnable(sp30);
             
             sp40->explosion_type = explosion_type;
-            sp40->unk3C8 = 0;
+            sp40->age = 0;
             sp40->unk3CA = -1;
             sp40->unk3CD = (u8) arg4;
             sp40->prop = sp30;
@@ -486,7 +488,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
     temp_s2 = arg0->explosion;
     temp_s6 = &array_explosion_types[temp_s2->explosion_type];
 
-    if (temp_s2->unk3C8 >= temp_s2->unk3CA)
+    if (temp_s2->age >= temp_s2->unk3CA)
     {
         chraiGetPropRoomIds(arg0, &spE0[0]);
         roomGetProps(&spE0[0]);
@@ -666,7 +668,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
             }
         }
 
-        temp_s2->unk3CA = temp_s2->unk3C8 + (temp_s6->duration >> 2);
+        temp_s2->unk3CA = temp_s2->age + (temp_s6->duration >> 2);
     }
 }
 
@@ -675,8 +677,171 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F09CEE8(void) {
+/***
+ * see Perfect Dark u32 explosionTick(struct prop *prop)
+ * 
+ * NTSC address 0x7F09CEE8.
+*/
+// https://decomp.me/scratch/dz7Pi 97.88%
+s32 sub_GAME_7F09CEE8(PropRecord* arg0)
+{
+    s32 var_s4;
+    s32 j;
+    s32 k;
+    
+    f32 var_f0;
+    f32 hrange;
+    f32 vrange;
+    f32 temp_f20;
+    f32 temp_f12;
+    
+    struct Explosion *exp;
+    s_explosiontype *explosiontype;
+    
+    f32 lvupdate;
+    s32 sp9C;
+    struct coord3d sp90;
+    struct coord3d sp84;
+    
+    
+    exp = arg0->explosion;
+    explosiontype = &array_explosion_types[exp->explosion_type];
+    
+    if (g_ClockTimer == 0)
+    {
+        return 0;
+    }
+    
+    lvupdate = (g_ClockTimer < 15) ? (f32) g_ClockTimer : 15.0f;
 
+    if ((exp->age >= 8) && (exp->age < explosiontype->duration))
+    {
+        hrange = explosiontype->hrange + (explosiontype->hchange * exp->age);
+        vrange = explosiontype->vrange + (explosiontype->vchange * exp->age);
+
+        if (exp->explosion_type == 0xE)
+        {
+            if (exp->age < 0x20)
+            {
+                arg0->pos.f[1] += 10.0f * lvupdate;
+            }
+            
+            if (exp->age >= 0x21)
+            {
+                hrange = (exp->age * 3.0f) + 40.0f;
+                vrange = 20.0f;
+                
+                if (hrange > 300.0f)
+                {
+                    hrange = 300.0f;
+                }
+            }
+        }
+
+        sp9C = (s32) (((f32)explosiontype->propagationrate * (f32)exp->age) / (f32)explosiontype->duration) + 1;
+        for (var_s4 = 0; var_s4 < sp9C; var_s4++)
+        {
+            for (j=0; j<EXPLOSION_PARTS_LEN; j++)
+            {
+                if (exp->parts[j].frame == 0)
+                {
+                    exp->parts[j].frame = 1;
+    
+                    exp->parts[j].pos.f[0] = arg0->pos.f[0] + ((RANDOMFRAC() - 0.5f) * hrange);
+                    exp->parts[j].pos.f[1] = arg0->pos.f[1] + ((RANDOMFRAC() - 0.5f) * vrange);
+                    exp->parts[j].pos.f[2] = arg0->pos.f[2] + ((RANDOMFRAC() - 0.5f) * hrange);
+    
+                    temp_f20 = ((RANDOMFRAC() * 0.5f) + 1.0f) * explosiontype->explosion_size;
+                    temp_f12 = RANDOMFRAC() * M_TAU_F;
+        
+                    exp->parts[j].size = cosf(temp_f12) * temp_f20;
+                    exp->parts[j].rot = sinf(temp_f12) * temp_f20;
+
+                    break;
+                }
+            }
+        }
+        
+        // see Perfect Dark void explosionGetBboxAtFrame(struct coord *lower, struct coord *upper, s32 frame, struct prop *prop)
+
+        // Perfect Dark indicates the assignment should look like:
+        //hrange = (hrange * 0.5f) + explosiontype->explosion_size * 1.5f;
+        //vrange = (vrange * 0.5f) + explosiontype->explosion_size * 1.5f;
+
+        // best match, wrong temp variables:
+        var_f0 = explosiontype->explosion_size * 1.5f;
+
+        hrange *= 0.5f;
+        hrange += var_f0;
+
+        vrange *= 0.5f;
+        vrange += var_f0;
+        // -------------------
+        
+        sp90.f[0] = arg0->pos.f[0] - hrange;
+        sp90.f[1] = arg0->pos.f[1] - vrange;
+        sp90.f[2] = arg0->pos.f[2] - hrange;
+        
+        sp84.f[0] = arg0->pos.f[0] + hrange;
+        sp84.f[1] = arg0->pos.f[1] + vrange;
+        sp84.f[2] = arg0->pos.f[2] + hrange;
+
+        // end explosionGetBboxAtFrame.
+        
+        sub_GAME_7F03E27C(arg0, &sp90, &sp84, hrange);
+
+        var_f0 = explosiontype->explosion_range + (((explosiontype->dmg_range - explosiontype->explosion_range) * (f32) exp->age) / (f32) explosiontype->duration);
+        sub_GAME_7F09C9D8(arg0, var_f0, var_f0);
+    }
+    
+    for (k = 0; k < (s32) lvupdate; k++)
+    {
+        exp->age++;
+        
+        for (j=0; j<EXPLOSION_PARTS_LEN; j++)
+        {
+            if (exp->parts[j].frame > 0)
+            {
+                exp->parts[j].frame++;
+            }
+        }
+
+        if (((exp->age == 0xF) && (exp->explosion_type == 0xE))
+            || (((exp->age + 0x14) == (s16) explosiontype->duration) && (exp->explosion_type != 0xE)))
+        {
+            PropRecord *temp_v0_6;
+            temp_v0_6 = exp->unk04;
+            if ((temp_v0_6 != NULL) && (temp_v0_6->stan != NULL))
+            {
+                if (temp_v0_6->type == PROP_TYPE_OBJ)
+                {
+                    struct ObjectRecord *obj = temp_v0_6->obj;
+                    sub_GAME_7F09E700(&obj->runtime_pos, temp_v0_6->stan, (s16) explosiontype->smoketype, temp_v0_6->rooms, (arg0->flags & 8) != 0);
+                }
+                else
+                {
+                    sub_GAME_7F09E700(&temp_v0_6->pos, temp_v0_6->stan, (s16) explosiontype->smoketype, temp_v0_6->rooms, (arg0->flags & 8) != 0);
+                }
+            }
+            else
+            {
+                sub_GAME_7F09E700(&arg0->pos, arg0->stan, (s16) explosiontype->smoketype, arg0->rooms, (arg0->flags & 8) != 0);
+            }
+        }
+        
+        if ((exp->age == ((s16) explosiontype->duration >> 1)) && (exp->unk3CD != 0))
+        {
+            sub_GAME_7F0A027C(&exp->pos, explosiontype->explosion_size * 4.0f, exp->room);
+        }
+    }
+
+    if (exp->age >= explosiontype->duration + (s32) (16.0f * explosiontype->flareanimspeed))
+    {
+        exp->prop = NULL;
+        return 1;
+    }
+    
+    return 0;
 }
 #else
 GLOBAL_ASM(
