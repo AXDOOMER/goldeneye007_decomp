@@ -110,29 +110,12 @@ struct Smoke {
 struct Scorch {
     s16 roomid;
     s16 unk02;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
 
-    u32 unk10;
+    struct coord3d unk04;
+    f32 unk10;
     u32 unk14;
-    u32 vertex_list[4];
 
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u32 unk44;
-    u32 unk48;
-    u32 unk4C;
-
-    u32 unk50;
-    u32 unk54;
+    Vtx vertex_list[4];
 };
 
 struct BulletImpact {
