@@ -487,17 +487,20 @@ BITFLAG(DOOR_LOCK,
         6,
         7
 )
-//PropDef State
-BITFLAG(PROPSTATE,
-        DAMAGED,
-        02,
-        RESPAWN,
-        EXT_COLISION_BLOCK,
-        10,
-        20,
-        ACTIVATED,
-        DESTROYED
-)
+
+/** PropDefHeaderRecord->state only u8 */
+typedef enum PROPSTATE {
+    PROPSTATE_NONE = 0x00,
+    PROPSTATE_DAMAGED = 0x01,
+    PROPSTATE_2 = 0x02,
+    PROPSTATE_RESPAWN = 0x04,
+    PROPSTATE_EXT_COLISION_BLOCK = 0x08,
+    PROPSTATE_10 = 0x10,
+    PROPSTATE_20 = 0x20,
+    PROPSTATE_ACTIVATED = 0x40,
+    PROPSTATE_DESTROYED = 0x80
+} PROPSTATE;
+
 #define PROPSTATE_NORMAL PROPSTATE_NONE
 
 BITFLAG(PLAYERFLAG,

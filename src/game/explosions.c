@@ -7,6 +7,7 @@
 #include <limits.h>
 #include "bg.h"
 #include "bondview.h"
+#include "cheat_buttons.h"
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
@@ -15,6 +16,7 @@
 #include "image_bank.h"
 #include "othermodemicrocode.h"
 #include "lvl.h"
+#include "matrixmath.h"
 #include "music.h"
 #include "player.h"
 #include "random.h"
@@ -217,16 +219,7 @@ u32 D_8004091C = 0;
 
 
 Vtx D_80040920 = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
-
-
-//D:80040930
-u32 D_80040930 = 0;
-//D:80040934
-u32 D_80040934 = 0;
-//D:80040938
-u32 D_80040938 = 0;
-//D:8004093C
-u32 D_8004093C = 0xDC;
+Vtx D_80040930 = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
 
 
 // rodata
