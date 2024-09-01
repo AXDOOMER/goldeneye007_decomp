@@ -122,34 +122,7 @@ struct BulletImpact {
     s16 unk00;
     s16 unk02;
     u32 unk04;
-    u32 unk08;
-    u32 unk0C;
-
-    u32 unk10;
-    u16 unk14;
-    s8 unk16;
-    s8 unk17;
-    u32 unk18;
-    u32 unk1C;
-
-    u32 unk20;
-    u16 unk24;
-    s8 unk26;
-    s8 unk27;
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u16 unk34;
-    s8 unk36;
-    s8 unk37;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u16 unk44;
-    s8 unk46;
-    s8 unk47;
+    Vtx vertex_list[4];
     PropRecord* unk48;
     s8 unk4C;
     s8 unk4D;
