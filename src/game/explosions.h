@@ -92,12 +92,12 @@ struct SmokePart
 {
     coord3d pos;         /*0x00*/
     f32 size;                   /*0x0c*/
-    u32 rot;                    /*0x10*/
-    u32 deltarot;               /*0x14*/
-    u32 offset1;                /*0x18*/
-    u32 offset2;                /*0x1c*/
-    u32 alpha;                  /*0x20*/
-    u16 count;                  /*0x24*/
+    f32 rot;                    /*0x10*/
+    f32 deltarot;               /*0x14*/
+    f32 offset1;                /*0x18*/
+    f32 offset2;                /*0x1c*/
+    f32 alpha;                  /*0x20*/
+    s16 count;                  /*0x24*/
 };
 
 struct Smoke {
