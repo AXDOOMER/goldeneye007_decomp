@@ -14,31 +14,34 @@
 /**
  * EU .bss 8007DC90
 */
-u8 dword_CODE_bss_80083320[AMT300];
+u8 roomStatusFlags[AMT300];
 
-s32 dword_CODE_bss_80083450[AMT300];
-s32 dword_CODE_bss_80083900[AMT300];
-Mtx mtx_array_bss_80083DB0[AMT300];
+s32 roomIndices[AMT300];
+s32 roomOwners[AMT300];
+Mtx roomMatrices[AMT300];
 
 
-/*
-* Address: 0x7F0BC530
-*/
-void sub_GAME_7F0BC530(void) 
+/**
+ * Initialize room and player-related data structures.
+ * Sets all rooms and players to an initial state.
+ *
+ * Address: 0x7F0BC530
+ */
+void initializeRoomData(void) 
 {
     int i;
       
     for (i=0; i<getPlayerCount(); i++)
     {
-        g_playerPointers[i]->field_108C = -1;
+        g_playerPointers[i]->curRoomIndex = -1;
     }
 
     for (i=0; i<AMT300; i++)
     {
-      dword_CODE_bss_80083450[i] = -1;
-      dword_CODE_bss_80083320[i] = 2;
+      roomIndices[i] = -1;
+      roomStatusFlags[i] = 2;
       
-      dword_CODE_bss_80083900[i] = -1;
+      roomOwners[i] = -1;
       
       
     }
@@ -50,57 +53,68 @@ void sub_GAME_7F0BC530(void)
 }
 
 
-/*
-* Address: 0x7F0BC624
-*/
-void sub_GAME_7F0BC624(s32 param_1) {
-  g_CurrentPlayer->field_108C = param_1;
+/**
+ * Set the player's room field.
+ *
+ * Address: 0x7F0BC624
+ */
+void setPlayerRoomField(s32 roomIndex) {
+  g_CurrentPlayer->curRoomIndex = roomIndex;
 }
 
 
-/*
-* Address: 0x7F0BC634
-*/
-void sub_GAME_7F0BC634(int param_1,int param_2)
+/**
+ * Assigns a room index to a specific room ID.
+ *
+ * Address: 0x7F0BC634
+ */
+void assignRoomIndexToRoomID(int roomIndex,int roomID)
 {
-    array_room_info[param_2].field_36 = param_1;
-    dword_CODE_bss_80083450[param_1] = param_2;
+    array_room_info[roomID].field_36 = roomIndex;
+    roomIndices[roomIndex] = roomID;
 }
 
 
-/*
-* Address: 0x7F0BC660
-*/
-void sub_GAME_7F0BC660(int param_1,int param_2)
+/**
+ * Removes the room index assignment for a specific room ID.
+ *
+ * Address: 0x7F0BC660
+ */
+void removeRoomIndexFromRoomID(int roomIndex,int roomID)
 {
-    array_room_info[param_2].field_36 = -1;
-    dword_CODE_bss_80083450[param_1] = -1;
+    array_room_info[roomID].field_36 = -1;
+    roomIndices[roomIndex] = -1;
 }
 
 
-/*
-* Address: 0x7F0BC690
-*/
-void sub_GAME_7F0BC690(int index)
+/**
+ * Resets a room's state to its initial condition.
+ *
+ * Address: 0x7F0BC690
+ */
+void resetRoomState(int roomIndex)
 {
-    if (dword_CODE_bss_80083450[index] != -1) {
-        sub_GAME_7F0BC660(index,dword_CODE_bss_80083450[index]);
+    if (roomIndices[roomIndex] != -1) {
+        removeRoomIndexFromRoomID(roomIndex,roomIndices[roomIndex]);
     }
-    dword_CODE_bss_80083320[index] = 2;
-    dword_CODE_bss_80083900[index] = -1;
+    roomStatusFlags[roomIndex] = 2;
+    roomOwners[roomIndex] = -1;
 }
 
 
-/*
-* Address: 0x7F0BC6F0
-*/
-s32 sub_GAME_7F0BC6F0(void)
+/**
+ * Finds and returns the first available room index.
+ * Returns 0 if no available room is found.
+ *
+ * Address: 0x7F0BC6F0
+ */
+s32 findAvailableRoomIndex(void)
 {
     s32 i;
 
     for (i = 0; i<AMT300; i++)
     {
-        if (((s32) dword_CODE_bss_80083320[i] >= 2) && (dword_CODE_bss_80083900[i] == -1))
+        if (((s32) roomStatusFlags[i] >= 2) && (roomOwners[i] == -1))
         {
             return i;
         }
@@ -110,21 +124,23 @@ s32 sub_GAME_7F0BC6F0(void)
 
 
 /**
+ * Updates the status flags for rooms, resetting those that are inactive.
+ *
  * NTSC address 0x7F0BC7D4.
-*/
-void sub_GAME_7F0BC7D4(void)
+ */
+void updateRoomStatusFlags(void)
 {
     s32 i;
 
     for(i = 0; i<AMT300; ++i)
     {
-        if (dword_CODE_bss_80083900[i] > -1)
+        if (roomOwners[i] > -1)
         {
-            dword_CODE_bss_80083320[i]++;
+            roomStatusFlags[i]++;
             
-            if (dword_CODE_bss_80083320[i] >= 2)
+            if (roomStatusFlags[i] >= 2)
             {
-                sub_GAME_7F0BC690(i);
+                resetRoomState(i);
             }            
         } 
     }
@@ -134,81 +150,89 @@ void sub_GAME_7F0BC7D4(void)
 
 
 /**
+ * Manages room index allocation and matrix setup for a given room.
+ *
  * NTSC address 0x7F0BC85C.
-*/
-s32 sub_GAME_7F0BC85C(s32 arg0)
+ */
+s32 manageRoomIndexAndMatrix(s32 roomID)
 {
-    s32 var_s0;
-    Mtxf sp2C;
+    s32 roomIndex;
+    Mtxf roomTransformMatrix;
 
-    var_s0 = array_room_info[arg0].field_36;
+    roomIndex = array_room_info[roomID].field_36;
     
-    if ((var_s0 == -1) || (g_CurrentPlayer->field_108C != dword_CODE_bss_80083900[var_s0]))
+    if ((roomIndex == -1) || (g_CurrentPlayer->curRoomIndex != roomOwners[roomIndex]))
     {
-        if (var_s0 != -1)
+        if (roomIndex != -1)
         {
-            sub_GAME_7F0BC660(var_s0, arg0);
+            removeRoomIndexFromRoomID(roomIndex, roomID);
         }
 
-        var_s0 = sub_GAME_7F0BC6F0();
-        sub_GAME_7F0BC634(var_s0, arg0);
+        roomIndex = findAvailableRoomIndex();
+        assignRoomIndexToRoomID(roomIndex, roomID);
         
-        dword_CODE_bss_80083320[var_s0] = 0;
+        roomStatusFlags[roomIndex] = 0;
     }
     else
     {
-        dword_CODE_bss_80083320[var_s0] = 0;
+        roomStatusFlags[roomIndex] = 0;
         
-        return var_s0;
+        return roomIndex;
     }
 
-    dword_CODE_bss_80083900[var_s0] = g_CurrentPlayer->field_108C;
+    roomOwners[roomIndex] = g_CurrentPlayer->curRoomIndex;
 
-    matrix_4x4_set_identity(&sp2C);
+    matrix_4x4_set_identity(&roomTransformMatrix);
     
-    sp2C.m[0][0] = room_data_float2;
-    sp2C.m[1][1] = room_data_float2;
-    sp2C.m[2][2] = room_data_float2;
+    roomTransformMatrix.m[0][0] = room_data_float2;
+    roomTransformMatrix.m[1][1] = room_data_float2;
+    roomTransformMatrix.m[2][2] = room_data_float2;
     
-    sp2C.m[3][0] = (ptr_bgdata_room_fileposition_list[arg0].pos.f[0] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[0];
-    sp2C.m[3][1] = (ptr_bgdata_room_fileposition_list[arg0].pos.f[1] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[1];
-    sp2C.m[3][2] = (ptr_bgdata_room_fileposition_list[arg0].pos.f[2] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[2];
+    roomTransformMatrix.m[3][0] = (ptr_bgdata_room_fileposition_list[roomID].pos.f[0] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[0];
+    roomTransformMatrix.m[3][1] = (ptr_bgdata_room_fileposition_list[roomID].pos.f[1] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[1];
+    roomTransformMatrix.m[3][2] = (ptr_bgdata_room_fileposition_list[roomID].pos.f[2] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[2];
     
-    matrix_4x4_f32_to_s32(&sp2C, &mtx_array_bss_80083DB0[var_s0]);
+    matrix_4x4_f32_to_s32(&roomTransformMatrix, &roomMatrices[roomIndex]);
     
-    return var_s0;
+    return roomIndex;
 }
 
 
 
-/*
-* Address: 0x7F0BC9C4
-*/
-Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
+/**
+ * Updates the display list with the room matrix for a specific room roomID.
+ *
+ * Address: 0x7F0BC9C4
+ */
+Gfx * updateDisplayListWithRoomMatrix(Gfx *gdl,int roomID)
 {
-    s32 i;
+    s32 roomIndex;
     
-    i = sub_GAME_7F0BC85C(index);
-    gSPMatrix(DL++, &mtx_array_bss_80083DB0[i], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
-    return DL;
+    roomIndex = manageRoomIndexAndMatrix(roomID);
+    gSPMatrix(gdl++, &roomMatrices[roomIndex], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
+    return gdl;
 }
 
 
-/*
-* Address: 0x7f0bca14
-*/
-struct coord3d* getRoomIndexPOS(s32 index)
+/**
+ * Returns the position of a room by its roomID.
+ *
+ * Address: 0x7f0bca14
+ */
+struct coord3d* getRoomPositionByIndex(s32 roomID)
 {
-    return &ptr_bgdata_room_fileposition_list[index].pos;
+    return &ptr_bgdata_room_fileposition_list[roomID].pos;
 }
 
-/*
-* Address: 0x7F0BCA34
-*/
-void sub_GAME_7F0BCA34(s32 index, coord3d *param_2)
+/**
+ * Retrieves and scales the position of a room by its roomID.
+ *
+ * Address: 0x7F0BCA34
+ */
+void getRoomPositionScaledByIndex(s32 roomID, coord3d *scaledPos)
 {
-    param_2->x = ptr_bgdata_room_fileposition_list[index].pos.x * room_data_float2;
-    param_2->y = ptr_bgdata_room_fileposition_list[index].pos.y * room_data_float2;
-    param_2->z = ptr_bgdata_room_fileposition_list[index].pos.z * room_data_float2;
+    scaledPos->x = ptr_bgdata_room_fileposition_list[roomID].pos.x * room_data_float2;
+    scaledPos->y = ptr_bgdata_room_fileposition_list[roomID].pos.y * room_data_float2;
+    scaledPos->z = ptr_bgdata_room_fileposition_list[roomID].pos.z * room_data_float2;
 }
 

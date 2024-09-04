@@ -42,15 +42,15 @@
 #include "PR/R4300.h"
 
 /**
- * EU .data, offset from start of data_seg : 0x33e0
-*/
-
-/**
  * @file boss.c
- * This file contains the main game loop code.
+ * @brief Main game loop and initialization functions.
+ * 
+ * This file contains the core functions that drive the game loop, manage stages, and handle debug operations.
  */
+
+
 #ifdef REFRESH_PAL
-#define MAIN_LOOP_TICK_INTERVAL D_800484B4 * 0xe34ea - 0x71a75U
+#define MAIN_LOOP_TICK_INTERVAL frameDelay * 0xe34ea - 0x71a75U
 #else
 #define MAIN_LOOP_TICK_INTERVAL 0x5eb61U
 #endif
@@ -77,12 +77,12 @@ void bossMainloop(void);
 
 /* data */
 u32 g_BossDebugNoticeEntry = 0;
-s32 g_DebugAndUpdateStageFlag = 0;
+s32 g_DebugAndUpdateStageFlag = FALSE;
 s32 g_StageNum = LEVELID_TITLE;
 u32 g_CurentMMallocValue = 0x234800;
 u32 g_CurentMaMallocValue = 0x4B000;
-s32 g_ShowMemUseFlag = 0;
-s32 g_ShowMemBarsFlag = 0;
+s32 g_ShowMemUseFlag = FALSE;
+s32 g_ShowMemBarsFlag = FALSE;
 
 struct memallocstring memallocstringtable[] = {
 { LEVELID_DAM,          "-ml0 -me0 -mgfx70  -mvtx50 -mt625 -ma275"},
@@ -121,14 +121,14 @@ struct memallocstring memallocstringtable[] = {
 { LEVELID_CAVERNS_MP ,  "-ml0 -me0 -mgfx130 -mvtx100 -mt440 -ma220"},
 { LEVELID_FACILITY_MP , "-ml0 -me0 -mgfx90  -mvtx100 -mt550 -ma230"},
 { LEVELID_EGYPT_MP ,    "-ml0 -me0 -mgfx110 -mvtx100 -mt350 -ma400"},
-{ 0x0,                  "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
+{ LEVELID_DEFAULT,      "-ml0 -me0 -mgfx100 -mvtx50 -mt700 -ma400"},
 { 0x0, },
 { 0x0, },
 { 0x0, }
 };
 
 s32 g_MainStageNum = LEVELID_NONE;
-s32 g_BossIsDebugMenuOpen = 0;
+s32 g_BossIsDebugMenuOpen = FALSE;
 
 OSScMsg g_bossGfxDoneMsg = { OS_SC_DONE_MSG };
 
@@ -425,7 +425,7 @@ void bossMainloop(void)
         lvlStageLoad(g_StageNum);
         viInitBuffers();
         debmenuInit();
-        sub_GAME_7F0C0B4C();
+        waitForNextFrame();
         speedgraphMarkerCommit();
 
         if(1); // regalloc
@@ -469,7 +469,7 @@ void bossMainloop(void)
                             }
                             else
                             {
-                                sub_GAME_7F0C0B4C();
+                                waitForNextFrame();
                             }
 
                             speedgraphRenderGraph();

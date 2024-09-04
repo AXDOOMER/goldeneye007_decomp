@@ -3316,7 +3316,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D8AC0 7F0A3F90 AFAB00A0 */   sw    $t3, 0xa0($sp)
 /* 0D8AC4 7F0A3F94 86040006 */  lh    $a0, 6($s0)
 /* 0D8AC8 7F0A3F98 00408825 */  move  $s1, $v0
-/* 0D8ACC 7F0A3F9C 0FC2F285 */  jal   getRoomIndexPOS
+/* 0D8ACC 7F0A3F9C 0FC2F285 */  jal   getRoomPositionByIndex
 /* 0D8AD0 7F0A3FA0 AFA40058 */   sw    $a0, 0x58($sp)
 /* 0D8AD4 7F0A3FA4 920C0028 */  lbu   $t4, 0x28($s0)
 /* 0D8AD8 7F0A3FA8 8FA300A4 */  lw    $v1, 0xa4($sp)
@@ -3623,7 +3623,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D8F8C 7F0A445C 8FA9004C */  lw    $t1, 0x4c($sp)
 /* 0D8F90 7F0A4460 AD220004 */  sw    $v0, 4($t1)
 /* 0D8F94 7F0A4464 8FA50058 */  lw    $a1, 0x58($sp)
-/* 0D8F98 7F0A4468 0FC2F271 */  jal   sub_GAME_7F0BC9C4
+/* 0D8F98 7F0A4468 0FC2F271 */  jal   updateDisplayListWithRoomMatrix
 /* 0D8F9C 7F0A446C 8FA400A0 */   lw    $a0, 0xa0($sp)
 /* 0D8FA0 7F0A4470 AFA200A0 */  sw    $v0, 0xa0($sp)
 /* 0D8FA4 7F0A4474 8E0B000C */  lw    $t3, 0xc($s0)

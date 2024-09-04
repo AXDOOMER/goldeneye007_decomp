@@ -5669,7 +5669,7 @@ s32 bondviewTrySimpleMovePlayerCollision(coord3d *next_pos, coord3d *collision_p
 /**
  * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
  * Instead of moving to the full coordinate specified by `next_pos`, it will
- * scale the position using `unkGeometry7F0B33DC` and try to move to that position.
+ * scale the position using `calculateNormalizedIntersection` and try to move to that position.
  *
  * @param next_pos: 3d coordinate to attempt to move to.
  * @param collision1_pt0: Prior collision point 0.
@@ -5719,7 +5719,7 @@ s32 bondviewTryFractionMovePlayerCollision(
     sp38.f[0] = delta_pos.f[0];
     sp38.f[1] = delta_pos.f[2];
 
-    temp_f0 = unkGeometry7F0B33DC(&sp50, &sp48, &sp40, &sp38);
+    temp_f0 = calculateNormalizedIntersection(&sp50, &sp48, &sp40, &sp38);
 
     try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (delta_pos.f[0] * temp_f0 * 0.25f);
     try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (delta_pos.f[2] * temp_f0 * 0.25f);
@@ -10844,7 +10844,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         }
 
 
-        ftemp_7 = (g_BondMoveAnimationSetup[1].unk0C * 0.5f  * g_GlobalTimerDelta);
+        ftemp_7 = (g_BondMoveAnimationSetup[1].speedMultiplier * 0.5f  * g_GlobalTimerDelta);
         sp3A0  = g_CurrentPlayer->speedsideways * ftemp_7;
 
         /*
@@ -11765,11 +11765,11 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
  */
 void bondviewUpdateCurrentRoomPosition(s32 arg0)
 {
-    sub_GAME_7F0BCA34(arg0, &g_CurrentPlayer->current_model_pos);
+    getRoomPositionScaledByIndex(arg0, &g_CurrentPlayer->current_model_pos);
     g_CurrentPlayer->current_room_pos.f[0] = g_CurrentPlayer->current_model_pos.f[0] * get_room_data_float1();
     g_CurrentPlayer->current_room_pos.f[1] = g_CurrentPlayer->current_model_pos.f[1] * get_room_data_float1();
     g_CurrentPlayer->current_room_pos.f[2] = g_CurrentPlayer->current_model_pos.f[2] * get_room_data_float1();
-    sub_GAME_7F0BC624(arg0);
+    setPlayerRoomField(arg0);
 }
 
 

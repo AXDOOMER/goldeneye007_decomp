@@ -313,10 +313,10 @@ f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
 
-rgba_u8 D_8002A9B0 = { 160, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9B4 = { 150, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9B8 = { 40, 0x00, 0x00, 0x00 };
-rgba_u8 D_8002A9BC = { 140, 0x00, 0x00, 0x00 };
+rgba_u8 D_8002A9B0 = { 160, 0, 0, 0 };
+rgba_u8 D_8002A9B4 = { 150, 0, 0, 0 };
+rgba_u8 D_8002A9B8 = { 40, 0, 0, 0 };
+rgba_u8 D_8002A9BC = { 140, 0, 0, 0 };
 
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 

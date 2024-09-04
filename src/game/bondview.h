@@ -848,7 +848,7 @@ struct player
   s32 field_5B0;
   s32 field_5B4;
   s32 field_5B8;
-  s8 field_5BC;
+  s8 animFlipFlag;
   s8 field_5BD;
   s8 field_5BE;
   s8 field_5BF;
@@ -1010,7 +1010,7 @@ struct player
   f32 field_1080;
   f32 sniper_zoom;
   f32 camera_zoom;
-  s32 field_108C;
+  s32 curRoomIndex;
 
   /**
    * Offset 0x1090.

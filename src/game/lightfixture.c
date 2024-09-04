@@ -382,7 +382,7 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 tri_type, s32 room_index)
         dist_nn = sqrtf((diff_x_13 * diff_x_13) + (diff_y_13 * diff_y_13) + (diff_z_13 * diff_z_13));
         inv_dist_13 = 10.0f / (get_room_data_float2() * dist_nn);
 
-        sub_GAME_7F0BCA34(light_fixture_table[i].room_index, &origin);
+        getRoomPositionScaledByIndex(light_fixture_table[i].room_index, &origin);
 
         for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += inv_dist_12)
         {

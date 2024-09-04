@@ -129,9 +129,9 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
     g_CurrentPlayer->headupsum.f[0] = 0.0f;
     g_CurrentPlayer->headupsum.f[1] = HEADSUM;
     g_CurrentPlayer->headupsum.f[2] = 0.0f;
-    g_CurrentPlayer->resetheadpos = 1;
-    g_CurrentPlayer->resetheadrot = 1;
-    g_CurrentPlayer->resetheadtick = 1;
+    g_CurrentPlayer->resetheadpos = TRUE;
+    g_CurrentPlayer->resetheadrot = TRUE;
+    g_CurrentPlayer->resetheadtick = TRUE;
     g_CurrentPlayer->headbodyoffset.f[0] = 0.0f;
     g_CurrentPlayer->headbodyoffset.f[1] = 0.0f;
     g_CurrentPlayer->headbodyoffset.f[2] = 0.0f;
@@ -163,7 +163,7 @@ void sets_a_bunch_of_BONDdata_values_to_default(void)
             (s32)g_BondMoveAnimationSetup[i].endframe,
             &spD0);
 
-        g_BondMoveAnimationSetup[i].unk0C = (f32) (((f32) spD0[2] * IDO_POINT_ONE) / (g_BondMoveAnimationSetup[i].endframe - g_BondMoveAnimationSetup[i].loopframe));
+        g_BondMoveAnimationSetup[i].speedMultiplier = (f32) (((f32) spD0[2] * IDO_POINT_ONE) / (g_BondMoveAnimationSetup[i].endframe - g_BondMoveAnimationSetup[i].loopframe));
     }
 
     sp90 = D_8002A790;
