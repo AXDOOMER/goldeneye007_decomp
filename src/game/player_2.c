@@ -377,7 +377,7 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->field_1080 = 0.0f;
     g_playerPointers[player_num]->sniper_zoom = 60.0f;
     g_playerPointers[player_num]->camera_zoom = 60.0f;
-    g_playerPointers[player_num]->field_108C = -1;
+    g_playerPointers[player_num]->curRoomIndex = -1;
     g_playerPointers[player_num]->c_screenwidth = 320.0f;
     g_playerPointers[player_num]->c_screenheight = DEFAULT_C_SCREENHEIGHT;
     g_playerPointers[player_num]->c_screenleft = 0.0f;

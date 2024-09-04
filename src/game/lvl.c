@@ -1543,7 +1543,7 @@ void lvlManageMpGame(void)
     {
         sub_GAME_7F09BBBC();
         lvlSetMultipliersForDifficulty();
-        sub_GAME_7F0BC7D4();
+        updateRoomStatusFlags();
         sub_GAME_7F092E50();
         sub_GAME_7F094438();
         update_bullet_sparks_and_dust_clouds();
@@ -2278,7 +2278,7 @@ glabel lvlManageMpGame
 /* 0F3E90 7F0BF360 00000000 */   nop
 /* 0F3E94 7F0BF364 0FC2FA34 */  jal   lvlSetMultipliersForDifficulty
 /* 0F3E98 7F0BF368 00000000 */   nop
-/* 0F3E9C 7F0BF36C 0FC2F1F5 */  jal   sub_GAME_7F0BC7D4
+/* 0F3E9C 7F0BF36C 0FC2F1F5 */  jal   updateRoomStatusFlags
 /* 0F3EA0 7F0BF370 00000000 */   nop
 /* 0F3EA4 7F0BF374 0FC24B94 */  jal   sub_GAME_7F092E50
 /* 0F3EA8 7F0BF378 00000000 */   nop
@@ -3169,7 +3169,7 @@ glabel lvlManageMpGame
 /* 0F4B08 7F0BFF98 00000000 */   nop
 /* 0F4B0C 7F0BFF9C 0FC2FD2D */  jal   lvlSetMultipliersForDifficulty
 /* 0F4B10 7F0BFFA0 00000000 */   nop
-/* 0F4B14 7F0BFFA4 0FC2F4E1 */  jal   sub_GAME_7F0BC7D4
+/* 0F4B14 7F0BFFA4 0FC2F4E1 */  jal   updateRoomStatusFlags
 /* 0F4B18 7F0BFFA8 00000000 */   nop
 /* 0F4B1C 7F0BFFAC 0FC24E7C */  jal   sub_GAME_7F092E50
 /* 0F4B20 7F0BFFB0 00000000 */   nop
@@ -4066,7 +4066,7 @@ glabel lvlManageMpGame
 /* 0F1194 7F0BE7A4 00000000 */   nop
 /* 0F1198 7F0BE7A8 0FC2F72D */  jal   lvlSetMultipliersForDifficulty
 /* 0F119C 7F0BE7AC 00000000 */   nop
-/* 0F11A0 7F0BE7B0 0FC2EEF5 */  jal   sub_GAME_7F0BC7D4
+/* 0F11A0 7F0BE7B0 0FC2EEF5 */  jal   updateRoomStatusFlags
 /* 0F11A4 7F0BE7B4 00000000 */   nop
 /* 0F11A8 7F0BE7B8 0FC248E4 */  jal   sub_GAME_7F092E50
 /* 0F11AC 7F0BE7BC 00000000 */   nop

@@ -1010,7 +1010,7 @@ struct player
   f32 field_1080;
   f32 sniper_zoom;
   f32 camera_zoom;
-  s32 field_108C;
+  s32 curRoomIndex;
 
   /**
    * Offset 0x1090.

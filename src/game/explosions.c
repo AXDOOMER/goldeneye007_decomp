@@ -867,7 +867,7 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
     
     temp_s1 = prop->rooms[0];
     temp_s5 = prop->explosion;
-    temp_s6 = getRoomIndexPOS((s32) temp_s1);
+    temp_s6 = getRoomPositionByIndex((s32) temp_s1);
     
     if (withalpha == 0)
     {
@@ -887,7 +887,7 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
         gSPClearGeometryMode(gdl++, G_CULL_BOTH | G_FOG);
         gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
 
-        gdl = sub_GAME_7F0BC9C4(gdl, temp_s1);
+        gdl = updateDisplayListWithRoomMatrix(gdl, temp_s1);
 
         gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical(pGlobalimagetable));
 
@@ -2291,7 +2291,7 @@ glabel unk09c250RenderPropSmoke
 /* 0D3B98 7F09F068 8C940004 */  lw    $s4, 4($a0)
 /* 0D3B9C 7F09F06C 00A09025 */  move  $s2, $a1
 /* 0D3BA0 7F09F070 00C09825 */  move  $s3, $a2
-/* 0D3BA4 7F09F074 0FC2F285 */  jal   getRoomIndexPOS
+/* 0D3BA4 7F09F074 0FC2F285 */  jal   getRoomPositionByIndex
 /* 0D3BA8 7F09F078 02202025 */   move  $a0, $s1
 /* 0D3BAC 7F09F07C 16600003 */  bnez  $s3, .L7F09F08C
 /* 0D3BB0 7F09F080 0040A825 */   move  $s5, $v0
@@ -2334,7 +2334,7 @@ glabel unk09c250RenderPropSmoke
 /* 0D3C38 7F09F108 00402025 */   move  $a0, $v0
 /* 0D3C3C 7F09F10C AE020004 */  sw    $v0, 4($s0)
 /* 0D3C40 7F09F110 02402025 */  move  $a0, $s2
-/* 0D3C44 7F09F114 0FC2F271 */  jal   sub_GAME_7F0BC9C4
+/* 0D3C44 7F09F114 0FC2F271 */  jal   updateDisplayListWithRoomMatrix
 /* 0D3C48 7F09F118 02202825 */   move  $a1, $s1
 /* 0D3C4C 7F09F11C 3C190100 */  lui   $t9, (0x01000040 >> 16) # lui $t9, 0x100
 /* 0D3C50 7F09F120 37390040 */  ori   $t9, (0x01000040 & 0xFFFF) # ori $t9, $t9, 0x40
@@ -2782,7 +2782,7 @@ void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2)
     sp54 = RANDOMFRAC() * M_TAU_F;
     sp4B = 0xFF - (randomGetNext() % 80U);
 
-    temp_s0 = getRoomIndexPOS((s32) arg2);
+    temp_s0 = getRoomPositionByIndex((s32) arg2);
 
     if (getPlayerCount() < 2)
     {
@@ -2896,7 +2896,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
                 if (phi_s3 != ptr_scorch_buf[i].roomid)
                 {
                     phi_s3 = ptr_scorch_buf[i].roomid;
-                    arg0 = sub_GAME_7F0BC9C4(arg0, ptr_scorch_buf[i].roomid);
+                    arg0 = updateDisplayListWithRoomMatrix(arg0, ptr_scorch_buf[i].roomid);
                 }
 
                 /**
@@ -3095,7 +3095,7 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
     }
     else
     {
-        temp_s0_2 = getRoomIndexPOS((s32) arg3);
+        temp_s0_2 = getRoomPositionByIndex((s32) arg3);
         spA0.f[0] = (spA0.f[0] * get_room_data_float1()) - temp_s0_2->f[0];
         spA0.f[1] = (spA0.f[1] * get_room_data_float1()) - temp_s0_2->f[1];
         spA0.f[2] = (spA0.f[2] * get_room_data_float1()) - temp_s0_2->f[2];
@@ -3317,7 +3317,7 @@ glabel explosionRenderBulletImpactOnProp
 /* 0D6784 7F0A1C54 8FAC0048 */   lw    $t4, 0x48($sp)
 /* 0D6788 7F0A1C58 0005AC00 */  sll   $s5, $a1, 0x10
 /* 0D678C 7F0A1C5C 00155C03 */  sra   $t3, $s5, 0x10
-/* 0D6790 7F0A1C60 0FC2F271 */  jal   sub_GAME_7F0BC9C4
+/* 0D6790 7F0A1C60 0FC2F271 */  jal   updateDisplayListWithRoomMatrix
 /* 0D6794 7F0A1C64 0160A825 */   move  $s5, $t3
 /* 0D6798 7F0A1C68 AFA20060 */  sw    $v0, 0x60($sp)
 .L7F0A1C6C:

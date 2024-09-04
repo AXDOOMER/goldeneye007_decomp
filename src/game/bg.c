@@ -2385,7 +2385,7 @@ glabel load_bg_file
 /* 0E9198 7F0B4668 AE17FFD8 */   sw    $s7, -0x28($s0)
 /* 0E919C 7F0B466C 24110001 */  li    $s1, 1
 .L7F0B4670:
-/* 0E91A0 7F0B4670 0FC2F14C */  jal   sub_GAME_7F0BC530
+/* 0E91A0 7F0B4670 0FC2F14C */  jal   initializeRoomData
 /* 0E91A4 7F0B4674 00000000 */   nop   
 /* 0E91A8 7F0B4678 8ED80000 */  lw    $t8, ($s6)
 /* 0E91AC 7F0B467C 2B010002 */  slti  $at, $t8, 2
@@ -2856,7 +2856,7 @@ glabel load_bg_file
 /* 0E6394 7F0B39A4 AE17FFD8 */   sw    $s7, -0x28($s0)
 /* 0E6398 7F0B39A8 24110001 */  li    $s1, 1
 .L7F0B39AC:
-/* 0E639C 7F0B39AC 0FC2EE4C */  jal   sub_GAME_7F0BC530
+/* 0E639C 7F0B39AC 0FC2EE4C */  jal   initializeRoomData
 /* 0E63A0 7F0B39B0 00000000 */   nop   
 /* 0E63A4 7F0B39B4 8ED80000 */  lw    $t8, ($s6)
 /* 0E63A8 7F0B39B8 2B010002 */  slti  $at, $t8, 2
@@ -6357,7 +6357,7 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
         }
         else
         {
-            arg0 = sub_GAME_7F0BC9C4(arg0, room_index);
+            arg0 = updateDisplayListWithRoomMatrix(arg0, room_index);
 
             gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_expanded_mapping_info));
@@ -6389,7 +6389,7 @@ Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index)
     {
         if (array_room_info[room_index].model_bin_loaded != 0)
         {
-            arg0 = sub_GAME_7F0BC9C4(arg0, room_index);
+            arg0 = updateDisplayListWithRoomMatrix(arg0, room_index);
 
             gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_secondary_expanded_mapping_info));
