@@ -848,7 +848,7 @@ struct player
   s32 field_5B0;
   s32 field_5B4;
   s32 field_5B8;
-  s8 field_5BC;
+  s8 animFlipFlag;
   s8 field_5BD;
   s8 field_5BE;
   s8 field_5BF;

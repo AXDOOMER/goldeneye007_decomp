@@ -7,12 +7,12 @@
 /*
 * Address: 0x7f0b3200
 */
-f32 unkGeometry7F0B3200(coord2d *arg0, coord2d *arg1, coord2d *arg2, coord2d *arg3)
+f32 calculateInterpolationFactor(coord2d *start1, coord2d *end1, coord2d *start2, coord2d *end2)
 {
-    f32 mult1 = arg2->f[1] - arg3->f[1];
-    f32 mult2 = arg3->f[0] - arg2->f[0];
-    f32 a = (arg2->f[1] - arg0->f[1]) * mult2 + (arg2->f[0] - arg0->f[0]) * mult1;
-    f32 b = (arg1->f[1] - arg0->f[1]) * mult2 + (arg1->f[0] - arg0->f[0]) * mult1;
+    f32 deltaX = start2->f[1] - end2->f[1];
+    f32 deltaY = end2->f[0] - start2->f[0];
+    f32 a = (start2->f[1] - start1->f[1]) * deltaY + (start2->f[0] - start1->f[0]) * deltaX;
+    f32 b = (end1->f[1] - start1->f[1]) * deltaY + (end1->f[0] - start1->f[0]) * deltaX;
 
     if (b == 0.0f)
     {
@@ -33,32 +33,32 @@ f32 unkGeometry7F0B3200(coord2d *arg0, coord2d *arg1, coord2d *arg2, coord2d *ar
 /*
 * Address: 0x7F0B32D8
 */
-f32 sub_GAME_7F0B32D8(struct coord3d *arg0, coord2d *arg1, coord2d *arg2)
+f32 calculateGeometricLimit(struct coord3d *point3D, coord2d *lineStart, coord2d *lineEnd)
 {
-    f32 value2;
-    f32 value1;
-    f32 sp24;
-    f32 mult1;
-    f32 mult2;
+    f32 projection1;
+    f32 projection2;
+    f32 deltaSquared;
+    f32 deltaX;
+    f32 deltaY;
 
-    mult1 = arg2->x - arg0->y;
-    mult2 = arg2->y - arg0->z;
+    deltaX = lineEnd->x - point3D->y;
+    deltaY = lineEnd->y - point3D->z;
 
-    value1 = mult2 * arg1->x - mult1 * arg1->y;
-    value2 = mult1 * arg1->x + mult2 * arg1->y;
+    projection2 = deltaY * lineStart->x - deltaX * lineStart->y;
+    projection1 = deltaX * lineStart->x + deltaY * lineStart->y;
 
-    sp24 = (arg0->x - value1) * (arg0->x + value1);
+    deltaSquared = (point3D->x - projection2) * (point3D->x + projection2);
 
-    if (sp24 < 0.0f)
+    if (deltaSquared < 0.0f)
     {
         return FLT_MAX;
     }
 
-    value2 -= sqrtf(sp24);
+    projection1 -= sqrtf(deltaSquared);
 
-    if (value2 < 0.0f)
+    if (projection1 < 0.0f)
     {
-        if (value2 * value2 + value1 * value1 <= arg0->x * arg0->x)
+        if (projection1 * projection1 + projection2 * projection2 <= point3D->x * point3D->x)
         {
             return 0.0f;
         }
@@ -66,137 +66,137 @@ f32 sub_GAME_7F0B32D8(struct coord3d *arg0, coord2d *arg1, coord2d *arg2)
         return FLT_MAX;
     }
 
-    return value2;
+    return projection1;
 }
 
 
 /*
 * Address: 0x7f0b33dc
 */
-f32 unkGeometry7F0B33DC(coord3d *arg0, coord2d *arg1, coord2d *arg2,coord2d *arg3)
+f32 calculateNormalizedIntersection(coord3d *point3D, coord2d *lineStart, coord2d *lineEnd, coord2d *direction)
 {
-    f32 spac;
-    f32 spa8;
-    coord2d spa0;
-    f32 sp9c;
-    f32 sp98;
-    f32 sp94;
-    f32 sp90;
-    f32 sp8c;
-    f32 sp88;
-    f32 sp84;
-    f32 sp80;
-    f32 sp7c;
-    f32 sp78;
-    f32 sp74;
-    f32 sp70;
-    f32 sp6c;
-    f32 sp68;
-    f32 sp64;
-    f32 sp60;
-    f32 sp5c;
-    f32 sp58;
-    f32 sp54;
+    f32 directionLength ;
+    f32 tempCrossProduct;
+    coord2d normalizedDir;
+    f32 deltaY;
+    f32 deltaX;
+    f32 lineLength;
+    f32 inverseLineLength ;
+    f32 normalY;
+    f32 normalX;
+    f32 proj1;
+    f32 proj2;
+    f32 intersectionStartY;
+    f32 intersectionStartX;
+    f32 intersectionEndY;
+    f32 intersectionEndX;
+    f32 crossEnd;
+    f32 crossStart;
+    f32 crossEndLineEnd;
+    f32 intersectionFactor;
+    f32 intersectionFactorLineEnd;
+    f32 projectedStartDiff;
+    f32 projectedEndDiff;
 
-    spac = sqrtf(arg3->x * arg3->x + arg3->y * arg3->y);
+    directionLength  = sqrtf(direction->x * direction->x + direction->y * direction->y);
 
-    if (spac == 0.0f)
+    if (directionLength  == 0.0f)
     {
         return 1.0f;
     }
 
-    spa0.x = arg3->x * (1.0f / spac);
-    spa0.y = arg3->y * (1.0f / spac);
+    normalizedDir.x = direction->x * (1.0f / directionLength );
+    normalizedDir.y = direction->y * (1.0f / directionLength );
 
-    sp98 = arg2->x - arg1->x;
-    sp9c = arg2->y - arg1->y;
+    deltaX = lineEnd->x - lineStart->x;
+    deltaY = lineEnd->y - lineStart->y;
 
-    sp94 = sqrtf(sp98 * sp98 + sp9c * sp9c);
+    lineLength = sqrtf(deltaX * deltaX + deltaY * deltaY);
 
-    if (sp94 == 0.0f)
+    if (lineLength == 0.0f)
     {
         goto handlezero;
     }
 
-    sp90 = 1.0f / sp94;
-    sp88 = sp9c * sp90;
-    sp8c = -sp98 * sp90;
+    inverseLineLength  = 1.0f / lineLength;
+    normalX = deltaY * inverseLineLength ;
+    normalY = -deltaX * inverseLineLength ;
 
-    sp84 = arg0->x * sp88;
-    sp80 = arg0->x * sp8c;
+    proj1 = point3D->x * normalX;
+    proj2 = point3D->x * normalY;
 
-    if (sp84 * (arg0->y - arg1->x) + sp80 * (arg0->z - arg1->y) < 0.0f)
+    if (proj1 * (point3D->y - lineStart->x) + proj2 * (point3D->z - lineStart->y) < 0.0f)
     {
-        sp84 = -sp84;
-        sp80 = -sp80;
+        proj1 = -proj1;
+        proj2 = -proj2;
     }
 
-    sp78 = arg1->x + sp84;
-    sp7c = arg1->y + sp80;
-    sp70 = arg2->x + sp84;
-    sp74 = arg2->y + sp80;
+    intersectionStartX = lineStart->x + proj1;
+    intersectionStartY = lineStart->y + proj2;
+    intersectionEndX = lineEnd->x + proj1;
+    intersectionEndY = lineEnd->y + proj2;
 
-    sp68 = (arg3->y * sp78) - (sp7c * arg3->x);
-    sp6c = (arg0->y * arg3->y) - (arg0->z * arg3->x);
-    sp64 = (arg3->y * sp70) - (sp74 * arg3->x);
+    crossStart = (direction->y * intersectionStartX) - (intersectionStartY * direction->x);
+    crossEnd = (point3D->y * direction->y) - (point3D->z * direction->x);
+    crossEndLineEnd = (direction->y * intersectionEndX) - (intersectionEndY * direction->x);
 
-    if (sp64 < sp68)
+    if (crossEndLineEnd < crossStart)
     {
         coord2d *tmp;
 
-        spa8 = sp68;
-        sp68 = sp64;
-        sp64 = spa8;
+        tempCrossProduct = crossStart;
+        crossStart = crossEndLineEnd;
+        crossEndLineEnd = tempCrossProduct;
 
-        tmp = arg1;
-        arg1 = arg2;
-        arg2 = tmp;
+        tmp = lineStart;
+        lineStart = lineEnd;
+        lineEnd = tmp;
 
-        sp88 = -sp88;
-        sp8c = -sp8c;
+        normalX = -normalX;
+        normalY = -normalY;
     }
 
-    if (sp64 == sp68)
+    if (crossEndLineEnd == crossStart)
     {
-        sp60 = sub_GAME_7F0B32D8(arg0, &spa0, arg1);
-        sp5c = sub_GAME_7F0B32D8(arg0, &spa0, arg2);
+        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineStart);
+        intersectionFactorLineEnd = calculateGeometricLimit(point3D, &normalizedDir, lineEnd);
 
-        if (sp5c < sp60)
+        if (intersectionFactorLineEnd < intersectionFactor)
         {
-            sp60 = sp5c;
+            intersectionFactor = intersectionFactorLineEnd;
         }
     }
-    else if (sp64 < sp6c)
+    else if (crossEndLineEnd < crossEnd)
     {
 handlezero:
-        sp60 = sub_GAME_7F0B32D8(arg0, &spa0, arg2);
+        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineEnd);
     }
-    else if (sp6c < sp68)
+    else if (crossEnd < crossStart)
     {
-        sp60 = sub_GAME_7F0B32D8(arg0, &spa0, arg1);
+        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineStart);
     }
     else
     {
-        sp58 = sp88 * (arg0->y - arg1->x) + sp8c * (arg0->z - arg1->y);
-        sp54 = sp88 * (arg0->y + arg3->x - arg1->x) + sp8c * (arg0->z + arg3->y - arg1->y);
+        projectedStartDiff = normalX * (point3D->y - lineStart->x) + normalY * (point3D->z - lineStart->y);
+        projectedEndDiff = normalX * (point3D->y + direction->x - lineStart->x) + normalY * (point3D->z + direction->y - lineStart->y);
 
-        if (sp58 == sp54)
+        if (projectedStartDiff == projectedEndDiff)
         {
             return 1.0f;
         }
 
-        sp60 = (sp58 - arg0->x) * spac / (sp58 - sp54);
+        intersectionFactor = (projectedStartDiff - point3D->x) * directionLength  / (projectedStartDiff - projectedEndDiff);
     }
 
-    if (spac < sp60)
+    if (directionLength  < intersectionFactor)
     {
         return 1.0f;
     }
 
-    if (sp60 < 0.0f)
+    if (intersectionFactor < 0.0f)
     {
         return 0.0f;
     }
 
-    return (f32) sp60 * (1.0f / spac);
+    return (f32) intersectionFactor * (1.0f / directionLength );
 }

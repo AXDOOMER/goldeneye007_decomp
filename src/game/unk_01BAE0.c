@@ -72,31 +72,31 @@ void sub_GAME_7F01BAE0(struct s_display_list_something *var_s0, s32 arg1)
 /*
 * Address: 0x7F01BFF8
 */
-Gfx *sub_GAME_7F01BFF8(Gfx *arg0, Vtx *arg1, s32 arg2)
+Gfx *sub_GAME_7F01BFF8(Gfx *gdl, Vtx *vertexList, s32 numVertices)
 {
     s8 j;
     
     do
     {
-        j = ((arg2 >= 0x11) ? 0x10 : arg2);
+        j = ((numVertices >= 0x11) ? 0x10 : numVertices);
 
-        gSPVertex(arg0++, arg1, j, 0);
+        gSPVertex(gdl++, vertexList, j, 0);
 
-        arg1 += 14;
+        vertexList += 14;
 
         j -= 3;
         
         do
         {
-            gSP1Triangle(arg0++, j, j+1, j+2, 0);
+            gSP1Triangle(gdl++, j, j+1, j+2, 0);
         } while (--j >= 0);
         
-        arg2 -= 14;        
-    } while (arg2 >= 3);
+        numVertices -= 14;        
+    } while (numVertices >= 3);
     
-    gSPEndDisplayList(arg0++);
+    gSPEndDisplayList(gdl++);
 
-    return arg0;
+    return gdl;
 }
 
 

@@ -22,45 +22,6 @@ struct init_bond_anim_unk g_BondMoveAnimationSetup[2] = {
     {PTR_ANIM_sprinting, 7.5f, 17.0f, 0.0f, 1.5f, 100.0f}
 };
 
-/**
- * Address 0x80036B00.
-*/
-coord3d D_80036B00 = { 0.0f, 0.0f, 0.0f };
-
-/**
- * Address 0x80036B0C.
-*/
-coord3d D_80036B0C = { 0.0f, 0.0f, 1.0f };
-
-/**
- * Address 0x80036B18.
-*/
-coord3d D_80036B18 = { 0.0f, 1.0f, 0.0f };
-
-/**
- * Address 0x80036B24.
-*/
-ModelRenderData D_80036B24 = {NULL,
-                              TRUE,
-                              0x00000003,
-                              NULL,
-                              NULL,
-                              0,
-                              0,
-                              0,
-                              0,
-                              0,
-                              0,
-                              0,
-                              0,
-                              {0, 0, 0, 0},
-                              {0, 0, 0, 0},
-                              CULLMODE_BOTH};
-/**
- * Address 0x80036B64.
-*/
-coord3d D_80036B64 = { 0.0f, 0.0f, 0.0f };
-
 
 
 
@@ -79,7 +40,7 @@ void bheadSetdamp(f32 headdamp);
 
 void bheadFlipAnimation()
 {
-    g_CurrentPlayer->field_5BC = !g_CurrentPlayer->field_5BC;
+    g_CurrentPlayer->animFlipFlag = !g_CurrentPlayer->animFlipFlag;
 }
 
 void bheadUpdateIdleRoll()
@@ -191,16 +152,62 @@ void bheadSetdamp(f32 headdamp)
 	}
 }
 
+
+/**
+ * Address 0x80036B00.
+*/
+coord3d D_80036B00 = { 0.0f, 0.0f, 0.0f };
+
+/**
+ * Address 0x80036B0C.
+*/
+coord3d D_80036B0C = { 0.0f, 0.0f, 1.0f };
+
+/**
+ * Address 0x80036B18.
+*/
+coord3d D_80036B18 = { 0.0f, 1.0f, 0.0f };
+
+/**
+ * Address 0x80036B24.
+*/
+ModelRenderData D_80036B24 = {NULL,
+                              TRUE,
+                              0x00000003,
+                              NULL,
+                              NULL,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              {0, 0, 0, 0},
+                              {0, 0, 0, 0},
+                              CULLMODE_BOTH};
+/**
+ * Address 0x80036B64.
+*/
+coord3d D_80036B64 = { 0.0f, 0.0f, 0.0f };
+
+
+
+
+/**
+ * Updates the head movement based on the player's speed and animation state.
+ */
 void bheadUpdate(f32 percent_speed, f32 speedsideways)
 {
     coord3d headpos;
     coord3d lookvel;
     coord3d upvel;
     f32 abs_anim_speed;
-    ModelRenderData sp80;
+    ModelRenderData renderData;
     Mtxf sp40;
-    coord3d sp34;
-    u32 sp30;
+    coord3d offset;
+    u32 isMergable;
 
     headpos = D_80036B00;
     lookvel = D_80036B0C;
@@ -236,35 +243,35 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
         g_CurrentPlayer->sideamplitude = g_CurrentPlayer->headamplitude;
     }
 
-    sp80 = D_80036B24;
-    sp34 = D_80036B64;
+    renderData = D_80036B24;
+    offset = D_80036B64;
 
-    sp30 = modelIsAnimMergingEnabled();
+    isMergable = modelIsAnimMergingEnabled();
 
     g_CurrentPlayer->resetheadtick = FALSE;
 
     modelSetAnimMergingEnabled(0);
     modelTickAnimQuarterSpeed(&g_CurrentPlayer->model, g_ClockTimer, 1);
-    modelSetAnimMergingEnabled((s32) sp30);
+    modelSetAnimMergingEnabled((s32) isMergable);
 
     subcalcpos(&g_CurrentPlayer->model);
     matrix_4x4_set_identity(&sp40);
 
-    sp80.unk_matrix = &sp40;
-    sp80.mtxlist = &g_CurrentPlayer->bondheadmatrices[0];
+    renderData.unk_matrix = &sp40;
+    renderData.mtxlist = &g_CurrentPlayer->bondheadmatrices[0];
 
-    subcalcmatrices(&sp80, &g_CurrentPlayer->model);
+    subcalcmatrices(&renderData, &g_CurrentPlayer->model);
 
     g_CurrentPlayer->headbodyoffset.f[0] = g_CurrentPlayer->standbodyoffset.x;
     g_CurrentPlayer->headbodyoffset.f[1] = g_CurrentPlayer->standbodyoffset.y;
     g_CurrentPlayer->headbodyoffset.f[2] = g_CurrentPlayer->standbodyoffset.z;
 
-    getsuboffset(&g_CurrentPlayer->model, (struct float3 *) &sp34);
+    getsuboffset(&g_CurrentPlayer->model, (struct float3 *) &offset);
 
-    sp34.f[0] -= g_CurrentPlayer->bondheadmatrices[0].m[3][0];
-    sp34.f[2] -= g_CurrentPlayer->bondheadmatrices[0].m[3][2];
+    offset.f[0] -= g_CurrentPlayer->bondheadmatrices[0].m[3][0];
+    offset.f[2] -= g_CurrentPlayer->bondheadmatrices[0].m[3][2];
 
-    setsuboffset(&g_CurrentPlayer->model, (coord3d *) &sp34);
+    setsuboffset(&g_CurrentPlayer->model, (coord3d *) &offset);
 
     if (abs_anim_speed > 0.0f)
     {
@@ -380,20 +387,20 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
 
 
 /**
- * Adjust Bond model based on speed (speedforwards).
- * Toggle the currently selected headanim index.
- * Address 0x7F08E8BC.
-*/
+ * Adjusts Bond's head animation based on movement speed.
+ * 
+ * @param speed The movement speed to adjust the animation to.
+ */
 void bheadAdjustAnimation(f32 speed)
 {
     s32 i;
     f32 startframe;
 
-    speed *= g_BondMoveAnimationSetup[1].unk0C;
+    speed *= g_BondMoveAnimationSetup[1].speedMultiplier;
 
     for (i=0; i<2; i++)
     {
-        if (speed <= g_BondMoveAnimationSetup[i].unk14 * g_BondMoveAnimationSetup[i].unk0C)
+        if (speed <= g_BondMoveAnimationSetup[i].unk14 * g_BondMoveAnimationSetup[i].speedMultiplier)
         {
             if (i != g_CurrentPlayer->headanim)
             {
@@ -411,7 +418,7 @@ void bheadAdjustAnimation(f32 speed)
                     &g_CurrentPlayer->model,
                     // match hack: addu address backwards
                     (struct ModelAnimation *) ((s32)g_BondMoveAnimationSetup[i].anim_id + (s32)&ptr_animation_table->data),
-                    (s32) g_CurrentPlayer->field_5BC,
+                    (s32) g_CurrentPlayer->animFlipFlag,
                     startframe,
                     0.5f,
                     12.0f);
@@ -422,7 +429,7 @@ void bheadAdjustAnimation(f32 speed)
                 g_CurrentPlayer->headanim = i;
             }
 
-            speed /= g_BondMoveAnimationSetup[i].unk0C;
+            speed /= g_BondMoveAnimationSetup[i].speedMultiplier;
 
             modelSetAnimSpeed(&g_CurrentPlayer->model, speed * 0.5f, 0.0f);
             return;
@@ -431,12 +438,14 @@ void bheadAdjustAnimation(f32 speed)
 }
 
 
-
-
-
 /**
- * Address 0x7F08EA48.
-*/
+ * Starts a new death animation for Bond's head.
+ * 
+ * @param animNum The animation to play.
+ * @param flip Whether to flip the animation.
+ * @param startFrame The starting frame of the animation.
+ * @param speed The speed of the animation.
+ */
 void bheadStartDeathAnimation(struct ModelAnimation *animnum, s32 flip, f32 fstarttime, f32 speed)
 {
     modelSetAnimation(&g_CurrentPlayer->model, animnum, flip, fstarttime, speed * 0.5f, 12.0f);
@@ -444,37 +453,40 @@ void bheadStartDeathAnimation(struct ModelAnimation *animnum, s32 flip, f32 fsta
 }
 
 
-
-
-
-
 /**
- * Address 0x7F08EAB8.
-*/
+ * Sets the speed of the current head animation.
+ * 
+ * @param speed The speed to set for the head animation.
+ */
 void bheadSetSpeed(f32 speed)
 {
     modelSetAnimSpeed(&g_CurrentPlayer->model, speed * 0.5f, 0.0f);
 }
 
 
+/**
+ * Calculates the breathing value for Bond's head animation.
+ * 
+ * @return The calculated breathing value.
+ */
 f32 bheadGetBreathingValue(void)
 {
 	if (g_CurrentPlayer->headanim >= 0) {
         // bondviewGetBondBreathing() * (1/80) + (1/240)
-		f32 a = bondviewGetBondBreathing() * 0.012500001f + 0.004166667f;
-		f32 b = modelGetAbsAnimSpeed(&g_CurrentPlayer->model);
+		f32 baseBreathing = bondviewGetBondBreathing() * 0.012500001f + 0.004166667f;
+		f32 animSpeed = modelGetAbsAnimSpeed(&g_CurrentPlayer->model);
 
-		if (b > 0) {
-			f32 c = b / (g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].endframe - g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].loopframe);
+		if (animSpeed > 0) {
+			f32 calculatedBreathing = animSpeed / (g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].endframe - g_BondMoveAnimationSetup[g_CurrentPlayer->headanim].loopframe);
 
-			if (c < a) {
-				c = a;
+			if (calculatedBreathing < baseBreathing) {
+				calculatedBreathing = baseBreathing;
 			}
 
-			return c;
+			return calculatedBreathing;
 		}
 
-		return a;
+		return baseBreathing;
 	}
 
 	return 0;

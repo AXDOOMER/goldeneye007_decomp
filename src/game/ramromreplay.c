@@ -512,7 +512,7 @@ void iterate_ramrom_entries_handle_camera_out(void)
         address_demo_loaded += align_addr_even((ptr_active_demofile->size_cmds * sizeof(struct ramrom_blockbuf) * ramrom_blkbuf_2->count) + 5);
     }
 
-    sub_GAME_7F0C0AA0(ramrom_blkbuf_2->speedframes);
+    updateFrameCounters(ramrom_blkbuf_2->speedframes);
 
     // BUG? Does this need to be adjusted for PAL?
     temp_v1 = ptr_active_demofile->totaltime_ms - 0x3C;
