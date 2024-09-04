@@ -246,7 +246,7 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 .NOTPARALLEL: print_info create_directories $(APPROM) checksum
 
 # Phony Recipes - These targets are not files, Get Make to do something
-.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context textures
+.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets textures 
 
 
 # this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
@@ -349,7 +349,7 @@ build_tools:
 	$(info Building tools...)
 	scripts/make/build_tools.sh "$(MAKE)"
 
-prerequisites: print_info create_directories build_tools
+prerequisites: print_info create_directories build_tools extractassets
 
 checksum: $(APPROM)
 ifeq ($(COMPARE), 1)
@@ -436,6 +436,64 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
-textures:
+extractassets: extract_u extract_e extract_j
+
+extract_u:
+	@if [ ! -f assets/obseg/ob__ob_end.seg ]; then \
+		echo "Extracting assets for u..."; \
+		if [ -f baserom.u.z64 ]; then \
+			scripts/extract_baserom.u.sh; \
+		else \
+			echo "Error: baserom.u.z64 not found."; \
+		fi \
+	else \
+		echo "Assets for u already extracted."; \
+	fi
+
+extract_e:
+	@if [ ! -f assets/obseg/text/e/LwaxP.bin ]; then \
+		echo "Extracting assets for e..."; \
+		if [ -f baserom.e.z64 ]; then \
+			scripts/extract_diff.e.sh; \
+		else \
+			echo "Error: baserom.e.z64 not found."; \
+		fi \
+	else \
+		echo "Assets for e already extracted."; \
+	fi
+
+extract_j:
+	@if [ ! -f assets/obseg/text/j/LstatJ.bin ]; then \
+		echo "Extracting assets for j..."; \
+		if [ -f baserom.j.z64 ]; then \
+			scripts/extract_diff.j.sh; \
+		else \
+			echo "Error: baserom.j.z64 not found."; \
+		fi \
+	else \
+		echo "Assets for j already extracted."; \
+	fi
+
+extract_rsp:
+	@if [ ! -f build/u/rsp/rspboot.bin ]; then \
+		echo "Extracting rsp assets..."; \
+		if [ -f baserom.u.z64 ]; then \
+			scripts/extract_asp_gsp_rsp.sh; \
+		else \
+			echo "Error: baserom.u.z64 not found."; \
+		fi \
+	else \
+		echo "RSP assets for already extracted."; \
+	fi
+
+textures: tools/mktex/build/tex2png
+	@echo "Processing textures..."
+	mkdir -p assets/images/out
 	$(foreach x,$(IMAGE_BINS),tools/mktex/build/tex2png $(x) assets/images/out ${\n})
 
+
+tools/mktex/build/tex2png:
+	@if [ ! -f tools/mktex/build/tex2png ]; then \
+		echo "Building tex2png..."; \
+		cd tools/mktex && $(MAKE); \
+	fi

@@ -181,14 +181,16 @@ typedef enum CHRHIDDEN
     CHRHIDDEN_TIMER_ACTIVE          = 0x0040, // chr timer is active
     CHRHIDDEN_FIRE_TRACER           = 0x0080, // spawn a tracer
     CHRHIDDEN_MOVING                = 0x0100, // moving
-    CHRHIDDEN_0200                  = 0x0200, // unknown
+    CHRHIDDEN_BACKGROUND_AI         = 0x0200, // chr has an AI script currently running
     CHRHIDDEN_0400                  = 0x0400, // unknown
     CHRHIDDEN_FREEZE                = 0x0800, // freeze current animation state
-    CHRHIDDEN_1000                  = 0x1000, // unknown
-    CHRHIDDEN_2000                  = 0x2000, // unknown
-    CHRHIDDEN_4000                  = 0x4000, // unknown
-    CHRHIDDEN_8000                  = 0x8000  // unknown
+    CHRHIDDEN_RAND_FLINCH_1         = 0x1000, // unknown
+    CHRHIDDEN_RAND_FLINCH_2         = 0x2000, // unknown
+    CHRHIDDEN_RAND_FLINCH_4         = 0x4000, // unknown
+    CHRHIDDEN_RAND_FLINCH_8         = 0x8000  // unknown
 }CHRHIDDEN;
+
+#define CHRHIDDEN_RAND_FLINCH_MASK (CHRHIDDEN_RAND_FLINCH_1 | CHRHIDDEN_RAND_FLINCH_2 | CHRHIDDEN_RAND_FLINCH_4 | CHRHIDDEN_RAND_FLINCH_8)
 
 typedef enum CHRFLAG
 {
@@ -211,7 +213,7 @@ typedef enum CHRFLAG
     CHRFLAG_IMPACT_ALWAYS                = 0x00008000 , // Trev on cradle sets this flag so he can be shot off the platform
     CHRFLAG_00010000                     = 0x00010000 , // unknown
     CHRFLAG_00020000                     = 0x00020000 , // unknown
-    CHRFLAG_00040000                     = 0x00040000 , // unknown
+    CHRFLAG_00040000                     = 0x00040000 , // maybe: update guard ACTION ?
     CHRFLAG_INCREASE_RUNNING_SPEED       = 0x00080000 , // increase sprinting speed (used by trevelyan)
     CHRFLAG_COUNT_DEATH_AS_CIVILIAN      = 0x00100000 , // count death as civilian killed
     CHRFLAG_WAS_HIT                      = 0x00200000 , // chr has been hit (even if invincible)
@@ -485,17 +487,20 @@ BITFLAG(DOOR_LOCK,
         6,
         7
 )
-//PropDef State
-BITFLAG(PROPSTATE,
-        DAMAGED,
-        02,
-        RESPAWN,
-        EXT_COLISION_BLOCK,
-        10,
-        20,
-        ACTIVATED,
-        DESTROYED
-)
+
+/** PropDefHeaderRecord->state only u8 */
+typedef enum PROPSTATE {
+    PROPSTATE_NONE = 0x00,
+    PROPSTATE_DAMAGED = 0x01,
+    PROPSTATE_2 = 0x02, // maybe "double damaged"
+    PROPSTATE_RESPAWN = 0x04,
+    PROPSTATE_EXT_COLISION_BLOCK = 0x08,
+    PROPSTATE_10 = 0x10,
+    PROPSTATE_20 = 0x20,
+    PROPSTATE_ACTIVATED = 0x40,
+    PROPSTATE_DESTROYED = 0x80
+} PROPSTATE;
+
 #define PROPSTATE_NORMAL PROPSTATE_NONE
 
 BITFLAG(PLAYERFLAG,

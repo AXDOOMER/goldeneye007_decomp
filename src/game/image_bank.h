@@ -17,6 +17,7 @@ extern struct sImageTableEntry *impactimages;
 
 extern u8* img_curpos;
 extern s32 img_bitcount;
+extern s32 *pGlobalimagetable;
 
 void texReset(void);
 u32 texReadBits(s32 bitCount);

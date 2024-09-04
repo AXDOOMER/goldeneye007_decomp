@@ -197,7 +197,7 @@ Gfx * sub_GAME_7F0BC9C4(Gfx *DL,int index)
 /*
 * Address: 0x7f0bca14
 */
-s32 getRoomIndexPOS(s32 index)
+struct coord3d* getRoomIndexPOS(s32 index)
 {
     return &ptr_bgdata_room_fileposition_list[index].pos;
 }

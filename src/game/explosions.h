@@ -12,6 +12,7 @@
 #define SMOKE_BUFFER_LEN 20
 #define SMOKE_PARTS_LEN 10
 #define SCORCH_BUFFER_LEN 20
+#define IMPACT_TYPE_LEN 20
 #define BULLET_IMPACT_BUFFER_LEN 100
 #define MAX_FLYING_PARTICLES 200
 
@@ -39,7 +40,7 @@ typedef struct s_explosiontype {
     f32 explosion_range;
     f32 dmg_range;
     s16 duration;
-    u16 propagationrate;
+    s16 propagationrate;
     f32 flareanimspeed;
     s16 numshrapnelbits;
     //u16 field_0x26;
@@ -74,11 +75,11 @@ struct Explosion {
     PropRecord *prop; // maybe explosion prop
     PropRecord *unk04; // maybe source prop (e.g., crate)
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
-    s16 unk3C8; // some kind of current tick + total elapsed?
+    s16 age; // some kind of current tick + total elapsed?
     s16 unk3CA; // total elapsed?
 
     s8 explosion_type;
-    u8 unk3CD;
+    s8 unk3CD;
     s8 player;
     s8 unk3CF;
 
@@ -109,63 +110,19 @@ struct Smoke {
 struct Scorch {
     s16 roomid;
     s16 unk02;
-    u32 unk04;
-    u32 unk08;
-    u32 unk0C;
 
-    u32 unk10;
+    struct coord3d unk04;
+    f32 unk10;
     u32 unk14;
-    u32 vertex_list[4];
 
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u32 unk34;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u32 unk44;
-    u32 unk48;
-    u32 unk4C;
-
-    u32 unk50;
-    u32 unk54;
+    Vtx vertex_list[4];
 };
 
 struct BulletImpact {
     s16 unk00;
     s16 unk02;
     u32 unk04;
-    u32 unk08;
-    u32 unk0C;
-
-    u32 unk10;
-    u16 unk14;
-    s8 unk16;
-    s8 unk17;
-    u32 unk18;
-    u32 unk1C;
-
-    u32 unk20;
-    u16 unk24;
-    s8 unk26;
-    s8 unk27;
-    u32 unk28;
-    u32 unk2C;
-
-    u32 unk30;
-    u16 unk34;
-    s8 unk36;
-    s8 unk37;
-    u32 unk38;
-    u32 unk3C;
-
-    u32 unk40;
-    u16 unk44;
-    s8 unk46;
-    s8 unk47;
+    Vtx vertex_list[4];
     PropRecord* unk48;
     s8 unk4C;
     s8 unk4D;
@@ -233,7 +190,7 @@ void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);
 Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
 Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
-Gfx *unk09c250RenderPropExplosion(PropRecord *arg0, Gfx *arg1);
+Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha);
 Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
 
 

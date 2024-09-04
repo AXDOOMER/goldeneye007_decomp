@@ -2672,8 +2672,8 @@ PropRecord *init_GUARDdata_with_set_values(PropRecord *arg0, Model *arg1, struct
     var_s0->ptr_SEbuffer4 = NULL;
     var_s0->field_178[0] = 0;
     var_s0->field_178[1] = 0;
-    var_s0->chrflags = 1;
-    var_s0->hidden = 0;
+    var_s0->chrflags = CHRFLAG_INIT;
+    var_s0->hidden = CHRHIDDEN_NONE;
     var_s0->sumground = 0.0f;
     var_s0->manground = 0.0f;
     var_s0->ground = 0.0f;
@@ -2985,7 +2985,7 @@ void chrSetHiddenToRandom(ChrRecord *self)
     if ((s32) self->flinchcnt < 0)
     {
         self->flinchcnt = 1;
-        self->hidden &= 0xFFF;
+        self->hidden &= ~CHRHIDDEN_RAND_FLINCH_MASK;
 
         // roll for bits 12,13.
         // rand -> value
@@ -2996,11 +2996,11 @@ void chrSetHiddenToRandom(ChrRecord *self)
 
         if (rand == 0)
         {
-            self->hidden |= CHRHIDDEN_1000;
+            self->hidden |= CHRHIDDEN_RAND_FLINCH_1;
         }
         else if (rand == 1)
         {
-            self->hidden |= CHRHIDDEN_2000;
+            self->hidden |= CHRHIDDEN_RAND_FLINCH_2;
         }
 
         // roll for bits 14,15.
@@ -3012,11 +3012,11 @@ void chrSetHiddenToRandom(ChrRecord *self)
 
         if (rand == 0)
         {
-            self->hidden |= CHRHIDDEN_4000;
+            self->hidden |= CHRHIDDEN_RAND_FLINCH_4;
         }
         else if (rand == 1)
         {
-            self->hidden |= CHRHIDDEN_8000;
+            self->hidden |= CHRHIDDEN_RAND_FLINCH_8;
         }
     }
 }
@@ -8115,7 +8115,7 @@ void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y
         (chr->actiontype != ACT_DIE) &&
         (chr->actiontype != ACT_DEAD) &&
         ((chr->chrflags & (CHRFLAG_00010000 | CHRFLAG_HIDDEN)) == 0) &&
-        ((chr->hidden & 0x100) == 0)
+        ((chr->hidden & CHRHIDDEN_MOVING) == 0)
         )
     {
         *arg2 = 4;

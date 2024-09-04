@@ -1915,7 +1915,7 @@ void solo_char_load(void)
     }
     if (curChr->model->anim == NULL)
     {
-        curChr->chrflags |= 1;
+        curChr->chrflags |= CHRFLAG_INIT;
         chrlvIdleAnimationRelated7F023A94(curChr, 0.0f);
         setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
         setsubroty(g_CurrentPlayer->ptr_char_objectinstance, hRot);
@@ -4243,7 +4243,7 @@ void bondviewSetCameraMode(s32 arg0)
             temp_v1_2 = g_CurrentPlayer->prop->chr;
             temp_v1_2->actiontype = ACT_BONDDIE;
             temp_v1_2->sleep = 0;
-            temp_v1_2->chrflags |= 1;
+            temp_v1_2->chrflags |= CHRFLAG_INIT;
 
             setsuboffset(g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos);
             var_f0 = get_curplay_horizontal_rotation_in_degrees();
