@@ -186,6 +186,7 @@ extern s32 numImpactEntries;
 
 
 
+s32 sub_GAME_7F09E8AC(PropRecord *arg0);
 void sub_GAME_7F09FD3C(void);
 Gfx * sub_GAME_7F0A0034(Gfx *arg0);
 Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
