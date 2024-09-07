@@ -109,11 +109,12 @@ struct Smoke {
 
 struct Scorch {
     s16 roomid;
-    s16 unk02;
+    u8 unk02;
+    s8 unk03;
 
     struct coord3d unk04;
     f32 unk10;
-    u32 unk14;
+    struct Model *model;
 
     Vtx vertex_list[4];
 };
