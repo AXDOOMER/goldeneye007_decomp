@@ -13,6 +13,7 @@
 #include "chrlv.h"
 #include "chrobjdata.h"
 #include "chrobjhandler.h"
+#include "explosions.h"
 #include "file.h"
 #include "gun.h"
 #include "initanitable.h"
