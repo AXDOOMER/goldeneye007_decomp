@@ -28,7 +28,7 @@
 // bss
 //CODE.bss:8007A100
 // possibly   printf("Allocating %d bytes for glass data (%d bits)\n",DAT_83bd5fb0 * 0x88 + 0xf & 0xfffffff0,         DAT_83bd5fb0);
-char dword_CODE_bss_8007A100[0x40];
+Mtx dword_CODE_bss_8007A100;
 
 /**
  * ptr_smoke_buf = mempAllocBytesInBank(0x1FE0, MEMPOOL_STAGE);
@@ -1457,156 +1457,70 @@ u8 smokeTick(PropRecord* prop)
 }
 
 
-#ifdef NONMATCHING
-void unk09c250RenderPropSmoke(void) {
+extern Gfx globalDL_0x000;
 
+/***
+ * NTSC address 0x7F09F03C.
+*/
+Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
+{
+    struct Smoke *smoke;
+    s32 i;
+    struct bbox2d sp78;
+    struct coord3d *temp_s5;
+    s32 temp_s1;
+
+
+    temp_s1 = arg0->rooms[0];
+    smoke = arg0->smoke;
+    temp_s5 = getRoomPositionByIndex(temp_s1);
+    
+    if (withalpha == 0)
+    {
+        return gdl;
+    }
+
+    if (sub_GAME_7F054A64(arg0, &sp78) > 0)
+    {
+        gdl = bgScissorCurrentPlayerViewF(gdl, sp78.min.f[0], sp78.min.f[1], sp78.max.f[0], sp78.max.f[1]);
+    }
+    else
+    {
+        gdl = bgScissorCurrentPlayerViewDefault(gdl);
+    }
+
+    gSPClearGeometryMode(gdl++, G_CULL_BOTH | G_FOG);
+
+    gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+    gdl = updateDisplayListWithRoomMatrix(gdl, temp_s1);
+
+    gSPMatrix(gdl++, osVirtualToPhysical((void*)&dword_CODE_bss_8007A100), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+    gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical((void*)pGlobalimagetable));
+
+    gSPDisplayList(gdl++, &globalDL_0x000);
+
+    gDPSetColorDither(gdl++, G_CD_NOISE);
+
+    for (i = 0; i < SMOKE_PARTS_LEN; i++)
+    {
+        if (smoke->parts[i].size > 0.0f)
+        {
+            gdl = sub_GAME_7F09DDA4(smoke, &smoke->parts[i], gdl, temp_s5);
+        }
+        else
+        {
+            smoke->parts[i].size = 0.0f;
+        }
+    }
+
+    gDPSetColorDither(gdl++, G_CD_BAYER);
+
+    gSPMatrix(gdl++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel unk09c250RenderPropSmoke
-/* 0D3B6C 7F09F03C 27BDFF70 */  addiu $sp, $sp, -0x90
-/* 0D3B70 7F09F040 AFB00024 */  sw    $s0, 0x24($sp)
-/* 0D3B74 7F09F044 AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0D3B78 7F09F048 AFB50038 */  sw    $s5, 0x38($sp)
-/* 0D3B7C 7F09F04C AFB40034 */  sw    $s4, 0x34($sp)
-/* 0D3B80 7F09F050 AFB30030 */  sw    $s3, 0x30($sp)
-/* 0D3B84 7F09F054 AFB2002C */  sw    $s2, 0x2c($sp)
-/* 0D3B88 7F09F058 AFB10028 */  sw    $s1, 0x28($sp)
-/* 0D3B8C 7F09F05C F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0D3B90 7F09F060 9091002C */  lbu   $s1, 0x2c($a0)
-/* 0D3B94 7F09F064 00808025 */  move  $s0, $a0
-/* 0D3B98 7F09F068 8C940004 */  lw    $s4, 4($a0)
-/* 0D3B9C 7F09F06C 00A09025 */  move  $s2, $a1
-/* 0D3BA0 7F09F070 00C09825 */  move  $s3, $a2
-/* 0D3BA4 7F09F074 0FC2F285 */  jal   getRoomPositionByIndex
-/* 0D3BA8 7F09F078 02202025 */   move  $a0, $s1
-/* 0D3BAC 7F09F07C 16600003 */  bnez  $s3, .L7F09F08C
-/* 0D3BB0 7F09F080 0040A825 */   move  $s5, $v0
-/* 0D3BB4 7F09F084 10000069 */  b     .L7F09F22C
-/* 0D3BB8 7F09F088 02401025 */   move  $v0, $s2
-.L7F09F08C:
-/* 0D3BBC 7F09F08C 02002025 */  move  $a0, $s0
-/* 0D3BC0 7F09F090 0FC15299 */  jal   sub_GAME_7F054A64
-/* 0D3BC4 7F09F094 27A50078 */   addiu $a1, $sp, 0x78
-/* 0D3BC8 7F09F098 1840000A */  blez  $v0, .L7F09F0C4
-/* 0D3BCC 7F09F09C 00000000 */   nop
-/* 0D3BD0 7F09F0A0 C7A40084 */  lwc1  $f4, 0x84($sp)
-/* 0D3BD4 7F09F0A4 02402025 */  move  $a0, $s2
-/* 0D3BD8 7F09F0A8 8FA50078 */  lw    $a1, 0x78($sp)
-/* 0D3BDC 7F09F0AC 8FA6007C */  lw    $a2, 0x7c($sp)
-/* 0D3BE0 7F09F0B0 8FA70080 */  lw    $a3, 0x80($sp)
-/* 0D3BE4 7F09F0B4 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
-/* 0D3BE8 7F09F0B8 E7A40010 */   swc1  $f4, 0x10($sp)
-/* 0D3BEC 7F09F0BC 10000004 */  b     .L7F09F0D0
-/* 0D3BF0 7F09F0C0 00409025 */   move  $s2, $v0
-.L7F09F0C4:
-/* 0D3BF4 7F09F0C4 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
-/* 0D3BF8 7F09F0C8 02402025 */   move  $a0, $s2
-/* 0D3BFC 7F09F0CC 00409025 */  move  $s2, $v0
-.L7F09F0D0:
-/* 0D3C00 7F09F0D0 02401025 */  move  $v0, $s2
-/* 0D3C04 7F09F0D4 3C0F0001 */  lui   $t7, (0x00013000 >> 16) # lui $t7, 1
-/* 0D3C08 7F09F0D8 35EF3000 */  ori   $t7, (0x00013000 & 0xFFFF) # ori $t7, $t7, 0x3000
-/* 0D3C0C 7F09F0DC 26520008 */  addiu $s2, $s2, 8
-/* 0D3C10 7F09F0E0 3C0EB600 */  lui   $t6, 0xb600
-/* 0D3C14 7F09F0E4 3C180103 */  lui   $t8, (0x01030040 >> 16) # lui $t8, 0x103
-/* 0D3C18 7F09F0E8 AC4E0000 */  sw    $t6, ($v0)
-/* 0D3C1C 7F09F0EC AC4F0004 */  sw    $t7, 4($v0)
-/* 0D3C20 7F09F0F0 37180040 */  ori   $t8, (0x01030040 & 0xFFFF) # ori $t8, $t8, 0x40
-/* 0D3C24 7F09F0F4 02408025 */  move  $s0, $s2
-/* 0D3C28 7F09F0F8 AE180000 */  sw    $t8, ($s0)
-/* 0D3C2C 7F09F0FC 0FC1E0E5 */  jal   get_BONDdata_field_10E0
-/* 0D3C30 7F09F100 26520008 */   addiu $s2, $s2, 8
-/* 0D3C34 7F09F104 0C003A2C */  jal   osVirtualToPhysical
-/* 0D3C38 7F09F108 00402025 */   move  $a0, $v0
-/* 0D3C3C 7F09F10C AE020004 */  sw    $v0, 4($s0)
-/* 0D3C40 7F09F110 02402025 */  move  $a0, $s2
-/* 0D3C44 7F09F114 0FC2F271 */  jal   updateDisplayListWithRoomMatrix
-/* 0D3C48 7F09F118 02202825 */   move  $a1, $s1
-/* 0D3C4C 7F09F11C 3C190100 */  lui   $t9, (0x01000040 >> 16) # lui $t9, 0x100
-/* 0D3C50 7F09F120 37390040 */  ori   $t9, (0x01000040 & 0xFFFF) # ori $t9, $t9, 0x40
-/* 0D3C54 7F09F124 3C048008 */  lui   $a0, %hi(dword_CODE_bss_8007A100)
-/* 0D3C58 7F09F128 2484A100 */  addiu $a0, %lo(dword_CODE_bss_8007A100) # addiu $a0, $a0, -0x5f00
-/* 0D3C5C 7F09F12C AC590000 */  sw    $t9, ($v0)
-/* 0D3C60 7F09F130 00408025 */  move  $s0, $v0
-/* 0D3C64 7F09F134 0C003A2C */  jal   osVirtualToPhysical
-/* 0D3C68 7F09F138 24520008 */   addiu $s2, $v0, 8
-/* 0D3C6C 7F09F13C 3C08BC00 */  lui   $t0, (0xBC000806 >> 16) # lui $t0, 0xbc00
-/* 0D3C70 7F09F140 AE020004 */  sw    $v0, 4($s0)
-/* 0D3C74 7F09F144 35080806 */  ori   $t0, (0xBC000806 & 0xFFFF) # ori $t0, $t0, 0x806
-/* 0D3C78 7F09F148 02409825 */  move  $s3, $s2
-/* 0D3C7C 7F09F14C AE680000 */  sw    $t0, ($s3)
-/* 0D3C80 7F09F150 3C048009 */  lui   $a0, %hi(pGlobalimagetable)
-/* 0D3C84 7F09F154 8C84D0B4 */  lw    $a0, %lo(pGlobalimagetable)($a0)
-/* 0D3C88 7F09F158 0C003A2C */  jal   osVirtualToPhysical
-/* 0D3C8C 7F09F15C 26520008 */   addiu $s2, $s2, 8
-/* 0D3C90 7F09F160 AE620004 */  sw    $v0, 4($s3)
-/* 0D3C94 7F09F164 02401825 */  move  $v1, $s2
-/* 0D3C98 7F09F168 26520008 */  addiu $s2, $s2, 8
-/* 0D3C9C 7F09F16C 3C0A0200 */  lui   $t2, 0x200
-/* 0D3CA0 7F09F170 254A0000 */  addiu $t2, $t2, 0
-/* 0D3CA4 7F09F174 3C090600 */  lui   $t1, 0x600
-/* 0D3CA8 7F09F178 02402025 */  move  $a0, $s2
-/* 0D3CAC 7F09F17C AC690000 */  sw    $t1, ($v1)
-/* 0D3CB0 7F09F180 AC6A0004 */  sw    $t2, 4($v1)
-/* 0D3CB4 7F09F184 3C0BBA00 */  lui   $t3, (0xBA000602 >> 16) # lui $t3, 0xba00
-/* 0D3CB8 7F09F188 356B0602 */  ori   $t3, (0xBA000602 & 0xFFFF) # ori $t3, $t3, 0x602
-/* 0D3CBC 7F09F18C 240C0080 */  li    $t4, 128
-/* 0D3CC0 7F09F190 4480A000 */  mtc1  $zero, $f20
-/* 0D3CC4 7F09F194 AC8C0004 */  sw    $t4, 4($a0)
-/* 0D3CC8 7F09F198 AC8B0000 */  sw    $t3, ($a0)
-/* 0D3CCC 7F09F19C 26520008 */  addiu $s2, $s2, 8
-/* 0D3CD0 7F09F1A0 24130190 */  li    $s3, 400
-/* 0D3CD4 7F09F1A4 00008825 */  move  $s1, $zero
-/* 0D3CD8 7F09F1A8 02808025 */  move  $s0, $s4
-.L7F09F1AC:
-/* 0D3CDC 7F09F1AC C6060014 */  lwc1  $f6, 0x14($s0)
-/* 0D3CE0 7F09F1B0 02802025 */  move  $a0, $s4
-/* 0D3CE4 7F09F1B4 26050008 */  addiu $a1, $s0, 8
-/* 0D3CE8 7F09F1B8 4606A03C */  c.lt.s $f20, $f6
-/* 0D3CEC 7F09F1BC 02403025 */  move  $a2, $s2
-/* 0D3CF0 7F09F1C0 45020006 */  bc1fl .L7F09F1DC
-/* 0D3CF4 7F09F1C4 E6140014 */   swc1  $f20, 0x14($s0)
-/* 0D3CF8 7F09F1C8 0FC27769 */  jal   sub_GAME_7F09DDA4
-/* 0D3CFC 7F09F1CC 02A03825 */   move  $a3, $s5
-/* 0D3D00 7F09F1D0 10000002 */  b     .L7F09F1DC
-/* 0D3D04 7F09F1D4 00409025 */   move  $s2, $v0
-/* 0D3D08 7F09F1D8 E6140014 */  swc1  $f20, 0x14($s0)
-.L7F09F1DC:
-/* 0D3D0C 7F09F1DC 26310028 */  addiu $s1, $s1, 0x28
-/* 0D3D10 7F09F1E0 1633FFF2 */  bne   $s1, $s3, .L7F09F1AC
-/* 0D3D14 7F09F1E4 26100028 */   addiu $s0, $s0, 0x28
-/* 0D3D18 7F09F1E8 02401025 */  move  $v0, $s2
-/* 0D3D1C 7F09F1EC 3C0DBA00 */  lui   $t5, (0xBA000602 >> 16) # lui $t5, 0xba00
-/* 0D3D20 7F09F1F0 35AD0602 */  ori   $t5, (0xBA000602 & 0xFFFF) # ori $t5, $t5, 0x602
-/* 0D3D24 7F09F1F4 26520008 */  addiu $s2, $s2, 8
-/* 0D3D28 7F09F1F8 240E0040 */  li    $t6, 64
-/* 0D3D2C 7F09F1FC 3C0F0103 */  lui   $t7, (0x01030040 >> 16) # lui $t7, 0x103
-/* 0D3D30 7F09F200 AC4E0004 */  sw    $t6, 4($v0)
-/* 0D3D34 7F09F204 AC4D0000 */  sw    $t5, ($v0)
-/* 0D3D38 7F09F208 35EF0040 */  ori   $t7, (0x01030040 & 0xFFFF) # ori $t7, $t7, 0x40
-/* 0D3D3C 7F09F20C 02408025 */  move  $s0, $s2
-/* 0D3D40 7F09F210 AE0F0000 */  sw    $t7, ($s0)
-/* 0D3D44 7F09F214 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
-/* 0D3D48 7F09F218 26520008 */   addiu $s2, $s2, 8
-/* 0D3D4C 7F09F21C 0C003A2C */  jal   osVirtualToPhysical
-/* 0D3D50 7F09F220 00402025 */   move  $a0, $v0
-/* 0D3D54 7F09F224 AE020004 */  sw    $v0, 4($s0)
-/* 0D3D58 7F09F228 02401025 */  move  $v0, $s2
-.L7F09F22C:
-/* 0D3D5C 7F09F22C 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0D3D60 7F09F230 D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0D3D64 7F09F234 8FB00024 */  lw    $s0, 0x24($sp)
-/* 0D3D68 7F09F238 8FB10028 */  lw    $s1, 0x28($sp)
-/* 0D3D6C 7F09F23C 8FB2002C */  lw    $s2, 0x2c($sp)
-/* 0D3D70 7F09F240 8FB30030 */  lw    $s3, 0x30($sp)
-/* 0D3D74 7F09F244 8FB40034 */  lw    $s4, 0x34($sp)
-/* 0D3D78 7F09F248 8FB50038 */  lw    $s5, 0x38($sp)
-/* 0D3D7C 7F09F24C 03E00008 */  jr    $ra
-/* 0D3D80 7F09F250 27BD0090 */   addiu $sp, $sp, 0x90
-)
-#endif
 
 
 void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4)

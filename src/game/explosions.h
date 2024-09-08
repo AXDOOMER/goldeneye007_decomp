@@ -172,7 +172,7 @@ struct FlyingParticles {
 };
 
 extern f32 D_80040178;
-extern char dword_CODE_bss_8007A100[];
+extern Mtx dword_CODE_bss_8007A100;
 extern struct Smoke *ptr_smoke_buf;
 extern struct Explosion *ptr_explosion_buf;
 extern s32 max_particles;
@@ -193,7 +193,7 @@ Gfx * sub_GAME_7F0A0034(Gfx *arg0);
 Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
 Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
 Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha);
-Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1);
+Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1, s32 withalpha);
 
 
 Gfx *explosionRenderBulletImpactOnProp(Gfx *arg0, PropRecord *arg1, s32 arg2);

@@ -447,7 +447,7 @@ Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
     }
     else if (type == PROP_TYPE_SMOKE)
     {
-        gdl = unk09c250RenderPropSmoke(prop, gdl);
+        gdl = unk09c250RenderPropSmoke(prop, gdl, withalpha);
     }
     else if (type == PROP_TYPE_VIEWER)
     {
