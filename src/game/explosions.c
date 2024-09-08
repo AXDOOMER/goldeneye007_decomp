@@ -1524,6 +1524,7 @@ Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
 }
 
 
+// https://decomp.me/scratch/RT8eu
 void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
 {
     // these are gray rectangles of dust created from shooting walls with guns that fall down with gravity
@@ -1699,170 +1700,52 @@ void update_gray_flying_particles(void)
 }
 
 
-#ifdef NONMATCHING
-Gfx * sub_GAME_7F0A0034(Gfx *arg0) {
+extern Gfx globalDL_0xa50;
 
+/***
+ * NTSC address 0x7F0A0034.
+*/
+Gfx *sub_GAME_7F0A0034(Gfx *gdl)
+{
+    Mtxf sp80;
+    s32 i;
+    Mtx *temp_v0_2;
+    struct FlyingParticles *particles;
+
+    gSPClearGeometryMode(gdl++, G_CULL_BOTH);
+    gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical((void*)pGlobalimagetable));
+    gSPDisplayList(gdl++, &globalDL_0xa50);
+    gDPSetRenderMode(gdl++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+
+    for (i = 0; i < max_particles; i++)
+    {
+        // HACK: regalloc has instructions backwards.
+        particles = (struct FlyingParticles *)(u32)ptr_flying_particles_buf + i;
+        
+        if (particles->unk00 > 0)
+        {
+            matrix_4x4_set_position_and_rotation_around_xyz(&particles->position, &particles->rotation, &sp80);
+            matrix_4x4_multiply_homogeneous_in_place(camGetWorldToScreenMtxf(), &sp80);
+
+            if ((sp80.m[3][0] < 20000.0f)
+                && (sp80.m[3][0] > -20000.0f)
+                && (sp80.m[3][1] < 20000.0f)
+                && (sp80.m[3][1] > -20000.0f)
+                && (sp80.m[3][2] < 20000.0f)
+                && (sp80.m[3][2] > -20000.0f))
+            {
+                temp_v0_2 = dynAllocateMatrix();
+                matrix_4x4_f32_to_s32(&sp80, (Mtxf *)temp_v0_2);
+
+                gSPMatrix(gdl++, osVirtualToPhysical((void*)temp_v0_2), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                gSPVertex(gdl++, osVirtualToPhysical((void*)ptr_flying_particles_buf[i].vertex_list), 4, 0)
+                gSP2Triangles(gdl++, 0, 1, 2, 0, 0, 2, 3, 0);
+            }
+        }
+    }
+
+    return gdl;
 }
-#else
-GLOBAL_ASM(
-.late_rodata
-glabel D_800576FC
-.word 0xc69c4000 /*-20000.0*/
-glabel D_80057700
-.word 0x469c4000 /*20000.0*/
-.text
-glabel sub_GAME_7F0A0034
-/* 0D4B64 7F0A0034 27BDFF40 */  addiu $sp, $sp, -0xc0
-/* 0D4B68 7F0A0038 AFB00028 */  sw    $s0, 0x28($sp)
-/* 0D4B6C 7F0A003C AFBF004C */  sw    $ra, 0x4c($sp)
-/* 0D4B70 7F0A0040 AFBE0048 */  sw    $fp, 0x48($sp)
-/* 0D4B74 7F0A0044 AFB70044 */  sw    $s7, 0x44($sp)
-/* 0D4B78 7F0A0048 AFB60040 */  sw    $s6, 0x40($sp)
-/* 0D4B7C 7F0A004C AFB5003C */  sw    $s5, 0x3c($sp)
-/* 0D4B80 7F0A0050 AFB40038 */  sw    $s4, 0x38($sp)
-/* 0D4B84 7F0A0054 AFB30034 */  sw    $s3, 0x34($sp)
-/* 0D4B88 7F0A0058 AFB20030 */  sw    $s2, 0x30($sp)
-/* 0D4B8C 7F0A005C AFB1002C */  sw    $s1, 0x2c($sp)
-/* 0D4B90 7F0A0060 F7B60020 */  sdc1  $f22, 0x20($sp)
-/* 0D4B94 7F0A0064 F7B40018 */  sdc1  $f20, 0x18($sp)
-/* 0D4B98 7F0A0068 3C0EB600 */  lui   $t6, 0xb600
-/* 0D4B9C 7F0A006C 240F3000 */  li    $t7, 12288
-/* 0D4BA0 7F0A0070 AC8F0004 */  sw    $t7, 4($a0)
-/* 0D4BA4 7F0A0074 AC8E0000 */  sw    $t6, ($a0)
-/* 0D4BA8 7F0A0078 24900008 */  addiu $s0, $a0, 8
-/* 0D4BAC 7F0A007C 3C18BC00 */  lui   $t8, (0xBC000806 >> 16) # lui $t8, 0xbc00
-/* 0D4BB0 7F0A0080 37180806 */  ori   $t8, (0xBC000806 & 0xFFFF) # ori $t8, $t8, 0x806
-/* 0D4BB4 7F0A0084 02008825 */  move  $s1, $s0
-/* 0D4BB8 7F0A0088 AE380000 */  sw    $t8, ($s1)
-/* 0D4BBC 7F0A008C 3C048009 */  lui   $a0, %hi(pGlobalimagetable)
-/* 0D4BC0 7F0A0090 8C84D0B4 */  lw    $a0, %lo(pGlobalimagetable)($a0)
-/* 0D4BC4 7F0A0094 0C003A2C */  jal   osVirtualToPhysical
-/* 0D4BC8 7F0A0098 26100008 */   addiu $s0, $s0, 8
-/* 0D4BCC 7F0A009C 02001825 */  move  $v1, $s0
-/* 0D4BD0 7F0A00A0 AE220004 */  sw    $v0, 4($s1)
-/* 0D4BD4 7F0A00A4 3C080200 */  lui   $t0, 0x200
-/* 0D4BD8 7F0A00A8 25080A50 */  addiu $t0, $t0, 0xa50
-/* 0D4BDC 7F0A00AC 26100008 */  addiu $s0, $s0, 8
-/* 0D4BE0 7F0A00B0 3C190600 */  lui   $t9, 0x600
-/* 0D4BE4 7F0A00B4 AC790000 */  sw    $t9, ($v1)
-/* 0D4BE8 7F0A00B8 AC680004 */  sw    $t0, 4($v1)
-/* 0D4BEC 7F0A00BC 02002025 */  move  $a0, $s0
-/* 0D4BF0 7F0A00C0 3C09B900 */  lui   $t1, (0xB900031D >> 16) # lui $t1, 0xb900
-/* 0D4BF4 7F0A00C4 3C0A0050 */  lui   $t2, (0x005049D8 >> 16) # lui $t2, 0x50
-/* 0D4BF8 7F0A00C8 354A49D8 */  ori   $t2, (0x005049D8 & 0xFFFF) # ori $t2, $t2, 0x49d8
-/* 0D4BFC 7F0A00CC 3529031D */  ori   $t1, (0xB900031D & 0xFFFF) # ori $t1, $t1, 0x31d
-/* 0D4C00 7F0A00D0 AC890000 */  sw    $t1, ($a0)
-/* 0D4C04 7F0A00D4 AC8A0004 */  sw    $t2, 4($a0)
-/* 0D4C08 7F0A00D8 3C0B8008 */  lui   $t3, %hi(max_particles)
-/* 0D4C0C 7F0A00DC 8D6BA148 */  lw    $t3, %lo(max_particles)($t3)
-/* 0D4C10 7F0A00E0 26100008 */  addiu $s0, $s0, 8
-/* 0D4C14 7F0A00E4 0000A825 */  move  $s5, $zero
-/* 0D4C18 7F0A00E8 19600055 */  blez  $t3, .L7F0A0240
-/* 0D4C1C 7F0A00EC 00009825 */   move  $s3, $zero
-/* 0D4C20 7F0A00F0 3C018005 */  lui   $at, %hi(D_800576FC)
-/* 0D4C24 7F0A00F4 C43676FC */  lwc1  $f22, %lo(D_800576FC)($at)
-/* 0D4C28 7F0A00F8 3C018005 */  lui   $at, %hi(D_80057700)
-/* 0D4C2C 7F0A00FC 3C1E0430 */  lui   $fp, (0x04300040 >> 16) # lui $fp, 0x430
-/* 0D4C30 7F0A0100 3C170102 */  lui   $s7, (0x01020040 >> 16) # lui $s7, 0x102
-/* 0D4C34 7F0A0104 3C168008 */  lui   $s6, %hi(ptr_flying_particles_buf)
-/* 0D4C38 7F0A0108 26D6A14C */  addiu $s6, %lo(ptr_flying_particles_buf) # addiu $s6, $s6, -0x5eb4
-/* 0D4C3C 7F0A010C 36F70040 */  ori   $s7, (0x01020040 & 0xFFFF) # ori $s7, $s7, 0x40
-/* 0D4C40 7F0A0110 37DE0040 */  ori   $fp, (0x04300040 & 0xFFFF) # ori $fp, $fp, 0x40
-/* 0D4C44 7F0A0114 C4347700 */  lwc1  $f20, %lo(D_80057700)($at)
-/* 0D4C48 7F0A0118 27B40080 */  addiu $s4, $sp, 0x80
-/* 0D4C4C 7F0A011C 8ECC0000 */  lw    $t4, ($s6)
-.L7F0A0120:
-/* 0D4C50 7F0A0120 01931021 */  addu  $v0, $t4, $s3
-/* 0D4C54 7F0A0124 8C4D0000 */  lw    $t5, ($v0)
-/* 0D4C58 7F0A0128 24440004 */  addiu $a0, $v0, 4
-/* 0D4C5C 7F0A012C 24450010 */  addiu $a1, $v0, 0x10
-/* 0D4C60 7F0A0130 19A0003C */  blez  $t5, .L7F0A0224
-/* 0D4C64 7F0A0134 00000000 */   nop
-/* 0D4C68 7F0A0138 0FC1624B */  jal   matrix_4x4_set_position_and_rotation_around_xyz
-/* 0D4C6C 7F0A013C 02803025 */   move  $a2, $s4
-/* 0D4C70 7F0A0140 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
-/* 0D4C74 7F0A0144 00000000 */   nop
-/* 0D4C78 7F0A0148 00402025 */  move  $a0, $v0
-/* 0D4C7C 7F0A014C 0FC16026 */  jal   matrix_4x4_multiply_homogeneous_in_place
-/* 0D4C80 7F0A0150 02802825 */   move  $a1, $s4
-/* 0D4C84 7F0A0154 C7A000B0 */  lwc1  $f0, 0xb0($sp)
-/* 0D4C88 7F0A0158 4614003C */  c.lt.s $f0, $f20
-/* 0D4C8C 7F0A015C 00000000 */  nop
-/* 0D4C90 7F0A0160 45000030 */  bc1f  .L7F0A0224
-/* 0D4C94 7F0A0164 00000000 */   nop
-/* 0D4C98 7F0A0168 4600B03C */  c.lt.s $f22, $f0
-/* 0D4C9C 7F0A016C C7A000B4 */  lwc1  $f0, 0xb4($sp)
-/* 0D4CA0 7F0A0170 4500002C */  bc1f  .L7F0A0224
-/* 0D4CA4 7F0A0174 00000000 */   nop
-/* 0D4CA8 7F0A0178 4614003C */  c.lt.s $f0, $f20
-/* 0D4CAC 7F0A017C 00000000 */  nop
-/* 0D4CB0 7F0A0180 45000028 */  bc1f  .L7F0A0224
-/* 0D4CB4 7F0A0184 00000000 */   nop
-/* 0D4CB8 7F0A0188 4600B03C */  c.lt.s $f22, $f0
-/* 0D4CBC 7F0A018C C7A000B8 */  lwc1  $f0, 0xb8($sp)
-/* 0D4CC0 7F0A0190 45000024 */  bc1f  .L7F0A0224
-/* 0D4CC4 7F0A0194 00000000 */   nop
-/* 0D4CC8 7F0A0198 4614003C */  c.lt.s $f0, $f20
-/* 0D4CCC 7F0A019C 00000000 */  nop
-/* 0D4CD0 7F0A01A0 45000020 */  bc1f  .L7F0A0224
-/* 0D4CD4 7F0A01A4 00000000 */   nop
-/* 0D4CD8 7F0A01A8 4600B03C */  c.lt.s $f22, $f0
-/* 0D4CDC 7F0A01AC 00000000 */  nop
-/* 0D4CE0 7F0A01B0 4500001C */  bc1f  .L7F0A0224
-/* 0D4CE4 7F0A01B4 00000000 */   nop
-/* 0D4CE8 7F0A01B8 0FC2F5B8 */  jal   dynAllocateMatrix
-/* 0D4CEC 7F0A01BC 00000000 */   nop
-/* 0D4CF0 7F0A01C0 00409025 */  move  $s2, $v0
-/* 0D4CF4 7F0A01C4 02802025 */  move  $a0, $s4
-/* 0D4CF8 7F0A01C8 0FC16327 */  jal   matrix_4x4_f32_to_s32
-/* 0D4CFC 7F0A01CC 00402825 */   move  $a1, $v0
-/* 0D4D00 7F0A01D0 02008825 */  move  $s1, $s0
-/* 0D4D04 7F0A01D4 AE370000 */  sw    $s7, ($s1)
-/* 0D4D08 7F0A01D8 26100008 */  addiu $s0, $s0, 8
-/* 0D4D0C 7F0A01DC 0C003A2C */  jal   osVirtualToPhysical
-/* 0D4D10 7F0A01E0 02402025 */   move  $a0, $s2
-/* 0D4D14 7F0A01E4 AE220004 */  sw    $v0, 4($s1)
-/* 0D4D18 7F0A01E8 02009025 */  move  $s2, $s0
-/* 0D4D1C 7F0A01EC AE5E0000 */  sw    $fp, ($s2)
-/* 0D4D20 7F0A01F0 8ECE0000 */  lw    $t6, ($s6)
-/* 0D4D24 7F0A01F4 26100008 */  addiu $s0, $s0, 8
-/* 0D4D28 7F0A01F8 01D32021 */  addu  $a0, $t6, $s3
-/* 0D4D2C 7F0A01FC 0C003A2C */  jal   osVirtualToPhysical
-/* 0D4D30 7F0A0200 24840038 */   addiu $a0, $a0, 0x38
-/* 0D4D34 7F0A0204 02001825 */  move  $v1, $s0
-/* 0D4D38 7F0A0208 AE420004 */  sw    $v0, 4($s2)
-/* 0D4D3C 7F0A020C 3C0FB100 */  lui   $t7, (0xB1000032 >> 16) # lui $t7, 0xb100
-/* 0D4D40 7F0A0210 35EF0032 */  ori   $t7, (0xB1000032 & 0xFFFF) # ori $t7, $t7, 0x32
-/* 0D4D44 7F0A0214 24182010 */  li    $t8, 8208
-/* 0D4D48 7F0A0218 AC780004 */  sw    $t8, 4($v1)
-/* 0D4D4C 7F0A021C AC6F0000 */  sw    $t7, ($v1)
-/* 0D4D50 7F0A0220 26100008 */  addiu $s0, $s0, 8
-.L7F0A0224:
-/* 0D4D54 7F0A0224 3C198008 */  lui   $t9, %hi(max_particles)
-/* 0D4D58 7F0A0228 8F39A148 */  lw    $t9, %lo(max_particles)($t9)
-/* 0D4D5C 7F0A022C 26B50001 */  addiu $s5, $s5, 1
-/* 0D4D60 7F0A0230 26730078 */  addiu $s3, $s3, 0x78
-/* 0D4D64 7F0A0234 02B9082A */  slt   $at, $s5, $t9
-/* 0D4D68 7F0A0238 5420FFB9 */  bnezl $at, .L7F0A0120
-/* 0D4D6C 7F0A023C 8ECC0000 */   lw    $t4, ($s6)
-.L7F0A0240:
-/* 0D4D70 7F0A0240 8FBF004C */  lw    $ra, 0x4c($sp)
-/* 0D4D74 7F0A0244 02001025 */  move  $v0, $s0
-/* 0D4D78 7F0A0248 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0D4D7C 7F0A024C D7B40018 */  ldc1  $f20, 0x18($sp)
-/* 0D4D80 7F0A0250 D7B60020 */  ldc1  $f22, 0x20($sp)
-/* 0D4D84 7F0A0254 8FB1002C */  lw    $s1, 0x2c($sp)
-/* 0D4D88 7F0A0258 8FB20030 */  lw    $s2, 0x30($sp)
-/* 0D4D8C 7F0A025C 8FB30034 */  lw    $s3, 0x34($sp)
-/* 0D4D90 7F0A0260 8FB40038 */  lw    $s4, 0x38($sp)
-/* 0D4D94 7F0A0264 8FB5003C */  lw    $s5, 0x3c($sp)
-/* 0D4D98 7F0A0268 8FB60040 */  lw    $s6, 0x40($sp)
-/* 0D4D9C 7F0A026C 8FB70044 */  lw    $s7, 0x44($sp)
-/* 0D4DA0 7F0A0270 8FBE0048 */  lw    $fp, 0x48($sp)
-/* 0D4DA4 7F0A0274 03E00008 */  jr    $ra
-/* 0D4DA8 7F0A0278 27BD00C0 */   addiu $sp, $sp, 0xc0
-)
-#endif
 
 
 
