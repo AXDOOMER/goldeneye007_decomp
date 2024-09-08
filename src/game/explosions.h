@@ -130,31 +130,12 @@ struct BulletImpact {
     s16 unk4E;
 };
 
-struct FlyingParticles_unk38 {
-    s16 unk00;
-    s16 unk02;
-    s16 unk04;
-    s16 unk06;
-    s16 unk08;
-    s16 unk0A;
-    s8 unk0C;
-    s8 unk0D;
-    s8 unk0E;
-    u8 unk0F;
-};
-
 struct FlyingParticles {
     s32 unk00;
 
-    // coord3d?
-    f32 x;
-    f32 y;
-    f32 z;
+    struct coord3d position;
 
-    // coord3d?
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
+    struct coord3d rotation;
 
     // coord3d?
     f32 unk1C;
@@ -168,7 +149,7 @@ struct FlyingParticles {
 
     s32 unk34;
 
-    struct FlyingParticles_unk38 unk38[4];
+    Vtx vertex_list[4];
 };
 
 extern f32 D_80040178;

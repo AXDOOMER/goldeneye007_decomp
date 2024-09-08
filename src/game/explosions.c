@@ -11,6 +11,7 @@
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
+#include "dyn.h"
 #include "explosions.h"
 #include "fr.h"
 #include "image_bank.h"
@@ -1533,7 +1534,7 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
     f32 rand3;
     s16 unk08_upper;
     s16 unk0A_upper;
-    s8 rand_s8;
+    s32 rand_s8;
 
     rand1 = (2.0f * (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX))) - 1.0f;
     rand2 = ((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 1.12f) - 0.12f;
@@ -1541,31 +1542,31 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
 
     ptr_flying_particles_buf[numParticleEntries].unk00 = 1;
 
-    ptr_flying_particles_buf[numParticleEntries].x = spawnpos->f[0] + (arg1 * rand1);
-    ptr_flying_particles_buf[numParticleEntries].y = spawnpos->f[1] + (arg1 * rand2);
-    ptr_flying_particles_buf[numParticleEntries].z = spawnpos->f[2] + (arg1 * rand3);
+    ptr_flying_particles_buf[numParticleEntries].position.f[0] = spawnpos->f[0] + (arg1 * rand1);
+    ptr_flying_particles_buf[numParticleEntries].position.f[1] = spawnpos->f[1] + (arg1 * rand2);
+    ptr_flying_particles_buf[numParticleEntries].position.f[2] = spawnpos->f[2] + (arg1 * rand3);
 
     ptr_flying_particles_buf[numParticleEntries].unk1C = rand1 * arg2;
     ptr_flying_particles_buf[numParticleEntries].unk20 = rand2 * arg3;
     ptr_flying_particles_buf[numParticleEntries].unk24 = rand3 * arg2;
 
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk02 = 0;
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[1] = 0;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
 
     if (1)
     {
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk02 = 0;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[1] = 0;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk02 = 0;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[1] = 0;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
 
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk00 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk02 = 0;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk04 = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[1] = 0;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
     }
 
     if (1) {}
@@ -1573,62 +1574,62 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
     unk08_upper = (randomGetNext() & 3) << 8;
     unk0A_upper = (randomGetNext() & 3) << 8;
 
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk08 = unk08_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0A = unk0A_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk08 = unk08_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0A = unk0A_upper;
-    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk08 = unk08_upper;
-    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0A = unk0A_upper;
-    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk08 = unk08_upper;
-    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0A = unk0A_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.tc[0] = unk08_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.tc[1] = unk0A_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.tc[0] = unk08_upper + 0xE0;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.tc[1] = unk0A_upper;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.tc[0] = unk08_upper;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.tc[1] = unk0A_upper;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.tc[0] = unk08_upper;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.tc[1] = unk0A_upper + 0xE0;
 
     if (randomGetNext() & 1)
     {
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
     }
     else
     {
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0E = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0D = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0C = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
+        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
     }
 
-    ptr_flying_particles_buf[numParticleEntries].unk38[0].unk0F = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].unk38[1].unk0F = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].unk38[2].unk0F = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].unk38[3].unk0F = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[3] = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[3] = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[3] = 0xdc;
+    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[3] = 0xdc;
 
-    ptr_flying_particles_buf[numParticleEntries].unk10 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_flying_particles_buf[numParticleEntries].unk14 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_flying_particles_buf[numParticleEntries].unk18 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].rotation.f[0] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].rotation.f[1] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_flying_particles_buf[numParticleEntries].rotation.f[2] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
     ptr_flying_particles_buf[numParticleEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
     ptr_flying_particles_buf[numParticleEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
@@ -1664,16 +1665,16 @@ void update_gray_flying_particles(void)
         {
             ptr_flying_particles_buf[i].unk00 += (s32) scalar;
 
-            ptr_flying_particles_buf[i].unk10 += ptr_flying_particles_buf[i].unk28 * scalar;
-            ptr_flying_particles_buf[i].unk14 += ptr_flying_particles_buf[i].unk2C * scalar;
-            ptr_flying_particles_buf[i].unk18 += ptr_flying_particles_buf[i].unk30 * scalar;
-            ptr_flying_particles_buf[i].x += ptr_flying_particles_buf[i].unk1C * scalar;
-            ptr_flying_particles_buf[i].z += ptr_flying_particles_buf[i].unk24 * scalar;
+            ptr_flying_particles_buf[i].rotation.f[0] += ptr_flying_particles_buf[i].unk28 * scalar;
+            ptr_flying_particles_buf[i].rotation.f[1] += ptr_flying_particles_buf[i].unk2C * scalar;
+            ptr_flying_particles_buf[i].rotation.f[2] += ptr_flying_particles_buf[i].unk30 * scalar;
+            ptr_flying_particles_buf[i].position.f[0] += ptr_flying_particles_buf[i].unk1C * scalar;
+            ptr_flying_particles_buf[i].position.f[2] += ptr_flying_particles_buf[i].unk24 * scalar;
 
             for (j = 0; j < (s32)scalar; j++)
             {
                 // initially sends particles flying up
-                ptr_flying_particles_buf[i].y += ptr_flying_particles_buf[i].unk20;
+                ptr_flying_particles_buf[i].position.f[1] += ptr_flying_particles_buf[i].unk20;
 
                 // applies gravity so particles fall down
                 if (ptr_flying_particles_buf[i].unk20 > -3.75f)
@@ -1689,7 +1690,7 @@ void update_gray_flying_particles(void)
             }
 
             // position-related. deletes particles that are too low or too high.
-            if ((ptr_flying_particles_buf[i].y < -30000.0f) || (ptr_flying_particles_buf[i].y > 30000.0f))
+            if ((ptr_flying_particles_buf[i].position.f[1] < -30000.0f) || (ptr_flying_particles_buf[i].position.f[1] > 30000.0f))
             {
                 ptr_flying_particles_buf[i].unk00 = 0;
             }
