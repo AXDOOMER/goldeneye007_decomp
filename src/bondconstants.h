@@ -1235,7 +1235,7 @@ typedef enum E_EXPLOSIONTYPE
     E_EXPLOSIONTYPE_COUNT
 } E_EXPLOSIONTYPE;
 
-/* index into array_explosion_types.
+/* index into g_ExplosionTypes.
 * Is this the same as E_EXPLOSIONTYPE ?
 * Some names are based on logic in chrobjWeaponTick method.
 */

@@ -1388,7 +1388,7 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *arg0)
 
     if (sub_GAME_7F0BD8F0())
     {
-        arg0 = sub_GAME_7F0A1D78(sub_GAME_7F0A0AB4(arg0));
+        arg0 = explosionCallRenderBulletImpactOnProp(explosionRenderScorchBuffer(arg0));
     }
 
     for (i=b_max; i > b_min - 1; i--)
@@ -1597,9 +1597,9 @@ glabel sub_GAME_7F0B3C8C
 /* 0E89F8 7F0B3EC8 AE220004 */   sw    $v0, 4($s1)
 /* 0E89FC 7F0B3ECC 10400006 */  beqz  $v0, .L7F0B3EE8
 /* 0E8A00 7F0B3ED0 00000000 */   nop   
-/* 0E8A04 7F0B3ED4 0FC282AD */  jal   sub_GAME_7F0A0AB4
+/* 0E8A04 7F0B3ED4 0FC282AD */  jal   explosionRenderScorchBuffer
 /* 0E8A08 7F0B3ED8 02002025 */   move  $a0, $s0
-/* 0E8A0C 7F0B3EDC 0FC2875E */  jal   sub_GAME_7F0A1D78
+/* 0E8A0C 7F0B3EDC 0FC2875E */  jal   explosionCallRenderBulletImpactOnProp
 /* 0E8A10 7F0B3EE0 00402025 */   move  $a0, $v0
 /* 0E8A14 7F0B3EE4 00408025 */  move  $s0, $v0
 .L7F0B3EE8:
@@ -1866,9 +1866,9 @@ glabel sub_GAME_7F0B3C8C
 /* 0E5BE4 7F0B31F4 AE220004 */   sw    $v0, 4($s1)
 /* 0E5BE8 7F0B31F8 50400007 */  beql  $v0, $zero, .L7F0B3218
 /* 0E5BEC 7F0B31FC 0016AC00 */   sll   $s5, $s6, 0x10
-/* 0E5BF0 7F0B3200 0FC27FFE */  jal   sub_GAME_7F0A0AB4
+/* 0E5BF0 7F0B3200 0FC27FFE */  jal   explosionRenderScorchBuffer
 /* 0E5BF4 7F0B3204 02002025 */   move  $a0, $s0
-/* 0E5BF8 7F0B3208 0FC284AF */  jal   sub_GAME_7F0A1D78
+/* 0E5BF8 7F0B3208 0FC284AF */  jal   explosionCallRenderBulletImpactOnProp
 /* 0E5BFC 7F0B320C 00402025 */   move  $a0, $v0
 /* 0E5C00 7F0B3210 00408025 */  move  $s0, $v0
 /* 0E5C04 7F0B3214 0016AC00 */  sll   $s5, $s6, 0x10

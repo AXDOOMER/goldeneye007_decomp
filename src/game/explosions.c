@@ -32,50 +32,50 @@
 Mtx dword_CODE_bss_8007A100;
 
 /**
- * ptr_smoke_buf = mempAllocBytesInBank(0x1FE0, MEMPOOL_STAGE);
+ * g_SmokeBuffer = mempAllocBytesInBank(0x1FE0, MEMPOOL_STAGE);
  * printf("Allocating %d bytes for smoke data\n",0x9f60);
  * Address 0x8007A140.
 */
-struct Smoke *ptr_smoke_buf;
+struct Smoke *g_SmokeBuffer;
 
 /**
- * ptr_explosion_buf = mempAllocBytesInBank(0x1740, MEMPOOL_STAGE);
+ * g_ExplosionBuffer = mempAllocBytesInBank(0x1740, MEMPOOL_STAGE);
  * printf("Allocating %d bytes for explosion data\n",0x2e80);
  * Address 0x8007A144.
 */
-struct Explosion *ptr_explosion_buf;
+struct Explosion *g_ExplosionBuffer;
 
 //CODE.bss:8007A148
 s32 max_particles;
 //CODE.bss:8007A14C
 // printf("Allocating %d bytes for debris data (%d bits)\n", DAT_83bd2af0 * 0xa4, DAT_83bd2af0);
-struct FlyingParticles *ptr_flying_particles_buf;
+struct FlyingParticles *g_FlyingParticlesBuffer;
 
 /**
- * ptr_scorch_buf = mempAllocBytesInBank(0x6E0, MEMPOOL_STAGE);
+ * g_ScorchBuffer = mempAllocBytesInBank(0x6E0, MEMPOOL_STAGE);
  * printf("Allocating %d bytes for scorch data\n",0xa50);
  * sizeof each entry == 0x58
  * Address 0x8007A150.
 */
-struct Scorch *ptr_scorch_buf;
+struct Scorch *g_ScorchBuffer;
 
 /**
- * ptr_bullet_impact_buf = mempAllocBytesInBank(0x1F40, MEMPOOL_STAGE);
+ * g_BulletImpactBuffer = mempAllocBytesInBank(0x1F40, MEMPOOL_STAGE);
  * printf("Allocating %d bytes for wallhit data\n",0x3070);
  * Address 0x8007A154.
 */
-struct BulletImpact *ptr_bullet_impact_buf;
+struct BulletImpact *g_BulletImpactBuffer;
 
 // data
 //D:80040170
-s32 numExplosionEntries = 0;
+s32 g_NumExplosionEntries = 0;
 //D:80040174
-s32 numSmokeEntries = 0;
+s32 g_NumSmokeEntries = 0;
 //D:80040178
-f32 D_80040178 = 1.0;
+f32 g_SpExplosionDamageMult = 1.0;
 
 #if defined(VERSION_EU)
-s_smoketype array_smoke_types[] = {
+s_smoketype g_SmokeTypes[] = {
    // dur, appr, dis, size, bgrate,    r,  g,    b, fgrate, propclouds
     {   1,   50,  99,    0,   0.0f, 128, 128, 128,   0.3f,     150 },
     { 400,   50,  37,   60,  0.02f,  80,  80,  96,   0.3f,     150 },
@@ -91,7 +91,7 @@ s_smoketype array_smoke_types[] = {
 };
 #else
 //D:8004017C
-s_smoketype array_smoke_types[] = {
+s_smoketype g_SmokeTypes[] = {
    // dur, appr, dis,size, bgrate,   r,  g,    b, fgrate, propclouds
     {   1,   60,  99,   0,   0.0f, 128, 128, 128,   0.3f,     180},
     { 480,   60,  45,  60,  0.02f,  80,  80,  96,   0.3f,     180},
@@ -108,7 +108,7 @@ s_smoketype array_smoke_types[] = {
 #endif
 
 #if defined(VERSION_EU)
-s_explosiontype array_explosion_types[] = {
+s_explosiontype g_ExplosionTypes[] = {
    //hrange, vrange,    hchg,               vchg,           expsize, exprang, dmgrang,   dur, proprate, flarespd, nbits,  bitsize, bitdist, bithvel, bitvvel, smoketype,             sndid, damage
     {  0.1f,   0.1f,    0.0f,               0.0f,                   0.1f,    0.0f,    0.0f,     1,        1,     1.0f,     0,     0.1f,    0.0f,    0.0f,    0.0f,         0,              0x00,   0.0f},
     {  1.0f,   1.0f,    0.0f,               0.0f,                   1.0f,    0.0f,    0.0f,    25,        1,     1.0f,    10,     5.0f,    0.0f,    2.0f,    6.0f,         7,              0x00,   0.0f},
@@ -135,7 +135,7 @@ s_explosiontype array_explosion_types[] = {
     {160.0f, 120.0f,    7.19999980926514f,  2.40000009536743f,    600.0f,  450.0f,  640.0f,    50,        1,     2.0f,     0,     0.0f,    0.0f,    0.0f,    0.0f,         0,  EXPLOSION_4B_SFX,   4.0f},
 };
 #else
-s_explosiontype array_explosion_types[] = {
+s_explosiontype g_ExplosionTypes[] = {
    //hrange, vrange,    hchg,  vchg,  expsize, exprang, dmgrang,   dur, proprate, flarespd, nbits,  bitsize, bitdist, bithvel, bitvvel, smoketype,             sndid, damage
     {  0.1f,   0.1f,    0.0f,  0.0f,     0.1f,    0.0f,    0.0f,     1,        1,     1.0f,     0,     0.1f,    0.0f,    0.0f,    0.0f,         0,              0x00,   0.0f},
     {  1.0f,   1.0f,    0.0f,  0.0f,     1.0f,    0.0f,    0.0f,    30,        1,     1.0f,    10,     5.0f,    0.0f,    2.0f,    6.0f,         7,              0x00,   0.0f},
@@ -161,7 +161,7 @@ s_explosiontype array_explosion_types[] = {
 };
 #endif
 
-Gfx * array_explosion_dl_ptrs[] = {
+Gfx * g_ExplosionDisplayLists[] = {
     &globalDL_0x078,
     &globalDL_0x120,
     &globalDL_0x1c8,
@@ -178,11 +178,13 @@ Gfx * array_explosion_dl_ptrs[] = {
     &globalDL_0x900,
     &globalDL_0x9a8
 };
-s32 numParticleEntries = 0;
-s32 numScorchEntries = 0;
-s32 numImpactEntries = 0;
+
+s32 g_NumParticleEntries = 0;
+s32 g_NumScorchEntries = 0;
+s32 g_NumImpactEntries = 0;
+
 //D:8004080C
-s_impacttype D_8004080C[] = {
+s_impacttype g_ImpactTypes[] = {
     {10.0f, 10.0f, 1, 2, 8},
     { 6.0f,  6.0f, 1, 2, 8},
     { 8.0f,  8.0f, 0, 2, 8},
@@ -205,28 +207,26 @@ s_impacttype D_8004080C[] = {
     {12.0f, 12.0f, 1, 2, 1},
 };
 
+// unused / unreferenced (padding)
 u32 D_800408FC = 0;
 
-Vtx D_80040900 = {0, 0, 0, 0, 0, 0, 0xff, 0xff, 0xff, 0xff };
-
-Vtx D_80040910 = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0x0 };
-
-
-Vtx D_80040920 = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
-Vtx D_80040930 = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
+Vtx g_ExplosionRenderPartDefaultVertex = {0, 0, 0, 0, 0, 0, 0xff, 0xff, 0xff, 0xff };
+Vtx g_SmokeRenderPartDefaultVertex = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0x0 };
+Vtx g_ScorchDefaultVertex = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
+Vtx g_BulletImpactDefaultVertex = {0, 0, 0, 0, 0, 0, 0x0, 0x0, 0x0, 0xDC };
 
 
 // rodata
 
 /*** prototypes */
 
-void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
-s32 sub_GAME_7F0A0C74(f32 arg0);
-void sub_GAME_7F0A0E98(s32 arg0);
-void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2);
-void sub_GAME_7F09C9D8(struct PropRecord *arg0, f32 arg1, f32 arg2);
-void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2);
-Gfx *sub_GAME_7F09D82C(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coord);
+void explosionInitFlyingParticles(coord3d *spawnpos, f32 spawn_rand_scale, f32 spawn_horiz_drift_scale, f32 spawn_vert_drift_scale, f32 spawn_tex_scale);
+s32 explosionRoundFloat(f32 arg0);
+void explosionSetBulletImpactAlpha(s32 arg0);
+void explosionInflictDamage(PropRecord *arg0, f32 arg1, f32 arg2);
+void explosionInflictDamage(struct PropRecord *arg0, f32 arg1, f32 arg2);
+void explosionScorchTick(struct coord3d *pos, f32 explosion_size, s16 room);
+Gfx *explosionRenderPart(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coord);
 
 /*** *************************************************************************************************************/
 
@@ -248,21 +248,21 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
     s32 var_v0;
     PropRecord *sp30;
     
-    sp44 = &array_explosion_types[explosion_type];
+    sp44 = &g_ExplosionTypes[explosion_type];
     sp40 = NULL;
     
 #if defined(VERSION_US)
     if ((explosion_type != 0x10) && (explosion_type != 1))
     {
-        numExplosionEntries = 6;
+        g_NumExplosionEntries = 6;
     }
 #endif
 
     for (var_v0 = 0; var_v0 < EXPLOSION_BUFFER_LEN; var_v0++)
     {
-        if (ptr_explosion_buf[var_v0].prop == NULL)
+        if (g_ExplosionBuffer[var_v0].prop == NULL)
         {
-            sp40 = &ptr_explosion_buf[var_v0];
+            sp40 = &g_ExplosionBuffer[var_v0];
             break;
         }
     }
@@ -274,7 +274,7 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
 #if defined(VERSION_JP) || defined(VERSION_EU)
         if ((explosion_type != 0x10) && (explosion_type != 1))
         {
-            numExplosionEntries = 6;
+            g_NumExplosionEntries = 6;
         }
 #endif
 
@@ -315,7 +315,7 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
             sp40->unk3CA = -1;
             sp40->unk3CD = (u8) arg4;
             sp40->prop = sp30;
-            sp40->unk04 = arg0;
+            sp40->source = arg0;
             sp40->player = (s8) player;
 
             if (arg4 != 0)
@@ -352,20 +352,20 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
 
             for (var_v0 = 0; var_v0 < sp44->numshrapnelbits; var_v0++)
             {
-                init_gray_flying_particles(target_pos, sp44->shrapnel_scatter_dist, sp44->shrapnel_hvel, sp44->shrapnel_vvel, sp44->shrapnel_size);
+                explosionInitFlyingParticles(target_pos, sp44->shrapnel_scatter_dist, sp44->shrapnel_hvel, sp44->shrapnel_vvel, sp44->shrapnel_size);
             }
 
             if (getPlayerCount() >= 2)
             {
                 for (var_v0 = 0; var_v0 < SMOKE_BUFFER_LEN; var_v0++)
                 {
-                    if (ptr_smoke_buf[var_v0].prop != NULL)
+                    if (g_SmokeBuffer[var_v0].prop != NULL)
                     {
-                        struct Smoke *smoke = &ptr_smoke_buf[var_v0];
+                        struct Smoke *smoke = &g_SmokeBuffer[var_v0];
 
                         if (smoke->smoke_type != 7 && smoke->smoke_type != 8 && smoke->smoke_type != 9)
                         {
-                            smoke->duration = array_smoke_types[smoke->smoke_type].duration;
+                            smoke->duration = g_SmokeTypes[smoke->smoke_type].duration;
                         }
                     }                    
                 }
@@ -380,12 +380,12 @@ explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_
 
 
 void setSixExplosionAndSmokeEntries(void) {
-        numExplosionEntries = 6;
-        numSmokeEntries = 6;
+        g_NumExplosionEntries = 6;
+        g_NumSmokeEntries = 6;
 }
 
 
-void sub_GAME_7F09C7C4(coord3d* arg0, coord3d* arg1, coord3d* arg2)
+void explosionScreenShake(coord3d* source_pos, coord3d* source_mag, coord3d* result)
 {
     PropRecord* explosion_prop;
     f32 angle;
@@ -400,66 +400,66 @@ void sub_GAME_7F09C7C4(coord3d* arg0, coord3d* arg1, coord3d* arg2)
     f32 dist;
     f32 dist2;
 
-    if (numExplosionEntries == 0)
+    if (g_NumExplosionEntries == 0)
     {
         viShake(0.0f);
         return;
     }
 
     angle = 0.8f;
-    mag_scalar_x = (cosf(angle) * arg1->x) - (sinf(angle) * arg1->f[2]);
-    mag_scalar_z = (sinf(angle) * arg1->x) + (cosf(angle) * arg1->f[2]);
+    mag_scalar_x = (cosf(angle) * source_mag->x) - (sinf(angle) * source_mag->f[2]);
+    mag_scalar_z = (sinf(angle) * source_mag->x) + (cosf(angle) * source_mag->f[2]);
 
     explosion_mag = 0.0f;
 
     for (i = 0; i < EXPLOSION_BUFFER_LEN; i++)
     {
-        explosion_prop = ptr_explosion_buf[i].prop;
+        explosion_prop = g_ExplosionBuffer[i].prop;
         if (explosion_prop != NULL)
         {
-            diff_x = explosion_prop->pos.x - arg0->x;
-            diff_y = explosion_prop->pos.y - arg0->y;
-            diff_z = explosion_prop->pos.z - arg0->z;
+            diff_x = explosion_prop->pos.x - source_pos->x;
+            diff_y = explosion_prop->pos.y - source_pos->y;
+            diff_z = explosion_prop->pos.z - source_pos->z;
 #ifndef VERSION_US
             dist = sqrtf((diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z));
             if (dist == 0.0f) { dist = 0.0001f; }
-            dist2 = array_explosion_types[ptr_explosion_buf[i].explosion_type].explosion_size / dist;
+            dist2 = g_ExplosionTypes[g_ExplosionBuffer[i].explosion_type].explosion_size / dist;
 #else
             dist = (diff_x * diff_x) + (diff_y * diff_y) + (diff_z * diff_z);
-            dist2 = array_explosion_types[ptr_explosion_buf[i].explosion_type].explosion_size / sqrtf(dist);
+            dist2 = g_ExplosionTypes[g_ExplosionBuffer[i].explosion_type].explosion_size / sqrtf(dist);
 #endif
             explosion_mag += dist2 * 15.0f;
         }
     }
 
-    if (numSmokeEntries > 0)
+    if (g_NumSmokeEntries > 0)
     {
-        numSmokeEntries--;
+        g_NumSmokeEntries--;
         explosion_mag++;
     }
 
-    numExplosionEntries--;
-    if (numExplosionEntries & 2)
+    g_NumExplosionEntries--;
+    if (g_NumExplosionEntries & 2)
     {
-        arg2->y = explosion_mag;
+        result->y = explosion_mag;
         explosion_mag = -explosion_mag;
     }
     else
     {
-        arg2->y = -explosion_mag;
+        result->y = -explosion_mag;
     }
 
-    arg2->x = explosion_mag * mag_scalar_x;
-    arg2->z = explosion_mag * mag_scalar_z;
+    result->x = explosion_mag * mag_scalar_x;
+    result->z = explosion_mag * mag_scalar_z;
 
-    viShake((f32) numExplosionEntries * explosion_mag);
+    viShake((f32) g_NumExplosionEntries * explosion_mag);
 }
 
 /***
  * see Perfect Dark void explosionInflictDamage(struct prop *expprop)
  * Address 0x7F09C9D8 (NTSC)
 */
-void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
+void explosionInflictDamage(PropRecord *arg0, f32 horiz_range, f32 vert_range)
 {
     s32 spE0[8];
     PropRecord *temp_s0;    
@@ -468,7 +468,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
     struct Explosion *temp_s2;
 
     temp_s2 = arg0->explosion;
-    temp_s6 = &array_explosion_types[temp_s2->explosion_type];
+    temp_s6 = &g_ExplosionTypes[temp_s2->explosion_type];
 
     if (temp_s2->age >= temp_s2->unk3CA)
     {
@@ -479,7 +479,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
         {
             temp_s0 = &pos_data_entry[*var_s3];
 
-            if ((temp_s0 != temp_s2->unk04) && (temp_s0->timetoregen == 0))
+            if ((temp_s0 != temp_s2->source) && (temp_s0->timetoregen == 0))
             {
                 if (temp_s0->type == PROP_TYPE_OBJ || temp_s0->type == PROP_TYPE_WEAPON || temp_s0->type == PROP_TYPE_DOOR)
                 {
@@ -493,21 +493,21 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
                     ydist = spCC->runtime_pos.f[1] - arg0->pos.f[1];
                     zdist = spCC->runtime_pos.f[2] - arg0->pos.f[2];
 
-                    if ((xdist <= arg1)
-                        && (-arg1 <= xdist)
-                        && (ydist <= arg2)
-                        && (-arg2 <= ydist)
-                        && (zdist <= arg1)
-                        && (-arg1 <= zdist))
+                    if ((xdist <= horiz_range)
+                        && (-horiz_range <= xdist)
+                        && (ydist <= vert_range)
+                        && (-vert_range <= ydist)
+                        && (zdist <= horiz_range)
+                        && (-horiz_range <= zdist))
                     {
                         f32 xfrac;
                         f32 yfrac;
                         f32 zfrac;
                         f32 minfrac;
                         
-                        xfrac = xdist / arg1;
-                        yfrac = ydist / arg2;
-                        zfrac = zdist / arg1;
+                        xfrac = xdist / horiz_range;
+                        yfrac = ydist / vert_range;
+                        zfrac = zdist / horiz_range;
 
                         if (xfrac < 0.0f)
                         {
@@ -564,21 +564,21 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
                     ydist = temp_s0->pos.f[1] - arg0->pos.f[1];
                     zdist = temp_s0->pos.f[2] - arg0->pos.f[2];
 
-                    if ((xdist <= arg1)
-                        && (-arg1 <= xdist)
-                        && (ydist <= arg2)
-                        && (-arg2 <= ydist)
-                        && (zdist <= arg1)
-                        && (-arg1 <= zdist))
+                    if ((xdist <= horiz_range)
+                        && (-horiz_range <= xdist)
+                        && (ydist <= vert_range)
+                        && (-vert_range <= ydist)
+                        && (zdist <= horiz_range)
+                        && (-horiz_range <= zdist))
                     {
                         f32 xfrac;
                         f32 yfrac;
                         f32 zfrac;
                         f32 minfrac;
                         
-                        xfrac = xdist / arg1;
-                        yfrac = ydist / arg2;
-                        zfrac = zdist / arg1;
+                        xfrac = xdist / horiz_range;
+                        yfrac = ydist / vert_range;
+                        zfrac = zdist / horiz_range;
 
                         if (xfrac < 0.0f)
                         {
@@ -634,7 +634,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
                             
                             if (getPlayerCount() == 1)
                             {
-                                minfrac *= D_80040178;
+                                minfrac *= g_SpExplosionDamageMult;
                             }
                             
                             if (isBondInTank() == 1)
@@ -663,7 +663,7 @@ void sub_GAME_7F09C9D8(PropRecord *arg0, f32 arg1, f32 arg2)
  * 
  * NTSC address 0x7F09CEE8.
 */
-s32 sub_GAME_7F09CEE8(PropRecord* arg0)
+s32 explosionTick(PropRecord* arg0)
 {
     s32 var_s4;
     s32 j;
@@ -684,7 +684,7 @@ s32 sub_GAME_7F09CEE8(PropRecord* arg0)
     
     
     exp = arg0->explosion;
-    explosiontype = &array_explosion_types[exp->explosion_type];
+    explosiontype = &g_ExplosionTypes[exp->explosion_type];
     
     if (g_ClockTimer == 0)
     {
@@ -760,7 +760,7 @@ s32 sub_GAME_7F09CEE8(PropRecord* arg0)
         sub_GAME_7F03E27C(arg0, &sp90, &sp84, hrange);
 
         vrange = explosiontype->explosion_range + (((explosiontype->dmg_range - explosiontype->explosion_range) * (f32) exp->age) / (f32) explosiontype->duration);
-        sub_GAME_7F09C9D8(arg0, vrange, vrange);
+        explosionInflictDamage(arg0, vrange, vrange);
     }
     
     for (k = 0; k < (s32) lvupdate; k++)
@@ -778,27 +778,27 @@ s32 sub_GAME_7F09CEE8(PropRecord* arg0)
         if (((exp->age == 0xF) && (exp->explosion_type == 0xE))
             || (((exp->age + 0x14) == (s16) explosiontype->duration) && (exp->explosion_type != 0xE)))
         {
-            if ((exp->unk04 != NULL) && (exp->unk04->stan != NULL))
+            if ((exp->source != NULL) && (exp->source->stan != NULL))
             {
-                if (exp->unk04->type == PROP_TYPE_OBJ)
+                if (exp->source->type == PROP_TYPE_OBJ)
                 {
-                    struct ObjectRecord *obj = exp->unk04->obj;
-                    sub_GAME_7F09E700(&obj->runtime_pos, exp->unk04->stan, (s16) explosiontype->smoketype, exp->unk04->rooms, (arg0->flags & 8) != 0);
+                    struct ObjectRecord *obj = exp->source->obj;
+                    explosionCreateSmoke(&obj->runtime_pos, exp->source->stan, (s16) explosiontype->smoketype, exp->source->rooms, (arg0->flags & 8) != 0);
                 }
                 else
                 {
-                    sub_GAME_7F09E700(&exp->unk04->pos, exp->unk04->stan, (s16) explosiontype->smoketype, exp->unk04->rooms, (arg0->flags & 8) != 0);
+                    explosionCreateSmoke(&exp->source->pos, exp->source->stan, (s16) explosiontype->smoketype, exp->source->rooms, (arg0->flags & 8) != 0);
                 }
             }
             else
             {
-                sub_GAME_7F09E700(&arg0->pos, arg0->stan, (s16) explosiontype->smoketype, arg0->rooms, (arg0->flags & 8) != 0);
+                explosionCreateSmoke(&arg0->pos, arg0->stan, (s16) explosiontype->smoketype, arg0->rooms, (arg0->flags & 8) != 0);
             }
         }
         
         if ((exp->age == ((s16) explosiontype->duration >> 1)) && (exp->unk3CD != 0))
         {
-            sub_GAME_7F0A027C(&exp->pos, explosiontype->explosion_size * 4.0f, exp->room);
+            explosionScorchTick(&exp->pos, explosiontype->explosion_size * 4.0f, exp->room);
         }
     }
 
@@ -816,7 +816,7 @@ s32 sub_GAME_7F09CEE8(PropRecord* arg0)
 /*
 * Address: 0x7F09D4EC
 */
-u8 explosionTick(PropRecord* prop)
+u8 explosionChrpropExplosionTick(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
@@ -846,7 +846,7 @@ u8 explosionTick(PropRecord* prop)
  * 
  * NTSC address 0x7F09D5A0.
 */
-Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
+Gfx *explosionRenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
 {
     s32 temp_s1;
     struct Explosion *temp_s5;
@@ -889,21 +889,21 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
             var_s2 >= 0;
             var_s2--)
         {
-            gSPDisplayList(gdl++, array_explosion_dl_ptrs[var_s2]);
+            gSPDisplayList(gdl++, g_ExplosionDisplayLists[var_s2]);
             
             for (i = 0; i < EXPLOSION_PARTS_LEN; i++)
             {
                 if (temp_s5->parts[i].frame > 0
-                    && var_s2 == (s32)( (f32)(temp_s5->parts[i].frame - 1) / array_explosion_types[temp_s5->explosion_type].flareanimspeed ) )
+                    && var_s2 == (s32)( (f32)(temp_s5->parts[i].frame - 1) / g_ExplosionTypes[temp_s5->explosion_type].flareanimspeed ) )
                 {
-                    gdl = sub_GAME_7F09D82C(&temp_s5->parts[i], gdl, temp_s6);
+                    gdl = explosionRenderPart(&temp_s5->parts[i], gdl, temp_s6);
                 }
             }
         }
 
         gSPMatrix(gdl++, osVirtualToPhysical((void*)currentPlayerGetProjectionMatrix()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
 
-        temp_f10 = (s32) (array_explosion_types[temp_s5->explosion_type].flareanimspeed * 15.0f);
+        temp_f10 = (s32) (g_ExplosionTypes[temp_s5->explosion_type].flareanimspeed * 15.0f);
 
         for (i = 0; i < EXPLOSION_PARTS_LEN; i++)
         {
@@ -924,7 +924,7 @@ Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
  * 
  * NTSC address 0x7F09D82C.
 */
-Gfx *sub_GAME_7F09D82C(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coord)
+Gfx *explosionRenderPart(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coord)
 {
     s32 padding1;
     f32 f2;
@@ -953,7 +953,7 @@ Gfx *sub_GAME_7F09D82C(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coo
     f32 temp_f0;
     f32 var_f12;    
 
-    spA0 = D_80040900;
+    spA0 = g_ExplosionRenderPartDefaultVertex;
 
     sp9C = currentPlayerGetMatrix10D4();
     sp98 = bondviewGetCurrentPlayersPosition();
@@ -1047,7 +1047,7 @@ Gfx *sub_GAME_7F09D82C(struct ExplosionPart *arg0, Gfx *gdl, struct coord3d *coo
  * 
  * NTSC address 0x7F09DDA4.
 */
-Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, struct coord3d *arg3)
+Gfx *explosionSmokeRenderPart(struct Smoke *smoke, struct SmokePart *smoke_part, Gfx *gdl, struct coord3d *arg3)
 {
     Vtx *vertices;
     Vtx spC0;
@@ -1073,18 +1073,18 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
     f32 sp50;
     f32 sp4C;
     
-    spC0 = D_80040910;
+    spC0 = g_SmokeRenderPartDefaultVertex;
 
     mtx = currentPlayerGetMatrix10D4();
     sp70 = bondviewGetCurrentPlayersPosition();
 
-    if (array_smoke_types[arg0->smoke_type].rateappear >= arg1->count)
+    if (g_SmokeTypes[smoke->smoke_type].rateappear >= smoke_part->count)
     {
-        sp77 = (arg1->alpha / (f32) array_smoke_types[arg0->smoke_type].rateappear) * arg1->count;
+        sp77 = (smoke_part->alpha / (f32) g_SmokeTypes[smoke->smoke_type].rateappear) * smoke_part->count;
     }
     else
     {
-        sp77 = arg1->alpha;
+        sp77 = smoke_part->alpha;
     }
 
     vertices = dynAllocate7F0BD6C4(4);
@@ -1094,12 +1094,12 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
     vertices[2] = spC0;
     vertices[3] = spC0;
 
-    sp88 = cosf(arg1->rot) * arg1->size;
-    sp84 = sinf(arg1->rot) * arg1->size;
+    sp88 = cosf(smoke_part->rot) * smoke_part->size;
+    sp84 = sinf(smoke_part->rot) * smoke_part->size;
 
-    sp80 = arg1->pos.f[0] + (sinf(arg1->offset1) * 7.0f);
-    sp7C = arg1->pos.f[1];
-    sp78 = arg1->pos.f[2] + (sinf(arg1->offset2) * 7.0f);
+    sp80 = smoke_part->pos.f[0] + (sinf(smoke_part->offset1) * 7.0f);
+    sp7C = smoke_part->pos.f[1];
+    sp78 = smoke_part->pos.f[2] + (sinf(smoke_part->offset2) * 7.0f);
 
     sp6C = sp80 - sp70->f[0];
     sp68 = sp7C - sp70->f[1];
@@ -1109,7 +1109,7 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
 
     if (temp_f0 > 30000.0f)
     {
-        return arg2;
+        return gdl;
     }
 
     range = temp_f0 * 0.5f;
@@ -1155,7 +1155,7 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
         || sp4C > 30000.0f
         || sp4C < -30000.0f)
     {
-		return arg2;
+		return gdl;
 	}
 
     vertices[0].v.ob[0] = sp54;
@@ -1163,9 +1163,9 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
 	vertices[0].v.ob[2] = sp4C;
 	vertices[0].v.tc[0] = 1760;
 	vertices[0].v.tc[1] = 0;
-    vertices[0].v.cn[0] = array_smoke_types[arg0->smoke_type].r;
-    vertices[0].v.cn[1] = array_smoke_types[arg0->smoke_type].g;
-    vertices[0].v.cn[2] = array_smoke_types[arg0->smoke_type].b;
+    vertices[0].v.cn[0] = g_SmokeTypes[smoke->smoke_type].r;
+    vertices[0].v.cn[1] = g_SmokeTypes[smoke->smoke_type].g;
+    vertices[0].v.cn[2] = g_SmokeTypes[smoke->smoke_type].b;
     vertices[0].v.cn[3] = sp77;
 
     vertices[1].v.ob[0] = ((((sp80 + spA4.f[0]) - sp98.f[0]) * get_room_data_float1()) - arg3->f[0]) * 10.0f;
@@ -1173,9 +1173,9 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
     vertices[1].v.ob[2] = ((((sp78 + spA4.f[2]) - sp98.f[2]) * get_room_data_float1()) - arg3->f[2]) * 10.0f;
     vertices[1].v.tc[0] = 0;
     vertices[1].v.tc[1] = 0;
-    vertices[1].v.cn[0] = array_smoke_types[arg0->smoke_type].r;
-    vertices[1].v.cn[1] = array_smoke_types[arg0->smoke_type].g;
-    vertices[1].v.cn[2] = array_smoke_types[arg0->smoke_type].b;
+    vertices[1].v.cn[0] = g_SmokeTypes[smoke->smoke_type].r;
+    vertices[1].v.cn[1] = g_SmokeTypes[smoke->smoke_type].g;
+    vertices[1].v.cn[2] = g_SmokeTypes[smoke->smoke_type].b;
     vertices[1].v.cn[3] = sp77;
     
     vertices[2].v.ob[0] = (((sp80 + spB0.f[0] + sp8C.f[0]) * get_room_data_float1()) - arg3->f[0]) * 10.0f;
@@ -1183,9 +1183,9 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
     vertices[2].v.ob[2] = (((sp78 + spB0.f[2] + sp8C.f[2]) * get_room_data_float1()) - arg3->f[2]) * 10.0f;
     vertices[2].v.tc[0] = 0;
     vertices[2].v.tc[1] = 1760;
-    vertices[2].v.cn[0] = array_smoke_types[arg0->smoke_type].r;
-    vertices[2].v.cn[1] = array_smoke_types[arg0->smoke_type].g;
-    vertices[2].v.cn[2] = array_smoke_types[arg0->smoke_type].b;
+    vertices[2].v.cn[0] = g_SmokeTypes[smoke->smoke_type].r;
+    vertices[2].v.cn[1] = g_SmokeTypes[smoke->smoke_type].g;
+    vertices[2].v.cn[2] = g_SmokeTypes[smoke->smoke_type].b;
     vertices[2].v.cn[3] = sp77;
     
     vertices[3].v.ob[0] = ((((sp80 - spA4.f[0]) + sp98.f[0]) * get_room_data_float1()) - arg3->f[0]) * 10.0f;
@@ -1193,20 +1193,20 @@ Gfx *sub_GAME_7F09DDA4(struct Smoke *arg0, struct SmokePart *arg1, Gfx *arg2, st
     vertices[3].v.ob[2] = ((((sp78 - spA4.f[2]) + sp98.f[2]) * get_room_data_float1()) - arg3->f[2]) * 10.0f;
     vertices[3].v.tc[0] = 1760;
     vertices[3].v.tc[1] = 1760;
-    vertices[3].v.cn[0] = array_smoke_types[arg0->smoke_type].r;
-    vertices[3].v.cn[1] = array_smoke_types[arg0->smoke_type].g;
-    vertices[3].v.cn[2] = array_smoke_types[arg0->smoke_type].b;
+    vertices[3].v.cn[0] = g_SmokeTypes[smoke->smoke_type].r;
+    vertices[3].v.cn[1] = g_SmokeTypes[smoke->smoke_type].g;
+    vertices[3].v.cn[2] = g_SmokeTypes[smoke->smoke_type].b;
     vertices[3].v.cn[3] = sp77;
 
-    gSPVertex(arg2++, osVirtualToPhysical(vertices), 4, 0);
+    gSPVertex(gdl++, osVirtualToPhysical(vertices), 4, 0);
 
-	gSP2Triangles(arg2++, 0, 1, 2, 0, 0, 2, 3, 0);
+	gSP2Triangles(gdl++, 0, 1, 2, 0, 0, 2, 3, 0);
 
-	return arg2;
+	return gdl;
 }
 
 
-void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 arg4)
+void explosionCreateSmoke(coord3d *pos, StandTile *stan, s16 smoke_type, u8 *rooms, s32 flags)
 {
     struct Smoke *smoke;
     struct Smoke *smoke_tmp;
@@ -1219,17 +1219,17 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
 
     for (i = 0; i < 20; i++)
     {
-        if (ptr_smoke_buf[i].prop == NULL)
+        if (g_SmokeBuffer[i].prop == NULL)
         {
-            smoke = &ptr_smoke_buf[i];
+            smoke = &g_SmokeBuffer[i];
             break;
         }
         else if (player_count >= 2)
         {
-            smoke_tmp = (i + ptr_smoke_buf);
+            smoke_tmp = (i + g_SmokeBuffer);
             if (((smoke_tmp->smoke_type != 7) && (smoke_tmp->smoke_type != 8)) && (smoke_tmp->smoke_type != 9))
             {
-                smoke_tmp->duration = (s16) array_smoke_types[smoke_tmp->smoke_type].duration;
+                smoke_tmp->duration = (s16) g_SmokeTypes[smoke_tmp->smoke_type].duration;
             }
         }
     }
@@ -1253,7 +1253,7 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
     }
     prop->rooms[i] = 0xFF;
 
-    if (arg4 != 0)
+    if (flags != 0)
     {
         prop->flags |= 8;
     }
@@ -1262,7 +1262,7 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
     chrpropEnable(prop);
     smoke->prop = prop;
     smoke->duration = 0;
-    smoke->smoke_type = arg2;
+    smoke->smoke_type = smoke_type;
 }
 
 
@@ -1271,7 +1271,7 @@ void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 a
  * 
  * NTSC address 0x7F09E8AC.
 */
-s32 sub_GAME_7F09E8AC(PropRecord *arg0)
+s32 explosionSmokeTick(PropRecord *arg0)
 {
     f32 temp_f2;
     s32 i;
@@ -1307,7 +1307,7 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
 				part->pos.f[1] += 0.3f;
                 part->size += 0.15f;
 
-                part->alpha -= array_smoke_types[smoke->smoke_type].fg_rotrate;
+                part->alpha -= g_SmokeTypes[smoke->smoke_type].fg_rotrate;
                 part->count++;
                 part->rot += part->deltarot;
 
@@ -1321,9 +1321,9 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
 			}
 		}
 
-        if (smoke->duration < array_smoke_types[smoke->smoke_type].duration)
+        if (smoke->duration < g_SmokeTypes[smoke->smoke_type].duration)
         {
-            if (smoke->duration % array_smoke_types[smoke->smoke_type].ratedissolve == 1)
+            if (smoke->duration % g_SmokeTypes[smoke->smoke_type].ratedissolve == 1)
             {
         		for (j = 0; j < SMOKE_PARTS_LEN; j++)
                 {
@@ -1331,11 +1331,11 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
                     {
                         part = &smoke->parts[j];
                         
-                        part->size = array_smoke_types[smoke->smoke_type].size * (RANDOMFRAC() * 0.5f + 1.0f);
+                        part->size = g_SmokeTypes[smoke->smoke_type].size * (RANDOMFRAC() * 0.5f + 1.0f);
                         part->alpha = (randomGetNext() % 70) + 110.0f;
 						part->count = 0;
 						part->rot = RANDOMFRAC() * M_TAU_F;
-						part->deltarot = (0.5f - RANDOMFRAC()) * array_smoke_types[smoke->smoke_type].bg_rotrate;
+						part->deltarot = (0.5f - RANDOMFRAC()) * g_SmokeTypes[smoke->smoke_type].bg_rotrate;
 
 						part->pos.x = arg0->pos.x;
                         part->pos.y = arg0->pos.y;
@@ -1344,9 +1344,9 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
 						part->offset1 = RANDOMFRAC() * 0.5f;
 						part->offset2 = RANDOMFRAC() * 0.5f;
 
-						if (smoke->duration > array_smoke_types[smoke->smoke_type].duration - array_smoke_types[smoke->smoke_type].propagated_clouds)
+						if (smoke->duration > g_SmokeTypes[smoke->smoke_type].duration - g_SmokeTypes[smoke->smoke_type].propagated_clouds)
                         {
-							part->alpha *= (array_smoke_types[smoke->smoke_type].duration - smoke->duration) / (f32)array_smoke_types[smoke->smoke_type].propagated_clouds;
+							part->alpha *= (g_SmokeTypes[smoke->smoke_type].duration - smoke->duration) / (f32)g_SmokeTypes[smoke->smoke_type].propagated_clouds;
 						}
                         
 						break;
@@ -1407,7 +1407,7 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
     
     sub_GAME_7F03E27C(arg0, &bbmin, &bbmax, var_f14);
 
-    if (smoke->duration > array_smoke_types[smoke->smoke_type].ratedissolve)
+    if (smoke->duration > g_SmokeTypes[smoke->smoke_type].ratedissolve)
     {
 		var_v1 = 1;
 
@@ -1438,7 +1438,7 @@ s32 sub_GAME_7F09E8AC(PropRecord *arg0)
 /*
 * Address: 0x7F09EF9C
 */
-u8 smokeTick(PropRecord* prop)
+u8 explosionChrpropSmokeTick(PropRecord* prop)
 {
     Mtxf* player_matrix;
 
@@ -1463,7 +1463,7 @@ extern Gfx globalDL_0x000;
 /***
  * NTSC address 0x7F09F03C.
 */
-Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
+Gfx *explosionRenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
 {
     struct Smoke *smoke;
     s32 i;
@@ -1508,7 +1508,7 @@ Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
     {
         if (smoke->parts[i].size > 0.0f)
         {
-            gdl = sub_GAME_7F09DDA4(smoke, &smoke->parts[i], gdl, temp_s5);
+            gdl = explosionSmokeRenderPart(smoke, &smoke->parts[i], gdl, temp_s5);
         }
         else
         {
@@ -1525,7 +1525,7 @@ Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
 
 
 // https://decomp.me/scratch/RT8eu
-void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3, f32 arg4)
+void explosionInitFlyingParticles(coord3d *spawnpos, f32 spawn_rand_scale, f32 spawn_horiz_drift_scale, f32 spawn_vert_drift_scale, f32 spawn_tex_scale)
 {
     // these are gray rectangles of dust created from shooting walls with guns that fall down with gravity
     // a bullet will create a group of them flying off the wall
@@ -1541,33 +1541,33 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
     rand2 = ((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 1.12f) - 0.12f;
     rand3 = (2.0f * (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX))) - 1.0f;
 
-    ptr_flying_particles_buf[numParticleEntries].unk00 = 1;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].unk00 = 1;
 
-    ptr_flying_particles_buf[numParticleEntries].position.f[0] = spawnpos->f[0] + (arg1 * rand1);
-    ptr_flying_particles_buf[numParticleEntries].position.f[1] = spawnpos->f[1] + (arg1 * rand2);
-    ptr_flying_particles_buf[numParticleEntries].position.f[2] = spawnpos->f[2] + (arg1 * rand3);
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position.f[0] = spawnpos->f[0] + (spawn_rand_scale * rand1);
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position.f[1] = spawnpos->f[1] + (spawn_rand_scale * rand2);
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position.f[2] = spawnpos->f[2] + (spawn_rand_scale * rand3);
 
-    ptr_flying_particles_buf[numParticleEntries].unk1C = rand1 * arg2;
-    ptr_flying_particles_buf[numParticleEntries].unk20 = rand2 * arg3;
-    ptr_flying_particles_buf[numParticleEntries].unk24 = rand3 * arg2;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position_drift.f[0] = rand1 * spawn_horiz_drift_scale;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position_drift.f[1] = rand2 * spawn_vert_drift_scale;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].position_drift.f[2] = rand3 * spawn_horiz_drift_scale;
 
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[1] = 0;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * spawn_tex_scale));
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.ob[1] = 0;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * spawn_tex_scale));
 
     if (1)
     {
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[1] = 0;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * spawn_tex_scale));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.ob[1] = 0;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-spawn_tex_scale)));
 
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[1] = 0;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-spawn_tex_scale)));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.ob[1] = 0;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-spawn_tex_scale)));
 
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-arg4)));
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[1] = 0;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * arg4));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.ob[0] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * (-spawn_tex_scale)));
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.ob[1] = 0;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.ob[2] = (s16) ((s32) ((((((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.75f) + 0.75f) * spawn_tex_scale));
     }
 
     if (1) {}
@@ -1575,76 +1575,76 @@ void init_gray_flying_particles(coord3d *spawnpos, f32 arg1, f32 arg2, f32 arg3,
     unk08_upper = (randomGetNext() & 3) << 8;
     unk0A_upper = (randomGetNext() & 3) << 8;
 
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.tc[0] = unk08_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.tc[1] = unk0A_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.tc[0] = unk08_upper + 0xE0;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.tc[1] = unk0A_upper;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.tc[0] = unk08_upper;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.tc[1] = unk0A_upper;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.tc[0] = unk08_upper;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.tc[1] = unk0A_upper + 0xE0;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.tc[0] = unk08_upper + 0xE0;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.tc[1] = unk0A_upper + 0xE0;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.tc[0] = unk08_upper + 0xE0;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.tc[1] = unk0A_upper;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.tc[0] = unk08_upper;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.tc[1] = unk0A_upper;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.tc[0] = unk08_upper;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.tc[1] = unk0A_upper + 0xE0;
 
     if (randomGetNext() & 1)
     {
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
         rand_s8 = 0xFF - (randomGetNext() & 0x3F);
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
     }
     else
     {
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[0] = rand_s8;
         rand_s8 = randomGetNext() & 0x3F;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
-        ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[2] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[1] = rand_s8;
+        g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[0] = rand_s8;
     }
 
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[0].v.cn[3] = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[1].v.cn[3] = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[2].v.cn[3] = 0xdc;
-    ptr_flying_particles_buf[numParticleEntries].vertex_list[3].v.cn[3] = 0xdc;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[0].v.cn[3] = 0xdc;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[1].v.cn[3] = 0xdc;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[2].v.cn[3] = 0xdc;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].vertex_list[3].v.cn[3] = 0xdc;
 
-    ptr_flying_particles_buf[numParticleEntries].rotation.f[0] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_flying_particles_buf[numParticleEntries].rotation.f[1] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
-    ptr_flying_particles_buf[numParticleEntries].rotation.f[2] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation.f[0] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation.f[1] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation.f[2] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
-    ptr_flying_particles_buf[numParticleEntries].unk28 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
-    ptr_flying_particles_buf[numParticleEntries].unk2C = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
-    ptr_flying_particles_buf[numParticleEntries].unk30 = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation_drift.f[0] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation_drift.f[1] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
+    g_FlyingParticlesBuffer[g_NumParticleEntries].rotation_drift.f[2] = (((f32) randomGetNext()) * (1.0f / (f32)UINT_MAX)) * 0.1f;
 
-    numParticleEntries++;
-    if (numParticleEntries >= max_particles)
+    g_NumParticleEntries++;
+    if (g_NumParticleEntries >= max_particles)
     {
-        numParticleEntries = 0;
+        g_NumParticleEntries = 0;
     }
 }
 
 
-void update_gray_flying_particles(void)
+void explosionUpdateFlyingParticles(void)
 {
     f32 scalar;
     s32 i;
@@ -1662,38 +1662,39 @@ void update_gray_flying_particles(void)
 
     for (i = 0; i < max_particles; i++)
     {
-        if (ptr_flying_particles_buf[i].unk00 > 0)
+        if (g_FlyingParticlesBuffer[i].unk00 > 0)
         {
-            ptr_flying_particles_buf[i].unk00 += (s32) scalar;
+            g_FlyingParticlesBuffer[i].unk00 += (s32) scalar;
 
-            ptr_flying_particles_buf[i].rotation.f[0] += ptr_flying_particles_buf[i].unk28 * scalar;
-            ptr_flying_particles_buf[i].rotation.f[1] += ptr_flying_particles_buf[i].unk2C * scalar;
-            ptr_flying_particles_buf[i].rotation.f[2] += ptr_flying_particles_buf[i].unk30 * scalar;
-            ptr_flying_particles_buf[i].position.f[0] += ptr_flying_particles_buf[i].unk1C * scalar;
-            ptr_flying_particles_buf[i].position.f[2] += ptr_flying_particles_buf[i].unk24 * scalar;
+            g_FlyingParticlesBuffer[i].rotation.f[0] += g_FlyingParticlesBuffer[i].rotation_drift.f[0] * scalar;
+            g_FlyingParticlesBuffer[i].rotation.f[1] += g_FlyingParticlesBuffer[i].rotation_drift.f[1] * scalar;
+            g_FlyingParticlesBuffer[i].rotation.f[2] += g_FlyingParticlesBuffer[i].rotation_drift.f[2] * scalar;
+            
+            g_FlyingParticlesBuffer[i].position.f[0] += g_FlyingParticlesBuffer[i].position_drift.f[0] * scalar;
+            g_FlyingParticlesBuffer[i].position.f[2] += g_FlyingParticlesBuffer[i].position_drift.f[2] * scalar;
 
             for (j = 0; j < (s32)scalar; j++)
             {
                 // initially sends particles flying up
-                ptr_flying_particles_buf[i].position.f[1] += ptr_flying_particles_buf[i].unk20;
+                g_FlyingParticlesBuffer[i].position.f[1] += g_FlyingParticlesBuffer[i].position_drift.f[1];
 
                 // applies gravity so particles fall down
-                if (ptr_flying_particles_buf[i].unk20 > -3.75f)
+                if (g_FlyingParticlesBuffer[i].position_drift.f[1] > -3.75f)
                 {
-                    ptr_flying_particles_buf[i].unk20 -= 0.2f;
+                    g_FlyingParticlesBuffer[i].position_drift.f[1] -= 0.2f;
                 }
             }
 
             // handles particles life time
-            if ((ptr_flying_particles_buf[i].unk00 >= 0x65) && (!(randomGetNext() & 0x1F) || (ptr_flying_particles_buf[i].unk00 == 0x12C)))
+            if ((g_FlyingParticlesBuffer[i].unk00 >= 0x65) && (!(randomGetNext() & 0x1F) || (g_FlyingParticlesBuffer[i].unk00 == 0x12C)))
             {
-                ptr_flying_particles_buf[i].unk00 = 0;
+                g_FlyingParticlesBuffer[i].unk00 = 0;
             }
 
             // position-related. deletes particles that are too low or too high.
-            if ((ptr_flying_particles_buf[i].position.f[1] < -30000.0f) || (ptr_flying_particles_buf[i].position.f[1] > 30000.0f))
+            if ((g_FlyingParticlesBuffer[i].position.f[1] < -30000.0f) || (g_FlyingParticlesBuffer[i].position.f[1] > 30000.0f))
             {
-                ptr_flying_particles_buf[i].unk00 = 0;
+                g_FlyingParticlesBuffer[i].unk00 = 0;
             }
         }
     }
@@ -1705,7 +1706,7 @@ extern Gfx globalDL_0xa50;
 /***
  * NTSC address 0x7F0A0034.
 */
-Gfx *sub_GAME_7F0A0034(Gfx *gdl)
+Gfx *explosionRenderFlyingParticles(Gfx *gdl)
 {
     Mtxf sp80;
     s32 i;
@@ -1720,7 +1721,7 @@ Gfx *sub_GAME_7F0A0034(Gfx *gdl)
     for (i = 0; i < max_particles; i++)
     {
         // HACK: regalloc has instructions backwards.
-        particles = (struct FlyingParticles *)(u32)ptr_flying_particles_buf + i;
+        particles = (struct FlyingParticles *)(u32)g_FlyingParticlesBuffer + i;
         
         if (particles->unk00 > 0)
         {
@@ -1738,7 +1739,7 @@ Gfx *sub_GAME_7F0A0034(Gfx *gdl)
                 matrix_4x4_f32_to_s32(&sp80, (Mtxf *)temp_v0_2);
 
                 gSPMatrix(gdl++, osVirtualToPhysical((void*)temp_v0_2), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-                gSPVertex(gdl++, osVirtualToPhysical((void*)ptr_flying_particles_buf[i].vertex_list), 4, 0)
+                gSPVertex(gdl++, osVirtualToPhysical((void*)g_FlyingParticlesBuffer[i].vertex_list), 4, 0)
                 gSP2Triangles(gdl++, 0, 1, 2, 0, 0, 2, 3, 0);
             }
         }
@@ -1753,7 +1754,7 @@ Gfx *sub_GAME_7F0A0034(Gfx *gdl)
 /***
  * NTSC address 0x7F0A027C.
 */
-void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2)
+void explosionScorchTick(struct coord3d *pos, f32 explosion_size, s16 room)
 {
     Vtx sp58;
     f32 sp54;
@@ -1763,90 +1764,90 @@ void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2)
     struct coord3d *temp_s0;
     u32 temp_hi;
 
-    sp58 = D_80040920;
+    sp58 = g_ScorchDefaultVertex;
 
     sp54 = RANDOMFRAC() * M_TAU_F;
     sp4B = 0xFF - (randomGetNext() % 80U);
 
-    temp_s0 = getRoomPositionByIndex((s32) arg2);
+    temp_s0 = getRoomPositionByIndex((s32) room);
 
     if (getPlayerCount() < 2)
     {
-        if (arg1 > 200.0f)
+        if (explosion_size > 200.0f)
         {
-            arg1 = 200.0f;
+            explosion_size = 200.0f;
         }
 
-        arg1 *= (0.8f + (0.2f * RANDOMFRAC()));
+        explosion_size *= (0.8f + (0.2f * RANDOMFRAC()));
         
-        arg0->f[0] = (arg0->f[0] * get_room_data_float1()) - temp_s0->f[0];
-        arg0->f[1] = (arg0->f[1] * get_room_data_float1()) - temp_s0->f[1];
-        arg0->f[2] = (arg0->f[2] * get_room_data_float1()) - temp_s0->f[2];
+        pos->f[0] = (pos->f[0] * get_room_data_float1()) - temp_s0->f[0];
+        pos->f[1] = (pos->f[1] * get_room_data_float1()) - temp_s0->f[1];
+        pos->f[2] = (pos->f[2] * get_room_data_float1()) - temp_s0->f[2];
 
-        arg1 *= get_room_data_float1();
+        explosion_size *= get_room_data_float1();
 
-        sp50 = cosf(sp54) * arg1;
-        sp4C = sinf(sp54) * arg1;
+        sp50 = cosf(sp54) * explosion_size;
+        sp4C = sinf(sp54) * explosion_size;
 
-        ptr_scorch_buf[numScorchEntries].roomid = arg2;
-        ptr_scorch_buf[numScorchEntries].unk04.f[0] = arg0->f[0];
-        ptr_scorch_buf[numScorchEntries].unk04.f[1] = arg0->f[1];
-        ptr_scorch_buf[numScorchEntries].unk04.f[2] = arg0->f[2];
-        ptr_scorch_buf[numScorchEntries].unk10 = arg1;
+        g_ScorchBuffer[g_NumScorchEntries].roomid = room;
+        g_ScorchBuffer[g_NumScorchEntries].pos.f[0] = pos->f[0];
+        g_ScorchBuffer[g_NumScorchEntries].pos.f[1] = pos->f[1];
+        g_ScorchBuffer[g_NumScorchEntries].pos.f[2] = pos->f[2];
+        g_ScorchBuffer[g_NumScorchEntries].explosion_size = explosion_size;
         
-        ptr_scorch_buf[numScorchEntries].vertex_list[0] = sp58;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1] = sp58;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2] = sp58;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3] = sp58;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0] = sp58;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1] = sp58;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2] = sp58;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3] = sp58;
 
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.ob[0] = (s16) (s32) (arg0->f[0] + sp50);
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.ob[1] = (s16) (s32) (arg0->f[1] + 0.5f);
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.ob[2] = (s16) (s32) (arg0->f[2] + sp4C);
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.tc[0] = 0;
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.tc[1] = genericimage->width << 5;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.ob[0] = (s16) (s32) (pos->f[0] + sp50);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.ob[1] = (s16) (s32) (pos->f[1] + 0.5f);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.ob[2] = (s16) (s32) (pos->f[2] + sp4C);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.tc[0] = 0;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.tc[1] = genericimage->width << 5;
         temp_hi = randomGetNext() % 50U;
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.cn[2] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.cn[1] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.cn[0] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[0].v.cn[3] = sp4B;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.cn[2] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.cn[1] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.cn[0] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[0].v.cn[3] = sp4B;
 
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.ob[0] = (s16) (s32) (arg0->f[0] + sp4C);
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.ob[1] = (s16) (s32) (arg0->f[1] + 0.5f);
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.ob[2] = (s16) (s32) (arg0->f[2] - sp50);
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.tc[0] = 0;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.tc[1] = 0;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.ob[0] = (s16) (s32) (pos->f[0] + sp4C);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.ob[1] = (s16) (s32) (pos->f[1] + 0.5f);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.ob[2] = (s16) (s32) (pos->f[2] - sp50);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.tc[0] = 0;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.tc[1] = 0;
         temp_hi = randomGetNext() % 50U;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.cn[2] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.cn[1] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.cn[0] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[1].v.cn[3] = sp4B;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.cn[2] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.cn[1] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.cn[0] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[1].v.cn[3] = sp4B;
         
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.ob[0] = (s16) (s32) (arg0->f[0] - sp50);
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.ob[1] = (s16) (s32) (arg0->f[1] + 0.5f);
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.ob[2] = (s16) (s32) (arg0->f[2] - sp4C);
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.tc[0] = genericimage->height << 5;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.tc[1] = 0;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.ob[0] = (s16) (s32) (pos->f[0] - sp50);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.ob[1] = (s16) (s32) (pos->f[1] + 0.5f);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.ob[2] = (s16) (s32) (pos->f[2] - sp4C);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.tc[0] = genericimage->height << 5;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.tc[1] = 0;
         temp_hi = randomGetNext() % 50U;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.cn[2] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.cn[1] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.cn[0] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[2].v.cn[3] = sp4B;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.cn[2] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.cn[1] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.cn[0] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[2].v.cn[3] = sp4B;
         
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.ob[0] = (s16) (s32) (arg0->f[0] - sp4C);
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.ob[1] = (s16) (s32) (arg0->f[1] + 0.5f);
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.ob[2] = (s16) (s32) (arg0->f[2] + sp50);
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.tc[0] = genericimage->width << 5;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.tc[1] = genericimage->height << 5;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.ob[0] = (s16) (s32) (pos->f[0] - sp4C);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.ob[1] = (s16) (s32) (pos->f[1] + 0.5f);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.ob[2] = (s16) (s32) (pos->f[2] + sp50);
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.tc[0] = genericimage->width << 5;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.tc[1] = genericimage->height << 5;
         temp_hi = randomGetNext() % 50U;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.cn[2] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.cn[1] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.cn[0] = (u8) temp_hi;
-        ptr_scorch_buf[numScorchEntries].vertex_list[3].v.cn[3] = sp4B;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.cn[2] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.cn[1] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.cn[0] = (u8) temp_hi;
+        g_ScorchBuffer[g_NumScorchEntries].vertex_list[3].v.cn[3] = sp4B;
 
-        numScorchEntries++;
-        if (numScorchEntries >= SCORCH_BUFFER_LEN)
+        g_NumScorchEntries++;
+        if (g_NumScorchEntries >= SCORCH_BUFFER_LEN)
         {
-            numScorchEntries = 0;
+            g_NumScorchEntries = 0;
         }
     }
 }
@@ -1857,7 +1858,7 @@ void sub_GAME_7F0A027C(struct coord3d *arg0, f32 arg1, s16 arg2)
 /**
  * Address 0x7F0A0AB4.
 */
-Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
+Gfx *explosionRenderScorchBuffer(Gfx *arg0)
 {
     //temp_t6 = arg0;
     s32 i;
@@ -1877,12 +1878,12 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
 
         for (i=0; i<20; i++)
         {
-            if (ptr_scorch_buf[i].roomid >= 0 && getROOMID_isRendered(ptr_scorch_buf[i].roomid))
+            if (g_ScorchBuffer[i].roomid >= 0 && getROOMID_isRendered(g_ScorchBuffer[i].roomid))
             {
-                if (phi_s3 != ptr_scorch_buf[i].roomid)
+                if (phi_s3 != g_ScorchBuffer[i].roomid)
                 {
-                    phi_s3 = ptr_scorch_buf[i].roomid;
-                    arg0 = updateDisplayListWithRoomMatrix(arg0, ptr_scorch_buf[i].roomid);
+                    phi_s3 = g_ScorchBuffer[i].roomid;
+                    arg0 = updateDisplayListWithRoomMatrix(arg0, g_ScorchBuffer[i].roomid);
                 }
 
                 /**
@@ -1893,7 +1894,7 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
                  * param v0: Starting index in vertex buffer where vertices are to be loaded
                  * gSPVertex(Gfx *gdl, Vtx *v, u32 n, u32 v0)
                 */
-                gSPVertex(arg0++, osVirtualToPhysical((void*)ptr_scorch_buf[i].vertex_list), 4, 0);
+                gSPVertex(arg0++, osVirtualToPhysical((void*)g_ScorchBuffer[i].vertex_list), 4, 0);
                 gSP2Triangles(arg0++,
                                 0, 1, 2, 0,
                                 0, 2, 3, 0);
@@ -1910,45 +1911,46 @@ Gfx *sub_GAME_7F0A0AB4(Gfx *arg0)
 
 
 
-s32 sub_GAME_7F0A0C74(f32 arg0)
+s32 explosionRoundFloat(f32 arg0)
 {
     if (arg0 >= 0.0f)
     {
         return (s32) (arg0 + 0.5f);
     }
+
     return (s32) (arg0 - 0.5f);
 }
 
 
 
-void sub_GAME_7F0A0CCC(PropRecord* arg0, s8 arg1)
+void explosionClearBulletImpactRoomByFlag(PropRecord* arg0, s8 arg1)
 {
     s32 i;
     for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
     {
-        if ((arg0 == ptr_bullet_impact_buf[i].unk48) && (arg1 == ptr_bullet_impact_buf[i].unk4D))
+        if ((arg0 == g_BulletImpactBuffer[i].prop) && (arg1 == g_BulletImpactBuffer[i].room_clear_flag))
         {
-            ptr_bullet_impact_buf[i].unk00 = -1;
+            g_BulletImpactBuffer[i].room = -1;
         }
     }
 }
 
 
 
-void sub_GAME_7F0A0D90(PropRecord* arg0)
+void explosionClearBulletImpactRoom(PropRecord* arg0)
 {
     s32 i;
     for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
     {
-        if ((arg0 == ptr_bullet_impact_buf[i].unk48) && (D_8004080C[ptr_bullet_impact_buf[i].unk02].unk1 == 2))
+        if ((arg0 == g_BulletImpactBuffer[i].prop) && (g_ImpactTypes[g_BulletImpactBuffer[i].impact_type].unk1 == 2))
         {
-            ptr_bullet_impact_buf[i].unk00 = -1;
+            g_BulletImpactBuffer[i].room = -1;
         }
     }
 }
 
 
-void sub_GAME_7F0A0E98(s32 arg0)
+void explosionSetBulletImpactAlpha(s32 arg0)
 {
     u32 val;
     s32 i;
@@ -1956,10 +1958,10 @@ void sub_GAME_7F0A0E98(s32 arg0)
     {
         val = (u32) (((f32) i / 10.0f) * 255.0f);
 
-        ptr_bullet_impact_buf[arg0].vertex_list[3].v.cn[3] = val; // alpha
-        ptr_bullet_impact_buf[arg0].vertex_list[2].v.cn[3] = val; // alpha
-        ptr_bullet_impact_buf[arg0].vertex_list[1].v.cn[3] = val; // alpha
-        ptr_bullet_impact_buf[arg0].vertex_list[0].v.cn[3] = val; // alpha
+        g_BulletImpactBuffer[arg0].vertex_list[3].v.cn[3] = val; // alpha
+        g_BulletImpactBuffer[arg0].vertex_list[2].v.cn[3] = val; // alpha
+        g_BulletImpactBuffer[arg0].vertex_list[1].v.cn[3] = val; // alpha
+        g_BulletImpactBuffer[arg0].vertex_list[0].v.cn[3] = val; // alpha
 
         if (++arg0 >= BULLET_IMPACT_BUFFER_LEN)
         {
@@ -1972,7 +1974,7 @@ void sub_GAME_7F0A0E98(s32 arg0)
 /***
  * NTSC address 0x7F0A108C.
 */
-void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16 arg3, PropRecord *arg4, s8 arg5, s8 arg6)
+void explosionCreateBulletImpact(struct coord3d *pos, struct coord3d *arg1, s16 impact_type, s16 room, PropRecord *prop, s8 model_render_pos_index, s8 room_clear_flag)
 {
     Vtx spE0;
     f32 spDC;
@@ -2004,18 +2006,18 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
     u8 sp62;
     u8 sp61;
 
-    spE0 = D_80040930;
+    spE0 = g_BulletImpactDefaultVertex;
 
     if (cheatIsActive(CHEAT_PAINTBALL))
     {
-        arg2 = 0x10;
+        impact_type = 0x10;
     }
 
-    spA0.f[0] = arg0->f[0];
-    spA0.f[1] = arg0->f[1];
-    spA0.f[2] = arg0->f[2];
+    spA0.f[0] = pos->f[0];
+    spA0.f[1] = pos->f[1];
+    spA0.f[2] = pos->f[2];
 
-    sp50 = &D_8004080C[arg2];
+    sp50 = &g_ImpactTypes[impact_type];
 
     sp9C = sp50->width;
     sp98 = sp50->height;
@@ -2048,10 +2050,10 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
         spC4 = temp_f12;
     }
 
-    if (arg4 != NULL)
+    if (prop != NULL)
     {
-        temp_s0 = arg4->obj;
-        temp_s1 = &temp_s0->model->render_pos[arg5];
+        temp_s0 = prop->obj;
+        temp_s1 = &temp_s0->model->render_pos[model_render_pos_index];
         
         sp78.f[0] = spC4;
         sp78.f[1] = 0.0f;
@@ -2081,7 +2083,7 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
     }
     else
     {
-        temp_s0_2 = getRoomPositionByIndex((s32) arg3);
+        temp_s0_2 = getRoomPositionByIndex((s32) room);
         spA0.f[0] = (spA0.f[0] * get_room_data_float1()) - temp_s0_2->f[0];
         spA0.f[1] = (spA0.f[1] * get_room_data_float1()) - temp_s0_2->f[1];
         spA0.f[2] = (spA0.f[2] * get_room_data_float1()) - temp_s0_2->f[2];
@@ -2089,40 +2091,40 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
         sp98 *= get_room_data_float1();
     }
 
-    ptr_bullet_impact_buf[numImpactEntries].unk48 = arg4;
-    ptr_bullet_impact_buf[numImpactEntries].unk4C = arg5;
-    ptr_bullet_impact_buf[numImpactEntries].unk4D = arg6;
-    ptr_bullet_impact_buf[numImpactEntries].unk00 = arg3;
-    ptr_bullet_impact_buf[numImpactEntries].unk02 = arg2;
+    g_BulletImpactBuffer[g_NumImpactEntries].prop = prop;
+    g_BulletImpactBuffer[g_NumImpactEntries].model_render_pos_index = model_render_pos_index;
+    g_BulletImpactBuffer[g_NumImpactEntries].room_clear_flag = room_clear_flag;
+    g_BulletImpactBuffer[g_NumImpactEntries].room = room;
+    g_BulletImpactBuffer[g_NumImpactEntries].impact_type = impact_type;
 
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0] = spE0;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1] = spE0;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2] = spE0;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3] = spE0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0] = spE0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1] = spE0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2] = spE0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3] = spE0;
 
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0].v.ob[0] = sub_GAME_7F0A0C74((spA0.f[0] - (sp9C * spC4)) - (sp98 * spB8));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0].v.ob[1] = sub_GAME_7F0A0C74((spA0.f[1] - zero) - (sp98 * spB4));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0].v.ob[2] = sub_GAME_7F0A0C74((spA0.f[2] - (sp9C * spBC)) - (sp98 * spB0));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0].v.tc[0] = 0;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[0].v.tc[1] = impactimages[arg2].height << 5;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0].v.ob[0] = explosionRoundFloat((spA0.f[0] - (sp9C * spC4)) - (sp98 * spB8));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0].v.ob[1] = explosionRoundFloat((spA0.f[1] - zero) - (sp98 * spB4));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0].v.ob[2] = explosionRoundFloat((spA0.f[2] - (sp9C * spBC)) - (sp98 * spB0));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0].v.tc[0] = 0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[0].v.tc[1] = impactimages[impact_type].height << 5;
     
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1].v.ob[0] = sub_GAME_7F0A0C74((spA0.f[0] - (sp9C * spC4)) + (sp98 * spB8));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1].v.ob[1] = sub_GAME_7F0A0C74((spA0.f[1] - zero) + (sp98 * spB4));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1].v.ob[2] = sub_GAME_7F0A0C74((spA0.f[2] - (sp9C * spBC)) + (sp98 * spB0));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1].v.tc[0] = 0;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[1].v.tc[1] = 0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1].v.ob[0] = explosionRoundFloat((spA0.f[0] - (sp9C * spC4)) + (sp98 * spB8));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1].v.ob[1] = explosionRoundFloat((spA0.f[1] - zero) + (sp98 * spB4));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1].v.ob[2] = explosionRoundFloat((spA0.f[2] - (sp9C * spBC)) + (sp98 * spB0));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1].v.tc[0] = 0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[1].v.tc[1] = 0;
     
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2].v.ob[0] = sub_GAME_7F0A0C74(spA0.f[0] + (sp9C * spC4) + (sp98 * spB8));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2].v.ob[1] = sub_GAME_7F0A0C74(spA0.f[1] + zero + (sp98 * spB4));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2].v.ob[2] = sub_GAME_7F0A0C74(spA0.f[2] + (sp9C * spBC) + (sp98 * spB0));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2].v.tc[0] = impactimages[arg2].width << 5;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[2].v.tc[1] = 0;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2].v.ob[0] = explosionRoundFloat(spA0.f[0] + (sp9C * spC4) + (sp98 * spB8));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2].v.ob[1] = explosionRoundFloat(spA0.f[1] + zero + (sp98 * spB4));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2].v.ob[2] = explosionRoundFloat(spA0.f[2] + (sp9C * spBC) + (sp98 * spB0));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2].v.tc[0] = impactimages[impact_type].width << 5;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[2].v.tc[1] = 0;
     
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3].v.ob[0] = sub_GAME_7F0A0C74((spA0.f[0] + (sp9C * spC4)) - (sp98 * spB8));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3].v.ob[1] = sub_GAME_7F0A0C74((spA0.f[1] + zero) - (sp98 * spB4));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3].v.ob[2] = sub_GAME_7F0A0C74((spA0.f[2] + (sp9C * spBC)) - (sp98 * spB0));
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3].v.tc[0] = impactimages[arg2].width << 5;
-    ptr_bullet_impact_buf[numImpactEntries].vertex_list[3].v.tc[1] = impactimages[arg2].height << 5;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.ob[0] = explosionRoundFloat((spA0.f[0] + (sp9C * spC4)) - (sp98 * spB8));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.ob[1] = explosionRoundFloat((spA0.f[1] + zero) - (sp98 * spB4));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.ob[2] = explosionRoundFloat((spA0.f[2] + (sp9C * spBC)) - (sp98 * spB0));
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.tc[0] = impactimages[impact_type].width << 5;
+    g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.tc[1] = impactimages[impact_type].height << 5;
     
     for (var_s1 = 0; var_s1 < 4; var_s1++)
     {
@@ -2153,21 +2155,21 @@ void sub_GAME_7F0A108C(struct coord3d *arg0, struct coord3d *arg1, s16 arg2, s16
             break;
         }
 
-        ptr_bullet_impact_buf[numImpactEntries].vertex_list[var_s1].v.cn[0] = var_s0;
-        ptr_bullet_impact_buf[numImpactEntries].vertex_list[var_s1].v.cn[1] = sp62;
-        ptr_bullet_impact_buf[numImpactEntries].vertex_list[var_s1].v.cn[2] = sp61;
-        ptr_bullet_impact_buf[numImpactEntries].vertex_list[var_s1].v.cn[3] = 0xff; // alpha
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[0] = var_s0;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[1] = sp62;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[2] = sp61;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[3] = 0xff; // alpha
     }
 
-    numImpactEntries++;
-    if (numImpactEntries >= BULLET_IMPACT_BUFFER_LEN)
+    g_NumImpactEntries++;
+    if (g_NumImpactEntries >= BULLET_IMPACT_BUFFER_LEN)
     {
-        numImpactEntries = 0;
+        g_NumImpactEntries = 0;
     }
     
-    sub_GAME_7F0A0E98(numImpactEntries);
+    explosionSetBulletImpactAlpha(g_NumImpactEntries);
     
-    ptr_bullet_impact_buf[numImpactEntries].unk00 = -1;
+    g_BulletImpactBuffer[g_NumImpactEntries].room = -1;
 }
 
 
@@ -2192,7 +2194,7 @@ Gfx *explosionRenderBulletImpactOnProp(Gfx *gdl, PropRecord *arg1, s32 arg2)
     s32 padding3;
 
     s16 var_s5;
-    s32 temp_s3;
+    s32 impact_type;
     s32 var_v0;
 
     var_s5 = -1;
@@ -2210,21 +2212,21 @@ Gfx *explosionRenderBulletImpactOnProp(Gfx *gdl, PropRecord *arg1, s32 arg2)
 
     for (i = 0; i < BULLET_IMPACT_BUFFER_LEN; i++)
     {
-        if (arg1 == ptr_bullet_impact_buf[i].unk48)
+        if (arg1 == g_BulletImpactBuffer[i].prop)
         {
-            if (ptr_bullet_impact_buf[i].unk00 >= 0)
+            if (g_BulletImpactBuffer[i].room >= 0)
             {
-                if (arg1 || getROOMID_isRendered(ptr_bullet_impact_buf[i].unk00))
+                if (arg1 || getROOMID_isRendered(g_BulletImpactBuffer[i].room))
                 {
-                    temp_s3 = ptr_bullet_impact_buf[i].unk02;
+                    impact_type = g_BulletImpactBuffer[i].impact_type;
                     
                     if (arg2)
                     {
-                        var_v0 = D_8004080C[temp_s3].unk2 < 2 && D_8004080C[temp_s3].unk1 == 2;
+                        var_v0 = g_ImpactTypes[impact_type].unk2 < 2 && g_ImpactTypes[impact_type].unk1 == 2;
                     }
                     else
                     {
-                        var_v0 = (D_8004080C[temp_s3].unk2 >= 2) || D_8004080C[temp_s3].unk1 != 2;
+                        var_v0 = (g_ImpactTypes[impact_type].unk2 >= 2) || g_ImpactTypes[impact_type].unk1 != 2;
                     }
     
                     if (var_v0)
@@ -2233,29 +2235,29 @@ Gfx *explosionRenderBulletImpactOnProp(Gfx *gdl, PropRecord *arg1, s32 arg2)
     
                         if (arg1 != NULL)
                         {
-                            if (var_s5 != ptr_bullet_impact_buf[i].unk4C)
+                            if (var_s5 != g_BulletImpactBuffer[i].model_render_pos_index)
                             {
-                                render_pos = &sp4C->model->render_pos[ptr_bullet_impact_buf[i].unk4C];
-                                var_s5 = ptr_bullet_impact_buf[i].unk4C;
+                                render_pos = &sp4C->model->render_pos[g_BulletImpactBuffer[i].model_render_pos_index];
+                                var_s5 = g_BulletImpactBuffer[i].model_render_pos_index;
                                 gSPMatrix(gdl++, osVirtualToPhysical(render_pos), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                             }
                         }
                         else
                         {
-                            if (var_s5 != ptr_bullet_impact_buf[i].unk00)
+                            if (var_s5 != g_BulletImpactBuffer[i].room)
                             {
-                                var_s5 = ptr_bullet_impact_buf[i].unk00;
-                                gdl = updateDisplayListWithRoomMatrix(gdl, ptr_bullet_impact_buf[i].unk00);
+                                var_s5 = g_BulletImpactBuffer[i].room;
+                                gdl = updateDisplayListWithRoomMatrix(gdl, g_BulletImpactBuffer[i].room);
                             }
                         }
     
-                        if (sp48 != temp_s3)
+                        if (sp48 != impact_type)
                         {
-                            texSelect(&gdl, &impactimages[temp_s3], D_8004080C[temp_s3].unk1, D_8004080C[temp_s3].unk2, 2U);
-                            sp48 = temp_s3;
+                            texSelect(&gdl, &impactimages[impact_type], g_ImpactTypes[impact_type].unk1, g_ImpactTypes[impact_type].unk2, 2U);
+                            sp48 = impact_type;
                         }
     
-                        gSPVertex(gdl++, osVirtualToPhysical(ptr_bullet_impact_buf[i].vertex_list), 4, 0);
+                        gSPVertex(gdl++, osVirtualToPhysical(g_BulletImpactBuffer[i].vertex_list), 4, 0);
                         gSP2Triangles(gdl++, 0, 1, 2, 0, 0, 2, 3, 0);
                     }
                 }
@@ -2277,7 +2279,7 @@ Gfx *explosionRenderBulletImpactOnProp(Gfx *gdl, PropRecord *arg1, s32 arg2)
 
 
 
-Gfx * sub_GAME_7F0A1D78(Gfx *arg0)
+Gfx * explosionCallRenderBulletImpactOnProp(Gfx *arg0)
 {
     return explosionRenderBulletImpactOnProp(arg0, NULL, 0);
 }

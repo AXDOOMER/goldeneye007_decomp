@@ -73,10 +73,10 @@ struct ExplosionPart
 
 struct Explosion {
     PropRecord *prop; // maybe explosion prop
-    PropRecord *unk04; // maybe source prop (e.g., crate)
+    PropRecord *source; // maybe source prop (e.g., crate)
     struct ExplosionPart parts[EXPLOSION_PARTS_LEN];
     s16 age; // some kind of current tick + total elapsed?
-    s16 unk3CA; // total elapsed?
+    s16 unk3CA; // total elapsed? Or "next tick" age?
 
     s8 explosion_type;
     s8 unk3CD;
@@ -112,75 +112,70 @@ struct Scorch {
     u8 unk02;
     s8 unk03;
 
-    struct coord3d unk04;
-    f32 unk10;
+    struct coord3d pos;
+    f32 explosion_size;
     struct Model *model;
 
     Vtx vertex_list[4];
 };
 
 struct BulletImpact {
-    s16 unk00;
-    s16 unk02;
+    s16 room;
+    s16 impact_type;
     u32 unk04;
     Vtx vertex_list[4];
-    PropRecord* unk48;
-    s8 unk4C;
-    s8 unk4D;
+    PropRecord* prop;
+    s8 model_render_pos_index;
+    s8 room_clear_flag;
     s16 unk4E;
 };
 
 struct FlyingParticles {
     s32 unk00;
 
-    struct coord3d position;
-
-    struct coord3d rotation;
-
-    // coord3d?
-    f32 unk1C;
-    f32 unk20;
-    f32 unk24;
-
-    // coord3d?
-    f32 unk28;
-    f32 unk2C;
-    f32 unk30;
+    struct coord3d position; // 0x04
+    struct coord3d rotation; // 0x10
+    struct coord3d position_drift; // 0x1c
+    struct coord3d rotation_drift; // 0x28
 
     s32 unk34;
 
     Vtx vertex_list[4];
 };
 
-extern f32 D_80040178;
+extern f32 g_SpExplosionDamageMult;
 extern Mtx dword_CODE_bss_8007A100;
-extern struct Smoke *ptr_smoke_buf;
-extern struct Explosion *ptr_explosion_buf;
+extern struct Smoke *g_SmokeBuffer;
+extern struct Explosion *g_ExplosionBuffer;
 extern s32 max_particles;
-extern struct FlyingParticles *ptr_flying_particles_buf;
-extern struct Scorch *ptr_scorch_buf;
-extern struct BulletImpact *ptr_bullet_impact_buf;
-extern s32 numExplosionEntries;
-extern s32 numSmokeEntries;
-extern s32 numParticleEntries;
-extern s32 numScorchEntries;
-extern s32 numImpactEntries;
+extern struct FlyingParticles *g_FlyingParticlesBuffer;
+extern struct Scorch *g_ScorchBuffer;
+extern struct BulletImpact *g_BulletImpactBuffer;
+extern s32 g_NumExplosionEntries;
+extern s32 g_NumSmokeEntries;
+extern s32 g_NumParticleEntries;
+extern s32 g_NumScorchEntries;
+extern s32 g_NumImpactEntries;
 
 
 
-s32 sub_GAME_7F09E8AC(PropRecord *arg0);
+s32 explosionSmokeTick(PropRecord *arg0);
 void sub_GAME_7F09FD3C(void);
-Gfx * sub_GAME_7F0A0034(Gfx *arg0);
-Gfx * sub_GAME_7F0A1D78(Gfx *arg0);
-Gfx *sub_GAME_7F0A0AB4(Gfx *arg0);
-Gfx *unk09c250RenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha);
-Gfx *unk09c250RenderPropSmoke(PropRecord *arg0, Gfx *arg1, s32 withalpha);
+Gfx * explosionRenderFlyingParticles(Gfx *arg0);
+Gfx * explosionCallRenderBulletImpactOnProp(Gfx *arg0);
+Gfx *explosionRenderScorchBuffer(Gfx *arg0);
+Gfx *explosionRenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha);
+Gfx *explosionRenderPropSmoke(PropRecord *arg0, Gfx *arg1, s32 withalpha);
 
 
 Gfx *explosionRenderBulletImpactOnProp(Gfx *arg0, PropRecord *arg1, s32 arg2);
 
-void sub_GAME_7F09E700(coord3d *pos, StandTile *stan, s16 arg2, u8 *rooms, s32 arg4);
-void update_gray_flying_particles(void);
+void explosionCreateSmoke(coord3d *pos, StandTile *stan, s16 smoke_type, u8 *rooms, s32 flags);
+void explosionUpdateFlyingParticles(void);
+u8 explosionChrpropSmokeTick(PropRecord* prop);
+u8 explosionChrpropExplosionTick(PropRecord* prop);
+void explosionScreenShake(coord3d* source_pos, coord3d* source_mag, coord3d* result);
+void explosionCreateBulletImpact(struct coord3d *pos, struct coord3d *arg1, s16 impact_type, s16 room, PropRecord *prop, s8 model_render_pos_index, s8 room_clear_flag);
 
 #if defined(VERSION_JP) || defined(VERSION_EU)
 s32 explosionCreate(PropRecord *arg0, struct coord3d *target_pos, StandTile *target_stan, s16 /* enum EXPLOSION_DEF */ explosion_type, s32 arg4, s32 player, u8 *rooms, s32 arg7);

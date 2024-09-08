@@ -1065,7 +1065,7 @@ Gfx* lvlRender(Gfx* DL)
             sub_GAME_7F0A4824(&DL, 1);
 #endif
             DL = sub_GAME_7F0A2C44(DL);
-            DL = sub_GAME_7F0A0034(DL);
+            DL = explosionRenderFlyingParticles(DL);
 
             if (
 
@@ -1132,7 +1132,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiAccuracyModifier = DEFAULT_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = (DEFAULT_AGENT_AI_DAMAGE_MODIFIER * damageMultiplier);
         g_AiHealthModifier = 2.0f;
-        D_80040178 = (f32) (0.25f * damageMultiplier);
+        g_SpExplosionDamageMult = (f32) (0.25f * damageMultiplier);
         difficulty = 1.5f;
         g_SoloAmmoMultiplier = DEFAULT_AGENT_SOLO_AMMO_MULTIPLIER;
         g_AiReactionSpeed = DEFAULT_AGENT_AI_REACTION_SPEED;
@@ -1147,7 +1147,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiAccuracyModifier = DEFAULT_SECRET_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_SECRET_AGENT_AI_DAMAGE_MODIFIER;
         g_AiHealthModifier = 1.0f;
-        D_80040178 = 0.75f;
+        g_SpExplosionDamageMult = 0.75f;
 
 #if defined(BUGFIX_R1)
         if (j_text_trigger)
@@ -1176,7 +1176,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiAccuracyModifier = DEFAULT_00_AGENT_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_00_AGENT_AI_DAMAGE_MODIFIER;
         g_AiHealthModifier = 1.0f;
-        D_80040178 = 1.0f;
+        g_SpExplosionDamageMult = 1.0f;
 
 #if defined(BUGFIX_R1)
         if (j_text_trigger)
@@ -1205,7 +1205,7 @@ void lvlSetMultipliersForDifficulty(void)
         g_AiAccuracyModifier = DEFAULT_007_AI_ACCURACY_MODIFIER;
         g_AiDamageModifier = DEFAULT_007_AI_DAMAGE_MODIFIER;
         g_AiHealthModifier = 1.0f;
-        D_80040178 = 1.0f;
+        g_SpExplosionDamageMult = 1.0f;
         difficulty = 1.0f;
         g_SoloAmmoMultiplier = DEFAULT_007_SOLO_AMMO_MULTIPLIER;
         g_AiReactionSpeed = DEFAULT_007_AI_REACTION_SPEED;
@@ -1549,7 +1549,7 @@ void lvlManageMpGame(void)
         update_bullet_sparks_and_dust_clouds();
         update_bullet_casings();
         update_broken_windows();
-        update_gray_flying_particles();
+        explosionUpdateFlyingParticles();
         handle_mp_respawn_and_some_things();
         reset_all_music_slots();
         langTick();
@@ -2290,7 +2290,7 @@ glabel lvlManageMpGame
 /* 0F3EC0 7F0BF390 00000000 */   nop
 /* 0F3EC4 7F0BF394 0FC28A35 */  jal   update_broken_windows
 /* 0F3EC8 7F0BF398 00000000 */   nop
-/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   update_gray_flying_particles
+/* 0F3ECC 7F0BF39C 0FC27F4F */  jal   explosionUpdateFlyingParticles
 /* 0F3ED0 7F0BF3A0 00000000 */   nop
 /* 0F3ED4 7F0BF3A4 0FC0F192 */  jal   handle_mp_respawn_and_some_things
 /* 0F3ED8 7F0BF3A8 00000000 */   nop
@@ -3181,7 +3181,7 @@ glabel lvlManageMpGame
 /* 0F4B38 7F0BFFC8 00000000 */   nop
 /* 0F4B3C 7F0BFFCC 0FC28D1D */  jal   update_broken_windows
 /* 0F4B40 7F0BFFD0 00000000 */   nop
-/* 0F4B44 7F0BFFD4 0FC28238 */  jal   update_gray_flying_particles
+/* 0F4B44 7F0BFFD4 0FC28238 */  jal   explosionUpdateFlyingParticles
 /* 0F4B48 7F0BFFD8 00000000 */   nop
 /* 0F4B4C 7F0BFFDC 0FC0F252 */  jal   handle_mp_respawn_and_some_things
 /* 0F4B50 7F0BFFE0 00000000 */   nop
@@ -4078,7 +4078,7 @@ glabel lvlManageMpGame
 /* 0F11C4 7F0BE7D4 00000000 */   nop
 /* 0F11C8 7F0BE7D8 0FC28785 */  jal   update_broken_windows
 /* 0F11CC 7F0BE7DC 00000000 */   nop
-/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   update_gray_flying_particles
+/* 0F11D0 7F0BE7E0 0FC27CA0 */  jal   explosionUpdateFlyingParticles
 /* 0F11D4 7F0BE7E4 00000000 */   nop
 /* 0F11D8 7F0BE7E8 0FC0F1C2 */  jal   handle_mp_respawn_and_some_things
 /* 0F11DC 7F0BE7EC 00000000 */   nop

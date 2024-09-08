@@ -443,11 +443,11 @@ Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
     }
     else if (type == PROP_TYPE_EXPLOSION)
     {
-        gdl = unk09c250RenderPropExplosion(prop, gdl, withalpha);
+        gdl = explosionRenderPropExplosion(prop, gdl, withalpha);
     }
     else if (type == PROP_TYPE_SMOKE)
     {
-        gdl = unk09c250RenderPropSmoke(prop, gdl, withalpha);
+        gdl = explosionRenderPropSmoke(prop, gdl, withalpha);
     }
     else if (type == PROP_TYPE_VIEWER)
     {
@@ -1896,7 +1896,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 070368 7F03B838 AFA00010 */  sw    $zero, 0x10($sp)
 /* 07036C 7F03B83C 27A40548 */  addiu $a0, $sp, 0x548
 /* 070370 7F03B840 27A5051C */  addiu $a1, $sp, 0x51c
-/* 070374 7F03B844 0FC28423 */  jal   sub_GAME_7F0A108C
+/* 070374 7F03B844 0FC28423 */  jal   explosionCreateBulletImpact
 /* 070378 7F03B848 87A70546 */   lh    $a3, 0x546($sp)
 .L7F03B84C:
 /* 07037C 7F03B84C 0FC2ED8C */  jal   check_if_imageID_is_light
@@ -2881,9 +2881,9 @@ void handle_mp_respawn_and_some_things(void) {
                     // 0x04 is chr, obj, door, weapon
                 }
             } else if (prop_type == PROP_TYPE_EXPLOSION) {
-                var_s2 = sub_GAME_7F09CEE8(prop_s1); // explosions related
+                var_s2 = explosionTick(prop_s1); // explosions related
             } else if (prop_type == PROP_TYPE_SMOKE) {
-                var_s2 = sub_GAME_7F09E8AC(prop_s1); // smoke related
+                var_s2 = explosionSmokeTick(prop_s1); // smoke related
             } else if (prop_type == PROP_TYPE_VIEWER) {
                 sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xA54); // function receives ChrRecord_f180
                 sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xDFC); // function receives ChrRecord_f180
@@ -3114,7 +3114,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C90C:
 /* 07143C 7F03C90C 54410006 */  bnel  $v0, $at, .L7F03C928
 /* 071440 7F03C910 24010008 */   li    $at, 8
-/* 071444 7F03C914 0FC273BA */  jal   sub_GAME_7F09CEE8
+/* 071444 7F03C914 0FC273BA */  jal   explosionTick
 /* 071448 7F03C918 02202025 */   move  $a0, $s1
 /* 07144C 7F03C91C 10000028 */  b     .L7F03C9C0
 /* 071450 7F03C920 00409025 */   move  $s2, $v0
@@ -3122,7 +3122,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C928:
 /* 071458 7F03C928 54410006 */  bnel  $v0, $at, .L7F03C944
 /* 07145C 7F03C92C 24010006 */   li    $at, 6
-/* 071460 7F03C930 0FC27A2B */  jal   sub_GAME_7F09E8AC
+/* 071460 7F03C930 0FC27A2B */  jal   explosionSmokeTick
 /* 071464 7F03C934 02202025 */   move  $a0, $s1
 /* 071468 7F03C938 10000021 */  b     .L7F03C9C0
 /* 07146C 7F03C93C 00409025 */   move  $s2, $v0
@@ -3397,7 +3397,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C9CC:
 /* 06F3BC 7F03C9CC 54410006 */  bnel  $v0, $at, .L7F03C9E8
 /* 06F3C0 7F03C9D0 24010008 */   li    $at, 8
-/* 06F3C4 7F03C9D4 0FC2710B */  jal   sub_GAME_7F09CEE8
+/* 06F3C4 7F03C9D4 0FC2710B */  jal   explosionTick
 /* 06F3C8 7F03C9D8 02202025 */   move  $a0, $s1
 /* 06F3CC 7F03C9DC 10000028 */  b     .L7F03CA80
 /* 06F3D0 7F03C9E0 00409025 */   move  $s2, $v0
@@ -3405,7 +3405,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C9E8:
 /* 06F3D8 7F03C9E8 54410006 */  bnel  $v0, $at, .L7F03CA04
 /* 06F3DC 7F03C9EC 24010006 */   li    $at, 6
-/* 06F3E0 7F03C9F0 0FC2777C */  jal   sub_GAME_7F09E8AC
+/* 06F3E0 7F03C9F0 0FC2777C */  jal   explosionSmokeTick
 /* 06F3E4 7F03C9F4 02202025 */   move  $a0, $s1
 /* 06F3E8 7F03C9F8 10000021 */  b     .L7F03CA80
 /* 06F3EC 7F03C9FC 00409025 */   move  $s2, $v0
@@ -3512,11 +3512,11 @@ void determing_type_of_object_and_detection(void)
         }
         else if (prop->type == PROP_TYPE_EXPLOSION)
         {
-            tickop = explosionTick(prop);
+            tickop = explosionChrpropExplosionTick(prop);
         }
         else if (prop->type == PROP_TYPE_SMOKE)
         {
-            tickop = smokeTick(prop);
+            tickop = explosionChrpropSmokeTick(prop);
         }
         else if (prop->type == PROP_TYPE_VIEWER)
         {
