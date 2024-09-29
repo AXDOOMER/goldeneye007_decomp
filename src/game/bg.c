@@ -7013,7 +7013,7 @@ bool bgTestLineIntersectsBbox(coord3d *arg0, coord3d *arg1, s32 *arg2, s32 *arg3
 
 
 #ifdef NONMATCHING
-?32 sub_GAME_7F0B7010(void *arg0, s32 arg1, ?32 arg2, void *arg3, s32 arg4, void *arg5) {
+?32 bgTestLineIntersectionInRoom(void *arg0, s32 arg1, ?32 arg2, void *arg3, s32 arg4, void *arg5) {
     s32 sp54;
     void *sp64;
     s32 sp80;
@@ -7159,7 +7159,7 @@ loop_5:
                 {
                     // Node 19
                     phi_t0_2 = &spA8;
-                    if (sub_GAME_7F092890((temp_s1 + (spE4 * 0x10)), (temp_s1 + (spE8 * 0x10)), (temp_s1 + (spEC * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
+                    if (intersectLineTriangle((temp_s1 + (spE4 * 0x10)), (temp_s1 + (spE8 * 0x10)), (temp_s1 + (spEC * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
                     {
                         // Node 20
                         temp_v0_4 = phi_s3;
@@ -7343,7 +7343,7 @@ loop_42:
                     if (bgTestLineIntersectsBbox(arg0, arg2, &sp8C, &sp80) != 0)
                     {
                         // Node 56
-                        if (sub_GAME_7F092890((temp_s1 + (sp9C * 0x10)), (temp_s1 + (spA0 * 0x10)), (temp_s1 + (spA4 * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
+                        if (intersectLineTriangle((temp_s1 + (sp9C * 0x10)), (temp_s1 + (spA0 * 0x10)), (temp_s1 + (spA4 * 0x10)), ((sp54 + ptr_bgdata_room_fileposition_list) + 0xc), arg0, arg1, arg2, &spF8) != 0)
                         {
                             // Node 57
                             temp_v0_6 = phi_s3;
@@ -7442,7 +7442,7 @@ loop_59:
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B7010
+glabel bgTestLineIntersectionInRoom
 /* 0EBB40 7F0B7010 27BDFEC0 */  addiu $sp, $sp, -0x140
 /* 0EBB44 7F0B7014 8FAE0150 */  lw    $t6, 0x150($sp)
 /* 0EBB48 7F0B7018 3C188004 */  lui   $t8, %hi(array_room_info) 
@@ -7690,7 +7690,7 @@ glabel sub_GAME_7F0B7010
 /* 0EBED8 7F0B73A8 022F2821 */  addu  $a1, $s1, $t7
 /* 0EBEDC 7F0B73AC AFB80018 */  sw    $t8, 0x18($sp)
 /* 0EBEE0 7F0B73B0 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0EBEE4 7F0B73B4 0FC24A24 */  jal   sub_GAME_7F092890
+/* 0EBEE4 7F0B73B4 0FC24A24 */  jal   intersectLineTriangle
 /* 0EBEE8 7F0B73B8 AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0EBEEC 7F0B73BC 1040019A */  beqz  $v0, .L7F0B7A28
 /* 0EBEF0 7F0B73C0 27A800A8 */   addiu $t0, $sp, 0xa8
@@ -8014,7 +8014,7 @@ glabel sub_GAME_7F0B7010
 /* 0EC39C 7F0B786C 022F2821 */  addu  $a1, $s1, $t7
 /* 0EC3A0 7F0B7870 AFAB0018 */  sw    $t3, 0x18($sp)
 /* 0EC3A4 7F0B7874 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0EC3A8 7F0B7878 0FC24A24 */  jal   sub_GAME_7F092890
+/* 0EC3A8 7F0B7878 0FC24A24 */  jal   intersectLineTriangle
 /* 0EC3AC 7F0B787C AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0EC3B0 7F0B7880 10400065 */  beqz  $v0, .L7F0B7A18
 /* 0EC3B4 7F0B7884 27A800A8 */   addiu $t0, $sp, 0xa8
@@ -8161,13 +8161,13 @@ glabel sub_GAME_7F0B7010
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B7A78(void) {
+void bgTestBulletHitBackground(void) {
 
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F0B7A78
+glabel bgTestBulletHitBackground
 /* 0EC5A8 7F0B7A78 27BDFF28 */  addiu $sp, $sp, -0xd8
 /* 0EC5AC 7F0B7A7C 3C0E7FFF */  lui   $t6, (0x7FFFFFFF >> 16) # lui $t6, 0x7fff
 /* 0EC5B0 7F0B7A80 35CEFFFF */  ori   $t6, (0x7FFFFFFF & 0xFFFF) # ori $t6, $t6, 0xffff
@@ -8252,7 +8252,7 @@ glabel sub_GAME_7F0B7A78
 /* 0EC6E4 7F0B7BB4 27A500B8 */  addiu $a1, $sp, 0xb8
 /* 0EC6E8 7F0B7BB8 03C03025 */  move  $a2, $fp
 /* 0EC6EC 7F0B7BBC 02603825 */  move  $a3, $s3
-/* 0EC6F0 7F0B7BC0 0FC2DC04 */  jal   sub_GAME_7F0B7010
+/* 0EC6F0 7F0B7BC0 0FC2DC04 */  jal   bgTestLineIntersectionInRoom
 /* 0EC6F4 7F0B7BC4 AFA90010 */   sw    $t1, 0x10($sp)
 /* 0EC6F8 7F0B7BC8 1040003D */  beqz  $v0, .L7F0B7CC0
 /* 0EC6FC 7F0B7BCC C7AA007C */   lwc1  $f10, 0x7c($sp)

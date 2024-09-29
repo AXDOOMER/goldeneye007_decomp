@@ -1008,7 +1008,7 @@ glabel sub_GAME_7F03AB58
 /* 06F724 7F03ABF4 02402025 */   move  $a0, $s2
 /* 06F728 7F03ABF8 8FA50224 */  lw    $a1, 0x224($sp)
 /* 06F72C 7F03ABFC 8E060000 */  lw    $a2, ($s0)
-/* 06F730 7F03AC00 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06F730 7F03AC00 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06F734 7F03AC04 02603825 */   move  $a3, $s3
 /* 06F738 7F03AC08 10400069 */  beqz  $v0, .L7F03ADB0
 /* 06F73C 7F03AC0C C7A40054 */   lwc1  $f4, 0x54($sp)
@@ -1196,7 +1196,7 @@ glabel sub_GAME_7F03ADF4
 /* 06F9AC 7F03AE7C 8FA402FC */   lw    $a0, 0x2fc($sp)
 /* 06F9B0 7F03AE80 8FA50300 */  lw    $a1, 0x300($sp)
 /* 06F9B4 7F03AE84 02603025 */  move  $a2, $s3
-/* 06F9B8 7F03AE88 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06F9B8 7F03AE88 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06F9BC 7F03AE8C 8FA70310 */   lw    $a3, 0x310($sp)
 /* 06F9C0 7F03AE90 50400004 */  beql  $v0, $zero, .L7F03AEA4
 /* 06F9C4 7F03AE94 02602025 */   move  $a0, $s3
@@ -1321,7 +1321,7 @@ glabel sub_GAME_7F03AF5C
 /* 06FB40 7F03B010 02602025 */   move  $a0, $s3
 /* 06FB44 7F03B014 8FA500C8 */  lw    $a1, 0xc8($sp)
 /* 06FB48 7F03B018 02203025 */  move  $a2, $s1
-/* 06FB4C 7F03B01C 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06FB4C 7F03B01C 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06FB50 7F03B020 02C03825 */   move  $a3, $s6
 /* 06FB54 7F03B024 10400035 */  beqz  $v0, .L7F03B0FC
 /* 06FB58 7F03B028 C7A40088 */   lwc1  $f4, 0x88($sp)
@@ -1585,7 +1585,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FF04 7F03B3D4 02002025 */  move  $a0, $s0
 /* 06FF08 7F03B3D8 27A50560 */  addiu $a1, $sp, 0x560
 /* 06FF0C 7F03B3DC 02203025 */  move  $a2, $s1
-/* 06FF10 7F03B3E0 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06FF10 7F03B3E0 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06FF14 7F03B3E4 27A70510 */   addiu $a3, $sp, 0x510
 /* 06FF18 7F03B3E8 10400002 */  beqz  $v0, .L7F03B3F4
 /* 06FF1C 7F03B3EC 24190001 */   li    $t9, 1

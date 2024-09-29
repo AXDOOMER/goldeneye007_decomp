@@ -2982,7 +2982,7 @@ glabel handles_projectile_motion
 /* 076EDC 7F0423AC 8FA40048 */  lw    $a0, 0x48($sp)
 .L7F0423B0:
 /* 076EE0 7F0423B0 27A50268 */  addiu $a1, $sp, 0x268
-/* 076EE4 7F0423B4 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 076EE4 7F0423B4 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 076EE8 7F0423B8 27A70274 */   addiu $a3, $sp, 0x274
 /* 076EEC 7F0423BC 50400092 */  beql  $v0, $zero, .L7F042608
 /* 076EF0 7F0423C0 8E260004 */   lw    $a2, 4($s1)
@@ -30160,7 +30160,7 @@ glabel bgTestHitOnObj
 /* 081F68 7F04D438 AFB8001C */  sw    $t8, 0x1c($sp)
 /* 081F6C 7F04D43C AFBE0018 */  sw    $fp, 0x18($sp)
 /* 081F70 7F04D440 AFB70010 */  sw    $s7, 0x10($sp)
-/* 081F74 7F04D444 0FC24A24 */  jal   sub_GAME_7F092890
+/* 081F74 7F04D444 0FC24A24 */  jal   intersectLineTriangle
 /* 081F78 7F04D448 AFAB0014 */   sw    $t3, 0x14($sp)
 /* 081F7C 7F04D44C 10400148 */  beqz  $v0, .L7F04D970
 /* 081F80 7F04D450 00000000 */   nop
@@ -30411,7 +30411,7 @@ glabel bgTestHitOnObj
 /* 082310 7F04D7E0 AFAB001C */  sw    $t3, 0x1c($sp)
 /* 082314 7F04D7E4 AFBE0018 */  sw    $fp, 0x18($sp)
 /* 082318 7F04D7E8 AFB70010 */  sw    $s7, 0x10($sp)
-/* 08231C 7F04D7EC 0FC24A24 */  jal   sub_GAME_7F092890
+/* 08231C 7F04D7EC 0FC24A24 */  jal   intersectLineTriangle
 /* 082320 7F04D7F0 AFAC0014 */   sw    $t4, 0x14($sp)
 /* 082324 7F04D7F4 5040005B */  beql  $v0, $zero, .L7F04D964
 /* 082328 7F04D7F8 26520001 */   addiu $s2, $s2, 1
