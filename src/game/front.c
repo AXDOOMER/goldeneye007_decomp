@@ -615,8 +615,7 @@ struct MP_selectable_chars mp_chr_setup[] = {
     {getStringID(LTITLE, TITLE_STR_225_MANDY), FEMALE, IMG_MPC_RANDOM, BODY_Brosnan_Tuxedo,                   HEAD_Female_Mandy, 1.0446},
     {getStringID(LTITLE, TITLE_STR_226_VIVIEN), FEMALE, IMG_MPC_RANDOM, BODY_Brosnan_Tuxedo,                   HEAD_Female_Vivien, 1.0446}
 };
-#endif
-#if defined(BUGFIX_R1)
+#else
 struct MP_selectable_chars mp_chr_setup[] = {
     {getStringID(LTITLE, TITLE_STR_184_BOND), MALE,   IMG_MPC_BROSNAN, BODY_Brosnan_Tuxedo,                   HEAD_Male_Brosnan_Tuxedo, 1.0},
     {getStringID(LTITLE, TITLE_STR_191_NATALYA), FEMALE, IMG_MPC_NATALYA, BODY_Natalya_Skirt,            HEAD_Male_Brosnan_Tuxedo, 0.96609998},
@@ -1229,7 +1228,7 @@ Gfx *frontDrawCursor(Gfx *DL)
     halfedxy[0] = image->width * 0.5f;
     halfedxy[1] = image->height * 0.5f;
 
-    display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 255, 255, 255, 220, (image->level > 0), 0);
+    display_image_at_position(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 255, 255, 255, 220, (image->level > 0), 0);
 
     return DL;
 }
@@ -1958,7 +1957,7 @@ Gfx * constructor_menu02_rareware(Gfx * DL) {
 //GUNBARREL
 //********************************************************************************************************
 void init_menu03_eyeintro(void) {
-    sub_GAME_7F008E80(ptr_logo_and_walletbond_DL, 0x78000);
+    initializeGunBarrelIntro(ptr_logo_and_walletbond_DL, 0x78000);
     musicTrack1Play(M_INTRO);
     maybe_is_in_menu = TRUE;
 }
@@ -2593,8 +2592,8 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
 
     DL = sub_GAME_7F007CC8(DL, (s32) floorFloat(((f32) viGetX() * -80.0f) / 1280.0f), &sp1A8, &sp19C);
 
-    gSPDisplayList(DL++, &fontDL_0x000);
-    gSPDisplayList(DL++, &fontDL_0x040);
+    gSPDisplayList(DL++, &dlBasicGeometry);
+    gSPDisplayList(DL++, &dlFastPipelineSetup);
 
     for (j = 3; j >= 0; j--)
     {
@@ -2793,7 +2792,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         spA4.f[1] = (f32) (mainfolderimages + IMG_COPY)->height * 0.5f;
 
         texSelect(&DL, mainfolderimages, 4, 0, 0);
-        display_image_at_on_screen_coord(&DL, &spAC.f[0], &spA4.f[0], mainfolderimages->width, mainfolderimages->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) mainfolderimages->level > 0, 0);
+        display_image_at_position(&DL, &spAC.f[0], &spA4.f[0], mainfolderimages->width, mainfolderimages->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) mainfolderimages->level > 0, 0);
 
         folder_option_COPY_bound.left = spAC.f[0] - spA4.f[0];
         folder_option_COPY_bound.up = spAC.f[1] - spA4.f[1];
@@ -2806,7 +2805,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp94.f[1] = (mainfolderimages + IMG_DEL)->height * 0.5f;
 
         texSelect(&DL, mainfolderimages + IMG_DEL, 4, 0, 0);
-        display_image_at_on_screen_coord(&DL, &sp9C.f[0], &sp94.f[0], (mainfolderimages + IMG_DEL)->width, (mainfolderimages + IMG_DEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_DEL)->level > 0, 0);
+        display_image_at_position(&DL, &sp9C.f[0], &sp94.f[0], (mainfolderimages + IMG_DEL)->width, (mainfolderimages + IMG_DEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_DEL)->level > 0, 0);
 
         folder_option_ERASE_bound.left = (f32) (sp9C.f[0] - sp94.f[0]);
         folder_option_ERASE_bound.up = (f32) (sp9C.f[1] - sp94.f[1]);
@@ -2819,7 +2818,7 @@ Gfx *constructor_menu05_fileselect(Gfx *DL)
         sp84.f[1] = (mainfolderimages + IMG_SEL)->height * 0.5f;
 
         texSelect(&DL, mainfolderimages + IMG_SEL, 4, 0, 0);
-        display_image_at_on_screen_coord(&DL, &sp8C.f[0], &sp84.f[0], (mainfolderimages + IMG_SEL)->width, (mainfolderimages + IMG_SEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_SEL)->level > 0, 0);
+        display_image_at_position(&DL, &sp8C.f[0], &sp84.f[0], (mainfolderimages + IMG_SEL)->width, (mainfolderimages + IMG_SEL)->height, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, (s32) (mainfolderimages + IMG_SEL)->level > 0, 0);
     }
 
     if (folder_selected_for_deletion < 0)
@@ -3785,7 +3784,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
             halfedxy[1] = image->height * 0.5f;
 
             texSelect(&DL, image, 4, 0, 0);
-            display_image_at_on_screen_coord(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xB4, 0, 0, 0xFF, image->level > 0, 0);
+            display_image_at_position(&DL, &xypos, &halfedxy, image->width, image->height, 0, 0, 1, 0xB4, 0, 0, 0xFF, image->level > 0, 0);
         }
     }
 
@@ -6080,12 +6079,10 @@ void interface_menu11_mpcontrols(void)
     viSetZRange(100.0f, 10000.0f);
     viSetUseZBuf(0);
 
-#if defined(VERSION_JP) || defined(VERSION_EU)
+#if defined(BUGFIX_R1)
     #define MAYBE_OR_JOYCOUNT_NOT_4 || joyGetControllerCount() != 4
     #define MAYBE_AND_JOYCOUNT_4 && joyGetControllerCount() == 4
-#endif
-
-#if defined(VERSION_US)
+#else
     #define MAYBE_OR_JOYCOUNT_NOT_4
     #define MAYBE_AND_JOYCOUNT_4
 #endif
@@ -6460,9 +6457,9 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
 
     for (i_2 = 0; i_2 < 3; i_2++)
     {
-        display_image_at_on_screen_coord(&DL, &sp100.f[0], &spF8.f[0], 0x2F0, 0x12, 0, 0, 1, 0x6B, 0x67, 0x53, 0xFF, simage->level > 0, 0);
+        display_image_at_position(&DL, &sp100.f[0], &spF8.f[0], 0x2F0, 0x12, 0, 0, 1, 0x6B, 0x67, 0x53, 0xFF, simage->level > 0, 0);
         sp100.f[1] += 60.0f;
-        display_image_at_on_screen_coord(&DL, &sp100.f[0], &spF8.f[0], 0x2F0, 0x12, 0, 0, 1, 0x6B, 0x67, 0x53, 0xFF, simage->level > 0, 0);
+        display_image_at_position(&DL, &sp100.f[0], &spF8.f[0], 0x2F0, 0x12, 0, 0, 1, 0x6B, 0x67, 0x53, 0xFF, simage->level > 0, 0);
         sp100.f[1] -= 60.0f;
         sp100.f[1] += 70.0f;
     }
@@ -6491,15 +6488,15 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
                     gDPSetFogColor(DL++, 0xff, 0xff, 0xff, 0x0a);
                     gDPSetRenderMode(DL++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
 
-                    display_image_at_on_screen_coord(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, simage->level > 0, 1);
+                    display_image_at_position(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0xFF, simage->level > 0, 1);
                 }
                 else if (check_if_mp_stage_unlocked(count) != 0)
                 {
-                    display_image_at_on_screen_coord(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0x6E, 0x6E, 0x6E, 0xFF, simage->level > 0, 0);
+                    display_image_at_position(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0x6E, 0x6E, 0x6E, 0xFF, simage->level > 0, 0);
                 }
                 else
                 {
-                    display_image_at_on_screen_coord(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0xF, 0xF, 0xF, 0xFF, simage->level > 0, 0);
+                    display_image_at_position(&DL, &spD8.f[0], &spD0.f[0], 0x44, 0x2C, 0, 0, 1, 0xF, 0xF, 0xF, 0xFF, simage->level > 0, 0);
                 }
             }
 
@@ -9990,11 +9987,10 @@ void interface_menu18_displaycast(void)
 
     g_MenuTimer += g_ClockTimer;
 
-#if defined(VERSION_US) || defined(VERSION_JP)
-#define INTERFACE_MENU18_TIMER 181
-#endif
-#if defined(VERSION_EU)
+#if defined(REFRESH_PAL)
 #define INTERFACE_MENU18_TIMER 151
+#else
+#define INTERFACE_MENU18_TIMER 181
 #endif
 
     if (g_MenuTimer >= INTERFACE_MENU18_TIMER)

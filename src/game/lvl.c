@@ -941,8 +941,8 @@ Gfx* lvlRender(Gfx* DL)
     gSPSegment(DL++, SPSEGMENT_PHYSICAL, NULL);
     gSPSegment(DL++, SPSEGMENT_UNKNOWN, osVirtualToPhysical(ptr_font_DL));
 
-    gSPDisplayList(DL++, &fontDL_0x040);
-    gSPDisplayList(DL++, &fontDL_0x020);
+    gSPDisplayList(DL++, &dlFastPipelineSetup);
+    gSPDisplayList(DL++, &dlZBufferGeometry);
 
     if (g_CurrentStageToLoad == LEVELID_TITLE)
     {

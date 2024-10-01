@@ -24355,7 +24355,7 @@ void *microcode_generation_ammo_related(void *arg0, void *arg1, f32 arg2, f32 ar
     }
     // Node 19
     texSelect(arg3, arg2, &arg0, arg1, phi_a2, 0, 0);
-    display_image_at_on_screen_coord(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
+    display_image_at_position(&arg0, &spB0, &spA8, arg1->unk4, (s32) arg1->unk5, 0, 0, 1, arg8, arg9, argA, argB, (s32) (0 < arg1->unk6), 0);
     arg0 = (void *) (arg0 + 8);
     arg0->unk4 = 0;
     *arg0 = 0xe7000000;//gDPPipeSync(glistp++);
@@ -24650,7 +24650,7 @@ glabel microcode_generation_ammo_related
 /* 09E3FC 7F0698CC 0009682A */  slt   $t5, $zero, $t1
 /* 09E400 7F0698D0 AFAD0030 */  sw    $t5, 0x30($sp)
 /* 09E404 7F0698D4 27A500B0 */  addiu $a1, $sp, 0xb0
-/* 09E408 7F0698D8 0FC1ABFA */  jal   display_image_at_on_screen_coord
+/* 09E408 7F0698D8 0FC1ABFA */  jal   display_image_at_position
 /* 09E40C 7F0698DC 27A600A8 */   addiu $a2, $sp, 0xa8
 /* 09E410 7F0698E0 8FAE00B8 */  lw    $t6, 0xb8($sp)
 /* 09E414 7F0698E4 3C18E700 */  lui   $t8, 0xe700
@@ -26476,7 +26476,7 @@ void gunDrawSight(s32 *gdl) {
 #ifdef VERSION_EU
         halfedxy[1] = halfedxy[1] * 1.19047617912f;
 #endif
-        display_image_at_on_screen_coord(&sp54, &xypos, &halfedxy, 0x20, 0x20, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0x6E, (crosshairimage->level > 0), 0);
+        display_image_at_position(&sp54, &xypos, &halfedxy, 0x20, 0x20, 0, 0, 1, 0xFF, 0xFF, 0xFF, 0x6E, (crosshairimage->level > 0), 0);
         *gdl = sp54;
     }
 }

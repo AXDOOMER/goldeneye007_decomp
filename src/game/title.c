@@ -31,31 +31,31 @@ extern signed short sins(unsigned short x);
 
 // bss
 //CODE.bss:80069550
-s32 dword_CODE_bss_80069550;
+s32 barrelDisplayListPtr;
 //CODE.bss:80069554
-Gfx *dword_CODE_bss_80069554;
+Gfx *gunbarrelgfxListPointer;
 //CODE.bss:80069558
-Mtx *matrix_buffer_rarelogo_0;
+Mtx *matrixBufferRareLogo0;
 //CODE.bss:8006955C
-Mtx *matrix_buffer_gunbarrel_0;
+Mtx *matrixBufferGunbarrel0;
 //CODE.bss:80069560
-Mtx *matrix_buffer_rarelogo_1;
+Mtx *matrixBufferRareLogo1;
 //CODE.bss:80069564
-Mtx *matrix_buffer_rarelogo_2;
+Mtx *matrixBufferRareLogo2;
 //CODE.bss:80069568
-Mtx *matrix_buffer_gunbarrel_1;
+Mtx *matrixBufferGunbarrel1;
 //CODE.bss:8006956C
-Mtx *matrix_buffer_intro_backdrop;
+Mtx *matrixBufferIntroBackdrop;
 //CODE.bss:80069570
-Mtx *matrix_buffer_intro_bond;
+Mtx *matrixBufferIntroBond;
 //CODE.bss:80069574
 f32 g_TitleX;
 //CODE.bss:80069578
 f32 g_TitleY;
 //CODE.bss:8006957C
-f32 dword_CODE_bss_8006957C;
+f32 titleTransitionX;
 //CODE.bss:80069580
-f32 dword_CODE_bss_80069580;
+f32 titleTransitionY;
 //CODE.bss:80069584
 s16 word_CODE_bss_80069584;
 //CODE.bss:80069588
@@ -82,10 +82,11 @@ s32 D_8002A7E8[3] = {0xFF, 0xFF, 0xFF};
 */
 struct FolderSelect D_8002A7DC = { 0x00, 0x00, 0x00 };
 struct FolderSelect D_8002A7E8 = { 0xFF, 0xFF, 0xFF };
-Model *D_8002A7F4 = NULL;
-Model *D_8002A7F8 = NULL;
-u32 D_8002A7FC = 0;
 
+Model *chrModelInstance = NULL;
+Model *gunModelInstance = NULL;
+
+u32 D_8002A7FC = 0;
 u32 D_8002A800 = 1;
 u32 D_8002A804 = 3;
 u32 D_8002A808 = 0;
@@ -101,47 +102,57 @@ u32 D_8002A82C = 0;
 u32 D_8002A830 = 0;
 u32 D_8002A834 = 0;
 u32 D_8002A838 = 0;
-f32 D_8002A83C[3] = {1758.2957f, 220.0f, 684.28143f};
-f32 D_8002A848[3] = {-0.97f, 0.0f, 0.24f};
-f32 D_8002A854[3] = {0.0f, 1.0f, -0.0f};
-Lights1 D_8002A860 = gdSPDefLights1(0xDC, 0xDC, 0xDC, 0xFF, 0xFF, 0xFF, 0x00, 0x7F, 0x00);
-f32 D_8002A878[3] = {0.0f, 0.0f, 4883.0f};
-f32 D_8002A884[3] = {0.0f, 0.0f, -1.0f};
-f32 D_8002A890[3] = {0.0f, 1.0f, 0.0f};
+
+f32 gunbarrelPosition1[3] = {1758.2957f, 220.0f, 684.28143f};
+f32 gunbarrelPosition2[3] = {-0.97f, 0.0f, 0.24f};
+f32 gunbarrelPosition3[3] = {0.0f, 1.0f, -0.0f};
+
+Lights1 gunbarrelLights = gdSPDefLights1(0xDC, 0xDC, 0xDC, 0xFF, 0xFF, 0xFF, 0x00, 0x7F, 0x00);
+
+f32 cameraPosition1[3] = {0.0f, 0.0f, 4883.0f};
+f32 cameraPosition2[3] = {0.0f, 0.0f, -1.0f};
+f32 cameraPosition3[3] = {0.0f, 1.0f, 0.0f};
 
 f32 D_8002A89C = 0.0f;
 s32 intro_eye_counter = 0;
 u32 intro_state_blood_animation = 0;
 struct coord3d D_8002A8A8 = { 0, 0, 0 };
 
-Gfx *something_with_gunbarrel_and_rareware_logo_matrix_manip(Gfx *gdl)
+
+/**
+ * Manipulates matrices for the gun barrel and Rareware logo during the intro sequence.
+ * 
+ * @param gdl The display list to append graphics commands to.
+ * @return Updated display list.
+ */
+Gfx *manipulateGunbarrelAndLogoMatrices(Gfx *gdl)
 {
-    guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], g_TitleX, g_TitleY, -5.0f);
-    guTranslate(&matrix_buffer_gunbarrel_1[D_8002A7D0], dword_CODE_bss_8006957C, dword_CODE_bss_80069580, -5.0f);
-    gSPDisplayList(gdl++, &fontDL_0x000);
+    guTranslate(&matrixBufferRareLogo2[D_8002A7D0], g_TitleX, g_TitleY, -5.0f);
+    guTranslate(&matrixBufferGunbarrel1[D_8002A7D0], titleTransitionX, titleTransitionY, -5.0f);
+    gSPDisplayList(gdl++, &dlBasicGeometry);
 
     gdl = sub_GAME_7F01C1A4(insert_imageDL(gdl));
 
     gDPSetCombineMode(gdl++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
     gDPSetPrimColor(gdl++, 0, 0, 0xE6, 0xE6, 0xE6, 0x00);
-    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
-    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(gunbarrelgfxListPointer));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferGunbarrel1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(gunbarrelgfxListPointer));
 
     return gdl;
 }
 
 Gfx *insert_sight_backdrop_eye_intro(Gfx *gdl)
 {
-    guTranslate(&matrix_buffer_rarelogo_2[D_8002A7D0], g_TitleX + 768.0f, g_TitleY - 40.0f, -5.0f);
-    guScale(&matrix_buffer_gunbarrel_1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
-    gSPDisplayList(gdl++, &fontDL_0x000);
-    gSPDisplayList(gdl++, &fontDL_0x040);
+    guTranslate(&matrixBufferRareLogo2[D_8002A7D0], g_TitleX + 768.0f, g_TitleY - 40.0f, -5.0f);
+    guScale(&matrixBufferGunbarrel1[D_8002A7D0], 2.7f, 2.57f, 1.0f);
+    gSPDisplayList(gdl++, &dlBasicGeometry);
+    gSPDisplayList(gdl++, &dlFastPipelineSetup);
 
     gdl = sub_GAME_7F01C1A4(gdl);
 
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_gunbarrel_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
-    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(dword_CODE_bss_80069554));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferGunbarrel1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
+    gSPDisplayList(gdl++, OS_K0_TO_PHYSICAL(gunbarrelgfxListPointer));
 
     return gdl;
 }
@@ -162,7 +173,7 @@ Gfx *insert_sniper_sight_eye_intro(Gfx *gdl)
     struct FolderSelect sp3C = D_8002A7DC;
     struct FolderSelect sp30 = D_8002A7E8;
 
-    gSPDisplayList(gdl++, &fontDL_0x000);
+    gSPDisplayList(gdl++, &dlBasicGeometry);
 
     gdl = insert_imageDL(gdl);
 
@@ -230,10 +241,10 @@ glabel sub_GAME_7F007F30
 /* 03CAD0 7F007FA0 8FA90124 */  lw    $t1, 0x124($sp)
 /* 03CAD4 7F007FA4 19200034 */  blez  $t1, .L7F008078
 /* 03CAD8 7F007FA8 3C140000 */   lui   $s4, 0
-/* 03CADC 7F007FAC 3C138003 */  lui   $s3, %hi(D_8002A7F4)
+/* 03CADC 7F007FAC 3C138003 */  lui   $s3, %hi(chrModelInstance)
 /* 03CAE0 7F007FB0 3C108007 */  lui   $s0, %hi(dword_CODE_bss_80069594)
 /* 03CAE4 7F007FB4 26109594 */  addiu $s0, %lo(dword_CODE_bss_80069594) # addiu $s0, $s0, -0x6a6c
-/* 03CAE8 7F007FB8 2673A7F4 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, -0x580c
+/* 03CAE8 7F007FB8 2673A7F4 */  addiu $s3, %lo(chrModelInstance) # addiu $s3, $s3, -0x580c
 /* 03CAEC 7F007FBC 26944298 */  addiu $s4, $s4, 0x4298
 /* 03CAF0 7F007FC0 24110089 */  li    $s1, 137
 /* 03CAF4 7F007FC4 8E020000 */  lw    $v0, ($s0)
@@ -286,16 +297,16 @@ glabel sub_GAME_7F007F30
 /* 03CBA0 7F008070 8E020000 */   lw    $v0, ($s0)
 /* 03CBA4 7F008074 00009025 */  move  $s2, $zero
 .L7F008078:
-/* 03CBA8 7F008078 3C138003 */  lui   $s3, %hi(D_8002A7F4)
-/* 03CBAC 7F00807C 2673A7F4 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, -0x580c
+/* 03CBA8 7F008078 3C138003 */  lui   $s3, %hi(chrModelInstance)
+/* 03CBAC 7F00807C 2673A7F4 */  addiu $s3, %lo(chrModelInstance) # addiu $s3, $s3, -0x580c
 /* 03CBB0 7F008080 0FC1B100 */  jal   modelSetDistanceDisabled
 /* 03CBB4 7F008084 24040001 */   li    $a0, 1
 /* 03CBB8 7F008088 0FC1CFF2 */  jal   sub_GAME_7F073FC8
 /* 03CBBC 7F00808C 24040050 */   li    $a0, 80
 /* 03CBC0 7F008090 0FC1B5AC */  jal   subcalcpos
 /* 03CBC4 7F008094 8E640000 */   lw    $a0, ($s3)
-/* 03CBC8 7F008098 3C148003 */  lui   $s4, %hi(D_8002A7F8)
-/* 03CBCC 7F00809C 2694A7F8 */  addiu $s4, %lo(D_8002A7F8) # addiu $s4, $s4, -0x5808
+/* 03CBC8 7F008098 3C148003 */  lui   $s4, %hi(gunModelInstance)
+/* 03CBCC 7F00809C 2694A7F8 */  addiu $s4, %lo(gunModelInstance) # addiu $s4, $s4, -0x5808
 /* 03CBD0 7F0080A0 8E860000 */  lw    $a2, ($s4)
 /* 03CBD4 7F0080A4 8CD90008 */  lw    $t9, 8($a2)
 /* 03CBD8 7F0080A8 8F230008 */  lw    $v1, 8($t9)
@@ -482,10 +493,10 @@ glabel sub_GAME_7F007F30
 /* 03A910 7F007F20 8FA90124 */  lw    $t1, 0x124($sp)
 /* 03A914 7F007F24 19200034 */  blez  $t1, .L7F007FF8
 /* 03A918 7F007F28 3C140000 */   lui   $s4, 0 # $s4, 0
-/* 03A91C 7F007F2C 3C138002 */  lui   $s3, %hi(D_8002A7F4) # $s3, 0x8002
+/* 03A91C 7F007F2C 3C138002 */  lui   $s3, %hi(chrModelInstance) # $s3, 0x8002
 /* 03A920 7F007F30 3C108006 */  lui   $s0, %hi(dword_CODE_bss_80069594) # $s0, 0x8006
 /* 03A924 7F007F34 261084D4 */  addiu $s0, %lo(dword_CODE_bss_80069594) # addiu $s0, $s0, -0x7b2c
-/* 03A928 7F007F38 26735D44 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, 0x5d44
+/* 03A928 7F007F38 26735D44 */  addiu $s3, %lo(chrModelInstance) # addiu $s3, $s3, 0x5d44
 /* 03A92C 7F007F3C 26944298 */  addiu $s4, 0x4298 # addiu $s4, $s4, 0x4298
 /* 03A930 7F007F40 24110072 */  li    $s1, 114
 /* 03A934 7F007F44 8E020000 */  lw    $v0, ($s0)
@@ -538,16 +549,16 @@ glabel sub_GAME_7F007F30
 /* 03A9E0 7F007FF0 8E020000 */   lw    $v0, ($s0)
 /* 03A9E4 7F007FF4 00009025 */  move  $s2, $zero
 .L7F007FF8:
-/* 03A9E8 7F007FF8 3C138002 */  lui   $s3, %hi(D_8002A7F4) # $s3, 0x8002
-/* 03A9EC 7F007FFC 26735D44 */  addiu $s3, %lo(D_8002A7F4) # addiu $s3, $s3, 0x5d44
+/* 03A9E8 7F007FF8 3C138002 */  lui   $s3, %hi(chrModelInstance) # $s3, 0x8002
+/* 03A9EC 7F007FFC 26735D44 */  addiu $s3, %lo(chrModelInstance) # addiu $s3, $s3, 0x5d44
 /* 03A9F0 7F008000 0FC1B2D0 */  jal   modelSetDistanceDisabled
 /* 03A9F4 7F008004 24040001 */   li    $a0, 1
 /* 03A9F8 7F008008 0FC1D037 */  jal   sub_GAME_7F073FC8
 /* 03A9FC 7F00800C 24040050 */   li    $a0, 80
 /* 03AA00 7F008010 0FC1B6B8 */  jal   subcalcpos
 /* 03AA04 7F008014 8E640000 */   lw    $a0, ($s3)
-/* 03AA08 7F008018 3C148002 */  lui   $s4, %hi(D_8002A7F8) # $s4, 0x8002
-/* 03AA0C 7F00801C 26945D48 */  addiu $s4, %lo(D_8002A7F8) # addiu $s4, $s4, 0x5d48
+/* 03AA08 7F008018 3C148002 */  lui   $s4, %hi(gunModelInstance) # $s4, 0x8002
+/* 03AA0C 7F00801C 26945D48 */  addiu $s4, %lo(gunModelInstance) # addiu $s4, $s4, 0x5d48
 /* 03AA10 7F008020 8E860000 */  lw    $a2, ($s4)
 /* 03AA14 7F008024 8CD90008 */  lw    $t9, 8($a2)
 /* 03AA18 7F008028 8F230008 */  lw    $v1, 8($t9)
@@ -700,15 +711,15 @@ glabel sub_GAME_7F007F30
 Gfx *insert_bond_eye_intro(Gfx *gdl) {
     Mtxf matrix;
     u16 perspNorm;
-    guTranslate(&matrix_buffer_intro_backdrop[D_8002A7D0], 0.0f, 0.0f, 0.0f);
-    guPerspective(&matrix_buffer_intro_bond[D_8002A7D0], &perspNorm, 46.0f, (320.0f / 240.0f), 10.0f, 10000.0f, 1.0f);
+    guTranslate(&matrixBufferIntroBackdrop[D_8002A7D0], 0.0f, 0.0f, 0.0f);
+    guPerspective(&matrixBufferIntroBond[D_8002A7D0], &perspNorm, 46.0f, (320.0f / 240.0f), 10.0f, 10000.0f, 1.0f);
     gSPPerspNormalize(gdl++, perspNorm);
     gDPSetCombineMode(gdl++, G_CC_SHADE, G_CC_SHADE);
     gDPSetRenderMode(gdl++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_intro_bond[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_intro_backdrop[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferIntroBond[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferIntroBackdrop[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
     
-    matrix_4x4_7F059694(&matrix, D_8002A83C[0], D_8002A83C[1], D_8002A83C[2], (D_8002A83C[0] + D_8002A848[0]), (D_8002A83C[1] + D_8002A848[1]), (D_8002A83C[2] + D_8002A848[2]), D_8002A854[0], D_8002A854[1], D_8002A854[2]);
+    matrix_4x4_7F059694(&matrix, gunbarrelPosition1[0], gunbarrelPosition1[1], gunbarrelPosition1[2], (gunbarrelPosition1[0] + gunbarrelPosition2[0]), (gunbarrelPosition1[1] + gunbarrelPosition2[1]), (gunbarrelPosition1[2] + gunbarrelPosition2[2]), gunbarrelPosition3[0], gunbarrelPosition3[1], gunbarrelPosition3[2]);
 
 #if defined REFRESH_PAL
     return sub_GAME_7F007F30(gdl, 1, &matrix);
@@ -723,28 +734,28 @@ extern Gfx *D_02004758;
 extern u8 *D_02004FE8;
 extern u8 *D_02005FF0;
 Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    D_8002A878[2] = arg3;
-    gSPDisplayList(gdl++, &fontDL_0x000);
+    cameraPosition1[2] = arg3;
+    gSPDisplayList(gdl++, &dlBasicGeometry);
     gdl = insert_imageDL(gdl);
     {
         u16 perspNorm;
-        guPerspective(&matrix_buffer_rarelogo_0[D_8002A7D0], &perspNorm, 60.0f, (320.0f / 240.0f), 100.0f, 5000.0f, 1.0f);
+        guPerspective(&matrixBufferRareLogo0[D_8002A7D0], &perspNorm, 60.0f, (320.0f / 240.0f), 100.0f, 5000.0f, 1.0f);
         gSPPerspNormalize(gdl++, perspNorm);
     }
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_0[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferRareLogo0[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
     gSPClearGeometryMode(gdl++, -1);
     gSPSetGeometryMode(gdl++, (G_SHADE | G_CULL_BACK | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH));
-    guLookAt(&matrix_buffer_rarelogo_1[D_8002A7D0], D_8002A878[0], D_8002A878[1], D_8002A878[2], (D_8002A878[0] + D_8002A884[0]), (D_8002A878[1] + D_8002A884[1]), (D_8002A878[2] + D_8002A884[2]), D_8002A890[0], D_8002A890[1], D_8002A890[2]);
-    gSPMatrix(gdl++,  osVirtualToPhysical(&matrix_buffer_rarelogo_1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
-    guRotate(&matrix_buffer_rarelogo_2[D_8002A7D0], D_8002A89C, 0.0f, 1.0f, 0.0f);
+    guLookAt(&matrixBufferRareLogo1[D_8002A7D0], cameraPosition1[0], cameraPosition1[1], cameraPosition1[2], (cameraPosition1[0] + cameraPosition2[0]), (cameraPosition1[1] + cameraPosition2[1]), (cameraPosition1[2] + cameraPosition2[2]), cameraPosition3[0], cameraPosition3[1], cameraPosition3[2]);
+    gSPMatrix(gdl++,  osVirtualToPhysical(&matrixBufferRareLogo1[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
+    guRotate(&matrixBufferRareLogo2[D_8002A7D0], D_8002A89C, 0.0f, 1.0f, 0.0f);
 #if defined(REFRESH_PAL)
     D_8002A89C += 2.4f;
 #else
     D_8002A89C += 2.0f;
 #endif
-    gSPMatrix(gdl++, osVirtualToPhysical(&matrix_buffer_rarelogo_2[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
-    gSPSetLights1(gdl++, D_8002A860);
-    D_8002A860.a.l.col[0] = D_8002A860.a.l.col[1] = D_8002A860.a.l.col[2] = D_8002A860.a.l.colc[0] = D_8002A860.a.l.colc[1] = D_8002A860.a.l.colc[2] = arg4;
+    gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferRareLogo2[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW));
+    gSPSetLights1(gdl++, gunbarrelLights);
+    gunbarrelLights.a.l.col[0] = gunbarrelLights.a.l.col[1] = gunbarrelLights.a.l.col[2] = gunbarrelLights.a.l.colc[0] = gunbarrelLights.a.l.colc[1] = gunbarrelLights.a.l.colc[2] = arg4;
     gDPPipeSync(gdl++);
     gDPPipeSync(gdl++);
     gDPSetCombineMode(gdl++, G_CC_MODULATEI, G_CC_MODULATEI);
@@ -892,108 +903,108 @@ glabel sub_GAME_7F008DE4
 
 
 
-void sub_GAME_7F008E80(u8 *arg0, s32 arg1)
+void initializeGunBarrelIntro(u8 *gfxBuffer, s32 bufferSize)
 {
-    struct ModelAnimation *temp_a1;
+    struct ModelAnimation *animation;
     struct coord3d sp50;
-    struct texpool sp40;
+    struct texpool texturePool;
     s32 temp_t9;
     s32 startframe;
     
     gunbarrel_mode = 2;
     
-    guOrtho(matrix_buffer_gunbarrel_0, 0.0f, 1280.0f, 0.0f, 960.0f, 1.0f, 8.0f, 256.0f);
+    guOrtho(matrixBufferGunbarrel0, 0.0f, 1280.0f, 0.0f, 960.0f, 1.0f, 8.0f, 256.0f);
     
     g_TitleX = -30.0f;
     g_TitleY = 482.0f;
-    dword_CODE_bss_8006957C = -100.0f;
-    dword_CODE_bss_80069580 = 482.0f;
+    titleTransitionX = -100.0f;
+    titleTransitionY = 482.0f;
     word_CODE_bss_80069584 = 0x42;
-    dword_CODE_bss_80069550 = arg0;
-    arg1 -= 0x200;
-    arg0 += 0x200;
+    barrelDisplayListPtr = gfxBuffer;
+    bufferSize -= 0x200;
+    gfxBuffer += 0x200;
     
-    sub_GAME_7F01BAE0(dword_CODE_bss_80069550, 0x1E);
+    sub_GAME_7F01BAE0(barrelDisplayListPtr, 0x1E);
     
-    dword_CODE_bss_80069554 = (Gfx*)arg0;
-    arg1 -= 0x100;
-    arg0 += 0x100;
+    gunbarrelgfxListPointer = (Gfx*)gfxBuffer;
+    bufferSize -= 0x100;
+    gfxBuffer += 0x100;
     
-    sub_GAME_7F01BFF8(dword_CODE_bss_80069554, dword_CODE_bss_80069550 + 0x80000000, 0x1E);
-    sub_GAME_7F008DE4((u8 **)&arg0, &arg1);
+    sub_GAME_7F01BFF8(gunbarrelgfxListPointer, barrelDisplayListPtr + 0x80000000, 0x1E);
+    sub_GAME_7F008DE4((u8 **)&gfxBuffer, &bufferSize);
 
     // struct copy
     sp50 = D_8002A8A8;
     
     temp_t9 = 0x12C00;
     
-    texInitPool(&sp40, arg0, temp_t9);
+    texInitPool(&texturePool, gfxBuffer, temp_t9);
     
-    arg0 += temp_t9;
-    arg1 -= temp_t9;
+    gfxBuffer += temp_t9;
+    bufferSize -= temp_t9;
     
-    load_object_fill_header(c_item_entries[BODY_Brosnan_Tuxedo].header, c_item_entries[BODY_Brosnan_Tuxedo].filename, arg0, arg1, &sp40);
+    load_object_fill_header(c_item_entries[BODY_Brosnan_Tuxedo].header, c_item_entries[BODY_Brosnan_Tuxedo].filename, gfxBuffer, bufferSize, &texturePool);
     
     temp_t9 = ((get_pc_buffer_remaining_value(c_item_entries[BODY_Brosnan_Tuxedo].filename) + 0x3F) | 0x3F) ^ 0x3F;
-    arg1 -= temp_t9;
-    arg0 += temp_t9;
+    bufferSize -= temp_t9;
+    gfxBuffer += temp_t9;
     
-    load_object_fill_header(c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].header, c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].filename, arg0, arg1, &sp40);
+    load_object_fill_header(c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].header, c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].filename, gfxBuffer, bufferSize, &texturePool);
     
     temp_t9 = ((get_pc_buffer_remaining_value(c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].filename) + 0x3F) | 0x3F) ^ 0x3F;
-    arg1 -= temp_t9;
-    arg0 += temp_t9;
+    bufferSize -= temp_t9;
+    gfxBuffer += temp_t9;
     
-    D_8002A7F4 = setup_chr_instance(BODY_Brosnan_Tuxedo, BODY_Male_Pierce_Bond_Tuxedo, c_item_entries[BODY_Brosnan_Tuxedo].header, c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].header, 0);
+    chrModelInstance = setup_chr_instance(BODY_Brosnan_Tuxedo, BODY_Male_Pierce_Bond_Tuxedo, c_item_entries[BODY_Brosnan_Tuxedo].header, c_item_entries[BODY_Male_Pierce_Bond_Tuxedo].header, 0);
 
-    modelSetScale(D_8002A7F4, 0.18779343f);
-    sub_GAME_7F06CE84(D_8002A7F4, 1.0f);
-    setsuboffset(D_8002A7F4, &sp50);
-    setsubroty(D_8002A7F4, 0.0f);
+    modelSetScale(chrModelInstance, 0.18779343f);
+    sub_GAME_7F06CE84(chrModelInstance, 1.0f);
+    setsuboffset(chrModelInstance, &sp50);
+    setsubroty(chrModelInstance, 0.0f);
 #if defined(VERSION_EU)
     #define S_7F008E80_ANIM_SPEED 0.6f
 #else
     #define S_7F008E80_ANIM_SPEED 0.5f
 #endif
-    modelSetAnimPlaySpeed(D_8002A7F4, S_7F008E80_ANIM_SPEED, 0.0f);
+    modelSetAnimPlaySpeed(chrModelInstance, S_7F008E80_ANIM_SPEED, 0.0f);
 #undef S_7F008E80_ANIM_SPEED
     
-    temp_a1 = (struct ModelAnimation*)((s32)ptr_animation_table + (s32)&ANIM_DATA_bond_eye_walk);
-    startframe = temp_a1->unk04 - 0x44;
+    animation = (struct ModelAnimation*)((s32)ptr_animation_table + (s32)&ANIM_DATA_bond_eye_walk);
+    startframe = animation->unk04 - 0x44;
     while (startframe < 0)
     {
-        startframe += temp_a1->unk04;
+        startframe += animation->unk04;
     }
     
-    modelSetAnimation(D_8002A7F4, (struct ModelAnimation *) temp_a1, 0, (f32) startframe, 0.91f, 0.0f);
-    load_object_fill_header(PitemZ_entries[PROP_CHRWPPK].header, PitemZ_entries[PROP_CHRWPPK].filename, arg0, arg1, &sp40);
+    modelSetAnimation(chrModelInstance, (struct ModelAnimation *) animation, 0, (f32) startframe, 0.91f, 0.0f);
+    load_object_fill_header(PitemZ_entries[PROP_CHRWPPK].header, PitemZ_entries[PROP_CHRWPPK].filename, gfxBuffer, bufferSize, &texturePool);
     
     temp_t9 = ((get_pc_buffer_remaining_value(PitemZ_entries[PROP_CHRWPPK].filename) + 0x3F) | 0x3F) ^ 0x3F;
-    arg1 -= temp_t9;
-    arg0 += temp_t9;
+    bufferSize -= temp_t9;
+    gfxBuffer += temp_t9;
     
     modelCalculateRwDataLen(PitemZ_entries[191].header);
     
-    D_8002A7F8 = get_obj_instance_controller_for_header(PitemZ_entries[PROP_CHRWPPK].header);
+    gunModelInstance = get_obj_instance_controller_for_header(PitemZ_entries[PROP_CHRWPPK].header);
     
-    modelSetScale(D_8002A7F8, 0.18779343f);
+    modelSetScale(gunModelInstance, 0.18779343f);
     
-    D_8002A7F8->attachedto = D_8002A7F4;
-    D_8002A7F8->attachedto_objinst = D_8002A7F4->obj->Switches[3];
+    gunModelInstance->attachedto = chrModelInstance;
+    gunModelInstance->attachedto_objinst = chrModelInstance->obj->Switches[3];
     dword_CODE_bss_80069594 = 0;    
 }
 
 
 void sub_GAME_7F00920C(void)
 {
-    if (D_8002A7F4)
+    if (chrModelInstance)
     {
-        clear_aircraft_model_obj(D_8002A7F4);
+        clear_aircraft_model_obj(chrModelInstance);
     }
 
-    if (D_8002A7F8)
+    if (gunModelInstance)
     {
-        clear_model_obj(D_8002A7F8);
+        clear_model_obj(gunModelInstance);
     }
 }
 
@@ -1023,11 +1034,11 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
     switch (gunbarrel_mode - 2)
     {
     case 0:
-        gdl = something_with_gunbarrel_and_rareware_logo_matrix_manip(gdl);
+        gdl = manipulateGunbarrelAndLogoMatrices(gdl);
         g_TitleX += XINC;
         if (word_CODE_bss_80069584 < 0) {
             word_CODE_bss_80069584 = 200;
-            dword_CODE_bss_8006957C = (g_TitleX - XDEC);
+            titleTransitionX = (g_TitleX - XDEC);
         } else {
 #if defined(VERSION_EU)
             word_CODE_bss_80069584 -= 7;
@@ -1043,7 +1054,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
 
     case 1:
         #if defined(LEFTOVERDEBUG)
-        gSPDisplayList(gdl++, &fontDL_0x000);
+        gSPDisplayList(gdl++, &dlBasicGeometry);
         gdl = insert_imageDL(gdl++);
         gdl = insert_imageDL(gdl++);
         gdl = insert_imageDL(gdl++);
@@ -1089,7 +1100,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         if (intro_state_blood_animation != 0) {
             gunbarrel_mode++;
             word_CODE_bss_80069584 = 0;
-            dword_CODE_bss_8006957C = g_TitleX;
+            titleTransitionX = g_TitleX;
             intro_eye_counter = 0;
         }
         break;
@@ -1097,7 +1108,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
     case 4:
         word_CODE_bss_80069584 += INCVAL;
         intro_eye_counter++;
-        g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
+        g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + titleTransitionX;
         gdl = insert_sniper_sight_eye_intro(gdl);
         gdl = insert_sight_backdrop_eye_intro(gdl);
         gdl = insert_bond_eye_intro(gdl);
@@ -1111,7 +1122,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
 
     case 5:
         word_CODE_bss_80069584 += INCVAL;
-        g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + dword_CODE_bss_8006957C;
+        g_TitleX = ((sins(word_CODE_bss_80069584) * 64.0f) / 32768.0f) + titleTransitionX;
         gdl = insert_sniper_sight_eye_intro(gdl);
         gdl = insert_sight_backdrop_eye_intro(gdl);
         gdl = insert_bond_eye_intro(gdl);
@@ -1127,7 +1138,7 @@ Gfx *sub_GAME_7F009254(Gfx *gdl) {
         break;
 
     case 6:
-        gSPDisplayList(gdl++, &fontDL_0x000);
+        gSPDisplayList(gdl++, &dlBasicGeometry);
         gdl = insert_imageDL(gdl);
         if (intro_eye_counter++ >= INTRO_EYE_COUNTER_CASE_6) {
             intro_eye_counter = 0;
