@@ -13,6 +13,7 @@
 #include "chrlv.h"
 #include "chrobjdata.h"
 #include "chrobjhandler.h"
+#include "explosions.h"
 #include "file.h"
 #include "gun.h"
 #include "initanitable.h"
@@ -7792,7 +7793,7 @@ glabel sub_GAME_7F022980
 /* 057748 7F022C18 0007000D */  break 7
 .L7F022C1C:
 /* 05774C 7F022C1C AFA00018 */  sw    $zero, 0x18($sp)
-/* 057750 7F022C20 0FC28423 */  jal   sub_GAME_7F0A108C
+/* 057750 7F022C20 0FC28423 */  jal   explosionCreateBulletImpact
 /* 057754 7F022C24 AFAA0014 */   sw    $t2, 0x14($sp)
 /* 057758 7F022C28 26520004 */  addiu $s2, $s2, 4
 .L7F022C2C:
@@ -7842,7 +7843,7 @@ glabel sub_GAME_7F022980
 /* 0577F8 7F022CC8 26240010 */  addiu $a0, $s1, 0x10
 /* 0577FC 7F022CCC 2625001C */  addiu $a1, $s1, 0x1c
 /* 057800 7F022CD0 24070001 */  li    $a3, 1
-/* 057804 7F022CD4 0FC28423 */  jal   sub_GAME_7F0A108C
+/* 057804 7F022CD4 0FC28423 */  jal   explosionCreateBulletImpact
 /* 057808 7F022CD8 AFAB0014 */   sw    $t3, 0x14($sp)
 /* 05780C 7F022CDC 10000045 */  b     .L7F022DF4
 /* 057810 7F022CE0 8FBF004C */   lw    $ra, 0x4c($sp)

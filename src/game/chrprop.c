@@ -1,43 +1,39 @@
 #include <ultra64.h>
+#include <assert.h>
 #include <bondgame.h>
 #include <bondtypes.h>
 #include <bondaicommands.h>
 #include <boss.h>
-#include <snd.h>
+#include <limits.h>
 #include <music.h>
+#include <random.h>
+#include <snd.h>
 #include "bg.h"
 #include "bondview.h"
+#include "cheat_buttons.h"
 #include "chr.h"
 #include "chrai.h"
+#include "chraidata.h"
 #include "chrlv.h"
 #include "chrobjhandler.h"
-#include "gun.h"
-#include "lvl_text.h"
-#include "math_floor.h"
-#include "math_ceil.h"
-#include "math_atan2f.h"
-#include "player.h"
-#include "chraidata.h"
-#include <limits.h>
-#include "objecthandler.h"
-#include "chrobjhandler.h"
-#include "initanitable.h"
-#include <random.h>
-#include "lvl.h"
-#include "stan.h"
-#include "chr.h"
-#include "mp_music.h"
-#include "objective_status.h"
-#include "bondview.h"
-#include <assert.h>
-#include "loadobjectmodel.h"
-#include "cheat_buttons.h"
-#include "player.h"
-#include "player_2.h"
+#include "explosions.h"
 #include "file.h"
 #include "fog.h"
+#include "gun.h"
+#include "initanitable.h"
+#include "loadobjectmodel.h"
+#include "lvl.h"
+#include "lvl_text.h"
+#include "math_atan2f.h"
+#include "math_ceil.h"
+#include "math_floor.h"
+#include "mp_music.h"
+#include "player.h"
+#include "objecthandler.h"
+#include "objective_status.h"
+#include "player.h"
+#include "player_2.h"
 #include "stan.h"
-#include "explosions.h"
 
 // bss
 
@@ -447,11 +443,11 @@ Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
     }
     else if (type == PROP_TYPE_EXPLOSION)
     {
-        gdl = unk09c250RenderPropExplosion(prop, gdl, withalpha);
+        gdl = explosionRenderPropExplosion(prop, gdl, withalpha);
     }
     else if (type == PROP_TYPE_SMOKE)
     {
-        gdl = unk09c250RenderPropSmoke(prop, gdl);
+        gdl = explosionRenderPropSmoke(prop, gdl, withalpha);
     }
     else if (type == PROP_TYPE_VIEWER)
     {
@@ -1012,7 +1008,7 @@ glabel sub_GAME_7F03AB58
 /* 06F724 7F03ABF4 02402025 */   move  $a0, $s2
 /* 06F728 7F03ABF8 8FA50224 */  lw    $a1, 0x224($sp)
 /* 06F72C 7F03ABFC 8E060000 */  lw    $a2, ($s0)
-/* 06F730 7F03AC00 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06F730 7F03AC00 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06F734 7F03AC04 02603825 */   move  $a3, $s3
 /* 06F738 7F03AC08 10400069 */  beqz  $v0, .L7F03ADB0
 /* 06F73C 7F03AC0C C7A40054 */   lwc1  $f4, 0x54($sp)
@@ -1200,7 +1196,7 @@ glabel sub_GAME_7F03ADF4
 /* 06F9AC 7F03AE7C 8FA402FC */   lw    $a0, 0x2fc($sp)
 /* 06F9B0 7F03AE80 8FA50300 */  lw    $a1, 0x300($sp)
 /* 06F9B4 7F03AE84 02603025 */  move  $a2, $s3
-/* 06F9B8 7F03AE88 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06F9B8 7F03AE88 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06F9BC 7F03AE8C 8FA70310 */   lw    $a3, 0x310($sp)
 /* 06F9C0 7F03AE90 50400004 */  beql  $v0, $zero, .L7F03AEA4
 /* 06F9C4 7F03AE94 02602025 */   move  $a0, $s3
@@ -1325,7 +1321,7 @@ glabel sub_GAME_7F03AF5C
 /* 06FB40 7F03B010 02602025 */   move  $a0, $s3
 /* 06FB44 7F03B014 8FA500C8 */  lw    $a1, 0xc8($sp)
 /* 06FB48 7F03B018 02203025 */  move  $a2, $s1
-/* 06FB4C 7F03B01C 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06FB4C 7F03B01C 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06FB50 7F03B020 02C03825 */   move  $a3, $s6
 /* 06FB54 7F03B024 10400035 */  beqz  $v0, .L7F03B0FC
 /* 06FB58 7F03B028 C7A40088 */   lwc1  $f4, 0x88($sp)
@@ -1589,7 +1585,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 06FF04 7F03B3D4 02002025 */  move  $a0, $s0
 /* 06FF08 7F03B3D8 27A50560 */  addiu $a1, $sp, 0x560
 /* 06FF0C 7F03B3DC 02203025 */  move  $a2, $s1
-/* 06FF10 7F03B3E0 0FC2DE9E */  jal   sub_GAME_7F0B7A78
+/* 06FF10 7F03B3E0 0FC2DE9E */  jal   bgTestBulletHitBackground
 /* 06FF14 7F03B3E4 27A70510 */   addiu $a3, $sp, 0x510
 /* 06FF18 7F03B3E8 10400002 */  beqz  $v0, .L7F03B3F4
 /* 06FF1C 7F03B3EC 24190001 */   li    $t9, 1
@@ -1900,7 +1896,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 070368 7F03B838 AFA00010 */  sw    $zero, 0x10($sp)
 /* 07036C 7F03B83C 27A40548 */  addiu $a0, $sp, 0x548
 /* 070370 7F03B840 27A5051C */  addiu $a1, $sp, 0x51c
-/* 070374 7F03B844 0FC28423 */  jal   sub_GAME_7F0A108C
+/* 070374 7F03B844 0FC28423 */  jal   explosionCreateBulletImpact
 /* 070378 7F03B848 87A70546 */   lh    $a3, 0x546($sp)
 .L7F03B84C:
 /* 07037C 7F03B84C 0FC2ED8C */  jal   check_if_imageID_is_light
@@ -2885,9 +2881,9 @@ void handle_mp_respawn_and_some_things(void) {
                     // 0x04 is chr, obj, door, weapon
                 }
             } else if (prop_type == PROP_TYPE_EXPLOSION) {
-                var_s2 = sub_GAME_7F09CEE8(prop_s1); // explosions related
+                var_s2 = explosionTick(prop_s1); // explosions related
             } else if (prop_type == PROP_TYPE_SMOKE) {
-                var_s2 = sub_GAME_7F09E8AC(prop_s1); // smoke related
+                var_s2 = explosionSmokeTick(prop_s1); // smoke related
             } else if (prop_type == PROP_TYPE_VIEWER) {
                 sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xA54); // function receives ChrRecord_f180
                 sub_GAME_7F062B00(*(&g_playerPointers + (getPlayerPointerIndex(prop_s1) * 4)) + 0xDFC); // function receives ChrRecord_f180
@@ -3118,7 +3114,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C90C:
 /* 07143C 7F03C90C 54410006 */  bnel  $v0, $at, .L7F03C928
 /* 071440 7F03C910 24010008 */   li    $at, 8
-/* 071444 7F03C914 0FC273BA */  jal   sub_GAME_7F09CEE8
+/* 071444 7F03C914 0FC273BA */  jal   explosionTick
 /* 071448 7F03C918 02202025 */   move  $a0, $s1
 /* 07144C 7F03C91C 10000028 */  b     .L7F03C9C0
 /* 071450 7F03C920 00409025 */   move  $s2, $v0
@@ -3126,7 +3122,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C928:
 /* 071458 7F03C928 54410006 */  bnel  $v0, $at, .L7F03C944
 /* 07145C 7F03C92C 24010006 */   li    $at, 6
-/* 071460 7F03C930 0FC27A2B */  jal   sub_GAME_7F09E8AC
+/* 071460 7F03C930 0FC27A2B */  jal   explosionSmokeTick
 /* 071464 7F03C934 02202025 */   move  $a0, $s1
 /* 071468 7F03C938 10000021 */  b     .L7F03C9C0
 /* 07146C 7F03C93C 00409025 */   move  $s2, $v0
@@ -3401,7 +3397,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C9CC:
 /* 06F3BC 7F03C9CC 54410006 */  bnel  $v0, $at, .L7F03C9E8
 /* 06F3C0 7F03C9D0 24010008 */   li    $at, 8
-/* 06F3C4 7F03C9D4 0FC2710B */  jal   sub_GAME_7F09CEE8
+/* 06F3C4 7F03C9D4 0FC2710B */  jal   explosionTick
 /* 06F3C8 7F03C9D8 02202025 */   move  $a0, $s1
 /* 06F3CC 7F03C9DC 10000028 */  b     .L7F03CA80
 /* 06F3D0 7F03C9E0 00409025 */   move  $s2, $v0
@@ -3409,7 +3405,7 @@ glabel handle_mp_respawn_and_some_things
 .L7F03C9E8:
 /* 06F3D8 7F03C9E8 54410006 */  bnel  $v0, $at, .L7F03CA04
 /* 06F3DC 7F03C9EC 24010006 */   li    $at, 6
-/* 06F3E0 7F03C9F0 0FC2777C */  jal   sub_GAME_7F09E8AC
+/* 06F3E0 7F03C9F0 0FC2777C */  jal   explosionSmokeTick
 /* 06F3E4 7F03C9F4 02202025 */   move  $a0, $s1
 /* 06F3E8 7F03C9F8 10000021 */  b     .L7F03CA80
 /* 06F3EC 7F03C9FC 00409025 */   move  $s2, $v0
@@ -3516,11 +3512,11 @@ void determing_type_of_object_and_detection(void)
         }
         else if (prop->type == PROP_TYPE_EXPLOSION)
         {
-            tickop = explosionTick(prop);
+            tickop = explosionChrpropExplosionTick(prop);
         }
         else if (prop->type == PROP_TYPE_SMOKE)
         {
-            tickop = smokeTick(prop);
+            tickop = explosionChrpropSmokeTick(prop);
         }
         else if (prop->type == PROP_TYPE_VIEWER)
         {

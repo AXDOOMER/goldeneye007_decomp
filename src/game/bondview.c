@@ -11921,7 +11921,7 @@ s32 sub_GAME_7F087A08(s32 arg0) {
         {
             // Node 3
             sp58 = temp_v1;
-            sub_GAME_7F09C7C4(temp_a0, temp_a1, &sp4C);
+            explosionScreenShake(temp_a0, temp_a1, &sp4C);
         }
         else
         {
@@ -12029,7 +12029,7 @@ glabel sub_GAME_7F087A08
 /* 0BC5EC 7F087ABC 8C4900D8 */  lw    $t1, 0xd8($v0)
 /* 0BC5F0 7F087AC0 55200006 */  bnezl $t1, .L7F087ADC
 /* 0BC5F4 7F087AC4 44806000 */   mtc1  $zero, $f12
-/* 0BC5F8 7F087AC8 0FC271F1 */  jal   sub_GAME_7F09C7C4
+/* 0BC5F8 7F087AC8 0FC271F1 */  jal   explosionScreenShake
 /* 0BC5FC 7F087ACC AFA30058 */   sw    $v1, 0x58($sp)
 /* 0BC600 7F087AD0 10000005 */  b     .L7F087AE8
 /* 0BC604 7F087AD4 8FA30058 */   lw    $v1, 0x58($sp)
@@ -12222,7 +12222,7 @@ glabel sub_GAME_7F087A08
 /* 0BA60C 7F087C1C 8C4900D8 */  lw    $t1, 0xd8($v0)
 /* 0BA610 7F087C20 55200006 */  bnezl $t1, .L7F087C3C
 /* 0BA614 7F087C24 44806000 */   mtc1  $zero, $f12
-/* 0BA618 7F087C28 0FC26F36 */  jal   sub_GAME_7F09C7C4
+/* 0BA618 7F087C28 0FC26F36 */  jal   explosionScreenShake
 /* 0BA61C 7F087C2C AFA30058 */   sw    $v1, 0x58($sp)
 /* 0BA620 7F087C30 10000005 */  b     .L7F087C48
 /* 0BA624 7F087C34 8FA30058 */   lw    $v1, 0x58($sp)

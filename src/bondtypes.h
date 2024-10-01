@@ -2185,8 +2185,9 @@ typedef union
             struct ObjectRecord    *obj;
             struct DoorRecord      *door;
             struct WeaponObjRecord *weapon;
-            void                   *explosion;
-            void                   *smoke;
+            struct Explosion *explosion;
+            struct Smoke *smoke;
+            struct Scorch *scorch;
             void                   *voidp;
         };                       /*0x04*/
         coord3d            pos;  /*0x08*/

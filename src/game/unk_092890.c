@@ -35,7 +35,7 @@ struct coord3d64 {
  * 
  * Address: 0x7F092890
 */
-s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, struct coord3d *arg4, struct coord3d *arg5, struct coord3d *arg6, struct unk_bg_struct *arg7)
+s32 intersectLineTriangle(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, struct coord3d *arg4, struct coord3d *arg5, struct coord3d *arg6, struct unk_bg_struct *arg7)
 {
     f64 sp150;
     f64 sp148;
@@ -124,6 +124,7 @@ s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, str
     sp100 = temp_f22 - temp_f24;
     spF8 = temp_f26 - temp_f28;
 
+    // why would this happen before the next early return when it's only used later?
     spF0 = 
         (spF8 * ((f64) arg0->v.ob[2] + spA0))
         +
@@ -132,6 +133,8 @@ s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, str
         (sp108 * ((f64) arg0->v.ob[0] + sp90))
         ;
     
+    // this is a dot product check that when 0.0, means the line is parallel to the
+    // plane of the triangle indicating an intersection is not possible
     if ((sp108 * sp78) + (sp100 * sp80) + (spF8 * sp88) == 0.0)
     {
         return 0;
@@ -178,8 +181,10 @@ s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, str
         var_f0 = (spC0 - (var_f2 * sp120)) / sp150;
     }
     
+    // checks if the impact point is within the triangle?
     if ((var_f0 >= 0.0) && (var_f2 >= 0.0) && ((var_f0 + var_f2) <= 1.0))
     {
+        // what's this doing?
         if ((
             (sp78 * (spC8 - (f64) arg4->f[0]))
             +
@@ -208,7 +213,7 @@ s32 sub_GAME_7F092890(Vtx *arg0, Vtx *arg1, Vtx *arg2, struct coord3d *arg3, str
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F092890
+glabel intersectLineTriangle
 /* 0C73C0 7F092890 27BDFEA8 */  addiu $sp, $sp, -0x158
 /* 0C73C4 7F092894 F7BE0030 */  sdc1  $f30, 0x30($sp)
 /* 0C73C8 7F092898 F7BC0028 */  sdc1  $f28, 0x28($sp)
