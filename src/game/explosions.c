@@ -881,7 +881,7 @@ Gfx *explosionRenderPropExplosion(PropRecord *prop, Gfx *gdl, s32 withalpha)
         gSPClearGeometryMode(gdl++, G_CULL_BOTH | G_FOG);
         gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
 
-        gdl = updateDisplayListWithRoomMatrix(gdl, temp_s1);
+        gdl = applyRoomMatrixToDisplayList(gdl, temp_s1);
 
         gSPSegment(gdl++, SPSEGMENT_GETITLE, osVirtualToPhysical(pGlobalimagetable));
 
@@ -1494,7 +1494,7 @@ Gfx *explosionRenderPropSmoke(PropRecord *arg0, Gfx *gdl, s32 withalpha)
 
     gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-    gdl = updateDisplayListWithRoomMatrix(gdl, temp_s1);
+    gdl = applyRoomMatrixToDisplayList(gdl, temp_s1);
 
     gSPMatrix(gdl++, osVirtualToPhysical((void*)&dword_CODE_bss_8007A100), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
@@ -1883,7 +1883,7 @@ Gfx *explosionRenderScorchBuffer(Gfx *arg0)
                 if (phi_s3 != g_ScorchBuffer[i].roomid)
                 {
                     phi_s3 = g_ScorchBuffer[i].roomid;
-                    arg0 = updateDisplayListWithRoomMatrix(arg0, g_ScorchBuffer[i].roomid);
+                    arg0 = applyRoomMatrixToDisplayList(arg0, g_ScorchBuffer[i].roomid);
                 }
 
                 /**
@@ -2247,7 +2247,7 @@ Gfx *explosionRenderBulletImpactOnProp(Gfx *gdl, PropRecord *arg1, s32 arg2)
                             if (var_s5 != g_BulletImpactBuffer[i].room)
                             {
                                 var_s5 = g_BulletImpactBuffer[i].room;
-                                gdl = updateDisplayListWithRoomMatrix(gdl, g_BulletImpactBuffer[i].room);
+                                gdl = applyRoomMatrixToDisplayList(gdl, g_BulletImpactBuffer[i].room);
                             }
                         }
     

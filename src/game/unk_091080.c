@@ -9,7 +9,7 @@
 
 // bss
 //CODE.bss:80079E20
-s32 dword_CODE_bss_80079E20;
+s32 debugCameraStateCounter;
 
 
 // data
@@ -17,30 +17,30 @@ s32 dword_CODE_bss_80079E20;
 s32 D_80037010 = 0; //unused
 
 // 0x80037014
-coord3d stanbondpos = {0.0f,0.0f,0.0f};
+coord3d debugCameraPosition = {0.0f,0.0f,0.0f};
 
-coord3d stanbondforward = {0.0f,0.0f,-1.0f};
+coord3d debugCameraForward = {0.0f,0.0f,-1.0f};
 
 //D:8003702C
-coord3d stanbondup = {0.0f,1.0f,0.0f};
+coord3d debugCameraUp = {0.0f,1.0f,0.0f};
 
 //D:80037038
-f32 stanbondhorzangle = 0.0f;
+f32 debugCameraHorizontalAngle = 0.0f;
 //D:8003703C
-f32 stanbondhorzcos = 1.0f;
+f32 debugCameraHorizontalCosine = 1.0f;
 //D:80037040
-f32 stanbondhorzsin = 0.0f;
+f32 debugCameraHorizontalSine = 0.0f;
 //D:80037044
-f32 stanbondvertangle = 0.0f;
+f32 debugCameraVerticalAngle = 0.0f;
 //D:80037048
-f32 stanbondvertcos = 1.0f;
+f32 debugCameraVerticalCosine = 1.0f;
 //D:8003704C
-f32 stanbondvertsin = 0.0f;
+f32 debugCameraVerticalSine = 0.0f;
 
 /***
  * NTSC address 0x7F091080.
 */
-void debugMoveView(s8 joyX, s8 joyY, u16 joyBtns)
+void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
 {
     f32 speedModifier;
     s32 temp_v0;
@@ -95,83 +95,83 @@ void debugMoveView(s8 joyX, s8 joyY, u16 joyBtns)
             movementSpeed *= 0.5f;
         }
         
-        stanbondpos.f[0] += ((f32) joyY * stanbondhorzsin * speedModifier * movementSpeed);
-        stanbondpos.f[2] += (-(f32) joyY * stanbondhorzcos * speedModifier * movementSpeed);
+        debugCameraPosition.f[0] += ((f32) joyY * debugCameraHorizontalSine * speedModifier * movementSpeed);
+        debugCameraPosition.f[2] += (-(f32) joyY * debugCameraHorizontalCosine * speedModifier * movementSpeed);
         
         if (joyBtns & (L_CBUTTONS|L_JPAD))
         {
-            stanbondpos.f[0] -= (20.0f * stanbondhorzcos * speedModifier * movementSpeed);
-            stanbondpos.f[2] -= (20.0f * stanbondhorzsin * speedModifier * movementSpeed);
+            debugCameraPosition.f[0] -= (20.0f * debugCameraHorizontalCosine * speedModifier * movementSpeed);
+            debugCameraPosition.f[2] -= (20.0f * debugCameraHorizontalSine * speedModifier * movementSpeed);
         }
         
         if (joyBtns & (R_CBUTTONS|R_JPAD))
         {
-            stanbondpos.f[0] += (20.0f * stanbondhorzcos * speedModifier * movementSpeed);
-            stanbondpos.f[2] += (20.0f * stanbondhorzsin * speedModifier * movementSpeed);
+            debugCameraPosition.f[0] += (20.0f * debugCameraHorizontalCosine * speedModifier * movementSpeed);
+            debugCameraPosition.f[2] += (20.0f * debugCameraHorizontalSine * speedModifier * movementSpeed);
         }
         
-        stanbondhorzangle += (f32) joyX * speedModifier * 0.125f;
+        debugCameraHorizontalAngle += (f32) joyX * speedModifier * 0.125f;
         
         if (joyBtns & U_JPAD)
         {
-            stanbondvertangle -= 2.0f * speedModifier;
+            debugCameraVerticalAngle -= 2.0f * speedModifier;
         }
         
         if (joyBtns & D_JPAD)
         {
-            stanbondvertangle += 2.0f * speedModifier;
+            debugCameraVerticalAngle += 2.0f * speedModifier;
         }
         
         if (joyBtns & U_CBUTTONS)
         {
-            stanbondpos.f[1] += (20.0f * speedModifier * movementSpeed);
+            debugCameraPosition.f[1] += (20.0f * speedModifier * movementSpeed);
         }
         
         if (joyBtns & D_CBUTTONS)
         {
-            stanbondpos.f[1] -= (20.0f * speedModifier * movementSpeed);
+            debugCameraPosition.f[1] -= (20.0f * speedModifier * movementSpeed);
         }
     }
 
-    while (stanbondhorzangle < 0.0f)
+    while (debugCameraHorizontalAngle < 0.0f)
     {
-        stanbondhorzangle += 360.0f;            
+        debugCameraHorizontalAngle += 360.0f;            
     }
 
-    while (stanbondhorzangle >= 360.0f)
+    while (debugCameraHorizontalAngle >= 360.0f)
     {
-        stanbondhorzangle -= 360.0f;
+        debugCameraHorizontalAngle -= 360.0f;
     }
 
-    while (stanbondvertangle < 0.0f)
+    while (debugCameraVerticalAngle < 0.0f)
     {
-        stanbondvertangle += 360.0f;
+        debugCameraVerticalAngle += 360.0f;
     }
 
-    while (stanbondvertangle >= 360.0f)
+    while (debugCameraVerticalAngle >= 360.0f)
     {
-        stanbondvertangle -= 360.0f;            
+        debugCameraVerticalAngle -= 360.0f;            
     }
 
-    stanbondhorzcos = cosf(stanbondhorzangle * DegToRad(1));
-    stanbondhorzsin = sinf(stanbondhorzangle * DegToRad(1));
-    stanbondvertcos = cosf(stanbondvertangle * DegToRad(1));
-    stanbondvertsin = sinf(stanbondvertangle * DegToRad(1));
+    debugCameraHorizontalCosine = cosf(debugCameraHorizontalAngle * DegToRad(1));
+    debugCameraHorizontalSine = sinf(debugCameraHorizontalAngle * DegToRad(1));
+    debugCameraVerticalCosine = cosf(debugCameraVerticalAngle * DegToRad(1));
+    debugCameraVerticalSine = sinf(debugCameraVerticalAngle * DegToRad(1));
     
-    stanbondforward.f[1] = (f32) stanbondvertsin;
-    stanbondforward.f[0] = (f32) (stanbondvertcos * stanbondhorzsin);
-    stanbondforward.f[2] = (f32) (-stanbondvertcos * stanbondhorzcos);
+    debugCameraForward.f[1] = (f32) debugCameraVerticalSine;
+    debugCameraForward.f[0] = (f32) (debugCameraVerticalCosine * debugCameraHorizontalSine);
+    debugCameraForward.f[2] = (f32) (-debugCameraVerticalCosine * debugCameraHorizontalCosine);
     
-    stanbondup.f[1] = (f32) stanbondvertcos;
-    stanbondup.f[0] = (f32) (-stanbondvertsin * stanbondhorzsin);
-    stanbondup.f[2] = (f32) (stanbondvertsin * stanbondhorzcos);
+    debugCameraUp.f[1] = (f32) debugCameraVerticalCosine;
+    debugCameraUp.f[0] = (f32) (-debugCameraVerticalSine * debugCameraHorizontalSine);
+    debugCameraUp.f[2] = (f32) (debugCameraVerticalSine * debugCameraHorizontalCosine);
     
     previousButtons = joyBtns;
     
     set_cur_player_fovy(FOV_Y_F);
     
-    dword_CODE_bss_80079E20++;
-    if (dword_CODE_bss_80079E20 == 1)
+    debugCameraStateCounter++;
+    if (debugCameraStateCounter == 1)
     {
         remove_item_in_hand(GUNRIGHT);
         remove_item_in_hand(GUNLEFT);
@@ -179,7 +179,7 @@ void debugMoveView(s8 joyX, s8 joyY, u16 joyBtns)
         return;
     }
     
-    if (dword_CODE_bss_80079E20 == 4)
+    if (debugCameraStateCounter == 4)
     {
         solo_char_load();
     }
@@ -187,18 +187,18 @@ void debugMoveView(s8 joyX, s8 joyY, u16 joyBtns)
 
 
 //D:80037058
-f32 stanbondScale = 1.0f;
+f32 debugCameraScale = 1.0f;
 //D:8003705C
-f32 stanbondInverseScale = 1.0f;
+f32 debugCameraInverseScale = 1.0f;
 //D:80037060
-coord3d stanbondPrevPos = {0.0f,0.0f,0.0f};
+coord3d debugCameraPreviousPosition = {0.0f,0.0f,0.0f};
 
 
 /*
 * Address: 0x7F091580
 */
 Gfx * sub_GAME_7F091580(Gfx * arg0) {
-    sub_GAME_7F0876C4(&stanbondpos, &stanbondforward, &stanbondup);
+    sub_GAME_7F0876C4(&debugCameraPosition, &debugCameraForward, &debugCameraUp);
     return arg0;
 }
 
@@ -206,23 +206,23 @@ Gfx * sub_GAME_7F091580(Gfx * arg0) {
 /*
 * Address: 0x7F0915BC
 */
-void sub_GAME_7F0915BC(float scale)
+void setDebugCameraScale(float scale)
 {
   float scaleFactor;
   
-  scaleFactor = stanbondScale / scale;
-  stanbondScale = scale;
-  stanbondpos.x = stanbondpos.x * scaleFactor;
-  stanbondpos.y = stanbondpos.y * scaleFactor;
-  stanbondpos.z = stanbondpos.z * scaleFactor;
-  stanbondInverseScale = 1.0f / scale;
+  scaleFactor = debugCameraScale / scale;
+  debugCameraScale = scale;
+  debugCameraPosition.x = debugCameraPosition.x * scaleFactor;
+  debugCameraPosition.y = debugCameraPosition.y * scaleFactor;
+  debugCameraPosition.z = debugCameraPosition.z * scaleFactor;
+  debugCameraInverseScale = 1.0f / scale;
 }
 
 
 /*
 * Address: 0x7f091618
 */
-void handle_debug_intropos(void)
+void initializeDebugCameraPosition(void)
 {
     coord3d* pos; //needed to be declared but not used to match
     f32 x;
@@ -239,29 +239,29 @@ void handle_debug_intropos(void)
 /*
 * Address: 0x7f09166c
 */
-void debugSetWorldPos(void)
+void updateDebugCameraWorldPosition(void)
 {
-    sqrtf((stanbondpos.x - stanbondPrevPos.x) * (stanbondpos.x - stanbondPrevPos.x) +
-          (stanbondpos.y - stanbondPrevPos.y) * (stanbondpos.y - stanbondPrevPos.y) +
-          (stanbondpos.z - stanbondPrevPos.z) * (stanbondpos.z - stanbondPrevPos.z));
+    sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
+          (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
+          (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z));
 
-    stanbondPrevPos.x = stanbondpos.x;
-    stanbondPrevPos.y = stanbondpos.y;
-    stanbondPrevPos.z = stanbondpos.z;
+    debugCameraPreviousPosition.x = debugCameraPosition.x;
+    debugCameraPreviousPosition.y = debugCameraPosition.y;
+    debugCameraPreviousPosition.z = debugCameraPosition.z;
 }
 
 /*
 * Address: 0x7F0916F4
 */
-void resetStanbondPosToPlayerPos(void)
+void resetDebugCameraToPlayerPosition(void)
 {
     coord3d *pos;
     
     pos = bondviewGetCurrentPlayersPosition();
-    stanbondpos.x = pos->x;
-    stanbondpos.y = pos->y;
-    stanbondpos.z = pos->z;
-    dword_CODE_bss_80079E20 = 0;
+    debugCameraPosition.x = pos->x;
+    debugCameraPosition.y = pos->y;
+    debugCameraPosition.z = pos->z;
+    debugCameraStateCounter = 0;
 }
 
 

@@ -320,7 +320,7 @@ void debugmenuUpdate(void)
 */
 void debmenuHandleMoveView(void)
 {
-    resetStanbondPosToPlayerPos();
+    resetDebugCameraToPlayerPosition();
     g_DebugHighlightedOption = get_highlighted_debug_option();
     debug_render_raster = debug_freeze_processing = g_DebugHighlightedOption;
 }
@@ -743,14 +743,14 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
             case DEB_INTRO_POS: // intro pos
                 if (debug_render_raster == DEB_MOVE_VIEW)
                 {
-                    handle_debug_intropos();
+                    initializeDebugCameraPosition();
                 }
                 break;
                 
             case DEB_WORLD_POS: // world pos
                 if (debug_render_raster == DEB_MOVE_VIEW)
                 {
-                    debugSetWorldPos();
+                    updateDebugCameraWorldPosition();
                 }
                 else
                 {

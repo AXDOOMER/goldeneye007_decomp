@@ -7,58 +7,58 @@
 /*
 * Address: 0x7f0b3200
 */
-f32 calculateInterpolationFactor(coord2d *start1, coord2d *end1, coord2d *start2, coord2d *end2)
+f32 calculateLineIntersectionFactor(coord2d *start1, coord2d *end1, coord2d *start2, coord2d *end2)
 {
     f32 deltaX = start2->f[1] - end2->f[1];
     f32 deltaY = end2->f[0] - start2->f[0];
-    f32 a = (start2->f[1] - start1->f[1]) * deltaY + (start2->f[0] - start1->f[0]) * deltaX;
-    f32 b = (end1->f[1] - start1->f[1]) * deltaY + (end1->f[0] - start1->f[0]) * deltaX;
+    f32 intersectionFactor = (start2->f[1] - start1->f[1]) * deltaY + (start2->f[0] - start1->f[0]) * deltaX;
+    f32 totalLineLength = (end1->f[1] - start1->f[1]) * deltaY + (end1->f[0] - start1->f[0]) * deltaX;
 
-    if (b == 0.0f)
+    if (totalLineLength == 0.0f)
     {
         return 1.0f;
     }
 
-    a /= b;
+    intersectionFactor /= totalLineLength;
 
-    if (a < 0.0f || a > 1.0f)
+    if (intersectionFactor < 0.0f || intersectionFactor > 1.0f)
     {
         return 1.0f;
     }
 
-    return a;
+    return intersectionFactor;
 }
 
 
 /*
 * Address: 0x7F0B32D8
 */
-f32 calculateGeometricLimit(struct coord3d *point3D, coord2d *lineStart, coord2d *lineEnd)
+f32 calculatePointToLineDistance(struct coord3d *point3D, coord2d *lineStart, coord2d *lineEnd)
 {
-    f32 projection1;
-    f32 projection2;
-    f32 deltaSquared;
+    f32 projectedDistance;
+    f32 perpendicularDistance;
+    f32 distanceSquared;
     f32 deltaX;
     f32 deltaY;
 
     deltaX = lineEnd->x - point3D->y;
     deltaY = lineEnd->y - point3D->z;
 
-    projection2 = deltaY * lineStart->x - deltaX * lineStart->y;
-    projection1 = deltaX * lineStart->x + deltaY * lineStart->y;
+    perpendicularDistance = deltaY * lineStart->x - deltaX * lineStart->y;
+    projectedDistance = deltaX * lineStart->x + deltaY * lineStart->y;
 
-    deltaSquared = (point3D->x - projection2) * (point3D->x + projection2);
+    distanceSquared = (point3D->x - perpendicularDistance) * (point3D->x + perpendicularDistance);
 
-    if (deltaSquared < 0.0f)
+    if (distanceSquared < 0.0f)
     {
         return FLT_MAX;
     }
 
-    projection1 -= sqrtf(deltaSquared);
+    projectedDistance -= sqrtf(distanceSquared);
 
-    if (projection1 < 0.0f)
+    if (projectedDistance < 0.0f)
     {
-        if (projection1 * projection1 + projection2 * projection2 <= point3D->x * point3D->x)
+        if (projectedDistance * projectedDistance + perpendicularDistance * perpendicularDistance <= point3D->x * point3D->x)
         {
             return 0.0f;
         }
@@ -66,14 +66,14 @@ f32 calculateGeometricLimit(struct coord3d *point3D, coord2d *lineStart, coord2d
         return FLT_MAX;
     }
 
-    return projection1;
+    return projectedDistance;
 }
 
 
 /*
 * Address: 0x7f0b33dc
 */
-f32 calculateNormalizedIntersection(coord3d *point3D, coord2d *lineStart, coord2d *lineEnd, coord2d *direction)
+f32 calculateNormalizedLineIntersection(coord3d *point3D, coord2d *lineStart, coord2d *lineEnd, coord2d *direction)
 {
     f32 directionLength ;
     f32 tempCrossProduct;
@@ -86,17 +86,17 @@ f32 calculateNormalizedIntersection(coord3d *point3D, coord2d *lineStart, coord2
     f32 normalX;
     f32 proj1;
     f32 proj2;
-    f32 intersectionStartY;
-    f32 intersectionStartX;
-    f32 intersectionEndY;
-    f32 intersectionEndX;
-    f32 crossEnd;
-    f32 crossStart;
-    f32 crossEndLineEnd;
+    f32 parallelLineStartY;
+    f32 parallelLineStartX;
+    f32 parallelLineEndY;
+    f32 parallelLineEndX;
+    f32 crossProductPoint;
+    f32 crossProductStart;
+    f32 crossProductEnd;
     f32 intersectionFactor;
     f32 intersectionFactorLineEnd;
-    f32 projectedStartDiff;
-    f32 projectedEndDiff;
+    f32 startProjection;
+    f32 endProjection;
 
     directionLength  = sqrtf(direction->x * direction->x + direction->y * direction->y);
 
@@ -131,22 +131,22 @@ f32 calculateNormalizedIntersection(coord3d *point3D, coord2d *lineStart, coord2
         proj2 = -proj2;
     }
 
-    intersectionStartX = lineStart->x + proj1;
-    intersectionStartY = lineStart->y + proj2;
-    intersectionEndX = lineEnd->x + proj1;
-    intersectionEndY = lineEnd->y + proj2;
+    parallelLineStartX = lineStart->x + proj1;
+    parallelLineStartY = lineStart->y + proj2;
+    parallelLineEndX = lineEnd->x + proj1;
+    parallelLineEndY = lineEnd->y + proj2;
 
-    crossStart = (direction->y * intersectionStartX) - (intersectionStartY * direction->x);
-    crossEnd = (point3D->y * direction->y) - (point3D->z * direction->x);
-    crossEndLineEnd = (direction->y * intersectionEndX) - (intersectionEndY * direction->x);
+    crossProductStart = (direction->y * parallelLineStartX) - (parallelLineStartY * direction->x);
+    crossProductPoint = (point3D->y * direction->y) - (point3D->z * direction->x);
+    crossProductEnd = (direction->y * parallelLineEndX) - (parallelLineEndY * direction->x);
 
-    if (crossEndLineEnd < crossStart)
+    if (crossProductEnd < crossProductStart)
     {
         coord2d *tmp;
 
-        tempCrossProduct = crossStart;
-        crossStart = crossEndLineEnd;
-        crossEndLineEnd = tempCrossProduct;
+        tempCrossProduct = crossProductStart;
+        crossProductStart = crossProductEnd;
+        crossProductEnd = tempCrossProduct;
 
         tmp = lineStart;
         lineStart = lineEnd;
@@ -156,36 +156,36 @@ f32 calculateNormalizedIntersection(coord3d *point3D, coord2d *lineStart, coord2
         normalY = -normalY;
     }
 
-    if (crossEndLineEnd == crossStart)
+    if (crossProductEnd == crossProductStart)
     {
-        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineStart);
-        intersectionFactorLineEnd = calculateGeometricLimit(point3D, &normalizedDir, lineEnd);
+        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineStart);
+        intersectionFactorLineEnd = calculatePointToLineDistance(point3D, &normalizedDir, lineEnd);
 
         if (intersectionFactorLineEnd < intersectionFactor)
         {
             intersectionFactor = intersectionFactorLineEnd;
         }
     }
-    else if (crossEndLineEnd < crossEnd)
+    else if (crossProductEnd < crossProductPoint)
     {
 handlezero:
-        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineEnd);
+        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineEnd);
     }
-    else if (crossEnd < crossStart)
+    else if (crossProductPoint < crossProductStart)
     {
-        intersectionFactor = calculateGeometricLimit(point3D, &normalizedDir, lineStart);
+        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineStart);
     }
     else
     {
-        projectedStartDiff = normalX * (point3D->y - lineStart->x) + normalY * (point3D->z - lineStart->y);
-        projectedEndDiff = normalX * (point3D->y + direction->x - lineStart->x) + normalY * (point3D->z + direction->y - lineStart->y);
+        startProjection = normalX * (point3D->y - lineStart->x) + normalY * (point3D->z - lineStart->y);
+        endProjection = normalX * (point3D->y + direction->x - lineStart->x) + normalY * (point3D->z + direction->y - lineStart->y);
 
-        if (projectedStartDiff == projectedEndDiff)
+        if (startProjection == endProjection)
         {
             return 1.0f;
         }
 
-        intersectionFactor = (projectedStartDiff - point3D->x) * directionLength  / (projectedStartDiff - projectedEndDiff);
+        intersectionFactor = (startProjection - point3D->x) * directionLength  / (startProjection - endProjection);
     }
 
     if (directionLength  < intersectionFactor)

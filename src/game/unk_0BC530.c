@@ -154,7 +154,7 @@ void updateRoomStatusFlags(void)
  *
  * NTSC address 0x7F0BC85C.
  */
-s32 manageRoomIndexAndMatrix(s32 roomID)
+s32 setupRoomTransformationMatrix(s32 roomID)
 {
     s32 roomIndex;
     Mtxf roomTransformMatrix;
@@ -204,11 +204,11 @@ s32 manageRoomIndexAndMatrix(s32 roomID)
  *
  * Address: 0x7F0BC9C4
  */
-Gfx * updateDisplayListWithRoomMatrix(Gfx *gdl,int roomID)
+Gfx * applyRoomMatrixToDisplayList(Gfx *gdl,int roomID)
 {
     s32 roomIndex;
     
-    roomIndex = manageRoomIndexAndMatrix(roomID);
+    roomIndex = setupRoomTransformationMatrix(roomID);
     gSPMatrix(gdl++, &roomMatrices[roomIndex], G_MTX_MODELVIEW|G_MTX_LOAD|G_MTX_NOPUSH);
     return gdl;
 }

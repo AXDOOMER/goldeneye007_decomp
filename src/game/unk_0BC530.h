@@ -5,7 +5,7 @@
 void setPlayerRoomField(s32 param_1);
 void updateRoomStatusFlags(void);
 void getRoomPositionScaledByIndex(s32 index, coord3d *param_2);
-Gfx * updateDisplayListWithRoomMatrix(Gfx *DL,int index);
+Gfx * applyRoomMatrixToDisplayList(Gfx *DL,int index);
 struct coord3d* getRoomPositionByIndex(s32 index);
 
 #endif

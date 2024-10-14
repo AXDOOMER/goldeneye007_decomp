@@ -4416,11 +4416,11 @@ void lvlViewMoveTick(void)
         {
             if ((getDebugMode() == DEB_MOVE_VIEW) || ((getDebugMode() == DEB_INTRO_EDIT) && (D_80036ABC < 0)))
             {
-                debugMoveView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
+                debugFreeCamera(joyGetStickX(local_player_number), joyGetStickY(local_player_number), joyGetButtons(local_player_number, ANY_BUTTON));
             }
             else
             {
-                debugMoveView(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
+                debugFreeCamera(joyGetStickX(local_player_number), joyGetStickY(local_player_number), 0);
             }
         }
         break;

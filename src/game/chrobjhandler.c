@@ -2128,7 +2128,7 @@ glabel sub_GAME_7F041400
 /* 0760E8 7F0415B8 C44A0000 */  lwc1  $f10, ($v0)
 /* 0760EC 7F0415BC E7AA00A8 */  swc1  $f10, 0xa8($sp)
 /* 0760F0 7F0415C0 C4480004 */  lwc1  $f8, 4($v0)
-/* 0760F4 7F0415C4 0FC2CC80 */  jal   calculateInterpolationFactor
+/* 0760F4 7F0415C4 0FC2CC80 */  jal   calculateLineIntersectionFactor
 /* 0760F8 7F0415C8 E7A800AC */   swc1  $f8, 0xac($sp)
 /* 0760FC 7F0415CC 4614003C */  c.lt.s $f0, $f20
 /* 076100 7F0415D0 00000000 */  nop
@@ -3664,7 +3664,7 @@ glabel sub_GAME_7F042A0C
 /* 077898 7F042D68 E7B00044 */  swc1  $f16, 0x44($sp)
 /* 07789C 7F042D6C C6120010 */  lwc1  $f18, 0x10($s0)
 /* 0778A0 7F042D70 46125101 */  sub.s $f4, $f10, $f18
-/* 0778A4 7F042D74 0FC2CCF7 */  jal   calculateNormalizedIntersection
+/* 0778A4 7F042D74 0FC2CCF7 */  jal   calculateNormalizedLineIntersection
 /* 0778A8 7F042D78 E7A40048 */   swc1  $f4, 0x48($sp)
 /* 0778AC 7F042D7C C7A80044 */  lwc1  $f8, 0x44($sp)
 /* 0778B0 7F042D80 3C018005 */  lui   $at, %hi(D_80052A5C)

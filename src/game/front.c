@@ -2946,7 +2946,7 @@ void interface_menu06_modesel(void)
 
 
 // Address 0x7F00D5E8 NTSC
-Gfx *sub_GAME_7F00D5E8(Gfx *DL)
+Gfx *frontSetupMenuBackground(Gfx *DL)
 {
     s32 padding;
     f32 temp_f0;
@@ -3023,7 +3023,7 @@ Gfx* constructor_menu06_modesel(Gfx* DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
     #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     x = 0x96;
@@ -3401,7 +3401,7 @@ Gfx *constructor_menu07_missionsel(Gfx *DL)
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
     gDPSetFogColor(DL++, 0xFF, 0xFF, 0xFF, 0xFF);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     for (spD8 = 0; spD8 < 5; spD8++)
@@ -3665,7 +3665,7 @@ Gfx *constructor_menu08_difficulty(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
 #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
 
 #ifndef VERSION_EU
     /**
@@ -3972,7 +3972,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
 #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
 
 #if !defined(VERSION_EU)
     sp54 = asc_D_80050074;
@@ -4666,7 +4666,7 @@ Gfx * constructor_menu0E_mpoptions(Gfx *DL)
   DL = viFillScreen(DL);
   DL = viFillScreen(DL);
   #endif
-  DL = sub_GAME_7F00D5E8(DL);
+  DL = frontSetupMenuBackground(DL);
   DL = microcode_constructor(DL);
   text = langGet(getStringID(LTITLE, TITLE_STR_76_MPOPTIONS));
   x = 0x37;
@@ -5097,7 +5097,7 @@ void interface_menu0F_mpcharsel(void)
 
 
 
-s32 sub_GAME_7F0122A8(s32 arg0, s32 arg1, s32 arg2)
+s32 frontCalculateCharacterImageAlpha(s32 arg0, s32 arg1, s32 arg2)
 {
     if ((arg1 >= arg0) || (arg0 >= arg2))
     {
@@ -5119,7 +5119,7 @@ s32 sub_GAME_7F0122A8(s32 arg0, s32 arg1, s32 arg2)
 
 
 // Address 0x7F01231C NTSC
-Gfx *sub_GAME_7F01231C(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
+Gfx *frontRenderCharacterPortrait(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6)
 {
     Mtx* spD4;
     Mtx* spD0;
@@ -5197,7 +5197,7 @@ Gfx *sub_GAME_7F01231C(Gfx *DL, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 
             if (arg6 == 0)
             {
-                spCC[vtx_index].a = sub_GAME_7F0122A8(spCC[vtx_index].coord.AsArray[0], arg1, arg2);
+                spCC[vtx_index].a = frontCalculateCharacterImageAlpha(spCC[vtx_index].coord.AsArray[0], arg1, arg2);
             }
             else
             {
@@ -5272,7 +5272,7 @@ Gfx * constructor_menu0F_mpcharsel(Gfx *DL)
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
     DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
 
@@ -5346,38 +5346,38 @@ Gfx * constructor_menu0F_mpcharsel(Gfx *DL)
 
         DL = microcode_constructor(DL);
         DL = frontPrintText(DL, &spA0, &sp9C, (s8*)text, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
-        DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, (var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i], var_s7 + 0x46, mp_char_prev_select_player[i], size_mp_select_image_player[i]);
+        DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, (var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i], var_s7 + 0x46, mp_char_prev_select_player[i], size_mp_select_image_player[i]);
 
         if ((player_has_selected_char[i] == 0 && size_mp_select_image_player[i] == 0) || (mp_char_prev_select_player[i] != mp_char_cur_select_player[i]))
         {
             if (mp_char_prev_select_player[i] >= 3)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] - 3, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] - 3, size_mp_select_image_player[i]);
             }
 
             if (mp_char_prev_select_player[i] >= 2)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] - 2, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] - 2, size_mp_select_image_player[i]);
             }
 
             if (mp_char_prev_select_player[i] >= 1)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] - 1, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) - 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] - 1, size_mp_select_image_player[i]);
             }
 
             if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 1)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] + 1, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0x54, var_s7 + 0x46, mp_char_prev_select_player[i] + 1, size_mp_select_image_player[i]);
             }
 
             if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 2)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] + 2, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xA8, var_s7 + 0x46, mp_char_prev_select_player[i] + 2, size_mp_select_image_player[i]);
             }
 
             if (mp_char_prev_select_player[i] < num_chars_selectable_mp - 3)
             {
-                DL = sub_GAME_7F01231C(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] + 3, size_mp_select_image_player[i]);
+                DL = frontRenderCharacterPortrait(DL, var_s2 + 0xD, var_s2 + var_s4 - 0xE, ((var_s4 >> 1) + var_s2 - dword_CODE_bss_80069730[i]) + 0xFC, var_s7 + 0x46, mp_char_prev_select_player[i] + 3, size_mp_select_image_player[i]);
             }
         }
     }
@@ -5412,7 +5412,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047310 7F0127E0 00003825 */   move  $a3, $zero
 /* 047314 7F0127E4 0C000FBE */  jal   viFillScreen
 /* 047318 7F0127E8 00402025 */   move  $a0, $v0
-/* 04731C 7F0127EC 0FC0357A */  jal   sub_GAME_7F00D5E8
+/* 04731C 7F0127EC 0FC0357A */  jal   frontSetupMenuBackground
 /* 047320 7F0127F0 00402025 */   move  $a0, $v0
 /* 047324 7F0127F4 0FC2B366 */  jal   microcode_constructor
 /* 047328 7F0127F8 00402025 */   move  $a0, $v0
@@ -5658,7 +5658,7 @@ glabel constructor_menu0F_mpcharsel
 /* 0476C0 7F012B90 00402025 */  move  $a0, $v0
 /* 0476C4 7F012B94 02C93823 */  subu  $a3, $s6, $t1
 /* 0476C8 7F012B98 AFAD0018 */  sw    $t5, 0x18($sp)
-/* 0476CC 7F012B9C 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 0476CC 7F012B9C 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 0476D0 7F012BA0 AFAC0014 */   sw    $t4, 0x14($sp)
 /* 0476D4 7F012BA4 8FAE0088 */  lw    $t6, 0x88($sp)
 /* 0476D8 7F012BA8 00408825 */  move  $s1, $v0
@@ -5691,7 +5691,7 @@ glabel constructor_menu0F_mpcharsel
 /* 04773C 7F012C0C 02CE3823 */  subu  $a3, $s6, $t6
 /* 047740 7F012C10 24E7FF04 */  addiu $a3, $a3, -0xfc
 /* 047744 7F012C14 AFB50010 */  sw    $s5, 0x10($sp)
-/* 047748 7F012C18 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 047748 7F012C18 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 04774C 7F012C1C AFAF0018 */   sw    $t7, 0x18($sp)
 /* 047750 7F012C20 8FB80070 */  lw    $t8, 0x70($sp)
 /* 047754 7F012C24 00408825 */  move  $s1, $v0
@@ -5710,7 +5710,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047784 7F012C54 24E7FF58 */  addiu $a3, $a3, -0xa8
 /* 047788 7F012C58 02602825 */  move  $a1, $s3
 /* 04778C 7F012C5C 02803025 */  move  $a2, $s4
-/* 047790 7F012C60 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 047790 7F012C60 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 047794 7F012C64 AFAC0018 */   sw    $t4, 0x18($sp)
 /* 047798 7F012C68 8FAD0070 */  lw    $t5, 0x70($sp)
 /* 04779C 7F012C6C 00408825 */  move  $s1, $v0
@@ -5728,7 +5728,7 @@ glabel constructor_menu0F_mpcharsel
 /* 0477C8 7F012C98 24E7FFAC */  addiu $a3, $a3, -0x54
 /* 0477CC 7F012C9C 02602825 */  move  $a1, $s3
 /* 0477D0 7F012CA0 02803025 */  move  $a2, $s4
-/* 0477D4 7F012CA4 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 0477D4 7F012CA4 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 0477D8 7F012CA8 AFB80018 */   sw    $t8, 0x18($sp)
 /* 0477DC 7F012CAC 8FA90070 */  lw    $t1, 0x70($sp)
 /* 0477E0 7F012CB0 00408825 */  move  $s1, $v0
@@ -5750,7 +5750,7 @@ glabel constructor_menu0F_mpcharsel
 /* 04781C 7F012CEC AFB50010 */  sw    $s5, 0x10($sp)
 /* 047820 7F012CF0 02CC3823 */  subu  $a3, $s6, $t4
 /* 047824 7F012CF4 24E70054 */  addiu $a3, $a3, 0x54
-/* 047828 7F012CF8 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 047828 7F012CF8 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 04782C 7F012CFC AFAE0018 */   sw    $t6, 0x18($sp)
 /* 047830 7F012D00 8FAA0070 */  lw    $t2, 0x70($sp)
 /* 047834 7F012D04 3C038003 */  lui   $v1, %hi(num_chars_selectable_mp)
@@ -5772,7 +5772,7 @@ glabel constructor_menu0F_mpcharsel
 /* 047870 7F012D40 24E700A8 */  addiu $a3, $a3, 0xa8
 /* 047874 7F012D44 02602825 */  move  $a1, $s3
 /* 047878 7F012D48 02803025 */  move  $a2, $s4
-/* 04787C 7F012D4C 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 04787C 7F012D4C 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 047880 7F012D50 AFAB0018 */   sw    $t3, 0x18($sp)
 /* 047884 7F012D54 8FAC0070 */  lw    $t4, 0x70($sp)
 /* 047888 7F012D58 3C038003 */  lui   $v1, %hi(num_chars_selectable_mp)
@@ -5794,7 +5794,7 @@ glabel constructor_menu0F_mpcharsel
 /* 0478C4 7F012D94 24E700FC */  addiu $a3, $a3, 0xfc
 /* 0478C8 7F012D98 02602825 */  move  $a1, $s3
 /* 0478CC 7F012D9C 02803025 */  move  $a2, $s4
-/* 0478D0 7F012DA0 0FC048C7 */  jal   sub_GAME_7F01231C
+/* 0478D0 7F012DA0 0FC048C7 */  jal   frontRenderCharacterPortrait
 /* 0478D4 7F012DA4 AFB80018 */   sw    $t8, 0x18($sp)
 /* 0478D8 7F012DA8 00408825 */  move  $s1, $v0
 .L7F012DAC:
@@ -5967,7 +5967,7 @@ Gfx * constructor_menu10_mphandicap(Gfx *DL)
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
     DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
 
@@ -6225,7 +6225,7 @@ Gfx * constructor_menu11_mpcontrol(Gfx *DL)
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
     DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
 
@@ -6435,7 +6435,7 @@ Gfx * constructor_menu12_mpstage(Gfx *DL)
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     for (i_1 = 0; i_1 != 3; i_1++)
@@ -6712,7 +6712,7 @@ Gfx * constructor_menu13_mpscenario(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
 #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     text = langGet(getStringID(LTITLE, TITLE_STR_87_SCENARIO2));
@@ -6951,7 +6951,7 @@ Gfx * constructor_menu14_mpteams(Gfx *DL)
 
     DL = viSetFillColor(DL,0,0,0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     DL = microcode_constructor_related_to_menus(DL, 0x26, 0xA9, 0x184, 0xAB, 0x90);
@@ -7043,7 +7043,7 @@ glabel constructor_menu14_mpteams
 /* 049CB4 7F015184 00003825 */   move  $a3, $zero
 /* 049CB8 7F015188 0C000FBE */  jal   viFillScreen
 /* 049CBC 7F01518C 00402025 */   move  $a0, $v0
-/* 049CC0 7F015190 0FC0357A */  jal   sub_GAME_7F00D5E8
+/* 049CC0 7F015190 0FC0357A */  jal   frontSetupMenuBackground
 /* 049CC4 7F015194 00402025 */   move  $a0, $v0
 /* 049CC8 7F015198 0FC2B366 */  jal   microcode_constructor
 /* 049CCC 7F01519C 00402025 */   move  $a0, $v0
@@ -7550,7 +7550,7 @@ Gfx *constructor_menu0A_briefing(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
 #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
 
 #if !defined(VERSION_EU)
     sp4C = asc_D_80050C54;
@@ -7781,7 +7781,7 @@ Gfx * constructor_menu0C_missionfailed(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
     #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
     DL = print_current_solo_briefing_stage_name(DL, &stagename);
 
@@ -7990,7 +7990,7 @@ Gfx *constructor_menu0D_missioncomplete(Gfx *DL)
 
     DL = viSetFillColor(DL, 0,0,0);
     DL = viFillScreen(DL);
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     missiontimer = getMissiontimer();
@@ -8363,7 +8363,7 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
     DL = viFillScreen(DL);
     DL = viFillScreen(DL);
 #endif
-    DL = sub_GAME_7F00D5E8(DL);
+    DL = frontSetupMenuBackground(DL);
     DL = microcode_constructor(DL);
 
     for (var_fp = 0; var_fp < ((totalunlockedcheats >= 0xD) ? 0xC : totalunlockedcheats); var_fp++)

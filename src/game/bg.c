@@ -2142,7 +2142,7 @@ glabel load_bg_file
 /* 0E8E14 7F0B42E4 01140019 */  multu $t0, $s4
 /* 0E8E18 7F0B42E8 00004812 */  mflo  $t1
 /* 0E8E1C 7F0B42EC 02295021 */  addu  $t2, $s1, $t1
-/* 0E8E20 7F0B42F0 0FC2456F */  jal   sub_GAME_7F0915BC
+/* 0E8E20 7F0B42F0 0FC2456F */  jal   setDebugCameraScale
 /* 0E8E24 7F0B42F4 C54C000C */   lwc1  $f12, 0xc($t2)
 /* 0E8E28 7F0B42F8 8E4B0000 */  lw    $t3, ($s2)
 /* 0E8E2C 7F0B42FC 01740019 */  multu $t3, $s4
@@ -2613,7 +2613,7 @@ glabel load_bg_file
 /* 0E6010 7F0B3620 01140019 */  multu $t0, $s4
 /* 0E6014 7F0B3624 00004812 */  mflo  $t1
 /* 0E6018 7F0B3628 02295021 */  addu  $t2, $s1, $t1
-/* 0E601C 7F0B362C 0FC2428F */  jal   sub_GAME_7F0915BC
+/* 0E601C 7F0B362C 0FC2428F */  jal   setDebugCameraScale
 /* 0E6020 7F0B3630 C54C000C */   lwc1  $f12, 0xc($t2)
 /* 0E6024 7F0B3634 8E4B0000 */  lw    $t3, ($s2)
 /* 0E6028 7F0B3638 01740019 */  multu $t3, $s4
@@ -6357,7 +6357,7 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
         }
         else
         {
-            arg0 = updateDisplayListWithRoomMatrix(arg0, room_index);
+            arg0 = applyRoomMatrixToDisplayList(arg0, room_index);
 
             gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_expanded_mapping_info));
@@ -6389,7 +6389,7 @@ Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index)
     {
         if (array_room_info[room_index].model_bin_loaded != 0)
         {
-            arg0 = updateDisplayListWithRoomMatrix(arg0, room_index);
+            arg0 = applyRoomMatrixToDisplayList(arg0, room_index);
 
             gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_point_index));
             gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(array_room_info[room_index].ptr_secondary_expanded_mapping_info));

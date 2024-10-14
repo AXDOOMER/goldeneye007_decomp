@@ -924,7 +924,7 @@ void initializeGunBarrelIntro(u8 *gfxBuffer, s32 bufferSize)
     bufferSize -= 0x200;
     gfxBuffer += 0x200;
     
-    sub_GAME_7F01BAE0(barrelDisplayListPtr, 0x1E);
+    createGunbarrelRenderHole(barrelDisplayListPtr, 0x1E);
     
     gunbarrelgfxListPointer = (Gfx*)gfxBuffer;
     bufferSize -= 0x100;

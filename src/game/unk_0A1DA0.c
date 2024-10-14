@@ -3623,7 +3623,7 @@ glabel sub_GAME_7F0A3F04
 /* 0D8F8C 7F0A445C 8FA9004C */  lw    $t1, 0x4c($sp)
 /* 0D8F90 7F0A4460 AD220004 */  sw    $v0, 4($t1)
 /* 0D8F94 7F0A4464 8FA50058 */  lw    $a1, 0x58($sp)
-/* 0D8F98 7F0A4468 0FC2F271 */  jal   updateDisplayListWithRoomMatrix
+/* 0D8F98 7F0A4468 0FC2F271 */  jal   applyRoomMatrixToDisplayList
 /* 0D8F9C 7F0A446C 8FA400A0 */   lw    $a0, 0xa0($sp)
 /* 0D8FA0 7F0A4470 AFA200A0 */  sw    $v0, 0xa0($sp)
 /* 0D8FA4 7F0A4474 8E0B000C */  lw    $t3, 0xc($s0)
