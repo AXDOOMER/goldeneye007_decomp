@@ -28075,14 +28075,251 @@ bool sub_GAME_7F04B590(ModelFileHeader* arg0, ModelNode* arg1)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F04B610(void) {
+/*
+*   objDeform - Deform an object due to it being destroyed.
+*   PD has a very similar function of the same name
+*   Address: 7F04B610
+*/
+void objDeform(ObjectRecord *obj, s32 arg1) {
+    s32 sp7C;
+    s32 sp78;
+    s32 sp70;
+    f32 sp68;
+    f32 sp5C;
+    f32 sp44;
+    s32 sp40;
+    ModelNode *temp_v0;
+    Vertex **temp_s3;
+    Vertex *temp_a0_2;
+    Vertex *temp_v0_3;
+    Vertex *var_s0;
+    Vertex *var_v1;
+    Vertex *var_v1_2;
+    f32 temp_s1;
+    f32 temp_v0_8;
+    f32 var_f6;
+    s16 *temp_s0_2;
+    s16 temp_a0;
+    s16 temp_v0_4;
+    s16 temp_v0_5;
+    s16 var_s4;
+    s16 var_s6;
+    s32 *temp_t4;
+    s32 *temp_t7;
+    s32 temp_at;
+    s32 temp_at_2;
+    s32 temp_t1;
+    s32 temp_t3;
+    s32 temp_v0_2;
+    s32 temp_v0_6;
+    s32 temp_v0_9;
+    s32 var_s0_2;
+    s32 var_s1;
+    s32 var_s1_2;
+    s32 var_s1_3;
+    s32 var_s1_4;
+    s32 var_s2;
+    s32 var_s7;
+    s32 var_v1_3;
+    void *temp_s0;
+    void *temp_s0_3;
+    void *temp_s0_4;
+    void *temp_s0_5;
+    void *temp_s5;
+    void *temp_v0_10;
+    void *temp_v0_7;
 
+    temp_s1 = obj->mtx.m[0][0];
+    var_s6 = 0x1869F;
+    var_s4 = 0xFFFE7961;
+    temp_v0 = sub_GAME_7F04B478(obj);
+    if ((temp_v0 != NULL) && (temp_s5 = temp_v0->Data, (temp_s5 != NULL)) && (sub_GAME_7F04B590(obj->mtx.m[0][0]->unk8, temp_v0) != 0)) {
+        temp_s3 = temp_s1->unk10 + (temp_s5->unk1A * 4);
+        temp_t1 = arg1 * 2;
+        if (randomGetNext() & 1) {
+            sp40 = temp_t1;
+            sp78 = (s32) *(object_explosion_details->Seed + ((obj->unk4 * 0xE) + temp_t1));
+        } else {
+            temp_v0_2 = arg1 * 2;
+            sp40 = temp_v0_2;
+            sp78 = (s32) *(&object_explosion_details->Seed[3] + ((obj->unk4 * 0xE) + temp_v0_2));
+        }
+        if ((get_debug_explosioninfo_flag() != 0) || (sp78 == 0)) {
+            get_debug_explosioninfo_flag();
+            sp78 = randomGetNext();
+            if (get_debug_explosioninfo_flag() != 0) {
+                sp78 &= 0xFFFF;
+            }
+        }
+        explosionClearBulletImpactRoom((PropRecord *) obj->model);
+        var_s7 = 1;
+        if (obj->unk4 == 0x4C) {
+            var_s7 = 0;
+        }
+        temp_v0_3 = sub_GAME_7F09BE4C(temp_s5->unkC, 0xB0B, temp_s1->unk8, objGetDestroyedLevel(obj));
+        if (temp_v0_3 != NULL) {
+            if (temp_s5->unk8 != *temp_s3) {
+                var_s2 = 0;
+                var_s1 = 0;
+                var_v1 = temp_v0_3;
+                if (temp_s5->unkC > 0) {
+                    do {
+                        var_s2 += 1;
+                        var_v1 += 0x10;
+                        temp_t7 = *temp_s3 + var_s1;
+                        temp_at = temp_t7->unk0;
+                        var_s1 += 0x10;
+                        var_v1->unk-10 = temp_at;
+                        var_v1->unk-C = (s32) temp_t7->unk4;
+                        var_v1->unk-8 = (s32) temp_t7->unk8;
+                        var_v1->unk-4 = (s32) temp_t7->unkC;
+                    } while (var_s2 < temp_s5->unkC);
+                    var_s2 = 0;
+                }
+                sub_GAME_7F09C044(*temp_s3);
+            } else {
+                var_s2 = 0;
+                var_s1_2 = 0;
+                var_v1_2 = temp_v0_3;
+                if (temp_s5->unkC > 0) {
+                    do {
+                        var_s2 += 1;
+                        var_v1_2 += 0x10;
+                        temp_t4 = temp_s5->unk8 + var_s1_2;
+                        temp_at_2 = temp_t4->unk0;
+                        var_s1_2 += 0x10;
+                        var_v1_2->unk-10 = temp_at_2;
+                        var_v1_2->unk-C = (s32) temp_t4->unk4;
+                        var_v1_2->unk-8 = (s32) temp_t4->unk8;
+                        var_v1_2->unk-4 = (s32) temp_t4->unkC;
+                    } while (var_s2 < temp_s5->unkC);
+                    var_s2 = 0;
+                }
+            }
+            *temp_s3 = temp_v0_3;
+            temp_v0_4 = obj->unk4;
+            var_s1_3 = 0;
+            if ((temp_v0_4 == 0x26) || (temp_v0_4 == 0x27) || (temp_v0_4 == 0x55)) {
+                sp70 = 0;
+            } else {
+                sp70 = 1;
+            }
+            temp_a0 = temp_s5->unkC;
+            if (temp_a0 > 0) {
+                var_s0 = *temp_s3;
+                do {
+                    temp_v0_5 = var_s0->coord.AsArray[1];
+                    var_s1_3 += 0x10;
+                    if (temp_v0_5 < var_s6) {
+                        var_s6 = temp_v0_5;
+                    }
+                    if (var_s4 < temp_v0_5) {
+                        var_s4 = temp_v0_5;
+                    }
+                    var_s0 += 0x10;
+                } while (var_s1_3 < (temp_a0 * 0x10));
+                var_s2 = 0;
+            }
+            temp_t3 = (s32) (var_s6 + var_s4) >> 1;
+            var_v1_3 = temp_t3;
+            if ((sp40 == 6) && ((temp_t3 - var_s6) >= 0x29)) {
+                var_v1_3 = var_s6 + 0x28;
+            }
+            temp_v0_6 = var_s4 - var_s6;
+            if (temp_v0_6 >= 0x3D) {
+                if (sp40 < 6) {
+                    var_f6 = D_80052CC0;
+                    goto block_47;
+                }
+                sp68 = (f32) (temp_v0_6 - 0x3C) / (f32) temp_v0_6;
+            } else {
+                var_f6 = 1.0f;
+block_47:
+                sp68 = var_f6;
+            }
+            if (temp_a0 > 0) {
+                var_s1_4 = 0;
+                sp7C = var_v1_3;
+                sp44 = (f32) var_s6;
+                do {
+                    temp_v0_7 = temp_s5->unk8 + var_s1_4;
+                    chrObjRandomSetSeed(temp_v0_7->unk4 + temp_v0_7->unk0 + temp_v0_7->unk2 + sp78);
+                    var_s0_2 = 0;
+                    if (sp70 != 0) {
+                        if (obj->mtx.m[1][2] >= 0.0f) {
+                            if ((*temp_s3 + var_s1_4)->unk2 >= sp7C) {
+                                if (var_s7 != 0) {
+                                    var_s0_2 = 0x5A;
+                                } else {
+                                    var_s0_2 = 0x14;
+                                }
+                            } else if (var_s7 != 0) {
+                                var_s0_2 = 0x14;
+                            } else {
+                                var_s0_2 = 0x5A;
+                            }
+                        } else if (sp7C >= (*temp_s3 + var_s1_4)->unk2) {
+                            if (var_s7 != 0) {
+                                var_s0_2 = 0x5A;
+                            } else {
+                                var_s0_2 = 0x14;
+                            }
+                        } else if (var_s7 != 0) {
+                            var_s0_2 = 0x14;
+                        } else {
+                            var_s0_2 = 0x5A;
+                        }
+                    }
+                    if ((s32) (chrObjRandomGetNext() % 100U) < var_s0_2) {
+                        (*temp_s3 + var_s1_4)->unkC = 0;
+                        (*temp_s3 + var_s1_4)->unkD = 0;
+                        (*temp_s3 + var_s1_4)->unkE = 0;
+                        (*temp_s3 + var_s1_4)->unkF = 0xFF;
+                    } else if (sp40 == 2) {
+                        (*temp_s3 + var_s1_4)->unkF = 0;
+                    }
+                    temp_s0 = *temp_s3 + var_s1_4;
+                    temp_s0->unk2 = (s16) (s32) (((f32) (temp_s0->unk2 - var_s6) * sp68) + sp44);
+                    temp_s0_2 = *temp_s3 + var_s1_4;
+                    *temp_s0_2 = (*temp_s0_2 + (chrObjRandomGetNext() % 80U)) - 0x28;
+                    temp_s0_3 = *temp_s3 + var_s1_4;
+                    temp_s0_3->unk2 = (s16) ((temp_s0_3->unk2 + (chrObjRandomGetNext() % 80U)) - 0x28);
+                    temp_s0_4 = *temp_s3 + var_s1_4;
+                    temp_s0_4->unk4 = (s16) ((temp_s0_4->unk4 + (chrObjRandomGetNext() % 80U)) - 0x28);
+                    temp_s0_5 = *temp_s3 + var_s1_4;
+                    if (temp_s0_5->unk2 < var_s6) {
+                        temp_s0_5->unk2 = var_s6;
+                    }
+                    var_s2 += 1;
+                    var_s1_4 += 0x10;
+                } while (var_s2 < temp_s5->unkC);
+            }
+        } else {
+            temp_a0_2 = *temp_s3;
+            if (temp_s5->unk8 != temp_a0_2) {
+                sub_GAME_7F09C044(temp_a0_2);
+                *temp_s3 = temp_s5->unk8;
+                obj->ptr_allocated_collisiondata_block = (struct collision_data *) ((s32) obj->ptr_allocated_collisiondata_block | 4);
+            }
+            obj->mtx.m[1][1] *= D_80052CB4;
+            obj->mtx.m[1][2] *= D_80052CB4;
+            obj->mtx.m[1][3] *= D_80052CB4;
+            if (var_s7 != 0) {
+                temp_v0_8 = obj->mtx.m[0][0];
+                sp5C = temp_v0_8->unk14;
+                temp_v0_9 = chrobjGetBboxFromObjFile(temp_v0_8->unk8);
+                temp_v0_10 = obj->model;
+                temp_v0_10->unkC = (f32) (temp_v0_10->unkC + (sp5C * chrpropBBOXGetYmin(temp_v0_9) * D_80052CB8));
+                obj->runtime_pos.f[2] += sp5C * chrpropBBOXGetYmin(temp_v0_9) * D_80052CBC;
+            }
+        }
+    }
 }
 #else
 #ifndef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04B610
+glabel objDeform
 /* 080140 7F04B610 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 080144 7F04B614 AFB60030 */  sw    $s6, 0x30($sp)
 /* 080148 7F04B618 AFB40028 */  sw    $s4, 0x28($sp)
@@ -28567,7 +28804,7 @@ glabel sub_GAME_7F04B610
 #ifdef VERSION_EU
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F04B610
+glabel objDeform
 /* 07E1DC 7F04B7EC 27BDFF68 */  addiu $sp, $sp, -0x98
 /* 07E1E0 7F04B7F0 AFB60030 */  sw    $s6, 0x30($sp)
 /* 07E1E4 7F04B7F4 AFB40028 */  sw    $s4, 0x28($sp)
@@ -29567,7 +29804,7 @@ glabel object_explosion_related
 /* 081AC4 7F04CF94 10000070 */  b     .L7F04D158
 /* 081AC8 7F04CF98 AE2F0064 */   sw    $t7, 0x64($s1)
 .L7F04CF9C:
-/* 081ACC 7F04CF9C 0FC12D84 */  jal   sub_GAME_7F04B610
+/* 081ACC 7F04CF9C 0FC12D84 */  jal   objDeform
 /* 081AD0 7F04CFA0 24050001 */   li    $a1, 1
 /* 081AD4 7F04CFA4 8FA40044 */  lw    $a0, 0x44($sp)
 /* 081AD8 7F04CFA8 5604006C */  bnel  $s0, $a0, .L7F04D15C
@@ -29603,7 +29840,7 @@ glabel object_explosion_related
 /* 081B48 7F04D018 AFA20034 */   sw    $v0, 0x34($sp)
 /* 081B4C 7F04D01C 00025083 */  sra   $t2, $v0, 2
 /* 081B50 7F04D020 25450001 */  addiu $a1, $t2, 1
-/* 081B54 7F04D024 0FC12D84 */  jal   sub_GAME_7F04B610
+/* 081B54 7F04D024 0FC12D84 */  jal   objDeform
 /* 081B58 7F04D028 02202025 */   move  $a0, $s1
 /* 081B5C 7F04D02C 8FAB0038 */  lw    $t3, 0x38($sp)
 /* 081B60 7F04D030 1160002A */  beqz  $t3, .L7F04D0DC
@@ -29803,7 +30040,7 @@ glabel object_explosion_related
 /* 07FB6C 7F04D17C 10000070 */  b     .L7F04D340
 /* 07FB70 7F04D180 AE2E0064 */   sw    $t6, 0x64($s1)
 .L7F04D184:
-/* 07FB74 7F04D184 0FC12DFB */  jal   sub_GAME_7F04B610
+/* 07FB74 7F04D184 0FC12DFB */  jal   objDeform
 /* 07FB78 7F04D188 24050001 */   li    $a1, 1
 /* 07FB7C 7F04D18C 8FA40044 */  lw    $a0, 0x44($sp)
 /* 07FB80 7F04D190 5604006C */  bnel  $s0, $a0, .L7F04D344
@@ -29839,7 +30076,7 @@ glabel object_explosion_related
 /* 07FBF0 7F04D200 AFA20034 */   sw    $v0, 0x34($sp)
 /* 07FBF4 7F04D204 00024883 */  sra   $t1, $v0, 2
 /* 07FBF8 7F04D208 25250001 */  addiu $a1, $t1, 1
-/* 07FBFC 7F04D20C 0FC12DFB */  jal   sub_GAME_7F04B610
+/* 07FBFC 7F04D20C 0FC12DFB */  jal   objDeform
 /* 07FC00 7F04D210 02202025 */   move  $a0, $s1
 /* 07FC04 7F04D214 8FAA0038 */  lw    $t2, 0x38($sp)
 /* 07FC08 7F04D218 1140002A */  beqz  $t2, .L7F04D2C4eu
