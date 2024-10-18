@@ -4108,7 +4108,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     {
                         countdownTimerSetVisible(16, FALSE);
                     }
-                    D_800364B0 = FALSE;
+                    is_timer_active = FALSE;
                     Offset += AI_BondDisableControl_LENGTH;
                     break;
                 }
@@ -4122,7 +4122,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                     hudmsgsSetOn(PLAYERFLAG_NOCONTROL);
                     bondviewClearUpperTextDisplayFlag(2);
                     countdownTimerSetVisible(16, TRUE);
-                    D_800364B0 = TRUE;
+                    is_timer_active = TRUE;
                     Offset += AI_BondEnableControl_LENGTH;
                     break;
                 }
@@ -4437,14 +4437,14 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
                 }
                 case AI_CreditsRoll:
                 {
-                    D_8003643C = TRUE;
+                    credits_state = TRUE;
                     Offset += AI_CreditsRoll_LENGTH;
                     break;
                 }
                 case AI_IFCreditsHasCompleted:
                 {
                     AIRecord *ai = AiListp + Offset;
-                    if (D_8003643C == 2)
+                    if (credits_state == 2)
                     {
                         Offset = chraiGoToLabel(AiListp, Offset, ai->val[0]);
                     }

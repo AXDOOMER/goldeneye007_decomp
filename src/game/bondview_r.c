@@ -20,7 +20,7 @@
 /**
  * Address 0x8002A780.
 */
-struct coord3d D_8002A780 = { 0 };
+struct coord3d default_start_position = { 0 };
 
 u32 weaponLoadProjectileModels(ITEM_IDS modelid)
 {
@@ -107,7 +107,7 @@ void bondviewLoadSetupIntroSection(void)
 
     // done with declarations
 
-    start_pos = D_8002A780;
+    start_pos = default_start_position;
 
     intro_record = (struct SetupIntroEmpty *)g_CurrentSetup.intro;
     g_isBondKIA = 0;
@@ -127,8 +127,8 @@ void bondviewLoadSetupIntroSection(void)
     }
 
     camera_80036438 = 0;
-    D_8003643C = 0;
-    D_80036440 = NULL;
+    credits_state = 0;
+    credits_pointer = NULL;
     g_ForceBondMoveOffset.f[0] = FLOAT_INIT;
     g_ForceBondMoveOffset.f[1] = FLOAT_INIT;
     g_ForceBondMoveOffset.f[2] = FLOAT_INIT;
@@ -142,24 +142,24 @@ void bondviewLoadSetupIntroSection(void)
     g_TankSfxState[1] = NULL;
     g_TankTurnSpeed = FLOAT_INIT;
     g_TankOrientationAngle = FLOAT_INIT;
-    D_80036468 = FLOAT_INIT;
+    tank_turret_unused_angle = FLOAT_INIT;
     g_TankTurretVerticalAngle = FLOAT_INIT;
     g_TankTurretVerticalAngleRelated = FLOAT_INIT;
     g_TankTurretOrientationAngleRad = FLOAT_INIT;
-    D_80036478 = FLOAT_INIT;
-    D_8003647C = FLOAT_INIT;
+    g_TankTurretOrientationAngleDeg = FLOAT_INIT;
+    tank_turret_turn_speed = FLOAT_INIT;
     g_BondCanEnterTank = 0;
     g_TankTurretAngle = FLOAT_INIT;
     g_TankTurretTurn = FLOAT_INIT;
     g_ExplodeTankOnDeathFlag = 0;
-    D_800364B0 = 1;
+    is_timer_active = 1;
     g_PlayerInvincible = 0;
     g_CameraMode = 0;
     g_CameraAfterCinema = 0;
-    D_8003649C = 0;
+    camera_fade_active = 0;
     stop_time_flag = 0;
-    D_800364A4 = FLOAT_INIT;
-    D_800364A8 = 1;
+    camera_transition_timer = FLOAT_INIT;
+    intro_camera_index = CAMERAMODE_INTRO;
     g_IntroSwirl = NULL;
     ptr_random06cam_entry = NULL;
     g_CurrentSetupIntroCamera = NULL;
@@ -327,7 +327,7 @@ void bondviewLoadSetupIntroSection(void)
                     
                     // hack: bad address math
                     credits = (CreditsEntry*)((s32)g_ptrStageSetupFile + (s32)intro_credits->unk04);
-                    D_80036440 = credits;
+                    credits_pointer = credits;
 
                     // what is the point of this?
                     while (credits->TextId1 != 0 || credits->TextId2 != 0)
@@ -466,5 +466,5 @@ void bondviewLoadSetupIntroSection(void)
     g_CurrentPlayer->startnewbonddie = TRUE;
     g_CurrentPlayer->redbloodfinished = FALSE;
     g_CurrentPlayer->deathanimfinished = FALSE;
-    D_80036510 = CAMERAMODE_NONE;
+    camera_mode = CAMERAMODE_NONE;
 }

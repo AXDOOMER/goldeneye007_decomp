@@ -156,22 +156,22 @@ void bheadSetdamp(f32 headdamp)
 /**
  * Address 0x80036B00.
 */
-coord3d D_80036B00 = { 0.0f, 0.0f, 0.0f };
+coord3d initialHeadPosition = { 0.0f, 0.0f, 0.0f };
 
 /**
  * Address 0x80036B0C.
 */
-coord3d D_80036B0C = { 0.0f, 0.0f, 1.0f };
+coord3d headLookDirection = { 0.0f, 0.0f, 1.0f };
 
 /**
  * Address 0x80036B18.
 */
-coord3d D_80036B18 = { 0.0f, 1.0f, 0.0f };
+coord3d headUpDirection = { 0.0f, 1.0f, 0.0f };
 
 /**
  * Address 0x80036B24.
 */
-ModelRenderData D_80036B24 = {NULL,
+ModelRenderData headModelRenderData = {NULL,
                               TRUE,
                               0x00000003,
                               NULL,
@@ -209,9 +209,9 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
     coord3d offset;
     u32 isMergable;
 
-    headpos = D_80036B00;
-    lookvel = D_80036B0C;
-    upvel = D_80036B18;
+    headpos = initialHeadPosition;
+    lookvel = headLookDirection;
+    upvel = headUpDirection;
 
     abs_anim_speed = modelGetAbsAnimSpeed(&g_CurrentPlayer->model);
 
@@ -243,7 +243,7 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
         g_CurrentPlayer->sideamplitude = g_CurrentPlayer->headamplitude;
     }
 
-    renderData = D_80036B24;
+    renderData = headModelRenderData;
     offset = D_80036B64;
 
     isMergable = modelIsAnimMergingEnabled();

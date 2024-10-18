@@ -349,9 +349,9 @@ s32 cameraFrameCounter2 = 0;
 //D:80036438
 s32 camera_80036438 = 0;
 //D:8003643C
-s32 D_8003643C = 0;
+s32 credits_state = 0;
 //D:80036440
-CreditsEntry *D_80036440 = NULL;
+CreditsEntry *credits_pointer = NULL;
 //D:80036444
 s32 g_SurroundBondWithExplosionsFlag = 0;
 
@@ -387,7 +387,7 @@ f32 g_TankTurnSpeed = 0;
 f32 g_TankOrientationAngle = 0;
 
 //D:80036468
-f32 D_80036468 = 0.0f;
+f32 tank_turret_unused_angle = 0.0f;
 
 /**
  * Argument to sinf,cosf.
@@ -407,10 +407,10 @@ f32 g_TankTurretVerticalAngleRelated = 0;
 f32 g_TankTurretOrientationAngleRad = 0;
 
 //D:80036478
-f32 D_80036478 = 0;
+f32 g_TankTurretOrientationAngleDeg = 0;
 
 //D:8003647C
-f32 D_8003647C = 0;
+f32 tank_turret_turn_speed = 0;
 
 /**
  * Can enter tank, remains set once Bond is in tank.
@@ -437,17 +437,17 @@ enum CAMERAMODE g_CameraMode = CAMERAMODE_NONE;
 //D:80036498
 enum CAMERAMODE g_CameraAfterCinema = CAMERAMODE_NONE;
 //D:8003649C
-s32 D_8003649C = 0;
+s32 camera_fade_active = 0;
 //D:800364A0
 s32 stop_time_flag = 0;
 //D:800364A4
-f32 D_800364A4 = 0;
+f32 camera_transition_timer = 0;
 //D:800364A8
-s32 D_800364A8 = 1;
+s32 intro_camera_index = 1;
 //D:800364AC
 struct SetupIntroSwirl *g_IntroSwirl = NULL;
 //D:800364B0
-s32 D_800364B0 = 1;
+s32 is_timer_active = 1;
 //D:800364B4
 s32 g_PlayerInvincible = 0;
 //D:800364B8
@@ -500,7 +500,7 @@ s32 g_bondviewBondDeathAnimations[] = {
 s32 g_bondviewBondDeathAnimationsCount = 0;
 
 //D:80036510
-enum CAMERAMODE D_80036510 = CAMERAMODE_NONE;
+enum CAMERAMODE camera_mode = CAMERAMODE_NONE;
 //D:80036514
 s32 g_IntroAnimationIndex = 0;
 
@@ -4093,7 +4093,7 @@ void bondviewSetCameraMode(s32 arg0)
     {
         if ((ptr_random06cam_entry != NULL) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
         {
-            D_800364A4 = 0.0f;
+            camera_transition_timer = 0.0f;
             currentPlayerSetFadeColour(0, 0, 0, 1.0f);
             currentPlayerSetFadeFrac(60.0f, 0.0f);
             fogLoadLevelEnvironment(bossGetStageNum(), 1);
@@ -4125,15 +4125,15 @@ void bondviewSetCameraMode(s32 arg0)
         f32 ftemp_1;
         struct ChrRecord *temp_v1;
 
-        D_8003649C = 0;
+        camera_fade_active = 0;
         currentPlayerSetFadeColour(0, 0, 0, 1.0f);
         currentPlayerSetFadeFrac(60.0f, 0.0f);
         fogLoadLevelEnvironment(bossGetStageNum(), 0);
 
         if ((g_IntroSwirl != 0) && (get_recording_ramrom_flag() == 0) && (get_is_ramrom_flag() == 0))
         {
-            D_800364A4 = 0.0f;
-            D_800364A8 = CAMERAMODE_INTRO;
+            camera_transition_timer = 0.0f;
+            intro_camera_index = CAMERAMODE_INTRO;
             currentPlayerStartChrFade(0.0f, 1.0f);
             solo_char_load();
 
@@ -4173,7 +4173,7 @@ void bondviewSetCameraMode(s32 arg0)
             currentPlayerSetFadeColour(0, 0, 0, 1.0f);
             currentPlayerSetFadeFrac(0.0f, 1.0f);
         }
-        else if (D_8003649C != 0)
+        else if (camera_fade_active != 0)
         {
             currentPlayerSetFadeColour(0, 0, 0, 1.0f);
             currentPlayerSetFadeFrac(60.0f, 0.0f);
@@ -4202,8 +4202,8 @@ void bondviewSetCameraMode(s32 arg0)
         PropRecord *var_a2;
         struct ChrRecord *temp_v1_2;
 
-        D_800364A4 = 0.0f;
-        D_800364A8 = CAMERAMODE_INTRO;
+        camera_transition_timer = 0.0f;
+        intro_camera_index = CAMERAMODE_INTRO;
         currentPlayerSetFadeColour(0, 0, 0, 1.0f);
         currentPlayerSetFadeFrac(60.0f, 0.0f);
 
@@ -4279,7 +4279,7 @@ void bondviewSetCameraMode(s32 arg0)
 
         if (pickDeathCameraAngles(sp64, &sp58, var_a2, &sp48, var_v1, var_f0) != 0)
         {
-            if (D_80036510 == 0)
+            if (camera_mode == 0)
             {
                 musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0.5f);
@@ -4391,8 +4391,8 @@ glabel sub_GAME_7F07B1A4
 /* 0AFD94 7F07B264 24010006 */  li    $at, 6
 .L7F07B268:
 /* 0AFD98 7F07B268 14410009 */  bne   $v0, $at, .L7F07B290
-/* 0AFD9C 7F07B26C 3C028003 */   lui   $v0, %hi(D_80036510)
-/* 0AFDA0 7F07B270 24426510 */  addiu $v0, %lo(D_80036510) # addiu $v0, $v0, 0x6510
+/* 0AFD9C 7F07B26C 3C028003 */   lui   $v0, %hi(camera_mode)
+/* 0AFDA0 7F07B270 24426510 */  addiu $v0, %lo(camera_mode) # addiu $v0, $v0, 0x6510
 /* 0AFDA4 7F07B274 8C4E0000 */  lw    $t6, ($v0)
 /* 0AFDA8 7F07B278 25CF0001 */  addiu $t7, $t6, 1
 /* 0AFDAC 7F07B27C 29E10003 */  slti  $at, $t7, 3
@@ -4641,7 +4641,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
     {
         if (g_CameraMode == CAMERAMODE_INTRO)
         {
-            if ((D_800364A4 < 120.0f) && ((D_800364A4 + g_GlobalTimerDelta) >= 120.0f))
+            if ((camera_transition_timer < 120.0f) && ((camera_transition_timer + g_GlobalTimerDelta) >= 120.0f))
             {
 #if defined(VERSION_US)
                 setFontTables(ptrFontZurichBoldChars, ptrFontZurichBold);
@@ -4653,7 +4653,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
 
             if (ptr_random06cam_entry->lang20.lang_ptr != NULL)
             {
-                if ((D_800364A4 < 300.0f) && ((D_800364A4 + g_GlobalTimerDelta) >= 300.0f))
+                if ((camera_transition_timer < 300.0f) && ((camera_transition_timer + g_GlobalTimerDelta) >= 300.0f))
                 {
 #if defined(VERSION_US)
                     hudmsgBottomShow(ptr_random06cam_entry->lang20.lang_ptr);
@@ -4662,17 +4662,17 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
 #endif
                 }
 
-                if (D_800364A4 > 480.0f)
+                if (camera_transition_timer > 480.0f)
                 {
                     g_CameraAfterCinema = CAMERAMODE_INTRO;
                 }
             }
-            else if (D_800364A4 > 300.0f)
+            else if (camera_transition_timer > 300.0f)
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
             }
 
-            D_800364A4 += g_GlobalTimerDelta;
+            camera_transition_timer += g_GlobalTimerDelta;
 
             if ((lvlGetControlsLockedFlag() == 0)
                 && (buttons & ~oldbuttons & (CONT_A | B_BUTTON | Z_TRIG | START_BUTTON | CONT_R | CONT_L)))
@@ -4784,26 +4784,26 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
     }
     else if (g_CameraMode == CAMERAMODE_SWIRL)
     {
-        D_800364A4 += g_GlobalTimerDelta;
+        camera_transition_timer += g_GlobalTimerDelta;
 
-        while (g_IntroSwirl[D_800364A8].unk18.fval <= D_800364A4)
+        while (g_IntroSwirl[intro_camera_index].unk18.fval <= camera_transition_timer)
         {
-            if (!(g_IntroSwirl[D_800364A8 + 3].unk04 & 1))
+            if (!(g_IntroSwirl[intro_camera_index + 3].unk04 & 1))
             {
-                D_800364A4 -= g_IntroSwirl[D_800364A8].unk18.fval;
-                D_800364A8++;
+                camera_transition_timer -= g_IntroSwirl[intro_camera_index].unk18.fval;
+                intro_camera_index++;
             }
             else
             {
-                D_800364A4 = g_IntroSwirl[D_800364A8].unk18.fval;
+                camera_transition_timer = g_IntroSwirl[intro_camera_index].unk18.fval;
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
                 break;
             }
         }
 
-        sp30 += (g_IntroSwirl[D_800364A8].unk18.fval - D_800364A4);
+        sp30 += (g_IntroSwirl[intro_camera_index].unk18.fval - camera_transition_timer);
 
-        for (i = D_800364A8 + 1; !(g_IntroSwirl[i+2].unk04 & 1); i++)
+        for (i = intro_camera_index + 1; !(g_IntroSwirl[i+2].unk04 & 1); i++)
         {
             sp30 += g_IntroSwirl[i].unk18.fval;
         }
@@ -4813,7 +4813,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             currentPlayerStartChrFade(30.0f, 0.0f);
         }
 
-        if (D_8003649C != 0)
+        if (camera_fade_active != 0)
         {
             if (currentPlayerIsFadeComplete() != 0)
             {
@@ -4821,12 +4821,12 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             }
         }
 
-        if ((sp30 > 60.0f) && (D_8003649C == 0))
+        if ((sp30 > 60.0f) && (camera_fade_active == 0))
         {
             if ((lvlGetControlsLockedFlag() == 0)
                 && (buttons & ~oldbuttons & (A_BUTTON | B_BUTTON | Z_TRIG | START_BUTTON | L_TRIG | R_TRIG)))
             {
-                D_8003649C = 1;
+                camera_fade_active = 1;
                 currentPlayerSetFadeColour(0, 0, 0, g_CurrentPlayer->colourscreenfrac);
 
                 if (currentPlayerIsFadeComplete() != 0)
@@ -4840,11 +4840,11 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
             }
         }
 
-        sub_GAME_7F07B2A0(D_800364A8, D_800364A4, pos, pos2);
+        sub_GAME_7F07B2A0(intro_camera_index, camera_transition_timer, pos, pos2);
 
-        if (g_IntroSwirl[D_800364A8].unk1C >= 0)
+        if (g_IntroSwirl[intro_camera_index].unk1C >= 0)
         {
-            p = &g_CurrentSetup.pads[g_IntroSwirl[D_800364A8].unk1C];
+            p = &g_CurrentSetup.pads[g_IntroSwirl[intro_camera_index].unk1C];
             setupPad = p;
             *stan = setupPad->stan;
 
@@ -4864,7 +4864,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
     {
         if (g_CameraMode == CAMERAMODE_DEATH_CAM_SP)
         {
-            D_800364A4 += g_GlobalTimerDelta;
+            camera_transition_timer += g_GlobalTimerDelta;
 
             if (g_CurrentPlayer->ptr_char_objectinstance != NULL)
             {
@@ -4874,7 +4874,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                     g_CameraAfterCinema = CAMERAMODE_INTRO;
                 }
             }
-            else if (D_800364A4 >= 180.0f)
+            else if (camera_transition_timer >= 180.0f)
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
             }
@@ -4885,12 +4885,12 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 && (g_CurrentPlayer->deathanimfinished))
             {
                 g_CameraAfterCinema = CAMERAMODE_INTRO;
-                D_80036510 = CAMERAMODE_FADESWIRL;
+                camera_mode = CAMERAMODE_FADESWIRL;
             }
         }
         else if (g_CameraMode == CAMERAMODE_DEATH_CAM_MP)
         {
-            D_800364A4 += g_GlobalTimerDelta;
+            camera_transition_timer += g_GlobalTimerDelta;
 
             if (g_CurrentPlayer->colourfadetimemax60 < 0.0f)
             {
@@ -4902,7 +4902,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
                 && (g_CurrentPlayer->redbloodfinished)
                 && (g_CurrentPlayer->deathanimfinished))
             {
-                D_80036510 = CAMERAMODE_FADESWIRL;
+                camera_mode = CAMERAMODE_FADESWIRL;
             }
         }
 
@@ -9120,8 +9120,8 @@ void bondviewProcessInput(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_TankTurretVerticalAngleRelated = g_TankTurretVerticalAngle / TANK_VERT_ANGLE_FACTOR;
             g_TankTurretAngle = spEC->turret_orientation_angle;
             g_TankTurretOrientationAngleRad = spEC->turret_orientation_angle;
-            D_80036478 = g_TankTurretOrientationAngleRad / TANK_VERT_ANGLE_RAD_FACTOR;
-            D_8003647C = 0;
+            g_TankTurretOrientationAngleDeg = g_TankTurretOrientationAngleRad / TANK_VERT_ANGLE_RAD_FACTOR;
+            tank_turret_turn_speed = 0;
             g_TankOrientationAngle = spEC->tank_orientation_angle;
             g_TankTurnSpeed = 0;
             in_tank_flag = 1;
@@ -10351,21 +10351,21 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 
         for (i_1=0; i_1<g_ClockTimer; i_1++)
         {
-            D_80036478 = ((TANKUPDATEROTATION_SCALE) * D_80036478) + ftemp;
+            g_TankTurretOrientationAngleDeg = ((TANKUPDATEROTATION_SCALE) * g_TankTurretOrientationAngleDeg) + ftemp;
         }
 
-        g_TankTurretOrientationAngleRad = D_80036478 * (1.0f - TANKUPDATEROTATION_SCALE);
+        g_TankTurretOrientationAngleRad = g_TankTurretOrientationAngleDeg * (1.0f - TANKUPDATEROTATION_SCALE);
 
         if (g_TankTurretOrientationAngleRad >= M_TAU_F)
         {
             g_TankTurretOrientationAngleRad -= M_TAU_F;
-            D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
+            g_TankTurretOrientationAngleDeg = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
         }
 
         if (g_TankTurretOrientationAngleRad < 0.0f)
         {
             g_TankTurretOrientationAngleRad += M_TAU_F;
-            D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
+            g_TankTurretOrientationAngleDeg = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
         }
 
         if (bondviewCallTankCollisionStatus(
@@ -10374,7 +10374,7 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
             g_TankOrientationAngle) == 0)
         {
             g_TankTurretOrientationAngleRad = sp354;
-            D_80036478 = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
+            g_TankTurretOrientationAngleDeg = g_TankTurretOrientationAngleRad / (1.0f - TANKUPDATEROTATION_SCALE);
             g_TankTurretAngle = sp354;
         }
 
@@ -10411,11 +10411,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
         if (g_ClockTimer > 0) {
             for (i=0; i<g_ClockTimer; i++)
             {
-                D_8003647C = (TANKUPDATEROTATION_SCALE * D_8003647C) + (g_TankTurretTurn / g_GlobalTimerDelta);
+                tank_turret_turn_speed = (TANKUPDATEROTATION_SCALE * tank_turret_turn_speed) + (g_TankTurretTurn / g_GlobalTimerDelta);
             }
         }
 
-        ftemp = D_8003647C * (1.0f - TANKUPDATEROTATION_SCALE);
+        ftemp = tank_turret_turn_speed * (1.0f - TANKUPDATEROTATION_SCALE);
 
         g_CurrentPlayer->vv_theta = (
             g_TankOrientationAngle +
@@ -11677,7 +11677,7 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
     if (1);
 #endif
 
-    if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (D_800364B0 != 0)) || (g_CameraMode == CAMERAMODE_FADE_TO_TITLE))
+    if ((g_CameraMode == CAMERAMODE_NONE) || ((g_CameraMode == CAMERAMODE_FP) && (is_timer_active != 0)) || (g_CameraMode == CAMERAMODE_FADE_TO_TITLE))
     {
         if (get_cur_playernum() == 0)
         {
@@ -11745,7 +11745,7 @@ void bondviewMovePlayerUpdateViewport(s8 stick_x, s8 stick_y, u16 buttons)
             };
         }
 
-        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
+        if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (camera_mode >= CAMERAMODE_SWIRL))
         {
             bossRunTitleStage();
         }
@@ -15303,14 +15303,14 @@ glabel sub_GAME_7F088CD8
 /* 0BD838 7F088D08 AFB00038 */   sw    $s0, 0x38($sp)
 /* 0BD83C 7F088D0C 24010036 */  li    $at, 54
 /* 0BD840 7F088D10 14410130 */  bne   $v0, $at, .L7F0891D4
-/* 0BD844 7F088D14 3C108003 */   lui   $s0, %hi(D_8003643C)
-/* 0BD848 7F088D18 2610643C */  addiu $s0, %lo(D_8003643C) # addiu $s0, $s0, 0x643c
+/* 0BD844 7F088D14 3C108003 */   lui   $s0, %hi(credits_state)
+/* 0BD848 7F088D18 2610643C */  addiu $s0, %lo(credits_state) # addiu $s0, $s0, 0x643c
 /* 0BD84C 7F088D1C 8E0E0000 */  lw    $t6, ($s0)
 /* 0BD850 7F088D20 24010001 */  li    $at, 1
-/* 0BD854 7F088D24 3C0F8003 */  lui   $t7, %hi(D_80036440)
+/* 0BD854 7F088D24 3C0F8003 */  lui   $t7, %hi(credits_pointer)
 /* 0BD858 7F088D28 55C1012B */  bnel  $t6, $at, .L7F0891D8
 /* 0BD85C 7F088D2C 8FBF005C */   lw    $ra, 0x5c($sp)
-/* 0BD860 7F088D30 8DEF6440 */  lw    $t7, %lo(D_80036440)($t7)
+/* 0BD860 7F088D30 8DEF6440 */  lw    $t7, %lo(credits_pointer)($t7)
 /* 0BD864 7F088D34 3C028003 */  lui   $v0, %hi(camera_80036438)
 /* 0BD868 7F088D38 24426438 */  addiu $v0, %lo(camera_80036438) # addiu $v0, $v0, 0x6438
 /* 0BD86C 7F088D3C 11E00125 */  beqz  $t7, .L7F0891D4
@@ -15327,7 +15327,7 @@ glabel sub_GAME_7F088CD8
 /* 0BD898 7F088D68 0C00112B */  jal   viGetViewHeight
 /* 0BD89C 7F088D6C 0040A825 */   move  $s5, $v0
 /* 0BD8A0 7F088D70 8FAA00B4 */  lw    $t2, 0xb4($sp)
-/* 0BD8A4 7F088D74 3C048003 */  lui   $a0, %hi(D_80036440)
+/* 0BD8A4 7F088D74 3C048003 */  lui   $a0, %hi(credits_pointer)
 /* 0BD8A8 7F088D78 01421823 */  subu  $v1, $t2, $v0
 /* 0BD8AC 7F088D7C 04610003 */  bgez  $v1, .L7F088D8C
 /* 0BD8B0 7F088D80 00035903 */   sra   $t3, $v1, 4
@@ -15348,7 +15348,7 @@ glabel sub_GAME_7F088CD8
 .L7F088DB4:
 /* 0BD8E4 7F088DB4 18C00024 */  blez  $a2, .L7F088E48
 /* 0BD8E8 7F088DB8 00009825 */   move  $s3, $zero
-/* 0BD8EC 7F088DBC 8C846440 */  lw    $a0, %lo(D_80036440)($a0)
+/* 0BD8EC 7F088DBC 8C846440 */  lw    $a0, %lo(credits_pointer)($a0)
 .L7F088DC0:
 /* 0BD8F0 7F088DC0 94820000 */  lhu   $v0, ($a0)
 /* 0BD8F4 7F088DC4 24015011 */  li    $at, 20497
@@ -15398,8 +15398,8 @@ glabel sub_GAME_7F088CD8
 /* 0BD988 7F088E58 102000DB */  beqz  $at, .L7F0891C8
 /* 0BD98C 7F088E5C 00000000 */   nop
 /* 0BD990 7F088E60 00C50019 */  multu $a2, $a1
-/* 0BD994 7F088E64 3C038003 */  lui   $v1, %hi(D_80036440)
-/* 0BD998 7F088E68 8C636440 */  lw    $v1, %lo(D_80036440)($v1)
+/* 0BD994 7F088E64 3C038003 */  lui   $v1, %hi(credits_pointer)
+/* 0BD998 7F088E68 8C636440 */  lw    $v1, %lo(credits_pointer)($v1)
 /* 0BD99C 7F088E6C 0000A012 */  mflo  $s4
 /* 0BD9A0 7F088E70 00742021 */  addu  $a0, $v1, $s4
 /* 0BD9A4 7F088E74 94820000 */  lhu   $v0, ($a0)
@@ -15419,8 +15419,8 @@ glabel sub_GAME_7F088CD8
 /* 0BD9D8 7F088EA8 00402025 */  move  $a0, $v0
 /* 0BD9DC 7F088EAC 0FC30776 */  jal   langGet
 /* 0BD9E0 7F088EB0 00138900 */   sll   $s1, $s3, 4
-/* 0BD9E4 7F088EB4 3C0A8003 */  lui   $t2, %hi(D_80036440)
-/* 0BD9E8 7F088EB8 8D4A6440 */  lw    $t2, %lo(D_80036440)($t2)
+/* 0BD9E4 7F088EB4 3C0A8003 */  lui   $t2, %hi(credits_pointer)
+/* 0BD9E8 7F088EB8 8D4A6440 */  lw    $t2, %lo(credits_pointer)($t2)
 /* 0BD9EC 7F088EBC 00409025 */  move  $s2, $v0
 /* 0BD9F0 7F088EC0 01542021 */  addu  $a0, $t2, $s4
 /* 0BD9F4 7F088EC4 84830004 */  lh    $v1, 4($a0)
@@ -15510,8 +15510,8 @@ glabel sub_GAME_7F088CD8
 /* 0BDB30 7F089000 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0BDB34 7F089004 0FC2B6AF */  jal   textRender
 /* 0BDB38 7F089008 AFB80010 */   sw    $t8, 0x10($sp)
-/* 0BDB3C 7F08900C 3C0B8003 */  lui   $t3, %hi(D_80036440)
-/* 0BDB40 7F089010 8D6B6440 */  lw    $t3, %lo(D_80036440)($t3)
+/* 0BDB3C 7F08900C 3C0B8003 */  lui   $t3, %hi(credits_pointer)
+/* 0BDB40 7F089010 8D6B6440 */  lw    $t3, %lo(credits_pointer)($t3)
 /* 0BDB44 7F089014 0040A825 */  move  $s5, $v0
 /* 0BDB48 7F089018 01742021 */  addu  $a0, $t3, $s4
 .L7F08901C:
@@ -15521,8 +15521,8 @@ glabel sub_GAME_7F088CD8
 /* 0BDB58 7F089028 00A02025 */   move  $a0, $a1
 /* 0BDB5C 7F08902C 0FC30776 */  jal   langGet
 /* 0BDB60 7F089030 00138900 */   sll   $s1, $s3, 4
-/* 0BDB64 7F089034 3C0A8003 */  lui   $t2, %hi(D_80036440)
-/* 0BDB68 7F089038 8D4A6440 */  lw    $t2, %lo(D_80036440)($t2)
+/* 0BDB64 7F089034 3C0A8003 */  lui   $t2, %hi(credits_pointer)
+/* 0BDB68 7F089038 8D4A6440 */  lw    $t2, %lo(credits_pointer)($t2)
 /* 0BDB6C 7F08903C 00409025 */  move  $s2, $v0
 /* 0BDB70 7F089040 01542021 */  addu  $a0, $t2, $s4
 /* 0BDB74 7F089044 84830008 */  lh    $v1, 8($a0)
@@ -15619,8 +15619,8 @@ glabel sub_GAME_7F088CD8
 /* 0BDCC8 7F089198 2694000C */  addiu $s4, $s4, 0xc
 /* 0BDCCC 7F08919C 026B082A */  slt   $at, $s3, $t3
 /* 0BDCD0 7F0891A0 10200009 */  beqz  $at, .L7F0891C8
-/* 0BDCD4 7F0891A4 3C0A8003 */   lui   $t2, %hi(D_80036440)
-/* 0BDCD8 7F0891A8 8D4A6440 */  lw    $t2, %lo(D_80036440)($t2)
+/* 0BDCD4 7F0891A4 3C0A8003 */   lui   $t2, %hi(credits_pointer)
+/* 0BDCD8 7F0891A8 8D4A6440 */  lw    $t2, %lo(credits_pointer)($t2)
 /* 0BDCDC 7F0891AC 01542021 */  addu  $a0, $t2, $s4
 /* 0BDCE0 7F0891B0 94820000 */  lhu   $v0, ($a0)
 /* 0BDCE4 7F0891B4 1440FF38 */  bnez  $v0, .L7F088E98

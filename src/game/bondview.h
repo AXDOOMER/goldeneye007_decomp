@@ -2352,9 +2352,9 @@ extern s32 cameraFrameCounter2;
 //D:80036438
 extern s32 camera_80036438;
 //D:8003643C
-extern s32 D_8003643C;
+extern s32 credits_state;
 //D:80036440
-extern CreditsEntry *D_80036440;
+extern CreditsEntry *credits_pointer;
 //D:80036444
 extern s32 g_SurroundBondWithExplosionsFlag;
 //D:80036448
@@ -2379,7 +2379,7 @@ extern f32 g_TankTurnSpeed;
 //D:80036464
 extern f32 g_TankOrientationAngle;
 //D:80036468
-extern f32 D_80036468;
+extern f32 tank_turret_unused_angle;
 //D:8003646C
 extern f32 g_TankTurretVerticalAngle;
 //D:80036470
@@ -2387,9 +2387,9 @@ extern f32 g_TankTurretVerticalAngleRelated;
 //D:80036474
 extern f32 g_TankTurretOrientationAngleRad;
 //D:80036478
-extern f32 D_80036478;
+extern f32 g_TankTurretOrientationAngleDeg;
 //D:8003647C
-extern f32 D_8003647C;
+extern f32 tank_turret_turn_speed;
 //D:80036480
 extern s32 g_BondCanEnterTank;
 //D:80036484
@@ -2405,17 +2405,17 @@ extern enum CAMERAMODE g_CameraMode;
 //D:80036498
 extern enum CAMERAMODE g_CameraAfterCinema;
 //D:8003649C
-extern s32 D_8003649C;
+extern s32 camera_fade_active;
 //D:800364A0
 extern s32 stop_time_flag;
 //D:800364A4
-extern f32 D_800364A4;
+extern f32 camera_transition_timer;
 //D:800364A8
-extern s32 D_800364A8;
+extern s32 intro_camera_index;
 //D:800364AC
 extern struct SetupIntroSwirl *g_IntroSwirl;
 //D:800364B0
-extern s32 D_800364B0;
+extern s32 is_timer_active;
 //D:800364B4
 extern s32 g_PlayerInvincible;
 //D:800364B8
@@ -2440,7 +2440,7 @@ extern s32 g_bondviewBondDeathAnimations[];
 //D:8003650C
 extern s32 g_bondviewBondDeathAnimationsCount;
 //D:80036510
-extern enum CAMERAMODE D_80036510;
+extern enum CAMERAMODE camera_mode;
 //D:80036514
 extern s32 g_IntroAnimationIndex;
 /*

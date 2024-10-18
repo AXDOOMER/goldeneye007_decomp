@@ -377,7 +377,7 @@ void setupUpdateObjectRoomPosition(ObjectRecord *obj)
             break;
 
             // not included:
-            //case PROPDEF_UNK15: //15:
+            //case PROPDEF_DEBRIS: //15:
             //case PROPDEF_UNK16: //16:
             // return ???
         }

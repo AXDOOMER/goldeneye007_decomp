@@ -3383,7 +3383,7 @@ typedef enum PROJECTILES
         PROPDEF_RACK,
         PROPDEF_AUTOGUN,
         PROPDEF_LINK,
-        PROPDEF_UNK15,
+        PROPDEF_DEBRIS,
         PROPDEF_UNK16,
         PROPDEF_HAT,
         PROPDEF_GUARD_ATTRIBUTE,
@@ -3428,7 +3428,7 @@ typedef enum PROJECTILES
     /**
      * enums were listed in a particular order, it appears the first few are associated with the start/intro
      * of a level:
-     *     if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (D_80036510 >= CAMERAMODE_SWIRL))
+     *     if (g_CurrentPlayer->redbloodfinished && g_CurrentPlayer->deathanimfinished && (camera_mode >= CAMERAMODE_SWIRL))
     */
    typedef enum CAMERAMODE
     {
