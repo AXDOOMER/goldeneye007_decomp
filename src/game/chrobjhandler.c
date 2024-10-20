@@ -1,3 +1,14 @@
+/*---------------------------------------------------------------------
+	Copyright (C) 1997, Rareware.
+
+	File		propobj.c
+	Coded    .	Jul 31, 1997.
+	Modified by
+	Comments	Prop Objects code.
+
+	$Id: propobj.c,v 1.21 1997/05/28 00:14:49 has Exp $
+  ---------------------------------------------------------------------*/
+
 #include <ultra64.h>
 #include <math.h>
 #include <PR/libaudio.h>
@@ -976,10 +987,12 @@ Projectile *projectileAllocate(void)
 
 void sub_GAME_7F03FDA8(PropRecord *prop)
 {
-    ObjectRecord *obj = prop->obj;
-
+    ObjectRecord *obj = prop->obj; //po
     if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
     {
+        #ifdef DEBUG
+        //assert(po->move.attach->fallinfo==NULL);
+        #endif
         obj->embedment->projectile = projectileAllocate();
     }
     else if ((obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0)
@@ -1576,6 +1589,12 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix,
             baseobj->runtime_pos.y = newPos.y;
             baseobj->runtime_pos.z = newPos.z;
         }
+        #ifdef DEBUG
+        else
+        {
+            osSyncPrintf("prop not positioned correctly!\n");
+        }
+        #endif
     }
 
     chrobjCollisionRelated(baseobj);
@@ -1635,6 +1654,17 @@ void objFreeEmbedmentOrProjectile(PropRecord *prop)
             {
                 projectileFree(obj->embedment->projectile);
             }
+            #ifdef DEBUG
+            else
+            {
+                osSyncPrintf("ERROR: PROPHIDD_ATTACHED was, but move.attach was NULL\a\n");
+                osSyncPrintf("po->obj=%d\n",po->obj);
+                osSyncPrintf("p->flags=%08x\n",p->flags);
+                osSyncPrintf("po->flags2=%08x\n",po->flags2);
+                osSyncPrintf("p->timetoregen=%d\n",p->timetoregen);
+            }
+            #endif
+
             embedmentFree(obj->embedment);
         }
         obj->embedment = NULL;
@@ -2880,7 +2910,8 @@ bool projectileFindCollidingProp(PropRecord *prop, coord3d *pos1, coord3d *pos2,
 
 #ifdef NONMATCHING
 void handles_projectile_motion(void) {
-
+    //this function contains
+    // osSyncPrintf("stanLineObjGfx: %d rooms is more than %d\n",arg0+0x58,20);
 }
 #else
 GLOBAL_ASM(
@@ -27953,12 +27984,12 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
     if (objAlpha < 0xFF)
     {
-        mrData.unk30 = 5;
+        mrData.PropType = 5;
         mrData.envcolour.word = objAlpha;
     }
     else
     {
-        mrData.unk30 = 9;
+        mrData.PropType = 9;
 
         if (obj->type == PROPDEF_TINTED_GLASS)
         {
@@ -37043,6 +37074,10 @@ void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy)
         if (temp_mine_table[i] == NULL)
         {
             temp_mine_table[i] = proxy;
+            #ifdef DEBUG
+                assert(i<PROXIMITYARRMAX);
+            #endif
+
             return;
         }
         i++;
@@ -37199,6 +37234,9 @@ bool chrEquipWeapon(WeaponObjRecord *wep, ChrRecord *chr)
             }
             else
             {
+                 #ifdef DEBUG
+                    osSyncPrintf("attempted multiple attach!!!\n");
+                #endif
                 return FALSE;
             }
         }
@@ -38909,11 +38947,17 @@ void sub_GAME_7F053A3C(DoorRecord* arg0)
 
         if (open_playing != 0)
         {
+            #ifdef DEBUG
+            assert( po->audiostate!=NULL);
+            #endif
             sndCreatePostEvent(arg0->openSoundState, 8, sp1C);
         }
 
         if (close_playing != 0)
         {
+            #ifdef DEBUG
+            assert( po->audiostate2!=NULL);
+            #endif
             sndCreatePostEvent(arg0->closeSoundState, 8, sp1C);
         }
     }

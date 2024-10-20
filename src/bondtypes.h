@@ -698,7 +698,7 @@ typedef union
         u32     unk28;          /*0x28*/
         u32     unk2c;          /*0x2c*/
 
-        s32     unk30;          /*0x30*/
+        s32     PropType;          /*0x30*/
         rgba_u8 envcolour;      /*0x34*/
         rgba_u8 fogcolour;      /*0x38*/
         u32     cullmode;       /*0x3c*/

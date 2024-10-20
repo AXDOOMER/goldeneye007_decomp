@@ -128,7 +128,7 @@ struct unk_joint_list {
     u32 unk28;
     u32 unk2C;
 
-    s32 unk30;
+    s32 PropType;
     s32 unk34;
     rgba_u8 unk38;
     s32 unk3C;

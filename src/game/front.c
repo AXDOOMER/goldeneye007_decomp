@@ -1243,7 +1243,7 @@ Gfx* frontAddStartTabText(Gfx* DL)
     s32 v;
     s32 h;
 
-    s32 textWidth; 
+    s32 textWidth;
     s32 textHeight;
 
     g_textPtrTAB1 = langGet(getStringID(LTITLE, TITLE_STR_04_START));
@@ -1252,8 +1252,8 @@ Gfx* frontAddStartTabText(Gfx* DL)
     textWidth = 0;
     //text is sideways so textWidth and textHeight are flipped
     textMeasure(&textWidth, &textHeight, g_textPtrTAB1, ptrFontBankGothicChars, ptrFontBankGothic, 0);
-    v = STARTTAB_TEXT_TOP; 
-    h = TABS_RIGHT_EDGE - (textWidth / 2); 
+    v = STARTTAB_TEXT_TOP;
+    h = TABS_RIGHT_EDGE - (textWidth / 2);
 
     if (tab_start_highlight)
     {
@@ -1397,6 +1397,9 @@ void init_menu00_legalscreen(void)
     modelCalculateRwDataLen(PitemZ_entries[PROP_LEGALPAGE].header);
 
     logoinst = get_obj_instance_controller_for_header(PitemZ_entries[PROP_LEGALPAGE].header);
+    #ifdef DEBUG
+        assert(logoinst);
+    #endif
     modelSetScale(logoinst, 1.0f);
     setsuboffset(logoinst, &pos);
     fileValidateSaves();
@@ -2001,6 +2004,10 @@ void init_menu04_goldeneyelogo(void)
     load_object_fill_header(PitemZ_entries[PROP_GOLDENEYELOGO].header, PitemZ_entries[PROP_GOLDENEYELOGO].filename, ptr_logo_and_walletbond_DL, 0x3c000, 0);
     modelCalculateRwDataLen(PitemZ_entries[PROP_GOLDENEYELOGO].header);
     logoinst = get_obj_instance_controller_for_header(PitemZ_entries[PROP_GOLDENEYELOGO].header);
+    #ifdef DEBUG
+        assert(logoinst);
+    #endif
+
     modelSetScale(logoinst, 1.0f);
     setsuboffset(logoinst, &pos);
 }
@@ -2210,6 +2217,9 @@ void load_walletbond(void)
         for (i = FOLDER1; i < MAX_FOLDER_COUNT; i++)
         {
             walletinst[i]  = get_aircraft_obj_instance_controller(PitemZ_entries[PROP_WALLETBOND].header);
+            #ifdef DEBUG
+            assert(walletinst[i]);
+            #endif
             modelSetScale(walletinst[i], 1.0f);
         }
 
@@ -2220,7 +2230,7 @@ void load_walletbond(void)
             struct unk_walletbond_struct *srecord;
             struct ModelNode *b;
             Gfx *arg0;
-            
+
             b = (struct ModelNode *)mnode;
             srecord = b->Data;
 

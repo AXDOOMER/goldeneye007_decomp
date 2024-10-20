@@ -28,8 +28,8 @@ s32 sub_GAME_7F0754BC(struct ModelAnimation *, s32, struct ModelSkeleton*);
 //newfile per EU
 bool modelmgrCanSlotFitRwdata(Model *modelslot, ModelFileHeader *modeldef)
 {
-	return modeldef->numRecords <= 0
-		|| (modelslot->datas != NULL && modelslot->Type >= modeldef->numRecords);
+    return modeldef->numRecords <= 0
+        || (modelslot->datas != NULL && modelslot->Type >= modeldef->numRecords);
 }
 
 
@@ -556,7 +556,7 @@ union ModelRwData* modelGetNodeRwData(Model *Objinst, ModelNode *root)
         root = root->Parent;
         if ((root->Opcode & 0xFF) == MODELNODE_OPCODE_HEAD)
         {
-			ModelRwData_HeadPlaceholderRecord *tmp = modelGetNodeRwData(Objinst, root);
+            ModelRwData_HeadPlaceholderRecord *tmp = modelGetNodeRwData(Objinst, root);
             data = tmp->RwDatas;
             break;
         }
@@ -5266,7 +5266,10 @@ glabel modelTickAnimQuarterSpeed
 )
 #endif
 
-
+/**
+ * @brief Model Type 1: 1Cycle No Secondary
+ * @param[in,out] renderdata append cycle, CC and RM to display List
+ */
 void modelApplyRenderModeType1(ModelRenderData *renderdata)
 {
     gDPPipeSync(renderdata->gdl++);
@@ -5284,26 +5287,670 @@ void modelApplyRenderModeType1(ModelRenderData *renderdata)
     gDPSetCombineMode(renderdata->gdl++, G_CC_MODULATEIA, G_CC_MODULATEIA);
 }
 
+/**
+ * @brief Model Type 3: GunLighting - Reduced Secondary Commands (guns)
+    This Type Uses Vertex Alpha for Secondary Surfaces and uses the FOG Alpha value for applying Fog/"Lighting".
+ * @param renderdata
+ * @param isPrimary
+ */
+void modelApplyRenderModeType3(ModelRenderData *renderdata, bool isPrimary)
+{
+    if (renderdata->PropType == PROP_TYPE_VIEWER+1)
+    {
+        if (isPrimary)
+        {
+            u8 r, g, b, a;
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+            r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+            g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+            b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+            a = 0xFF;
+            gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+
+            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, ENVIRONMENT, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_EXPLOSION+1)
+    {
+        if (isPrimary)
+        {
+            u8 r, g, b, a;
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+            r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+            g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+            b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+            a = _SHIFTR(renderdata->envcolour.word, 0, 8);
+            gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+
+            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_SMOKE+1)
+    {
+        if ((renderdata->envcolour.word & 0xFF) == 0)
+        {
+            if (isPrimary)
+            {
+                u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+                u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+                u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+                u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+
+                gDPPipeSync(renderdata->gdl++);
+                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+                gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0xFF);
+                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
+
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+                }
+            }
+            else
+            {
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+                }
+            }
+        }
+        else
+        {
+            if (isPrimary)
+            {
+                u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+                u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+                u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+                u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+
+                gDPPipeSync(renderdata->gdl++);
+                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+                gDPSetEnvColor(renderdata->gdl++, 0, 0, 0, renderdata->envcolour.word & 0xFF);
+
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            }
+            else
+            {
+                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, SHADE, ENVIRONMENT, TEXEL0, 0, COMBINED, 0, SHADE, 0, 1, 0, PRIMITIVE, COMBINED);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_CHR+1)
+    {
+        if (isPrimary)
+        {
+            u8 r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+            u8 g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+            u8 b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+            u8 a = _SHIFTR(renderdata->envcolour.word, 0, 8);
+
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_WEAPON+1)
+    {
+        u8 r, g, b, a;
+        if (isPrimary)
+        {
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+            a = renderdata->envcolour.word & 0xFF;
+
+            if (a < 255)
+            {
+                gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, a);
+
+                if (renderdata->envcolour.word & 0xFF00)
+                {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, SHADE, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                }
+                else
+                {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                }
+            }
+            else
+            {
+                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+            }
+
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+        else
+        {
+            a = renderdata->envcolour.word & 0xFF;
+
+            if (a < 255)
+            {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+            }
+            else
+            {
+                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+            }
+        }
+    }
+    else
+    {
+        if (isPrimary)
+        {
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Model Type 4: Normal Fog/Lighting object
+    This Type Uses Vertex Alpha for Secondary Surfaces and uses the FOG Alpha value for applying Fog/"Lighting".
+ * @param renderdata
+ * @param isPrimary Type of DisplayList
+ */
+void modelApplyRenderModeType4(ModelRenderData *renderdata, bool isPrimary)
+{
+    if (renderdata->PropType == PROP_TYPE_VIEWER+1)
+    {
+        u8 r, g, b, a;
+        gDPPipeSync(renderdata->gdl++);
+        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+        r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+        g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+        b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+        a = 0xFF;
+        gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+
+        gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, ENVIRONMENT, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+        if (isPrimary)
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_EXPLOSION+1)
+    {
+        u8 r, g, b, a;
+        gDPPipeSync(renderdata->gdl++);
+        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+        r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+        g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+        b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+        a = _SHIFTR(renderdata->envcolour.word, 0, 8);
+        gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
+
+        gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+        if (renderdata->zbufferenabled)
+        {
+            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+        }
+        else
+        {
+            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_SMOKE+1)
+    {
+        if ((renderdata->envcolour.word & 0xFF) == 0)
+        {
+            u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+            u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+            u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+            u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0xFF);
+            gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, ((renderdata->envcolour.word >> 8 ) & 0xFF));
+
+            if (isPrimary)
+            {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+                }
+            }
+            else
+            {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+                }
+            }
+        }
+        else
+        {
+            u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+            u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+            u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+            u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+
+            gDPPipeSync(renderdata->gdl++);
+            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+            gDPSetEnvColor(renderdata->gdl++, 0, 0, 0, renderdata->envcolour.word & 0xFF);
+
+            if (isPrimary)
+            {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            }
+            else
+            {
+                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, SHADE, ENVIRONMENT, TEXEL0, 0, COMBINED, 0, SHADE, 0, 1, 0, PRIMITIVE, COMBINED);
+
+                if (renderdata->zbufferenabled)
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
+                }
+                else
+                {
+                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
+                }
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_CHR+1)
+    {
+        u8 r = _SHIFTR(renderdata->envcolour.word, 24, 8);
+        u8 g = _SHIFTR(renderdata->envcolour.word, 16, 8);
+        u8 b = _SHIFTR(renderdata->envcolour.word, 8, 8);
+        u8 a = _SHIFTR(renderdata->envcolour.word, 0, 8);
+
+        gDPPipeSync(renderdata->gdl++);
+        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+        gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+        if (isPrimary)
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+    else if (renderdata->PropType == PROP_TYPE_WEAPON+1)
+    {
+        u8 r, g, b, a;
+
+        gDPPipeSync(renderdata->gdl++);
+        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
+        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
+        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
+        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
+        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
+
+        a = renderdata->envcolour.word & 0xFF;
+
+        if (a < 255)
+        {
+            gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, a);
+
+            if (isPrimary)
+            {
+                if (renderdata->envcolour.word & 0xFF00) //apply inverse vertex alpha if any
+                {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, SHADE, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                }
+                else
+                {
+                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+                }
+            }
+            else
+            {
+                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
+            }
+        }
+        else
+        {
+            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+        }
+
+        if (renderdata->zbufferenabled)
+        {
+            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+        }
+        else
+        {
+            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+        }
+    }
+    else
+    {
+        gDPPipeSync(renderdata->gdl++);
+        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+        gDPSetFogColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0x00);
+        gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+
+        if (isPrimary)
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
+            }
+        }
+        else
+        {
+            if (renderdata->zbufferenabled)
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
+            }
+            else
+            {
+                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+            }
+        }
+    }
+}
+
+/**
+ * @brief Model Type 2: 2Cycle No Secondary
+ * @param[in,out] renderdata append cycle, CC and RM to display List
+ */
+void modelApplyRenderModeType2(ModelRenderData *renderdata)
+{
+    gDPPipeSync(renderdata->gdl++);
+    gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
+
+    if (renderdata->zbufferenabled)
+    {
+        gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
+    }
+    else
+    {
+        gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_OPA_SURF2);
+    }
+
+    gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
+}
+
+
+void modelApplyCullMode(ModelRenderData *renderdata)
+{
+    if (renderdata->cullmode == CULLMODE_NONE)
+    {
+        gSPClearGeometryMode(renderdata->gdl++, G_CULL_BOTH);
+    }
+    else if (renderdata->cullmode == CULLMODE_FRONT)
+    {
+        gSPSetGeometryMode(renderdata->gdl++, G_CULL_FRONT);
+    }
+    else if (renderdata->cullmode == CULLMODE_BACK)
+    {
+        gSPSetGeometryMode(renderdata->gdl++, G_CULL_BACK);
+    }
+}
+
+
+void modelRenderNodeGundl(ModelRenderData* renderdata, ModelNode* arg1)
+{
+    ModelRoData_DisplayListRecord* rodata = &arg1->Data->DisplayList;
+
+    if (renderdata->unk18 == 0)
+    {
+        if ((renderdata->flags & 1) && rodata->Primary)
+        {
+            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
+
+            if (renderdata->cullmode)
+            {
+                modelApplyCullMode(renderdata);
+            }
+
+            if (rodata->ModelType == 1)
+            {
+                modelApplyRenderModeType1(renderdata);
+            }
+            else if (rodata->ModelType == 3)
+            {
+                modelApplyRenderModeType3(renderdata, 1);
+            }
+            else if (rodata->ModelType == 4)
+            {
+                modelApplyRenderModeType4(renderdata, 1);
+            }
+            else if (rodata->ModelType == 2)
+            {
+                modelApplyRenderModeType2(renderdata);
+            }
+
+            gSPDisplayList(renderdata->gdl++, rodata->Primary);
+
+            if ((rodata->ModelType == 3) && rodata->Secondary)
+            {
+                modelApplyRenderModeType3(renderdata, 0);
+                gSPDisplayList(renderdata->gdl++, rodata->Secondary);
+            }
+        }
+
+        if ((renderdata->flags & 2) && rodata->Primary && (rodata->ModelType == 4) && rodata->Secondary)
+        {
+            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
+
+            if (renderdata->cullmode)
+            {
+                modelApplyCullMode(renderdata);
+            }
+
+            modelApplyRenderModeType4(renderdata, 0);
+            gSPDisplayList(renderdata->gdl++, rodata->Secondary);
+        }
+    }
+}
 
 /*
---Copy/Paste from Doc
-DisplayList Setups Depend on Object Type, Prop Guard or Gun.
-These are applied to each part of an object at runtime and can be overridden. loading the next part will use these values once more.
-GeometryMode is not in setup and is persistent accross parts.
-
-
-7F072A0C Read Displaylist 18 Model Type
-7F072A1C Read Displaylist 18 Model Type
-7F072A24 Check model type 1
-7F072A2C Call to do model type 1 7F070F80
-7F072A40 Check model type 3
-7F072A48 Call to do model type 3 7F071030
-7F072A5C Check model type 4
-7F072A64 Call to do model type 4 7F071B44
-7F072A78 Check model type 2
-7F072A80 Call to do model type 2 7F072644
-
-7F0727F8 Read Displaylist 04 Model Type
 
 A1 is primary = 1, secondary = 0
 Inside the T8 or whatever temporary register indicates gun or not gun (0 = gun, or UseZ = 1), for different render mode
@@ -5420,656 +6067,13 @@ Model Type 4: Normal Fog/Lighting object
       B900031DC41041C8 SetRendermode(AA_OPA_StanFOG_2)//FcBl ClrOnCvg
     endif
 */
-void modelApplyRenderModeType3(ModelRenderData *renderdata, bool isPrimary)
-{
-    if (renderdata->unk30 == 7)
-    {
-        if (isPrimary)
-        {
-            u8 r, g, b, a;
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
 
-            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-            r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-            g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-            b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-            a = 0xFF;
-            gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
-
-            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, ENVIRONMENT, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-    else if (renderdata->unk30 == 8)
-    {
-        if (isPrimary)
-        {
-            u8 r, g, b, a;
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-            r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-            g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-            b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-            a = _SHIFTR(renderdata->envcolour.word, 0, 8);
-            gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
-
-            gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-    else if (renderdata->unk30 == 9)
-    {
-        if ((renderdata->envcolour.word & 0xFF) == 0)
-        {
-            if (isPrimary)
-            {
-                u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-                u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-                u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-                u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-
-                gDPPipeSync(renderdata->gdl++);
-                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-                gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0xFF);
-                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
-
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-                }
-            }
-            else
-            {
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-                }
-            }
-        }
-        else
-        {
-            if (isPrimary)
-            {
-                u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-                u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-                u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-                u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-
-                gDPPipeSync(renderdata->gdl++);
-                gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-                gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-                gDPSetEnvColor(renderdata->gdl++, 0, 0, 0, renderdata->envcolour.word & 0xFF);
-
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
-                }
-            }
-            else
-            {
-                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, SHADE, ENVIRONMENT, TEXEL0, 0, COMBINED, 0, SHADE, 0, 1, 0, PRIMITIVE, COMBINED);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
-                }
-            }
-        }
-    }
-    else if (renderdata->unk30 == 4)
-    {
-        if (isPrimary)
-        {
-            u8 r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-            u8 g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-            u8 b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-            u8 a = _SHIFTR(renderdata->envcolour.word, 0, 8);
-
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-    else if (renderdata->unk30 == 5)
-    {
-        u8 r, g, b, a;
-        if (isPrimary)
-        {
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-            r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-            g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-            b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-            a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-            a = renderdata->envcolour.word & 0xFF;
-
-            if (a < 255)
-            {
-                gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, a);
-
-                if (renderdata->envcolour.word & 0xFF00)
-                {
-                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, SHADE, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-                }
-                else
-                {
-                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-                }
-            }
-            else
-            {
-                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-            }
-
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-        else
-        {
-            a = renderdata->envcolour.word & 0xFF;
-
-            if (a < 255)
-            {
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-            }
-            else
-            {
-                gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-            }
-        }
-    }
-    else
-    {
-        if (isPrimary)
-        {
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-}
-
-
-void modelApplyRenderModeType4(ModelRenderData *renderdata, bool isPrimary)
-{
-    if (renderdata->unk30 == 7)
-    {
-        u8 r, g, b, a;
-        gDPPipeSync(renderdata->gdl++);
-        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-        r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-        g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-        b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-        a = 0xFF;
-        gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
-
-        gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, ENVIRONMENT, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-        if (isPrimary)
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-    else if (renderdata->unk30 == 8)
-    {
-        u8 r, g, b, a;
-        gDPPipeSync(renderdata->gdl++);
-        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-        r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-        g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-        b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-        a = _SHIFTR(renderdata->envcolour.word, 0, 8);
-        gDPSetEnvColor(renderdata->gdl++, r, g, b, a);
-
-        gDPSetCombineLERP(renderdata->gdl++, TEXEL0, ENVIRONMENT, SHADE_ALPHA, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-        if (renderdata->zbufferenabled)
-        {
-            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-        }
-        else
-        {
-            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-        }
-    }
-    else if (renderdata->unk30 == 9)
-    {
-        if ((renderdata->envcolour.word & 0xFF) == 0)
-        {
-            u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-            u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-            u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-            u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-            gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0xFF);
-            gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, ((renderdata->envcolour.word >> 8 ) & 0xFF));
-
-            if (isPrimary)
-            {
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-                }
-            }
-            else
-            {
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, PRIMITIVE);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-                }
-            }
-        }
-        else
-        {
-            u8 r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-            u8 g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-            u8 b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-            u8 a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-
-            gDPPipeSync(renderdata->gdl++);
-            gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-            gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-            gDPSetEnvColor(renderdata->gdl++, 0, 0, 0, renderdata->envcolour.word & 0xFF);
-
-            if (isPrimary)
-            {
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, SHADE, ENVIRONMENT, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
-                }
-            }
-            else
-            {
-                gDPSetPrimColor(renderdata->gdl++, 0, 0, 0, 0, 0, (renderdata->envcolour.word >> 8) & 0xFF);
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, SHADE, ENVIRONMENT, TEXEL0, 0, COMBINED, 0, SHADE, 0, 1, 0, PRIMITIVE, COMBINED);
-
-                if (renderdata->zbufferenabled)
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_TEX_EDGE2);
-                }
-                else
-                {
-                    gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_TEX_EDGE2);
-                }
-            }
-        }
-    }
-    else if (renderdata->unk30 == 4)
-    {
-        u8 r = _SHIFTR(renderdata->envcolour.word, 24, 8);
-        u8 g = _SHIFTR(renderdata->envcolour.word, 16, 8);
-        u8 b = _SHIFTR(renderdata->envcolour.word, 8, 8);
-        u8 a = _SHIFTR(renderdata->envcolour.word, 0, 8);
-
-        gDPPipeSync(renderdata->gdl++);
-        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-        gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-
-        if (isPrimary)
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-    else if (renderdata->unk30 == 5)
-    {
-        u8 r, g, b, a;
-
-        gDPPipeSync(renderdata->gdl++);
-        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-        r = _SHIFTR(renderdata->fogcolour.word, 24, 8);
-        g = _SHIFTR(renderdata->fogcolour.word, 16, 8);
-        b = _SHIFTR(renderdata->fogcolour.word, 8, 8);
-        a = _SHIFTR(renderdata->fogcolour.word, 0, 8);
-        gDPSetFogColor(renderdata->gdl++, r, g, b, a);
-
-        a = renderdata->envcolour.word & 0xFF;
-
-        if (a < 255)
-        {
-            gDPSetEnvColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, a);
-
-            if (isPrimary)
-            {
-                if (renderdata->envcolour.word & 0xFF00)
-                {
-                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, SHADE, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-                }
-                else
-                {
-                    gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, 1, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-                }
-            }
-            else
-            {
-                gDPSetCombineLERP(renderdata->gdl++, TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, COMBINED, 0, SHADE, 0, COMBINED, 0, SHADE, 0);
-            }
-        }
-        else
-        {
-            gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-        }
-
-        if (renderdata->zbufferenabled)
-        {
-            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-        }
-        else
-        {
-            gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-        }
-    }
-    else
-    {
-        gDPPipeSync(renderdata->gdl++);
-        gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-        gDPSetFogColor(renderdata->gdl++, 0xFF, 0xFF, 0xFF, 0x00);
-        gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-
-        if (isPrimary)
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_OPA_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_OPA_SURF2);
-            }
-        }
-        else
-        {
-            if (renderdata->zbufferenabled)
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_ZB_XLU_SURF2);
-            }
-            else
-            {
-                gDPSetRenderMode(renderdata->gdl++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
-            }
-        }
-    }
-}
-
-
-void modelApplyRenderModeType2(ModelRenderData *renderdata)
-{
-    gDPPipeSync(renderdata->gdl++);
-    gDPSetCycleType(renderdata->gdl++, G_CYC_2CYCLE);
-
-    if (renderdata->zbufferenabled)
-    {
-        gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
-    }
-    else
-    {
-        gDPSetRenderMode(renderdata->gdl++, G_RM_PASS, G_RM_AA_OPA_SURF2);
-    }
-
-    gDPSetCombineMode(renderdata->gdl++, G_CC_TRILERP, G_CC_MODULATEIA2);
-}
-
-
-void modelApplyCullMode(ModelRenderData *renderdata)
-{
-    if (renderdata->cullmode == CULLMODE_NONE)
-    {
-        gSPClearGeometryMode(renderdata->gdl++, G_CULL_BOTH);
-    }
-    else if (renderdata->cullmode == CULLMODE_FRONT)
-    {
-        gSPSetGeometryMode(renderdata->gdl++, G_CULL_FRONT);
-    }
-    else if (renderdata->cullmode == CULLMODE_BACK)
-    {
-        gSPSetGeometryMode(renderdata->gdl++, G_CULL_BACK);
-    }
-}
-
-
-void modelRenderNodeGundl(ModelRenderData* renderdata, ModelNode* arg1)
-{
-    ModelRoData_DisplayListRecord* rodata = &arg1->Data->DisplayList;
-
-    if (renderdata->unk18 == 0)
-    {
-        if ((renderdata->flags & 1) && rodata->Primary)
-        {
-            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
-
-            if (renderdata->cullmode)
-            {
-                modelApplyCullMode(renderdata);
-            }
-
-            if (rodata->ModelType == 1)
-            {
-                modelApplyRenderModeType1(renderdata);
-            }
-            else if (rodata->ModelType == 3)
-            {
-                modelApplyRenderModeType3(renderdata, 1);
-            }
-            else if (rodata->ModelType == 4)
-            {
-                modelApplyRenderModeType4(renderdata, 1);
-            }
-            else if (rodata->ModelType == 2)
-            {
-                modelApplyRenderModeType2(renderdata);
-            }
-
-            gSPDisplayList(renderdata->gdl++, rodata->Primary);
-
-            if ((rodata->ModelType == 3) && rodata->Secondary)
-            {
-                modelApplyRenderModeType3(renderdata, 0);
-                gSPDisplayList(renderdata->gdl++, rodata->Secondary);
-            }
-        }
-
-        if ((renderdata->flags & 2) && rodata->Primary && (rodata->ModelType == 4) && rodata->Secondary)
-        {
-            gSPSegment(renderdata->gdl++, SPSEGMENT_MODEL_COL1, osVirtualToPhysical(rodata->BaseAddr));
-
-            if (renderdata->cullmode)
-            {
-                modelApplyCullMode(renderdata);
-            }
-
-            modelApplyRenderModeType4(renderdata, 0);
-            gSPDisplayList(renderdata->gdl++, rodata->Secondary);
-        }
-    }
-}
-
-
+/**
+* 7F072A0C
+* DisplayList Setups Depend on Object Type, Prop Guard or Gun.
+These are applied to each part of an object at runtime and can be overridden. loading the next part will use these values once more.
+GeometryMode is not in setup and is persistent accross parts.
+*/
 void modelRenderNodeDl(ModelRenderData *renderdata, Model *model, ModelNode *node)
 {
     union ModelRoData *rodata = node->Data;
@@ -6240,7 +6244,7 @@ void dorottex(ModelRenderData *renderdata, ModelNode *node)
 
 void sub_GAME_7F073038(ModelRenderData *renderdata, struct sImageTableEntry *tconfig, s32 arg2)
 {
-	texSelect(&renderdata->gdl, tconfig, arg2, renderdata->zbufferenabled, 2);
+    texSelect(&renderdata->gdl, tconfig, arg2, renderdata->zbufferenabled, 2);
 }
 
 

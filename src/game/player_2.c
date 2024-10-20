@@ -47,7 +47,7 @@ void default_player_perspective_and_height(void)
   g_playerPlayerData[PLAYER_4].handicap = value;
 }
 
-void reset_play_data_ptrs(void) 
+void reset_play_data_ptrs(void)
 {
     g_playerPointers[PLAYER_1] = NULL;
     g_playerPointers[PLAYER_2] = NULL;
@@ -104,12 +104,18 @@ void initBONDdataforPlayer(s32 player_num)
     s32 i;
     struct hand default_hand;
     s32 one;
-
+#ifdef DEBUG
+    assert(players[num]==NULL); //according to assert, this file name is "player.c"
+#endif
     default_hand = *((struct hand*)D_8003FDA0);
 #if defined(VERSION_US) || defined(VERSION_JP)
     g_playerPointers[player_num] = mempAllocBytesInBank(0x2A80U, MEMPOOL_STAGE);
 #elif defined(VERSION_EU)
     g_playerPointers[player_num] = mempAllocBytesInBank(0x2A70U, MEMPOOL_STAGE);
+#endif
+
+#ifdef DEBUG
+    assert(players[num]!=NULL);
 #endif
 
     g_playerPointers[player_num]->unknown = 0;
@@ -466,6 +472,12 @@ void initBONDdataforPlayer(s32 player_num)
 
 void set_cur_player(s32 playernum)
 {
+#ifdef DEBUG
+    assert(num>=0);
+    assert(num<4);
+    assert(players[num]!=NULL); //player.c
+#endif
+
     player_num = playernum;
     g_CurrentPlayer = g_playerPointers[playernum];
     g_playerPerm = &g_playerPlayerData[playernum];
@@ -492,9 +504,7 @@ s32 getPlayerPointerIndex(PropRecord* prop)
 
 void set_cur_player_screen_size(u32 width, u32 height) {
     #ifdef XBLADEBUG
-        if (g_CurrentPlayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x25a,"Assertion failed: g_CurrentPlayer");
-    }
+       assert(currentplayer);
     #endif
   g_CurrentPlayer->viewx = width;
   g_CurrentPlayer->viewy = height;
@@ -502,9 +512,7 @@ void set_cur_player_screen_size(u32 width, u32 height) {
 
 void set_cur_player_viewport_size(u32 ulx, u32 uly) {
         #ifdef XBLADEBUG
-        if (g_CurrentPlayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x262,"Assertion failed: g_CurrentPlayer");
-    }
+       assert(currentplayer);
     #endif
   g_CurrentPlayer->viewleft = ulx;
   g_CurrentPlayer->viewtop = uly;
@@ -512,27 +520,21 @@ void set_cur_player_viewport_size(u32 ulx, u32 uly) {
 
 void set_cur_player_fovy(f32 fovy) {
     #ifdef XBLADEBUG
-        if (g_CurrentPlayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x26a,"Assertion failed: g_CurrentPlayer");
-    }
+       assert(currentplayer);
     #endif
     g_CurrentPlayer->fovy = fovy;
 }
 
 void set_cur_player_aspect(f32 aspect) {
     #ifdef XBLADEBUG
-        if (g_CurrentPlayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x271,"Assertion failed: g_CurrentPlayer");
-    }
+       assert(currentplayer);
     #endif
     g_CurrentPlayer->aspect = aspect;
 }
 
 f32 get_cur_player_fovy(void) {
     #ifdef XBLADEBUG
-        if (g_CurrentPlayer == NULL) {
-        assertPrint_8291E690(".\\ported\\player.cpp",0x278,"Assertion failed: g_CurrentPlayer");
-    }
+       assert(currentplayer);
     #endif
     return g_CurrentPlayer->fovy;
 }

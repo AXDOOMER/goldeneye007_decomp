@@ -169,6 +169,10 @@ InvItem *bondinvGetNextAvailItem(void)
         }
     }
 
+    #ifdef DEBUG
+    osSyncPrintf("equipgetfreeitem: No free equip items!!!!\n");
+    #endif
+
     return NULL;
 }
 

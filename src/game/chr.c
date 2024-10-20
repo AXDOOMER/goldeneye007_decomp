@@ -6893,12 +6893,12 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 withalpha)
 
             if (chrfadealpha < 0xFF)
             {
-                mrData.unk30 = 8;
+                mrData.PropType = 8;
                 mrData.envcolour.word |= (u8)chrfadealpha;
             }
             else
             {
-                mrData.unk30 = 7;
+                mrData.PropType = 7;
             }
 
             g_playerPerm->time_other_players_on_screen += 1;

@@ -175,6 +175,7 @@ s32 stanBitwiseCastF32(f32 arg0)
 }
 
 #ifdef NONMATCHING
+// maybe getstanroomID and returns a string
 s32 sub_GAME_7F0AEF3C(void *arg0) {
     s32 sp24;
     s32 temp_a1;
@@ -253,10 +254,20 @@ glabel sub_GAME_7F0AEF3C
 
 
 void sub_GAME_7F0AEFE0(void) {
-    sub_GAME_7F0AEF3C();
+    sub_GAME_7F0AEF3C(); //maybe getstanroomID
 }
 
 u32 stanRemovedAnimationRoutine(s32 arg0) {
+    /*
+      if (arg0 < stanfileRecord_ARRAY_83aa0a58[140])
+      {
+        printf("checksf: ERROR line %d %08x<%08x",__LINE__,arg0,stanfileRecord_ARRAY_83aa0a58[140]);
+      }
+      if (arg0 > stanfileRecord_ARRAY_83aa0a58[140])
+      {
+        printf("checksf: ERROR line %d %08x>%08x",__LINE__,arg0,stanfileRecord_ARRAY_83aa0a58[140]);
+      }
+  */
     return 0;
 }
 
@@ -326,11 +337,13 @@ loop_4:
         {
             // Node 5
             temp_a2 = (temp_s0 & 0xff);
+            //assert(curr);
             if (temp_a2 >= dword_CODE_bss_8007B9DC)
             {
                 // Node 6
                 dword_CODE_bss_8007B9DC = (s32) (temp_a2 + 1);
             }
+            //        assert(firststaninroom[curroom]==NULL);
             // Node 7
             *(&dword_CODE_bss_8007B128 + (temp_a2 * 4)) = (void *) phi_a0;
             temp_s0_2 = (&dword_CODE_bss_8007B358 + (temp_a2 * 0xc));
@@ -873,8 +886,31 @@ glabel stanLoadFile
 
 
 
+//stanRegion()
+void sub_GAME_7F0AF630(s32 arg0)
+{
+#ifdef DEBUG
 
-void sub_GAME_7F0AF630(s32 arg0) {
+    if (arg0 < 0)
+    {
+        if (*(stanPrefix + (DAT_83aa10f0 - 1) * 4) != 0)
+        {
+            DAT_83aa10f0 = DAT_83aa10f0 - 1;
+        }
+    }
+    else if (arg0 < 1)
+    {
+        if (arg0 == 0)
+        {
+            DAT_83aa10f0 = 1;
+        }
+    }
+    else if (*(stanPrefix + (DAT_83aa10f0 + 1) * 4) != 0)
+    {
+        DAT_83aa10f0 = DAT_83aa10f0 + 1;
+    }
+    osSyncPrintf("stanRegion():  region=%d",DAT_83aa10f0);
+#endif
     return;
 }
 
@@ -884,6 +920,7 @@ void sub_GAME_7F0AF630(s32 arg0) {
 
 
 #ifdef NONMATCHING
+//stanFillin()
 s32 sub_GAME_7F0AF638(s32 arg0, s32 arg1, void *arg2) {
     s32 temp_s4;
     void *temp_s3;
@@ -996,6 +1033,13 @@ loop_5:
     }
     // Node 10
     return phi_s7;
+
+    /*somewhere in this function a loop is checked for overflow
+    if (uStack < local_20)
+    {
+        printf("stanFillin: Stack overflow %d>%d",local_20,uStack);
+    }
+    */
 }
 #else
 GLOBAL_ASM(
@@ -1414,10 +1458,14 @@ glabel getTileMidPoint
 #ifdef NONMATCHING
 // Saves a1 (tripleIndex) to the stack completely unnecessarily
 // Otherwise just regalloc, but maybe that alone fixes it.
-void getPointJustInsideOfTileTriple(StandTile *tile, s32 tripleIndex, coord3d* pnt)
+void getPointJustInsideOfTileTriple(StandTile *tile, s32 tripleIndex /*canonically c */, coord3d* pnt)
 {
     coord3d midPoint;
     s32 pntIndex;
+
+    #ifdef DEBUG
+    assert(c<3);
+    #endif
 
     pntIndex = STAN_TRIPLE_TO_PNT_INDEX(tile, tripleIndex);
 
@@ -1688,12 +1736,13 @@ glabel sub_GAME_7F0AFB78
 
 // Returns the shortest distance from (p_x,p_z) to the infinite extention of tile's index-th edge, projected into XZ.
 // Where the edge is vertical (or degenerate) they just return the distance between the points.
+// cannonically tile is sf and index is ei
 f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
 {
     s32 nextIndex;
     f32 edge_x;
     f32 edge_z;
-    f32 edge_len;
+    f32 edge_len; //canonically d
 
     f32 v_x;
     f32 v_z;
@@ -1704,6 +1753,10 @@ f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
     struct StandTilePoint* currPnt;
     struct StandTilePoint* nextPnt;
     f32 UNUSED;
+
+    #ifdef DEBUG
+    assert(ei<getsides(sf));
+    #endif
 
     // Omiting the '& 0xF' is equivalent, but keeping it is necessary to match.
     // Perhaps the structure isn't correct but this seems much cleaner than doing an explicit >> 0xC.
@@ -1725,6 +1778,10 @@ f32 getShortest2dDispToInfTileEdge(StandTile *tile,s32 index,f32 p_x,f32 p_z)
     }
     else
     {
+        #ifdef DEBUG
+        assert(d>0.0f);
+        #endif
+
         // | (AP x AB) / ||AB|| | = ||PA|| sin(a),
         // so we're returning the SIGNED displacement
         crossProduct = (
@@ -1748,6 +1805,7 @@ f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32
 // Similar to getShortest2dDispToInfTileEdge
 // 2nd arg must be in {0,1,2}
 // New name needed though: getShortest2dDispToInfTripleEdge
+//same as above, tile is sf, index is ei
 f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32 p_z)
 {
     s32 end3index;      // types seem correct, changing introduces more instructions
@@ -1762,6 +1820,10 @@ f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32
     f32 v_x;
     f32 v_z;
     f32 crossProduct;
+
+    #ifdef DEBUG
+    assert(ei<getsides(sf));
+    #endif
 
 
     // end3index = (start3index + 1) % 3, start3index in [0,3)
@@ -1793,6 +1855,10 @@ f32 getShortest2dDispToInfTripleEdge(StandTile *tile,s32 start3index,f32 p_x,f32
     }
     else
     {
+        #ifdef DEBUG
+        assert(d>0.0f);
+        #endif
+
         // - (AP x AB) / ||AB|| = ||PA|| sin(a)
         crossProduct = (
             edge_z * (p_x - (f32)tile->points[currPntI].x)
@@ -2290,6 +2356,10 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     struct stan_7F0B0E24 *temp_a2;
     struct stan_7F0B0E24 *temp_v1;
 
+    #ifdef DEBUG
+    assert(ei<getsides(sf));
+    #endif
+
     if (start3index != 2)
     {
         var_a0 = start3index + 1;
@@ -2315,6 +2385,9 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     {
         return 0.0f;
     }
+    #ifdef DEBUG
+    assert(d>0.0f);
+    #endif
 
     tempf = (((p_z - (f32) temp_a2->unk0C) * -temp_f2) + (temp_f14 * (p_x - (f32) temp_a2->unk08)));
     return tempf / temp_f0;
@@ -2404,7 +2477,7 @@ glabel sub_GAME_7F0B0400
 
 
 
-s32 stanTestPointWithinTileBoundsMaybe(StandTile *tile, f32 p_x, f32 p_z)
+bool stanTestPointWithinTileBoundsMaybe(StandTile *tile, f32 p_x, f32 p_z)
 {
     f32 unk;
     s32 i;
@@ -2418,11 +2491,11 @@ s32 stanTestPointWithinTileBoundsMaybe(StandTile *tile, f32 p_x, f32 p_z)
 
         if (unk < -2)
         {
-            return 0;
+            return FALSE;
         }
     }
 
-    return 1;
+    return TRUE;
 }
 
 
@@ -2685,13 +2758,136 @@ s32 sub_GAME_7F0B07BC(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
 // 'walkTilesBetweenPoints_withCallback'
 // sig declared for caller matches
-s32 sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
+bool sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
     standTileWalkCallback_t func, struct StandTileWalkCallbackRecord *funcData);
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B0914(void) {
+bool sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z,
+    standTileWalkCallback_t func, struct StandTileWalkCallbackRecord *funcData)
+{
+     s32 sp8C;
+    StandTile *tileStackTop;
+    StandTile *temp_v0_2;
+    StandTile *var_s0;
+    StandTile *var_s3;
+    StandTile *var_s6;
+    StandTile *var_s7;
+    f32 scaled_startX;
+    f32 scaled_startZ;
+    f32 scaled_destX;
+    f32 scaled_destZ;
+    f32 zDist;
+    f32 xDist;
+    s16 point2_z;
+    s16 startpoint2_z;
+    s16 point2_x;
+    s16 startpoint2_x;
+    s32 temp_s2;
+    s32 temp_t5;
+    s32 pointcount;
+    s32 nextTile;
+    s32 pointcount2;
+    s32 var_fp;
+    s32 var_s1;
+    s32 var_s4;
+    s32 trynexttile;
+    u16 temp_v1;
 
+    /*
+    somewhere in here debug has
+    */
+    #ifdef DEBUG
+    ossyncPrintf("{\"%s\",0x%08x,0x%08x,0x%08x,0x%08x},\t/* %8.3f %8.3f  %8.3f %8.3f */\n", GetStanRoomID(*tilestack),start_x,start_z,dest_x,dest_z,start_x,start_z);
+    #endif
+
+
+    scaled_startX = start_x * level_scale;
+    scaled_startZ = start_z * level_scale;
+    scaled_destX = dest_x * level_scale;
+    scaled_destZ = dest_z * level_scale;
+    tileStackTop = *tileStack;
+    trynexttile = 0;
+    sp8C = 0;
+    zDist = -(scaled_destZ - scaled_startZ);
+    xDist = scaled_destX - scaled_startX;
+    var_s1 = 0;
+    var_s4 = 0;
+    var_fp = sp98;
+    var_s3 = tileStackTop;
+    var_s6 = tileStackTop;
+    var_s7 = tileStackTop;
+
+    while (true)
+    {
+        if (func != NULL)
+        {
+            func(var_s3, var_s6, funcData);
+        }
+        var_s0 = var_s3;
+        pointcount = (var_s3->tail.half >> 0xC) & 0xF; //pointcount
+        pointcount2 = pointcount;
+        if (pointcount > 0)
+        {
+            do
+            {
+                temp_s2 = var_s1 + 1;
+                temp_v0_2 = &var_s3[temp_s2 % pointcount2];
+                point2_z = temp_v0_2->unkC;
+                startpoint2_z = var_s0->unkC;
+                point2_x = temp_v0_2->unk8;
+                startpoint2_x = var_s0->unk8;
+                if (((((point2_z - startpoint2_z) * xDist) + (zDist * (point2_x - startpoint2_x))) <= 0.0f) && (sub_GAME_7F0B07BC(scaled_startX, scaled_startZ, pointcount2, point2_z, scaled_destX, scaled_destZ, startpoint2_x, startpoint2_z, point2_x, point2_z, (var_s0->unkE >> 4) != 0) != 0))
+                {
+                    temp_v1 = var_s0->unkE;
+                    var_s4 += 1;
+                    nextTile = (temp_v1 * 8) + standTileStart;
+                    if ((var_s6 != nextTile) && (var_s7 != nextTile))
+                    {
+                        var_fp = var_s1;
+                        if ((temp_v1 >> 4) != 0)
+                        {
+                            trynexttile = nextTile;
+                        }
+                        else
+                        {
+                            trynexttile = NULL;
+                        }
+                    }
+                }
+                var_s1 = temp_s2;
+                var_s0 += 8;
+                temp_t5 = (var_s3->tail.half >> 0xC) & 0xF;
+                pointcount2 = temp_t5;
+            } while (temp_s2 < temp_t5);
+        }
+        var_s7 = var_s6;
+        var_s6 = var_s3;
+        var_s3 = trynexttile;
+        //assert(intersections!=0);
+        //assert(intersections!=3);
+        //printf("sf: stanLineDo %d   %5.1f %5.1f %5.1f %5.1f  %s %s %s\n",3,start_x, start_z,dest_x,dest_z,GetStanRoomID(*tilestack),GetStanRoomID(puVar3));
+        if ((var_s3 ^ trynexttile) == 0)
+        {
+            var_s4 = 0;
+        }
+        if (var_s4 == 0)
+        {
+            return TRUE;
+        }
+        sp8C += 1;
+        if ((((sp8C < 0x1F5) ^ 1) != 0) || (trynexttile == 0) || (var_s1 = 0, (var_s4 == 0)))
+        {
+            stanSavedColl_tile = var_s6;
+            stanSavedColl_pointI = var_fp;
+            #ifdef DEBUG
+            osSyncPrintf("stanLine: Looping; ret=0\n");
+            #endif
+            return FALSE;
+        }
+        *tileStack = trynexttile;
+        var_s4 = 0;
+    }
 }
 #else
 GLOBAL_ASM(
@@ -3012,6 +3208,9 @@ s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z, StandTile **til
 
         if (tileStack[0] != unkTile) {
             bufCount = 0;
+            #ifdef DEBUG
+            osSyncPrintf("stan %s(%d) != %s(%d) from=%s\n", GetStanRoomID(tileStack[0]), /*funcForTileNumber(tileStack[0])*/,GetStanRoomID(tile), /*funcForTileNumber(tile)*/,GetStanRoomID(roomBuf));
+            #endif
         }
      }
 
@@ -3303,7 +3502,10 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
         dest_z -= p_z;
         dest_z *= sp140;
         dest_z = p_z + dest_z;
-        walkTilesBetweenPoints_NoCallback(&sp154, p_x, p_z, dest_x, dest_z);
+        /*stanlineret = */ walkTilesBetweenPoints_NoCallback(&sp154, p_x, p_z, dest_x, dest_z);
+        #ifdef DEBUG
+        assert(stanlineret==1)
+        #endif
     }
 
     *pTile = sp154;
@@ -3318,7 +3520,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B1410(void) {
-
+    //osSyncPrintf("stanLineDoor: %d rooms is more than %d\n");
 }
 #else
 GLOBAL_ASM(
@@ -3514,7 +3716,7 @@ glabel sub_GAME_7F0B1410
 f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
 {
     u32 stack[8];
-    f32 result;
+    f32 result; //d
 
     result = sqrtf((x2 - x1) * (x2 - x1) + (z2 - z1) * (z2 - z1));
 
@@ -3522,7 +3724,9 @@ f32 sub_GAME_7F0B16C4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
     {
         return sqrtf((x3 - x2) * (x3 - x2) + (z3 - z2) * (z3 - z2));
     }
-
+    #ifdef DEBUG
+    assert(d>0.0F);
+    #endif
     return ((z2 - z1) * (x3 - x1) + -(x2 - x1) * (z3 - z1)) / result;
 }
 
@@ -3601,15 +3805,19 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
 
     spFC = 0;
 
-    temp_v0 = sub_GAME_7F0B21B0(arg0, arg1, arg2, arg3, &spA8[0], &spFC, 0x14);
+    temp_v0 = sub_GAME_7F0B21B0(arg0, arg1, arg2, arg3, &spA8[0], &spFC, 20);
     if (temp_v0 >= 0)
     {
         return temp_v0;
     }
 
-    if (spFC > 0x14)
+
+    if (spFC > 20)
     {
-        spFC = 0x14;
+        #ifdef DEBUG
+            osSyncPrintf("stanCircleLegalXFObjTypeY: %d rooms is more than %d\n",spFC,20);
+        #endif
+        spFC = 20;
     }
 
     stanSavedColl_posData = NULL;
@@ -3702,11 +3910,20 @@ void sub_GAME_7F0B1CC4(void) {
     D_800413BC = 0;
 }
 
-StandTile *sub_GAME_7F0B1CE0(void) {
+StandTile *sub_GAME_7F0B1CE0(void)
+{
+    #ifdef DEBUG
+        osSyncPrintf("Don\'t call stanCircleLegalHit()!\n");
+    #endif
     return stanSavedColl_tile;
 }
 
-s32 sub_GAME_7F0B1CEC(void) {
+s32 sub_GAME_7F0B1CEC(void)
+{
+    #ifdef DEBUG
+        osSyncPrintf("Don\'t call stanCircleLegalHitEdge()!\n");
+    #endif
+
     return stanSavedColl_pointI;
 }
 
@@ -3806,8 +4023,18 @@ glabel getTileEdgePoints
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B1DDC(void) {
-
+s32 sub_GAME_7F0B1DDC(void)
+{
+    #ifdef DEBUG
+    if (cat>= 0x190)
+    {
+      osSyncPrintf("cat=%d !!!!!!!!!!!!!!!!!!!! NEED TO INCREASE ARRAY SIZE\n",cat);
+    }
+    #endif
+    if (cat >= 0x320)
+    {
+      return 5; //error value?
+    }
 }
 #else
 GLOBAL_ASM(
@@ -4361,7 +4588,24 @@ glabel sub_GAME_7F0B23AC
 #ifdef NONMATCHING
 // TODO
 void stanGetMoveBondCollisionTiles(void) {
+    #ifdef DEBUG
+    assert(getsides(s1)==3);
+    #endif
 
+    //if side++ > getsides
+    #ifdef DEBUG
+    osSyncPrintf("Ladder %s has no neighbouring ladder stan\n", GetStanRoomID(arg0));
+    #endif
+    return;
+
+
+    // for rotate = 0 to 12
+    // next
+
+    //ran out of rotating tiles - just end
+    #ifdef DEBUG
+    osSyncPrintf("rotate==12\n");
+    #endif
 }
 #else
 GLOBAL_ASM(
@@ -4595,6 +4839,7 @@ s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32
 
 #ifdef NONMATCHING
 // Horrifc BFS on tiles
+// stanFillSearch()
 StandTile *sub_GAME_7F0B2718(StandTile *srcTile, tilePredicate_t tilePred)
 {
     StandTile *tile;
@@ -4653,7 +4898,11 @@ StandTile *sub_GAME_7F0B2718(StandTile *srcTile, tilePredicate_t tilePred)
                     }
 
                     bfsTileStack[seenCount] = linkTile;
-                    if (350 < seenCount + 1) {    // as written
+                    if (350 < seenCount + 1)
+                    {    // as written
+                        #ifdef DEBUG
+                        osSyncPrintf("Out of confs[] in stanFillSearch()\n");
+                        #endif
                         return 0;
                     }
 
@@ -4841,9 +5090,18 @@ bool getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB)
 
 
 
-void setLevelScale(f32 ls) {
+void setLevelScale(f32 ls)
+{
     level_scale = ls;
     inv_level_scale = (1.0f / ls);
+    #ifdef DEBUG
+    if (level_scale != 1.0)
+    {
+        osSyncPrintf("%5.2fm squared total area\n", /*lots of math*/ 1* inv_level_scale * inv_level_scale * 0.01 * 0.01);
+        //...
+        osSyncPrintf("%5.2fm squared BB extent\n\n",/*more maths*/ 1 * inv_level_scale * inv_level_scale * 0.01 * 0.01);
+    }
+    #endif
     return;
 }
 
@@ -5167,6 +5425,26 @@ glabel stanMatchTileName
 #endif
 
 
+#ifdef XBLADEBUG
+StandTile RemovedDebugFunctionOrXBLAUnique_7F0B2EFC()
+{
+    lVar1 = param_2;
+    local_10 = *(stanPrefix + 4);
+    cStack00000017 = param_1;
+    sStack0000001e = param_2;
+    while( true ) {
+    if (*local_10 == 0) {
+        return NULL;
+    }
+    cVar2 = sStack0000001e;
+    if ((*local_10 == sStack0000001e) && (cVar2 = cStack00000017, *(local_10 + 2) == cStack00000017)
+        ) break;
+    local_10 = Function_8238ED08(local_10,lVar1,in_r5,in_r6,in_r7,in_r8,in_r9,cVar2,
+                                    in_stack_ffffffab,in_stack_ffffffaf,in_stack_ffffffb4); //get a char or string from "    (08@HPX"[getsides(local10)]
+    }
+    return local_10;
+}
+#endif
 
 
 
@@ -5180,7 +5458,7 @@ void sub_GAME_7F0B2F00(StandTilePoint** arg0) {
 
 #ifdef NONMATCHING
 // To try
-void *stanDetermineEOF(void *arg0, s32 arg1, s32 arg2) {
+void *stanDetermineEOF(StandTile *r, s32 arg1, s32 arg2) {
     s32 temp_v0;
     void *temp_a3;
     s32 temp_v1;
@@ -5193,13 +5471,16 @@ void *stanDetermineEOF(void *arg0, s32 arg1, s32 arg2) {
     void *phi_v0;
 
     // Node 0
-    stan_prefix.stanfile = arg0;
+    stan_prefix.stanfile = r;
     temp_v0 = (arg2 - arg1);
-    standTileStart = (s32) ((arg0->unk4 + temp_v0) + -0x80);
-    ptr_firstroom_0 = (s32) (arg0->unk4 + temp_v0);
-    temp_a3 = (arg0 + 4);
+    standTileStart = (s32) ((r->unk4 + temp_v0) + -0x80);
+    ptr_firstroom_0 = (s32) (r->unk4 + temp_v0);
+    temp_a3 = (r + 4);
     phi_a3_2 = temp_a3;
-    if (arg0->unk4 != 0)
+    #ifdef DEBUG
+    assert(r==0);
+    #endif
+    if (r->unk4 != 0)
     {
         // Node 1
         phi_v1 = *temp_a3;
@@ -5233,7 +5514,7 @@ loop_4:
         }
     }
     // Node 5
-    stan_prefix.stanfile = arg0;
+    stan_prefix.stanfile = r;
     return temp_v0_2;
 }
 #else

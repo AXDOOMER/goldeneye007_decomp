@@ -437,7 +437,7 @@ struct player
   struct rect4f collision_bounds;
 
   /* 0x00d0 */ s32 field_D0;
-  /* 0x00d4 */ struct Model *ptr_char_objectinstance;
+  /* 0x00d4 */ struct Model *ptr_char_objectinstance; //canonically bondsub
   /* 0x00d8 */ s32 bonddead;
   /* 0x00dc */ f32 bondhealth;
   /* 0x00e0 */ f32 bondarmour;

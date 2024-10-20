@@ -71,6 +71,7 @@ PropRecord **g_LastOnScreenProp;
 /**
  * Count of onscreen props.
  * Address 0x80071DF4.
+ * canonically propznum
 */
 s32 g_OnScreenPropCount;
 
@@ -217,6 +218,9 @@ void chraiUpdateOnscreenPropCount(void)
     if(1)
     {
         // removed
+        #ifdef DEBUG
+        assert(propznum<MAXPROPSVISIBLE); //800 props
+        #endif
     }
 
     g_LastOnScreenProp = (PropRecord *)&g_OnScreenPropList[count];
@@ -5215,7 +5219,32 @@ void propsDefragRoomProps(void)
 
 void removed_debug_roomblocks_feature(void)
 {
+    /* gleened from debug
+    
+        fVar1 = 1.0f / sqrtf(((param_2 * param_2) + (param_3*param_3)) + (param_4*param_4));
+        param_2 *= fvar1;
+        param_3 *= fvar1;
+        param_4 *= fvar1;
 
+        param_1 *= 0.017453292; //Deg2Rad?
+
+        fVar1       = 1.0 - cosf(param_1);
+        fVar2       = param_2 * param_3 * fVar1;
+        fVar3       = param_3 * param_4 * fVar1;
+        fVar1       = param_4 * param_2 * fVar1;
+
+        matrix_4x4_set_identity(param_5);
+
+        *param_5    = param_2 * param_2 + cosf(param_1) * (1.0 - param_2 * param_2);
+        param_5[9]  = fVar3 - param_2 * sinf(param_1);
+        param_5[6]  = fVar3 + param_2 * sinf(param_1);
+        param_5[5]  = param_3 * param_3 + cosf(param_1) * (1.0 - param_3 * param_3);
+        param_5[8]  = fVar1 + param_3 * sinf(param_1);
+        param_5[2]  = fVar1 - param_3 * sinf(param_1);
+        param_5[10] = param_4 * param_4 + cosf(param_1) * (1.0 - param_4 * param_4);
+        param_5[4]  = fVar2 - param_4 * sinf(param_1);
+        param_5[1]  = fVar2 + param_4 * sinf(param_1);
+        */
 }
 
 
@@ -6213,6 +6242,33 @@ void sub_GAME_7F03F540(struct ModelRoData_BoundingBoxRecord *bbox, Mtxf* arg1, s
 
 #ifdef NONMATCHING
 s32 sub_GAME_7F03F598(coord3d* pos, f32 arg1, BoundPadRecord *boundpads) {
+      dword local_70;
+  ushort *local_20;
+  dword local_1c;
+  dword local_18;
+  dword local_14;
+  dword local_8;
+
+  local_20 = **(param_1 + 8);
+  do {
+    while( true ) {
+      if (local_20 == NULL) {
+        return NULL;
+      }
+      if (((*local_20 & 0xff) == 10) && (**(local_20 + 2) == param_2)) {
+        return local_20;
+      }
+      if (*(local_20 + 10) == 0) break;
+      local_20 = *(local_20 + 10);
+    }
+    for (; local_20 != NULL; local_20 = *(local_20 + 4)) {
+      if (*(local_20 + 6) != 0) {
+        local_20 = *(local_20 + 6);
+        break;
+      }
+    }
+  } while( true );
+
 
 }
 #else

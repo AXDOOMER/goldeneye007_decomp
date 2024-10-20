@@ -71,8 +71,13 @@
 
 #endif
 
+/*cannonically these are both*/
 #define BONDVIEW_HUD_MSG_TOP_BUFFER_LENGTH 0x97
 #define BONDVIEW_HUD_MSG_BOTTOM_BUFFER_LENGTH 0x65
+/*these*/
+#define MAXTALKMESSLEN 150
+#define MAXMESSAGELEN 100
+
 
 
 #if defined(VERSION_US)
@@ -361,7 +366,7 @@ s32 in_tank_flag = 0;
 //D:8003644C
 struct PropRecord *g_WorldTankProp = NULL;
 
-//D:80036450
+//D:80036450 cannonically bondonprop2
 struct PropRecord *g_PlayerTankProp = NULL;
 
 /**
@@ -1515,7 +1520,7 @@ void init_player_BONDdata(void)
     g_CurrentPlayer->bondfadetimemax60 = -1.0f;
     g_CurrentPlayer->bondfadefracold = 0.0f;
     g_CurrentPlayer->bondfadefracnew = 0.0f;
-    g_CurrentPlayer->field_42c = 2; 
+    g_CurrentPlayer->field_42c = 2;
     g_CurrentPlayer->controldef = CONTROLLER_CONFIG_HONEY;
     g_CurrentPlayer->pause_starting_angle = 0.0f;
     g_CurrentPlayer->pause_related = 0.0f;
@@ -1684,7 +1689,7 @@ void solo_char_load(void)
     ModelFileHeader *p_leftHeader;
     ModelFileHeader *bodyBuffer;
     ModelFileHeader *headBuffer;
-    s32 totalsize;
+    s32 totalsize; //canonically sizer
     s32 bodyBufSize;
     s32 headBufSize;
     WeaponObjRecord *p_rightHeader;
@@ -1800,6 +1805,11 @@ void solo_char_load(void)
         }
         if (getPlayerCount() == 1)
         {
+#ifdef DEBUG
+            assert(currentplayer->gunmemused[GUNRIGHT]==0 || currentplayer->gunmemtype[GUNRIGHT]==0);
+            assert(currentplayer->gunmemused[GUNLEFT]==0 || currentplayer->gunmemtype[GUNLEFT]==0); //j
+#endif
+
             remove_item_in_hand(GUNLEFT);
             remove_item_in_hand(GUNRIGHT);
             texInitPool(&texPool, headBuffer, headBufSize);
@@ -1826,6 +1836,9 @@ void solo_char_load(void)
             p_headEntryHeader = p_headEntry->header;
 
             bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + 0x3F);
+#ifdef DEBUG
+            assert(sizer<=bondmemsizer);
+#endif
             p_headHeader = bodyBuffer + bufferSizeRemain;
             bodyalignedSizeRemainPlus0x5F = ALIGN64_V3(bufferSizeRemain + 0x5F);
 
@@ -1852,6 +1865,9 @@ void solo_char_load(void)
             numRecords = pBody->numRecords + pHead->numRecords + 0xA;
 
             totalsize = ALIGN64_V3((numRecords * 4) + totalsize + 0x3F);
+            #ifdef DEBUG
+            assert(sizer<=bondmemsizer);
+            #endif
 
             animInit(model, pBody, bodyBuffer + totalsize);
             model->Type = numRecords; //???
@@ -1873,6 +1889,9 @@ void solo_char_load(void)
 //            &c_item_entries[head]->header = pHead;
         }
         g_CurrentPlayer->ptr_char_objectinstance = makeonebody(body, head, pBody, &c_item_entries[head]->header/*pHead maybe?*/, 0, model);
+        #ifdef DEBUG
+            assert(currentplayer->bondsub);
+        #endif
 
         modelSetScale((Model *) g_CurrentPlayer->ptr_char_objectinstance, g_CurrentPlayer->ptr_char_objectinstance->unk14 * 0.97f);
         init_GUARDdata_with_set_values(g_CurrentPlayer->prop, g_CurrentPlayer->ptr_char_objectinstance, &g_CurrentPlayer->prop->pos, hRot, g_CurrentPlayer->prop->stan, 0);
@@ -1887,6 +1906,9 @@ void solo_char_load(void)
             {
                 p_rightHeader = bodyBuffer + totalsize;
                 totalsize = ALIGN64_V3(totalsize + 0xC7);
+                #ifdef DEBUG
+                assert(sizer<=bondmemsizer);
+                #endif
                 p_lhandItemHeader = get_ptr_itemheader_in_hand(GUNLEFT);
                 p_rhandItemHeader = &PitemZ_entries[rhandPropID]->header;
                 p_leftHeader = p_lhandItemHeader;
@@ -5260,6 +5282,10 @@ void bondviewGetTankCollisionBounds(struct rect4f *tank_collision_bounds, struct
     f32 sp38;
     f32 sp34;
     struct ModelRoData_BoundingBoxRecord *bbox;
+
+    #ifdef DEBUG
+        assert(bondonprop2);
+    #endif
 
     sp4C = g_PlayerTankProp->obj;
 
@@ -17007,22 +17033,26 @@ void hudmsgBottomShow(char *string)
 {
     s32 abs_index;
     s32 index;
+    #ifdef DEBUG
+        assert(font);
+        assert(wcslen(mess)<=MAXMESSAGELEN);
+    #endif
     if (getPlayerCount() == 1)
     {
         if (display_statusbar < 5)
         {
             abs_index = status_bar_text_buffer_index + display_statusbar;
             index = abs_index % 5;
-            strncpy(stringbuffer_lowerleft[index], string, 0x64U);
+            strncpy(stringbuffer_lowerleft[index], string, MAXMESSAGELEN);
             display_statusbar++;
-            stringbuffer_lowerleft[index][0x64] = 0;
+            stringbuffer_lowerleft[index][MAXMESSAGELEN] = 0;
         }
     }
     else
     {
         index = get_cur_playernum();
-        strncpy(stringbuffer_lowerleft[index], string, 0x64U);
-        stringbuffer_lowerleft[index][0x64] = 0;
+        strncpy(stringbuffer_lowerleft[index], string, MAXMESSAGELEN);
+        stringbuffer_lowerleft[index][MAXMESSAGELEN] = 0;
         g_CurrentPlayer->bondmesscnt = 0x78;
     }
 }
@@ -17187,7 +17217,9 @@ void bondviewSetUpperTextDisplayFlag(PLAYERFLAG flag)
 void hudmsgTopShow(char* string)
 {
     s32 index;
-
+    #ifdef DEBUG
+        assert(wcslen(mess)<=MAXTALKMESSLEN);
+    #endif
     if (display_upper_text_window >= 2) { return; }
 
     index = (upper_text_buffer_index + display_upper_text_window) % 2;

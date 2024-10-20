@@ -312,7 +312,7 @@ void fileSetDifficultyStageTime(save_data *save, LEVEL_SOLO_SEQUENCE levelid, DI
                 break;
             default:
 #if DEBUG
-                osSyncPrintf("file.c: SHOULDN\'T GET HERE EVER [1]\n");
+                osSyncPrintf("file.c: SHOULDN\'T GET HERE EVER [2]\n");
 #endif
                 break;
         }
