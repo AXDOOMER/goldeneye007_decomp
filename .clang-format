@@ -124,7 +124,6 @@ Cpp11BracedListStyle: true
 
 # use specified line ending and pointer allignment
 DeriveLineEnding: false
-DerivePointerAlignment: false
 
 DisableFormat: false
 

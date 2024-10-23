@@ -137,6 +137,12 @@ void audioPlayFromProp(s32 slot, s16 soundIndex)
             sfx->pos     = NULL;
             sfx->Obj     = NULL;
         }
+        #ifdef DEBUG
+        else
+        {
+            osSyncPrintf("Existing ai sound number %d!\n", slot);
+        }
+        #endif
     }
     sndPlaySfx(g_musicSfxBufferPtr, soundIndex, sfx);
 }

@@ -21,11 +21,11 @@ struct StanPrefixRecord stan_prefix;
 
 
 //CODE.bss:8007B128
-s32 dword_CODE_bss_8007B128;
+s32 firststaninroom;
 //CODE.bss:8007B12C
 s32 dword_CODE_bss_8007B12C;
 //CODE.bss:8007B130
-s32 dword_CODE_bss_8007B130;
+s32 dword_CODE_bss_8007B130; //stanladder s1
 //CODE.bss:8007B134
 char dword_CODE_bss_8007B134;
 char dword_CODE_bss_8007B135;
@@ -34,10 +34,10 @@ char dword_CODE_bss_8007B137;
 char dword_CODE_bss_8007B138[0x21C];
 //CODE.bss:8007B354
 s32 dword_CODE_bss_8007B354;
-//CODE.bss:8007B358
+//CODE.bss:8007B358 //stan list array
 s32 dword_CODE_bss_8007B358[0x1a1];
 //CODE.bss:8007B9DC
-s32 dword_CODE_bss_8007B9DC;
+s32 dword_CODE_bss_8007B9DC; //region?
 //CODE.bss:8007B9E0
 s32 dword_CODE_bss_8007B9E0;
 
@@ -71,7 +71,7 @@ StandTile *bfsTileStack[352];
 
 // data
 
-//D:80040F30
+//D:80040F30 //stanladder related
 u8 D_80040F30[] = {
     0x8D, 0x86, 0x04, 0xC5,
     0x9D, 0xA4, 0x00, 0x00,
@@ -96,13 +96,13 @@ struct StandTile * standTileStart = NULL;
 //D:80040F5C
 s32 ptr_firstroom_0 = 0;
 //D:80040F60
-s32 D_80040F60 = 0;
+struct StanPrefixRecord* D_80040F60 = 0;
 //D:80040F64
 s32 D_80040F64[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 //D:80040FAC
 s32 D_80040FAC = 0;
 //D:80040FB0
-s32 stanLoaded = 0;
+s32 m_stanRegion = 0;
 //D:80040FB4
 s32 stanlinelog_flag = 0;
 
@@ -257,15 +257,16 @@ void sub_GAME_7F0AEFE0(void) {
     sub_GAME_7F0AEF3C(); //maybe getstanroomID
 }
 
+//stanChecksf
 u32 stanRemovedAnimationRoutine(s32 arg0) {
     /*
-      if (arg0 < stanfileRecord_ARRAY_83aa0a58[140])
+      if (arg0 < g_someinteger)
       {
-        printf("checksf: ERROR line %d %08x<%08x",__LINE__,arg0,stanfileRecord_ARRAY_83aa0a58[140]);
+        printf("checksf: ERROR line %d %08x<%08x",__LINE__,arg0,g_someInteger);
       }
-      if (arg0 > stanfileRecord_ARRAY_83aa0a58[140])
+      if (arg0 > g_someinteger2)
       {
-        printf("checksf: ERROR line %d %08x>%08x",__LINE__,arg0,stanfileRecord_ARRAY_83aa0a58[140]);
+        printf("checksf: ERROR line %d %08x>%08x",__LINE__,arg0,g_someinteger2);
       }
   */
     return 0;
@@ -293,8 +294,8 @@ void sub_GAME_7F0AF038(void) {
     s32 temp_s0_5;
     void *temp_a0;
     void *phi_v1;
-    s32 phi_a1;
-    void *phi_a0;
+    s32 curroom;
+    void *firststan;
     void *phi_s3;
     void *phi_s5;
     s16 phi_s0;
@@ -326,48 +327,48 @@ loop_1:
     if (*stan_prefix.ptr_firstroom != 0)
     {
         // Node 3
-        phi_a1 = 0xff;
-        phi_a0 = stan_prefix.ptr_firstroom;
-        phi_a2 = 0xff;
+        curroom = 0xff;
+        firststan = stan_prefix.ptr_firstroom;
+        curroom = 0xff;
 loop_4:
         // Node 4
-        temp_s0 = phi_a0->unk3;
-        phi_a1 = phi_a1;
-        if (phi_a1 != temp_s0)
+        temp_s0 = firststan->unk3;
+        curroom = curroom;
+        if (curroom != temp_s0)
         {
             // Node 5
-            temp_a2 = (temp_s0 & 0xff);
-            //assert(curr);
-            if (temp_a2 >= dword_CODE_bss_8007B9DC)
+            curroom = (temp_s0 & 0xff);
+            //assert(curroom<MAXSTANROOMS);
+            if (curroom >= dword_CODE_bss_8007B9DC)
             {
                 // Node 6
-                dword_CODE_bss_8007B9DC = (s32) (temp_a2 + 1);
+                dword_CODE_bss_8007B9DC = (s32) (curroom + 1);
             }
             //        assert(firststaninroom[curroom]==NULL);
             // Node 7
-            *(&dword_CODE_bss_8007B128 + (temp_a2 * 4)) = (void *) phi_a0;
-            temp_s0_2 = (&dword_CODE_bss_8007B358 + (temp_a2 * 0xc));
+            *(&firststaninroom + (curroom * 4)) = (void *) firststan;
+            temp_s0_2 = (&dword_CODE_bss_8007B358 + (curroom * 0xc));
             temp_s0_2->unk4 = (u16)0x7fff;
             temp_s0_2->unkA = (u16)-0x8000;
             temp_s0_2->unk2 = (s16) temp_s0_2->unk4;
             *temp_s0_2 = (s16) temp_s0_2->unk4;
             temp_s0_2->unk8 = (s16) temp_s0_2->unkA;
             temp_s0_2->unk6 = (s16) temp_s0_2->unkA;
-            phi_a1 = temp_a2;
-            phi_a2 = temp_a2;
+            curroom = curroom;
+            curroom = curroom;
         }
         // Node 8
-        temp_s0_4 = (((s32) phi_a0->unk6 >> 0xc) & 0xf);
+        temp_s0_4 = (((s32) firststan->unk6 >> 0xc) & 0xf);
         phi_s0_2 = temp_s0_4;
         if (temp_s0_4 > 0)
         {
             // Node 9
             phi_v1_2 = 0;
-            phi_s1 = phi_a0;
+            phi_s1 = firststan;
 loop_10:
             // Node 10
             phi_s3 = phi_s1;
-            phi_s5 = (&dword_CODE_bss_8007B358 + (((phi_a2 * 4) - phi_a2) * 4));
+            phi_s5 = (&dword_CODE_bss_8007B358 + (((curroom * 4) - curroom) * 4));
             phi_s2 = 0;
 loop_11:
             // Node 11
@@ -396,7 +397,7 @@ loop_11:
             }
             // Node 16
             temp_v1_2 = (phi_v1_2 + 1);
-            temp_s0_5 = (((s32) phi_a0->unk6 >> 0xc) & 0xf);
+            temp_s0_5 = (((s32) firststan->unk6 >> 0xc) & 0xf);
             phi_v1_2 = temp_v1_2;
             phi_s0_2 = temp_s0_5;
             phi_s1 = (phi_s1 + 8);
@@ -406,9 +407,9 @@ loop_11:
             }
         }
         // Node 17
-        temp_a0 = (*(&list_of_tilesizes + phi_s0_2) + phi_a0);
-        phi_a0 = temp_a0;
-        phi_a2 = phi_a2;
+        temp_a0 = (*(&list_of_tilesizes + phi_s0_2) + firststan);
+        firststan = temp_a0;
+        curroom = curroom;
         if (*temp_a0 != 0)
         {
             goto loop_4;
@@ -427,7 +428,7 @@ glabel sub_GAME_7F0AF038
 /* 0E3B70 7F0AF040 24E7B9DC */  addiu $a3, %lo(dword_CODE_bss_8007B9DC) # addiu $a3, $a3, -0x4624
 /* 0E3B74 7F0AF044 ACE00000 */  sw    $zero, ($a3)
 /* 0E3B78 7F0AF048 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007B12C)
-/* 0E3B7C 7F0AF04C AC20B128 */  sw    $zero, %lo(dword_CODE_bss_8007B128)($at)
+/* 0E3B7C 7F0AF04C AC20B128 */  sw    $zero, %lo(firststaninroom)($at)
 /* 0E3B80 7F0AF050 AC20B12C */  sw    $zero, %lo(dword_CODE_bss_8007B12C)($at)
 /* 0E3B84 7F0AF054 3C018008 */  lui   $at, %hi(dword_CODE_bss_8007B130)
 /* 0E3B88 7F0AF058 3C038008 */  lui   $v1, %hi(dword_CODE_bss_8007B134)
@@ -461,8 +462,8 @@ glabel sub_GAME_7F0AF038
 /* 0E3BF4 7F0AF0C4 240A000C */  li    $t2, 12
 /* 0E3BF8 7F0AF0C8 11E00048 */  beqz  $t7, .L7F0AF1EC
 /* 0E3BFC 7F0AF0CC 3C098008 */   lui   $t1, %hi(dword_CODE_bss_8007B358)
-/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(dword_CODE_bss_8007B128)
-/* 0E3C04 7F0AF0D4 2508B128 */  addiu $t0, %lo(dword_CODE_bss_8007B128) # addiu $t0, $t0, -0x4ed8
+/* 0E3C00 7F0AF0D0 3C088008 */  lui   $t0, %hi(firststaninroom)
+/* 0E3C04 7F0AF0D4 2508B128 */  addiu $t0, %lo(firststaninroom) # addiu $t0, $t0, -0x4ed8
 /* 0E3C08 7F0AF0D8 2529B358 */  addiu $t1, %lo(dword_CODE_bss_8007B358) # addiu $t1, $t1, -0x4ca8
 /* 0E3C0C 7F0AF0DC 24020006 */  li    $v0, 6
 /* 0E3C10 7F0AF0E0 90900003 */  lbu   $s0, 3($a0)
@@ -557,9 +558,118 @@ glabel sub_GAME_7F0AF038
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0AF20C(void) {
+void sub_GAME_7F0AF20C(void)
+{
+  float fVar1;
+  bool bVar2;
+  int iVar3;
+  double dVar4;
+  float *pfStack00000014;
+  int iStack0000001c;
+  float *pfStack00000024;
+  dword local_c0;
+  dword local_70;
+  dword local_6c;
+  int *local_68;
+  int *local_64;
+  short local_60;
+  short local_5e;
+  short local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_48 [2];
+  float local_40;
+  float local_3c;
+  uint local_38;
+  int local_34;
+  float local_30;
+  int *local_2c;
+  int local_28;
+  float local_24;
+  qword local_20;
+  qword local_18;
+  qword local_10;
+  dword local_8;
 
+  local_68 = NULL;
+  local_3c = -3.402823e+38;
+  bVar2 = false;
+  local_58 = *param_1 * level_scale;
+  local_54 = param_1[1] * level_scale;
+  local_50 = param_1[2] * level_scale;
+  if (32767.0 < local_54) {
+    local_54 = 32767.0;
+  }
+  if (local_54 < -32767.0) {
+    local_54 = -32767.0;
+  }
+  local_20._6_2_ = local_58;
+  local_60 = local_20._6_2_;
+  local_18._6_2_ = local_54;
+  local_5e = local_18._6_2_;
+  local_10._6_2_ = local_50;
+  local_5c = local_10._6_2_;
+  local_38 = 0;
+  pfStack00000014 = param_1;
+  iStack0000001c = param_2;
+  pfStack00000024 = param_3;
+  do {
+    if (DAT_83aa0290 <= local_38) {
+      if ((local_68 != NULL) && (pfStack00000024 != NULL)) {
+        *pfStack00000024 = local_3c;
+      }
+      return local_68;
+    }
+    if (((((firststaninroom[local_38] != NULL) &&
+          (stanfileRecord_ARRAY_83aa0a58[local_38].id <= local_60)) &&
+         (local_60 <= stanfileRecord_ARRAY_83aa0a58[local_38].tail)) &&
+        ((stanfileRecord_ARRAY_83aa0a58[local_38].mid <= local_5c &&
+         (local_5c <= *(&stanfileRecord_ARRAY_83aa0a58[local_38].points + 2))))) &&
+       (stanfileRecord_ARRAY_83aa0a58[local_38].id2 <= local_5e)) {
+      if (iStack0000001c == 0) {
+LAB_8238358c:
+        for (local_2c = firststaninroom[local_38]; (*local_2c != 0 && (*(local_2c + 3) == local_38))
+            ; local_2c = getNextStan(local_2c)) {
+          for (local_28 = 0; local_28 < 3; local_28 = local_28 + 1) {
+            dVar4 = getShortest2dDispToInfTripleEdge(local_58,local_50,local_2c,local_28);
+            if (dVar4 < -2.0) goto LAB_823835a8;
+            if (dVar4 < 2.0) {
+              bVar2 = true;
+            }
+          }
+          iVar3 = sub_GAME_7F0AF760(local_2c);
+          if (iVar3 == 0) {
+            if (bVar2) {
+              getTileMidPoint(local_2c,local_48);
+              local_64 = local_2c;
+              iVar3 = walkTilesBetweenPoints_NoCallback
+                                (local_48[0],local_40,*pfStack00000014,pfStack00000014[2],&local_64)
+              ;
+              if ((iVar3 == 0) || (local_64 != local_2c)) goto LAB_823835a8;
+            }
+            dVar4 = stanGetPositionYValue(*pfStack00000014,pfStack00000014[2],local_2c);
+            fVar1 = dVar4;
+            if ((fVar1 <= pfStack00000014[1]) && (local_3c < fVar1)) {
+              local_68 = local_2c;
+              local_3c = fVar1;
+            }
+          }
+LAB_823835a8:
+        }
+      }
+      else {
+        for (local_28 = 0; (*(iStack0000001c + local_28) != -1 && (local_28 < 4));
+            local_28 = local_28 + 1) {
+          if (*(iStack0000001c + local_28) == local_38) goto LAB_8238358c;
+        }
+      }
+    }
+    local_38 = local_38 + 1;
+  } while( true );
 }
+
+
 #else
 GLOBAL_ASM(
 .late_rodata
@@ -598,9 +708,9 @@ glabel sub_GAME_7F0AF20C
 /* 0E3D9C 7F0AF26C 0080A025 */  move  $s4, $a0
 /* 0E3DA0 7F0AF270 3C178004 */  lui   $s7, %hi(list_of_tilesizes)
 /* 0E3DA4 7F0AF274 46002182 */  mul.s $f6, $f4, $f0
-/* 0E3DA8 7F0AF278 3C0A8008 */  lui   $t2, %hi(dword_CODE_bss_8007B128)
+/* 0E3DA8 7F0AF278 3C0A8008 */  lui   $t2, %hi(firststaninroom)
 /* 0E3DAC 7F0AF27C 3C018006 */  lui   $at, %hi(D_800585D4)
-/* 0E3DB0 7F0AF280 254AB128 */  addiu $t2, %lo(dword_CODE_bss_8007B128) # addiu $t2, $t2, -0x4ed8
+/* 0E3DB0 7F0AF280 254AB128 */  addiu $t2, %lo(firststaninroom) # addiu $t2, $t2, -0x4ed8
 /* 0E3DB4 7F0AF284 26F70F4C */  addiu $s7, %lo(list_of_tilesizes) # addiu $s7, $s7, 0xf4c
 /* 0E3DB8 7F0AF288 24130003 */  li    $s3, 3
 /* 0E3DBC 7F0AF28C 241600FF */  li    $s6, 255
@@ -832,10 +942,10 @@ glabel sub_GAME_7F0AF20C
 
 
 #ifdef NONMATCHING
-void stanLoadFile(void *arg0) {
-    stanLoaded = 1;
+void stanLoadFile(StanPrefixRecord *arg0) {
+    m_stanRegion = 1;
     stan_prefix.stanfile = arg0;
-    standTileStart = (s32) (arg0->unk4 + -0x80);
+    standTileStart = (s32) (arg0->ptr_firstroom + -0x10);
     if (tokenFind(1, "-stanlinelog") != 0)
     {
         stanlinelog_flag = 1;
@@ -850,10 +960,10 @@ GLOBAL_ASM(
 glabel stanLoadFile
 /* 0E40E8 7F0AF5B8 3C028008 */  lui   $v0, %hi(stan_prefix)
 /* 0E40EC 7F0AF5BC 240E0001 */  li    $t6, 1
-/* 0E40F0 7F0AF5C0 3C018004 */  lui   $at, %hi(stanLoaded)
+/* 0E40F0 7F0AF5C0 3C018004 */  lui   $at, %hi(m_stanRegion)
 /* 0E40F4 7F0AF5C4 2442B120 */  addiu $v0, %lo(stan_prefix) # addiu $v0, $v0, -0x4ee0
 /* 0E40F8 7F0AF5C8 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0E40FC 7F0AF5CC AC2E0FB0 */  sw    $t6, %lo(stanLoaded)($at)
+/* 0E40FC 7F0AF5CC AC2E0FB0 */  sw    $t6, %lo(m_stanRegion)($at)
 /* 0E4100 7F0AF5D0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E4104 7F0AF5D4 AC440000 */  sw    $a0, ($v0)
 /* 0E4108 7F0AF5D8 8C980004 */  lw    $t8, 4($a0)
@@ -893,23 +1003,23 @@ void sub_GAME_7F0AF630(s32 arg0)
 
     if (arg0 < 0)
     {
-        if (*(stanPrefix + (DAT_83aa10f0 - 1) * 4) != 0)
+        if (*(stanPrefix->ptr_firstroom)[m_stanRegion - 1])
         {
-            DAT_83aa10f0 = DAT_83aa10f0 - 1;
+            m_stanRegion --;
         }
     }
     else if (arg0 < 1)
     {
         if (arg0 == 0)
         {
-            DAT_83aa10f0 = 1;
+            m_stanRegion = 1;
         }
     }
-    else if (*(stanPrefix + (DAT_83aa10f0 + 1) * 4) != 0)
+    else if (*(stanPrefix->ptr_firstroom)[m_stanRegion + 1])
     {
-        DAT_83aa10f0 = DAT_83aa10f0 + 1;
+        m_stanRegion ++;
     }
-    osSyncPrintf("stanRegion():  region=%d",DAT_83aa10f0);
+    osSyncPrintf("stanRegion():  region=%d",m_stanRegion);
 #endif
     return;
 }
@@ -3903,7 +4013,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
 
 
 
-
+//stanResetHits
 void sub_GAME_7F0B1CC4(void) {
     stanSavedColl_tile = 0;
     stanSavedColl_pointI = 0;
@@ -4339,7 +4449,7 @@ s32 incrNearEdgeCount(StandTile **tileStack, s32 stackHeight, struct StandTileLo
 
 
 
-
+// maybe stanCircleLegalXFObjTypeY
 s32 sub_GAME_7F0B21B0(StandTile **tileStack, f32 target_x, f32 target_z, f32 unknown, s32 unk00, s32 *count_rtn, s32 bufMax)
 {
     struct StandTileLocusCallbackRecord data;
@@ -5440,7 +5550,7 @@ StandTile RemovedDebugFunctionOrXBLAUnique_7F0B2EFC()
     if ((*local_10 == sStack0000001e) && (cVar2 = cStack00000017, *(local_10 + 2) == cStack00000017)
         ) break;
     local_10 = Function_8238ED08(local_10,lVar1,in_r5,in_r6,in_r7,in_r8,in_r9,cVar2,
-                                    in_stack_ffffffab,in_stack_ffffffaf,in_stack_ffffffb4); //get a char or string from "    (08@HPX"[getsides(local10)]
+                                    in_stack_ffffffab,in_stack_ffffffaf,in_stack_ffffffb4); 
     }
     return local_10;
 }
@@ -5458,64 +5568,30 @@ void sub_GAME_7F0B2F00(StandTilePoint** arg0) {
 
 #ifdef NONMATCHING
 // To try
-void *stanDetermineEOF(StandTile *r, s32 arg1, s32 arg2) {
-    s32 temp_v0;
-    void *temp_a3;
-    s32 temp_v1;
-    void *temp_a3_2;
-    void *temp_v0_2;
-    void *temp_v0_3;
-    s32 phi_v1;
-    void *phi_a3;
-    void *phi_a3_2;
-    void *phi_v0;
+void *stanDetermineEOF(struct StanPrefixRecord *r, s32 arg1, s32 arg2)
+{
+     int iVar1;
+  StandTile *local_20;
+  StandTile **local_18;
+  
+  iVar1 = param_3._4_4_ - param_2._4_4_;
+  stanTileStart = r->ptr_firstroom + iVar1 + -0x80;
+  ptr_firstroom_0 = r->ptr_firstroom + iVar1;
+  stanPrefix = r;
+  #ifdef DEBUG
+  assert(*r==0);
+  #endif
 
-    // Node 0
-    stan_prefix.stanfile = r;
-    temp_v0 = (arg2 - arg1);
-    standTileStart = (s32) ((r->unk4 + temp_v0) + -0x80);
-    ptr_firstroom_0 = (s32) (r->unk4 + temp_v0);
-    temp_a3 = (r + 4);
-    phi_a3_2 = temp_a3;
-    #ifdef DEBUG
-    assert(r==0);
-    #endif
-    if (r->unk4 != 0)
-    {
-        // Node 1
-        phi_v1 = *temp_a3;
-        phi_a3 = temp_a3;
-loop_2:
-        // Node 2
-        temp_v1 = phi_a3->unk4;
-        *phi_a3 = (s32) (phi_v1 + temp_v0);
-        temp_a3_2 = (phi_a3 + 4);
-        phi_v1 = temp_v1;
-        phi_a3 = temp_a3_2;
-        phi_a3_2 = temp_a3_2;
-        if (temp_v1 != 0)
-        {
-            goto loop_2;
-        }
-    }
-    // Node 3
-    temp_v0_2 = (phi_a3_2 + 4);
-    phi_v0 = temp_v0_2;
-    if (*temp_v0_2 != 0)
-    {
-loop_4:
-        // Node 4
-        D_80040F60 = (void *) phi_v0;
-        temp_v0_3 = (*(&list_of_tilesizes + (((s32) phi_v0->unk6 >> 0xc) & 0xf)) + phi_v0);
-        phi_v0 = temp_v0_3;
-        if (*temp_v0_3 != 0)
-        {
-            goto loop_4;
-        }
-    }
-    // Node 5
-    stan_prefix.stanfile = r;
-    return temp_v0_2;
+  for (local_18 = &r->ptr_firstroom; *local_18 != NULL; local_18 = local_18 + 1)
+  {
+    *local_18 = *local_18 + iVar1;
+  }
+  for (local_20 = local_18 + 1; *local_20 != 0; local_20 = getNextStan(local_20))
+  {
+    D_80040F60 = local_20;
+  }
+  stanPrefix = r;
+  return;
 }
 #else
 GLOBAL_ASM(
@@ -5635,7 +5711,83 @@ s32 sub_GAME_7F0B3044(void) {
     return sp1C;
 }
 
-Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1) {
+Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1)
+{
+    #ifdef DEBUG
+      qword *pqVar1;
+      qword *pqVar2;
+      int iVar3;
+      char cVar4;
+      ulonglong uVar5;
+      ulonglong uVar6;
+      uint uStack00000014;
+      stanRecord *psStack0000001c;
+      char cStack00000027;
+      ushort **ppuStack0000002c;
+      uint uStack00000034;
+      dword local_80;
+      char *local_30;
+      dword local_2c;
+      uint local_28;
+      dword local_24;
+      dword local_20;
+      qword local_10;
+      dword local_8;
+  
+      uStack00000034 = param_5;
+      ppuStack0000002c = param_4;
+      uVar6 = ZEXT48(param_2);
+      *ppuStack0000002c = param_2;
+      local_30 = &DAT_00000001;
+      uStack00000014 = param_1;
+      psStack0000001c = param_2;
+      cStack00000027 = param_3;
+      pqVar1 = Function_8237F158();
+      pqVar2 = Function_8237F058();
+      uVar5 = 0;
+      Function_82278968(pqVar2,pqVar1,0,param_4,param_5,param_6,uVar6);
+      do {
+        do {
+          if (local_30 == NULL) {
+            Function_82279088();
+            return;
+          }
+          local_30 = local_30 + -1;
+          psStack0000001c = ppuStack0000002c[local_30];
+        } while (*psStack0000001c >> 0xf == cStack00000027);
+        *psStack0000001c = *psStack0000001c ^ 0x8000;
+        sub_GAME_7F0AF760(psStack0000001c);
+        iVar3 = sub_GAME_7F0B3044();
+        if (iVar3 != 0) {
+          Function_8238AC90(psStack0000001c,uStack00000014,uVar5,param_4,param_5,param_6,uVar6);
+        }
+        for (local_28 = 0; cVar4 = getsides(psStack0000001c), local_28 < cVar4; local_28 = local_28 + 1)
+        {
+          if (psStack0000001c[local_28 + 1].tail >> 4 == 0) {
+            iVar3 = sub_GAME_7F0B3044();
+            if (iVar3 != 0) {
+              uVar5 = local_28 + 1;
+              cVar4 = getsides(psStack0000001c);
+              trapWord(6,cVar4,0);
+              trapWord(5,cVar4 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 << 0x20) >> 0x3f) - 1),0xffff);
+              uVar5 = uVar5 - (uVar5 / cVar4) * cVar4;
+              param_4 = 0xffffffffffffffc0;
+              Function_8238B8F0(psStack0000001c,local_28,uVar5,0xffffffffffffffc0,param_5,param_6,uVar6)
+              ;
+            }
+          }
+          else if (*(stanTileStart + psStack0000001c[local_28 + 1].tail) >> 0xf != cStack00000027) {
+            uVar6 = ZEXT48(ppuStack0000002c);
+            ppuStack0000002c[local_30] = stanTileStart + psStack0000001c[local_28 + 1].tail;
+            local_30 = local_30 + 1;
+            if (uStack00000034 < local_30) {
+              osSyncPrintf("stanFillinVis: Stack overflow %d>%d",local_30,uStack00000034);
+              return;
+            }
+          }
+        }
+      } while( TRUE );
+    #endif
     return arg0;
 }
 

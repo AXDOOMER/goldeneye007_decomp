@@ -14,10 +14,10 @@
 #define STAN_MID_G(tile) ((tile->mid.half >> 0x08) & 0xF)
 #define STAN_MID_B(tile) ((tile->mid.half >> 0x0C) & 0xF)
 
-#define STAN_TAIL_POINT_COUNT(tile) (tile->tail.half & 0xF)
+#define STAN_TAIL_POINT_COUNT(tile) (tile->tail.half & 0xF)/*canonically getsides()*/
 #define STAN_TAIL_C(tile) ((tile->tail.half >> 0x04) & 0xF)
 #define STAN_TAIL_D(tile) ((tile->tail.half >> 0x08) & 0xF)
-#define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF) /*canonically getsides()*/
+#define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF)
 
 struct move_bond_collision {
     struct coord3d bondCollision;

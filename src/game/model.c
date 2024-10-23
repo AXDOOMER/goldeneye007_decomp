@@ -36,7 +36,9 @@ bool modelmgrCanSlotFitRwdata(Model *modelslot, ModelFileHeader *modeldef)
 #ifdef NONMATCHING
 struct PropRecord * get_obj_instance_controller_for_header(struct ModelFileHeader* arg0)
 {
-
+    #ifdef DEBUG
+    if (arg0 + 5 > 19) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", *(arg0 + 5));
+    #endif
 }
 #else
 GLOBAL_ASM(
@@ -167,7 +169,9 @@ void clear_model_obj(Model* model)
 
 #ifdef NONMATCHING
 void get_aircraft_obj_instance_controller(void) {
-
+    #ifdef DEBUG
+    if (arg0 + 0x14 > 140) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", *(arg0 + 0x14));
+    #endif
 }
 #else
 GLOBAL_ASM(
@@ -288,6 +292,10 @@ glabel get_aircraft_obj_instance_controller
 void modelAttachHead(Model *model, ModelNode *node,  ModelFileHeader *head)
 {
     modelAttachPart(model,model->obj,node,head);
+#ifdef DEBUG
+    if (model + 0x14 > 140 && g_ModelDistanceScale == 0) osSyncPrintf("WARNING: increase OASAVESIZE to %d!\n", *(model + 0x14));
+#endif
+
     modelInitRwData(model,head->RootNode);
 }
 

@@ -317,6 +317,12 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
             }
         }
     }
+    #ifdef DEBUG
+    else
+    {
+    osSyncPrintf("chr not reset! (prop num=%d chr num=%d stan=%s) ",arg2 + 1, arg1->chrnum, GetStanName(pad->stan));
+    }
+    #endif
 }
 
 /**
@@ -2386,6 +2392,8 @@ s32 chrlvAttackAnimationRelated7F026F30(ChrRecord *self, f32 *result)
  * - identical instructions: fail
  * - identical registers: fail
  *
+ * this file should be chraction.c and with at this point about 2000 lines above
+ *
  * notes: mystery section, seems to be missing something mips_to_c can't see.
  * male_guard_yelp_counter, female_guard_yelp_counter are static, need to be moved from chr.c
  * Also need to remove female_guard_yelps, male_guard_yelps from chr.c once this matches.
@@ -4036,7 +4044,7 @@ void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
     if (next_step < 0)
     {
         #ifdef DEBUG
-        osSyncPrintf("Patrol first step not found for chr number %d\n",self->chrnum + 1);
+        osSyncPrintf("Patrol first step not found for chr number %d\n",self->chrnum );
         #endif
         next_step = 0;
     }
@@ -5224,6 +5232,12 @@ bool chrGoToPad(ChrRecord *self, s32 padid, SPEED speed)
                 {
                     return TRUE;
                 }
+                #ifdef DEBUG
+                else
+                {
+                    osSyncPrintf("could not go to pad %d!!!\n", padid);
+                    }
+                #endif
             }
             else if (plot_course_for_actor(self, &pad->pos, stan, speed))
             {
@@ -10211,6 +10225,12 @@ s32 chrResolvePadId(ChrRecord *guardData,s32 padNo)
     // Guard's target pad.
     if (padNo == PAD_PRESET1)
     {
+        #ifdef DEBUG
+        if (guardData->padpreset1 < 0)
+        {
+            osSyncPrintf("preset less than zero char = %d\n", guardData->chrnum);
+        }
+        #endif
         padNo = (s32)guardData->padpreset1;
     }
 
@@ -11260,6 +11280,7 @@ PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, 
     {
         pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
     }
+    //<- not here...
     #ifdef ENABLE_LOG
     osSyncPrintf("%s%s new char x = %f, y = %f, z = %f \n", "", "", pad->pos.x, pad->pos.y, pad->pos.z);
     #endif
