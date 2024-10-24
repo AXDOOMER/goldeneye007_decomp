@@ -307,12 +307,12 @@ s32         get_numguards(void);
 Gfx        *chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 void        chrAddHealth(ChrRecord *chr, f32 health);
 void        chrSetMaxDamage(ChrRecord *chr, f32 maxdamage);
-s32 sub_GAME_7F03DA50(PropRecord* prop, s32 objFlags);
-s32 sub_GAME_7F023194(PropRecord *arg0, struct coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3);
+s32         propIsOfCdType(PropRecord* prop, s32 objFlags);
+s32         sub_GAME_7F023194(PropRecord *arg0, struct coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3);
 
 //tentative signature
 s32         sub_GAME_7F01FC10(Model *, coord3d *, coord3d *, f32 *);
-void sub_GAME_7F0221DC(Model *arg0, s32 arg1, ModelNode *arg2, struct coord3d *arg3);
+void        sub_GAME_7F0221DC(Model *arg0, s32 arg1, ModelNode *arg2, struct coord3d *arg3);
 
 #ifdef BUGFIX_R1
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

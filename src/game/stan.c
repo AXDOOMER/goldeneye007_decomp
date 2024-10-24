@@ -3519,7 +3519,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
         {
             temp_s6 = &pos_data_entry[*spB8];
 
-            if (sub_GAME_7F03DA50(temp_s6, objFlags) != 0)
+            if (propIsOfCdType(temp_s6, objFlags) != 0)
             {
                 chraiGetCollisionBounds(temp_s6, &spB4, &numvertices0, &spA4, &spA0);
 
@@ -3712,7 +3712,7 @@ glabel sub_GAME_7F0B1410
 /* 0E605C 7F0B152C 000A5080 */  sll   $t2, $t2, 2
 /* 0E6060 7F0B1530 014B9821 */  addu  $s3, $t2, $t3
 /* 0E6064 7F0B1534 02602025 */  move  $a0, $s3
-/* 0E6068 7F0B1538 0FC0F694 */  jal   sub_GAME_7F03DA50
+/* 0E6068 7F0B1538 0FC0F694 */  jal   propIsOfCdType
 /* 0E606C 7F0B153C 8FA5013C */   lw    $a1, 0x13c($sp)
 /* 0E6070 7F0B1540 10400048 */  beqz  $v0, .L7F0B1664
 /* 0E6074 7F0B1544 02602025 */   move  $a0, $s3
@@ -3948,7 +3948,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
         {
             temp_s5 = &pos_data_entry[*sp100];
 
-            if (sub_GAME_7F03DA50(temp_s5, arg4) != 0)
+            if (propIsOfCdType(temp_s5, arg4) != 0)
             {
                 chraiGetCollisionBounds(temp_s5, &spA4, &numvertices0, &sp94, &sp90);
                 if ((numvertices0 > 0) && ((sp108 == 0) || ((sp90 <= arg5) && (arg6 <= sp94))))

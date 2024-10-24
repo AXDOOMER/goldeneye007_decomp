@@ -4117,8 +4117,12 @@ s32 propDoorGetCdTypes(PropRecord* arg0)
 }
 
 
-s32 sub_GAME_7F03DA50(PropRecord* prop, s32 objFlags) {
-    s32 ret ;
+// This function was renamed because it looks similar to PD's `prop_is_of_cd_type` function.
+// objFlags is likely CD types. Also, the return type is a boolean. 
+// TODO: Change return type and objFlags variables passed to this function as the 2nd parameter.
+// The purpose if this function is likely to determine if a prop of a certain CD type can be tested for collisions.
+s32 propIsOfCdType(PropRecord* prop, s32 objFlags) {
+    s32 ret;
     ObjectRecord *obj;
     ret = 1;
 
