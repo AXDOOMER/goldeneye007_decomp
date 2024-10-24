@@ -1,12 +1,9 @@
 /*---------------------------------------------------------------------
-	Copyright (C) 1997, Rareware.
 
 	File		propobj.c
-	Coded    .	Jul 31, 1997.
-	Modified by
+
 	Comments	Prop Objects code.
 
-	$Id: propobj.c,v 1.21 1997/05/28 00:14:49 has Exp $
   ---------------------------------------------------------------------*/
 
 #include <ultra64.h>

@@ -10,7 +10,7 @@ struct jpncharpixels {
 };
 
 struct jpncacheitem {
-	u16 ttl : 2;
+	u16 ttl : 2; //cannonically timeleft
 	u16 codepoint : 14;
 };
 
