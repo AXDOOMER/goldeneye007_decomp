@@ -171,10 +171,16 @@ s32 levelentry_index = 1;
 s32 bgViewRelated[] = { 1, 1, -1, -1 };
 
 
-//D:80041414 //This is why 150 is room limit
-s_room_info roominf[MAXROOMCOUNT] = {0};
+/**
+ * Array of info about all the rooms on the level
+ * Some info is different according to which player is being rendered
+ * This array is also why there's a 150 is room limit
+ * Canonical name: roominf
+ * Address 0x80041414
+*/
+s_room_info g_BgRoomInfo[MAXROOMCOUNT] = {0};
 //D:800442F4
-s32 MaxNumRooms = MAXROOMCOUNT;
+s32 g_MaxNumRooms = MAXROOMCOUNT;
 
 
 //D:800442F8
@@ -925,9 +931,9 @@ void sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize,s32 next)
 {
     int i;
 
-    roominf[curroom].room_rendered = '\x01';
+    g_BgRoomInfo[curroom].room_rendered = '\x01';
 
-    if (roominf[curroom].room_loaded_mask == '\0') {
+    if (g_BgRoomInfo[curroom].room_loaded_mask == '\0') {
         for (i = 0; i < g_BgNumberOfRoomsDrawn; i++)
         {
             if (curroom == dword_CODE_bss_8007FFA0[i].roomid) {
@@ -962,8 +968,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B39BC
 /* 0E84EC 7F0B39BC 00047080 */  sll   $t6, $a0, 2
 /* 0E84F0 7F0B39C0 01C47021 */  addu  $t6, $t6, $a0
-/* 0E84F4 7F0B39C4 3C0F8004 */  lui   $t7, %hi(roominf)
-/* 0E84F8 7F0B39C8 25EF1414 */  addiu $t7, %lo(roominf) # addiu $t7, $t7, 0x1414
+/* 0E84F4 7F0B39C4 3C0F8004 */  lui   $t7, %hi(g_BgRoomInfo)
+/* 0E84F8 7F0B39C8 25EF1414 */  addiu $t7, %lo(g_BgRoomInfo) # addiu $t7, $t7, 0x1414
 /* 0E84FC 7F0B39CC 000E7100 */  sll   $t6, $t6, 4
 /* 0E8500 7F0B39D0 01CF1021 */  addu  $v0, $t6, $t7
 /* 0E8504 7F0B39D4 90590034 */  lbu   $t9, 0x34($v0)
@@ -1057,8 +1063,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B39BC
 /* 0E566C 7F0B2C7C 00047080 */  sll   $t6, $a0, 2
 /* 0E5670 7F0B2C80 01C47021 */  addu  $t6, $t6, $a0
-/* 0E5674 7F0B2C84 3C0F8004 */  lui   $t7, %hi(roominf) # $t7, 0x8004
-/* 0E5678 7F0B2C88 25EFAC64 */  addiu $t7, %lo(roominf) # addiu $t7, $t7, -0x539c
+/* 0E5674 7F0B2C84 3C0F8004 */  lui   $t7, %hi(g_BgRoomInfo) # $t7, 0x8004
+/* 0E5678 7F0B2C88 25EFAC64 */  addiu $t7, %lo(g_BgRoomInfo) # addiu $t7, $t7, -0x539c
 /* 0E567C 7F0B2C8C 000E7100 */  sll   $t6, $t6, 4
 /* 0E5680 7F0B2C90 01CF1021 */  addu  $v0, $t6, $t7
 /* 0E5684 7F0B2C94 90590034 */  lbu   $t9, 0x34($v0)
@@ -1166,7 +1172,7 @@ glabel sub_GAME_7F0B39BC
 
 void bgZeroPortalsToRoom(s32 roomnum)
 {
-  roominf[roomnum].portals_to_room_count = '\0';
+  g_BgRoomInfo[roomnum].portals_to_room_count = '\0';
 }
 
 
@@ -1181,7 +1187,7 @@ s32 sub_GAME_7F0B3B20(void)
 
     for (i=0;i<MAXROOMCOUNT;i++)
     {
-        if (roominf[i].portals_to_room_count) {
+        if (g_BgRoomInfo[i].portals_to_room_count) {
             return i;
         };
     }
@@ -1201,7 +1207,7 @@ void sub_GAME_7F0B3BC4(void)
   g_BgNumberOfRoomsDrawn = 0;
   for (i=0;i!=MAXROOMCOUNT;i++)
   {
-    roominf[i].portals_to_room_count = '\0';
+    g_BgRoomInfo[i].portals_to_room_count = '\0';
   }
 }
 #else
@@ -1212,14 +1218,14 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B3BC4
 /* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(g_BgNumberOfRoomsDrawn)
 /* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(g_BgNumberOfRoomsDrawn)($at)
-/* 0E86FC 7F0B3BCC 3C018004 */  lui   $at, %hi(roominf+0x3)
-/* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(roominf+0x3)($at)
-/* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(roominf + 0x53)
-/* 0E8708 7F0B3BD8 3C038004 */  lui   $v1, %hi(roominf + 0xA0)
-/* 0E870C 7F0B3BDC 3C028004 */  lui   $v0, %hi(MaxNumRooms)
-/* 0E8710 7F0B3BE0 244242F4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, 0x42f4
-/* 0E8714 7F0B3BE4 246314B4 */  addiu $v1, %lo(roominf + 0xA0) # addiu $v1, $v1, 0x14b4
-/* 0E8718 7F0B3BE8 A0201467 */  sb    $zero, %lo(roominf + 0x53)($at)
+/* 0E86FC 7F0B3BCC 3C018004 */  lui   $at, %hi(g_BgRoomInfo+0x3)
+/* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(g_BgRoomInfo+0x3)($at)
+/* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x53)
+/* 0E8708 7F0B3BD8 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0xA0)
+/* 0E870C 7F0B3BDC 3C028004 */  lui   $v0, %hi(g_MaxNumRooms)
+/* 0E8710 7F0B3BE0 244242F4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, 0x42f4
+/* 0E8714 7F0B3BE4 246314B4 */  addiu $v1, %lo(g_BgRoomInfo + 0xA0) # addiu $v1, $v1, 0x14b4
+/* 0E8718 7F0B3BE8 A0201467 */  sb    $zero, %lo(g_BgRoomInfo + 0x53)($at)
 .L7F0B3BEC:
 /* 0E871C 7F0B3BEC 24630140 */  addiu $v1, $v1, 0x140
 /* 0E8720 7F0B3BF0 A060FEC3 */  sb    $zero, -0x13d($v1)
@@ -1240,16 +1246,16 @@ glabel sub_GAME_7F0B3BC4
 /* 0E58C0 7F0B2ED0 AC20DD1C */  sw    $zero, %lo(g_BgNumberOfRoomsDrawn)($at)
 /* 0E58C4 7F0B2ED4 3C018004 */  lui   $at, %hi(eu_cdata_0x1f0d0) # $at, 0x8004
 /* 0E58C8 7F0B2ED8 AC20DD20 */  sw    $zero, %lo(eu_cdata_0x1f0d0)($at)
-/* 0E58CC 7F0B2EDC 3C018004 */  lui   $at, %hi(roominf+0x3) # $at, 0x8004
-/* 0E58D0 7F0B2EE0 A020AC67 */  sb    $zero, %lo(roominf+0x3)($at)
-/* 0E58D4 7F0B2EE4 3C018004 */  lui   $at, %hi(roominf + 0x53) # $at, 0x8004
-/* 0E58D8 7F0B2EE8 A020ACB7 */  sb    $zero, %lo(roominf + 0x53)($at)
-/* 0E58DC 7F0B2EEC 3C018004 */  lui   $at, %hi(roominf + 0xA3) # $at, 0x8004
-/* 0E58E0 7F0B2EF0 3C038004 */  lui   $v1, %hi(roominf + 0xf0) # $v1, 0x8004
-/* 0E58E4 7F0B2EF4 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
-/* 0E58E8 7F0B2EF8 2442D7D4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, -0x282c
-/* 0E58EC 7F0B2EFC 2463AD54 */  addiu $v1, %lo(roominf + 0xf0) # addiu $v1, $v1, -0x52ac
-/* 0E58F0 7F0B2F00 A020AD07 */  sb    $zero, %lo(roominf + 0xA3)($at)
+/* 0E58CC 7F0B2EDC 3C018004 */  lui   $at, %hi(g_BgRoomInfo+0x3) # $at, 0x8004
+/* 0E58D0 7F0B2EE0 A020AC67 */  sb    $zero, %lo(g_BgRoomInfo+0x3)($at)
+/* 0E58D4 7F0B2EE4 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x53) # $at, 0x8004
+/* 0E58D8 7F0B2EE8 A020ACB7 */  sb    $zero, %lo(g_BgRoomInfo + 0x53)($at)
+/* 0E58DC 7F0B2EEC 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0xA3) # $at, 0x8004
+/* 0E58E0 7F0B2EF0 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0xf0) # $v1, 0x8004
+/* 0E58E4 7F0B2EF4 3C028004 */  lui   $v0, %hi(g_MaxNumRooms) # $v0, 0x8004
+/* 0E58E8 7F0B2EF8 2442D7D4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, -0x282c
+/* 0E58EC 7F0B2EFC 2463AD54 */  addiu $v1, %lo(g_BgRoomInfo + 0xf0) # addiu $v1, $v1, -0x52ac
+/* 0E58F0 7F0B2F00 A020AD07 */  sb    $zero, %lo(g_BgRoomInfo + 0xA3)($at)
 .L7F0B2F04:
 /* 0E58F4 7F0B2F04 24630140 */  addiu $v1, $v1, 0x140
 /* 0E58F8 7F0B2F08 A060FEC3 */  sb    $zero, -0x13d($v1)
@@ -2051,8 +2057,8 @@ glabel load_bg_file
 /* 0E8C5C 7F0B412C 3C128004 */  lui   $s2, %hi(levelentry_index)
 /* 0E8C60 7F0B4130 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0E8C64 7F0B4134 26521400 */  addiu $s2, %lo(levelentry_index) # addiu $s2, $s2, 0x1400
-/* 0E8C68 7F0B4138 3C108004 */  lui   $s0, %hi(roominf)
-/* 0E8C6C 7F0B413C 3C028004 */  lui   $v0, %hi(MaxNumRooms)
+/* 0E8C68 7F0B4138 3C108004 */  lui   $s0, %hi(g_BgRoomInfo)
+/* 0E8C6C 7F0B413C 3C028004 */  lui   $v0, %hi(g_MaxNumRooms)
 /* 0E8C70 7F0B4140 AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E8C74 7F0B4144 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 0E8C78 7F0B4148 AFB70034 */  sw    $s7, 0x34($sp)
@@ -2062,8 +2068,8 @@ glabel load_bg_file
 /* 0E8C88 7F0B4158 AFB30024 */  sw    $s3, 0x24($sp)
 /* 0E8C8C 7F0B415C AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0E8C90 7F0B4160 AE400000 */  sw    $zero, ($s2)
-/* 0E8C94 7F0B4164 244242F4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, 0x42f4
-/* 0E8C98 7F0B4168 26101414 */  addiu $s0, %lo(roominf) # addiu $s0, $s0, 0x1414
+/* 0E8C94 7F0B4164 244242F4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, 0x42f4
+/* 0E8C98 7F0B4168 26101414 */  addiu $s0, %lo(g_BgRoomInfo) # addiu $s0, $s0, 0x1414
 .L7F0B416C:
 /* 0E8C9C 7F0B416C 26100050 */  addiu $s0, $s0, 0x50
 /* 0E8CA0 7F0B4170 0202082B */  sltu  $at, $s0, $v0
@@ -2198,8 +2204,8 @@ glabel load_bg_file
 /* 0E8E9C 7F0B436C AC8A0000 */  sw    $t2, ($a0)
 /* 0E8EA0 7F0B4370 AEC20000 */  sw    $v0, ($s6)
 /* 0E8EA4 7F0B4374 8C4B0004 */  lw    $t3, 4($v0)
-/* 0E8EA8 7F0B4378 3C168004 */  lui   $s6, %hi(MaxNumRooms)
-/* 0E8EAC 7F0B437C 26D642F4 */  addiu $s6, %lo(MaxNumRooms) # addiu $s6, $s6, 0x42f4
+/* 0E8EA8 7F0B4378 3C168004 */  lui   $s6, %hi(g_MaxNumRooms)
+/* 0E8EAC 7F0B437C 26D642F4 */  addiu $s6, %lo(g_MaxNumRooms) # addiu $s6, $s6, 0x42f4
 /* 0E8EB0 7F0B4380 01626021 */  addu  $t4, $t3, $v0
 /* 0E8EB4 7F0B4384 01936821 */  addu  $t5, $t4, $s3
 /* 0E8EB8 7F0B4388 AEAD0000 */  sw    $t5, ($s5)
@@ -2295,8 +2301,8 @@ glabel load_bg_file
 .L7F0B44CC:
 /* 0E8FFC 7F0B44CC 8ED90000 */  lw    $t9, ($s6)
 .L7F0B44D0:
-/* 0E9000 7F0B44D0 3C108004 */  lui   $s0, %hi(roominf + 0x10 +0x40)
-/* 0E9004 7F0B44D4 26101464 */  addiu $s0, %lo(roominf + 0x10 +0x40) # addiu $s0, $s0, 0x1464
+/* 0E9000 7F0B44D0 3C108004 */  lui   $s0, %hi(g_BgRoomInfo + 0x10 +0x40)
+/* 0E9004 7F0B44D4 26101464 */  addiu $s0, %lo(g_BgRoomInfo + 0x10 +0x40) # addiu $s0, $s0, 0x1464
 /* 0E9008 7F0B44D8 2B210002 */  slti  $at, $t9, 2
 /* 0E900C 7F0B44DC 14200064 */  bnez  $at, .L7F0B4670
 /* 0E9010 7F0B44E0 24110001 */   li    $s1, 1
@@ -2522,8 +2528,8 @@ glabel load_bg_file
 /* 0E5E58 7F0B3468 3C128004 */  lui   $s2, %hi(levelentry_index) # $s2, 0x8004
 /* 0E5E5C 7F0B346C AFB00018 */  sw    $s0, 0x18($sp)
 /* 0E5E60 7F0B3470 2652AC50 */  addiu $s2, %lo(levelentry_index) # addiu $s2, $s2, -0x53b0
-/* 0E5E64 7F0B3474 3C108004 */  lui   $s0, %hi(roominf) # $s0, 0x8004
-/* 0E5E68 7F0B3478 3C028004 */  lui   $v0, %hi(MaxNumRooms) # $v0, 0x8004
+/* 0E5E64 7F0B3474 3C108004 */  lui   $s0, %hi(g_BgRoomInfo) # $s0, 0x8004
+/* 0E5E68 7F0B3478 3C028004 */  lui   $v0, %hi(g_MaxNumRooms) # $v0, 0x8004
 /* 0E5E6C 7F0B347C AFBF003C */  sw    $ra, 0x3c($sp)
 /* 0E5E70 7F0B3480 AFBE0038 */  sw    $fp, 0x38($sp)
 /* 0E5E74 7F0B3484 AFB70034 */  sw    $s7, 0x34($sp)
@@ -2533,8 +2539,8 @@ glabel load_bg_file
 /* 0E5E84 7F0B3494 AFB30024 */  sw    $s3, 0x24($sp)
 /* 0E5E88 7F0B3498 AFB1001C */  sw    $s1, 0x1c($sp)
 /* 0E5E8C 7F0B349C AE400000 */  sw    $zero, ($s2)
-/* 0E5E90 7F0B34A0 2442D7D4 */  addiu $v0, %lo(MaxNumRooms) # addiu $v0, $v0, -0x282c
-/* 0E5E94 7F0B34A4 2610AC64 */  addiu $s0, %lo(roominf) # addiu $s0, $s0, -0x539c
+/* 0E5E90 7F0B34A0 2442D7D4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, -0x282c
+/* 0E5E94 7F0B34A4 2610AC64 */  addiu $s0, %lo(g_BgRoomInfo) # addiu $s0, $s0, -0x539c
 .L7F0B34A8:
 /* 0E5E98 7F0B34A8 26100050 */  addiu $s0, $s0, 0x50
 /* 0E5E9C 7F0B34AC 0202082B */  sltu  $at, $s0, $v0
@@ -2669,8 +2675,8 @@ glabel load_bg_file
 /* 0E6098 7F0B36A8 AC8A0000 */  sw    $t2, ($a0)
 /* 0E609C 7F0B36AC AEC20000 */  sw    $v0, ($s6)
 /* 0E60A0 7F0B36B0 8C4B0004 */  lw    $t3, 4($v0)
-/* 0E60A4 7F0B36B4 3C168004 */  lui   $s6, %hi(MaxNumRooms) # $s6, 0x8004
-/* 0E60A8 7F0B36B8 26D6D7D4 */  addiu $s6, %lo(MaxNumRooms) # addiu $s6, $s6, -0x282c
+/* 0E60A4 7F0B36B4 3C168004 */  lui   $s6, %hi(g_MaxNumRooms) # $s6, 0x8004
+/* 0E60A8 7F0B36B8 26D6D7D4 */  addiu $s6, %lo(g_MaxNumRooms) # addiu $s6, $s6, -0x282c
 /* 0E60AC 7F0B36BC 01626021 */  addu  $t4, $t3, $v0
 /* 0E60B0 7F0B36C0 01936821 */  addu  $t5, $t4, $s3
 /* 0E60B4 7F0B36C4 AEAD0000 */  sw    $t5, ($s5)
@@ -2766,8 +2772,8 @@ glabel load_bg_file
 .L7F0B3808:
 /* 0E61F8 7F0B3808 8ED90000 */  lw    $t9, ($s6)
 .L7F0B380C:
-/* 0E61FC 7F0B380C 3C108004 */  lui   $s0, %hi(roominf + 0x10 +0x40) # $s0, 0x8004
-/* 0E6200 7F0B3810 2610ACB4 */  addiu $s0, %lo(roominf + 0x10 +0x40) # addiu $s0, $s0, -0x534c
+/* 0E61FC 7F0B380C 3C108004 */  lui   $s0, %hi(g_BgRoomInfo + 0x10 +0x40) # $s0, 0x8004
+/* 0E6200 7F0B3810 2610ACB4 */  addiu $s0, %lo(g_BgRoomInfo + 0x10 +0x40) # addiu $s0, $s0, -0x534c
 /* 0E6204 7F0B3814 2B210002 */  slti  $at, $t9, 2
 /* 0E6208 7F0B3818 14200064 */  bnez  $at, .L7F0B39AC
 /* 0E620C 7F0B381C 24110001 */   li    $s1, 1
@@ -3663,7 +3669,7 @@ void sub_GAME_7F0B5208(s32 arg0, void *arg1) {
     viGetZRange(&sp3C);
     sp40 = (f32) (sp40 / mCurrentLevelVisibilityScale);
     phi_v1 = 0;
-    phi_a2 = ((arg0 * 0x50) + &roominf);
+    phi_a2 = ((arg0 * 0x50) + &g_BgRoomInfo);
     phi_s6_2 = 0;
     phi_s4_2 = 0;
     phi_s5_2 = 0;
@@ -3860,12 +3866,12 @@ glabel sub_GAME_7F0B5208
 /* 0E9D88 7F0B5258 C42613FC */  lwc1  $f6, %lo(mCurrentLevelVisibilityScale)($at)
 /* 0E9D8C 7F0B525C C7A40040 */  lwc1  $f4, 0x40($sp)
 /* 0E9D90 7F0B5260 8FAE0078 */  lw    $t6, 0x78($sp)
-/* 0E9D94 7F0B5264 3C188004 */  lui   $t8, %hi(roominf)
+/* 0E9D94 7F0B5264 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
 /* 0E9D98 7F0B5268 46062203 */  div.s $f8, $f4, $f6
 /* 0E9D9C 7F0B526C 000E7880 */  sll   $t7, $t6, 2
 /* 0E9DA0 7F0B5270 01EE7821 */  addu  $t7, $t7, $t6
 /* 0E9DA4 7F0B5274 000F7900 */  sll   $t7, $t7, 4
-/* 0E9DA8 7F0B5278 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0E9DA8 7F0B5278 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0E9DAC 7F0B527C 01F83021 */  addu  $a2, $t7, $t8
 /* 0E9DB0 7F0B5280 00001825 */  move  $v1, $zero
 /* 0E9DB4 7F0B5284 E7A80040 */  swc1  $f8, 0x40($sp)
@@ -4873,7 +4879,7 @@ glabel bgDebPrintROOMID
 
 
 s32 getMaxNumRooms(void) {
-    return MaxNumRooms;
+    return g_MaxNumRooms;
 }
 
 /*
@@ -4881,7 +4887,7 @@ s32 getMaxNumRooms(void) {
  */
 u8 getROOMID_isRendered(s32 roomID)
 {
-    return roominf[roomID].room_rendered;
+    return g_BgRoomInfo[roomID].room_rendered;
 }
 
 /*
@@ -4889,7 +4895,7 @@ u8 getROOMID_isRendered(s32 roomID)
  */
 u8 getROOMID_isNeighborToRendered(s32 roomID)
 {
-    return roominf[roomID].room_neighbor_to_rendered;
+    return g_BgRoomInfo[roomID].room_neighbor_to_rendered;
 }
 
 
@@ -4930,10 +4936,10 @@ void roomsHandleStateDebugging(void) {
     {
         // Node 1
         phi_a0_3 = 1;
-        if (MaxNumRooms >= 2)
+        if (g_MaxNumRooms >= 2)
         {
             // Node 2
-            phi_v1 = &roominf + 0x10 +0x40;
+            phi_v1 = &g_BgRoomInfo + 0x10 +0x40;
             phi_a0 = 1;
             phi_v0 = &sp29;
 loop_3:
@@ -4955,7 +4961,7 @@ loop_3:
             phi_a0 = phi_a0_2;
             phi_v0 = (phi_v0 + 1);
             phi_a0_3 = phi_a0_2;
-            if (phi_a0_2 < MaxNumRooms)
+            if (phi_a0_2 < g_MaxNumRooms)
             {
                 goto loop_3;
             }
@@ -4977,10 +4983,10 @@ glabel roomsHandleStateDebugging
 /* 0EAA10 7F0B5EE0 0FC243F4 */  jal   debugIsRoomStateDebugEnabled
 /* 0EAA14 7F0B5EE4 00000000 */   nop
 /* 0EAA18 7F0B5EE8 10400024 */  beqz  $v0, .L7F0B5F7C
-/* 0EAA1C 7F0B5EEC 3C078004 */   lui   $a3, %hi(MaxNumRooms)
-/* 0EAA20 7F0B5EF0 8CE742F4 */  lw    $a3, %lo(MaxNumRooms)($a3)
-/* 0EAA24 7F0B5EF4 3C038004 */  lui   $v1, %hi(roominf + 0x10 +0x40)
-/* 0EAA28 7F0B5EF8 24631464 */  addiu $v1, %lo(roominf + 0x10 +0x40) # addiu $v1, $v1, 0x1464
+/* 0EAA1C 7F0B5EEC 3C078004 */   lui   $a3, %hi(g_MaxNumRooms)
+/* 0EAA20 7F0B5EF0 8CE742F4 */  lw    $a3, %lo(g_MaxNumRooms)($a3)
+/* 0EAA24 7F0B5EF4 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0x10 +0x40)
+/* 0EAA28 7F0B5EF8 24631464 */  addiu $v1, %lo(g_BgRoomInfo + 0x10 +0x40) # addiu $v1, $v1, 0x1464
 /* 0EAA2C 7F0B5EFC 28E10002 */  slti  $at, $a3, 2
 /* 0EAA30 7F0B5F00 1420001C */  bnez  $at, .L7F0B5F74
 /* 0EAA34 7F0B5F04 24040001 */   li    $a0, 1
@@ -5036,10 +5042,10 @@ glabel roomsHandleStateDebugging
 /* 0E7C0C 7F0B521C 0FC2411A */  jal   debugIsRoomStateDebugEnabled
 /* 0E7C10 7F0B5220 00000000 */   nop
 /* 0E7C14 7F0B5224 10400024 */  beqz  $v0, .L7F0B52B8
-/* 0E7C18 7F0B5228 3C078004 */   lui   $a3, %hi(MaxNumRooms) # $a3, 0x8004
-/* 0E7C1C 7F0B522C 8CE7D7D4 */  lw    $a3, %lo(MaxNumRooms)($a3)
-/* 0E7C20 7F0B5230 3C038004 */  lui   $v1, %hi(roominf + 0x10 +0x40) # $v1, 0x8004
-/* 0E7C24 7F0B5234 2463ACB4 */  addiu $v1, %lo(roominf + 0x10 +0x40) # addiu $v1, $v1, -0x534c
+/* 0E7C18 7F0B5228 3C078004 */   lui   $a3, %hi(g_MaxNumRooms) # $a3, 0x8004
+/* 0E7C1C 7F0B522C 8CE7D7D4 */  lw    $a3, %lo(g_MaxNumRooms)($a3)
+/* 0E7C20 7F0B5230 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0x10 +0x40) # $v1, 0x8004
+/* 0E7C24 7F0B5234 2463ACB4 */  addiu $v1, %lo(g_BgRoomInfo + 0x10 +0x40) # addiu $v1, $v1, -0x534c
 /* 0E7C28 7F0B5238 28E10002 */  slti  $at, $a3, 2
 /* 0E7C2C 7F0B523C 1420001C */  bnez  $at, .L7F0B52B0
 /* 0E7C30 7F0B5240 24040001 */   li    $a0, 1
@@ -5110,7 +5116,7 @@ void* sub_GAME_7F0B5FAC(int roomID, int* data, int size)
 
 
 
-    len = roominf[roomID].csize_point_index_binary + 0xfU & 0xfffffff0;
+    len = g_BgRoomInfo[roomID].csize_point_index_binary + 0xfU & 0xfffffff0;
     if (size < len + 0x20) {
         dest = -1;
     }
@@ -5119,8 +5125,8 @@ void* sub_GAME_7F0B5FAC(int roomID, int* data, int size)
         obLoadBGFileBytesAtOffset(levelinfotable[levelentry_index].bg_seg_filename, source,
             (ptr_bg_data+ &ptr_bgdata_room_fileposition_list[roomID] - ptr_bg_data) + 0xF1000000, len);
         dest = bgDecompress(source,data);
-        roominf[roomID].usize_point_index_binary = dest;
-        roominf[roomID].ptr_point_index = data;
+        g_BgRoomInfo[roomID].usize_point_index_binary = dest;
+        g_BgRoomInfo[roomID].ptr_point_index = data;
     }
     return dest;
 }
@@ -5132,8 +5138,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B5FAC
 /* 0EAADC 7F0B5FAC 00047880 */  sll   $t7, $a0, 2
 /* 0EAAE0 7F0B5FB0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EAAE4 7F0B5FB4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EAAE8 7F0B5FB8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EAAE4 7F0B5FB4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EAAE8 7F0B5FB8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EAAEC 7F0B5FBC 000F7900 */  sll   $t7, $t7, 4
 /* 0EAAF0 7F0B5FC0 01F81821 */  addu  $v1, $t7, $t8
 /* 0EAAF4 7F0B5FC4 8C670010 */  lw    $a3, 0x10($v1)
@@ -5201,8 +5207,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B5FAC
 /* 0EAADC 7F0B5FAC 00047880 */  sll   $t7, $a0, 2
 /* 0EAAE0 7F0B5FB0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EAAE4 7F0B5FB4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EAAE8 7F0B5FB8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EAAE4 7F0B5FB4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EAAE8 7F0B5FB8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EAAEC 7F0B5FBC 000F7900 */  sll   $t7, $t7, 4
 /* 0EAAF0 7F0B5FC0 01F81821 */  addu  $v1, $t7, $t8
 /* 0EAAF4 7F0B5FC4 8C670010 */  lw    $a3, 0x10($v1)
@@ -5278,7 +5284,7 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
   u8 *source;
   u32 len;
 
-  len = roominf[roomID].csize_primary_DL_binary + 0xfU & 0xfffffff0;
+  len = g_BgRoomInfo[roomID].csize_primary_DL_binary + 0xfU & 0xfffffff0;
   if (size < len + 0x20) {
     dest = 0xffffffff;
   }
@@ -5295,8 +5301,8 @@ u32 * sub_GAME_7F0B609C(int roomID, int *data, u32 size)
     if (dest < puVar1) {
       dest = puVar1;
     }
-    roominf[roomID].ptr_expanded_mapping_info = data;
-    roominf[roomID].usize_primary_DL_binary = dest;
+    g_BgRoomInfo[roomID].ptr_expanded_mapping_info = data;
+    g_BgRoomInfo[roomID].usize_primary_DL_binary = dest;
   }
   return dest;
 }
@@ -5308,8 +5314,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B609C
 /* 0EABCC 7F0B609C 00047880 */  sll   $t7, $a0, 2
 /* 0EABD0 7F0B60A0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EABD4 7F0B60A4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EABD8 7F0B60A8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EABD4 7F0B60A4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EABD8 7F0B60A8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EABDC 7F0B60AC 000F7900 */  sll   $t7, $t7, 4
 /* 0EABE0 7F0B60B0 01F84021 */  addu  $t0, $t7, $t8
 /* 0EABE4 7F0B60B4 8D070014 */  lw    $a3, 0x14($t0)
@@ -5398,8 +5404,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B609C
 /* 0EABCC 7F0B609C 00047880 */  sll   $t7, $a0, 2
 /* 0EABD0 7F0B60A0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EABD4 7F0B60A4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EABD8 7F0B60A8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EABD4 7F0B60A4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EABD8 7F0B60A8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EABDC 7F0B60AC 000F7900 */  sll   $t7, $t7, 4
 /* 0EABE0 7F0B60B0 01F84021 */  addu  $t0, $t7, $t8
 /* 0EABE4 7F0B60B4 8D070014 */  lw    $a3, 0x14($t0)
@@ -5496,7 +5502,7 @@ u32 sub_GAME_7F0B61DC(s32 roomID, u32 *data, s32 size)
     u8 *source;
     u32 len;
 
-    len = roominf[roomID].csize_secondary_DL_binary + 0xfU & 0xfffffff0;
+    len = g_BgRoomInfo[roomID].csize_secondary_DL_binary + 0xfU & 0xfffffff0;
     if (size < len + 0x20)
     {
         dest = 0xffffffff;
@@ -5512,8 +5518,8 @@ u32 sub_GAME_7F0B61DC(s32 roomID, u32 *data, s32 size)
         if (dest < puVar1) {
             dest = puVar1;
         }
-        roominf[roomID].ptr_secondary_expanded_mapping_info = data;
-        roominf[roomID].usize_secondary_DL_binary = dest;
+        g_BgRoomInfo[roomID].ptr_secondary_expanded_mapping_info = data;
+        g_BgRoomInfo[roomID].usize_secondary_DL_binary = dest;
     }
     return dest;
 }
@@ -5525,8 +5531,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B61DC
 /* 0EAD0C 7F0B61DC 00047880 */  sll   $t7, $a0, 2
 /* 0EAD10 7F0B61E0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EAD14 7F0B61E4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EAD18 7F0B61E8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EAD14 7F0B61E4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EAD18 7F0B61E8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EAD1C 7F0B61EC 000F7900 */  sll   $t7, $t7, 4
 /* 0EAD20 7F0B61F0 01F84021 */  addu  $t0, $t7, $t8
 /* 0EAD24 7F0B61F4 8D070018 */  lw    $a3, 0x18($t0)
@@ -5613,8 +5619,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B61DC
 /* 0EAD0C 7F0B61DC 00047880 */  sll   $t7, $a0, 2
 /* 0EAD10 7F0B61E0 01E47821 */  addu  $t7, $t7, $a0
-/* 0EAD14 7F0B61E4 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EAD18 7F0B61E8 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EAD14 7F0B61E4 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EAD18 7F0B61E8 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EAD1C 7F0B61EC 000F7900 */  sll   $t7, $t7, 4
 /* 0EAD20 7F0B61F0 01F84021 */  addu  $t0, $t7, $t8
 /* 0EAD24 7F0B61F4 8D070018 */  lw    $a3, 0x18($t0)
@@ -5703,8 +5709,8 @@ glabel sub_GAME_7F0B61DC
 
 s32 bgCheckIfRoomModelNeedsLoad(s32 roomID)
 {
-    roominf[roomID].field_35 = 1;
-    if (roominf[roomID].model_bin_loaded == FALSE)
+    g_BgRoomInfo[roomID].field_35 = 1;
+    if (g_BgRoomInfo[roomID].model_bin_loaded == FALSE)
     {
         sub_GAME_7F0B6368(roomID);
         return 1;
@@ -5717,7 +5723,11 @@ s32 bgCheckIfRoomModelNeedsLoad(s32 roomID)
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B6368(s32 rooms) {
+/*
+* Allocates memory for room and update its display lists
+* Address: 7F0B6368
+*/
+void sub_GAME_7F0B6368(s32 room) {
     void *sp1C;
     s32 sp20;
     s32 sp28;
@@ -5742,10 +5752,10 @@ void sub_GAME_7F0B6368(s32 rooms) {
     void *phi_v1_3;
 
     // Node 0
-    if (rooms < MaxNumRooms)
+    if (room < g_MaxNumRooms)
     {
         // Node 1
-        temp_v1 = ((rooms * 0x50) + &roominf);
+        temp_v1 = ((room * 0x50) + &g_BgRoomInfo);
         if (temp_v1->unk2 == 0)
         {
             // Node 2
@@ -5779,13 +5789,13 @@ void sub_GAME_7F0B6368(s32 rooms) {
                 {
                     // Node 8
                     sp1C = temp_v1_2;
-                    temp_ret_2 = sub_GAME_7F0B5FAC(rooms, temp_ret, sp2C, sp28);
+                    temp_ret_2 = sub_GAME_7F0B5FAC(room, temp_ret, sp2C, sp28);
                     if (temp_ret_2 >= 0)
                     {
                         // Node 9
                         sp1C = temp_v1_2;
                         sp28 = temp_ret_2;
-                        redarken_lights_in_room(rooms, sp28);
+                        redarken_lights_in_room(room, sp28);
                     }
                 }
                 else
@@ -5801,7 +5811,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                 {
                     // Node 12
                     sp1C = (void *) temp_v1_2;
-                    temp_ret_3 = sub_GAME_7F0B609C(rooms, (sp20 + sp28), (sp2C - sp28), sp28);
+                    temp_ret_3 = sub_GAME_7F0B609C(room, (sp20 + sp28), (sp2C - sp28), sp28);
                     temp_v1_5 = temp_v1_2;
                     phi_v1 = temp_v1_5;
                     phi_a3 = sp28;
@@ -5817,7 +5827,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                 {
                     // Node 15
                     sp1C = (void *) phi_v1;
-                    temp_ret_4 = sub_GAME_7F0B61DC(rooms, (sp20 + phi_a3), (sp2C - phi_a3), phi_a3);
+                    temp_ret_4 = sub_GAME_7F0B61DC(room, (sp20 + phi_a3), (sp2C - phi_a3), phi_a3);
                     temp_v1_6 = phi_v1;
                     phi_a3_2 = sp28;
                     phi_v1_2 = temp_v1_6;
@@ -5875,7 +5885,7 @@ void sub_GAME_7F0B6368(s32 rooms) {
                     }
                 }
                 // Node 25
-                sub_GAME_7F0B6994(rooms);
+                sub_GAME_7F0B6994(room);
                 roomsHandleStateDebugging();
             }
         }
@@ -5888,8 +5898,8 @@ void sub_GAME_7F0B6368(s32 rooms) {
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6368
-/* 0EAE98 7F0B6368 3C0F8004 */  lui   $t7, %hi(MaxNumRooms)
-/* 0EAE9C 7F0B636C 8DEF42F4 */  lw    $t7, %lo(MaxNumRooms)($t7)
+/* 0EAE98 7F0B6368 3C0F8004 */  lui   $t7, %hi(g_MaxNumRooms)
+/* 0EAE9C 7F0B636C 8DEF42F4 */  lw    $t7, %lo(g_MaxNumRooms)($t7)
 /* 0EAEA0 7F0B6370 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0EAEA4 7F0B6374 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0EAEA8 7F0B6378 008F082A */  slt   $at, $a0, $t7
@@ -5898,8 +5908,8 @@ glabel sub_GAME_7F0B6368
 /* 0EAEB4 7F0B6384 00003825 */   move  $a3, $zero
 /* 0EAEB8 7F0B6388 0004C880 */  sll   $t9, $a0, 2
 /* 0EAEBC 7F0B638C 0324C821 */  addu  $t9, $t9, $a0
-/* 0EAEC0 7F0B6390 3C088004 */  lui   $t0, %hi(roominf)
-/* 0EAEC4 7F0B6394 25081414 */  addiu $t0, %lo(roominf) # addiu $t0, $t0, 0x1414
+/* 0EAEC0 7F0B6390 3C088004 */  lui   $t0, %hi(g_BgRoomInfo)
+/* 0EAEC4 7F0B6394 25081414 */  addiu $t0, %lo(g_BgRoomInfo) # addiu $t0, $t0, 0x1414
 /* 0EAEC8 7F0B6398 0019C900 */  sll   $t9, $t9, 4
 /* 0EAECC 7F0B639C 03281821 */  addu  $v1, $t9, $t0
 /* 0EAED0 7F0B63A0 90690002 */  lbu   $t1, 2($v1)
@@ -6058,8 +6068,8 @@ glabel sub_GAME_7F0B6368
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B6368
-/* 0E8094 7F0B56A4 3C0F8004 */  lui   $t7, %hi(MaxNumRooms) # $t7, 0x8004
-/* 0E8098 7F0B56A8 8DEFD7D4 */  lw    $t7, %lo(MaxNumRooms)($t7)
+/* 0E8094 7F0B56A4 3C0F8004 */  lui   $t7, %hi(g_MaxNumRooms) # $t7, 0x8004
+/* 0E8098 7F0B56A8 8DEFD7D4 */  lw    $t7, %lo(g_MaxNumRooms)($t7)
 /* 0E809C 7F0B56AC 27BDFFD0 */  addiu $sp, $sp, -0x30
 /* 0E80A0 7F0B56B0 AFBF0014 */  sw    $ra, 0x14($sp)
 /* 0E80A4 7F0B56B4 008F082A */  slt   $at, $a0, $t7
@@ -6068,8 +6078,8 @@ glabel sub_GAME_7F0B6368
 /* 0E80B0 7F0B56C0 00003825 */   move  $a3, $zero
 /* 0E80B4 7F0B56C4 0004C880 */  sll   $t9, $a0, 2
 /* 0E80B8 7F0B56C8 0324C821 */  addu  $t9, $t9, $a0
-/* 0E80BC 7F0B56CC 3C088004 */  lui   $t0, %hi(roominf) # $t0, 0x8004
-/* 0E80C0 7F0B56D0 2508AC64 */  addiu $t0, %lo(roominf) # addiu $t0, $t0, -0x539c
+/* 0E80BC 7F0B56CC 3C088004 */  lui   $t0, %hi(g_BgRoomInfo) # $t0, 0x8004
+/* 0E80C0 7F0B56D0 2508AC64 */  addiu $t0, %lo(g_BgRoomInfo) # addiu $t0, $t0, -0x539c
 /* 0E80C4 7F0B56D4 0019C900 */  sll   $t9, $t9, 4
 /* 0E80C8 7F0B56D8 03281821 */  addu  $v1, $t9, $t0
 /* 0E80CC 7F0B56DC 90690002 */  lbu   $t1, 2($v1)
@@ -6231,27 +6241,27 @@ glabel sub_GAME_7F0B6368
 void delete_room_data(s32 roomID)
 {
 
-    if (roominf[roomID].ptr_unique_collision_points)
+    if (g_BgRoomInfo[roomID].ptr_unique_collision_points)
     {
-        memaFree(roominf[roomID].ptr_unique_collision_points, (((s16)roominf[roomID].bitflags3 * 0x1C) + 0xF) & ~0xF);
-        roominf[roomID].ptr_unique_collision_points = 0;
+        memaFree(g_BgRoomInfo[roomID].ptr_unique_collision_points, (((s16)g_BgRoomInfo[roomID].bitflags3 * 0x1C) + 0xF) & ~0xF);
+        g_BgRoomInfo[roomID].ptr_unique_collision_points = 0;
     }
 
-    if ( 0 < roominf[roomID].cur_room_totalsize)
+    if ( 0 < g_BgRoomInfo[roomID].cur_room_totalsize)
     {
-        if (roominf[roomID].ptr_point_index)
+        if (g_BgRoomInfo[roomID].ptr_point_index)
         {
-            memaFree(roominf[roomID].ptr_point_index, roominf[roomID].cur_room_totalsize);
+            memaFree(g_BgRoomInfo[roomID].ptr_point_index, g_BgRoomInfo[roomID].cur_room_totalsize);
         }
         else
         {
-            memaFree(roominf[roomID].ptr_expanded_mapping_info, roominf[roomID].cur_room_totalsize);
+            memaFree(g_BgRoomInfo[roomID].ptr_expanded_mapping_info, g_BgRoomInfo[roomID].cur_room_totalsize);
         }
-        roominf[roomID].ptr_point_index = 0;
-        roominf[roomID].ptr_expanded_mapping_info = 0;
-        roominf[roomID].ptr_secondary_expanded_mapping_info = 0;
+        g_BgRoomInfo[roomID].ptr_point_index = 0;
+        g_BgRoomInfo[roomID].ptr_expanded_mapping_info = 0;
+        g_BgRoomInfo[roomID].ptr_secondary_expanded_mapping_info = 0;
     }
-    roominf[roomID].model_bin_loaded = 0;
+    g_BgRoomInfo[roomID].model_bin_loaded = 0;
     roomsHandleStateDebugging();
 }
 #else
@@ -6261,9 +6271,9 @@ glabel delete_room_data
 /* 0EB0F4 7F0B65C4 00047080 */  sll   $t6, $a0, 2
 /* 0EB0F8 7F0B65C8 27BDFFE0 */  addiu $sp, $sp, -0x20
 /* 0EB0FC 7F0B65CC 01C47021 */  addu  $t6, $t6, $a0
-/* 0EB100 7F0B65D0 3C0F8004 */  lui   $t7, %hi(roominf)
+/* 0EB100 7F0B65D0 3C0F8004 */  lui   $t7, %hi(g_BgRoomInfo)
 /* 0EB104 7F0B65D4 AFB00018 */  sw    $s0, 0x18($sp)
-/* 0EB108 7F0B65D8 25EF1414 */  addiu $t7, %lo(roominf) # addiu $t7, $t7, 0x1414
+/* 0EB108 7F0B65D8 25EF1414 */  addiu $t7, %lo(g_BgRoomInfo) # addiu $t7, $t7, 0x1414
 /* 0EB10C 7F0B65DC 000E7100 */  sll   $t6, $t6, 4
 /* 0EB110 7F0B65E0 01CF8021 */  addu  $s0, $t6, $t7
 /* 0EB114 7F0B65E4 8E06002C */  lw    $a2, 0x2c($s0)
@@ -6320,9 +6330,9 @@ void unload_rooms(void)
 {
     s32 i;
 
-    for(i = 1; i < MaxNumRooms; i++)
+    for(i = 1; i < g_MaxNumRooms; i++)
     {
-        if (roominf[i].model_bin_loaded)
+        if (g_BgRoomInfo[i].model_bin_loaded)
         {
             delete_room_data(i);
         }
@@ -6335,17 +6345,17 @@ void sub_GAME_7F0B66E8(void)
 {
     s32 i;
 
-    for(i = 1; i < MaxNumRooms; i++)
+    for(i = 1; i < g_MaxNumRooms; i++)
     {
-        if (roominf[i].field_35 == 0)
+        if (g_BgRoomInfo[i].field_35 == 0)
         {
-            if (roominf[i].model_bin_loaded == 4)
+            if (g_BgRoomInfo[i].model_bin_loaded == 4)
             {
                 delete_room_data(i);
             }
-            else if (roominf[i].model_bin_loaded != 0)
+            else if (g_BgRoomInfo[i].model_bin_loaded != 0)
             {
-                roominf[i].model_bin_loaded = roominf[i].model_bin_loaded + 1;
+                g_BgRoomInfo[i].model_bin_loaded = g_BgRoomInfo[i].model_bin_loaded + 1;
             }
         }
  }
@@ -6360,14 +6370,14 @@ void sub_GAME_7F0B66E8(void)
 */
 Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
 {
-    if (room_index >= MaxNumRooms)
+    if (room_index >= g_MaxNumRooms)
     {
         return arg0;
     }
 
     if ((D_8004485C != 0) || (D_80044858 == (room_index % 10)))
     {
-        if (roominf[room_index].model_bin_loaded == 0)
+        if (g_BgRoomInfo[room_index].model_bin_loaded == 0)
         {
             if (D_800442F8 > 0)
             {
@@ -6376,7 +6386,7 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
             }
         }
 
-        if (roominf[room_index].model_bin_loaded == 0)
+        if (g_BgRoomInfo[room_index].model_bin_loaded == 0)
         {
             return arg0;
         }
@@ -6384,10 +6394,10 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
         {
             arg0 = applyRoomMatrixToDisplayList(arg0, room_index);
 
-            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(roominf[room_index].ptr_point_index));
-            gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(roominf[room_index].ptr_expanded_mapping_info));
+            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(g_BgRoomInfo[room_index].ptr_point_index));
+            gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(g_BgRoomInfo[room_index].ptr_expanded_mapping_info));
 
-            roominf[room_index].model_bin_loaded = 1;
+            g_BgRoomInfo[room_index].model_bin_loaded = 1;
         }
     }
 
@@ -6401,25 +6411,25 @@ Gfx *sub_GAME_7F0B677C(Gfx *arg0, s32 room_index)
 */
 Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index)
 {
-    if (room_index >= MaxNumRooms)
+    if (room_index >= g_MaxNumRooms)
     {
         return arg0;
     }
 
-    if (roominf[room_index].ptr_secondary_expanded_mapping_info == 0)
+    if (g_BgRoomInfo[room_index].ptr_secondary_expanded_mapping_info == 0)
     {
         return arg0;
     }
     else if ((D_8004485C != 0) || (D_80044858 == (room_index % 10)))
     {
-        if (roominf[room_index].model_bin_loaded != 0)
+        if (g_BgRoomInfo[room_index].model_bin_loaded != 0)
         {
             arg0 = applyRoomMatrixToDisplayList(arg0, room_index);
 
-            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(roominf[room_index].ptr_point_index));
-            gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(roominf[room_index].ptr_secondary_expanded_mapping_info));
+            gSPSegment(arg0++, SPSEGMENT_BG_VTX, OS_K0_TO_PHYSICAL(g_BgRoomInfo[room_index].ptr_point_index));
+            gSPDisplayList(arg0++, OS_K0_TO_PHYSICAL(g_BgRoomInfo[room_index].ptr_secondary_expanded_mapping_info));
 
-            roominf[room_index].model_bin_loaded = 1;
+            g_BgRoomInfo[room_index].model_bin_loaded = 1;
         }
         else
         {
@@ -6433,6 +6443,10 @@ Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index)
 
 
 #ifdef NONMATCHING
+/*
+* Is this related to room collisions? (for bullets)
+* Address: 7F0B6994
+*/
 void sub_GAME_7F0B6994(s32 arg0) {
     s32 sp24;
     s32 sp3C;
@@ -6469,7 +6483,7 @@ void sub_GAME_7F0B6994(s32 arg0) {
     s32 phi_t5_4;
 
     // Node 0
-    temp_a1 = ((arg0 * 0x50) + &roominf);
+    temp_a1 = ((arg0 * 0x50) + &g_BgRoomInfo);
     if (temp_a1->unk2C == 0)
     {
         // Node 1
@@ -6647,8 +6661,8 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B6994
 /* 0EB4C4 7F0B6994 00047880 */  sll   $t7, $a0, 2
 /* 0EB4C8 7F0B6998 01E47821 */  addu  $t7, $t7, $a0
-/* 0EB4CC 7F0B699C 3C188004 */  lui   $t8, %hi(roominf)
-/* 0EB4D0 7F0B69A0 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EB4CC 7F0B699C 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
+/* 0EB4D0 7F0B69A0 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EB4D4 7F0B69A4 000F7900 */  sll   $t7, $t7, 4
 /* 0EB4D8 7F0B69A8 01F82821 */  addu  $a1, $t7, $t8
 /* 0EB4DC 7F0B69AC 8CB9002C */  lw    $t9, 0x2c($a1)
@@ -7094,7 +7108,7 @@ bool bgTestLineIntersectsBbox(coord3d *arg0, coord3d *arg1, s32 *arg2, s32 *arg3
     void *phi_t0_2;
 
     // Node 0
-    temp_t0 = ((arg4 * 0x50) + &roominf);
+    temp_t0 = ((arg4 * 0x50) + &g_BgRoomInfo);
     temp_s3 = ((*arg3 * 8) + temp_t0->unk8);
     spF0 = 0x7fffffff;
     sp12C = 0;
@@ -7470,7 +7484,7 @@ GLOBAL_ASM(
 glabel bgTestLineIntersectionInRoom
 /* 0EBB40 7F0B7010 27BDFEC0 */  addiu $sp, $sp, -0x140
 /* 0EBB44 7F0B7014 8FAE0150 */  lw    $t6, 0x150($sp)
-/* 0EBB48 7F0B7018 3C188004 */  lui   $t8, %hi(roominf)
+/* 0EBB48 7F0B7018 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
 /* 0EBB4C 7F0B701C AFBF004C */  sw    $ra, 0x4c($sp)
 /* 0EBB50 7F0B7020 000E7880 */  sll   $t7, $t6, 2
 /* 0EBB54 7F0B7024 01EE7821 */  addu  $t7, $t7, $t6
@@ -7487,7 +7501,7 @@ glabel bgTestLineIntersectionInRoom
 /* 0EBB80 7F0B7050 AFA50144 */  sw    $a1, 0x144($sp)
 /* 0EBB84 7F0B7054 AFA60148 */  sw    $a2, 0x148($sp)
 /* 0EBB88 7F0B7058 000F7900 */  sll   $t7, $t7, 4
-/* 0EBB8C 7F0B705C 27181414 */  addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EBB8C 7F0B705C 27181414 */  addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EBB90 7F0B7060 84F90000 */  lh    $t9, ($a3)
 /* 0EBB94 7F0B7064 01F84021 */  addu  $t0, $t7, $t8
 /* 0EBB98 7F0B7068 8D130008 */  lw    $s3, 8($t0)
@@ -8215,8 +8229,8 @@ glabel bgTestBulletHitBackground
 /* 0EC5F4 7F0B7AC4 0006C080 */  sll   $t8, $a2, 2
 /* 0EC5F8 7F0B7AC8 0306C021 */  addu  $t8, $t8, $a2
 /* 0EC5FC 7F0B7ACC 46002182 */  mul.s $f6, $f4, $f0
-/* 0EC600 7F0B7AD0 3C198004 */  lui   $t9, %hi(roominf)
-/* 0EC604 7F0B7AD4 27391414 */  addiu $t9, %lo(roominf) # addiu $t9, $t9, 0x1414
+/* 0EC600 7F0B7AD0 3C198004 */  lui   $t9, %hi(g_BgRoomInfo)
+/* 0EC604 7F0B7AD4 27391414 */  addiu $t9, %lo(g_BgRoomInfo) # addiu $t9, $t9, 0x1414
 /* 0EC608 7F0B7AD8 0018C100 */  sll   $t8, $t8, 4
 /* 0EC60C 7F0B7ADC 03194021 */  addu  $t0, $t8, $t9
 /* 0EC610 7F0B7AE0 8D02002C */  lw    $v0, 0x2c($t0)
@@ -8424,7 +8438,7 @@ u8 sub_GAME_7F0B7DA8(s32 arg0)
     u8 bitflags;
     u8 out;
 
-    room_info = &roominf[arg0];
+    room_info = &g_BgRoomInfo[arg0];
     bitflags = room_info->portals_to_room_count;
     out = bitflags;
 
@@ -9705,12 +9719,12 @@ disable_room:
 /* 0ED324 7F0B87F4 52400009 */  beql  $s2, $zero, .L7F0B881C
 /* 0ED328 7F0B87F8 92290001 */   lbu   $t1, 1($s1)
 /* 0ED32C 7F0B87FC 8E39000C */  lw    $t9, 0xc($s1)
-/* 0ED330 7F0B8800 3C018004 */  lui   $at, %hi(roominf + 0x10 +0x24)
+/* 0ED330 7F0B8800 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x10 +0x24)
 /* 0ED334 7F0B8804 00194080 */  sll   $t0, $t9, 2
 /* 0ED338 7F0B8808 01194021 */  addu  $t0, $t0, $t9
 /* 0ED33C 7F0B880C 00084100 */  sll   $t0, $t0, 4
 /* 0ED340 7F0B8810 00280821 */  addu  $at, $at, $t0
-/* 0ED344 7F0B8814 A0351448 */  sb    $s5, %lo(roominf + 0x10 +0x24)($at)
+/* 0ED344 7F0B8814 A0351448 */  sb    $s5, %lo(g_BgRoomInfo + 0x10 +0x24)($at)
 /* 0ED348 7F0B8818 92290001 */  lbu   $t1, 1($s1)
 .L7F0B881C:
 /* 0ED34C 7F0B881C 000950C0 */  sll   $t2, $t1, 3
@@ -9721,13 +9735,13 @@ disable_room_range:
 /* 0ED35C 7F0B882C 922F0001 */   lbu   $t7, 1($s1)
 /* 0ED360 7F0B8830 8E22000C */  lw    $v0, 0xc($s1)
 /* 0ED364 7F0B8834 8E2B0014 */  lw    $t3, 0x14($s1)
-/* 0ED368 7F0B8838 3C0D8004 */  lui   $t5, %hi(roominf)
+/* 0ED368 7F0B8838 3C0D8004 */  lui   $t5, %hi(g_BgRoomInfo)
 /* 0ED36C 7F0B883C 00026080 */  sll   $t4, $v0, 2
 /* 0ED370 7F0B8840 0162082A */  slt   $at, $t3, $v0
 /* 0ED374 7F0B8844 1420000B */  bnez  $at, .L7F0B8874
 /* 0ED378 7F0B8848 01826021 */   addu  $t4, $t4, $v0
 /* 0ED37C 7F0B884C 000C6100 */  sll   $t4, $t4, 4
-/* 0ED380 7F0B8850 25AD1414 */  addiu $t5, %lo(roominf) # addiu $t5, $t5, 0x1414
+/* 0ED380 7F0B8850 25AD1414 */  addiu $t5, %lo(g_BgRoomInfo) # addiu $t5, $t5, 0x1414
 /* 0ED384 7F0B8854 018D1821 */  addu  $v1, $t4, $t5
 /* 0ED388 7F0B8858 A0750034 */  sb    $s5, 0x34($v1)
 .L7F0B885C:
@@ -10219,12 +10233,12 @@ disable_room:
 /* 0EA494 7F0B7AA4 52400009 */  beql  $s2, $zero, .L7F0B7ACC
 /* 0EA498 7F0B7AA8 92290001 */   lbu   $t1, 1($s1)
 /* 0EA49C 7F0B7AAC 8E39000C */  lw    $t9, 0xc($s1)
-/* 0EA4A0 7F0B7AB0 3C018004 */  lui   $at, %hi(roominf + 0x10 +0x24)
+/* 0EA4A0 7F0B7AB0 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x10 +0x24)
 /* 0EA4A4 7F0B7AB4 00194080 */  sll   $t0, $t9, 2
 /* 0EA4A8 7F0B7AB8 01194021 */  addu  $t0, $t0, $t9
 /* 0EA4AC 7F0B7ABC 00084100 */  sll   $t0, $t0, 4
 /* 0EA4B0 7F0B7AC0 00280821 */  addu  $at, $at, $t0
-/* 0EA4B4 7F0B7AC4 A035AC98 */  sb    $s5, %lo(roominf + 0x10 +0x24)($at)
+/* 0EA4B4 7F0B7AC4 A035AC98 */  sb    $s5, %lo(g_BgRoomInfo + 0x10 +0x24)($at)
 /* 0EA4B8 7F0B7AC8 92290001 */  lbu   $t1, 1($s1)
 .L7F0B7ACC:
 /* 0EA4BC 7F0B7ACC 000950C0 */  sll   $t2, $t1, 3
@@ -10235,13 +10249,13 @@ disable_room_range:
 /* 0EA4CC 7F0B7ADC 922F0001 */   lbu   $t7, 1($s1)
 /* 0EA4D0 7F0B7AE0 8E22000C */  lw    $v0, 0xc($s1)
 /* 0EA4D4 7F0B7AE4 8E2B0014 */  lw    $t3, 0x14($s1)
-/* 0EA4D8 7F0B7AE8 3C0D8004 */  lui   $t5, %hi(roominf) # $t5, 0x8004
+/* 0EA4D8 7F0B7AE8 3C0D8004 */  lui   $t5, %hi(g_BgRoomInfo) # $t5, 0x8004
 /* 0EA4DC 7F0B7AEC 00026080 */  sll   $t4, $v0, 2
 /* 0EA4E0 7F0B7AF0 0162082A */  slt   $at, $t3, $v0
 /* 0EA4E4 7F0B7AF4 1420000B */  bnez  $at, .L7F0B7B24
 /* 0EA4E8 7F0B7AF8 01826021 */   addu  $t4, $t4, $v0
 /* 0EA4EC 7F0B7AFC 000C6100 */  sll   $t4, $t4, 4
-/* 0EA4F0 7F0B7B00 25ADAC64 */  addiu $t5, %lo(roominf) # addiu $t5, $t5, -0x539c
+/* 0EA4F0 7F0B7B00 25ADAC64 */  addiu $t5, %lo(g_BgRoomInfo) # addiu $t5, $t5, -0x539c
 /* 0EA4F4 7F0B7B04 018D1821 */  addu  $v1, $t4, $t5
 /* 0EA4F8 7F0B7B08 A0750034 */  sb    $s5, 0x34($v1)
 .L7F0B7B0C:
@@ -10434,10 +10448,10 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED5D4 7F0B8AA4 C44A1124 */  lwc1  $f10, 0x1124($v0)
 /* 0ED5D8 7F0B8AA8 0FC2CEF1 */  jal   sub_GAME_7F0B3BC4
 /* 0ED5DC 7F0B8AAC E7AA005C */   swc1  $f10, 0x5c($sp)
-/* 0ED5E0 7F0B8AB0 3C028004 */  lui   $v0, %hi(roominf)
-/* 0ED5E4 7F0B8AB4 3C038004 */  lui   $v1, %hi(MaxNumRooms)
-/* 0ED5E8 7F0B8AB8 246342F4 */  addiu $v1, %lo(MaxNumRooms) # addiu $v1, $v1, 0x42f4
-/* 0ED5EC 7F0B8ABC 24421414 */  addiu $v0, %lo(roominf) # addiu $v0, $v0, 0x1414
+/* 0ED5E0 7F0B8AB0 3C028004 */  lui   $v0, %hi(g_BgRoomInfo)
+/* 0ED5E4 7F0B8AB4 3C038004 */  lui   $v1, %hi(g_MaxNumRooms)
+/* 0ED5E8 7F0B8AB8 246342F4 */  addiu $v1, %lo(g_MaxNumRooms) # addiu $v1, $v1, 0x42f4
+/* 0ED5EC 7F0B8ABC 24421414 */  addiu $v0, %lo(g_BgRoomInfo) # addiu $v0, $v0, 0x1414
 .L7F0B8AC0:
 /* 0ED5F0 7F0B8AC0 24420050 */  addiu $v0, $v0, 0x50
 /* 0ED5F4 7F0B8AC4 0043082B */  sltu  $at, $v0, $v1
@@ -10493,8 +10507,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED6B4 7F0B8B84 0FC2CE6F */  jal   sub_GAME_7F0B39BC
 /* 0ED6B8 7F0B8B88 24C61118 */   addiu $a2, $a2, 0x1118
 .L7F0B8B8C:
-/* 0ED6BC 7F0B8B8C 3C0B8004 */  lui   $t3, %hi(MaxNumRooms)
-/* 0ED6C0 7F0B8B90 8D6B42F4 */  lw    $t3, %lo(MaxNumRooms)($t3)
+/* 0ED6BC 7F0B8B8C 3C0B8004 */  lui   $t3, %hi(g_MaxNumRooms)
+/* 0ED6C0 7F0B8B90 8D6B42F4 */  lw    $t3, %lo(g_MaxNumRooms)($t3)
 /* 0ED6C4 7F0B8B94 24100001 */  li    $s0, 1
 /* 0ED6C8 7F0B8B98 29610002 */  slti  $at, $t3, 2
 /* 0ED6CC 7F0B8B9C 14200012 */  bnez  $at, .L7F0B8BE8
@@ -10512,8 +10526,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0ED6F8 7F0B8BC8 0FC2CE6F */  jal   sub_GAME_7F0B39BC
 /* 0ED6FC 7F0B8BCC 24C61118 */   addiu $a2, $a2, 0x1118
 .L7F0B8BD0:
-/* 0ED700 7F0B8BD0 3C0C8004 */  lui   $t4, %hi(MaxNumRooms)
-/* 0ED704 7F0B8BD4 8D8C42F4 */  lw    $t4, %lo(MaxNumRooms)($t4)
+/* 0ED700 7F0B8BD0 3C0C8004 */  lui   $t4, %hi(g_MaxNumRooms)
+/* 0ED704 7F0B8BD4 8D8C42F4 */  lw    $t4, %lo(g_MaxNumRooms)($t4)
 /* 0ED708 7F0B8BD8 26100001 */  addiu $s0, $s0, 1
 /* 0ED70C 7F0B8BDC 020C082A */  slt   $at, $s0, $t4
 /* 0ED710 7F0B8BE0 5420FFF1 */  bnezl $at, .L7F0B8BA8
@@ -10590,8 +10604,8 @@ glabel sub_GAME_7F0B8A6C
 .L7F0B8CD8:
 /* 0ED808 7F0B8CD8 10400022 */  beqz  $v0, .L7F0B8D64
 /* 0ED80C 7F0B8CDC 24090001 */   li    $t1, 1
-/* 0ED810 7F0B8CE0 3C078004 */  lui   $a3, %hi(roominf)
-/* 0ED814 7F0B8CE4 24E71414 */  addiu $a3, %lo(roominf) # addiu $a3, $a3, 0x1414
+/* 0ED810 7F0B8CE0 3C078004 */  lui   $a3, %hi(g_BgRoomInfo)
+/* 0ED814 7F0B8CE4 24E71414 */  addiu $a3, %lo(g_BgRoomInfo) # addiu $a3, $a3, 0x1414
 /* 0ED818 7F0B8CE8 00801025 */  move  $v0, $a0
 /* 0ED81C 7F0B8CEC 24080050 */  li    $t0, 80
 /* 0ED820 7F0B8CF0 90430004 */  lbu   $v1, 4($v0)
@@ -10657,10 +10671,10 @@ glabel sub_GAME_7F0B8A6C
 /* 0EA744 7F0B7D54 C44A111C */  lwc1  $f10, 0x111c($v0)
 /* 0EA748 7F0B7D58 0FC2CBB3 */  jal   sub_GAME_7F0B3BC4
 /* 0EA74C 7F0B7D5C E7AA004C */   swc1  $f10, 0x4c($sp)
-/* 0EA750 7F0B7D60 3C028004 */  lui   $v0, %hi(roominf) # $v0, 0x8004
-/* 0EA754 7F0B7D64 3C038004 */  lui   $v1, %hi(MaxNumRooms) # $v1, 0x8004
-/* 0EA758 7F0B7D68 2463D7D4 */  addiu $v1, %lo(MaxNumRooms) # addiu $v1, $v1, -0x282c
-/* 0EA75C 7F0B7D6C 2442AC64 */  addiu $v0, %lo(roominf) # addiu $v0, $v0, -0x539c
+/* 0EA750 7F0B7D60 3C028004 */  lui   $v0, %hi(g_BgRoomInfo) # $v0, 0x8004
+/* 0EA754 7F0B7D64 3C038004 */  lui   $v1, %hi(g_MaxNumRooms) # $v1, 0x8004
+/* 0EA758 7F0B7D68 2463D7D4 */  addiu $v1, %lo(g_MaxNumRooms) # addiu $v1, $v1, -0x282c
+/* 0EA75C 7F0B7D6C 2442AC64 */  addiu $v0, %lo(g_BgRoomInfo) # addiu $v0, $v0, -0x539c
 .L7F0B7D70:
 /* 0EA760 7F0B7D70 24420050 */  addiu $v0, $v0, 0x50
 /* 0EA764 7F0B7D74 0043082B */  sltu  $at, $v0, $v1
@@ -10716,8 +10730,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0EA824 7F0B7E34 0FC2CB1F */  jal   sub_GAME_7F0B39BC
 /* 0EA828 7F0B7E38 24C61110 */   addiu $a2, $a2, 0x1110
 .L7F0B7E3C:
-/* 0EA82C 7F0B7E3C 3C0B8004 */  lui   $t3, %hi(MaxNumRooms) # $t3, 0x8004
-/* 0EA830 7F0B7E40 8D6BD7D4 */  lw    $t3, %lo(MaxNumRooms)($t3)
+/* 0EA82C 7F0B7E3C 3C0B8004 */  lui   $t3, %hi(g_MaxNumRooms) # $t3, 0x8004
+/* 0EA830 7F0B7E40 8D6BD7D4 */  lw    $t3, %lo(g_MaxNumRooms)($t3)
 /* 0EA834 7F0B7E44 24100001 */  li    $s0, 1
 /* 0EA838 7F0B7E48 29610002 */  slti  $at, $t3, 2
 /* 0EA83C 7F0B7E4C 14200012 */  bnez  $at, .L7F0B7E98
@@ -10735,8 +10749,8 @@ glabel sub_GAME_7F0B8A6C
 /* 0EA868 7F0B7E78 0FC2CB1F */  jal   sub_GAME_7F0B39BC
 /* 0EA86C 7F0B7E7C 24C61110 */   addiu $a2, $a2, 0x1110
 .L7F0B7E80:
-/* 0EA870 7F0B7E80 3C0C8004 */  lui   $t4, %hi(MaxNumRooms) # $t4, 0x8004
-/* 0EA874 7F0B7E84 8D8CD7D4 */  lw    $t4, %lo(MaxNumRooms)($t4)
+/* 0EA870 7F0B7E80 3C0C8004 */  lui   $t4, %hi(g_MaxNumRooms) # $t4, 0x8004
+/* 0EA874 7F0B7E84 8D8CD7D4 */  lw    $t4, %lo(g_MaxNumRooms)($t4)
 /* 0EA878 7F0B7E88 26100001 */  addiu $s0, $s0, 1
 /* 0EA87C 7F0B7E8C 020C082A */  slt   $at, $s0, $t4
 /* 0EA880 7F0B7E90 5420FFF1 */  bnezl $at, .L7F0B7E58
@@ -10804,8 +10818,8 @@ glabel sub_GAME_7F0B8A6C
 .L7F0B7F68:
 /* 0EA958 7F0B7F68 3C048007 */  lui   $a0, %hi(g_BgPortals) # $a0, 0x8007
 /* 0EA95C 7F0B7F6C 8C84B3C8 */  lw    $a0, %lo(g_BgPortals)($a0)
-/* 0EA960 7F0B7F70 3C078004 */  lui   $a3, %hi(roominf) # $a3, 0x8004
-/* 0EA964 7F0B7F74 24E7AC64 */  addiu $a3, %lo(roominf) # addiu $a3, $a3, -0x539c
+/* 0EA960 7F0B7F70 3C078004 */  lui   $a3, %hi(g_BgRoomInfo) # $a3, 0x8004
+/* 0EA964 7F0B7F74 24E7AC64 */  addiu $a3, %lo(g_BgRoomInfo) # addiu $a3, $a3, -0x539c
 /* 0EA968 7F0B7F78 8C8A0000 */  lw    $t2, ($a0)
 /* 0EA96C 7F0B7F7C 24090001 */  li    $t1, 1
 /* 0EA970 7F0B7F80 24080050 */  li    $t0, 80
@@ -11308,7 +11322,7 @@ s32 sub_GAME_7F0B92B4(s32 arg0, void *arg1)
     }
     // Node 0
 
-    temp_a2 = ((arg0 * 0x50) + &roominf);
+    temp_a2 = ((arg0 * 0x50) + &g_BgRoomInfo);
     temp_v0 = (0 + 1);
     temp_f18 = ((temp_a2->unk44 + temp_a2->unk38) * 0.5f);
     phi_f18 = temp_f18;
@@ -11347,9 +11361,9 @@ GLOBAL_ASM(
 glabel sub_GAME_7F0B92B4
 /* 0EDDE4 7F0B92B4 00047080 */  sll   $t6, $a0, 2
 /* 0EDDE8 7F0B92B8 01C47021 */  addu  $t6, $t6, $a0
-/* 0EDDEC 7F0B92BC 3C0F8004 */  lui   $t7, %hi(roominf)
+/* 0EDDEC 7F0B92BC 3C0F8004 */  lui   $t7, %hi(g_BgRoomInfo)
 /* 0EDDF0 7F0B92C0 3C013F00 */  li    $at, 0x3F000000 # 0.500000
-/* 0EDDF4 7F0B92C4 25EF1414 */  addiu $t7, %lo(roominf) # addiu $t7, $t7, 0x1414
+/* 0EDDF4 7F0B92C4 25EF1414 */  addiu $t7, %lo(g_BgRoomInfo) # addiu $t7, $t7, 0x1414
 /* 0EDDF8 7F0B92C8 000E7100 */  sll   $t6, $t6, 4
 /* 0EDDFC 7F0B92CC 44810000 */  mtc1  $at, $f0
 /* 0EDE00 7F0B92D0 01CF3021 */  addu  $a2, $t6, $t7
@@ -11413,10 +11427,10 @@ glabel sub_GAME_7F0B9338
 /* 0EDE88 7F0B9358 AFB00018 */  sw    $s0, 0x18($sp)
 /* 0EDE8C 7F0B935C 01C24821 */  addu  $t1, $t6, $v0
 /* 0EDE90 7F0B9360 8D2F0000 */  lw    $t7, ($t1)
-/* 0EDE94 7F0B9364 3C188004 */  lui   $t8, %hi(roominf)
+/* 0EDE94 7F0B9364 3C188004 */  lui   $t8, %hi(g_BgRoomInfo)
 /* 0EDE98 7F0B9368 00808025 */  move  $s0, $a0
 /* 0EDE9C 7F0B936C 15E00035 */  bnez  $t7, .L7F0B9444
-/* 0EDEA0 7F0B9370 27181414 */   addiu $t8, %lo(roominf) # addiu $t8, $t8, 0x1414
+/* 0EDEA0 7F0B9370 27181414 */   addiu $t8, %lo(g_BgRoomInfo) # addiu $t8, $t8, 0x1414
 /* 0EDEA4 7F0B9374 3C188008 */  lui   $t8, %hi(dword_CODE_bss_8007B9DC)
 /* 0EDEA8 7F0B9378 8F18B9DC */  lw    $t8, %lo(dword_CODE_bss_8007B9DC)($t8)
 /* 0EDEAC 7F0B937C 0004C880 */  sll   $t9, $a0, 2
@@ -11431,10 +11445,10 @@ glabel sub_GAME_7F0B9338
 /* 0EDED0 7F0B93A0 00002025 */   move  $a0, $zero
 /* 0EDED4 7F0B93A4 00107080 */  sll   $t6, $s0, 2
 /* 0EDED8 7F0B93A8 01D07023 */  subu  $t6, $t6, $s0
-/* 0EDEDC 7F0B93AC 3C0D8004 */  lui   $t5, %hi(roominf)
+/* 0EDEDC 7F0B93AC 3C0D8004 */  lui   $t5, %hi(g_BgRoomInfo)
 /* 0EDEE0 7F0B93B0 3C0F8008 */  lui   $t7, %hi(dword_CODE_bss_8007B358)
 /* 0EDEE4 7F0B93B4 25EFB358 */  addiu $t7, %lo(dword_CODE_bss_8007B358) # addiu $t7, $t7, -0x4ca8
-/* 0EDEE8 7F0B93B8 25AD1414 */  addiu $t5, %lo(roominf) # addiu $t5, $t5, 0x1414
+/* 0EDEE8 7F0B93B8 25AD1414 */  addiu $t5, %lo(g_BgRoomInfo) # addiu $t5, $t5, 0x1414
 /* 0EDEEC 7F0B93BC 000E7080 */  sll   $t6, $t6, 2
 /* 0EDEF0 7F0B93C0 000C6100 */  sll   $t4, $t4, 4
 /* 0EDEF4 7F0B93C4 018D2821 */  addu  $a1, $t4, $t5
@@ -11619,7 +11633,7 @@ loop_1:
 loop_5:
                 // Node 5
                 phi_t0 = 0;
-                phi_t2 = ((arg0 * 0x50) + &roominf);
+                phi_t2 = ((arg0 * 0x50) + &g_BgRoomInfo);
 loop_6:
                 // Node 6
                 temp_t8 = ((phi_a2 + (((phi_a1 * 4) - phi_a1) * 4)) + phi_t0);
@@ -11695,8 +11709,8 @@ glabel sub_GAME_7F0B95D8
 /* 0EE150 7F0B9620 000C6100 */  sll   $t4, $t4, 4
 /* 0EE154 7F0B9624 00002825 */  move  $a1, $zero
 /* 0EE158 7F0B9628 1B200022 */  blez  $t9, .L7F0B96B4
-/* 0EE15C 7F0B962C 3C0D8004 */   lui   $t5, %hi(roominf)
-/* 0EE160 7F0B9630 25AD1414 */  addiu $t5, %lo(roominf) # addiu $t5, $t5, 0x1414
+/* 0EE15C 7F0B962C 3C0D8004 */   lui   $t5, %hi(g_BgRoomInfo)
+/* 0EE160 7F0B9630 25AD1414 */  addiu $t5, %lo(g_BgRoomInfo) # addiu $t5, $t5, 0x1414
 /* 0EE164 7F0B9634 018D4821 */  addu  $t1, $t4, $t5
 /* 0EE168 7F0B9638 00004025 */  move  $t0, $zero
 .L7F0B963C:
@@ -12929,7 +12943,7 @@ loop_5:
                 sp64.unk0 = D_80044910.unk0;
                 sp64.unk4 = D_80044910.unk4;
                 sp64.unk8 = D_80044910.unk8;
-                if (*var_a3->unk0 > 0) //roominf->numportals 0x47 in debug, 0x0 in retail... maybesomething comes before ?
+                if (*var_a3->unk0 > 0) //g_BgRoomInfo->numportals 0x47 in debug, 0x0 in retail... maybesomething comes before ?
                 {
                     do
                     {

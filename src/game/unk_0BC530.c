@@ -52,7 +52,7 @@ void initializeRoomData(void)
 
     for (i=0; i<getMaxNumRooms(); ++i)
     {
-        roominf[i].field_36 = -1;
+        g_BgRoomInfo[i].field_36 = -1;
     }
 }
 
@@ -76,11 +76,11 @@ void assignRoomIndexToRoomID(int mtx,int room)
 {
 #ifdef DEBUG
     //check we are clear first before assignment
-    assert(roominf[room].mtxid == -1);
+    assert(g_BgRoomInfo[room].mtxid == -1);
     assert(mtxbufferroom[mtx] == -1);
 #endif
 
-    roominf[room].field_36 = mtx;
+    g_BgRoomInfo[room].field_36 = mtx;
     roomIndices[mtx] = room;
 }
 
@@ -94,11 +94,11 @@ void removeRoomIndexFromRoomID(int mtx,int room)
 {
 #ifdef DEBUG
     // check the requested mtx is assigned before removing
-    assert(roominf[room].mtxid == mtx);
+    assert(g_BgRoomInfo[room].mtxid == mtx);
     assert(mtxbufferroom[mtx] == room);
 #endif
 
-    roominf[room].field_36 = -1;
+    g_BgRoomInfo[room].field_36 = -1;
     roomIndices[mtx] = -1;
 }
 
@@ -175,7 +175,7 @@ s32 setupRoomTransformationMatrix(s32 room)
     s32 mtx;
     Mtxf roomTransformMatrix;
 
-    mtx = roominf[room].field_36;//mtxid
+    mtx = g_BgRoomInfo[room].field_36;//mtxid
 
     if ((mtx == -1) || (g_CurrentPlayer->curRoomIndex != roomOwners[mtx]))
     {
@@ -189,7 +189,7 @@ s32 setupRoomTransformationMatrix(s32 room)
 
         roomStatusFlags[mtx] = 0;
 #ifdef DEBUG
-        assert(roominf[room].mtxid == mtx);
+        assert(g_BgRoomInfo[room].mtxid == mtx);
         assert(mtxbufferroom[mtx] == room);
 #endif
     }
@@ -197,7 +197,7 @@ s32 setupRoomTransformationMatrix(s32 room)
     {
         roomStatusFlags[mtx] = 0;
         #ifdef DEBUG
-        assert(roominf[room].mtxid == mtx);
+        assert(g_BgRoomInfo[room].mtxid == mtx);
         assert(mtxbufferroom[mtx] == room);
         #endif
         return mtx;
