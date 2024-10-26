@@ -3435,9 +3435,9 @@ struct stan_7F0B0E24 {
  *
  * 'testLineUnobstructed'
 */
-s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC)
+s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, s32 cdtypes, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC)
 {
-    struct PropRecord *temp_s6;
+    struct PropRecord *prop;
     s32 retval; // sp158
     StandTile *sp154; // sp154
     struct coord2d sp14C;
@@ -3510,18 +3510,18 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
 
     stanSavedColl_posData = NULL;
 
-    if (objFlags != 0)
+    if (cdtypes != 0)
     {
         spD0[sp124] = -1;
         roomGetProps((s32 *)&spD0);
 
         for (spB8 = ptr_list_object_lookup_indices; *spB8 >= 0; spB8++)
         {
-            temp_s6 = &pos_data_entry[*spB8];
+            prop = &pos_data_entry[*spB8];
 
-            if (propIsOfCdType(temp_s6, objFlags) != 0)
+            if (propIsOfCdType(prop, cdtypes) != 0)
             {
-                chraiGetCollisionBounds(temp_s6, &spB4, &numvertices0, &spA4, &spA0);
+                chraiGetCollisionBounds(prop, &spB4, &numvertices0, &spA4, &spA0);
 
                 if (numvertices0 > 0)
                 {
@@ -3590,7 +3590,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
                                     stanSavedColl_pntB = sp12C;
                                     stanSavedColl_tile = NULL;
                                     stanSavedColl_pointI = 0;
-                                    stanSavedColl_posData = temp_s6;
+                                    stanSavedColl_posData = prop;
                                     sp154 = NULL;
                                 }
                             }
@@ -3887,7 +3887,7 @@ bool sub_GAME_7F0B17E4(f32 x1, f32 z1, f32 x2, f32 z2, f32 x3, f32 z3)
  * US address 7F0B18B8.
  * Perfect Dark cdTestVolume (from context)
 */
-s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32 arg5, f32 arg6)
+s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 cdtypes, f32 arg5, f32 arg6)
 {
     s32 i; // stack ??
     f32 var_f20; // stack ??
@@ -3899,7 +3899,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
     f32 temp_f0;  // stack ??
     s16 *sp100;
     s32 spFC;
-    struct PropRecord *temp_s5; // no stack
+    struct PropRecord *prop; // no stack
     s32 spA8[0x14];
     struct rect4f *spA4;
     s32 numvertices0;  // spa0
@@ -3932,7 +3932,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
 
     stanSavedColl_posData = NULL;
 
-    if (arg4)
+    if (cdtypes)
     {
         if (sp108)
         {
@@ -3946,11 +3946,11 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
 
         for (sp100 = ptr_list_object_lookup_indices; *sp100 >= 0; sp100++)
         {
-            temp_s5 = &pos_data_entry[*sp100];
+            prop = &pos_data_entry[*sp100];
 
-            if (propIsOfCdType(temp_s5, arg4) != 0)
+            if (propIsOfCdType(prop, cdtypes) != 0)
             {
-                chraiGetCollisionBounds(temp_s5, &spA4, &numvertices0, &sp94, &sp90);
+                chraiGetCollisionBounds(prop, &spA4, &numvertices0, &sp94, &sp90);
                 if ((numvertices0 > 0) && ((sp108 == 0) || ((sp90 <= arg5) && (arg6 <= sp94))))
                 {
                     var_f24 = -1.0f;
@@ -3987,7 +3987,7 @@ s32 stanTestVolume(StandTile **arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, f32
                                 stanSavedColl_pntB.f[1] = spA4->points[next].f[1];
                                 stanSavedColl_tile = NULL;
                                 stanSavedColl_pointI = 0;
-                                stanSavedColl_posData = temp_s5;
+                                stanSavedColl_posData = prop;
                             }
                         }
 
@@ -5795,9 +5795,9 @@ Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1)
 // Only difference is an extra sw a1,0x34(sp) appearing.
 // There is the unused first argument which may have the wrong type
 int sub_GAME_7F0B3138(void* unused, StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z,
-        int objFlags, f32 unkHeight, f32 unkA) {
+        int cdtypes, f32 unkHeight, f32 unkA) {
 
-    return stanTestLineUnobstructed(pTile, p_x, p_z, dest_x, dest_z, objFlags, unkHeight, unkA, 0, 1);
+    return stanTestLineUnobstructed(pTile, p_x, p_z, dest_x, dest_z, cdtypes, unkHeight, unkA, 0, 1);
 }
 #else
 GLOBAL_ASM(
@@ -5837,9 +5837,9 @@ glabel sub_GAME_7F0B3138
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0B31A4(StandTile ** arg1, f32 arg0, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, f32 arg7) {
+void sub_GAME_7F0B31A4(StandTile ** arg1, f32 arg0, f32 arg2, f32 arg3, f32 arg4, s32 cdtypes, f32 arg6, f32 arg7) {
     // almost a match. missing sw a0,0x28(sp) and move a0,a1 instructions
-    stanTestVolume(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+    stanTestVolume(arg1, arg2, arg3, arg4, cdtypes, arg6, arg7);
 }
 #else
 GLOBAL_ASM(

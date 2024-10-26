@@ -1794,7 +1794,7 @@ void sub_GAME_7F05EC1C(void)
                               temp_s0->unk10,
                               arg1->unk0,
                               arg1->unk8,
-                              0x1F,
+                              CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER,
                               temp_f14,
                               phi_f16,
                               0.0f,

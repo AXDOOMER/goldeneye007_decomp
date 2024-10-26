@@ -29553,19 +29553,19 @@ s32 objDrop(PropRecord *prop)
             // Do collision checks
             f32 objwidth = objGetWidth(obj);
             Mtxf *sp58 = getsubmatrix(model);
-            s32 sp54 = 0x1F;
+            s32 cdtypes = CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER;
 
             matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), sp58, &spB8);
 
             if (projectile->flags & 0x40)
             {
-                sp54 = 0x1D;
+                cdtypes = CDTYPE_OBJS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER;
             }
 
             sub_GAME_7F03D058(root, FALSE);
 
-            if ((stanTestLineUnobstructed(&rootstan, root->pos.f[0], root->pos.f[2], spB8.m[3][0], spB8.m[3][2], sp54, 0.0f, 1.0f, 0.0f, 1.0f) != 0)
-                && (stanTestVolume(&rootstan, spB8.m[3][0], spB8.m[3][2], objwidth, sp54, 0.0f, 1.0f) < 0))
+            if ((stanTestLineUnobstructed(&rootstan, root->pos.f[0], root->pos.f[2], spB8.m[3][0], spB8.m[3][2], cdtypes, 0.0f, 1.0f, 0.0f, 1.0f) != 0)
+                && (stanTestVolume(&rootstan, spB8.m[3][0], spB8.m[3][2], objwidth, cdtypes, 0.0f, 1.0f) < 0))
             {
                 prop->stan = rootstan;
 

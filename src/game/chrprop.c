@@ -3944,7 +3944,7 @@ f32 sub_GAME_7F03D188(PropRecord *prop, coord3d *arg1, f32 *arg2, f32 *arg3, f32
             ducking_height_related = bondviewGetPlayerDuckingHeightRelated(g_CurrentPlayer);
             bondviewUpdateGuardTankFlagsRelated(playerprop, FALSE);
 
-            if ((stanTestLineUnobstructed(&stan, playerprop->pos.f[0], playerprop->pos.f[2], prop->pos.f[0], prop->pos.f[2], 0x13, ducking_height_related, ducking_height_related, 0.0f, 1.0f) != 0))
+            if ((stanTestLineUnobstructed(&stan, playerprop->pos.f[0], playerprop->pos.f[2], prop->pos.f[0], prop->pos.f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PATHBLOCKER, ducking_height_related, ducking_height_related, 0.0f, 1.0f) != 0))
             {
                 if (stan == prop->stan)
                 {
@@ -4092,23 +4092,25 @@ void chrpropUpdateAutoaimTarget(void)
     }
 }
 
-
-s32 propDoorGetCdTypes(PropRecord* arg0)
+/*
+* Address: 7F03D9EC
+*/
+s32 propDoorGetCdTypes(PropRecord* prop)
 {
     s32 var_v1;
 
-    if (arg0->door->openPosition <= 0.0f)
+    if (prop->door->openPosition <= 0.0f)
     {
         var_v1 = CDTYPE_CLOSEDDOORS;
     }
     else
     {
-        var_v1 = (arg0->door->maxFrac <= arg0->door->openPosition)
+        var_v1 = (prop->door->maxFrac <= prop->door->openPosition)
             ? CDTYPE_OPENDOORS
             : CDTYPE_AJARDOORS;
     }
 
-    if (((s32)arg0->door->flags2 * 4) < 0)
+    if (((s32)prop->door->flags2 * 4) < 0)
     {
         var_v1 |= CDTYPE_DOORSLOCKEDTOAI;
     }
@@ -4117,17 +4119,17 @@ s32 propDoorGetCdTypes(PropRecord* arg0)
 }
 
 
-// This function was renamed because it looks similar to PD's `prop_is_of_cd_type` function.
-// objFlags is likely CD types. Also, the return type is a boolean. 
-// TODO: Change return type and objFlags variables passed to this function as the 2nd parameter.
-// The purpose if this function is likely to determine if a prop of a certain CD type can be tested for collisions.
-s32 propIsOfCdType(PropRecord* prop, s32 objFlags) {
+/*
+* Address: 7F03DA50
+* PD: prop_is_of_cd_type
+*/
+s32 propIsOfCdType(PropRecord* prop, s32 cdtypes) {
     s32 ret;
     ObjectRecord *obj;
     ret = 1;
 
     if (prop->type == PROP_TYPE_DOOR) {
-        if ((objFlags & PROPFLAG_00000100)) {
+        if ((cdtypes & CDTYPE_AIOPAQUE)) {
             obj = prop->obj;
 
             if (obj->flags & PROPFLAG_04000000) {
@@ -4135,35 +4137,35 @@ s32 propIsOfCdType(PropRecord* prop, s32 objFlags) {
             }
         }
 
-        if (!(objFlags & PROPFLAG_ONSCREEN)) {
-            if (!(propDoorGetCdTypes(prop) & objFlags)) {
+        if (!(cdtypes & CDTYPE_DOORS)) {
+            if (!(propDoorGetCdTypes(prop) & cdtypes)) {
                 ret = 0;
             }
         }
     } else if (prop->type == PROP_TYPE_VIEWER) {
-        if (!(objFlags & PROPFLAG_ENABLED)) {
+        if (!(cdtypes & CDTYPE_PLAYERS)) {
             ret = 0;
         }
     } else if (prop->type == PROP_TYPE_CHR) {
-        if (!(objFlags & PROPFLAG_00000008)) {
+        if (!(cdtypes & CDTYPE_CHRS)) {
             ret = 0;
         }
     } else {
         obj = prop->obj;
 
-        if ((objFlags & PROPFLAG_00000100) && (obj->flags & PROPFLAG_04000000)) {
+        if ((cdtypes & CDTYPE_AIOPAQUE) && (obj->flags & PROPFLAG_04000000)) {
             ret = 0;
         }
 
-        if ((objFlags & PROPFLAG_00000200) && !(obj->flags & PROPFLAG_INVINCIBLE)) {
+        if ((cdtypes & CDTYPE_OBJSIMMUNETOEXPLOSIONS) && !(obj->flags & PROPFLAG_INVINCIBLE)) {
             ret = 0;
         }
 
         if (obj->flags & PROPFLAG_00000800) {
-            if (!(objFlags & PROPFLAG_00000010)) {
+            if (!(cdtypes & CDTYPE_PATHBLOCKER)) {
                 ret = 0;
             }
-        } else if (!(objFlags & PROPFLAG_RENDERPOSTBG)) {
+        } else if (!(cdtypes & CDTYPE_OBJS)) {
             ret = 0;
         }
     }

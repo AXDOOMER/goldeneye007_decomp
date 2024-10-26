@@ -26,7 +26,7 @@ s32 sub_GAME_7F056850(struct coord3d *arg0, StandTile *arg1, f32 arg2, struct co
         return 0;
     }
 
-    if ((arg2 > 0.0f) && (stanTestVolume(arg4, arg3->f[0], arg3->f[2], arg2, 0x1F, 0.0f, 1.0f) >= 0))
+    if ((arg2 > 0.0f) && (stanTestVolume(arg4, arg3->f[0], arg3->f[2], arg2, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, 0.0f, 1.0f) >= 0))
     {
         #ifdef DEBUG
         osSyncPrintf("getposstan: circle not legal!\n");

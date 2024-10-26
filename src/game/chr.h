@@ -307,7 +307,7 @@ s32         get_numguards(void);
 Gfx        *chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 void        chrAddHealth(ChrRecord *chr, f32 health);
 void        chrSetMaxDamage(ChrRecord *chr, f32 maxdamage);
-s32         propIsOfCdType(PropRecord* prop, s32 objFlags);
+s32         propIsOfCdType(PropRecord* prop, s32 cdtypes);
 s32         sub_GAME_7F023194(PropRecord *arg0, struct coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3);
 
 //tentative signature
