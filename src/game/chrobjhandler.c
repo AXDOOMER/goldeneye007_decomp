@@ -40380,12 +40380,12 @@ void init_trigger_toxic_gas_effect(coord3d *source) //#MATCH
     D_80030AD0.z             = source->z;
     if (bossGetStageNum() == LEVELID_EGYPT)
     {
-        gas_damage_flag = 120.0f;
-        gas_cutoff_flag = FALSE;
+        gasTimeToFullOpacity = 120.0f;
+        gasDoesDamageFlag = FALSE;
         return;
     }
-    gas_damage_flag = 3600.0f;
-    gas_cutoff_flag = TRUE;
+    gasTimeToFullOpacity = 3600.0f;
+    gasDoesDamageFlag = TRUE;
 }
 
 
@@ -40414,18 +40414,18 @@ void handle_gas_damage(void)
     if (activate_gas_sound_timer != 0)
     {
         toxic_gas_sound_timer += g_GlobalTimerDelta;
-        if (gas_damage_flag <= toxic_gas_sound_timer)
+        if (gasTimeToFullOpacity <= toxic_gas_sound_timer)
         {
-            toxic_gas_sound_timer = gas_damage_flag;
+            toxic_gas_sound_timer = gasTimeToFullOpacity;
             activate_gas_sound_timer = 0;
         }
     }
 
     if (toxic_gas_sound_timer > 0.0f && g_PlayerInvincible == 0)
     {
-        fogSwitchToSolosky2(toxic_gas_sound_timer / gas_damage_flag);
+        fogSwitchToSolosky2(toxic_gas_sound_timer / gasTimeToFullOpacity);
 
-        if (gas_cutoff_flag == 0) { return; }
+        if (gasDoesDamageFlag == 0) { return; }
 
 #ifdef VERSION_EU
         if (D_80030ADC < (g_GlobalTimer - 0xBB))
@@ -40444,7 +40444,7 @@ void handle_gas_damage(void)
             }
         }
 
-        if (D_80030AE0 < gas_damage_flag)
+        if (D_80030AE0 < gasTimeToFullOpacity)
         {
             D_80030AE0 = D_80030AE0 + g_GlobalTimerDelta;
             if ((ptr_gas_sound == NULL) && (lvlGetControlsLockedFlag() == 0))

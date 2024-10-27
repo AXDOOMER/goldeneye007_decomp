@@ -83,9 +83,9 @@ u32 dword_CODE_bss_80071DFC;
 WeaponObjRecord* temp_mine_table[30];
 
 //CODE.bss:80071E78
-f32 gas_damage_flag;
+f32 gasTimeToFullOpacity;
 //CODE.bss:80071E7C
-u32 gas_cutoff_flag;
+u32 gasDoesDamageFlag;
 
 /**
  * Address 0x80071E80.
