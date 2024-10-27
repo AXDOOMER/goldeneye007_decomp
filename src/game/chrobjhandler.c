@@ -29578,7 +29578,7 @@ s32 objDrop(PropRecord *prop)
             }
 
             sub_GAME_7F03D058(root, TRUE);
-            prop->Unk18 = -sp58->m[3][2];
+            prop->zDepth = -sp58->m[3][2];
 
         }
         else
@@ -39548,10 +39548,10 @@ f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
     ret = 1.0f;
     nfd = fogGetNearFogValuesP();
 
-    if ((nfd != NULL) && (nfd->MaxObfuscationRange < prop->Unk18))
+    if ((nfd != NULL) && (nfd->MaxObfuscationRange < prop->zDepth))
     {
         temp_f12 = getPlayer_c_lodscalez();
-        temp_f12 = ((((prop->Unk18 - nfd->MaxObfuscationRange) * 100.0f) / size) + nfd->MaxObfuscationRange) * temp_f12;
+        temp_f12 = ((((prop->zDepth - nfd->MaxObfuscationRange) * 100.0f) / size) + nfd->MaxObfuscationRange) * temp_f12;
 
         if (nfd->MaxVisRange <= temp_f12)
         {

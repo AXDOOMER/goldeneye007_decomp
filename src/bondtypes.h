@@ -2196,7 +2196,7 @@ typedef union
         /**
          * Maybe float. Something related to draw (render) distance.
          */
-        f32                Unk18;
+        f32                zDepth;                          /*0x18*/
         struct PropRecord *parent;                          /*0x1c*/
         struct PropRecord *child;                           /*0x20*/
         struct PropRecord *prev;                            /*0x24*/

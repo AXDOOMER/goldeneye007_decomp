@@ -232,7 +232,7 @@ void chraiUpdateOnscreenPropCount(void)
 
         for (j = i; j < count; j++)
         {
-            f32 f = g_OnScreenPropList[j]->Unk18;
+            f32 f = g_OnScreenPropList[j]->zDepth;
 
             if (phi_f12 < f)
             {

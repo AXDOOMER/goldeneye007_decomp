@@ -492,7 +492,7 @@ void objectiveTakePictureHandler(void)
                 
                 if ((target_prop != NULL) 
                     && (target_prop->flags & PROPFLAG_ONSCREEN)
-                    && (target_prop->Unk18 >= 0.0f) // draw/render distance
+                    && (target_prop->zDepth >= 0.0f) // draw/render distance
                     && (objIsHealthy(target_object) != 0)
                     && (sub_GAME_7F050D30(target_object->prop, &sp84, &sp7C, &sp74) != 0))
                 {
