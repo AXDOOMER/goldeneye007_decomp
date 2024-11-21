@@ -20382,6 +20382,11 @@ void sub_GAME_7F08BDC4(Mtxf *arg0)
 }
 
 
+/**
+ * Unreferenced.
+ *
+ * Address 0x7F08BE2C.
+ */
 void sub_GAME_7F08BE2C(Mtxf *matrices, s32 count)
 {
     Mtxf copy;
