@@ -207,10 +207,12 @@ s32 setupRoomTransformationMatrix(s32 room)
 
     matrix_4x4_set_identity(&roomTransformMatrix);
 
+    // set room size according to level scaling
     roomTransformMatrix.m[0][0] = room_data_float2;
     roomTransformMatrix.m[1][1] = room_data_float2;
     roomTransformMatrix.m[2][2] = room_data_float2;
 
+    // room translation to position it relative to the player
     roomTransformMatrix.m[3][0] = (ptr_bgdata_room_fileposition_list[room].pos.f[0] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[0];
     roomTransformMatrix.m[3][1] = (ptr_bgdata_room_fileposition_list[room].pos.f[1] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[1];
     roomTransformMatrix.m[3][2] = (ptr_bgdata_room_fileposition_list[room].pos.f[2] * room_data_float2) - g_CurrentPlayer->current_model_pos.f[2];
