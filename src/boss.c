@@ -33,7 +33,6 @@
 #include "game/debugmenu_handler.h"
 #include "game/lvl.h"
 #include "game/ramromreplay.h"
-#include "game/room_model_buffer.h"
 #include "game/rsp.h"
 #include "game/stan.h"
 #include "game/textrelated.h"
@@ -200,7 +199,7 @@ void bossInitMainthreadData(void)
         g_CurentMMallocValue = (s32) (strtol(tokenFind(1, "-m"), 0, 0) << 0xa);
     }
 
-    start = (PHYS_TO_K0(osVirtualToPhysical(&room_model_buffer)));
+    start = (PHYS_TO_K0(osVirtualToPhysical(&_bssSegmentEnd)));
     mempCheckMemflagTokens(start, ((u32)tlbmanageGetTlbAllocatedBlock() - (u32)start));
     mempResetBank(MEMPOOL_PERMANENT);
     langInit();

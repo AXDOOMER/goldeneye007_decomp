@@ -29,7 +29,7 @@ typedef struct s_mempMVALS { //mempSizes
 // Pool Names
 enum MEMPOOL
 {
-    MEMPOOL_TOTAL, //room_model_buffer
+    MEMPOOL_TOTAL, // the mempool starts at _bssSegmentEnd and ends at _stacksSegmentStart
     MEMPOOL_MF,
     MEMPOOL_2,
     MEMPOOL_ML,

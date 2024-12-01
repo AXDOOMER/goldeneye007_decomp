@@ -222,22 +222,8 @@ SECTIONS
    _bssSegmentEnd = ADDR(.bss) + SIZEOF(.bss);
    _bssSegmentSize = SIZEOF(.bss);
 
-   _roombufSegmentStart = ADDR(.roombuf);
-   .roombuf (NOLOAD) :
-   {
-      build/OUTCODE/src/game/room_model_buffer.o (.bss);
-   }
-   _roombufSegmentEnd = ADDR(.roombuf) + SIZEOF(.roombuf);
-
-   _decompbufSegmentStart = ADDR(.decompbuf);
-   .decompbuf 0x80300000 :
-   {
-      build/OUTCODE/src/decompressbuffer.o (.bss);
-   }
-   _decompbufSegmentEnd = ADDR(.decompbuf) + SIZEOF(.decompbuf);
-
    _stacksSegmentStart = ADDR(.stacks);
-   .stacks (NOLOAD) :
+   .stacks 0x803AB400 :
    {
       build/OUTCODE/src/stacks.o (.bss);
    }
