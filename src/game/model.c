@@ -8633,41 +8633,48 @@ glabel sub_GAME_7F07549C
 #endif
 
 
-s32 sub_GAME_7F0754BC(ModelAnimation* arg0, s32 arg1, ModelSkeleton* arg2)
+/**
+ * Address 7F0754BC.
+ * Copy animation from ROM to RAM
+*/
+s32 sub_GAME_7F0754BC(ModelAnimation* anim, s32 frame, ModelSkeleton* unused)
 {
     s32 ret;
-    s32 var_a1;
+    s32 source;
     s32 shiftede;
-    u32 tmp;
-    u32 temp_a2_2;
+    u32 dest;
+    u32 size;
 
     ret = 0;
-    shiftede = arg0->unk0E >> 3;
+    shiftede = anim->unk0E >> 3;
 
-    if (arg0->unk00 & 0x80000000)
+    if (anim->unk00 & 0x80000000)
     {
-        ret = arg0->unk00 + (arg1 * shiftede);
+        ret = anim->unk00 + (frame * shiftede);
     }
     else if (D_80036414 != NULL)
     {
-        tmp = ((u32) (D_80036414->unk08 + 0xF) >> 4) * 0x10;
-        ret = tmp;
-        var_a1 = arg0->unk00 + (arg1 * shiftede);
-        if (var_a1 & 1)
+        dest = ((u32) (D_80036414->unk08 + 15) >> 4) * 16;
+        ret = dest;
+        source = anim->unk00 + (frame * shiftede);
+        if (source & 1)
         {
-            var_a1--;
+            source--;
             shiftede++;
             ret++;
         }
-        temp_a2_2 = ((u32) (shiftede + 0xF) >> 4) * 0x10;
-        romCopy((void* ) tmp, (void* ) var_a1, temp_a2_2);
+        size = ((u32) (shiftede + 15) >> 4) * 16;
+        romCopy((void* ) dest, (void* ) source, size);
         D_80036414->unk00 += 1;
-        D_80036414->unk08 = tmp + temp_a2_2;
+        D_80036414->unk08 = dest + size;
     }
     return ret;
 }
 
 
+/**
+ * Address 7F0755B0.
+*/
 void sub_GAME_7F0755B0(void)
 {
     if (D_80036414 != NULL)
@@ -8879,7 +8886,9 @@ void modelPromoteNodeOffsetsToPointers(ModelNode *node, u32 vma, u32 fileramaddr
     }
 }
 
-
+/**
+ * Address 7F075A90.
+*/
 void sub_GAME_7F075A90(ModelFileHeader *header, s32 vma, u32 addr) {
     s32 diff = addr - vma;
     s32 i;
@@ -8891,6 +8900,9 @@ void sub_GAME_7F075A90(ModelFileHeader *header, s32 vma, u32 addr) {
     modelPromoteNodeOffsetsToPointers(header->RootNode, vma, addr);
 }
 
+/**
+ * Address 7F075B08.
+*/
 void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)
 {
     return;

@@ -549,7 +549,7 @@ typedef union
         u16 unk0A;
         u16 unk0C;
         u16 unk0E;
-                int unk10;
+        int unk10;
         int unk14;
         int unk18;
         int unk1c;
