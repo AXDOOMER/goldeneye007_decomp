@@ -17,7 +17,7 @@
 
 void sub_GAME_7F06D490(struct Model *arg0, struct ModelNode *arg1);
 void sub_GAME_7F0755B0(void);
-s32 sub_GAME_7F0754BC(struct ModelAnimation *, s32, struct ModelSkeleton*);
+s32 loadAnimationFrame(struct ModelAnimation *, s32, struct ModelSkeleton*);
 
 // end forward declarations
 
@@ -3278,20 +3278,20 @@ void subcalcmatrices(ModelRenderData *arg0, struct Model *arg1)
         }
 #endif
 
-        arg1->unk34 = sub_GAME_7F0754BC(arg1->anim, arg1->framea, arg1->obj->Skeleton);
+        arg1->unk34 = loadAnimationFrame(arg1->anim, arg1->framea, arg1->obj->Skeleton);
 
         if (arg1->unk2c != 0.0f)
         {
-            arg1->unk38 = sub_GAME_7F0754BC(arg1->anim, arg1->frameb, arg1->obj->Skeleton);
+            arg1->unk38 = loadAnimationFrame(arg1->anim, arg1->frameb, arg1->obj->Skeleton);
         }
 
         if (arg1->anim2 != NULL)
         {
-            arg1->unk64 = sub_GAME_7F0754BC(arg1->anim2, arg1->frame2a, arg1->obj->Skeleton);
+            arg1->unk64 = loadAnimationFrame(arg1->anim2, arg1->frame2a, arg1->obj->Skeleton);
 
             if (arg1->unk5c != 0.0f)
             {
-                arg1->unk68 = sub_GAME_7F0754BC(arg1->anim2, arg1->frame2b, arg1->obj->Skeleton);
+                arg1->unk68 = loadAnimationFrame(arg1->anim2, arg1->frame2b, arg1->obj->Skeleton);
             }
         }
 
@@ -8637,7 +8637,7 @@ glabel sub_GAME_7F07549C
  * Address 7F0754BC.
  * Copy animation from ROM to RAM
 */
-s32 sub_GAME_7F0754BC(ModelAnimation* anim, s32 frame, ModelSkeleton* unused)
+s32 loadAnimationFrame(ModelAnimation* anim, s32 frame, ModelSkeleton* unused)
 {
     s32 ret;
     s32 source;
