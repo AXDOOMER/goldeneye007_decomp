@@ -8641,32 +8641,45 @@ s32 sub_GAME_7F0754BC(ModelAnimation* anim, s32 frame, ModelSkeleton* unused)
 {
     s32 ret;
     s32 source;
-    s32 shiftede;
+    s32 frameSize;
     u32 dest;
     u32 size;
 
     ret = 0;
-    shiftede = anim->unk0E >> 3;
+    frameSize = anim->unk0E >> 3; // divide by 8
 
-    if (anim->unk00 & 0x80000000)
+    if (anim->address & 0x80000000) // If animation's address is in RAM
     {
-        ret = anim->unk00 + (frame * shiftede);
+        // Load that frame from RAM
+        ret = anim->address + (frame * frameSize);
     }
-    else if (D_80036414 != NULL)
+    else if (D_80036414 != NULL) // should never be NULL after sub_GAME_7F0009E0 is called
     {
-        dest = ((u32) (D_80036414->unk08 + 15) >> 4) * 16;
+        // Get dest from this D_80036414 which points to an array. Align to 16 bytes.
+        dest = ((u32) (D_80036414->animBufferPtr2 + 15) >> 4) * 16;
         ret = dest;
-        source = anim->unk00 + (frame * shiftede);
+
+        // Get source of this animation in ROM with the offset of the frame we'll load
+        source = anim->address + (frame * frameSize);
         if (source & 1)
         {
             source--;
-            shiftede++;
+            frameSize++;
             ret++;
         }
-        size = ((u32) (shiftede + 15) >> 4) * 16;
+
+        // Size of frame but 16-bytes aligned. Observed to be 80 bytes. Might differ for non-guards.
+        size = ((u32) (frameSize + 15) >> 4) * 16;
+
+        // This copies one animation frame from ROM to the destination in RAM
         romCopy((void* ) dest, (void* ) source, size);
-        D_80036414->unk00 += 1;
-        D_80036414->unk08 = dest + size;
+
+        // Increment this which serves nothing
+        D_80036414->uselessPointer += 1;
+
+        // Set this to point to the end of the copied frame
+        // This allows to copy another frame after this one
+        D_80036414->animBufferPtr2 = dest + size; 
     }
     return ret;
 }
@@ -8677,10 +8690,11 @@ s32 sub_GAME_7F0754BC(ModelAnimation* anim, s32 frame, ModelSkeleton* unused)
 */
 void sub_GAME_7F0755B0(void)
 {
-    if (D_80036414 != NULL)
+    if (D_80036414 != NULL) // should never be NULL after sub_GAME_7F0009E0 is called
     {
-        D_80036414->unk08 = D_80036414->unk04;
-        D_80036414->unk00 = NULL;
+        // Reset the pointer to point to the start of the array
+        D_80036414->animBufferPtr2 = D_80036414->animBufferPtr1;
+        D_80036414->uselessPointer = NULL;
     }
 }
 

@@ -542,7 +542,7 @@ typedef union
     // unknown struct, unknown size.
     typedef struct ModelAnimation
     {
-        s32 unk00;
+        s32 address;
         u16 unk04; //nextframe
         u16 unk06;
         u16 unk08;
