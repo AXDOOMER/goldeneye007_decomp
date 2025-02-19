@@ -17,18 +17,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  manage-ip-whitelist:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Bypass Cloudflare for GitHub Action
-        uses: xiaotianxt/bypass-cloudflare-for-github-action@v1.1.1
-        with:
-          cf_zone_id: ${{ secrets.CF_ZONE_ID }}
-          cf_api_token: ${{ secrets.CF_API_TOKEN }}
-      - name: Send request to Cloudflare-protected server
-        run: curl https://api.cloudflare.com/client/v4/user/tokens/verify
   changedfiles:
     runs-on: ubuntu-latest
     # Map a step output to a job output
@@ -45,10 +33,15 @@ jobs:
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
    
   buildus:
-    
     runs-on: ubuntu-20.04
-
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Bypass Cloudflare for GitHub Action
+        uses: xiaotianxt/bypass-cloudflare-for-github-action@v1.1.1
+        with:
+          cf_zone_id: ${{ secrets.CF_ZONE_ID }}
+          cf_api_token: ${{ secrets.CF_API_TOKEN }}
       - uses: actions/checkout@v2
       #  with:
       #    fetch-depth: 2
