@@ -4206,17 +4206,18 @@ s32 sub_GAME_7F03DB70(s32* roomids1, s32* roomids2)
 
 /*
 * Address: 0x7F03DBCC
+* PD: prop_try_add_to_chunk
 */
-s32 chrpropInsertPropnum(s16 propnum, s32 roomindex) {
+s32 chrpropInsertPropnum(s16 propnum, s32 chunkindex) {
     s32 i;
 
     // Note: The size of the propnums array is 16, but we're only iterating over the first 15 elements.
     //       Is this because the last element is always -1? Seems like a waste.
     for (i = 0; i < 15; i++)
     {
-        if (RoomPropListChunks[roomindex].propnums[i] < 0)
+        if (RoomPropListChunks[chunkindex].propnums[i] < 0)
         {
-            RoomPropListChunks[roomindex].propnums[i] = propnum;
+            RoomPropListChunks[chunkindex].propnums[i] = propnum;
             return 1;
         }
     }
@@ -4226,32 +4227,35 @@ s32 chrpropInsertPropnum(s16 propnum, s32 roomindex) {
 
 
 
-
-s32 sub_GAME_7F03DCB8(s32 arg0, s32 arg1)
+/*
+* Address: 0x7F03DCB8
+* Description: Find an emtpy chunk that can be assigned to a room
+* PD: room_allocate_prop_list_chunk
+*/
+s32 chrpropInitializeNewChunkForRoom(s32 roomindex, s32 chunkindex)
 {
-    s32 index;
-
-    for (index = 0; index < 256; index++)
+    s32 i;
+    for (i = 0; i < 256; i++)
     {
-        if (RoomPropListChunks[index].propnums[0] == -2)
+        if (RoomPropListChunks[i].propnums[0] == -2)
         {
-            s32 i;
-            
-            for (i = 0; i < 16; i++)
+            // This chunk is allowed to be erased
+            s32 j; 
+            for (j = 0; j < 16; j++)
             {
-                RoomPropListChunks[index].propnums[i] = -1;
+                RoomPropListChunks[i].propnums[j] = -1;
             }
 
-            if (arg1 >= 0)
+            if (chunkindex >= 0)
             {
-                RoomPropListChunks[arg1].propnums[0xF] = index;
+                RoomPropListChunks[chunkindex].propnums[0xF] = i;
             }
             else
             {
-                RoomPropListChunkIndexes[arg0] = index;
+                RoomPropListChunkIndexes[roomindex] = i;
             }
             
-            return index;
+            return i;
         }
     }
 
@@ -4262,6 +4266,10 @@ s32 sub_GAME_7F03DCB8(s32 arg0, s32 arg1)
 
 
 #ifdef NONMATCHING
+/*
+* Address: 0x7F03DD9C
+* PD: prop_register_room
+*/
 void chrpropRegisterRoom(PropRecord *arg0, s16 arg1)
 {
     s16 temp_s0;
@@ -4296,7 +4304,7 @@ loop_3:
         else
         {
 block_5:
-            temp_v0 = sub_GAME_7F03DCB8(arg1, phi_a2_2, phi_a2_2);
+            temp_v0 = chrpropInitializeNewChunkForRoom(arg1, phi_a2_2, phi_a2_2);
             if (temp_v0 >= 0)
             {
                 chrpropInsertPropnum((arg0 - pos_data_entry) / 52, temp_v0);
@@ -4353,7 +4361,7 @@ glabel chrpropRegisterRoom
 /* 07296C 7F03DE3C 00112400 */   sll   $a0, $s1, 0x10
 .L7F03DE40:
 /* 072970 7F03DE40 87A4002E */  lh    $a0, 0x2e($sp)
-/* 072974 7F03DE44 0FC0F72E */  jal   sub_GAME_7F03DCB8
+/* 072974 7F03DE44 0FC0F72E */  jal   chrpropInitializeNewChunkForRoom
 /* 072978 7F03DE48 00C02825 */   move  $a1, $a2
 /* 07297C 7F03DE4C 0440000B */  bltz  $v0, .L7F03DE7C
 /* 072980 7F03DE50 8FA80028 */   lw    $t0, 0x28($sp)
@@ -4384,6 +4392,10 @@ glabel chrpropRegisterRoom
 void chrpropDeregisterRoom(PropRecord *arg0, s16 room);
 
 #ifdef NONMATCHING
+/*
+* Address: 0x7F03DE94
+* PD: prop_deregister_room
+*/
 void chrpropDeregisterRoom(PropRecord *arg0, s16 arg1)
 {
     s16 *temp_s0;
@@ -4821,6 +4833,15 @@ void chrpropRegisterRooms(PropRecord *prop)
 
 
 #ifdef NONMATCHING
+/*
+* Address: 0x7F03E27C
+* PD: Could be one of the following
+*        - los_find_intersecting_rooms_properly, 
+*        - los_find_final_room_properly
+*        - los_find_intersecting_rooms_exhaustive
+*        - los_find_final_room_exhaustive
+*        - los_find_final_room_fast
+*/
 void sub_GAME_7F03E27C(void) {
 
 }
