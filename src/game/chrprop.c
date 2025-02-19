@@ -4212,8 +4212,10 @@ s32 chrpropInsertPropnum(s16 propnum, s32 roomindex) {
 
     // Note: The size of the propnums array is 16, but we're only iterating over the first 15 elements.
     //       Is this because the last element is always -1? Seems like a waste.
-    for (i = 0; i < 15; i++) {
-        if (RoomPropListChunks[roomindex].propnums[i] < 0) {
+    for (i = 0; i < 15; i++)
+    {
+        if (RoomPropListChunks[roomindex].propnums[i] < 0)
+        {
             RoomPropListChunks[roomindex].propnums[i] = propnum;
             return 1;
         }
@@ -4224,80 +4226,37 @@ s32 chrpropInsertPropnum(s16 propnum, s32 roomindex) {
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03DCB8(void) {
 
+s32 sub_GAME_7F03DCB8(s32 arg0, s32 arg1)
+{
+    s32 index;
+
+    for (index = 0; index < 256; index++)
+    {
+        if (RoomPropListChunks[index].propnums[0] == -2)
+        {
+            s32 i;
+            
+            for (i = 0; i < 16; i++)
+            {
+                RoomPropListChunks[index].propnums[i] = -1;
+            }
+
+            if (arg1 >= 0)
+            {
+                RoomPropListChunks[arg1].propnums[0xF] = index;
+            }
+            else
+            {
+                RoomPropListChunkIndexes[arg0] = index;
+            }
+            
+            return index;
+        }
+    }
+
+    return -1;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03DCB8
-/* 0727E8 7F03DCB8 00803025 */  move  $a2, $a0
-/* 0727EC 7F03DCBC 3C028007 */  lui   $v0, %hi(RoomPropListChunks)
-/* 0727F0 7F03DCC0 8C42161C */  lw    $v0, %lo(RoomPropListChunks)($v0)
-/* 0727F4 7F03DCC4 2404FFFE */  li    $a0, -2
-/* 0727F8 7F03DCC8 00001825 */  move  $v1, $zero
-/* 0727FC 7F03DCCC 24070100 */  li    $a3, 256
-.L7F03DCD0:
-/* 072800 7F03DCD0 844E0000 */  lh    $t6, ($v0)
-/* 072804 7F03DCD4 548E002C */  bnel  $a0, $t6, .L7F03DD88
-/* 072808 7F03DCD8 24630001 */   addiu $v1, $v1, 1
-/* 07280C 7F03DCDC 3C028007 */  lui   $v0, %hi(RoomPropListChunks)
-/* 072810 7F03DCE0 2442161C */  addiu $v0, %lo(RoomPropListChunks) # addiu $v0, $v0, 0x161c
-/* 072814 7F03DCE4 00002025 */  move  $a0, $zero
-/* 072818 7F03DCE8 24080020 */  li    $t0, 32
-/* 07281C 7F03DCEC 2407FFFF */  li    $a3, -1
-.L7F03DCF0:
-/* 072820 7F03DCF0 8C4F0000 */  lw    $t7, ($v0)
-/* 072824 7F03DCF4 0003C140 */  sll   $t8, $v1, 5
-/* 072828 7F03DCF8 00035940 */  sll   $t3, $v1, 5
-/* 07282C 7F03DCFC 01F8C821 */  addu  $t9, $t7, $t8
-/* 072830 7F03DD00 03244821 */  addu  $t1, $t9, $a0
-/* 072834 7F03DD04 A5270000 */  sh    $a3, ($t1)
-/* 072838 7F03DD08 8C4A0000 */  lw    $t2, ($v0)
-/* 07283C 7F03DD0C 00037940 */  sll   $t7, $v1, 5
-/* 072840 7F03DD10 014B6021 */  addu  $t4, $t2, $t3
-/* 072844 7F03DD14 01846821 */  addu  $t5, $t4, $a0
-/* 072848 7F03DD18 A5A70002 */  sh    $a3, 2($t5)
-/* 07284C 7F03DD1C 8C4E0000 */  lw    $t6, ($v0)
-/* 072850 7F03DD20 00035140 */  sll   $t2, $v1, 5
-/* 072854 7F03DD24 01CFC021 */  addu  $t8, $t6, $t7
-/* 072858 7F03DD28 0304C821 */  addu  $t9, $t8, $a0
-/* 07285C 7F03DD2C A7270004 */  sh    $a3, 4($t9)
-/* 072860 7F03DD30 8C490000 */  lw    $t1, ($v0)
-/* 072864 7F03DD34 012A5821 */  addu  $t3, $t1, $t2
-/* 072868 7F03DD38 01646021 */  addu  $t4, $t3, $a0
-/* 07286C 7F03DD3C 24840008 */  addiu $a0, $a0, 8
-/* 072870 7F03DD40 1488FFEB */  bne   $a0, $t0, .L7F03DCF0
-/* 072874 7F03DD44 A5870006 */   sh    $a3, 6($t4)
-/* 072878 7F03DD48 04A00007 */  bltz  $a1, .L7F03DD68
-/* 07287C 7F03DD4C 00000000 */   nop
-/* 072880 7F03DD50 8C4D0000 */  lw    $t5, ($v0)
-/* 072884 7F03DD54 00057140 */  sll   $t6, $a1, 5
-/* 072888 7F03DD58 00601025 */  move  $v0, $v1
-/* 07288C 7F03DD5C 01AE7821 */  addu  $t7, $t5, $t6
-/* 072890 7F03DD60 03E00008 */  jr    $ra
-/* 072894 7F03DD64 A5E3001E */   sh    $v1, 0x1e($t7)
-
-.L7F03DD68:
-/* 072898 7F03DD68 3C188007 */  lui   $t8, %hi(RoomPropListChunkIndexes)
-/* 07289C 7F03DD6C 8F181618 */  lw    $t8, %lo(RoomPropListChunkIndexes)($t8)
-/* 0728A0 7F03DD70 0006C840 */  sll   $t9, $a2, 1
-/* 0728A4 7F03DD74 03194821 */  addu  $t1, $t8, $t9
-/* 0728A8 7F03DD78 A5230000 */  sh    $v1, ($t1)
-/* 0728AC 7F03DD7C 03E00008 */  jr    $ra
-/* 0728B0 7F03DD80 00601025 */   move  $v0, $v1
-
-/* 0728B4 7F03DD84 24630001 */  addiu $v1, $v1, 1
-.L7F03DD88:
-/* 0728B8 7F03DD88 1467FFD1 */  bne   $v1, $a3, .L7F03DCD0
-/* 0728BC 7F03DD8C 24420020 */   addiu $v0, $v0, 0x20
-/* 0728C0 7F03DD90 2402FFFF */  li    $v0, -1
-/* 0728C4 7F03DD94 03E00008 */  jr    $ra
-/* 0728C8 7F03DD98 00000000 */   nop
-)
-#endif
-
 
 
 
