@@ -4204,91 +4204,23 @@ s32 sub_GAME_7F03DB70(s32* roomids1, s32* roomids2)
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F03DBCC(void) {
+/*
+* Address: 0x7F03DBCC
+*/
+s32 sub_GAME_7F03DBCC(s16 propnum, s32 roomindex) {
+    s32 i;
 
+    // Note: The size of the propnums array is 16, but we're only iterating over the first 15 elements.
+    //       Is this because the last element is always -1? Seems like a waste.
+    for (i = 0; i < 15; i++) {
+        if (RoomPropListChunks[roomindex].propnums[i] < 0) {
+            RoomPropListChunks[roomindex].propnums[i] = propnum;
+            return 1;
+        }
+    }
+
+    return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03DBCC
-/* 0726FC 7F03DBCC 3C0F8007 */  lui   $t7, %hi(RoomPropListChunks)
-/* 072700 7F03DBD0 8DEF161C */  lw    $t7, %lo(RoomPropListChunks)($t7)
-/* 072704 7F03DBD4 0005C140 */  sll   $t8, $a1, 5
-/* 072708 7F03DBD8 AFA40000 */  sw    $a0, ($sp)
-/* 07270C 7F03DBDC 01F81821 */  addu  $v1, $t7, $t8
-/* 072710 7F03DBE0 84790000 */  lh    $t9, ($v1)
-/* 072714 7F03DBE4 00043400 */  sll   $a2, $a0, 0x10
-/* 072718 7F03DBE8 00067403 */  sra   $t6, $a2, 0x10
-/* 07271C 7F03DBEC 01C03025 */  move  $a2, $t6
-/* 072720 7F03DBF0 07210004 */  bgez  $t9, .L7F03DC04
-/* 072724 7F03DBF4 00602025 */   move  $a0, $v1
-/* 072728 7F03DBF8 A48E0000 */  sh    $t6, ($a0)
-/* 07272C 7F03DBFC 03E00008 */  jr    $ra
-/* 072730 7F03DC00 24020001 */   li    $v0, 1
-
-.L7F03DC04:
-/* 072734 7F03DC04 84880002 */  lh    $t0, 2($a0)
-/* 072738 7F03DC08 24020001 */  li    $v0, 1
-/* 07273C 7F03DC0C 05030004 */  bgezl $t0, .L7F03DC20
-/* 072740 7F03DC10 84890004 */   lh    $t1, 4($a0)
-/* 072744 7F03DC14 03E00008 */  jr    $ra
-/* 072748 7F03DC18 A4860002 */   sh    $a2, 2($a0)
-
-/* 07274C 7F03DC1C 84890004 */  lh    $t1, 4($a0)
-.L7F03DC20:
-/* 072750 7F03DC20 24650006 */  addiu $a1, $v1, 6
-/* 072754 7F03DC24 2402001E */  li    $v0, 30
-/* 072758 7F03DC28 05230005 */  bgezl $t1, .L7F03DC40
-/* 07275C 7F03DC2C 24040006 */   li    $a0, 6
-/* 072760 7F03DC30 A4860004 */  sh    $a2, 4($a0)
-/* 072764 7F03DC34 03E00008 */  jr    $ra
-/* 072768 7F03DC38 24020001 */   li    $v0, 1
-
-/* 07276C 7F03DC3C 24040006 */  li    $a0, 6
-.L7F03DC40:
-/* 072770 7F03DC40 84AA0000 */  lh    $t2, ($a1)
-/* 072774 7F03DC44 24840008 */  addiu $a0, $a0, 8
-/* 072778 7F03DC48 05430005 */  bgezl $t2, .L7F03DC60
-/* 07277C 7F03DC4C 84AB0002 */   lh    $t3, 2($a1)
-/* 072780 7F03DC50 A4A60000 */  sh    $a2, ($a1)
-/* 072784 7F03DC54 03E00008 */  jr    $ra
-/* 072788 7F03DC58 24020001 */   li    $v0, 1
-
-/* 07278C 7F03DC5C 84AB0002 */  lh    $t3, 2($a1)
-.L7F03DC60:
-/* 072790 7F03DC60 05630005 */  bgezl $t3, .L7F03DC78
-/* 072794 7F03DC64 84AC0004 */   lh    $t4, 4($a1)
-/* 072798 7F03DC68 A4A60002 */  sh    $a2, 2($a1)
-/* 07279C 7F03DC6C 03E00008 */  jr    $ra
-/* 0727A0 7F03DC70 24020001 */   li    $v0, 1
-
-/* 0727A4 7F03DC74 84AC0004 */  lh    $t4, 4($a1)
-.L7F03DC78:
-/* 0727A8 7F03DC78 05830005 */  bgezl $t4, .L7F03DC90
-/* 0727AC 7F03DC7C 84AD0006 */   lh    $t5, 6($a1)
-/* 0727B0 7F03DC80 A4A60004 */  sh    $a2, 4($a1)
-/* 0727B4 7F03DC84 03E00008 */  jr    $ra
-/* 0727B8 7F03DC88 24020001 */   li    $v0, 1
-
-/* 0727BC 7F03DC8C 84AD0006 */  lh    $t5, 6($a1)
-.L7F03DC90:
-/* 0727C0 7F03DC90 05A10004 */  bgez  $t5, .L7F03DCA4
-/* 0727C4 7F03DC94 00000000 */   nop
-/* 0727C8 7F03DC98 A4A60006 */  sh    $a2, 6($a1)
-/* 0727CC 7F03DC9C 03E00008 */  jr    $ra
-/* 0727D0 7F03DCA0 24020001 */   li    $v0, 1
-
-.L7F03DCA4:
-/* 0727D4 7F03DCA4 1482FFE6 */  bne   $a0, $v0, .L7F03DC40
-/* 0727D8 7F03DCA8 24A50008 */   addiu $a1, $a1, 8
-/* 0727DC 7F03DCAC 00001025 */  move  $v0, $zero
-/* 0727E0 7F03DCB0 03E00008 */  jr    $ra
-/* 0727E4 7F03DCB4 00000000 */   nop
-)
-#endif
-
-
 
 
 
