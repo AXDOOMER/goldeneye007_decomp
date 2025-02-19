@@ -4207,7 +4207,7 @@ s32 sub_GAME_7F03DB70(s32* roomids1, s32* roomids2)
 /*
 * Address: 0x7F03DBCC
 */
-s32 sub_GAME_7F03DBCC(s16 propnum, s32 roomindex) {
+s32 chrpropInsertPropnum(s16 propnum, s32 roomindex) {
     s32 i;
 
     // Note: The size of the propnums array is 16, but we're only iterating over the first 15 elements.
@@ -4321,7 +4321,7 @@ void chrpropRegisterRoom(PropRecord *arg0, s16 arg1)
         if (temp_s0 >= 0)
         {
 loop_3:
-            if (sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, phi_s0, phi_a2) == 0)
+            if (chrpropInsertPropnum((arg0 - pos_data_entry) / 52, phi_s0, phi_a2) == 0)
             {
                 temp_s0_2 = (RoomPropListChunks + (phi_s0 << 5))->unk1E;
                 phi_s0 = temp_s0_2;
@@ -4340,7 +4340,7 @@ block_5:
             temp_v0 = sub_GAME_7F03DCB8(arg1, phi_a2_2, phi_a2_2);
             if (temp_v0 >= 0)
             {
-                sub_GAME_7F03DBCC((arg0 - pos_data_entry) / 52, temp_v0);
+                chrpropInsertPropnum((arg0 - pos_data_entry) / 52, temp_v0);
             }
         }
     }
@@ -4381,7 +4381,7 @@ glabel chrpropRegisterRoom
 .L7F03DE0C:
 /* 07293C 7F03DE0C 00047403 */  sra   $t6, $a0, 0x10
 /* 072940 7F03DE10 01C02025 */  move  $a0, $t6
-/* 072944 7F03DE14 0FC0F6F3 */  jal   sub_GAME_7F03DBCC
+/* 072944 7F03DE14 0FC0F6F3 */  jal   chrpropInsertPropnum
 /* 072948 7F03DE18 02002825 */   move  $a1, $s0
 /* 07294C 7F03DE1C 54400018 */  bnezl $v0, .L7F03DE80
 /* 072950 7F03DE20 8FBF0024 */   lw    $ra, 0x24($sp)
@@ -4406,7 +4406,7 @@ glabel chrpropRegisterRoom
 /* 072998 7F03DE68 00005012 */  mflo  $t2
 /* 07299C 7F03DE6C 000A5C00 */  sll   $t3, $t2, 0x10
 /* 0729A0 7F03DE70 000B2403 */  sra   $a0, $t3, 0x10
-/* 0729A4 7F03DE74 0FC0F6F3 */  jal   sub_GAME_7F03DBCC
+/* 0729A4 7F03DE74 0FC0F6F3 */  jal   chrpropInsertPropnum
 /* 0729A8 7F03DE78 00402825 */   move  $a1, $v0
 .L7F03DE7C:
 /* 0729AC 7F03DE7C 8FBF0024 */  lw    $ra, 0x24($sp)
