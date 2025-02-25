@@ -67,7 +67,7 @@ typedef struct bondstruct_unk_8007A170 {
 
 extern s32 SHATTERED_WINDOW_PIECES_BUFFER_LEN;
 extern s_shattered_window_piece* ptr_shattered_window_pieces;
-extern s32 D_80040940;
+extern s32 g_NextShardNum;
 
 extern u32 D_80040980;
 extern u32 D_80040984;

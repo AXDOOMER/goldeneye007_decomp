@@ -42,7 +42,7 @@ u8 dword_CODE_bss_8007B098[8];
 
 // data
 //D:80040940
-s32 D_80040940 = 0;
+s32 g_NextShardNum = 0;
 u32 D_80040944 = 0;
 u32 D_80040948 = 0;
 u32 D_8004094C = 0;
@@ -347,57 +347,57 @@ void sub_GAME_7F0A2160(coord3d* arg0, f32 arg1, f32 arg2)
     sp50 = (randomGetNext() * (1.0f / (f32)UINT_MAX) * 1.12f) - .12f;
     temp_v0 = randomGetNext();
 
-    ptr_shattered_window_pieces[D_80040940].piece = 1;
-    ptr_shattered_window_pieces[D_80040940].x = arg0->x;
-    ptr_shattered_window_pieces[D_80040940].y = arg0->y;
-    ptr_shattered_window_pieces[D_80040940].z = arg0->z;
+    ptr_shattered_window_pieces[g_NextShardNum].piece = 1;
+    ptr_shattered_window_pieces[g_NextShardNum].x = arg0->x;
+    ptr_shattered_window_pieces[g_NextShardNum].y = arg0->y;
+    ptr_shattered_window_pieces[g_NextShardNum].z = arg0->z;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x1c = temp_f24 * SCALAR_1_7F0A2160;
-    ptr_shattered_window_pieces[D_80040940].field_0x20 = sp50 * SCALAR_2_7F0A2160;
-    ptr_shattered_window_pieces[D_80040940].field_0x24 = ((2.0f * (temp_v0 * (1.0f / (f32)UINT_MAX))) - 1.0f) * SCALAR_1_7F0A2160;
-    ptr_shattered_window_pieces[D_80040940].field_0x38 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[D_80040940].field_0x3a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[D_80040940].field_0x3c = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x48 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[D_80040940].field_0x4a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
-    ptr_shattered_window_pieces[D_80040940].field_0x4c = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x58 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
-    ptr_shattered_window_pieces[D_80040940].field_0x5a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x1c = temp_f24 * SCALAR_1_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x20 = sp50 * SCALAR_2_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x24 = ((2.0f * (temp_v0 * (1.0f / (f32)UINT_MAX))) - 1.0f) * SCALAR_1_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x38 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x3a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x3c = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x48 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x4a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x4c = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x58 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x5a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x5c = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x40 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x42 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x50 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x52 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x60 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x62 = 0;
-    ptr_shattered_window_pieces[D_80040940].field_0x44 = 5;
-    ptr_shattered_window_pieces[D_80040940].field_0x45 = 5;
-    ptr_shattered_window_pieces[D_80040940].field_0x46 = 0x7E;
-    ptr_shattered_window_pieces[D_80040940].field_0x54 = 5;
-    ptr_shattered_window_pieces[D_80040940].field_0x55 = 0xFB;
-    ptr_shattered_window_pieces[D_80040940].field_0x56 = 0x7E;
-    ptr_shattered_window_pieces[D_80040940].field_0x64 = 0xFB;
-    ptr_shattered_window_pieces[D_80040940].field_0x65 = 0xFB;
-    ptr_shattered_window_pieces[D_80040940].field_0x66 = 0x7E;
-    ptr_shattered_window_pieces[D_80040940].field_0x67 = 0xFF;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x5c = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x40 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x42 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x50 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x52 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x60 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x62 = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x44 = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x45 = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x46 = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x54 = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x55 = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x56 = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x64 = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x65 = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x66 = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x67 = 0xFF;
 
-    field67 = ptr_shattered_window_pieces[D_80040940].field_0x67;
-    ptr_shattered_window_pieces[D_80040940].field_0x57 = field67;
-    ptr_shattered_window_pieces[D_80040940].field_0x47 = field67;
+    field67 = ptr_shattered_window_pieces[g_NextShardNum].field_0x67;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x57 = field67;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x47 = field67;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x10 = arg1;
-    ptr_shattered_window_pieces[D_80040940].field_0x14 = 0.0f;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x10 = arg1;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x14 = 0.0f;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x18 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x18 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
 
-    ptr_shattered_window_pieces[D_80040940].field_0x28 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
-    ptr_shattered_window_pieces[D_80040940].field_0x2c = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
-    ptr_shattered_window_pieces[D_80040940].field_0x30 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x28 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x2c = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
+    ptr_shattered_window_pieces[g_NextShardNum].field_0x30 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
 
-    D_80040940++;
-    if (D_80040940 >= SHATTERED_WINDOW_PIECES_BUFFER_LEN) {
-        D_80040940 = 0;
+    g_NextShardNum++;
+    if (g_NextShardNum >= SHATTERED_WINDOW_PIECES_BUFFER_LEN) {
+        g_NextShardNum = 0;
     }
 }
 

@@ -22,6 +22,6 @@ void alloc_shattered_window_pieces(void)
         ptr_shattered_window_pieces[i].piece = 0;
     }
 
-    D_80040940 = 0;
+    g_NextShardNum = 0;
 }
 
