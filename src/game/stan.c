@@ -5403,37 +5403,10 @@ glabel sub_GAME_7F0B3138
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B31A4(StandTile ** arg1, f32 arg0, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, f32 arg7) {
-    // almost a match. missing sw a0,0x28(sp) and move a0,a1 instructions
+
+void sub_GAME_7F0B31A4(s32 arg0, StandTile *arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, f32 arg6, f32 arg7) {
     stanTestVolume(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B31A4
-/* 0E7CD4 7F0B31A4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E7CD8 7F0B31A8 44866000 */  mtc1  $a2, $f12
-/* 0E7CDC 7F0B31AC 44877000 */  mtc1  $a3, $f14
-/* 0E7CE0 7F0B31B0 AFA40028 */  sw    $a0, 0x28($sp)
-/* 0E7CE4 7F0B31B4 8FAE003C */  lw    $t6, 0x3c($sp)
-/* 0E7CE8 7F0B31B8 C7A40040 */  lwc1  $f4, 0x40($sp)
-/* 0E7CEC 7F0B31BC C7A60044 */  lwc1  $f6, 0x44($sp)
-/* 0E7CF0 7F0B31C0 AFA5002C */  sw    $a1, 0x2c($sp)
-/* 0E7CF4 7F0B31C4 00A02025 */  move  $a0, $a1
-/* 0E7CF8 7F0B31C8 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0E7CFC 7F0B31CC 44056000 */  mfc1  $a1, $f12
-/* 0E7D00 7F0B31D0 44067000 */  mfc1  $a2, $f14
-/* 0E7D04 7F0B31D4 8FA70038 */  lw    $a3, 0x38($sp)
-/* 0E7D08 7F0B31D8 AFAE0010 */  sw    $t6, 0x10($sp)
-/* 0E7D0C 7F0B31DC E7A40014 */  swc1  $f4, 0x14($sp)
-/* 0E7D10 7F0B31E0 0FC2C62E */  jal   stanTestVolume
-/* 0E7D14 7F0B31E4 E7A60018 */   swc1  $f6, 0x18($sp)
-/* 0E7D18 7F0B31E8 8FBF0024 */  lw    $ra, 0x24($sp)
-/* 0E7D1C 7F0B31EC 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E7D20 7F0B31F0 03E00008 */  jr    $ra
-/* 0E7D24 7F0B31F4 00000000 */   nop
-)
-#endif
+
 
 
