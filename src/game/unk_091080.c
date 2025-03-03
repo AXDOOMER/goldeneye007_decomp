@@ -175,7 +175,7 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
     {
         remove_item_in_hand(GUNRIGHT);
         remove_item_in_hand(GUNLEFT);
-        
+
         return;
     }
     
@@ -233,6 +233,7 @@ void initializeDebugCameraPosition(void)
     sinf(x);
     cosf(x);
     sinf(x);
+   /*osSyncPrintf("propBondIntroKey(INTROKEY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ", cosf(x),sinf(x));*/
 }
 
 
@@ -244,7 +245,14 @@ void updateDebugCameraWorldPosition(void)
     sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
           (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
           (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z));
-
+    #ifdef DEBUG
+    osSyncPrintf("world pos = %f,%f,%f\n", debugCameraPosition.x, debugCameraPosition.y, debugCameraPosition.z);
+    osSyncPrintf("world theta = %f verta = %f\n", (debugCameraPreviousPosition.x * 6.283185) / 360.0, (debugCameraPreviousPosition.z * 6.283185) / 360.0);
+    osSyncPrintf("dist from prev = %f\n",
+                 sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
+                       (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
+                       (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z)));
+    #endif
     debugCameraPreviousPosition.x = debugCameraPosition.x;
     debugCameraPreviousPosition.y = debugCameraPosition.y;
     debugCameraPreviousPosition.z = debugCameraPosition.z;
@@ -256,7 +264,7 @@ void updateDebugCameraWorldPosition(void)
 void resetDebugCameraToPlayerPosition(void)
 {
     coord3d *pos;
-    
+
     pos = bondviewGetCurrentPlayersPosition();
     debugCameraPosition.x = pos->x;
     debugCameraPosition.y = pos->y;

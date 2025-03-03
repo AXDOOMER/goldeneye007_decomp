@@ -821,15 +821,15 @@ u8 explosionChrpropExplosionTick(PropRecord* prop)
     Mtxf* player_matrix;
 
     player_matrix = camGetWorldToScreenMtxf();
-    prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
+    prop->zDepth = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
-    if (prop->Unk18 < 100.0f)
+    if (prop->zDepth < 100.0f)
     {
-        prop->Unk18 *= 0.5f;
+        prop->zDepth *= 0.5f;
     }
     else
     {
-        prop->Unk18 -= 100.0f;
+        prop->zDepth -= 100.0f;
     }
 
     if (g_ClockTimer == 0)
@@ -1443,15 +1443,15 @@ u8 explosionChrpropSmokeTick(PropRecord* prop)
     Mtxf* player_matrix;
 
     player_matrix = camGetWorldToScreenMtxf();
-    prop->Unk18 = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
+    prop->zDepth = -((((player_matrix->m[0][2] * prop->pos.x) + (player_matrix->m[1][2] * prop->pos.y)) + (player_matrix->m[2][2] * prop->pos.z)) + player_matrix->m[3][2]);
 
-    if (prop->Unk18 < 100.0f)
+    if (prop->zDepth < 100.0f)
     {
-        prop->Unk18 *= 0.5f;
+        prop->zDepth *= 0.5f;
     }
     else
     {
-        prop->Unk18 -= 100.0f;
+        prop->zDepth -= 100.0f;
     }
 
     return 0;

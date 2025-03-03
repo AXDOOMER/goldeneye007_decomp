@@ -128,7 +128,7 @@ struct unk_joint_list {
     u32 unk28;
     u32 unk2C;
 
-    s32 unk30;
+    s32 PropType;
     s32 unk34;
     rgba_u8 unk38;
     s32 unk3C;
@@ -307,12 +307,12 @@ s32         get_numguards(void);
 Gfx        *chrRenderProp(PropRecord *arg0, Gfx *arg1, s32 arg2);
 void        chrAddHealth(ChrRecord *chr, f32 health);
 void        chrSetMaxDamage(ChrRecord *chr, f32 maxdamage);
-s32 sub_GAME_7F03DA50(struct PropRecord *arg0, s32 arg1);
-s32 sub_GAME_7F023194(PropRecord *arg0, struct coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3);
+s32         propIsOfCdType(PropRecord* prop, s32 cdtypes);
+s32         sub_GAME_7F023194(PropRecord *arg0, struct coord3d *arg1, struct coord2d *arg2, struct coord2d *arg3);
 
 //tentative signature
 s32         sub_GAME_7F01FC10(Model *, coord3d *, coord3d *, f32 *);
-void sub_GAME_7F0221DC(Model *arg0, s32 arg1, ModelNode *arg2, struct coord3d *arg3);
+void        sub_GAME_7F0221DC(Model *arg0, s32 arg1, ModelNode *arg2, struct coord3d *arg3);
 
 #ifdef BUGFIX_R1
 s32 not_in_us_7F0209EC(s32 bodynum, s32 headnum);

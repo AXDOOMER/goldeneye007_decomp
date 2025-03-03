@@ -642,28 +642,28 @@ s32 fogGetPropDistColor(PropRecord *prop, rgba_f32 *color)
 {
     if (g_FogSkyIsEnabled == 0)
     {
-        return 2;
+        return 2; // No fog, props cannot be obscured by fog
     }
 
-    if (prop->Unk18 < 0.0f)
+    if (prop->zDepth < 0.0f)
     {
-        return 2;
+        return 2; // Prop is behind the camera
     }
 
     color->rgba[0] = (f32) g_CurrentEnvironment.Red / 255.0f;
     color->rgba[1] = (f32) g_CurrentEnvironment.Green / 255.0f;
     color->rgba[2] = (f32) g_CurrentEnvironment.Blue / 255.0f;
-    color->rgba[3] = (g_CurFogDetails.far_fog_dist_scaled / prop->Unk18) + g_CurFogDetails.near_fog_dist_scaled;
+    color->rgba[3] = (g_CurFogDetails.far_fog_dist_scaled / prop->zDepth) + g_CurFogDetails.near_fog_dist_scaled;
 
     if (color->rgba[3] < 0.0f)
     {
-        return 2;
+        return 2; // Prop has no fog effect coloring applied to it
     }
 
     if (color->rgba[3] > 1.0f)
     {
-        return 0;
+        return 0; // Prop is completely obscured by fog (don't render)
     }
 
-    return 1;
+    return 1; // Fog color will be applied to prop
 }

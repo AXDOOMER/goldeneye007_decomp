@@ -5,6 +5,8 @@
 #include <bondconstants.h>  // game constants
 #include <bondtypes.h>      // game structs and types
 
+extern u32 *_bssSegmentEnd;
+
 extern u32 *_codeSegmentStart;
 extern u32 *_codeSegmentEnd;
 extern u32 *_codeSegmentRomStart;

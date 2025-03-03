@@ -32,6 +32,7 @@ if [ $retVal -ne 0 ]; then
         echo "Please wait while we determine which files are affected..."
         # scripts file relative to root source control directory
         ./scripts/test_files.sh -c -i scripts/ge007.${OUTCODE}-test_basis.csv
+        echo "Dumping map diff..."
         diff --suppress-common-lines build/${OUTCODE}-match/ge007.${OUTCODE}.map build/${OUTCODE}/ge007.${OUTCODE}.map
     fi
 

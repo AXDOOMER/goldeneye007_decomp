@@ -508,7 +508,7 @@ BITFLAG(PLAYERFLAG,
         NOCONTROL,
         NOTIMER
 )
-//PropDef bitflag
+//PropDef bitflag canonically PROPHID_
 BITFLAG(RUNTIMEBITFLAG,
         00000001,
         00000002,

@@ -341,6 +341,9 @@ void bondviewLoadSetupIntroSection(void)
 
                 default:
                 {
+                    #ifdef DEBUG
+                        ossyncprintf("unknown bondstart type %d!\n",intro_record->type);
+                    #endif
                     intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroEmpty));
                 }
                 break;

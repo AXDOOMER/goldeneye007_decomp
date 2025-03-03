@@ -1,3 +1,11 @@
+/*---------------------------------------------------------------------
+
+	File		propobj.c
+
+	Comments	Prop Objects code.
+
+  ---------------------------------------------------------------------*/
+
 #include <ultra64.h>
 #include <math.h>
 #include <PR/libaudio.h>
@@ -976,10 +984,12 @@ Projectile *projectileAllocate(void)
 
 void sub_GAME_7F03FDA8(PropRecord *prop)
 {
-    ObjectRecord *obj = prop->obj;
-
+    ObjectRecord *obj = prop->obj; //po
     if (obj->runtime_bitflags & RUNTIMEBITFLAG_EMBEDDED)
     {
+        #ifdef DEBUG
+        //assert(po->move.attach->fallinfo==NULL);
+        #endif
         obj->embedment->projectile = projectileAllocate();
     }
     else if ((obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0)
@@ -1576,6 +1586,12 @@ void sub_GAME_7F04088C(ObjectRecord *baseobj, struct coord3d *pos, Mtxf *matrix,
             baseobj->runtime_pos.y = newPos.y;
             baseobj->runtime_pos.z = newPos.z;
         }
+        #ifdef DEBUG
+        else
+        {
+            osSyncPrintf("prop not positioned correctly!\n");
+        }
+        #endif
     }
 
     chrobjCollisionRelated(baseobj);
@@ -1635,6 +1651,17 @@ void objFreeEmbedmentOrProjectile(PropRecord *prop)
             {
                 projectileFree(obj->embedment->projectile);
             }
+            #ifdef DEBUG
+            else
+            {
+                osSyncPrintf("ERROR: PROPHIDD_ATTACHED was, but move.attach was NULL\a\n");
+                osSyncPrintf("po->obj=%d\n",po->obj);
+                osSyncPrintf("p->flags=%08x\n",p->flags);
+                osSyncPrintf("po->flags2=%08x\n",po->flags2);
+                osSyncPrintf("p->timetoregen=%d\n",p->timetoregen);
+            }
+            #endif
+
             embedmentFree(obj->embedment);
         }
         obj->embedment = NULL;
@@ -2880,7 +2907,8 @@ bool projectileFindCollidingProp(PropRecord *prop, coord3d *pos1, coord3d *pos2,
 
 #ifdef NONMATCHING
 void handles_projectile_motion(void) {
-
+    //this function contains
+    // osSyncPrintf("stanLineObjGfx: %d rooms is more than %d\n",arg0+0x58,20);
 }
 #else
 GLOBAL_ASM(
@@ -27953,12 +27981,12 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
 
     if (objAlpha < 0xFF)
     {
-        mrData.unk30 = 5;
+        mrData.PropType = 5;
         mrData.envcolour.word = objAlpha;
     }
     else
     {
-        mrData.unk30 = 9;
+        mrData.PropType = 9;
 
         if (obj->type == PROPDEF_TINTED_GLASS)
         {
@@ -29525,19 +29553,19 @@ s32 objDrop(PropRecord *prop)
             // Do collision checks
             f32 objwidth = objGetWidth(obj);
             Mtxf *sp58 = getsubmatrix(model);
-            s32 sp54 = 0x1F;
+            s32 cdtypes = CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER;
 
             matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), sp58, &spB8);
 
             if (projectile->flags & 0x40)
             {
-                sp54 = 0x1D;
+                cdtypes = CDTYPE_OBJS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER;
             }
 
             sub_GAME_7F03D058(root, FALSE);
 
-            if ((stanTestLineUnobstructed(&rootstan, root->pos.f[0], root->pos.f[2], spB8.m[3][0], spB8.m[3][2], sp54, 0.0f, 1.0f, 0.0f, 1.0f) != 0)
-                && (stanTestVolume(&rootstan, spB8.m[3][0], spB8.m[3][2], objwidth, sp54, 0.0f, 1.0f) < 0))
+            if ((stanTestLineUnobstructed(&rootstan, root->pos.f[0], root->pos.f[2], spB8.m[3][0], spB8.m[3][2], cdtypes, 0.0f, 1.0f, 0.0f, 1.0f) != 0)
+                && (stanTestVolume(&rootstan, spB8.m[3][0], spB8.m[3][2], objwidth, cdtypes, 0.0f, 1.0f) < 0))
             {
                 prop->stan = rootstan;
 
@@ -29550,7 +29578,7 @@ s32 objDrop(PropRecord *prop)
             }
 
             sub_GAME_7F03D058(root, TRUE);
-            prop->Unk18 = -sp58->m[3][2];
+            prop->zDepth = -sp58->m[3][2];
 
         }
         else
@@ -37043,6 +37071,10 @@ void add_obj_to_temp_proxmine_table(WeaponObjRecord* proxy)
         if (temp_mine_table[i] == NULL)
         {
             temp_mine_table[i] = proxy;
+            #ifdef DEBUG
+                assert(i<PROXIMITYARRMAX);
+            #endif
+
             return;
         }
         i++;
@@ -37199,6 +37231,9 @@ bool chrEquipWeapon(WeaponObjRecord *wep, ChrRecord *chr)
             }
             else
             {
+                 #ifdef DEBUG
+                    osSyncPrintf("attempted multiple attach!!!\n");
+                #endif
                 return FALSE;
             }
         }
@@ -38909,11 +38944,17 @@ void sub_GAME_7F053A3C(DoorRecord* arg0)
 
         if (open_playing != 0)
         {
+            #ifdef DEBUG
+            assert( po->audiostate!=NULL);
+            #endif
             sndCreatePostEvent(arg0->openSoundState, 8, sp1C);
         }
 
         if (close_playing != 0)
         {
+            #ifdef DEBUG
+            assert( po->audiostate2!=NULL);
+            #endif
             sndCreatePostEvent(arg0->closeSoundState, 8, sp1C);
         }
     }
@@ -39507,10 +39548,10 @@ f32 chrobjFogVisRangeRelated(PropRecord *prop, f32 size)
     ret = 1.0f;
     nfd = fogGetNearFogValuesP();
 
-    if ((nfd != NULL) && (nfd->MaxObfuscationRange < prop->Unk18))
+    if ((nfd != NULL) && (nfd->MaxObfuscationRange < prop->zDepth))
     {
         temp_f12 = getPlayer_c_lodscalez();
-        temp_f12 = ((((prop->Unk18 - nfd->MaxObfuscationRange) * 100.0f) / size) + nfd->MaxObfuscationRange) * temp_f12;
+        temp_f12 = ((((prop->zDepth - nfd->MaxObfuscationRange) * 100.0f) / size) + nfd->MaxObfuscationRange) * temp_f12;
 
         if (nfd->MaxVisRange <= temp_f12)
         {
@@ -40339,12 +40380,12 @@ void init_trigger_toxic_gas_effect(coord3d *source) //#MATCH
     D_80030AD0.z             = source->z;
     if (bossGetStageNum() == LEVELID_EGYPT)
     {
-        gas_damage_flag = 120.0f;
-        gas_cutoff_flag = FALSE;
+        gasTimeToFullOpacity = 120.0f;
+        gasDoesDamageFlag = FALSE;
         return;
     }
-    gas_damage_flag = 3600.0f;
-    gas_cutoff_flag = TRUE;
+    gasTimeToFullOpacity = 3600.0f;
+    gasDoesDamageFlag = TRUE;
 }
 
 
@@ -40373,18 +40414,18 @@ void handle_gas_damage(void)
     if (activate_gas_sound_timer != 0)
     {
         toxic_gas_sound_timer += g_GlobalTimerDelta;
-        if (gas_damage_flag <= toxic_gas_sound_timer)
+        if (gasTimeToFullOpacity <= toxic_gas_sound_timer)
         {
-            toxic_gas_sound_timer = gas_damage_flag;
+            toxic_gas_sound_timer = gasTimeToFullOpacity;
             activate_gas_sound_timer = 0;
         }
     }
 
     if (toxic_gas_sound_timer > 0.0f && g_PlayerInvincible == 0)
     {
-        fogSwitchToSolosky2(toxic_gas_sound_timer / gas_damage_flag);
+        fogSwitchToSolosky2(toxic_gas_sound_timer / gasTimeToFullOpacity);
 
-        if (gas_cutoff_flag == 0) { return; }
+        if (gasDoesDamageFlag == 0) { return; }
 
 #ifdef VERSION_EU
         if (D_80030ADC < (g_GlobalTimer - 0xBB))
@@ -40403,7 +40444,7 @@ void handle_gas_damage(void)
             }
         }
 
-        if (D_80030AE0 < gas_damage_flag)
+        if (D_80030AE0 < gasTimeToFullOpacity)
         {
             D_80030AE0 = D_80030AE0 + g_GlobalTimerDelta;
             if ((ptr_gas_sound == NULL) && (lvlGetControlsLockedFlag() == 0))

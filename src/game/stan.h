@@ -14,7 +14,7 @@
 #define STAN_MID_G(tile) ((tile->mid.half >> 0x08) & 0xF)
 #define STAN_MID_B(tile) ((tile->mid.half >> 0x0C) & 0xF)
 
-#define STAN_TAIL_POINT_COUNT(tile) (tile->tail.half & 0xF)
+#define STAN_TAIL_POINT_COUNT(tile) (tile->tail.half & 0xF)/*canonically getsides()*/
 #define STAN_TAIL_C(tile) ((tile->tail.half >> 0x04) & 0xF)
 #define STAN_TAIL_D(tile) ((tile->tail.half >> 0x08) & 0xF)
 #define STAN_TAIL_E(tile) ((tile->tail.half >> 0x0C) & 0xF)
@@ -58,11 +58,11 @@ s32 getCollisionEdge_maybe(coord3d *pntA, coord3d *pntB);
 s32 sub_GAME_7F0B26B8(StandTile **tile, f32 target_x, f32 target_z, f32 b_z, f32 param_5);
 s32 sub_GAME_7F0B20D0(StandTile** tileStack, f32 target_x, f32 target_z, f32 unknown);
 
-s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int objFlags, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
+s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int cdtypes, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 StandTile* sub_GAME_7F0B2718(StandTile* srcTile, tilePredicate_t tilePred);
 s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z,  StandTile **tilePtr, f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize);
 s32 sub_GAME_7F0B0C24(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize);
-s32 stanTestVolume(StandTile **, f32 posX, f32 posY, f32 radius, s32 integer, f32 float1, f32 float2);
+s32 stanTestVolume(StandTile **, f32 posX, f32 posY, f32 radius, s32 cdtypes, f32 float1, f32 float2);
 s32 getTileRoom(StandTile* tile);
 PropRecord *sub_GAME_7F0B1410(StandTile *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
 void copy_tile_RGB_as_24bit(StandTile *tile, f32 p_x, f32 p_z, u8 *rtn);

@@ -4047,7 +4047,12 @@ void chrPositionRelated7F020E40(ChrRecord *chr, s32 arg1)
 *   EU: 0x7F020E68
 */
 void chrTickBeams(void) {
-
+    #ifdef DEBUG
+    osSyncPrintf("anim=%d frame=%f backy=%f\n", DAT_83bcf9d8, *(local_e8 + 0x28), (*(psVar2 + 0xa6) * 360.0) / 6.283185);
+    #endif
+    #ifdef DEBUG
+    osSyncPrintf("\nVISIBLE MAGIC MODE!!!!\n\n");
+    #endif
 }
 #else
 
@@ -6893,12 +6898,12 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 withalpha)
 
             if (chrfadealpha < 0xFF)
             {
-                mrData.unk30 = 8;
+                mrData.PropType = 8;
                 mrData.envcolour.word |= (u8)chrfadealpha;
             }
             else
             {
-                mrData.unk30 = 7;
+                mrData.PropType = 7;
             }
 
             g_playerPerm->time_other_players_on_screen += 1;
@@ -7386,7 +7391,10 @@ glabel sub_GAME_7F0221DC
 
 #ifdef NONMATCHING
 void sub_GAME_7F022648(void) {
-
+    //somewhere
+    #ifdef DEBUG
+    assert(hits && hits->HasHits());
+    #endif
 }
 #else
 GLOBAL_ASM(

@@ -137,6 +137,12 @@ void audioPlayFromProp(s32 slot, s16 soundIndex)
             sfx->pos     = NULL;
             sfx->Obj     = NULL;
         }
+        #ifdef DEBUG
+        else
+        {
+            osSyncPrintf("Existing ai sound number %d!\n", slot);
+        }
+        #endif
     }
     sndPlaySfx(g_musicSfxBufferPtr, soundIndex, sfx);
 }
@@ -227,9 +233,9 @@ s32 chraiitemsize(u8 *AIList, s32 offset)
             return AI_TRYFireOrAimAtTarget_LENGTH;
         case AI_TRYFireOrAimAtTargetKneel:
             return AI_TRYFireOrAimAtTargetKneel_LENGTH;
-        case AI_IFImFiring:
+        case AI_IFImFiring: /* enum = 232 despite following enum = 21 in the list */
             return AI_IFImFiring_LENGTH;
-        case AI_IFImFiringAndLockedForward:
+        case AI_IFImFiringAndLockedForward: /* enum = 231 despite being followed by enum = 22 in the list */
             return AI_IFImFiringAndLockedForward_LENGTH;
         case AI_TRYFireOrAimAtTargetUpdate:
             return AI_TRYFireOrAimAtTargetUpdate_LENGTH;

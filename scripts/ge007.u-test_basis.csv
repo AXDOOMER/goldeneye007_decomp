@@ -388,7 +388,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/ejectedcartridges.o
-01e1d3999655cc8cef8726d802d16a91,.text,build/u/src/game/explosions.o
+611b9b73637f8add35cf24f49abd88f7,.text,build/u/src/game/explosions.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/explosions.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/explosions.o
 fbda85eb8d9891c2efde432e0336946e,.data,build/u/src/game/explosions.o
@@ -398,7 +398,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/file.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/file.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/file.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/file.o
-7648a8e15da9e82fc32d1c510852e678,.text,build/u/src/game/file2.o
+dc557102f98af1012104e5468e2deed8,.text,build/u/src/game/file2.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/file2.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/file2.o
 eeec347630f5896aa34d74a8014be746,.data,build/u/src/game/file2.o
@@ -468,7 +468,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/initactorpropstuff.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/initactorpropstuff.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/initactorpropstuff.o
 d1c7d5ce895aab2c74f422e89ac7301f,.rodata,build/u/src/game/initactorpropstuff.o
-1ef6c73df22d17ba495ef9096ef272a8,.text,build/u/src/game/initanitable.o
+eaf91a3b414baab952b0b11e09316245,.text,build/u/src/game/initanitable.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/initanitable.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/initanitable.o
 5e19c149b3a17a65bef4f99dfe9fe15c,.data,build/u/src/game/initanitable.o
@@ -643,7 +643,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/model.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/model.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/model.o
 63392afd7ef8420cf22b9e1f4b947ac7,.rodata,build/u/src/game/model.o
-36b514f94110f7d4b0f375cb43875623,.text,build/u/src/game/mp_music.o
+cb8e6a63ac2bb5a94211a678cb31643f,.text,build/u/src/game/mp_music.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/mp_music.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/mp_music.o
 4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/mp_music.o
@@ -738,7 +738,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/quaternion.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/quaternion.o
 dd8a23d5bf38aa81e9e52eb43d310cea,.data,build/u/src/game/quaternion.o
 dcf28c5b87d1bafd8f6cb584ea25112a,.rodata,build/u/src/game/quaternion.o
-56b5a26d40931632137490777d875b8e,.text,build/u/src/game/radar.o
+750fbea75750acbcfb5c3feb1cbff4f2,.text,build/u/src/game/radar.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/radar.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/radar.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/radar.o
@@ -768,6 +768,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/spectrum.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/spectrum.o
 2ce81ebe3ddf133df9e5efc28f0e99ad,.data,build/u/src/game/spectrum.o
 3035d02bd694ebdead84c918a03129d6,.rodata,build/u/src/game/spectrum.o
+16b4e13d4b5d2c2924a59aff80c5f24a,.text,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/speedgraphrenderer.o
+4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/speedgraphrenderer.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/speedgraphrenderer.o
 a43eb71310cabab33807e1e48a9e426a,.text,build/u/src/game/stan.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/stan.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/stan.o
@@ -778,7 +783,7 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/textrelated.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/textrelated.o
 5b2be5a4a56e5d047ddd92f749836d87,.data,build/u/src/game/textrelated.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/textrelated.o
-da07a32762f121fea4f7c2e7d521d4ca,.text,build/u/src/game/title.o
+5152db464b3f52019f62367b97c1a055,.text,build/u/src/game/title.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/title.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/title.o
 e09fcfa9f21f3499758e33b62d2d3668,.data,build/u/src/game/title.o
@@ -843,11 +848,6 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0CC4C0.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0CC4C0.o
 3276b0ae12d43e34773e3e7340fd7eb7,.data,build/u/src/game/unk_0CC4C0.o
 649f505c857e9b5f6bc4b652ea1d387e,.rodata,build/u/src/game/unk_0CC4C0.o
-16b4e13d4b5d2c2924a59aff80c5f24a,.text,build/u/src/game/speedgraphrenderer.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/speedgraphrenderer.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/speedgraphrenderer.o
-4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/speedgraphrenderer.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/speedgraphrenderer.o
 7e01bd828f54335aefbf28fc14d26b02,.text,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/viewport.o

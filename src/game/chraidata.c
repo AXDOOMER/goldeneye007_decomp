@@ -473,43 +473,56 @@ u8 m_SimpleGuardAlarmRaiser[] = {
     DO(lblLoop)
         IFImOnPatrolOrStopped(lblStoppedMoving)
         /*ELSE*/
-        CONTINUE(lblLoop)
-
-        Label(lblStoppedMoving)
-            IFISeeBond(lblRunToObjective)
-            IFMyNumCloseArghsGreaterThan(0, lblNearMiss)
-            IFIHeardBondRecently(lblNearMiss)
-            IFISeeSomeoneShot(lblNearMiss)
-            IFISeeSomeoneDie(lblNearMiss)
+        CONTINUE(lblLoop)                                       /* Only process this script if not already running */
+        /********************
+            StoppedMoving
+        *********************/
+        Label(lblStoppedMoving)                                 /* break loop if any condition is true */
+        IFISeeBond(lblRunToObjective)
+        IFMyNumCloseArghsGreaterThan(0, lblNearMiss)
+        IFIHeardBondRecently(lblNearMiss)
+        IFISeeSomeoneShot(lblNearMiss)
+        IFISeeSomeoneDie(lblNearMiss)
     LOOP(lblLoop)
 
+    /*************
+       NearMiss
+    **************/
+    Label(lblNearMiss)                                          /* a guard in sight was killed/shot, heard bond or bond shot guard */
+    IFMyNumArghsGreaterThan(0, lblRunToObjective)               /* doesn't make sense why the guard would be mildly curious about getting shot */
+    LookSurprised()
 
-    Label(lblNearMiss)                                              /* a guard in sight was killed/shot, heard bond or bond shot guard */
-        IFMyNumArghsGreaterThan(0, lblRunToObjective)               /* doesn't make sense why the guard would be mildly curious about getting shot */
-        LookSurprised()
-
-    DO(lblWaiting)                                                  /* wait for guard to stop moving before branching to next logic (triggered by look around animation) */
+    DO(lblWaiting)                                              /* wait for guard to stop moving before branching to next logic (triggered by look around animation) */
         IFImOnPatrolOrStopped(lblRunToObjective)
     LOOP(lblWaiting)
 
+    /********
+       RUN!
+    *********/
     Label(lblRunToObjective)
-        RunToPad(PAD_PRESET1)
+    RunToPad(PAD_PRESET1)
 
-    DO(lblNext)                                                     /* wait for guard to stop moving (reached destination/guard was shot) */
+    DO(lblNext)                                                 /* wait for guard to stop moving (reached destination/guard was shot) */
         IFImOnPatrolOrStopped(lblDone)
     LOOP(lblNext)
 
+    /*********
+       DONE
+    **********/
     Label(lblDone)
-        IFMyDistanceToPadGreaterThanMeter( 1, PAD_PRESET1, lblDone) /* if guard is more than 1 meter away from alarm, skip to attack ai list */
-        TRYTriggeringAlarmAtPad(PAD_PRESET1, lblAlarmActivated)
-        GotoNext(lblDone)                                           /* didn't activate alarm (alarm destroyed?) */
+    IFMyDistanceToPadGreaterThanMeter( 1, PAD_PRESET1, lblDone) /* if guard is more than 1 meter away from alarm, skip to attack ai list */
+    TRYTriggeringAlarmAtPad(PAD_PRESET1, lblAlarmActivated)
+    GotoNext(lblDone)                                           /* didn't activate alarm (alarm destroyed?) */
 
-    DO(lblAlarmActivated)                                           /* wait for guard to finish activating alarm */
+    DO(lblAlarmActivated)                                       /* wait for guard to finish activating alarm */
         IFImOnPatrolOrStopped(lblDone)
     LOOP(lblAlarmActivated)
 
+    /*********
+       DONE
+    **********/
     Label(lblDone)
-        JUMPTO_THEN_GUARD( GAILIST_RUN_TO_BOND)
+    JUMPTO_THEN_GUARD( GAILIST_RUN_TO_BOND)                     /* Come Here!... Meh, Im just doing my job */
     EndList()
 };
 

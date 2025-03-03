@@ -57,7 +57,7 @@ void chrlvDeathStaggerAnimationRelated        (ChrRecord *self);
 void chrlvAttackActionRelated                 (ChrRecord *self);
 f32 chrlvDistanceToChrRelated                 (ChrRecord *self, s32 arg1, s32 arg2);
 f32 get_distance_actor_to_position            (ChrRecord *self, coord3d *arg1);
-f32 chrlvPathingCollisionRelated              (PropRecord *arg0, f32 arg1, f32 arg2, s32 objFlags, f32 unkHeight, f32 unkA);
+f32 chrlvPathingCollisionRelated              (PropRecord *arg0, f32 arg1, f32 arg2, s32 cdtypes, f32 unkHeight, f32 unkA);
 f32 chrlvPathingCollisionRelated7F0264B0      (PropRecord *arg0, f32 arg1, f32 arg2);
 void triggered_on_shot_hit                    (ChrRecord *self, coord3d *arg1, f32 arg2, s32 req_animation_id, ITEM_IDS item);
 s32 chrlvAttackAnimationRelated7F026F30       (ChrRecord *self, f32 *result);
@@ -126,12 +126,12 @@ void chrlvTickBondDieRemoved                  (ChrRecord *self);
 s32 chrlvApplySpeed                           (ChrRecord *self, coord3d *arg1, s32 arg2, f32 *speedPtr);
 void chrlvTickAttackWalk                      (ChrRecord *self);
 void chrlvTickRunPos                          (ChrRecord *self);
-s32 sub_GAME_7F030128                         (ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, StandTile * arg4, s32 objflags);
-s32 sub_GAME_7F0301FC                         (ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, f32 arg4, s32 arg5);
-s32 sub_GAME_7F0304AC                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, StandTile *arg5, s32 arg6);
+s32 sub_GAME_7F030128                         (ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, StandTile * arg4, s32 cdtypes);
+s32 sub_GAME_7F0301FC                         (ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, f32 arg4, s32 cdtypes);
+s32 sub_GAME_7F0304AC                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, StandTile *arg5, s32 cdtypes);
 void chrlvSwapIfDiffArg2Determinate           (coord3d *arg0, coord3d *arg1, coord3d *arg2);
-s32 sub_GAME_7F03081C                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 arg8);
-s32 sub_GAME_7F030D70                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 arg8);
+s32 sub_GAME_7F03081C                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 cdtypes);
+s32 sub_GAME_7F030D70                         (ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 cdtypes);
 void chrlvTravelTickMagic                     (ChrRecord *self, struct waydata *arg1, f32 arg2, coord3d *arg3, StandTile *arg4);
 void chrlvTravelTick                          (ChrRecord *, coord3d *, StandTile *, struct waydata *);
 void chrlvTickGoPos                           (ChrRecord *self);
@@ -317,6 +317,12 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
             }
         }
     }
+    #ifdef DEBUG
+    else
+    {
+    osSyncPrintf("chr not reset! (prop num=%d chr num=%d stan=%s) ",arg2 + 1, arg1->chrnum, GetStanName(pad->stan));
+    }
+    #endif
 }
 
 /**
@@ -1975,7 +1981,7 @@ void chrlvStanPointPointIntersection(coord3d *arg0, coord3d *arg1, coord3d *resu
 /**
  * Address 0x7F026364.
  */
-f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFlags, f32 unkHeight, f32 unkA)
+f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 cdtypes, f32 unkHeight, f32 unkA)
 {
     coord3d sp5C; // sp92
     f32 dest_x; // sp88
@@ -1997,7 +2003,7 @@ f32 chrlvPathingCollisionRelated(PropRecord *arg0, f32 arg1, f32 arg2, s32 objFl
     chrSetMoving(chr, 0);
     sub_GAME_7F0B1CC4();
 
-    if (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], dest_x, dest_z, objFlags, unkHeight, unkA, 0.0f, 1.0f) != 0)
+    if (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], dest_x, dest_z, cdtypes, unkHeight, unkA, 0.0f, 1.0f) != 0)
     {
         ret = arg2;
     }
@@ -2027,7 +2033,7 @@ f32 chrlvPathingCollisionRelated7F0264B0(PropRecord *arg0, f32 arg1, f32 arg2)
     f32 sp24;
 
     chrGetChrWidthHeight(arg0, &sp24, &sp2C, &sp28);
-    return chrlvPathingCollisionRelated(arg0, arg1, arg2, 0x1F, sp2C, sp28);
+    return chrlvPathingCollisionRelated(arg0, arg1, arg2, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, sp2C, sp28);
 }
 
 
@@ -2385,6 +2391,8 @@ s32 chrlvAttackAnimationRelated7F026F30(ChrRecord *self, f32 *result)
  * - stack resize: ok
  * - identical instructions: fail
  * - identical registers: fail
+ *
+ * this file should be chraction.c and with at this point about 2000 lines above
  *
  * notes: mystery section, seems to be missing something mips_to_c can't see.
  * male_guard_yelp_counter, female_guard_yelp_counter are static, need to be moved from chr.c
@@ -3634,7 +3642,7 @@ void chrlvTravelTickMagic(ChrRecord *self, struct waydata *arg1, f32 arg2, coord
         chrSetMoving(self, 0);
 
         if (
-            (stanTestVolume(&arg4, arg3->f[0], arg3->f[2], self->chrwidth, 0x1F, 0.0f, 1.0f) < 0)
+            (stanTestVolume(&arg4, arg3->f[0], arg3->f[2], self->chrwidth, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, 0.0f, 1.0f) < 0)
             && sub_GAME_7F028510(arg3, arg4))
         {
             self_prop = self->prop;
@@ -4036,7 +4044,7 @@ void set_actor_on_path(ChrRecord *self, struct patrol_path *path)
     if (next_step < 0)
     {
         #ifdef DEBUG
-        osSyncPrintf("Patrol first step not found for chr number %d\n",self->chrnum + 1);
+        osSyncPrintf("Patrol first step not found for chr number %d\n",self->chrnum );
         #endif
         next_step = 0;
     }
@@ -4233,7 +4241,7 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
 
             if (bondviewGetVisibleToGuardsFlag() != 0)
             {
-                if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11B, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+                if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER | CDTYPE_AIOPAQUE, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
                 {
                     setSeenBondTimeToNow(self);
                     ret = 1;
@@ -4244,14 +4252,14 @@ s32 chrlvAttackRelated7F0292A8(ChrRecord *self, coord3d *arg1, StandTile *arg2)
         }
         else if ((flags & 4) != 0)
         {
-            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x117, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_PATHBLOCKER | CDTYPE_AIOPAQUE, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
             {
                 ret = 1;
             }
         }
         else if ((flags & 8) != 0)
         {
-            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], 0x11F, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
+            if ((stanTestLineUnobstructed(&stan, arg1->x, arg1->f[2], sp3C->x, sp3C->f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER | CDTYPE_AIOPAQUE, arg1->f[1], arg1->f[1], sp3C->f[1], sp3C->f[1]) != 0) && (stan == sp40))
             {
                 ret = 1;
             }
@@ -4288,7 +4296,7 @@ bool chrCanSeeBond(ChrRecord *self)
 
         mystan = myprop->stan;
 
-        if (stanTestLineUnobstructed(&mystan, myprop->pos.x, myprop->pos.z, bondprop->pos.x, bondprop->pos.z, 0x11B, myheight, myheight, 0.0f, 1.0f) && (mystan == bondprop->stan))
+        if (stanTestLineUnobstructed(&mystan, myprop->pos.x, myprop->pos.z, bondprop->pos.x, bondprop->pos.z, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER | CDTYPE_AIOPAQUE, myheight, myheight, 0.0f, 1.0f) && (mystan == bondprop->stan))
         {
             setSeenBondTimeToNow(self);
             pass = TRUE;
@@ -4318,7 +4326,7 @@ bool check_if_position_in_same_room(ChrRecord *self, coord3d *pos, StandTile *st
 
     propstan = myprop->stan;
 
-    if (stanTestLineUnobstructed(&propstan, myprop->pos.x, myprop->pos.z, pos->x, pos->z, 0x113, myheight, myheight, 0.0f, 1.0f) && (propstan == stan))
+    if (stanTestLineUnobstructed(&propstan, myprop->pos.x, myprop->pos.z, pos->x, pos->z, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PATHBLOCKER | CDTYPE_AIOPAQUE, myheight, myheight, 0.0f, 1.0f) && (propstan == stan))
     {
         pass = TRUE;
     }
@@ -4435,8 +4443,8 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
     stan = arg0->stan;
 
     if (
-        (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
-        && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+        (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER , sp58, sp54, 0.0f, 1.0f) != 0)
+        && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER , sp58, sp54, 0.0f, 1.0f) != 0)
         )
     {
         sp78 = arg0->pos.f[0] - chrz;
@@ -4448,8 +4456,8 @@ s32 chrlvCall7F0B0E24WithChrWidthHeight(PropRecord *arg0, coord3d *arg1, coord3d
         stan = arg0->stan;
 
         if (
-            (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
-            && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, 0x1F, sp58, sp54, 0.0f, 1.0f) != 0)
+            (stanTestLineUnobstructed(&stan, arg0->pos.f[0], arg0->pos.f[2], sp78, sp74, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER , sp58, sp54, 0.0f, 1.0f) != 0)
+            && (stanTestLineUnobstructed(&stan, sp78, sp74, sp70, sp6C, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER , sp58, sp54, 0.0f, 1.0f) != 0)
             )
         {
             ret = 1;
@@ -5224,6 +5232,12 @@ bool chrGoToPad(ChrRecord *self, s32 padid, SPEED speed)
                 {
                     return TRUE;
                 }
+                #ifdef DEBUG
+                else
+                {
+                    osSyncPrintf("could not go to pad %d!!!\n", padid);
+                    }
+                #endif
             }
             else if (plot_course_for_actor(self, &pad->pos, stan, speed))
             {
@@ -7099,7 +7113,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     }
                 }
 
-                if (stanTestLineUnobstructed(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240.f[0], sp240.f[2], 2, sp240.f[1] - self->ground, sp240.f[1] - self->ground, 0.0f, 1.0f) != 0)
+                if (stanTestLineUnobstructed(&self_stan, self_prop->pos.x, self_prop->pos.f[2], sp240.f[0], sp240.f[2], CDTYPE_DOORS, sp240.f[1] - self->ground, sp240.f[1] - self->ground, 0.0f, 1.0f) != 0)
                 {
                     sp238 = self_stan;
                 }
@@ -7129,7 +7143,7 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
                     sub_GAME_7F0B1CC4();
                     self_stan = sp238;
 
-                    if (stanTestLineUnobstructed(&self_stan, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], 0x1B, sp240.f[1], sp240.f[1], sp258.f[1], sp258.f[1]) == 0)
+                    if (stanTestLineUnobstructed(&self_stan, sp240.f[0], sp240.f[2], sp258.f[0], sp258.f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, sp240.f[1], sp240.f[1], sp258.f[1], sp258.f[1]) == 0)
                     {
                         chrlvStanLineDirIntersection(&sp240, &sp220, &sp258);
                         sp254 = self_stan;
@@ -8567,7 +8581,7 @@ void chrlvTickRunPos(ChrRecord *self)
 /**
  * Address 0x7F030128.
 */
-s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, StandTile * arg4, s32 objflags)
+s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, StandTile * arg4, s32 cdtypes)
 {
     StandTile *sp44;
     s32 sp40;
@@ -8583,7 +8597,7 @@ s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
     chrSetMoving(self, 0);
 
     if (
-        stanTestLineUnobstructed(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], objflags, sp3C, sp38, 0.0f, 1.0f)
+        stanTestLineUnobstructed(&sp44, point->f[0], point->f[2], dest->f[0], dest->f[2], cdtypes, sp3C, sp38, 0.0f, 1.0f)
         && ((arg4 == NULL) || (sp44 == arg4)))
     {
         sp40 = 1;
@@ -8599,7 +8613,7 @@ s32 sub_GAME_7F030128(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
 /**
  * Address 0x7F0301FC.
 */
-s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, f32 arg4, s32 arg5)
+s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d *dest, f32 arg4, s32 cdtypes)
 {
     StandTile *pstan;
     coord3d dd;
@@ -8638,13 +8652,13 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
 
         pstan = arg2;
 
-        if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] + temp_f22, point->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
-            && stanTestLineUnobstructed(&pstan, point->f[0] + temp_f22, point->f[2] - temp_f20, dest->f[0] + temp_f22, dest->f[2] - temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
+        if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] + temp_f22, point->f[2] - temp_f20, cdtypes, sp64, sp60, 0.0f, 1.0f)
+            && stanTestLineUnobstructed(&pstan, point->f[0] + temp_f22, point->f[2] - temp_f20, dest->f[0] + temp_f22, dest->f[2] - temp_f20, cdtypes, sp64, sp60, 0.0f, 1.0f))
         {
             pstan = arg2;
 
-            if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] - temp_f22, point->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f)
-                && stanTestLineUnobstructed(&pstan, point->f[0] - temp_f22, point->f[2] + temp_f20, dest->f[0] - temp_f22, dest->f[2] + temp_f20, arg5, sp64, sp60, 0.0f, 1.0f))
+            if (stanTestLineUnobstructed(&pstan, point->f[0], point->f[2], point->f[0] - temp_f22, point->f[2] + temp_f20, cdtypes, sp64, sp60, 0.0f, 1.0f)
+                && stanTestLineUnobstructed(&pstan, point->f[0] - temp_f22, point->f[2] + temp_f20, dest->f[0] - temp_f22, dest->f[2] + temp_f20, cdtypes, sp64, sp60, 0.0f, 1.0f))
             {
                 ret = 1;
             }
@@ -8661,7 +8675,7 @@ s32 sub_GAME_7F0301FC(ChrRecord *self, coord3d *point, StandTile *arg2, coord3d 
 /**
  * Address 0x7F0304AC.
 */
-s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3d *arg3, coord3d *bondpos, StandTile *bondstan, s32 arg6)
+s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3d *arg3, coord3d *bondpos, StandTile *bondstan, s32 cdtypes)
 {
     StandTile *sp44;
     bool pass;
@@ -8676,11 +8690,11 @@ s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3
     chrGetChrWidthHeight(self->prop, &sp34, &sp3C, &sp38);
     chrSetMoving(self, 0);
 
-    if (stanTestLineUnobstructed(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, arg6, sp3C, sp38, 0.0f, 1.0f))
+    if (stanTestLineUnobstructed(&sp44, mypos->x, mypos->z, arg3->x, arg3->z, cdtypes, sp3C, sp38, 0.0f, 1.0f))
     {
         sp30 = sp44; // duplicate var? needed?
 
-        if (stanTestLineUnobstructed(&sp30, arg3->x, arg3->z, bondpos->x, bondpos->z, arg6, sp3C, sp38, 0.0f, 1.0f)
+        if (stanTestLineUnobstructed(&sp30, arg3->x, arg3->z, bondpos->x, bondpos->z, cdtypes, sp3C, sp38, 0.0f, 1.0f)
             && ((bondstan == NULL) || (sp30 == bondstan)))
         {
             pass = TRUE;
@@ -8699,7 +8713,7 @@ s32 sub_GAME_7F0304AC(ChrRecord *self, coord3d *mypos, StandTile *mystan, coord3
  *
  * Address 0x7F0305E0.
 */
-s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, f32 arg5, s32 arg6)
+s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, f32 arg5, s32 cdtypes)
 {
     StandTile *sp4C;
     s32 sp48;
@@ -8714,13 +8728,13 @@ s32 sub_GAME_7F0305E0(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     chrGetChrWidthHeight(self->prop, &sp3C, &sp44, &sp40);
     chrSetMoving(self, 0);
 
-    if (stanTestLineUnobstructed(&sp4C, arg1->x, arg1->f[2], arg3->x, arg3->f[2], arg6, sp44, sp40, 0.0f, 1.0f))
+    if (stanTestLineUnobstructed(&sp4C, arg1->x, arg1->f[2], arg3->x, arg3->f[2], cdtypes, sp44, sp40, 0.0f, 1.0f))
     {
         sp38 = sp4C;
 
-        if (stanTestLineUnobstructed(&sp38, arg3->x, arg3->f[2], arg4->x, arg4->f[2], arg6, sp44, sp40, 0.0f, 1.0f)
-            && sub_GAME_7F0301FC(self, arg1, arg2, arg3, arg5, arg6)
-            && sub_GAME_7F0301FC(self, arg3, sp4C, arg4, arg5, arg6))
+        if (stanTestLineUnobstructed(&sp38, arg3->x, arg3->f[2], arg4->x, arg4->f[2], cdtypes, sp44, sp40, 0.0f, 1.0f)
+            && sub_GAME_7F0301FC(self, arg1, arg2, arg3, arg5, cdtypes)
+            && sub_GAME_7F0301FC(self, arg3, sp4C, arg4, arg5, cdtypes))
         {
             sp48 = 1;
         }
@@ -8773,7 +8787,7 @@ void chrlvSwapIfDiffArg2Determinate(coord3d *arg0, coord3d *arg1, coord3d *arg2)
  * Very similar to @see sub_GAME_7F030D70 .
  * Address 0x7F03081C.
 */
-s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 arg8)
+s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 cdtypes)
 {
     StandTile *spAC;
     coord3d spA0;
@@ -8831,7 +8845,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         arg1->f[2],
         arg1->f[0] + sp98,
         arg1->f[2] - sp9C,
-        arg8,
+        cdtypes,
         sp4C,
         sp48,
         0.0f,
@@ -8842,7 +8856,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
             arg1->f[2] - sp9C,
             (arg3->f[0] + sp90) + (spA0.f[0] * arg6),
             (arg3->f[2] - sp94) + (spA0.f[2] * arg6),
-            arg8,
+            cdtypes,
             sp4C,
             sp48,
             0.0f,
@@ -8862,7 +8876,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         arg1->f[2],
         arg1->f[0] - sp98,
         arg1->f[2] + sp9C,
-        arg8,
+        cdtypes,
         sp4C,
         sp48,
         0.0f,
@@ -8873,7 +8887,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
             arg1->f[2] + sp9C,
             (arg3->f[0] - sp90) + (spA0.f[0] * arg6),
             (arg3->f[2] + sp94) + (spA0.f[2] * arg6),
-            arg8,
+            cdtypes,
             sp4C,
             sp48,
             0.0f,
@@ -8922,8 +8936,8 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     {
         spAC = arg2;
 
-        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
-            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
+        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], cdtypes, sp4C, sp48, 0.0f, 1.0f)
+            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, cdtypes, sp4C, sp48) < 0)
         {
             sp50 = 1;
         }
@@ -8945,7 +8959,7 @@ s32 sub_GAME_7F03081C(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
  *
  * Address 0x7F030D70.
 */
-s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 arg8)
+s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *arg3, coord3d *arg4, coord3d *arg5, f32 arg6, f32 arg7, s32 cdtypes)
 {
     StandTile *spAC;
     coord3d spA0;
@@ -9005,7 +9019,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         arg1->f[2],
         arg1->f[0] + sp98,
         arg1->f[2] - sp9C,
-        arg8,
+        cdtypes,
         sp4C,
         sp48,
         0.0f,
@@ -9016,7 +9030,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
             arg1->f[2] - sp9C,
             (arg3->f[0] + sp90) + (spA0.f[0] * arg6),
             (arg3->f[2] - sp94) + (spA0.f[2] * arg6),
-            arg8,
+            cdtypes,
             sp4C,
             sp48,
             0.0f,
@@ -9038,7 +9052,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
         arg1->f[2],
         arg1->f[0] - sp98,
         arg1->f[2] + sp9C,
-        arg8,
+        cdtypes,
         sp4C,
         sp48,
         0.0f,
@@ -9049,7 +9063,7 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
             arg1->f[2] + sp9C,
             (arg3->f[0] - sp90) + (spA0.f[0] * arg6),
             (arg3->f[2] + sp94) + (spA0.f[2] * arg6),
-            arg8,
+            cdtypes,
             sp4C,
             sp48,
             0.0f,
@@ -9110,8 +9124,8 @@ s32 sub_GAME_7F030D70(ChrRecord *self, coord3d *arg1, StandTile *arg2, coord3d *
     {
         spAC = arg2;
 
-        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], arg8, sp4C, sp48, 0.0f, 1.0f)
-            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, arg8, sp4C, sp48) < 0)
+        if (stanTestLineUnobstructed(&spAC, arg1->f[0], arg1->f[2], arg3->f[0], arg3->f[2], cdtypes, sp4C, sp48, 0.0f, 1.0f)
+            && stanTestVolume(&spAC, arg3->f[0], arg3->f[2], arg7, cdtypes, sp4C, sp48) < 0)
         {
             sp50 = 1;
         }
@@ -9142,7 +9156,7 @@ s32 sub_GAME_7F03130C(
     coord3d *arg6,
     struct waydata *arg7,
     f32 arg8,
-    s32 arg9,
+    s32 cdtypes,
     s32 set_copy)
 {
     PropRecord *self_prop; // -- 124
@@ -9198,8 +9212,8 @@ s32 sub_GAME_7F03130C(
     sp64.f[1] = arg1->f[1];
     sp64.f[2] = arg1->f[2] + sp50.f[2];
 
-    if (sub_GAME_7F03081C(self, &self_prop->pos, self_prop->stan, &sp64, sp4C, sp48, arg8, self->chrwidth, arg9)
-        && ((arg5 == 0) || sub_GAME_7F0304AC(self, &self_prop->pos, self_prop->stan, &sp64, arg6, NULL, arg9)))
+    if (sub_GAME_7F03081C(self, &self_prop->pos, self_prop->stan, &sp64, sp4C, sp48, arg8, self->chrwidth, cdtypes)
+        && ((arg5 == 0) || sub_GAME_7F0304AC(self, &self_prop->pos, self_prop->stan, &sp64, arg6, NULL, cdtypes)))
     {
         if (set_copy != 0)
         {
@@ -9262,16 +9276,16 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
     s32 max;
     f32 atan_pos;
     s32 temp_t1;
-    s32 phi_s6;
+    s32 cdtypes;
     PropRecord *phi_s3;
     s32 stack_01;
     s32 stack_02;
 
     self_prop = self->prop;
-    phi_s6 = 0x801D;
+    cdtypes = CDTYPE_OBJS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER | CDTYPE_DOORSLOCKEDTOAI;
     if ((self->hidden & CHRHIDDEN_OFFSCREEN_PATROL) != 0)
     {
-        phi_s6 = 0x1F;
+        cdtypes = CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER;
     }
 
     max=1;
@@ -9283,7 +9297,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
             sp100.f[1] = arg1->f[1];
             sp100.f[2] = arg1->f[2];
 
-            if (sub_GAME_7F03081C(self, &self_prop->pos, self_prop->stan, &sp100, &arg3->pos2, &arg3->pos3, -(self->chrwidth), self->chrwidth, 0x10) != 0)
+            if (sub_GAME_7F03081C(self, &self_prop->pos, self_prop->stan, &sp100, &arg3->pos2, &arg3->pos3, -(self->chrwidth), self->chrwidth, CDTYPE_PATHBLOCKER) != 0)
             {
                 arg3->unk02 = (u8) 1;
                 arg3->pos.f[0] = sp100.f[0];
@@ -9357,7 +9371,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
         }
         else if (arg3->mode == WAYMODE_4)
         {
-            if (sub_GAME_7F030D70(self, &self_prop->pos, self_prop->stan, &arg3->pos, &arg3->pos2, &arg3->pos3, -(self->chrwidth), self->chrwidth, phi_s6) != 0)
+            if (sub_GAME_7F030D70(self, &self_prop->pos, self_prop->stan, &arg3->pos, &arg3->pos2, &arg3->pos3, -(self->chrwidth), self->chrwidth, cdtypes) != 0)
             {
                 arg3->unk03 = max;
                 arg3->mode = WAYMODE_0;
@@ -9411,7 +9425,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
 
             if (atan_pos2_a < atan_pos3_a)
             {
-                if (sub_GAME_7F03130C(self, &arg3->pos2, 1, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, phi_s6, 1) != 0)
+                if (sub_GAME_7F03130C(self, &arg3->pos2, 1, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, cdtypes, 1) != 0)
                 {
                     arg3->mode = WAYMODE_0;
                     break;
@@ -9447,7 +9461,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
                         atan_pos3_b = -atan_pos3_b;
                     }
 
-                    if ((atan_pos3_b < atan_pos2_b) && (sub_GAME_7F03130C(self, &spF4, 0, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, phi_s6, 1) != 0))
+                    if ((atan_pos3_b < atan_pos2_b) && (sub_GAME_7F03130C(self, &spF4, 0, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, cdtypes, 1) != 0))
                     {
                         arg3->mode = WAYMODE_0;
                         break;
@@ -9456,7 +9470,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
             }
             else
             {
-                if (sub_GAME_7F03130C(self,  &arg3->pos3, 0, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, phi_s6, 1) != 0)
+                if (sub_GAME_7F03130C(self,  &arg3->pos3, 0, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, cdtypes, 1) != 0)
                 {
                     arg3->mode = WAYMODE_0;
                     break;
@@ -9492,7 +9506,7 @@ void chrlvTravelTick(ChrRecord *self, coord3d *arg1, StandTile *arg2, struct way
                         atan_pos3_c = -atan_pos3_c;
                     }
 
-                    if ((atan_pos3_c < atan_pos2_c) && (sub_GAME_7F03130C(self, &spF4, 1, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, phi_s6, 1) != 0))
+                    if ((atan_pos3_c < atan_pos2_c) && (sub_GAME_7F03130C(self, &spF4, 1, &spF4, spe0, 0, NULL, arg3, spe0 * 1.1f, cdtypes, 1) != 0))
                     {
                         arg3->mode = WAYMODE_0;
                         break;
@@ -9735,8 +9749,8 @@ void chrlvTickGoPos(ChrRecord *self)
                     wp_stan = self->act_gopos.target;
                 }
 
-                if (sub_GAME_7F030128(self, &self_prop->pos, self_prop->stan, wp_pos, wp_stan, 0x10)
-                    && sub_GAME_7F0301FC(self, &self_prop->pos, self_prop->stan, wp_pos, self->chrwidth * 1.2f, 0x10))
+                if (sub_GAME_7F030128(self, &self_prop->pos, self_prop->stan, wp_pos, wp_stan, CDTYPE_PATHBLOCKER)
+                    && sub_GAME_7F0301FC(self, &self_prop->pos, self_prop->stan, wp_pos, self->chrwidth * 1.2f, CDTYPE_PATHBLOCKER))
                 {
                     chrlvActGoposIncCurIndex(self);
                     chrlvActGoposIncCurIndex(self);
@@ -9765,8 +9779,8 @@ void chrlvTickGoPos(ChrRecord *self)
                 wp_stan = self->act_gopos.target;
             }
 
-            if (sub_GAME_7F030128(self, &self_prop->pos, self_prop->stan, wp_pos, wp_stan, 0x10)
-                && sub_GAME_7F0301FC(self, &self_prop->pos, self_prop->stan, wp_pos, self->chrwidth * 1.2f, 0x10))
+            if (sub_GAME_7F030128(self, &self_prop->pos, self_prop->stan, wp_pos, wp_stan, CDTYPE_PATHBLOCKER)
+                && sub_GAME_7F0301FC(self, &self_prop->pos, self_prop->stan, wp_pos, self->chrwidth * 1.2f, CDTYPE_PATHBLOCKER))
             {
                 chrlvActGoposIncCurIndex(self);
             }
@@ -10211,6 +10225,12 @@ s32 chrResolvePadId(ChrRecord *guardData,s32 padNo)
     // Guard's target pad.
     if (padNo == PAD_PRESET1)
     {
+        #ifdef DEBUG
+        if (guardData->padpreset1 < 0)
+        {
+            osSyncPrintf("preset less than zero char = %d\n", guardData->chrnum);
+        }
+        #endif
         padNo = (s32)guardData->padpreset1;
     }
 
@@ -11154,7 +11174,7 @@ bool chrAdjustPosForSpawn(coord3d *pos, StandTile **arg1, f32 facing, bool allow
     s = *arg1;
     spp = &s;
 
-    if ((stanTestVolume(spp, pos->f[0], pos->z, 20.0f, 0x1F, 0.0f, 1.0f) < 0) &&
+    if ((stanTestVolume(spp, pos->f[0], pos->z, 20.0f, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, 0.0f, 1.0f) < 0) &&
         (allowonscreen || chrIsPosOffScreen(pos, *arg1)))
     {
         return TRUE;
@@ -11168,8 +11188,8 @@ bool chrAdjustPosForSpawn(coord3d *pos, StandTile **arg1, f32 facing, bool allow
 
         s = *arg1;
 
-        if (stanTestLineUnobstructed(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], 0x13, 0.0f, 1.0f, 0.0f, 1.0f)
-            && (stanTestVolume(spp, testpos.f[0], testpos.f[2], 20.0f, 0x1F, 0.0f, 1.0f) < 0)
+        if (stanTestLineUnobstructed(spp, pos->f[0], pos->f[2], testpos.f[0], testpos.f[2], CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PATHBLOCKER, 0.0f, 1.0f, 0.0f, 1.0f)
+            && (stanTestVolume(spp, testpos.f[0], testpos.f[2], 20.0f, CDTYPE_OBJS | CDTYPE_DOORS | CDTYPE_PLAYERS | CDTYPE_CHRS | CDTYPE_PATHBLOCKER, 0.0f, 1.0f) < 0)
             && (allowonscreen || chrIsPosOffScreen(&testpos, s)))
         {
             *arg1 = s;
@@ -11260,6 +11280,7 @@ PropRecord *chrSpawnAtPad(ChrRecord *self, s32 bodynum, s32 headnum, s32 padid, 
     {
         pad = (PadRecord *)&g_CurrentSetup.boundpads[getBoundPadNum(padid)];
     }
+    //<- not here...
     #ifdef ENABLE_LOG
     osSyncPrintf("%s%s new char x = %f, y = %f, z = %f \n", "", "", pad->pos.x, pad->pos.y, pad->pos.z);
     #endif

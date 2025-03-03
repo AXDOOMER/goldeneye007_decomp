@@ -542,14 +542,14 @@ typedef union
     // unknown struct, unknown size.
     typedef struct ModelAnimation
     {
-        s32 unk00;
+        s32 address;
         u16 unk04; //nextframe
         u16 unk06;
         u16 unk08;
         u16 unk0A;
         u16 unk0C;
         u16 unk0E;
-                int unk10;
+        int unk10;
         int unk14;
         int unk18;
         int unk1c;
@@ -698,7 +698,7 @@ typedef union
         u32     unk28;          /*0x28*/
         u32     unk2c;          /*0x2c*/
 
-        s32     unk30;          /*0x30*/
+        s32     PropType;          /*0x30*/
         rgba_u8 envcolour;      /*0x34*/
         rgba_u8 fogcolour;      /*0x38*/
         u32     cullmode;       /*0x3c*/
@@ -2196,7 +2196,7 @@ typedef union
         /**
          * Maybe float. Something related to draw (render) distance.
          */
-        f32                Unk18;
+        f32                zDepth;                          /*0x18*/
         struct PropRecord *parent;                          /*0x1c*/
         struct PropRecord *child;                           /*0x20*/
         struct PropRecord *prev;                            /*0x24*/

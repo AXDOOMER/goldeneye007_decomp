@@ -5,17 +5,23 @@
 #include "bondgame.h"
 
 //bss
-char dword_CODE_bss_80069170[0x2D0];
+
+// Where animation frames are saved. Can possibly hold as much as nine, but the game will ever store four at maximum.
+char animations_frame_buffer[0x2D0];
+
+// Msg Queue stuff (unused)
 OSMesgQueue animMsgQ;
-char dword_CODE_bss_80069458[0xC0];
+char dword_CODE_bss_80069458[0xC0]; // Unused. Possibly meant for unused message queue.
 OSMesg animMesg[8];
+
+// Animation table ptr
 struct animation_table_data * ptr_animation_table;
 
 //data
 struct bondstruct_unk_animation_related D_80029D60 = {
     NULL,
-    &dword_CODE_bss_80069170,
-    &dword_CODE_bss_80069170
+    &animations_frame_buffer, // Two pointers. One always points to the start of the buffer, the other can be modified.
+    &animations_frame_buffer
 };
 
 s32 animation_table_ptrs1[] = {
@@ -314,16 +320,16 @@ glabel expand_ani_table_entries
 
 void alloc_load_expand_ani_table(void)
 {
-    s32 sp18;
+    s32 animsDataSegmentSize;
     
     osCreateMesgQueue(&animMsgQ, animMesg, 8);
     sub_GAME_7F0009E0(&D_80029D60, &animMsgQ, &dword_CODE_bss_80069458);
     
-    sp18 = (s32)&_animation_dataSegmentEnd - (s32)&_animation_dataSegmentStart;
+    animsDataSegmentSize = (s32)&_animation_dataSegmentEnd - (s32)&_animation_dataSegmentStart;
     
-    ptr_animation_table = mempAllocBytesInBank(sp18, MEMPOOL_PERMANENT);
+    ptr_animation_table = mempAllocBytesInBank(animsDataSegmentSize, MEMPOOL_PERMANENT);
 
-    romCopy(ptr_animation_table, &_animation_dataSegmentRomStart, sp18);
+    romCopy(ptr_animation_table, &_animation_dataSegmentRomStart, animsDataSegmentSize);
     expand_ani_table_entries((s32*)&animation_table_ptrs1);
     expand_ani_table_entries((s32*)&animation_table_ptrs2);
 }
