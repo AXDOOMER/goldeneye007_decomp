@@ -1831,7 +1831,11 @@ def_7F06BEEC:
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06C010(void) {
+/*
+* Address: 0x7F06C010
+* https://decomp.me/scratch/IDiXU
+*/
+void sub_GAME_7F06C010(ModelNode **head, /*s32 unused, s32 unused2,*/ s32 *arg3, s32 *arg4) {
 
 }
 #else
