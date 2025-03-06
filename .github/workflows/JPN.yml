@@ -71,7 +71,7 @@ jobs:
      
       - name: Upload output files
 
-        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+        uses: AXDOOMER/copy_file_to_another_repo_action@e54ae5087212906dac7ef96dee19e31190913257
 
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -82,7 +82,6 @@ jobs:
           destination_repo: 'kholdfuzion/goldeneyestatus'
           user_email: $API_TOKEN_EMAIL
           user_name: $API_TOKEN_USER
-          source_file: |
-            tools/report/JPN.htm
-      
+          source_file: tools/report/JPN.htm
+
 #need way of telling report that JP passed/failed
