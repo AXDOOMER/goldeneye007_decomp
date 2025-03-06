@@ -216,7 +216,8 @@ ifneq (,$(shell which armips 2>/dev/null))
 else
   ARMIPS              := $(TOOLS_DIR)/armips
 endif
-ASM_PREPROC := python3 tools/asmpreproc/asm-processor.py
+ASM_PROCESSOR_DIR := tools/asm-processor
+ASM_PREPROC := python3 $(ASM_PROCESSOR_DIR)/asm_processor.py
 
 OBJCOPY := $(TOOLCHAIN)objcopy
 
@@ -280,10 +281,10 @@ $(BUILD_DIR)/$(OBSEGMENT): $(OBSEG_RZ) $(IMAGE_OBJS)
 # convert AI_PRINT commands from readable to byte-array
 $(BUILD_DIR)/src/%.o: src/%.c
 	@if grep -q 'GLOBAL_ASM(' $<; then \
-		$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); \
-		$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude tools/asmpreproc/prelude.s; \
+		$(ASM_PREPROC) $(OPTIMIZATION) $< | $(CC) -c $(CFLAGS) $(ASM_PROCESSOR_DIR)/include-stdin.c -o $@ $(OPTIMIZATION); \
+		$(ASM_PREPROC) $(OPTIMIZATION) $< --post-process $@ --assembler "$(AS) $(ASFLAGS)" --asm-prelude $(ASM_PROCESSOR_DIR)/prelude.inc; \
 	elif [ "$$(basename $<)" = "chraidata.c" ]; then \
-		$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION); \
+		$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) $(ASM_PROCESSOR_DIR)/include-stdin.c -o $@ $(OPTIMIZATION); \
 	else \
 		$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<; \
 	fi
@@ -308,7 +309,7 @@ $(BUILD_DIR)/assets/obseg/%.o: assets/obseg/%.s $(OBSEG_RZ)
 #Build C files in assets/
 $(BUILD_DIR)/assets/%.o: assets/%.c
 ifeq ($(filter-out %setup%,$<),)
-	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) tools/asmpreproc/include-stdin.c -o $@ $(OPTIMIZATION)
+	$(ConvertAIPRINT) $< | $(CC) -c $(CFLAGS) $(ASM_PROCESSOR_DIR)/include-stdin.c -o $@ $(OPTIMIZATION)
 else
 	$(CC) -c $(CFLAGS) -o $@ $(OPTIMIZATION) $<
 endif

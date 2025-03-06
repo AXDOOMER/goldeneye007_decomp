@@ -3579,6 +3579,7 @@ glabel jpt_weapon_bullet_type
 .word weapon_bullet_type_pistol
 .word weapon_bullet_type_none
 .word weapon_bullet_type_none
+.size jpt_weapon_bullet_type, . - jpt_weapon_bullet_type
 
 .text
 glabel handles_firing_or_throwing_weapon_in_hand
@@ -5364,6 +5365,8 @@ glabel jpt_weapon_bullet_type
 .word weapon_bullet_type_pistol
 .word weapon_bullet_type_none
 .word weapon_bullet_type_none
+.size jpt_weapon_bullet_type, . - jpt_weapon_bullet_type
+
 .text
 glabel handles_firing_or_throwing_weapon_in_hand
 /* 095058 7F0604E8 27BDFD58 */  addiu $sp, $sp, -0x2a8
@@ -7150,6 +7153,7 @@ glabel jpt_weapon_bullet_type
 .word weapon_bullet_type_pistol
 .word weapon_bullet_type_none
 .word weapon_bullet_type_none
+.size jpt_weapon_bullet_type, . - jpt_weapon_bullet_type
 
 .text
 glabel handles_firing_or_throwing_weapon_in_hand
@@ -13290,6 +13294,7 @@ glabel jpt_80054084
 .word Weapon_shooting_throwable
 .word Weapon_shooting_throwable
 .word Weapon_shooting_watch_magnet
+.size jpt_80054084, . - jpt_80054084
 
 glabel D_80054170
 .word 0x40c90fdb /*6.2831855*/
@@ -13374,6 +13379,7 @@ glabel jpt_80054194
 .word weapon_playsfx_gun
 .word weapon_switchstyle_NONE
 .word weapon_switchstyle_NONE
+.size jpt_80054194, . - jpt_80054194
 
 glabel D_8005428C
 .word 0x3f32b8c3 /*0.69813174*/
@@ -16123,6 +16129,7 @@ glabel jpt_80054084
 .word Weapon_shooting_throwable
 .word Weapon_shooting_throwable
 .word Weapon_shooting_watch_magnet
+.size jpt_80054084, . - jpt_80054084
 
 glabel D_80054170
 .word 0x40c90fdb /*6.2831855*/
@@ -16207,6 +16214,7 @@ glabel jpt_80054194
 .word weapon_playsfx_gun
 .word weapon_switchstyle_NONE
 .word weapon_switchstyle_NONE
+.size jpt_80054194, . - jpt_80054194
 
 glabel D_8005428C
 .word 0x3f32b8c3 /*0.69813174*/
@@ -18981,6 +18989,7 @@ glabel jpt_80054084
 .word Weapon_shooting_throwable
 .word Weapon_shooting_throwable
 .word Weapon_shooting_watch_magnet
+.size jpt_80054084, . - jpt_80054084
 
 glabel D_80054170
 .word 0x40c90fdb /*6.2831855*/
@@ -19065,6 +19074,7 @@ glabel jpt_80054194
 .word weapon_playsfx_gun
 .word weapon_switchstyle_NONE
 .word weapon_switchstyle_NONE
+.size jpt_80054194, . - jpt_80054194
 
 glabel D_8005428C
 .word 0x3f32b8c3 /*0.69813174*/

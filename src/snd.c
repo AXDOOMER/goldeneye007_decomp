@@ -1468,6 +1468,7 @@ glabel jpt_80029160
  .word .L700088D4
  .word .L700088D4
  .word .L700084F0
+ .size jpt_80029160, . - jpt_80029160
 )
 #endif
 

@@ -8781,6 +8781,8 @@ glabel jpt_intro_bond_head
  .word .L7F018830
  .word .L7F018844
  .word .L7F018858
+ .size jpt_intro_bond_head, . - jpt_intro_bond_head
+
 glabel D_80051B00
 .word 0x40C90FDB /*6.2831855;*/
 glabel D_80051B04
@@ -9375,6 +9377,7 @@ glabel jpt_intro_bond_head
  .word .L7F018830
  .word .L7F018844
  .word .L7F018858
+ .size jpt_intro_bond_head, . - jpt_intro_bond_head
 glabel D_80051B00
 .word 0x40C90FDB /*6.2831855;*/
 glabel D_80051B04

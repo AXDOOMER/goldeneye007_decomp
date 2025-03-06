@@ -34,7 +34,7 @@ glabel resolve_TLBaddress_for_InvalidHit
 /* 0027A0 70001BA0 00000000 */  nop   
 /* 0027A4 70001BA4 00000000 */  nop   
 /* 0027A8 70001BA8 42000018 */  eret  
-
+.size resolve_TLBaddress_for_InvalidHit, . - resolve_TLBaddress_for_InvalidHit
 
 
 

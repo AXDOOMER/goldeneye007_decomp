@@ -1988,6 +1988,7 @@ glabel jpt_bondcuff
 .word cuff_6_moore
 .word cuff_7_dalton
 .word cuff_8_variable_bond_head
+.size jpt_bondcuff, . - jpt_bondcuff
 
 /*D:80055008*/
 glabel jpt_bondhead
@@ -2580,6 +2581,7 @@ glabel jpt_bondcuff
 .word cuff_6_moore
 .word cuff_7_dalton
 .word cuff_8_variable_bond_head
+.size jpt_bondcuff, . - jpt_bondcuff
 
 /*D:80055008*/
 glabel jpt_bondhead
@@ -3185,6 +3187,7 @@ glabel jpt_bondcuff
 .word cuff_6_moore
 .word cuff_7_dalton
 .word cuff_8_variable_bond_head
+.size jpt_bondcuff, . - jpt_bondcuff
 
 /*D:80055008*/
 glabel jpt_bondhead
@@ -14721,6 +14724,7 @@ glabel jpt_mpspawntype
 .word mp_spawntype_intro_anim
 .word mp_spawntype_handcuff
 .word mp_spawntype_intro_camera
+.size jpt_mpspawntype, . - jpt_mpspawntype
 
 glabel D_800552AC
 .word 0xb8d1b717 /*-0.000099999997*/
@@ -15020,6 +15024,7 @@ glabel jpt_mpspawntype
 .word mp_spawntype_intro_anim
 .word mp_spawntype_handcuff
 .word mp_spawntype_intro_camera
+.size jpt_mpspawntype, . - jpt_mpspawntype
 
 glabel D_800552AC
 .word 0xb8d1b717 /*-0.000099999997*/

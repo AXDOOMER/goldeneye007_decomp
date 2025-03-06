@@ -793,6 +793,7 @@ glabel jpt_MP_overlays_scoring
 .word team_player_kills
 .word team_player_kills
 .word team_player_kills
+.size jpt_MP_overlays_scoring, . - jpt_MP_overlays_scoring
 
 .text
 glabel get_points_for_mp_player
@@ -1353,6 +1354,7 @@ glabel jpt_MP_menu_window_text
 .word text_exit
 .word text_exit
 .word text_blank
+.size jpt_MP_menu_window_text, . - jpt_MP_menu_window_text
 
 .text
 glabel mp_watch_menu_display
@@ -3511,6 +3513,7 @@ def_7F0C40C0:
 /* 0FAB6C 7F0C603C 8FB10038 */  lw    $s1, 0x38($sp)
 /* 0FAB70 7F0C6040 03E00008 */  jr    $ra
 /* 0FAB74 7F0C6044 27BD00D8 */   addiu $sp, $sp, 0xd8
+.size mp_watch_menu_display, . - mp_watch_menu_display
 )
 #endif
 
