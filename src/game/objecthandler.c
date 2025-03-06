@@ -490,6 +490,7 @@ glabel jpt_800544E4
 .word .L7F06B6A4
 .word .L7F06B6A4
 .word .L7F06B428
+.size jpt_800544E4, . - jpt_800544E4
 
 .text
 glabel sub_GAME_7F06B29C
@@ -1660,6 +1661,7 @@ glabel jpt_damage_detail
 .word .L7F06BFC8
 .word .L7F06BFBC
 .word .L7F06BFC8
+.size jpt_damage_detail, . - jpt_damage_detail
 
 /*D:800545F8*/
 glabel D_800545F8
