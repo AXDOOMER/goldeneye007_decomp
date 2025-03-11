@@ -927,6 +927,18 @@ glabel sub_GAME_7F0B38B4
 
 
 #ifdef NONMATCHING
+/**
+ * Address 0x7F0B39BC.
+ *
+ * decomp status:
+ * - compiles: ?
+ * - stack resize: ?
+ * - identical instructions: fail
+ * - identical registers: fail
+ *
+ * https://decomp.me/scratch/GKQcb
+ *
+*/
 void sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize,s32 next)
 {
     int i;
@@ -1321,6 +1333,8 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
  * - stack resize: ok
  * - identical instructions: fail
  * - identical registers: fail
+ * 
+ * https://decomp.me/scratch/DRX9U
  *
  * notes: can't read g_BgNumberOfRoomsDrawn the correct number of times.
 */

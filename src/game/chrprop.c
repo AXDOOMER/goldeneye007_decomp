@@ -475,6 +475,8 @@ Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
  * - identical instructions: fail
  * - identical registers: fail
  *
+ * https://decomp.me/scratch/JMiZY
+ * 
  * notes: can't seem to iterate the prop lists correctly. Maybe type definitions are wrong?
 */
 Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
@@ -788,6 +790,18 @@ glabel chrpropsRenderPass
 
 
 #ifdef NONMATCHING
+/**
+ * Address 0x7F03A97C.
+ *
+ * decomp status:
+ * - compiles: ?
+ * - stack resize: ?
+ * - identical instructions: fail
+ * - identical registers: fail
+ *
+ * https://decomp.me/scratch/LyWo4
+ *
+*/
 s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
     s32 sp34;
     s32 sp30;
