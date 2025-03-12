@@ -579,101 +579,28 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 
 
 
-#ifdef NONMATCHING
 /**
  * Address 0x7F03A97C.
- *
- * decomp status:
- * - compiles: ?
- * - stack resize: ?
- * - identical instructions: fail
- * - identical registers: fail
- *
- * https://decomp.me/scratch/LyWo4
- *
 */
 s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
-    s32 sp34;
-    s32 sp30;
-    s32 sp2C;
-    s32 sp28;
-    s32 sp24;
-    s32 sp20;
+    s32 sp2C[3];
+    s32 sp20[3];
     s_room_info* temp_v0;
 
     temp_v0 = &g_BgRoomInfo[index];
     if (temp_v0->ptr_unique_collision_points != NULL) {
-        sp20 = (s32) temp_v0->minbounds.f[0];
-        sp24 = (s32) temp_v0->minbounds.f[1];
-        sp28 = (s32) temp_v0->minbounds.f[2];
-        sp2C = (s32) temp_v0->maxbounds.f[0];
-        sp30 = (s32) temp_v0->maxbounds.f[1];
-        sp34 = (s32) temp_v0->maxbounds.f[2];
-        if (bgTestLineIntersectsBbox(arg1, arg2, &sp20, &sp2C) != 0) {
+        sp20[0] = temp_v0->minbounds.f[0];
+        sp20[1] = temp_v0->minbounds.f[1];
+        sp20[2] = temp_v0->minbounds.f[2];
+        sp2C[0] = temp_v0->maxbounds.f[0];
+        sp2C[1] = temp_v0->maxbounds.f[1];
+        sp2C[2] = temp_v0->maxbounds.f[2];
+        if (bgTestLineIntersectsBbox(arg1, arg2, sp20, sp2C) != 0) {
             return 1;
         }
     }
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03A97C
-/* 06F4AC 7F03A97C 00047080 */  sll   $t6, $a0, 2
-/* 06F4B0 7F03A980 01C47021 */  addu  $t6, $t6, $a0
-/* 06F4B4 7F03A984 3C0F8004 */  lui   $t7, %hi(g_BgRoomInfo)
-/* 06F4B8 7F03A988 25EF1414 */  addiu $t7, %lo(g_BgRoomInfo) # addiu $t7, $t7, 0x1414
-/* 06F4BC 7F03A98C 000E7100 */  sll   $t6, $t6, 4
-/* 06F4C0 7F03A990 01CF1021 */  addu  $v0, $t6, $t7
-/* 06F4C4 7F03A994 8C58002C */  lw    $t8, 0x2c($v0)
-/* 06F4C8 7F03A998 27BDFFC8 */  addiu $sp, $sp, -0x38
-/* 06F4CC 7F03A99C AFBF0014 */  sw    $ra, 0x14($sp)
-/* 06F4D0 7F03A9A0 AFA5003C */  sw    $a1, 0x3c($sp)
-/* 06F4D4 7F03A9A4 13000022 */  beqz  $t8, .L7F03AA30
-/* 06F4D8 7F03A9A8 AFA60040 */   sw    $a2, 0x40($sp)
-/* 06F4DC 7F03A9AC C4440038 */  lwc1  $f4, 0x38($v0)
-/* 06F4E0 7F03A9B0 C448003C */  lwc1  $f8, 0x3c($v0)
-/* 06F4E4 7F03A9B4 C4500040 */  lwc1  $f16, 0x40($v0)
-/* 06F4E8 7F03A9B8 4600218D */  trunc.w.s $f6, $f4
-/* 06F4EC 7F03A9BC C4440044 */  lwc1  $f4, 0x44($v0)
-/* 06F4F0 7F03A9C0 00A02025 */  move  $a0, $a1
-/* 06F4F4 7F03A9C4 4600428D */  trunc.w.s $f10, $f8
-/* 06F4F8 7F03A9C8 C4480048 */  lwc1  $f8, 0x48($v0)
-/* 06F4FC 7F03A9CC 44083000 */  mfc1  $t0, $f6
-/* 06F500 7F03A9D0 4600848D */  trunc.w.s $f18, $f16
-/* 06F504 7F03A9D4 C450004C */  lwc1  $f16, 0x4c($v0)
-/* 06F508 7F03A9D8 440A5000 */  mfc1  $t2, $f10
-/* 06F50C 7F03A9DC 4600218D */  trunc.w.s $f6, $f4
-/* 06F510 7F03A9E0 440C9000 */  mfc1  $t4, $f18
-/* 06F514 7F03A9E4 AFA80020 */  sw    $t0, 0x20($sp)
-/* 06F518 7F03A9E8 4600428D */  trunc.w.s $f10, $f8
-/* 06F51C 7F03A9EC 440E3000 */  mfc1  $t6, $f6
-/* 06F520 7F03A9F0 00C02825 */  move  $a1, $a2
-/* 06F524 7F03A9F4 4600848D */  trunc.w.s $f18, $f16
-/* 06F528 7F03A9F8 44185000 */  mfc1  $t8, $f10
-/* 06F52C 7F03A9FC 27A60020 */  addiu $a2, $sp, 0x20
-/* 06F530 7F03AA00 27A7002C */  addiu $a3, $sp, 0x2c
-/* 06F534 7F03AA04 44089000 */  mfc1  $t0, $f18
-/* 06F538 7F03AA08 AFAA0024 */  sw    $t2, 0x24($sp)
-/* 06F53C 7F03AA0C AFAC0028 */  sw    $t4, 0x28($sp)
-/* 06F540 7F03AA10 AFAE002C */  sw    $t6, 0x2c($sp)
-/* 06F544 7F03AA14 AFB80030 */  sw    $t8, 0x30($sp)
-/* 06F548 7F03AA18 0FC2DB3B */  jal   bgTestLineIntersectsBbox
-/* 06F54C 7F03AA1C AFA80034 */   sw    $t0, 0x34($sp)
-/* 06F550 7F03AA20 50400004 */  beql  $v0, $zero, .L7F03AA34
-/* 06F554 7F03AA24 00001025 */   move  $v0, $zero
-/* 06F558 7F03AA28 10000002 */  b     .L7F03AA34
-/* 06F55C 7F03AA2C 24020001 */   li    $v0, 1
-.L7F03AA30:
-/* 06F560 7F03AA30 00001025 */  move  $v0, $zero
-.L7F03AA34:
-/* 06F564 7F03AA34 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 06F568 7F03AA38 27BD0038 */  addiu $sp, $sp, 0x38
-/* 06F56C 7F03AA3C 03E00008 */  jr    $ra
-/* 06F570 7F03AA40 00000000 */   nop
-)
-#endif
-
 
 
 
