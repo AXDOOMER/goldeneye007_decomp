@@ -939,38 +939,49 @@ glabel sub_GAME_7F0B38B4
  * https://decomp.me/scratch/GKQcb
  *
 */
-void sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize,s32 next)
+s32 sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize, s32 next)
 {
     int i;
+    int temp;
 
     g_BgRoomInfo[curroom].room_rendered = '\x01';
 
-    if (g_BgRoomInfo[curroom].room_loaded_mask == '\0') {
-        for (i = 0; i < g_BgNumberOfRoomsDrawn; i++)
-        {
-            if (curroom == dword_CODE_bss_8007FFA0[i].roomid) {
-                if (dword_CODE_bss_8007FFA0[i].unk1 < unk1) {
-                    dword_CODE_bss_8007FFA0[i].unk1 = unk1;
-                }
-                sub_GAME_7F0B5CC0(screensize,&dword_CODE_bss_8007FFA0[i].bbox);
-                dword_CODE_bss_8007FFA0[i].bbox.min.x = screensize->min.x;
-                dword_CODE_bss_8007FFA0[i].bbox.min.y = screensize->min.y;
-                dword_CODE_bss_8007FFA0[i].bbox.max.x = screensize->max.x;
-                dword_CODE_bss_8007FFA0[i].bbox.max.y = screensize->max.y;
-                dword_CODE_bss_8007FFA0[i].next =  next;
-
-                return;
-            }
-        }
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].roomid = curroom;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].unk1 = unk1;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.min.x = screensize->min.x;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.min.y = screensize->min.y;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.max.x = screensize->max.x;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.max.y = screensize->max.y;
-        dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].next = next;
+    if (g_BgRoomInfo[curroom].room_loaded_mask != '\0') {
+        return 0;
     }
-    return;
+
+    // Need g_BgNumberOfRoomsDrawn in a3
+    for (i = 0; i < g_BgNumberOfRoomsDrawn; i++)
+    {
+        if (curroom == dword_CODE_bss_8007FFA0[i].roomid) {
+            if (dword_CODE_bss_8007FFA0[i].unk1 < unk1) {
+                dword_CODE_bss_8007FFA0[i].unk1 = unk1;
+            }
+            sub_GAME_7F0B5CC0(screensize,&dword_CODE_bss_8007FFA0[i].bbox);
+            temp = dword_CODE_bss_8007FFA0[i].next;
+            dword_CODE_bss_8007FFA0[i].bbox.min.x = screensize->min.x;
+            dword_CODE_bss_8007FFA0[i].bbox.min.y = screensize->min.y;
+            dword_CODE_bss_8007FFA0[i].bbox.max.x = screensize->max.x;
+            dword_CODE_bss_8007FFA0[i].bbox.max.y = screensize->max.y;
+            dword_CODE_bss_8007FFA0[i].next = temp | next;
+
+            return temp;
+        }
+    }
+    
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].roomid = curroom;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].unk1 = unk1;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.min.x = screensize->min.x;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.min.y = screensize->min.y;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.max.x = screensize->max.x;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.max.y = screensize->max.y;
+    dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].next = next;
+    g_BgNumberOfRoomsDrawn++;
+
+    // FAKE puts g_BgNumberOfRoomsDrawn in a3
+    if (g_BgNumberOfRoomsDrawn) {}
+    
+    return 0;
 }
 #else
 
