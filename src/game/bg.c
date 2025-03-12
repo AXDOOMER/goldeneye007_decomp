@@ -1334,7 +1334,8 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
  * - identical instructions: fail
  * - identical registers: fail
  * 
- * https://decomp.me/scratch/DRX9U
+ * Should be equivalent.
+ * https://decomp.me/scratch/hw6En
  *
  * notes: can't read g_BgNumberOfRoomsDrawn the correct number of times.
 */
@@ -1347,13 +1348,13 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
     b_min = 99999999;
     b_max = 0;
 
-    for (i=0; i<g_BgNumberOfRoomsDrawn; i++)
+    for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
     {
-        b_max = (b_max < dword_CODE_bss_8007FFA0[i].unk1) ? dword_CODE_bss_8007FFA0[i].unk1 : b_max;
-        b_min = (dword_CODE_bss_8007FFA0[i].unk1 < b_min) ? dword_CODE_bss_8007FFA0[i].unk1 : b_min;
+        b_max = (b_max < dword_CODE_bss_8007FFA0[j].unk1) ? dword_CODE_bss_8007FFA0[j].unk1 : b_max;
+        b_min = (dword_CODE_bss_8007FFA0[j].unk1 < b_min) ? dword_CODE_bss_8007FFA0[j].unk1 : b_min;
     }
 
-    for (i=b_min; i < b_max + 1; i++)
+    for (i=b_min; i <= b_max; i++)
     {
 #ifdef DEBUG
 notdone = g_BgNumberOfRoomsDrawn;
@@ -1421,7 +1422,7 @@ notdone --;
         gdl = explosionCallRenderBulletImpactOnProp(explosionRenderScorchBuffer(gdl));
     }
 
-    for (i=b_max; i > b_min - 1; i--)
+    for (i=b_max; i >= b_min; i--)
     {
    #ifdef DEBUG
 notdone = g_BgNumberOfRoomsDrawn;
@@ -1440,7 +1441,7 @@ notdone = g_BgNumberOfRoomsDrawn;
                         dword_CODE_bss_8007FFA0[j].bbox.f[0][1],
                         dword_CODE_bss_8007FFA0[j].bbox.f[1][0],
                         dword_CODE_bss_8007FFA0[j].bbox.f[1][1]),
-                    0);
+                    1);
 
                 if (get_debug_do_draw_bg())
                 {
