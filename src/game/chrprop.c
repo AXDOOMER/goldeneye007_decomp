@@ -464,20 +464,8 @@ Gfx *chrpropRender(Gfx * gdl, PropRecord *prop, s32 withalpha)
 
 
 
-#ifdef NONMATCHING
-
 /**
  * Address 0x7F03A6F4.
- *
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
- *
- * https://decomp.me/scratch/JMiZY
- * 
- * notes: can't seem to iterate the prop lists correctly. Maybe type definitions are wrong?
 */
 Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 {
@@ -487,7 +475,7 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
     s32 i;
     s32* rp;
     s32 unused2;
-    s32 sp48[PROPRECORD_STAN_ROOM_LEN]; // 72
+    s32 sp48[PROPRECORD_STAN_ROOM_LEN];
     s32 unused3;
     s32 unused4;
 
@@ -521,13 +509,12 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
                 {
                     flag = 1;
                 }
-
+    
                 if (flag != 0)
                 {
-                    flag=0;
-
-                    chraiGetPropRoomIds(prop, &sp48);
-
+                    flag = 0;
+                    chraiGetPropRoomIds(prop, sp48);
+    
                     for (rp = sp48; *rp >= 0; rp++)
                     {
                         if (getROOMID_isRendered(*rp))
@@ -551,21 +538,14 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
     }
     else
     {
-        /**
-         * decomp problem area.
-         * (target) precurser loop comparison seems to be loading g_OnScreenPropList address plus one byte.
-         * This code generates a `beqzl` at the end of the loop (and `bnez` at start), while target
-         * uses `bnezl` (and `bnez` at start).
-         *
-        */
-        for (pp = g_OnScreenPropList; pp <= g_LastOnScreenProp; pp++)
+        for (pp = g_OnScreenPropList; pp < g_LastOnScreenProp; pp++)
         {
             prop = *pp;
-            flag = 0;
 
             if (prop != NULL)
             {
-                chraiGetPropRoomIds(prop, &sp48);
+                flag = 0;
+                chraiGetPropRoomIds(prop, sp48);
 
                 for (rp = sp48; *rp >= 0; rp++)
                 {
@@ -595,196 +575,6 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 
     return bgScissorCurrentPlayerViewDefault(gdl);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel chrpropsRenderPass
-/* 06F224 7F03A6F4 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 06F228 7F03A6F8 AFBF0034 */  sw    $ra, 0x34($sp)
-/* 06F22C 7F03A6FC AFB70030 */  sw    $s7, 0x30($sp)
-/* 06F230 7F03A700 AFB50028 */  sw    $s5, 0x28($sp)
-/* 06F234 7F03A704 AFB40024 */  sw    $s4, 0x24($sp)
-/* 06F238 7F03A708 0080A025 */  move  $s4, $a0
-/* 06F23C 7F03A70C 00C0A825 */  move  $s5, $a2
-/* 06F240 7F03A710 00A0B825 */  move  $s7, $a1
-/* 06F244 7F03A714 AFB6002C */  sw    $s6, 0x2c($sp)
-/* 06F248 7F03A718 AFB30020 */  sw    $s3, 0x20($sp)
-/* 06F24C 7F03A71C AFB2001C */  sw    $s2, 0x1c($sp)
-/* 06F250 7F03A720 AFB10018 */  sw    $s1, 0x18($sp)
-/* 06F254 7F03A724 0C001A57 */  jal   bossGetStageNum
-/* 06F258 7F03A728 AFB00014 */   sw    $s0, 0x14($sp)
-/* 06F25C 7F03A72C 24010036 */  li    $at, 54
-/* 06F260 7F03A730 14410008 */  bne   $v0, $at, .L7F03A754
-/* 06F264 7F03A734 00000000 */   nop
-/* 06F268 7F03A738 16A00003 */  bnez  $s5, .L7F03A748
-/* 06F26C 7F03A73C 24010002 */   li    $at, 2
-/* 06F270 7F03A740 10000083 */  b     .L7F03A950
-/* 06F274 7F03A744 02801025 */   move  $v0, $s4
-.L7F03A748:
-/* 06F278 7F03A748 16A10002 */  bne   $s5, $at, .L7F03A754
-/* 06F27C 7F03A74C 00000000 */   nop
-/* 06F280 7F03A750 0000A825 */  move  $s5, $zero
-.L7F03A754:
-/* 06F284 7F03A754 12A00003 */  beqz  $s5, .L7F03A764
-/* 06F288 7F03A758 24010002 */   li    $at, 2
-/* 06F28C 7F03A75C 16A10043 */  bne   $s5, $at, .L7F03A86C
-/* 06F290 7F03A760 3C138007 */   lui   $s3, %hi(g_OnScreenPropList)
-.L7F03A764:
-/* 06F294 7F03A764 3C138007 */  lui   $s3, %hi(g_LastOnScreenProp)
-/* 06F298 7F03A768 8E731DF0 */  lw    $s3, %lo(g_LastOnScreenProp)($s3)
-/* 06F29C 7F03A76C 3C0E8007 */  lui   $t6, %hi(g_OnScreenPropList)
-/* 06F2A0 7F03A770 25CE1620 */  addiu $t6, %lo(g_OnScreenPropList) # addiu $t6, $t6, 0x1620
-/* 06F2A4 7F03A774 2673FFFC */  addiu $s3, $s3, -4
-/* 06F2A8 7F03A778 026E082B */  sltu  $at, $s3, $t6
-/* 06F2AC 7F03A77C 14200072 */  bnez  $at, .L7F03A948
-/* 06F2B0 7F03A780 27B60048 */   addiu $s6, $sp, 0x48
-/* 06F2B4 7F03A784 8E720000 */  lw    $s2, ($s3)
-.L7F03A788:
-/* 06F2B8 7F03A788 12400030 */  beqz  $s2, .L7F03A84C
-/* 06F2BC 7F03A78C 00000000 */   nop
-/* 06F2C0 7F03A790 16A00007 */  bnez  $s5, .L7F03A7B0
-/* 06F2C4 7F03A794 00008825 */   move  $s1, $zero
-/* 06F2C8 7F03A798 924F0001 */  lbu   $t7, 1($s2)
-/* 06F2CC 7F03A79C 31F80021 */  andi  $t8, $t7, 0x21
-/* 06F2D0 7F03A7A0 57000004 */  bnezl $t8, .L7F03A7B4
-/* 06F2D4 7F03A7A4 24010002 */   li    $at, 2
-/* 06F2D8 7F03A7A8 1000000A */  b     .L7F03A7D4
-/* 06F2DC 7F03A7AC 24110001 */   li    $s1, 1
-.L7F03A7B0:
-/* 06F2E0 7F03A7B0 24010002 */  li    $at, 2
-.L7F03A7B4:
-/* 06F2E4 7F03A7B4 16A10007 */  bne   $s5, $at, .L7F03A7D4
-/* 06F2E8 7F03A7B8 00000000 */   nop
-/* 06F2EC 7F03A7BC 92590001 */  lbu   $t9, 1($s2)
-/* 06F2F0 7F03A7C0 24010001 */  li    $at, 1
-/* 06F2F4 7F03A7C4 33280021 */  andi  $t0, $t9, 0x21
-/* 06F2F8 7F03A7C8 15010002 */  bne   $t0, $at, .L7F03A7D4
-/* 06F2FC 7F03A7CC 00000000 */   nop
-/* 06F300 7F03A7D0 24110001 */  li    $s1, 1
-.L7F03A7D4:
-/* 06F304 7F03A7D4 1220001D */  beqz  $s1, .L7F03A84C
-/* 06F308 7F03A7D8 02402025 */   move  $a0, $s2
-/* 06F30C 7F03A7DC 00008825 */  move  $s1, $zero
-/* 06F310 7F03A7E0 02C02825 */  move  $a1, $s6
-/* 06F314 7F03A7E4 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 06F318 7F03A7E8 02C08025 */   move  $s0, $s6
-/* 06F31C 7F03A7EC 8FA90048 */  lw    $t1, 0x48($sp)
-/* 06F320 7F03A7F0 27AA0048 */  addiu $t2, $sp, 0x48
-/* 06F324 7F03A7F4 0520000F */  bltz  $t1, .L7F03A834
-/* 06F328 7F03A7F8 00000000 */   nop
-/* 06F32C 7F03A7FC 8D440000 */  lw    $a0, ($t2)
-.L7F03A800:
-/* 06F330 7F03A800 0FC2D794 */  jal   getROOMID_isRendered
-/* 06F334 7F03A804 00000000 */   nop
-/* 06F338 7F03A808 50400007 */  beql  $v0, $zero, .L7F03A828
-/* 06F33C 7F03A80C 8E040004 */   lw    $a0, 4($s0)
-/* 06F340 7F03A810 8E0B0000 */  lw    $t3, ($s0)
-/* 06F344 7F03A814 16EB0007 */  bne   $s7, $t3, .L7F03A834
-/* 06F348 7F03A818 00000000 */   nop
-/* 06F34C 7F03A81C 10000005 */  b     .L7F03A834
-/* 06F350 7F03A820 24110001 */   li    $s1, 1
-/* 06F354 7F03A824 8E040004 */  lw    $a0, 4($s0)
-.L7F03A828:
-/* 06F358 7F03A828 26100004 */  addiu $s0, $s0, 4
-/* 06F35C 7F03A82C 0481FFF4 */  bgez  $a0, .L7F03A800
-/* 06F360 7F03A830 00000000 */   nop
-.L7F03A834:
-/* 06F364 7F03A834 12200005 */  beqz  $s1, .L7F03A84C
-/* 06F368 7F03A838 02802025 */   move  $a0, $s4
-/* 06F36C 7F03A83C 02402825 */  move  $a1, $s2
-/* 06F370 7F03A840 0FC0E98B */  jal   chrpropRender
-/* 06F374 7F03A844 00003025 */   move  $a2, $zero
-/* 06F378 7F03A848 0040A025 */  move  $s4, $v0
-.L7F03A84C:
-/* 06F37C 7F03A84C 3C0C8007 */  lui   $t4, %hi(g_OnScreenPropList)
-/* 06F380 7F03A850 258C1620 */  addiu $t4, %lo(g_OnScreenPropList) # addiu $t4, $t4, 0x1620
-/* 06F384 7F03A854 2673FFFC */  addiu $s3, $s3, -4
-/* 06F388 7F03A858 026C082B */  sltu  $at, $s3, $t4
-/* 06F38C 7F03A85C 5020FFCA */  beql  $at, $zero, .L7F03A788
-/* 06F390 7F03A860 8E720000 */   lw    $s2, ($s3)
-/* 06F394 7F03A864 10000038 */  b     .L7F03A948
-/* 06F398 7F03A868 00000000 */   nop
-.L7F03A86C:
-/* 06F39C 7F03A86C 3C158007 */  lui   $s5, %hi(g_LastOnScreenProp)
-/* 06F3A0 7F03A870 26B51DF0 */  addiu $s5, %lo(g_LastOnScreenProp) # addiu $s5, $s5, 0x1df0
-/* 06F3A4 7F03A874 8EAD0000 */  lw    $t5, ($s5)
-/* 06F3A8 7F03A878 3C0E8007 */  lui   $t6, %hi(g_OnScreenPropList+1)
-/* 06F3AC 7F03A87C 25CE1621 */  addiu $t6, %lo(g_OnScreenPropList+1) # addiu $t6, $t6, 0x1621
-/* 06F3B0 7F03A880 01AE082B */  sltu  $at, $t5, $t6
-/* 06F3B4 7F03A884 14200030 */  bnez  $at, .L7F03A948
-/* 06F3B8 7F03A888 26731620 */   addiu $s3, $s3, %lo(g_OnScreenPropList)
-/* 06F3BC 7F03A88C 27B60048 */  addiu $s6, $sp, 0x48
-/* 06F3C0 7F03A890 8E720000 */  lw    $s2, ($s3)
-.L7F03A894:
-/* 06F3C4 7F03A894 00008825 */  move  $s1, $zero
-/* 06F3C8 7F03A898 02C02825 */  move  $a1, $s6
-/* 06F3CC 7F03A89C 12400025 */  beqz  $s2, .L7F03A934
-/* 06F3D0 7F03A8A0 02402025 */   move  $a0, $s2
-/* 06F3D4 7F03A8A4 0FC0F2E3 */  jal   chraiGetPropRoomIds
-/* 06F3D8 7F03A8A8 02C08025 */   move  $s0, $s6
-/* 06F3DC 7F03A8AC 8FAF0048 */  lw    $t7, 0x48($sp)
-/* 06F3E0 7F03A8B0 27B80048 */  addiu $t8, $sp, 0x48
-/* 06F3E4 7F03A8B4 05E0000F */  bltz  $t7, .L7F03A8F4
-/* 06F3E8 7F03A8B8 00000000 */   nop
-/* 06F3EC 7F03A8BC 8F040000 */  lw    $a0, ($t8)
-.L7F03A8C0:
-/* 06F3F0 7F03A8C0 0FC2D794 */  jal   getROOMID_isRendered
-/* 06F3F4 7F03A8C4 00000000 */   nop
-/* 06F3F8 7F03A8C8 50400007 */  beql  $v0, $zero, .L7F03A8E8
-/* 06F3FC 7F03A8CC 8E040004 */   lw    $a0, 4($s0)
-/* 06F400 7F03A8D0 8E190000 */  lw    $t9, ($s0)
-/* 06F404 7F03A8D4 16F90007 */  bne   $s7, $t9, .L7F03A8F4
-/* 06F408 7F03A8D8 00000000 */   nop
-/* 06F40C 7F03A8DC 10000005 */  b     .L7F03A8F4
-/* 06F410 7F03A8E0 24110001 */   li    $s1, 1
-/* 06F414 7F03A8E4 8E040004 */  lw    $a0, 4($s0)
-.L7F03A8E8:
-/* 06F418 7F03A8E8 26100004 */  addiu $s0, $s0, 4
-/* 06F41C 7F03A8EC 0481FFF4 */  bgez  $a0, .L7F03A8C0
-/* 06F420 7F03A8F0 00000000 */   nop
-.L7F03A8F4:
-/* 06F424 7F03A8F4 52200010 */  beql  $s1, $zero, .L7F03A938
-/* 06F428 7F03A8F8 8EAA0000 */   lw    $t2, ($s5)
-/* 06F42C 7F03A8FC 92480001 */  lbu   $t0, 1($s2)
-/* 06F430 7F03A900 02802025 */  move  $a0, $s4
-/* 06F434 7F03A904 02402825 */  move  $a1, $s2
-/* 06F438 7F03A908 31090020 */  andi  $t1, $t0, 0x20
-/* 06F43C 7F03A90C 51200005 */  beql  $t1, $zero, .L7F03A924
-/* 06F440 7F03A910 02802025 */   move  $a0, $s4
-/* 06F444 7F03A914 0FC0E98B */  jal   chrpropRender
-/* 06F448 7F03A918 00003025 */   move  $a2, $zero
-/* 06F44C 7F03A91C 0040A025 */  move  $s4, $v0
-/* 06F450 7F03A920 02802025 */  move  $a0, $s4
-.L7F03A924:
-/* 06F454 7F03A924 02402825 */  move  $a1, $s2
-/* 06F458 7F03A928 0FC0E98B */  jal   chrpropRender
-/* 06F45C 7F03A92C 24060001 */   li    $a2, 1
-/* 06F460 7F03A930 0040A025 */  move  $s4, $v0
-.L7F03A934:
-/* 06F464 7F03A934 8EAA0000 */  lw    $t2, ($s5)
-.L7F03A938:
-/* 06F468 7F03A938 26730004 */  addiu $s3, $s3, 4
-/* 06F46C 7F03A93C 026A082B */  sltu  $at, $s3, $t2
-/* 06F470 7F03A940 5420FFD4 */  bnezl $at, .L7F03A894
-/* 06F474 7F03A944 8E720000 */   lw    $s2, ($s3)
-.L7F03A948:
-/* 06F478 7F03A948 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
-/* 06F47C 7F03A94C 02802025 */   move  $a0, $s4
-.L7F03A950:
-/* 06F480 7F03A950 8FBF0034 */  lw    $ra, 0x34($sp)
-/* 06F484 7F03A954 8FB00014 */  lw    $s0, 0x14($sp)
-/* 06F488 7F03A958 8FB10018 */  lw    $s1, 0x18($sp)
-/* 06F48C 7F03A95C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 06F490 7F03A960 8FB30020 */  lw    $s3, 0x20($sp)
-/* 06F494 7F03A964 8FB40024 */  lw    $s4, 0x24($sp)
-/* 06F498 7F03A968 8FB50028 */  lw    $s5, 0x28($sp)
-/* 06F49C 7F03A96C 8FB6002C */  lw    $s6, 0x2c($sp)
-/* 06F4A0 7F03A970 8FB70030 */  lw    $s7, 0x30($sp)
-/* 06F4A4 7F03A974 03E00008 */  jr    $ra
-/* 06F4A8 7F03A978 27BD0070 */   addiu $sp, $sp, 0x70
-)
-#endif
-
 
 
 
