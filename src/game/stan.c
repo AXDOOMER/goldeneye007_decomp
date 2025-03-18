@@ -2438,7 +2438,8 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 }
 
 
-
+// TODO: remove this struct.
+// This should be a StanTile, offset 08 onwards are for the points.
 struct stan_7F0B0E24 {
     s32 unk00;
     s32 unk04;
@@ -3318,17 +3319,7 @@ glabel sub_GAME_7F0B0D0C
 )
 #endif
 
-// TODO: remove this struct.
-// This should be a StanTile, offset 08 onwards are for the points.
-struct stan_7F0B0E24 {
-    /***/
-    s32 unk00;
-    s32 unk04;
-    s16 unk08;
-    s16 unk0A;
-    s16 unk0C;
-    s16 unk0E;
-};
+
 /**
  * Can change global variables:
  *
