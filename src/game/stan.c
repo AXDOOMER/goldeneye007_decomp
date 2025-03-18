@@ -2438,12 +2438,8 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 }
 
 
-// Sig for caller matches
-f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x,f32 p_z);
 
-#ifdef NONMATCHING
 struct stan_7F0B0E24 {
-    /***/
     s32 unk00;
     s32 unk04;
     s16 unk08;
@@ -2452,7 +2448,7 @@ struct stan_7F0B0E24 {
     s16 unk0E;
 };
 
-// decomp.me 98.89% https://decomp.me/scratch/tj1r4
+
 f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
 {
     f32 temp_f0;
@@ -2460,8 +2456,7 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     f32 temp_f14;
     s32 var_a0;
     s32 padding3;
-    s32 padding4;
-    //s32 padding;
+
     f32 tempf;
     struct stan_7F0B0E24 *temp_a2;
     struct stan_7F0B0E24 *temp_v1;
@@ -2470,21 +2465,13 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     assert(ei<getsides(sf));
     #endif
 
-    if (start3index != 2)
-    {
-        var_a0 = start3index + 1;
-    }
-    else
-    {
-        var_a0 = 0;
-    }
+    var_a0 = ((start3index != 2) ? start3index + 1 : 0);
 
-    var_a0 = tile->tail.half >> (8 - (var_a0 * 4));
-    temp_v1 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( var_a0) & 0xF)));
+    start3index = (tile->tail.half >> (8 - (start3index << 2))) & 0xF;
+    var_a0 = (tile->tail.half >> (8 - (var_a0 << 2))) & 0xF;
 
-    start3index = tile->tail.half >> (8 - (start3index * 4));
-    temp_a2 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + (( start3index) & 0xF)));
-
+    temp_v1 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + var_a0));
+    temp_a2 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + start3index));
 
     temp_f2 = (f32) (temp_v1->unk08 - temp_a2->unk08);
     temp_f14 = (f32) (temp_v1->unk0C - temp_a2->unk0C);
@@ -2495,6 +2482,7 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     {
         return 0.0f;
     }
+
     #ifdef DEBUG
     assert(d>0.0f);
     #endif
@@ -2502,86 +2490,6 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     tempf = (((p_z - (f32) temp_a2->unk0C) * -temp_f2) + (temp_f14 * (p_x - (f32) temp_a2->unk08)));
     return tempf / temp_f0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0400
-/* 0E4F30 7F0B0400 27BDFFC0 */  addiu $sp, $sp, -0x40
-/* 0E4F34 7F0B0404 AFA7004C */  sw    $a3, 0x4c($sp)
-/* 0E4F38 7F0B0408 24010002 */  li    $at, 2
-/* 0E4F3C 7F0B040C 00803825 */  move  $a3, $a0
-/* 0E4F40 7F0B0410 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E4F44 7F0B0414 AFA40040 */  sw    $a0, 0x40($sp)
-/* 0E4F48 7F0B0418 10A10003 */  beq   $a1, $at, .L7F0B0428
-/* 0E4F4C 7F0B041C AFA60048 */   sw    $a2, 0x48($sp)
-/* 0E4F50 7F0B0420 10000002 */  b     .L7F0B042C
-/* 0E4F54 7F0B0424 24A40001 */   addiu $a0, $a1, 1
-.L7F0B0428:
-/* 0E4F58 7F0B0428 00002025 */  move  $a0, $zero
-.L7F0B042C:
-/* 0E4F5C 7F0B042C 84E20006 */  lh    $v0, 6($a3)
-/* 0E4F60 7F0B0430 24080008 */  li    $t0, 8
-/* 0E4F64 7F0B0434 00057080 */  sll   $t6, $a1, 2
-/* 0E4F68 7F0B0438 0004C880 */  sll   $t9, $a0, 2
-/* 0E4F6C 7F0B043C 010E7823 */  subu  $t7, $t0, $t6
-/* 0E4F70 7F0B0440 01194823 */  subu  $t1, $t0, $t9
-/* 0E4F74 7F0B0444 01E22807 */  srav  $a1, $v0, $t7
-/* 0E4F78 7F0B0448 01222007 */  srav  $a0, $v0, $t1
-/* 0E4F7C 7F0B044C 30B8000F */  andi  $t8, $a1, 0xf
-/* 0E4F80 7F0B0450 308A000F */  andi  $t2, $a0, 0xf
-/* 0E4F84 7F0B0454 000A58C0 */  sll   $t3, $t2, 3
-/* 0E4F88 7F0B0458 001860C0 */  sll   $t4, $t8, 3
-/* 0E4F8C 7F0B045C 00EC3021 */  addu  $a2, $a3, $t4
-/* 0E4F90 7F0B0460 00EB1821 */  addu  $v1, $a3, $t3
-/* 0E4F94 7F0B0464 846D0008 */  lh    $t5, 8($v1)
-/* 0E4F98 7F0B0468 84CE0008 */  lh    $t6, 8($a2)
-/* 0E4F9C 7F0B046C 8478000C */  lh    $t8, 0xc($v1)
-/* 0E4FA0 7F0B0470 84D9000C */  lh    $t9, 0xc($a2)
-/* 0E4FA4 7F0B0474 01AE7823 */  subu  $t7, $t5, $t6
-/* 0E4FA8 7F0B0478 448F2000 */  mtc1  $t7, $f4
-/* 0E4FAC 7F0B047C 03194823 */  subu  $t1, $t8, $t9
-/* 0E4FB0 7F0B0480 44893000 */  mtc1  $t1, $f6
-/* 0E4FB4 7F0B0484 468020A0 */  cvt.s.w $f2, $f4
-/* 0E4FB8 7F0B0488 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0E4FBC 7F0B048C 468033A0 */  cvt.s.w $f14, $f6
-/* 0E4FC0 7F0B0490 46021202 */  mul.s $f8, $f2, $f2
-/* 0E4FC4 7F0B0494 E7A20038 */  swc1  $f2, 0x38($sp)
-/* 0E4FC8 7F0B0498 460E7282 */  mul.s $f10, $f14, $f14
-/* 0E4FCC 7F0B049C E7AE0034 */  swc1  $f14, 0x34($sp)
-/* 0E4FD0 7F0B04A0 0C007DF8 */  jal   sqrtf
-/* 0E4FD4 7F0B04A4 460A4300 */   add.s $f12, $f8, $f10
-/* 0E4FD8 7F0B04A8 44806000 */  mtc1  $zero, $f12
-/* 0E4FDC 7F0B04AC 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 0E4FE0 7F0B04B0 C7A20038 */  lwc1  $f2, 0x38($sp)
-/* 0E4FE4 7F0B04B4 460C0032 */  c.eq.s $f0, $f12
-/* 0E4FE8 7F0B04B8 C7AE0034 */  lwc1  $f14, 0x34($sp)
-/* 0E4FEC 7F0B04BC 46000406 */  mov.s $f16, $f0
-/* 0E4FF0 7F0B04C0 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E4FF4 7F0B04C4 45020004 */  bc1fl .L7F0B04D8
-/* 0E4FF8 7F0B04C8 84CA000C */   lh    $t2, 0xc($a2)
-/* 0E4FFC 7F0B04CC 10000010 */  b     .L7F0B0510
-/* 0E5000 7F0B04D0 46006006 */   mov.s $f0, $f12
-/* 0E5004 7F0B04D4 84CA000C */  lh    $t2, 0xc($a2)
-.L7F0B04D8:
-/* 0E5008 7F0B04D8 C7B2004C */  lwc1  $f18, 0x4c($sp)
-/* 0E500C 7F0B04DC 84CB0008 */  lh    $t3, 8($a2)
-/* 0E5010 7F0B04E0 448A2000 */  mtc1  $t2, $f4
-/* 0E5014 7F0B04E4 46001287 */  neg.s $f10, $f2
-/* 0E5018 7F0B04E8 468021A0 */  cvt.s.w $f6, $f4
-/* 0E501C 7F0B04EC 46069201 */  sub.s $f8, $f18, $f6
-/* 0E5020 7F0B04F0 448B3000 */  mtc1  $t3, $f6
-/* 0E5024 7F0B04F4 C7B20048 */  lwc1  $f18, 0x48($sp)
-/* 0E5028 7F0B04F8 460A4102 */  mul.s $f4, $f8, $f10
-/* 0E502C 7F0B04FC 46803220 */  cvt.s.w $f8, $f6
-/* 0E5030 7F0B0500 46089281 */  sub.s $f10, $f18, $f8
-/* 0E5034 7F0B0504 460A7182 */  mul.s $f6, $f14, $f10
-/* 0E5038 7F0B0508 46062300 */  add.s $f12, $f4, $f6
-/* 0E503C 7F0B050C 46106003 */  div.s $f0, $f12, $f16
-.L7F0B0510:
-/* 0E5040 7F0B0510 03E00008 */  jr    $ra
-/* 0E5044 7F0B0514 27BD0040 */   addiu $sp, $sp, 0x40
-)
-#endif
 
 
 
