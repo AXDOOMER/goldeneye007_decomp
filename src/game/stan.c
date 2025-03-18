@@ -1672,45 +1672,22 @@ glabel getPointJustInsideOfTileTriple
 
 
 
-#ifdef NONMATCHING
-// Missing addiu sp, sp, -0x10 : I can't get it to use the stack at all.
+/*
+* Address: 0x7F0AFB1C
+ */
 f32 sub_GAME_7F0AFB1C(coord3d *p,coord3d *q)
 {
-  f32 xDiff = q->x - p->x;
-  f32 yDiff = q->y - p->y;
-  f32 zDiff = q->z - p->z;
+    // Should be a coord3d or vec3d, but they used an array which
+    // causes lots of data reads and writes to the stack.
+    f32 components[3];
 
-  return xDiff*xDiff + yDiff*yDiff + zDiff*zDiff;
+    components[0] = q->x - p->x;
+    components[1] = q->y - p->y;
+    components[2] = q->z - p->z;
+
+    return components[0]*components[0] + components[1]*components[1] + components[2]*components[2];
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0AFB1C
-/* 0E464C 7F0AFB1C C4A40000 */  lwc1  $f4, ($a1)
-/* 0E4650 7F0AFB20 C4860000 */  lwc1  $f6, ($a0)
-/* 0E4654 7F0AFB24 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 0E4658 7F0AFB28 46062201 */  sub.s $f8, $f4, $f6
-/* 0E465C 7F0AFB2C E7A80004 */  swc1  $f8, 4($sp)
-/* 0E4660 7F0AFB30 C4900004 */  lwc1  $f16, 4($a0)
-/* 0E4664 7F0AFB34 C4AA0004 */  lwc1  $f10, 4($a1)
-/* 0E4668 7F0AFB38 46105481 */  sub.s $f18, $f10, $f16
-/* 0E466C 7F0AFB3C C7AA0004 */  lwc1  $f10, 4($sp)
-/* 0E4670 7F0AFB40 E7B20008 */  swc1  $f18, 8($sp)
-/* 0E4674 7F0AFB44 C4860008 */  lwc1  $f6, 8($a0)
-/* 0E4678 7F0AFB48 C4A40008 */  lwc1  $f4, 8($a1)
-/* 0E467C 7F0AFB4C 460A5402 */  mul.s $f16, $f10, $f10
-/* 0E4680 7F0AFB50 C7B20008 */  lwc1  $f18, 8($sp)
-/* 0E4684 7F0AFB54 46062201 */  sub.s $f8, $f4, $f6
-/* 0E4688 7F0AFB58 46129102 */  mul.s $f4, $f18, $f18
-/* 0E468C 7F0AFB5C E7A8000C */  swc1  $f8, 0xc($sp)
-/* 0E4690 7F0AFB60 C7A8000C */  lwc1  $f8, 0xc($sp)
-/* 0E4694 7F0AFB64 27BD0010 */  addiu $sp, $sp, 0x10
-/* 0E4698 7F0AFB68 46084282 */  mul.s $f10, $f8, $f8
-/* 0E469C 7F0AFB6C 46048180 */  add.s $f6, $f16, $f4
-/* 0E46A0 7F0AFB70 03E00008 */  jr    $ra
-/* 0E46A4 7F0AFB74 46065000 */   add.s $f0, $f10, $f6
-)
-#endif
+
 
 
 
@@ -2440,6 +2417,7 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 
 // TODO: remove this struct.
 // This should be a StanTile, offset 08 onwards are for the points.
+// StandTile
 struct stan_7F0B0E24 {
     s32 unk00;
     s32 unk04;
@@ -2450,6 +2428,9 @@ struct stan_7F0B0E24 {
 };
 
 
+/*
+* Address: 0x7F0B0400
+*/
 f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
 {
     f32 temp_f0;
