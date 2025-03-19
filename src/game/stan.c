@@ -3367,19 +3367,16 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
 
     if (retval == 0)
     {
-        /// TODO: fix the horrible casts below.
+        s32 padding[2];
 
-        struct stan_7F0B0E24 * stack_padding_1;
-        struct stan_7F0B0E24 * stack_padding_2;
-
-        point_index = (stanSavedColl_pointI + 1) % (s32) (((s16) (stanSavedColl_tile)->tail.half >> 0xC) & 0xF);
+        point_index = (stanSavedColl_pointI + 1) % (s32)((stanSavedColl_tile->tail.half >> 0xC) & 0xF);
         D_800413BC = 1;
 
-        stanSavedColl_pntA.f[0] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + stanSavedColl_pointI))->unk08 * inv_level_scale;
-        stanSavedColl_pntA.f[1] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + stanSavedColl_pointI))->unk0C * inv_level_scale;
+        stanSavedColl_pntA.f[0] = (f32) stanSavedColl_tile->points[stanSavedColl_pointI].x * inv_level_scale;
+        stanSavedColl_pntA.f[1] = (f32) stanSavedColl_tile->points[stanSavedColl_pointI].z * inv_level_scale;
 
-        stanSavedColl_pntB.f[0] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk08 * inv_level_scale;
-        stanSavedColl_pntB.f[1] = (f32) ((struct stan_7F0B0E24 *)((struct StandTilePoint *)stanSavedColl_tile + point_index))->unk0C * inv_level_scale;
+        stanSavedColl_pntB.f[0] = (f32) stanSavedColl_tile->points[point_index].x * inv_level_scale;
+        stanSavedColl_pntB.f[1] = (f32) stanSavedColl_tile->points[point_index].z * inv_level_scale;
 
         sp140 = calculateLineIntersectionFactor(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
     }
