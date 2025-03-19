@@ -2415,19 +2415,6 @@ s32 isPointInsideTriStandTileUnscaled_Maybe(StandTile *tile, f32 p_x, f32 p_z)
 }
 
 
-// TODO: remove this struct.
-// This should be a StanTile, offset 08 onwards are for the points.
-// StandTile
-struct stan_7F0B0E24 {
-    s32 unk00;
-    s32 unk04;
-    s16 unk08;
-    s16 unk0A;
-    s16 unk0C;
-    s16 unk0E;
-};
-
-
 /*
 * Address: 0x7F0B0400
 */
@@ -2437,31 +2424,26 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     f32 temp_f2;
     f32 temp_f14;
     s32 var_a0;
-    s32 padding3;
+    s32 padding;
 
     f32 tempf;
-    struct stan_7F0B0E24 *temp_a2;
-    struct stan_7F0B0E24 *temp_v1;
+    s32 extra_padding[2];
 
     #ifdef DEBUG
     assert(ei<getsides(sf));
     #endif
 
-    var_a0 = ((start3index != 2) ? start3index + 1 : 0);
+    var_a0 = (start3index != 2) ? start3index + 1 : 0;
 
     start3index = (tile->tail.half >> (8 - (start3index << 2))) & 0xF;
     var_a0 = (tile->tail.half >> (8 - (var_a0 << 2))) & 0xF;
 
-    temp_v1 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + var_a0));
-    temp_a2 = ((struct stan_7F0B0E24 *)((struct StandTilePoint *)tile + start3index));
-
-    temp_f2 = (f32) (temp_v1->unk08 - temp_a2->unk08);
-    temp_f14 = (f32) (temp_v1->unk0C - temp_a2->unk0C);
+    temp_f2 = (f32)(tile->points[var_a0].x - tile->points[start3index].x);
+    temp_f14 = (f32)(tile->points[var_a0].z - tile->points[start3index].z);
 
     temp_f0 = sqrtf((temp_f2 * temp_f2) + (temp_f14 * temp_f14));
 
-    if (temp_f0 == 0.0f)
-    {
+    if (temp_f0 == 0.0f) {
         return 0.0f;
     }
 
@@ -2469,10 +2451,9 @@ f32 sub_GAME_7F0B0400(StandTile *tile, s32 start3index, f32 p_x, f32 p_z)
     assert(d>0.0f);
     #endif
 
-    tempf = (((p_z - (f32) temp_a2->unk0C) * -temp_f2) + (temp_f14 * (p_x - (f32) temp_a2->unk08)));
+    tempf = (temp_f14 * (p_x - tile->points[start3index].x)) + ((p_z - tile->points[start3index].z) * -temp_f2);
     return tempf / temp_f0;
 }
-
 
 
 
