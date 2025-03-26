@@ -5138,7 +5138,7 @@ bool chrobjSeparatingAxisTheorem(rect4f* rect1, s32 numvertices0, rect4f* rect2,
  * 
  * So they fixed a bug, but didn't do it the right way so it wouldn't affect performance.
 */
-s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3)
+s32 chrobjTestPolygonsTouchingOrOverlap2D(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3)
 {
 #if defined(VERSION_JP) || defined(VERSION_EU)
     s32 i;
@@ -5330,7 +5330,7 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
                 if ((sp48 > 0)
                     && (sp40 <= sp90)
                     && (sp8C <= sp44)
-                    && (sub_GAME_7F0446B8(sp4C, sp48, sp98, sp94) != 0))
+                    && (chrobjTestPolygonsTouchingOrOverlap2D(sp4C, sp48, sp98, sp94) != 0))
                 {
                     return 0;
                 }

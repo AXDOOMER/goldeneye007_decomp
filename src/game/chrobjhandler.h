@@ -140,7 +140,7 @@ PropRecord* objInitWithModelDef(ObjectRecord* object, ModelFileHeader* header);
 Embedment           *embedmentAllocate(void);
 void objDetach(PropRecord *prop);
 void sub_GAME_7F043650(struct WeaponObjRecord *arg0);
-s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
+s32 chrobjTestPolygonsTouchingOrOverlap2D(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3);
 s32 chrobjTestPointPolygonCollision(struct coord3d *arg0, f32 arg1, struct rect4f *arg2, s32 arg3);
 void maybe_detonate_object_and_its_children(PropRecord *arg0, f32 arg1, struct coord3d *arg2, s32 arg3, s32 owner);
 struct ModelRoData_BoundingBoxRecord* chrobjGetBboxFromObjectRecord(ObjectRecord *arg0);
