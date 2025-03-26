@@ -870,7 +870,7 @@ ModelRenderData D_80031FD0 = {  NULL,
 s32 updateDoorDisplacement(DoorRecord* door);
 s32 objGetShotsTaken(ObjectRecord *);
 void sub_GAME_7F04AC20(PropRecord *prop, ModelRenderData *, s32 arg2);
-bool sub_GAME_7F044414(rect4f* rect1, s32 numvertices0, rect4f* rect2, s32 numvertices1);
+bool chrobjSeparatingAxisTheorem(rect4f* rect1, s32 numvertices0, rect4f* rect2, s32 numvertices1);
 void chrobjSndCreatePostEvent(ALSoundState *state, coord3d *pos, f32 low, f32 high);
 void sub_GAME_7F050DE8(Model* model);
 void remove_obj_from_temp_proxmine_table(WeaponObjRecord* proxy);
@@ -5049,10 +5049,13 @@ void sub_GAME_7F0442DC(PropRecord* prop)
 
 
 /**
+ * Address: 7F044414
+ * Description: Separating Axis Theorem 
+ * 
  * Return true if both blocks are not intersecting on the X/Z plane.
  * PD: cdBlockExcludesBlockLaterally
  */
-bool sub_GAME_7F044414(rect4f* rect1, s32 numvertices0, rect4f* rect2, s32 numvertices1)
+bool chrobjSeparatingAxisTheorem(rect4f* rect1, s32 numvertices0, rect4f* rect2, s32 numvertices1)
 {
     f64 diff2;
     f64 diff1;
@@ -5166,12 +5169,12 @@ s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 ar
     }
 #endif
 
-    if (sub_GAME_7F044414(arg0, arg1, arg2, arg3))
+    if (chrobjSeparatingAxisTheorem(arg0, arg1, arg2, arg3))
     {
         return 0;
     }
 
-    if (sub_GAME_7F044414(arg2, arg3, arg0, arg1))
+    if (chrobjSeparatingAxisTheorem(arg2, arg3, arg0, arg1))
     {
         return 0;
     }
