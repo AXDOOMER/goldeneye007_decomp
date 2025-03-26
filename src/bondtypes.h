@@ -379,7 +379,7 @@ typedef union
     typedef struct StandTilePoint
     {
         inherits coord16; //points for tile
-        u16 link; //link to nother tile
+        u16 link; //link to another tile
     } StandTilePoint;
     /*
     unused struct for clarity of intent

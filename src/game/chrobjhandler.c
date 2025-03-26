@@ -5122,6 +5122,18 @@ bool sub_GAME_7F044414(rect4f* rect1, s32 numvertices0, rect4f* rect2, s32 numve
 /**
  * Address 0x7F0446B8 (NTSC)
  * Address 0x7F0449A0 (NTSC-J)
+ * 
+ * Description: Does a 2D collision check between two (convex?) polygons.
+ * 
+ * Note: The NTSC version is 7 to 8 times faster than the others.
+ *       Was this an attempt at optimization or to fix a bug?
+ * 
+ * Deepseek says JP/EU's new code will detect edges cases such as a polygon
+ * fully contained into another. NTSC's only check is SAT, which misses when
+ * the polygons have edges that don’t overlap. NTSC's code handles 95% of
+ * collisions so it should be called first.
+ * 
+ * So they fixed a bug, but didn't do it the right way so it wouldn't affect performance.
 */
 s32 sub_GAME_7F0446B8(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3)
 {
