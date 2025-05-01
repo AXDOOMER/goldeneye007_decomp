@@ -8114,11 +8114,11 @@ PropRecord *chrGetEquippedWeaponPropWithCheck(ChrRecord *self, GUNHAND hand)
  *
  * Address 0x7F02308C.
  */
-void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y_out, f32 *ground)
+void chrUpdateCollisionBounds(PropRecord *prop, rect4f **polygon, s32 *edges, f32 *y_out, f32 *ground)
 {
     ChrRecord *chr;
 
-    chr = arg0->chr;
+    chr = prop->chr;
 
     if (
         (chr->actiontype != ACT_DIE) &&
@@ -8127,22 +8127,22 @@ void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y
         ((chr->hidden & CHRHIDDEN_MOVING) == 0)
         )
     {
-        *arg2 = 4;
-        *arg1 = &chr->collision_bounds;
+        *edges = 4;
+        *polygon = &chr->collision_bounds;
 
         //collision box is a diamond around chr
 
-        chr->collision_bounds.f[0] = arg0->pos.x + chr->chrwidth;
-        chr->collision_bounds.f[1] = arg0->pos.z;
+        chr->collision_bounds.f[0] = prop->pos.x + chr->chrwidth;
+        chr->collision_bounds.f[1] = prop->pos.z;
 
-        chr->collision_bounds.f[2] = arg0->pos.x;
-        chr->collision_bounds.f[3] = arg0->pos.z + chr->chrwidth;
+        chr->collision_bounds.f[2] = prop->pos.x;
+        chr->collision_bounds.f[3] = prop->pos.z + chr->chrwidth;
 
-        chr->collision_bounds.f[4] = arg0->pos.x - chr->chrwidth;
-        chr->collision_bounds.f[5] = arg0->pos.z;
+        chr->collision_bounds.f[4] = prop->pos.x - chr->chrwidth;
+        chr->collision_bounds.f[5] = prop->pos.z;
 
-        chr->collision_bounds.f[6] = arg0->pos.x;
-        chr->collision_bounds.f[7] = arg0->pos.z - chr->chrwidth;
+        chr->collision_bounds.f[6] = prop->pos.x;
+        chr->collision_bounds.f[7] = prop->pos.z - chr->chrwidth;
 
         *ground = chr->ground;
         *y_out = *ground + chr->chrheight;
@@ -8150,7 +8150,7 @@ void chrUpdateCollisionBounds(PropRecord *arg0, rect4f **arg1, s32 *arg2, f32 *y
         return;
     }
 
-    *arg2 = 0;
+    *edges = 0;
 }
 
 

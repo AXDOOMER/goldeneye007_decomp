@@ -1067,6 +1067,7 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
 
 
 
+// unused / unreferenced
 void chrlvDeathStaggerAnimationRelated(ChrRecord *self)
 {
     chrStopFiring(self);
