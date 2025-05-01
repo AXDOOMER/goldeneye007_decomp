@@ -23600,6 +23600,9 @@ glabel object_interaction
 
 
 #ifdef NONMATCHING
+/*
+* https://decomp.me/scratch/WSRxX  82.48%
+*/
 Gfx * sub_GAME_7F049B58(Gfx *arg0) {
 
 }
