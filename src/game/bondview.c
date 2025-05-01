@@ -5977,8 +5977,8 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
     struct coord3d next_pos; // spb4
     struct coord3d collision1_pt0; // spa8
     struct coord3d collision1_pt1; // sp9c
-    struct rect4f *sp98; // sp98
-    s32 sp94; // sp94
+    struct rect4f *polygon; // sp98
+    s32 edges; // sp94
     struct TankRecord *tank_objrecord; // no stack
     struct ObjectRecord *obj;
     f32 *farr5;
@@ -6009,11 +6009,11 @@ void bondviewCalcUpdatePlayerCollision(struct coord3d *offset, s32 allow_scoot)
 
     if (g_WorldTankProp != NULL)
     {
-        chraiGetCollisionBoundsWithoutY(g_WorldTankProp, &sp98, &sp94);
+        chraiGetCollisionBoundsWithoutY(g_WorldTankProp, &polygon, &edges);
 
         if ((in_tank_flag == 1)
-            || (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, sp98, sp94) != 0)
-            || ((chrobjTestPointPolygonCollision(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, sp98, sp94) != 0)))
+            || (chrpropTestPointInPolygon(&g_CurrentPlayer->field_488.collision_position, polygon, edges) != 0)
+            || ((chrobjTestPointPolygonCollision(&g_CurrentPlayer->field_488.collision_position, g_CurrentPlayer->field_488.collision_radius, polygon, edges) != 0)))
         {
 
             obj = g_WorldTankProp->obj;
@@ -11331,11 +11331,11 @@ void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
                 }
                 else if (prop->type == PROP_TYPE_OBJ)
                 {
-                    struct rect4f *sp64;
-                    s32 sp60;
+                    struct rect4f *polygon;
+                    s32 edges;
 
-                    chraiGetCollisionBoundsWithoutY(prop, &sp64, &sp60);
-                    if ((sp60 > 0) && chrobjTestPolygonsTouchingOrOverlap2D(sp64, sp60, &spB4_tank_collision_bounds, 4))
+                    chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
+                    if ((edges > 0) && chrobjTestPolygonsTouchingOrOverlap2D(polygon, edges, &spB4_tank_collision_bounds, 4))
                     {
                         // Explode destroyable props when the tank touches them
                         maybe_detonate_object_and_its_children(prop, 10000.0f, &prop->obj->runtime_pos, 0x20, get_cur_playernum());

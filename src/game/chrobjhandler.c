@@ -5256,8 +5256,8 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
     f32 temp_f0;
     PropRecord *propss;
     ObjectRecord *temp_v0_2;
-    struct rect4f *sp4C;
-    s32 sp48;
+    struct rect4f *polygon;
+    s32 edges;
     f32 sp44;
     f32 sp40;
 
@@ -5325,12 +5325,12 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
                     (arg0->type != PROP_TYPE_DOOR)
                     || ((prop->type != PROP_TYPE_DOOR) && ((prop->obj->type != PROPDEF_SAFE)) && (prop->obj->type != PROPDEF_AIRCRAFT))))
             {
-                chraiGetCollisionBounds(prop, &sp4C, &sp48, &sp44, &sp40);
+                chraiGetCollisionBounds(prop, &polygon, &edges, &sp44, &sp40);
 
-                if ((sp48 > 0)
+                if ((edges > 0)
                     && (sp40 <= sp90)
                     && (sp8C <= sp44)
-                    && (chrobjTestPolygonsTouchingOrOverlap2D(sp4C, sp48, sp98, sp94) != 0))
+                    && (chrobjTestPolygonsTouchingOrOverlap2D(polygon, edges, sp98, sp94) != 0))
                 {
                     return 0;
                 }
@@ -29702,15 +29702,15 @@ void objDestroySupportedObjects(PropRecord* tableprop, s32 playernum)
     ObjectRecord* tableobj;
     PropRecord* prop;
     rect4f* rect;
-    s32 sp44;
+    s32 edges;
     u8 room;
 
     tableobj = tableprop->obj;
     room = tableprop->stan->room;
 
-    chraiGetCollisionBoundsWithoutY(tableprop, &rect, &sp44);
+    chraiGetCollisionBoundsWithoutY(tableprop, &rect, &edges);
 
-    if (sp44 > 0)
+    if (edges > 0)
     {
         prop = get_ptr_obj_pos_list_current_entry();
         while (prop)
@@ -29720,7 +29720,7 @@ void objDestroySupportedObjects(PropRecord* tableprop, s32 playernum)
                 obj = prop->obj;
                 if ((tableobj->runtime_pos.y < obj->runtime_pos.y)
                         && ((s32) obj->runtime_bitflags & RUNTIMEBITFLAG_00008000)
-                        && (chrpropTestPointInPolygon(&obj->runtime_pos, rect, sp44) != 0))
+                        && (chrpropTestPointInPolygon(&obj->runtime_pos, rect, edges) != 0))
                 {
                     objFall(obj, playernum);
                 }

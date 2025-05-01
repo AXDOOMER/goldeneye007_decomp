@@ -3582,8 +3582,8 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
     s32 roomids[8];
     s16 *temp_s0;
     PropRecord *propss = (PropRecord *)&pos_data_entry;
-    struct rect4f *prect4f; // 68
-    s32 sp40;
+    struct rect4f *polygon; // 68
+    s32 edges;
 
     roomids[0] = arg1->room;
     roomids[1] = -1;
@@ -3595,9 +3595,9 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
 
         if (prop->type == PROP_TYPE_OBJ)
         {
-            chraiGetCollisionBoundsWithoutY(prop, &prect4f, &sp40);
+            chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
 
-            if ((sp40 > 0) && chrpropTestPointInPolygon(arg0, prect4f, sp40))
+            if ((edges > 0) && chrpropTestPointInPolygon(arg0, polygon, edges))
             {
                 return 0;
             }
