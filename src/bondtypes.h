@@ -2426,9 +2426,9 @@ typedef union
     #pragma region IndividualObjectTypes
 
     struct collision_data {
-        s32 unk00;
+        s32 edges; // 0x00
 
-        rect4f unk04;
+        rect4f polygon; // 0x04
 
         s32 unk24;
         s32 unk28;
@@ -2440,10 +2440,10 @@ typedef union
         s32 unk3C;
 
         s32 unk40;
-        f32 unk44;
+        f32 top; // 0x44
 
         // Might be related to collision radius
-        f32 unk48;
+        f32 bottom; // 0x48
     };
 
     typedef struct Projectile {

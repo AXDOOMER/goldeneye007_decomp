@@ -3346,18 +3346,18 @@ void chraiGetPropRoomIds(PropRecord *self, s32 *roomids)
  *
  * Address 0x7F03CC20.
 */
-void chraiGetCollisionBounds(PropRecord *prop, struct rect4f **polygon, s32 *edges, f32 *arg3, f32 *arg4)
+void chraiGetCollisionBounds(PropRecord *prop, struct rect4f **polygon, s32 *edges, f32 *top, f32 *bottom)
 {
     *polygon = NULL;
     *edges = 0;
 
     if (prop->type == PROP_TYPE_CHR)
     {
-        chrUpdateCollisionBounds(prop, polygon, edges, arg3, arg4);
+        chrUpdateCollisionBounds(prop, polygon, edges, top, bottom);
     }
     else if (prop->type == PROP_TYPE_VIEWER)
     {
-        bondviewGetPropHeightRelatedValues(prop, polygon, edges, arg3, arg4);
+        bondviewGetPropHeightRelatedValues(prop, polygon, edges, top, bottom);
     }
     else if (prop->type == PROP_TYPE_WEAPON)
     {
@@ -3365,7 +3365,7 @@ void chraiGetCollisionBounds(PropRecord *prop, struct rect4f **polygon, s32 *edg
     }
     else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_DOOR))
     {
-        sub_GAME_7F04F244(prop, polygon, edges, arg3, arg4);
+        sub_GAME_7F04F244(prop, polygon, edges, top, bottom);
     }
     else if (prop->type == PROP_TYPE_PLAYER)
     {
