@@ -32713,21 +32713,21 @@ void sub_GAME_7F04F218(PropRecord* prop, s32 arg1) {
 }
 
 
-void sub_GAME_7F04F244(PropRecord* prop, rect4f** arg1, s32* arg2, f32* arg3, f32* arg4)
+void sub_GAME_7F04F244(PropRecord* prop, rect4f** polygon, s32* edges, f32* top, f32* bottom)
 {
     ObjectRecord* obj;
     obj = prop->obj;
 
     if ((obj->ptr_allocated_collisiondata_block != NULL) && (obj->flags & PROPFLAG_00000100) && !(obj->state & PROPSTATE_20))
     {
-        *arg2 = obj->ptr_allocated_collisiondata_block->unk00;
-        *arg1 = &obj->ptr_allocated_collisiondata_block->unk04;
-        *arg4 = obj->ptr_allocated_collisiondata_block->unk48;
-        *arg3 = obj->ptr_allocated_collisiondata_block->unk44;
+        *edges = obj->ptr_allocated_collisiondata_block->unk00;
+        *polygon = &obj->ptr_allocated_collisiondata_block->unk04;
+        *bottom = obj->ptr_allocated_collisiondata_block->unk48;
+        *top = obj->ptr_allocated_collisiondata_block->unk44;
         return;
     }
 
-    *arg2 = 0;
+    *edges = 0;
 }
 
 

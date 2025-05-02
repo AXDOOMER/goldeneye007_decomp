@@ -3578,7 +3578,7 @@ void sub_GAME_7F0284DC(ChrRecord *self)
 /**
  * Address 0x7F028510.
 */
-s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
+s32 sub_GAME_7F028510(coord3d *point, StandTile *stan)
 {
     s32 roomids[8];
     s16 *temp_s0;
@@ -3586,7 +3586,7 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
     struct rect4f *polygon; // 68
     s32 edges;
 
-    roomids[0] = arg1->room;
+    roomids[0] = stan->room;
     roomids[1] = -1;
     roomGetProps((s32*)&roomids);
 
@@ -3598,7 +3598,7 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
         {
             chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
 
-            if ((edges > 0) && chrpropTestPointInPolygon(arg0, polygon, edges))
+            if ((edges > 0) && chrpropTestPointInPolygon(point, polygon, edges))
             {
                 return 0;
             }

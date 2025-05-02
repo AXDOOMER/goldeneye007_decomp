@@ -16853,6 +16853,7 @@ void bondviewGetPropHeightRelatedValues(PropRecord *arg0, struct rect4f **field_
     temp_v0 = getPlayerPointerIndex(arg0);
     if (g_playerPointers[temp_v0]->field_AC != 0)
     {
+        // What is this doing and why is it 1 player only?
         if (getPlayerCount() == 1 || g_playerPointers[temp_v0]->bonddead == FALSE)
         {
             if (g_playerPointers[temp_v0]->unknown != 1)
