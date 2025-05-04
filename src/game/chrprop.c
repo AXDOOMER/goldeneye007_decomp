@@ -3346,32 +3346,32 @@ void chraiGetPropRoomIds(PropRecord *self, s32 *roomids)
  *
  * Address 0x7F03CC20.
 */
-void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, f32 *arg3, f32 *arg4)
+void chraiGetCollisionBounds(PropRecord *prop, struct rect4f **polygon, s32 *edges, f32 *top, f32 *bottom)
 {
-    *arg1 = NULL;
-    *arg2 = 0;
+    *polygon = NULL;
+    *edges = 0;
 
-    if (arg0->type == PROP_TYPE_CHR)
+    if (prop->type == PROP_TYPE_CHR)
     {
-        chrUpdateCollisionBounds(arg0, arg1, arg2, arg3, arg4);
+        chrUpdateCollisionBounds(prop, polygon, edges, top, bottom);
     }
-    else if (arg0->type == PROP_TYPE_VIEWER)
+    else if (prop->type == PROP_TYPE_VIEWER)
     {
-        bondviewGetPropHeightRelatedValues(arg0, arg1, arg2, arg3, arg4);
+        bondviewGetPropHeightRelatedValues(prop, polygon, edges, top, bottom);
     }
-    else if (arg0->type == PROP_TYPE_WEAPON)
-    {
-        // nothing to do
-    }
-    else if ((arg0->type == PROP_TYPE_OBJ) || (arg0->type == PROP_TYPE_DOOR))
-    {
-        sub_GAME_7F04F244(arg0, arg1, arg2, arg3, arg4);
-    }
-    else if (arg0->type == PROP_TYPE_PLAYER)
+    else if (prop->type == PROP_TYPE_WEAPON)
     {
         // nothing to do
     }
-    else if (arg0->type == PROP_TYPE_NUL)
+    else if ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_DOOR))
+    {
+        sub_GAME_7F04F244(prop, polygon, edges, top, bottom);
+    }
+    else if (prop->type == PROP_TYPE_PLAYER)
+    {
+        // nothing to do
+    }
+    else if (prop->type == PROP_TYPE_NUL)
     {
         // nothing to do
     }
@@ -3392,12 +3392,12 @@ void chraiGetCollisionBounds(PropRecord *arg0, struct rect4f **arg1, s32 *arg2, 
  *
  * Address 0x7F03CCB0.
 */
-void chraiGetCollisionBoundsWithoutY(PropRecord *arg0, struct rect4f **arg1, s32 *arg2)
+void chraiGetCollisionBoundsWithoutY(PropRecord *prop, struct rect4f **polygon, s32 *edges)
 {
     f32 sp24;
     f32 sp20;
 
-    chraiGetCollisionBounds(arg0, arg1, arg2, &sp24, &sp20);
+    chraiGetCollisionBounds(prop, polygon, edges, &sp24, &sp20);
 }
 
 

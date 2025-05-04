@@ -2426,9 +2426,9 @@ typedef union
     #pragma region IndividualObjectTypes
 
     struct collision_data {
-        s32 unk00;
+        s32 edges; // 0x00
 
-        rect4f unk04;
+        rect4f polygon; // 0x04
 
         s32 unk24;
         s32 unk28;
@@ -2440,10 +2440,10 @@ typedef union
         s32 unk3C;
 
         s32 unk40;
-        f32 unk44;
+        f32 top; // 0x44
 
         // Might be related to collision radius
-        f32 unk48;
+        f32 bottom; // 0x48
     };
 
     typedef struct Projectile {
@@ -3577,7 +3577,7 @@ typedef union
     typedef struct TankRecord
     {
         inherits ObjectRecord;
-        struct collision_data *unk80;
+        struct collision_data *collision /*0x80*/;
         struct rect4f  rect;       /*0x84*/
         //s32 unk88;
         //s32 unk8C;
