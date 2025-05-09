@@ -98,10 +98,10 @@ s32 getPlayerCount(void);
 void set_cur_player_screen_size(u32 width, u32 height);
 void set_cur_player_viewport_size(u32 ulx, u32 uly);
 void skySetStageNum(s32 stagenum);
-void sub_GAME_7F094438(void);
+void skyTick(void);
 Gfx * skyRender(Gfx *arg0);
 void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 arg4, SkyRelated38 *arg5);
-Gfx *sub_GAME_7F097818(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, f32 arg4, bool textured);
-Gfx *sub_GAME_7F098A2C(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, SkyRelated38 *arg4, f32 arg5);
+Gfx *skyRenderTri(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, f32 arg4, bool textured);
+Gfx *skyRenderFull(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, SkyRelated38 *arg4, f32 arg5);
 
 #endif
