@@ -1325,7 +1325,7 @@ u16 *bondinvGetSecondTitlebyIndex(s32 index)
     return get_ptr_second_title_line_item(weaponnum);
 }
 extern f32 get_45_degree_angle(s32 item);
-float bondinvGetDifferent45AngleForIndex(int index)
+f32 bondinvGetDifferent45AngleForIndex(int index)
 {
     return get_45_degree_angle(bondinvGetTextbyInvIndex(index));
 }
