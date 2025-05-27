@@ -35,7 +35,10 @@ PLAYER_ID array_PLAYER_IDs[4];
 //s32 dword_CODE_bss_8007A0C8;
 //s32 dword_CODE_bss_8007A0CC;
 
-void sub_GAME_7F093880(f32 offset_x, f32 offset_y, coord3d* out) {
+/*
+* Address: 0x7F093880
+*/
+void skyGetWorldPosFromScreenPos(f32 offset_x, f32 offset_y, coord3d* out) {
     Mtxf* player_mtxf;
     coord2d coords;
     f32 screen_top;
@@ -48,11 +51,13 @@ void sub_GAME_7F093880(f32 offset_x, f32 offset_y, coord3d* out) {
     mtx4RotateVecInPlace(player_mtxf, out->f);
 }
 
-
-bool sub_GAME_7F0938FC(coord3d *arg0, coord3d *arg1, f32 *arg2)
+/*
+* Address: 0x7F0938FC
+*/
+bool skyIsScreenCornerInSky(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 {
     coord3d *campos = bondviewGetCurrentPlayersPosition();
-    f32 f12 = 2.0f * arg0->y / sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2] + 0.0001f);
+    f32 f12 = 2.0f * corner3dpos->y / sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2] + 0.0001f);
     f32 sp2c;
     f32 f12_2;
     f32 sp24;
@@ -63,30 +68,30 @@ bool sub_GAME_7F0938FC(coord3d *arg0, coord3d *arg1, f32 *arg2)
         f12 = 1.0f;
     }
 
-    *arg2 = 1.0f - f12;
+    *dstfrac = 1.0f - f12;
 
-    if (arg0->y == 0.0f)
+    if (corner3dpos->y == 0.0f)
     {
         sp24 = 0.01f;
     }
     else
     {
-        sp24 = arg0->y;
+        sp24 = corner3dpos->y;
     }
 
     if (sp24 > 0.0f)
     {
         sp2c = (fogGetCurrentEnvironmentp()->CloudRepeat - campos->y) / sp24;
-        f12_2 = sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2]) * sp2c;
+        f12_2 = sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2]) * sp2c;
 
         if (f12_2 > 300000)
         {
             sp2c *= 300000 / f12_2;
         }
 
-        arg1->x = campos->x + sp2c * arg0->f[0];
-        arg1->y = campos->y + sp2c * sp24;
-        arg1->z = campos->z + sp2c * arg0->f[2];
+        dstpos->x = campos->x + sp2c * corner3dpos->f[0];
+        dstpos->y = campos->y + sp2c * sp24;
+        dstpos->z = campos->z + sp2c * corner3dpos->f[2];
 
         return TRUE;
     }
@@ -95,10 +100,13 @@ bool sub_GAME_7F0938FC(coord3d *arg0, coord3d *arg1, f32 *arg2)
 }
 
 
-bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2)
+/*
+* Address: 0x7F093A78
+*/
+bool skyIsCornerInWater(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 {
     coord3d *campos = bondviewGetCurrentPlayersPosition();
-    f32 f12 = -2.0f * arg0->y / sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2] + 0.0001f);
+    f32 f12 = -2.0f * corner3dpos->y / sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2] + 0.0001f);
     f32 sp2c;
     f32 f12_2;
     f32 sp24;
@@ -109,30 +117,30 @@ bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2)
         f12 = 1.0f;
     }
 
-    *arg2 = 1.0f - f12;
+    *dstfrac = 1.0f - f12;
 
-    if (arg0->y == 0.0f)
+    if (corner3dpos->y == 0.0f)
     {
         sp24 = -0.01f;
     }
     else
     {
-        sp24 = arg0->y;
+        sp24 = corner3dpos->y;
     }
 
     if (sp24 < 0.0f)
     {
         sp2c = (fogGetCurrentEnvironmentp()->WaterRepeat - campos->y) / sp24;
-        f12_2 = sqrtf(arg0->f[0] * arg0->f[0] + arg0->f[2] * arg0->f[2]) * sp2c;
+        f12_2 = sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2]) * sp2c;
 
         if (f12_2 > 300000)
         {
             sp2c *= 300000 / f12_2;
         }
 
-        arg1->x = campos->x + sp2c * arg0->f[0];
-        arg1->y = campos->y + sp2c * sp24;
-        arg1->z = campos->z + sp2c * arg0->f[2];
+        dstpos->x = campos->x + sp2c * corner3dpos->f[0];
+        dstpos->y = campos->y + sp2c * sp24;
+        dstpos->z = campos->z + sp2c * corner3dpos->f[2];
 
         return TRUE;
     }
@@ -140,15 +148,17 @@ bool sub_GAME_7F093A78(coord3d *arg0, coord3d *arg1, f32 *arg2)
     return FALSE;
 }
 
-
-void sub_GAME_7F093BFC(coord3d *arg0, coord3d* arg1, coord3d* out) 
+/*
+* Address: 0x7F093BFC
+*/
+void skyCalculateEdgeVertex(coord3d *base, coord3d* ref, coord3d* out) 
 {
-    f32 temp_f0;
+    f32 mult;
 
-    temp_f0 = arg0->y / (arg0->y - arg1->y);
-    out->x = ((arg1->x - arg0->x) * temp_f0) + arg0->x;
+    mult = base->y / (base->y - ref->y);
+    out->x = ((ref->x - base->x) * mult) + base->x;
     out->y = 0.0f;
-    out->z = ((arg1->z - arg0->z) * temp_f0) + arg0->z;
+    out->z = ((ref->z - base->z) * mult) + base->z;
 }
 
 f32 skyClamp(f32 a, f32 b, f32 c)
@@ -187,8 +197,10 @@ void skyChooseCloudVtxColour(SkyRelated18 *arg0, f32 arg1)
     arg0->a = 0xff;
 }
 
-
-void sub_GAME_7F093FA4(SkyRelated18 *arg0, f32 arg1)
+/*
+* Address: 0x7F093FA4
+*/
+void skyChooseWaterVtxColour(SkyRelated18 *arg0, f32 arg1)
 {
     f32 r = fogGetCurrentEnvironmentp()->Red;
     f32 g = fogGetCurrentEnvironmentp()->Green;
@@ -201,7 +213,11 @@ void sub_GAME_7F093FA4(SkyRelated18 *arg0, f32 arg1)
     arg0->a = 0xff;
 }
 
-
+/*
+* Address: 0x7F094298
+* Has to do with converting a float to a 32-bits value that's later read in two 16-bits parts
+* Possibly converting floats to fixed point
+*/
 u32 sub_GAME_7F094298(f32 arg0)
 {
     u32 result;
@@ -228,7 +244,10 @@ void skySetStageNum(s32 stagenum) {
 }
 
 
-void sub_GAME_7F094438(void)
+/*
+* Address: 0x7F094438
+*/
+void skyTick(void)
 {
     #if defined(VERSION_EU)
     g_SkyCloudOffset += g_GlobalTimerDelta;
@@ -337,29 +356,29 @@ Gfx *skyRender(Gfx *gdl)
 
     if (&sp6a4);
 
-    sub_GAME_7F093880(0.0f, 0.0f, &sp6a4);
-    sub_GAME_7F093880(getPlayer_c_screenwidth() - 0.1f, 0.0f, &sp698);
-    sub_GAME_7F093880(0.0f, getPlayer_c_screenheight() - 0.1f, &sp68c);
-    sub_GAME_7F093880(getPlayer_c_screenwidth() - 0.1f, getPlayer_c_screenheight() - 0.1f, &sp680);
+    skyGetWorldPosFromScreenPos(0.0f, 0.0f, &sp6a4);
+    skyGetWorldPosFromScreenPos(getPlayer_c_screenwidth() - 0.1f, 0.0f, &sp698);
+    skyGetWorldPosFromScreenPos(0.0f, getPlayer_c_screenheight() - 0.1f, &sp68c);
+    skyGetWorldPosFromScreenPos(getPlayer_c_screenwidth() - 0.1f, getPlayer_c_screenheight() - 0.1f, &sp680);
 
-    sp538 = sub_GAME_7F0938FC(&sp6a4, &sp644, &sp58c);
-    sp534 = sub_GAME_7F0938FC(&sp698, &sp638, &sp588);
-    sp530 = sub_GAME_7F0938FC(&sp68c, &sp62c, &sp584);
-    sp52c = sub_GAME_7F0938FC(&sp680, &sp620, &sp580);
+    sp538 = skyIsScreenCornerInSky(&sp6a4, &sp644, &sp58c);
+    sp534 = skyIsScreenCornerInSky(&sp698, &sp638, &sp588);
+    sp530 = skyIsScreenCornerInSky(&sp68c, &sp62c, &sp584);
+    sp52c = skyIsScreenCornerInSky(&sp680, &sp620, &sp580);
 
-    sub_GAME_7F093A78(&sp6a4, &sp5e4, &sp56c);
-    sub_GAME_7F093A78(&sp698, &sp5d8, &sp568);
-    sub_GAME_7F093A78(&sp68c, &sp5cc, &sp564);
-    sub_GAME_7F093A78(&sp680, &sp5c0, &sp560);
+    skyIsCornerInWater(&sp6a4, &sp5e4, &sp56c);
+    skyIsCornerInWater(&sp698, &sp5d8, &sp568);
+    skyIsCornerInWater(&sp68c, &sp5cc, &sp564);
+    skyIsCornerInWater(&sp680, &sp5c0, &sp560);
 
     if (sp538 != sp530)
     {
         sp54c = getPlayer_c_screentop() + getPlayer_c_screenheight() * (sp6a4.f[1] / (sp6a4.f[1] - sp68c.f[1]));
 
-        sub_GAME_7F093880(0.0f, sp54c, &sp65c);
-        sub_GAME_7F093BFC(&sp6a4, &sp68c, &sp65c);
-        sub_GAME_7F0938FC(&sp65c, &sp5fc, &sp574);
-        sub_GAME_7F093A78(&sp65c, &sp59c, &sp554);
+        skyGetWorldPosFromScreenPos(0.0f, sp54c, &sp65c);
+        skyCalculateEdgeVertex(&sp6a4, &sp68c, &sp65c);
+        skyIsScreenCornerInSky(&sp65c, &sp5fc, &sp574);
+        skyIsCornerInWater(&sp65c, &sp59c, &sp554);
     }
     else
     {
@@ -370,10 +389,10 @@ Gfx *skyRender(Gfx *gdl)
     {
         sp548 = getPlayer_c_screentop() + getPlayer_c_screenheight() * (sp698.f[1] / (sp698.f[1] - sp680.f[1]));
 
-        sub_GAME_7F093880(getPlayer_c_screenwidth() - 0.1f, sp548, &sp650);
-        sub_GAME_7F093BFC(&sp698, &sp680, &sp650);
-        sub_GAME_7F0938FC(&sp650, &sp5f0, &sp570);
-        sub_GAME_7F093A78(&sp650, &sp590, &sp550);
+        skyGetWorldPosFromScreenPos(getPlayer_c_screenwidth() - 0.1f, sp548, &sp650);
+        skyCalculateEdgeVertex(&sp698, &sp680, &sp650);
+        skyIsScreenCornerInSky(&sp650, &sp5f0, &sp570);
+        skyIsCornerInWater(&sp650, &sp590, &sp550);
     }
     else
     {
@@ -382,20 +401,20 @@ Gfx *skyRender(Gfx *gdl)
 
     if (sp538 != sp534)
     {
-        sub_GAME_7F093880(getPlayer_c_screenleft() + getPlayer_c_screenwidth() * (sp6a4.f[1] / (sp6a4.f[1] - sp698.f[1])), 0.0f, &sp674);
-        sub_GAME_7F093BFC(&sp6a4, &sp698, &sp674);
-        sub_GAME_7F0938FC(&sp674, &sp614, &sp57c);
-        sub_GAME_7F093A78(&sp674, &sp5b4, &sp55c);
+        skyGetWorldPosFromScreenPos(getPlayer_c_screenleft() + getPlayer_c_screenwidth() * (sp6a4.f[1] / (sp6a4.f[1] - sp698.f[1])), 0.0f, &sp674);
+        skyCalculateEdgeVertex(&sp6a4, &sp698, &sp674);
+        skyIsScreenCornerInSky(&sp674, &sp614, &sp57c);
+        skyIsCornerInWater(&sp674, &sp5b4, &sp55c);
     }
 
     if (sp530 != sp52c)
     {
         tmp = getPlayer_c_screenleft() + getPlayer_c_screenwidth() * (sp68c.f[1] / (sp68c.f[1] - sp680.f[1]));
 
-        sub_GAME_7F093880(tmp, getPlayer_c_screenheight() - 0.1f, &sp668);
-        sub_GAME_7F093BFC(&sp68c, &sp680, &sp668);
-        sub_GAME_7F0938FC(&sp668, &sp608, &sp578);
-        sub_GAME_7F093A78(&sp668, &sp5a8, &sp558);
+        skyGetWorldPosFromScreenPos(tmp, getPlayer_c_screenheight() - 0.1f, &sp668);
+        skyCalculateEdgeVertex(&sp68c, &sp680, &sp668);
+        skyIsScreenCornerInSky(&sp668, &sp608, &sp578);
+        skyIsCornerInWater(&sp668, &sp5a8, &sp558);
     }
 
     switch ((sp538 << 3) | (sp534 << 2) | (sp530 << 1) | sp52c)
@@ -427,10 +446,10 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[3].unk0c = sp5c0.f[0];
             sp43c[3].unk10 = sp5c0.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp56c);
-            sub_GAME_7F093FA4(&sp43c[1], sp568);
-            sub_GAME_7F093FA4(&sp43c[2], sp564);
-            sub_GAME_7F093FA4(&sp43c[3], sp560);
+            skyChooseWaterVtxColour(&sp43c[0], sp56c);
+            skyChooseWaterVtxColour(&sp43c[1], sp568);
+            skyChooseWaterVtxColour(&sp43c[2], sp564);
+            skyChooseWaterVtxColour(&sp43c[3], sp560);
             break;
 
         case 3:
@@ -456,10 +475,10 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[3].unk0c = sp590.f[0];
             sp43c[3].unk10 = sp590.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp56c);
-            sub_GAME_7F093FA4(&sp43c[1], sp568);
-            sub_GAME_7F093FA4(&sp43c[2], sp554);
-            sub_GAME_7F093FA4(&sp43c[3], sp550);
+            skyChooseWaterVtxColour(&sp43c[0], sp56c);
+            skyChooseWaterVtxColour(&sp43c[1], sp568);
+            skyChooseWaterVtxColour(&sp43c[2], sp554);
+            skyChooseWaterVtxColour(&sp43c[3], sp550);
             break;
 
         case 12:
@@ -486,10 +505,10 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[3].unk0c = sp59c.f[0];
             sp43c[3].unk10 = sp59c.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp560);
-            sub_GAME_7F093FA4(&sp43c[1], sp564);
-            sub_GAME_7F093FA4(&sp43c[2], sp550);
-            sub_GAME_7F093FA4(&sp43c[3], sp554);
+            skyChooseWaterVtxColour(&sp43c[0], sp560);
+            skyChooseWaterVtxColour(&sp43c[1], sp564);
+            skyChooseWaterVtxColour(&sp43c[2], sp550);
+            skyChooseWaterVtxColour(&sp43c[3], sp554);
             break;
 
         case 10:
@@ -515,10 +534,10 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[3].unk0c = sp5a8.f[0];
             sp43c[3].unk10 = sp5a8.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp568);
-            sub_GAME_7F093FA4(&sp43c[1], sp560);
-            sub_GAME_7F093FA4(&sp43c[2], sp55c);
-            sub_GAME_7F093FA4(&sp43c[3], sp558);
+            skyChooseWaterVtxColour(&sp43c[0], sp568);
+            skyChooseWaterVtxColour(&sp43c[1], sp560);
+            skyChooseWaterVtxColour(&sp43c[2], sp55c);
+            skyChooseWaterVtxColour(&sp43c[3], sp558);
             break;
 
         case 5:
@@ -544,10 +563,10 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[3].unk0c = sp5b4.f[0];
             sp43c[3].unk10 = sp5b4.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp564);
-            sub_GAME_7F093FA4(&sp43c[1], sp56c);
-            sub_GAME_7F093FA4(&sp43c[2], sp558);
-            sub_GAME_7F093FA4(&sp43c[3], sp55c);
+            skyChooseWaterVtxColour(&sp43c[0], sp564);
+            skyChooseWaterVtxColour(&sp43c[1], sp56c);
+            skyChooseWaterVtxColour(&sp43c[2], sp558);
+            skyChooseWaterVtxColour(&sp43c[3], sp55c);
             break;
 
         case 14:
@@ -568,9 +587,9 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[2].unk0c = sp590.f[0];
             sp43c[2].unk10 = sp590.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp560);
-            sub_GAME_7F093FA4(&sp43c[1], sp558);
-            sub_GAME_7F093FA4(&sp43c[2], sp550);
+            skyChooseWaterVtxColour(&sp43c[0], sp560);
+            skyChooseWaterVtxColour(&sp43c[1], sp558);
+            skyChooseWaterVtxColour(&sp43c[2], sp550);
             break;
 
         case 13:
@@ -591,9 +610,9 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[2].unk0c = sp5a8.f[0];
             sp43c[2].unk10 = sp5a8.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp564);
-            sub_GAME_7F093FA4(&sp43c[1], sp554);
-            sub_GAME_7F093FA4(&sp43c[2], sp558);
+            skyChooseWaterVtxColour(&sp43c[0], sp564);
+            skyChooseWaterVtxColour(&sp43c[1], sp554);
+            skyChooseWaterVtxColour(&sp43c[2], sp558);
             break;
 
         case 11:
@@ -614,9 +633,9 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[2].unk0c = sp5b4.f[0];
             sp43c[2].unk10 = sp5b4.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp568);
-            sub_GAME_7F093FA4(&sp43c[1], sp550);
-            sub_GAME_7F093FA4(&sp43c[2], sp55c);
+            skyChooseWaterVtxColour(&sp43c[0], sp568);
+            skyChooseWaterVtxColour(&sp43c[1], sp550);
+            skyChooseWaterVtxColour(&sp43c[2], sp55c);
             break;
 
         case 7:
@@ -637,9 +656,9 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[2].unk0c = sp59c.f[0];
             sp43c[2].unk10 = sp59c.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp56c);
-            sub_GAME_7F093FA4(&sp43c[1], sp55c);
-            sub_GAME_7F093FA4(&sp43c[2], sp554);
+            skyChooseWaterVtxColour(&sp43c[0], sp56c);
+            skyChooseWaterVtxColour(&sp43c[1], sp55c);
+            skyChooseWaterVtxColour(&sp43c[2], sp554);
             break;
 
         case 1:
@@ -670,11 +689,11 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[4].unk0c = sp5a8.f[0];
             sp43c[4].unk10 = sp5a8.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp564);
-            sub_GAME_7F093FA4(&sp43c[1], sp56c);
-            sub_GAME_7F093FA4(&sp43c[2], sp568);
-            sub_GAME_7F093FA4(&sp43c[3], sp550);
-            sub_GAME_7F093FA4(&sp43c[4], sp558);
+            skyChooseWaterVtxColour(&sp43c[0], sp564);
+            skyChooseWaterVtxColour(&sp43c[1], sp56c);
+            skyChooseWaterVtxColour(&sp43c[2], sp568);
+            skyChooseWaterVtxColour(&sp43c[3], sp550);
+            skyChooseWaterVtxColour(&sp43c[4], sp558);
             break;
 
         case 2:
@@ -705,11 +724,11 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[4].unk0c = sp59c.f[0];
             sp43c[4].unk10 = sp59c.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp56c);
-            sub_GAME_7F093FA4(&sp43c[1], sp568);
-            sub_GAME_7F093FA4(&sp43c[2], sp560);
-            sub_GAME_7F093FA4(&sp43c[3], sp558);
-            sub_GAME_7F093FA4(&sp43c[4], sp554);
+            skyChooseWaterVtxColour(&sp43c[0], sp56c);
+            skyChooseWaterVtxColour(&sp43c[1], sp568);
+            skyChooseWaterVtxColour(&sp43c[2], sp560);
+            skyChooseWaterVtxColour(&sp43c[3], sp558);
+            skyChooseWaterVtxColour(&sp43c[4], sp554);
             break;
 
         case 4:
@@ -740,11 +759,11 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[4].unk0c = sp590.f[0];
             sp43c[4].unk10 = sp590.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp560);
-            sub_GAME_7F093FA4(&sp43c[1], sp564);
-            sub_GAME_7F093FA4(&sp43c[2], sp56c);
-            sub_GAME_7F093FA4(&sp43c[3], sp55c);
-            sub_GAME_7F093FA4(&sp43c[4], sp550);
+            skyChooseWaterVtxColour(&sp43c[0], sp560);
+            skyChooseWaterVtxColour(&sp43c[1], sp564);
+            skyChooseWaterVtxColour(&sp43c[2], sp56c);
+            skyChooseWaterVtxColour(&sp43c[3], sp55c);
+            skyChooseWaterVtxColour(&sp43c[4], sp550);
             break;
 
         case 8:
@@ -775,11 +794,11 @@ Gfx *skyRender(Gfx *gdl)
             sp43c[4].unk0c = sp5b4.f[0];
             sp43c[4].unk10 = sp5b4.f[2] + g_SkyCloudOffset;
 
-            sub_GAME_7F093FA4(&sp43c[0], sp568);
-            sub_GAME_7F093FA4(&sp43c[1], sp560);
-            sub_GAME_7F093FA4(&sp43c[2], sp564);
-            sub_GAME_7F093FA4(&sp43c[3], sp554);
-            sub_GAME_7F093FA4(&sp43c[4], sp55c);
+            skyChooseWaterVtxColour(&sp43c[0], sp568);
+            skyChooseWaterVtxColour(&sp43c[1], sp560);
+            skyChooseWaterVtxColour(&sp43c[2], sp564);
+            skyChooseWaterVtxColour(&sp43c[3], sp554);
+            skyChooseWaterVtxColour(&sp43c[4], sp55c);
             break;
 
         default:
@@ -846,7 +865,7 @@ Gfx *skyRender(Gfx *gdl)
 
             if (s1 == 4)
             {
-                gdl = sub_GAME_7F097818(gdl, &sp274[0], &sp274[1], &sp274[3], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[0], &sp274[1], &sp274[3], 130.0f, TRUE);
 
                 if (sp430)
                 {
@@ -856,17 +875,17 @@ Gfx *skyRender(Gfx *gdl)
                     sp274[3].unk2c++;
                 }
 
-                gdl = sub_GAME_7F097818(gdl, &sp274[3], &sp274[2], &sp274[0], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[3], &sp274[2], &sp274[0], 130.0f, TRUE);
             }
             else if (s1 == 5)
             {
-                gdl = sub_GAME_7F097818(gdl, &sp274[0], &sp274[1], &sp274[2], 130.0f, TRUE);
-                gdl = sub_GAME_7F097818(gdl, &sp274[0], &sp274[2], &sp274[3], 130.0f, TRUE);
-                gdl = sub_GAME_7F097818(gdl, &sp274[0], &sp274[3], &sp274[4], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[0], &sp274[1], &sp274[2], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[0], &sp274[2], &sp274[3], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[0], &sp274[3], &sp274[4], 130.0f, TRUE);
             }
             else if (s1 == 3)
             {
-                gdl = sub_GAME_7F097818(gdl, &sp274[0], &sp274[1], &sp274[2], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp274[0], &sp274[1], &sp274[2], 130.0f, TRUE);
             }
         }
     }
@@ -1302,11 +1321,11 @@ Gfx *skyRender(Gfx *gdl)
                         sp94[2].unk28 = getPlayer_c_screenleft() * 4.0f;
                         sp94[3].unk28 = (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f;
 
-                        gdl = sub_GAME_7F098A2C(gdl, &sp94[0], &sp94[1], &sp94[2], &sp94[3], 130.0f);
+                        gdl = skyRenderFull(gdl, &sp94[0], &sp94[1], &sp94[2], &sp94[3], 130.0f);
                     }
                     else
                     {
-                        gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
+                        gdl = skyRenderTri(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
                     }
                 }
                 else if (sp94[2].unk2c >= sp94[0].unk2c + 4.0f)
@@ -1318,28 +1337,28 @@ Gfx *skyRender(Gfx *gdl)
                     sp94[2].unk28 = getPlayer_c_screenleft() * 4.0f;
                     sp94[3].unk28 = (getPlayer_c_screenleft() + getPlayer_c_screenwidth()) * 4.0f - 1.0f;
 
-                    gdl = sub_GAME_7F098A2C(gdl, &sp94[1], &sp94[0], &sp94[3], &sp94[2], 130.0f);
+                    gdl = skyRenderFull(gdl, &sp94[1], &sp94[0], &sp94[3], &sp94[2], 130.0f);
                 }
                 else
                 {
-                    gdl = sub_GAME_7F097818(gdl, &sp94[1], &sp94[0], &sp94[3], 130.0f, TRUE);
+                    gdl = skyRenderTri(gdl, &sp94[1], &sp94[0], &sp94[3], 130.0f, TRUE);
                 }
             }
             else
             {
-                gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[1], &sp94[3], 130.0f, TRUE);
-                gdl = sub_GAME_7F097818(gdl, &sp94[3], &sp94[2], &sp94[0], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp94[0], &sp94[1], &sp94[3], 130.0f, TRUE);
+                gdl = skyRenderTri(gdl, &sp94[3], &sp94[2], &sp94[0], 130.0f, TRUE);
             }
         }
         else if (s1 == 5)
         {
-            gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
-            gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[2], &sp94[3], 130.0f, TRUE);
-            gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[3], &sp94[4], 130.0f, TRUE);
+            gdl = skyRenderTri(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
+            gdl = skyRenderTri(gdl, &sp94[0], &sp94[2], &sp94[3], 130.0f, TRUE);
+            gdl = skyRenderTri(gdl, &sp94[0], &sp94[3], &sp94[4], 130.0f, TRUE);
         }
         else if (s1 == 3)
         {
-            gdl = sub_GAME_7F097818(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
+            gdl = skyRenderTri(gdl, &sp94[0], &sp94[1], &sp94[2], 130.0f, TRUE);
         }
     }
 
@@ -1413,8 +1432,10 @@ void sub_GAME_7F097388(SkyRelated18 *arg0, Mtxf *arg1, u16 arg2, f32 arg3, f32 a
     arg5->a = arg0->a;
 }
 
-
-bool sub_GAME_7F0977B4(SkyRelated38 *arg0, SkyRelated38 *arg1)
+/*
+* Address: 0x7F0977B4
+*/
+bool skyVerticesAreTheSame(SkyRelated38 *arg0, SkyRelated38 *arg1)
 {
     f32 f0;
     f32 f1;
@@ -1424,8 +1445,10 @@ bool sub_GAME_7F0977B4(SkyRelated38 *arg0, SkyRelated38 *arg1)
     return sqrtf((f0 * f0) + (f1 * f1)) < 1.0f ? TRUE : FALSE;
 }
 
-
-Gfx *sub_GAME_7F097818(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, f32 arg4, bool textured)
+/*
+* Address: 0x7F097818
+*/
+Gfx *skyRenderTri(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, f32 arg4, bool textured)
 {
     SkyRelated38 *sp484;
     SkyRelated38 *sp480;
@@ -1546,7 +1569,7 @@ Gfx *sub_GAME_7F097818(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRela
     f32 sp190[1];
     u32 stack3;
 
-    if (sub_GAME_7F0977B4(arg1, arg2) || sub_GAME_7F0977B4(arg2, arg3) || sub_GAME_7F0977B4(arg3, arg1))
+    if (skyVerticesAreTheSame(arg1, arg2) || skyVerticesAreTheSame(arg2, arg3) || skyVerticesAreTheSame(arg3, arg1))
     {
         return gdl;
     }
@@ -1918,8 +1941,10 @@ Gfx *sub_GAME_7F097818(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRela
     return gdl;
 }
 
-
-Gfx *sub_GAME_7F098A2C(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, SkyRelated38 *arg4, f32 arg5)
+/*
+* Address: 0x7F098A2C
+*/
+Gfx *skyRenderFull(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRelated38 *arg3, SkyRelated38 *arg4, f32 arg5)
 {
     SkyRelated38 *sp4cc;
     SkyRelated38 *sp4c8;
@@ -2045,12 +2070,12 @@ Gfx *sub_GAME_7F098A2C(Gfx *gdl, SkyRelated38 *arg1, SkyRelated38 *arg2, SkyRela
     f32 sp1c4[1];
     u32 stack16;
 
-    if (sub_GAME_7F0977B4(arg1, arg2)
-            || sub_GAME_7F0977B4(arg2, arg3)
-            || sub_GAME_7F0977B4(arg3, arg1)
-            || sub_GAME_7F0977B4(arg4, arg1)
-            || sub_GAME_7F0977B4(arg4, arg2)
-            || sub_GAME_7F0977B4(arg4, arg3))
+    if (skyVerticesAreTheSame(arg1, arg2)
+            || skyVerticesAreTheSame(arg2, arg3)
+            || skyVerticesAreTheSame(arg3, arg1)
+            || skyVerticesAreTheSame(arg4, arg1)
+            || skyVerticesAreTheSame(arg4, arg2)
+            || skyVerticesAreTheSame(arg4, arg3))
     {
         return gdl;
     }

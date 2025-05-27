@@ -1067,6 +1067,7 @@ void sub_GAME_7F024CF8(ChrRecord *self, coord3d *arg1)
 
 
 
+// unused / unreferenced
 void chrlvDeathStaggerAnimationRelated(ChrRecord *self)
 {
     chrStopFiring(self);
@@ -3577,15 +3578,15 @@ void sub_GAME_7F0284DC(ChrRecord *self)
 /**
  * Address 0x7F028510.
 */
-s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
+s32 sub_GAME_7F028510(coord3d *point, StandTile *stan)
 {
     s32 roomids[8];
     s16 *temp_s0;
     PropRecord *propss = (PropRecord *)&pos_data_entry;
-    struct rect4f *prect4f; // 68
-    s32 sp40;
+    struct rect4f *polygon; // 68
+    s32 edges;
 
-    roomids[0] = arg1->room;
+    roomids[0] = stan->room;
     roomids[1] = -1;
     roomGetProps((s32*)&roomids);
 
@@ -3595,9 +3596,9 @@ s32 sub_GAME_7F028510(coord3d *arg0, StandTile *arg1)
 
         if (prop->type == PROP_TYPE_OBJ)
         {
-            chraiGetCollisionBoundsWithoutY(prop, &prect4f, &sp40);
+            chraiGetCollisionBoundsWithoutY(prop, &polygon, &edges);
 
-            if ((sp40 > 0) && chrpropTestPointInPolygon(arg0, prect4f, sp40))
+            if ((edges > 0) && chrpropTestPointInPolygon(point, polygon, edges))
             {
                 return 0;
             }

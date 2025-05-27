@@ -1358,14 +1358,14 @@ void chrobjCollisionRelated(ObjectRecord *obj)
         bbox = chrobjGetBboxFromObjectRecord(obj);
         matrix_4x4_copy(&obj->mtx, &sp24);
         matrix_4x4_set_position(&obj->runtime_pos, &sp24);
-        sub_GAME_7F03F540(bbox, &sp24, &obj->ptr_allocated_collisiondata_block->unk04, obj->ptr_allocated_collisiondata_block);
+        sub_GAME_7F03F540(bbox, &sp24, &obj->ptr_allocated_collisiondata_block->polygon, obj->ptr_allocated_collisiondata_block);
 
-        obj->ptr_allocated_collisiondata_block->unk48 = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(bbox, &sp24);
-        obj->ptr_allocated_collisiondata_block->unk44 = obj->runtime_pos.f[1] + chrpropSumMatrixNegY(bbox, &sp24);
+        obj->ptr_allocated_collisiondata_block->bottom = obj->runtime_pos.f[1] + chrpropSumMatrixPosY(bbox, &sp24);
+        obj->ptr_allocated_collisiondata_block->top = obj->runtime_pos.f[1] + chrpropSumMatrixNegY(bbox, &sp24);
 
         if (obj->type == PROPDEF_AIRCRAFT)
         {
-            obj->ptr_allocated_collisiondata_block->unk48 -= 200.0f;
+            obj->ptr_allocated_collisiondata_block->bottom -= 200.0f;
         }
     }
 }
@@ -5241,34 +5241,34 @@ s32 chrobjTestPointPolygonCollision(struct coord3d *point, f32 collision_radius,
 /**
  * NTSC address 0x7F0448A8.
 */
-s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
+s32 sub_GAME_7F0448A8(struct PropRecord *argProp)
 {
     s32 var_s0;
-    struct rect4f *sp98;
-    s32 sp94;
-    f32 sp90;
-    f32 sp8C;
+    struct rect4f *polygon2;
+    s32 edges2;
+    f32 chrTop;
+    f32 chrBottom;
     s32 roomids[8];
     s16 *temp_s0;
-    f32 sp64;
-    f32 sp60;
-    f32 sp5C;
-    f32 temp_f0;
+    f32 height;
+    f32 arbitratyNumber;
+    f32 radius;
+    f32 ground;
     PropRecord *propss;
     ObjectRecord *temp_v0_2;
-    struct rect4f *sp4C;
-    s32 sp48;
-    f32 sp44;
-    f32 sp40;
+    struct rect4f *polygon;
+    s32 edges;
+    f32 top;
+    f32 bottom;
 
-    chraiGetCollisionBounds(arg0, &sp98, &sp94, &sp90, &sp8C);
+    chraiGetCollisionBounds(argProp, &polygon2, &edges2, &chrTop, &chrBottom);
 
-    if (sp94 <= 0)
+    if (edges2 <= 0)
     {
         return 1;
     }
 
-    chraiGetPropRoomIds(arg0, (s32*)&roomids);
+    chraiGetPropRoomIds(argProp, (s32*)&roomids);
     roomGetProps((s32*)&roomids);
 
     propss = (PropRecord *)&pos_data_entry;
@@ -5277,38 +5277,39 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
     {
         PropRecord *prop = &propss[*temp_s0];
 
-        if (prop != arg0)
+        if (prop != argProp)
         {
             if ((prop->type == PROP_TYPE_VIEWER) || (prop->type == PROP_TYPE_CHR))
             {
                 temp_v0_2 = prop->obj;
                 if ((temp_v0_2 == NULL) || !((s32) temp_v0_2->model & 0x400))
                 {
-                    chrpropGetCollisionBounds(prop, &sp5C, &sp64, &sp60);
+                    chrpropGetCollisionBounds(prop, &radius, &height, &arbitratyNumber);
 
-                    temp_f0 = sub_GAME_7F03CFE8(prop);
-                    sp60 += temp_f0;
-                    sp64 += temp_f0;
+                    ground = sub_GAME_7F03CFE8(prop);
+                    arbitratyNumber += ground;
+                    height += ground;
 
-                    if (sp60 <= sp90)
+                    if (arbitratyNumber <= chrTop)
                     {
                         var_s0 = 1;
 
-                        if (sp8C <= sp64)
+                        if (chrBottom <= height)
                         {
-                            if (chrpropTestPointInPolygon(&prop->pos, sp98, sp94) != 0)
+                            if (chrpropTestPointInPolygon(&prop->pos, polygon2, edges2) != 0)
                             {
                                 var_s0 = 0;
                             }
 
-                            if ((var_s0 != 0) && (chrobjTestPointPolygonCollision(&prop->pos, sp5C, sp98, sp94) != 0))
+                            // 'else if' avoided here
+                            if ((var_s0 != 0) && (chrobjTestPointPolygonCollision(&prop->pos, radius, polygon2, edges2) != 0))
                             {
                                 var_s0 = 0;
                             }
 
                             if (var_s0 == 0)
                             {
-                                if ((prop->type == PROP_TYPE_CHR) && (arg0->type == PROP_TYPE_DOOR))
+                                if ((prop->type == PROP_TYPE_CHR) && (argProp->type == PROP_TYPE_DOOR))
                                 {
                                     prop->chr->hidden |= CHRHIDDEN_OFFSCREEN_PATROL;
                                 }
@@ -5322,15 +5323,15 @@ s32 sub_GAME_7F0448A8(struct PropRecord *arg0)
             else if (
                 ((prop->type == PROP_TYPE_OBJ) || (prop->type == PROP_TYPE_WEAPON) || (prop->type == PROP_TYPE_DOOR))
                 && (
-                    (arg0->type != PROP_TYPE_DOOR)
+                    (argProp->type != PROP_TYPE_DOOR)
                     || ((prop->type != PROP_TYPE_DOOR) && ((prop->obj->type != PROPDEF_SAFE)) && (prop->obj->type != PROPDEF_AIRCRAFT))))
             {
-                chraiGetCollisionBounds(prop, &sp4C, &sp48, &sp44, &sp40);
+                chraiGetCollisionBounds(prop, &polygon, &edges, &top, &bottom);
 
-                if ((sp48 > 0)
-                    && (sp40 <= sp90)
-                    && (sp8C <= sp44)
-                    && (chrobjTestPolygonsTouchingOrOverlap2D(sp4C, sp48, sp98, sp94) != 0))
+                if ((edges > 0)
+                    && (bottom <= chrTop)
+                    && (chrBottom <= top)
+                    && (chrobjTestPolygonsTouchingOrOverlap2D(polygon, edges, polygon2, edges2) != 0))
                 {
                     return 0;
                 }
@@ -23600,6 +23601,9 @@ glabel object_interaction
 
 
 #ifdef NONMATCHING
+/*
+* https://decomp.me/scratch/WSRxX  82.48%
+*/
 Gfx * sub_GAME_7F049B58(Gfx *arg0) {
 
 }
@@ -29702,15 +29706,15 @@ void objDestroySupportedObjects(PropRecord* tableprop, s32 playernum)
     ObjectRecord* tableobj;
     PropRecord* prop;
     rect4f* rect;
-    s32 sp44;
+    s32 edges;
     u8 room;
 
     tableobj = tableprop->obj;
     room = tableprop->stan->room;
 
-    chraiGetCollisionBoundsWithoutY(tableprop, &rect, &sp44);
+    chraiGetCollisionBoundsWithoutY(tableprop, &rect, &edges);
 
-    if (sp44 > 0)
+    if (edges > 0)
     {
         prop = get_ptr_obj_pos_list_current_entry();
         while (prop)
@@ -29720,7 +29724,7 @@ void objDestroySupportedObjects(PropRecord* tableprop, s32 playernum)
                 obj = prop->obj;
                 if ((tableobj->runtime_pos.y < obj->runtime_pos.y)
                         && ((s32) obj->runtime_bitflags & RUNTIMEBITFLAG_00008000)
-                        && (chrpropTestPointInPolygon(&obj->runtime_pos, rect, sp44) != 0))
+                        && (chrpropTestPointInPolygon(&obj->runtime_pos, rect, edges) != 0))
                 {
                     objFall(obj, playernum);
                 }
@@ -32713,21 +32717,21 @@ void sub_GAME_7F04F218(PropRecord* prop, s32 arg1) {
 }
 
 
-void sub_GAME_7F04F244(PropRecord* prop, rect4f** arg1, s32* arg2, f32* arg3, f32* arg4)
+void sub_GAME_7F04F244(PropRecord* prop, rect4f** polygon, s32* edges, f32* top, f32* bottom)
 {
     ObjectRecord* obj;
     obj = prop->obj;
 
     if ((obj->ptr_allocated_collisiondata_block != NULL) && (obj->flags & PROPFLAG_00000100) && !(obj->state & PROPSTATE_20))
     {
-        *arg2 = obj->ptr_allocated_collisiondata_block->unk00;
-        *arg1 = &obj->ptr_allocated_collisiondata_block->unk04;
-        *arg4 = obj->ptr_allocated_collisiondata_block->unk48;
-        *arg3 = obj->ptr_allocated_collisiondata_block->unk44;
+        *edges = obj->ptr_allocated_collisiondata_block->edges;
+        *polygon = &obj->ptr_allocated_collisiondata_block->polygon;
+        *bottom = obj->ptr_allocated_collisiondata_block->bottom;
+        *top = obj->ptr_allocated_collisiondata_block->top;
         return;
     }
 
-    *arg2 = 0;
+    *edges = 0;
 }
 
 
@@ -38034,29 +38038,29 @@ void door7F052B00(DoorRecord *door)
 
     if (door->perimFrac <= door->openPosition)
     {
-        door->ptr_allocated_collisiondata_block->unk00 = 0;
+        door->ptr_allocated_collisiondata_block->edges = 0;
 
         return;
     }
 
     door7F0526EC(door, &sp2C);
-    sub_GAME_7F03F540(&door->bbox, &sp2C, &door->ptr_allocated_collisiondata_block->unk04, door->ptr_allocated_collisiondata_block);
+    sub_GAME_7F03F540(&door->bbox, &sp2C, &door->ptr_allocated_collisiondata_block->polygon, door->ptr_allocated_collisiondata_block);
 
     if (door->doorType == DOORTYPE_VERTICAL)
     {
-        door->ptr_allocated_collisiondata_block->unk48 = door->runtime_pos.f[1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
+        door->ptr_allocated_collisiondata_block->bottom = door->runtime_pos.f[1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
     }
     else if (door->doorType == DOORTYPE_FALLAWAY)
     {
-        door->ptr_allocated_collisiondata_block->unk48 = door->runtime_pos.f[1] - 10000.0f;
+        door->ptr_allocated_collisiondata_block->bottom = door->runtime_pos.f[1] - 10000.0f;
     }
     else
     {
-        door->ptr_allocated_collisiondata_block->unk48 = sp2C.m[3][1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
+        door->ptr_allocated_collisiondata_block->bottom = sp2C.m[3][1] + chrpropSumMatrixPosY(&door->bbox, &sp2C);
 
         if (door->doorFlags & DOORFLAG_0001)
         {
-            door->ptr_allocated_collisiondata_block->unk48 -= 1000.0f;
+            door->ptr_allocated_collisiondata_block->bottom -= 1000.0f;
         }
     }
 
@@ -38065,19 +38069,19 @@ void door7F052B00(DoorRecord *door)
         )
     {
 
-        door->ptr_allocated_collisiondata_block->unk44 = door->ptr_allocated_collisiondata_block->unk48 + 50.0f;
+        door->ptr_allocated_collisiondata_block->top = door->ptr_allocated_collisiondata_block->bottom + 50.0f;
     }
     else if (door->doorType == DOORTYPE_FALLAWAY)
     {
-        door->ptr_allocated_collisiondata_block->unk44 = door->runtime_pos.f[1] + 1000.0f;
+        door->ptr_allocated_collisiondata_block->top = door->runtime_pos.f[1] + 1000.0f;
     }
     else
     {
-        door->ptr_allocated_collisiondata_block->unk44 = sp2C.m[3][1] + chrpropSumMatrixNegY(&door->bbox, &sp2C);
+        door->ptr_allocated_collisiondata_block->top = sp2C.m[3][1] + chrpropSumMatrixNegY(&door->bbox, &sp2C);
 
         if (door->doorFlags & DOORFLAG_0001)
         {
-            door->ptr_allocated_collisiondata_block->unk44 += 1000.0f;
+            door->ptr_allocated_collisiondata_block->top += 1000.0f;
         }
     }
 
@@ -39381,7 +39385,7 @@ void doorStartOpen(DoorRecord *door)
         door->flags |= DOORFLAG_CANNOT_ACTIVATE;
         door->perimFrac = 0;
 
-        if (col) { col->unk00 = 0; }
+        if (col) { col->edges = 0; }
         door->flags &= ~DOORFLAG_100;
     }
 }
