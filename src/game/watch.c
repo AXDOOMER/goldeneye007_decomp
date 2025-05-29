@@ -3479,8 +3479,145 @@ void sub_GAME_7F0A8378(void)
 
 
 #ifdef NONMATCHING
-void draw_watch_inventory_page(void) {
+Gfx* draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
+    Mtx* sp924;
+    u16 perspNorm;
+    Mtxf sp8E0;
+    Mtxf sp8A0;
+    f32 temp_cos;
+    f32 temp_sin;
+    f32 sp894;
+    f32 sp890;
+    f32 sp88C;
+    f32 sp888;
+    s32 sp884;
+    f32 sp880;
+    f32 sp87C;
+    s32 temp_s0_3;
+    GunModelFileRecord *gitem;
+    s32 x1;
+    s32 y1;
+    
+    gdl = draw_background_health_and_armor(gdl, param_2, 0);
 
+    if (check_watch_page_transistion_running() != 1) {
+        sp924 = dynAllocateMatrix();
+        sp894 = bondinvGet45AngleForIndex(g_curWatchItemIndex);
+        sp890 = bondinvGetHoffsetForIndex(g_curWatchItemIndex);
+        sp88C = bondinvGetVoffsetForIndex(g_curWatchItemIndex);
+        sp888 = bondinvGetDepthForIndex(g_curWatchItemIndex);
+        sp884 = bondinvGetTextbyInvIndex(g_curWatchItemIndex);
+        sp880 = bondinvGetXrotWatchForIndex(g_curWatchItemIndex);
+        sp87C = bondinvGetYrotWatchForIndex(g_curWatchItemIndex);
+
+        if (get_debug_gunwatchpos_flag() != 0) {
+            //temp_s0 = (getCurrentPlayerWeaponId(0) * 0x38) + &gitem_structs;
+            gitem = &gitem_structs[getCurrentPlayerWeaponId(0)];
+
+            if (joyGetButtons(0, 2) != 0) {
+                gitem->equip_watch_x -= 2.0f;
+            }
+            if (joyGetButtons(0, 1) != 0) {
+                gitem->equip_watch_x += 2.0f;
+            }
+            if (joyGetButtons(0, 4) != 0) {
+                gitem->equip_watch_y += 2.0f;
+            }
+            if (joyGetButtons(0, 8) != 0) {
+                gitem->equip_watch_y -= 2.0f;
+            }
+            if (joyGetButtons(0, 0x20) != 0) {
+                gitem->equip_watch_z *= D_80058520;
+            }
+            if (joyGetButtons(0, 0x10) != 0) {
+                gitem->equip_watch_z *= D_80058524;
+            }
+        }
+
+        guPerspective(sp924, &perspNorm, sp894, 1.3333333730698, 10.0f, D_80058528, 1.0f);
+        gSPMatrix(gdl++, osVirtualToPhysical(sp924), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+        matrix_4x4_set_rotation_around_y((sp87C * D_8005852C) / 360.0f, &sp8E0);
+        matrix_4x4_set_rotation_around_z(D_80058530 - ((sp880 * D_80058530) / 360.0f), &sp8A0);
+        matrix_4x4_multiply_in_place(&sp8A0, &sp8E0);
+        temp_cos = cosf(D_80040B14) * sp888;
+        temp_sin = sinf(D_80040B14) * sp888;
+        matrix_4x4_7F059694(&sp8A0, temp_cos, sp88C, temp_sin + sp890, 0.0f, sp88C, sp890, 0.0f, 1.0f, 0.0f);
+        matrix_4x4_multiply_in_place(&sp8A0, &sp8E0);
+
+        gdl = set_enviro_fog_for_items_in_solo_watch_menu(sub_GAME_7F0A6EE8(gdl), sp884, &sp8E0, 0x40, 0xA0FFA03C);
+
+        {
+            s32 i;
+            s32 textheight;
+            s32 textwidth;
+            s32 pFontFile2;
+            s32 pFontChars2;
+            char string_builder_allocation[2000];
+            
+            textheight = 0;
+            textwidth = 0;
+            string_builder_allocation[0] = 0;
+            pFontFile2 = ptrFontBankGothic;
+            pFontChars2 = ptrFontBankGothicChars;
+    
+            // Build a large string
+            for (i = 0; i < bondinvCountTotalItemsInInv(); i++) {
+                char* name = bondinvGetNameByIndex(i);
+                strcat(string_builder_allocation, name);
+            }
+    
+            if (D_800409C4 > 0) {
+                D_800409C4--;
+            }
+    
+            sub_GAME_7F0A5B80();
+    
+            x1 = 0x4E;
+            y1 = 0x8C;
+    
+#define LINEHEIGHT() (j_text_trigger ? 14 : 12)
+    
+            temp_s0_3 = (LINEHEIGHT() * 2) + 0x8D;
+    
+            gdl = microcode_constructor(gdl);
+            textMeasure(&textheight, &textwidth, string_builder_allocation, pFontChars2, pFontFile2, LINEHEIGHT());
+            gdl = microcode_constructor_related_to_menus(gdl, 0x4E, 0x8C, textwidth + 0x4E, (LINEHEIGHT() * 5) + 0x8C, 0);
+            gdl = textRender(gdl, &x1, &y1, string_builder_allocation, pFontChars2, pFontFile2, 0xAA00B0, textwidth + 1, LINEHEIGHT() * 5, D_800409B0, LINEHEIGHT());
+            gdl = microcode_constructor_related_to_menus(gdl, 0x4B, temp_s0_3, textwidth + 0x52, (LINEHEIGHT() + temp_s0_3) - 2, 0x800050);
+
+            {
+                char formattedString[32];
+                s32 pFontFile;
+                s32 pFontChars;
+                s32 x2;
+                s32 y2;
+                char* invItemName;
+
+                pFontFile = ptrFontBankGothic;
+                pFontChars = ptrFontBankGothicChars;
+                invItemName = bondinvGetNameByIndex(g_curWatchItemIndex);
+                sprintf(formattedString, "%d, %d\n%d %f\n", D_800409B0, D_800409B4, g_curWatchItemIndex, (f64) D_800409BC);
+                gdl = microcode_constructor(gdl);
+        
+                textMeasure(&y2, &x2, formattedString, pFontChars, pFontFile, 0);
+        
+                if (D_800409C0 != 0) {
+                    textMeasure(&y2, &x2, invItemName, pFontChars, pFontFile, LINEHEIGHT());
+                    x1 = 0x4E;
+                    y1 = (LINEHEIGHT() * 2) + 0x8C;
+                    if (D_800409C4 == 0) {
+                        gdl = textRender(gdl, &x1, &y1, invItemName, pFontChars, pFontFile, 0xA0FFA0F0, x2, 0x64, 0, LINEHEIGHT());
+                    } else {
+                        gdl = textRenderGlow(gdl, &x1, &y1, invItemName, pFontChars, pFontFile, -1, 0x7000A0, x2 + 1, 0x64, 0, LINEHEIGHT());
+                    }
+        
+                    sub_GAME_7F0A8378();
+                }
+            }
+        }
+    }
+    return gdl;
 }
 #else
 //D:80057768
