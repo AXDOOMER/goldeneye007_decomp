@@ -1184,7 +1184,8 @@ u16 *bondinvGetLongNameByIndex(s32 index)
     return get_ptr_long_watch_text_for_item(weaponnum);
 }
 
-int bondinvGet45AngleForIndex(int index)
+extern f32 get_45_degree_angle_0(s32 item);
+f32 bondinvGet45AngleForIndex(int index)
 {
     return get_45_degree_angle_0(bondinvGetTextbyInvIndex(index));
 }
@@ -1323,8 +1324,8 @@ u16 *bondinvGetSecondTitlebyIndex(s32 index)
 
     return get_ptr_second_title_line_item(weaponnum);
 }
-
-int bondinvGetDifferent45AngleForIndex(int index)
+extern f32 get_45_degree_angle(s32 item);
+f32 bondinvGetDifferent45AngleForIndex(int index)
 {
     return get_45_degree_angle(bondinvGetTextbyInvIndex(index));
 }
