@@ -3479,6 +3479,7 @@ void sub_GAME_7F0A8378(void)
 
 
 #ifdef NONMATCHING
+// Matching!
 Gfx* draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
     Mtx* sp924;
     u16 perspNorm;
