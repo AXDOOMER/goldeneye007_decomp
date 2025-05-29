@@ -2689,8 +2689,114 @@ Gfx *draw_text_q_watch_v201_beta(Gfx *gdl)
 
 
 #ifdef NONMATCHING
-void draw_current_hand_item_and_ammo(void) {
+// Matching!
+Gfx* draw_current_hand_item_and_ammo(Gfx* gdl) {
+    Mtx* sp114;
+    u16 perspNorm;
+    Mtxf matrix2;
+    Mtxf matrix;
+    s32 sp8C;
+    s32 sp88;
+    s32 sp84;
+    s32 sp80;
+    s32 sp7C;
+    s32 sp78;
+    s32 temp_v0;
+    s32 sp70;
+    f32 sp6C;
+    f32 sp68;
+    f32 sp64;
+    f32 sp60;
+    f32 rotx;
+    f32 roty;
+    s8* text;
+    s8* text2;
+    struct GunModelFileRecord *gitem;
 
+    sp114 = dynAllocateMatrix();
+    sp84 = 0;
+    sp80 = 0;
+
+    sp7C = ptrFontBankGothic;
+    sp78 = ptrFontBankGothicChars;
+
+    temp_v0 = bondinvGetCurEquippedItem();
+    sp70 = bondinvGetTextbyInvIndex(temp_v0);
+    sp6C = bondinvGetVposWatchForIndex(temp_v0);
+    sp68 = bondinvGetHposWatchForIndex(temp_v0);
+    sp64 = bondinvGetDepthWatchForIndex(temp_v0);
+    sp60 = bondinvGetDifferent45AngleForIndex(temp_v0);
+    rotx = bondinvGetXrotWatchForIndex(temp_v0);
+    roty = bondinvGetYrotWatchForIndex(temp_v0);
+    text = bondinvGetFirstTitlebyIndex(temp_v0);
+    text2 = bondinvGetSecondTitlebyIndex(temp_v0);
+    
+    if (get_debug_gunwatchpos_flag() != 0) {
+        gitem = &gitem_structs[getCurrentPlayerWeaponId(0)];
+
+        if (joyGetButtons(0, 2) != 0) {
+           gitem->watch_pos_y -= 2.0f;
+        }
+
+        if (joyGetButtons(0, 1) != 0) {
+            gitem->watch_pos_y += 2.0f;
+        }
+
+        if (joyGetButtons(0, 4) != 0) {
+           gitem->watch_pos_x += 2.0f;
+        }
+
+        if (joyGetButtons(0, 8) != 0) {
+            gitem->watch_pos_x -= 2.0f;
+        }
+
+        if (joyGetButtons(0, 0x20) != 0) {
+            gitem->watch_pos_z *= D_80058520;
+        }
+
+        if (joyGetButtons(0, 0x10) != 0) {
+             gitem->watch_pos_z *= D_80058524;
+        }
+    }
+
+    guPerspective(sp114, &perspNorm, sp60, 1.33333337f, 10.0f, D_80058528, 1.0f);
+
+    gSPMatrix(gdl++, osVirtualToPhysical(sp114), G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
+
+    matrix_4x4_set_rotation_around_y((roty * D_8005852C) / 360.0f, &matrix2);
+    matrix_4x4_set_rotation_around_z(D_80058530 - ((rotx * D_80058530) / 360.0f), &matrix);
+    matrix_4x4_multiply_in_place(&matrix, &matrix2);
+    matrix_4x4_7F059694(&matrix, sp64, sp6C, sp68, 0.0f, sp6C, sp68, 0.0f, 1.0f, 0.0f);
+    matrix_4x4_multiply_in_place(&matrix, &matrix2);
+
+    gdl = sub_GAME_7F0A6EE8(gdl);
+
+    if (g_WatchBackgroundGreen < 0xE0) {
+        gdl = set_enviro_fog_for_items_in_solo_watch_menu(gdl, sp70, &matrix2, g_WatchBackgroundGreen + 1, 0x64DC6428);
+    } else {
+        gdl = set_enviro_fog_for_items_in_solo_watch_menu(gdl, sp70, &matrix2, 0xFF, 0x64DC6428);
+    }
+
+    gdl = microcode_constructor(sub_GAME_7F06A334(gdl));
+
+    sp8C = 0x60;
+#if defined(LEFTOVERDEBUG)
+    sp88 = 0xA0;
+#else
+    sp88 = 0xBC;
+#endif
+    textMeasure(&sp84, &sp80, text, sp78, sp7C, 0);
+    gdl = textRender(gdl, &sp8C, &sp88, text, sp78, sp7C, 0xFF00B0, sp80, sp84, 0, 0);
+
+#if defined(LEFTOVERDEBUG)
+    sp88 = 0xAA;
+#else
+    sp88 = 0xC6;
+#endif
+    textMeasure(&sp84, &sp80, text2, sp78, sp7C, 0);
+    gdl = textRender(gdl, &sp8C, &sp88, text2, sp78, sp7C, 0xFF00B0, sp80, sp84, 0, 0);
+
+    return gdl;
 }
 #else
 #if defined(LEFTOVERDEBUG)
