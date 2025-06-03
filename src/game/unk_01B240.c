@@ -29,8 +29,58 @@ s32 D_8002BB2C = 0;
 /*
 * Address: 0x7F01B240
 */
-void sub_GAME_7F01B240(void) {
+Gfx* sub_GAME_7F01B240(Gfx* gdl, s32 imgIndex, s32 x, struct FolderSelect* arg3, struct FolderSelect* arg4) {
+    // Matching
+    f32 temp_f0;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f14_2;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f2;
+    s32 i;
 
+    temp_f0 = arg3->unk00;
+    temp_f2 = arg3->unk04;
+    temp_f12 = arg3->unk08;
+    temp_f14 = arg4->unk00;
+    temp_f16 = arg4->unk04;
+    temp_f18 = arg4->unk08;
+    D_8002BB0C = temp_f14;
+    D_8002BB10 = temp_f16;
+    D_8002BB14 = temp_f18;
+
+    i = 0;
+    while ((i + 1) < 300) {
+        gDPLoadTextureBlock(
+            gdl++, imgIndex, G_IM_FMT_I, G_IM_SIZ_8b, 440, 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP,
+            G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD
+        );
+
+        gDPSetPrimColor(
+            gdl++, 0, 0, temp_f0 + (((temp_f14 - temp_f0) * i) / 299.0f),
+            temp_f2 + (((temp_f16 - temp_f2) * i) / 299.0f), temp_f12 + (((temp_f18 - temp_f12) * i) / 299.0f), 255
+        );
+
+        if (x < 0) {
+            gSPTextureRectangle(
+                gdl++, 0, (i + 0x10) << 2, (440 << 2) - 1, ((((i + 1) + 0x10)) << 2) - 1, G_TX_RENDERTILE, (-x) << 5, 0,
+                1 << 10, 1 << 10
+            );
+        } else {
+            gSPTextureRectangle(
+                gdl++, x << 2, (i + 0x10) << 2, (440 << 2) - 1, ((((i + 1) + 0x10)) << 2) - 1, G_TX_RENDERTILE, 0, 0,
+                1 << 10, 1 << 10
+            );
+        }
+        i++;
+        imgIndex += 440;
+    }
+    D_8002BB08 = temp_f12;
+    D_8002BB04 = temp_f2;
+    D_8002BB00 = temp_f0;
+
+    return gdl;
 }
 #else
 GLOBAL_ASM(
