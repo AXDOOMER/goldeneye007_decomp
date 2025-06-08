@@ -4853,13 +4853,19 @@ glabel bgDebPrintPORTALID
 
 
 #ifdef NONMATCHING
-char *bgDebPrintROOMID(s32 roomID)
+// Maching
+char *bgDebPrintROOMID(s32 roomId)
 {
-    s32 temp_hi = (bgDebRoomOutLineNum + 1) % 0xA;
-
-    bgDebRoomOutLineNum = temp_hi;
-    sprintf(&bgDebRoomOutBuffer[temp_hi], "ROOM%d", roomID);
-    return &bgDebRoomOutBuffer[temp_hi];
+    static char bgDebRoomOutBuffer[10][9];
+    static s32 bgDebRoomOutLineNum;
+    char* roomIdStr;
+    
+    bgDebRoomOutLineNum = (bgDebRoomOutLineNum + 1) % 10;
+    roomIdStr = bgDebRoomOutBuffer[bgDebRoomOutLineNum];
+    
+    sprintf(roomIdStr, "ROOM%d", roomId);
+    
+    return roomIdStr;
 }
 #else
 GLOBAL_ASM(
