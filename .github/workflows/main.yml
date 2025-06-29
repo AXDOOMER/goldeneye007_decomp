@@ -110,6 +110,7 @@ jobs:
       #    path: tools/report/index.html
       - name: Upload output files
         uses: AXDOOMER/copy_file_to_another_repo_action@e54ae5087212906dac7ef96dee19e31190913257
+        id: upload
         continue-on-error: true
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -124,5 +125,9 @@ jobs:
             tools/report/index.html
             tools/report/sfx.ogg
             tools/report/background.jpg
+
+      - name: Check upload
+        if: steps.upload.outcome != 'success'
+        run: echo "::Upload output files::Failed to upload output files. Report and stats were not updated."
       
 #need way of telling report that JAP passed/failed
