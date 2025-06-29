@@ -70,14 +70,12 @@ jobs:
         run: python3 tools/ge-stats.py --version jp --report
      
       - name: Upload output files
-
         uses: AXDOOMER/copy_file_to_another_repo_action@e54ae5087212906dac7ef96dee19e31190913257
-
+        continue-on-error: true
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
           API_TOKEN_USER: ${{ secrets.API_TOKEN_USER }}
           API_TOKEN_EMAIL: ${{ secrets.API_TOKEN_EMAIL }}
-
         with:
           destination_repo: 'kholdfuzion/goldeneyestatus'
           user_email: $API_TOKEN_EMAIL
