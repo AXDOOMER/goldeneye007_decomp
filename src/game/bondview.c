@@ -14700,8 +14700,125 @@ glabel sub_GAME_7F088618
 
 
 #ifdef NONMATCHING
+/*
+* Address: 7F0888E8
+* Everything matches except the rodata addresses
+*/
 void mp_respawn_handler(void) {
+    coord3d start_pos = {0, 0, 0};
+    f32 start_look_angle;
+    s32 start_stan;
+    s32 pad;
+    f32 stan_height;
+    s32 var_v0;
+    s32 var_v1;
+    u32 var_v0_2;
+    struct SetupIntroEmpty* intro_record;
 
+    intro_record = g_CurrentSetup.intro;
+
+    init_player_BONDdata();
+    bondviewPlayerSpawnRelated();
+
+    g_CurrentPlayer->bonddead = 0;
+    g_CurrentPlayer->deathanimfinished = 0;
+    g_CurrentPlayer->redbloodfinished = 0;
+    g_CurrentPlayer->startnewbonddie = 1;
+    g_CurrentPlayer->healthDamageType = 7;
+    g_CurrentPlayer->damagetype = 7;
+    g_CurrentPlayer->gunammooff = 0;
+    g_CurrentPlayer->gunsightmode = 2;
+
+    hudmsgsSetOn(-1);
+    bondviewClearUpperTextDisplayFlag(-1);
+
+    if ((getPlayerCount() >= 2) && (startpadcount > 0)) {
+        var_v1 = bondviewGetRandomSpawnPadIndex();
+    } else {
+        var_v1 = 0;
+    }
+
+    start_pos.x = g_Startpad[var_v1]->pos.x;
+    start_pos.z = g_Startpad[var_v1]->pos.z;
+    start_stan = g_Startpad[var_v1]->stan;
+
+    stan_height = bondviewYPositionRelated(start_stan, start_pos.x, start_pos.z);
+
+    start_pos.y = g_CurrentPlayer->field_29BC + stan_height;
+    g_CurrentPlayer->field_70 = stan_height;
+
+    start_look_angle = randomGetNext() * 2.3283064e-10f * 6.2831855f;
+
+    g_CurrentPlayer->vv_theta = (f32) ((start_look_angle * 360.0f) / 6.2831855f);
+    g_CurrentPlayer->stanHeight = stan_height;
+    g_CurrentPlayer->field_6C = (f32) (stan_height / 0.17000002f);
+
+    change_player_pos_to_target(&g_CurrentPlayer->field_488, &start_pos, start_stan);
+
+    g_CurrentPlayer->field_488.theta_transform.x = -sinf(start_look_angle);
+    g_CurrentPlayer->field_488.theta_transform.y = 0.0f;
+    g_CurrentPlayer->field_488.theta_transform.z = cosf(start_look_angle);
+    g_CurrentPlayer->prop->pos.x = g_CurrentPlayer->bondprevpos.x = start_pos.f[0];
+    g_CurrentPlayer->prop->pos.y = g_CurrentPlayer->bondprevpos.y = start_pos.f[1];
+    g_CurrentPlayer->prop->pos.z = g_CurrentPlayer->bondprevpos.z = start_pos.f[2];
+    g_CurrentPlayer->prop->stan = start_stan;
+    g_CurrentPlayer->field_3B8.x = (f32) (g_CurrentPlayer->field_488.pos.x / 0.100000024f);
+    g_CurrentPlayer->field_3B8.y = (f32) (g_CurrentPlayer->field_488.pos.y / 0.100000024f);
+    g_CurrentPlayer->field_3B8.z = (f32) (g_CurrentPlayer->field_488.pos.z / 0.100000024f);
+
+    bondinvReinitInv();
+    var_v0 = 0;
+
+    while (var_v0 != 30)
+    {
+        g_CurrentPlayer->ammoheldarr[var_v0++] = 0;
+    }
+
+    if (intro_record != NULL) {
+        while (intro_record->type != 9) { // INTROTYPE_END
+            switch (intro_record->type) {
+            case 0: // INTROTYPE_SPAWN
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroSpawn));
+                break;
+            case 1: // INTROTYPE_ITEM
+                if (check_ramrom_flags() == ((struct SetupIntroAmmo*)intro_record)->is_demo_playback) {
+                    if ( ((struct SetupIntroItem*)intro_record)->item_left >= 0) {
+                        bondinvAddDoublesInvItem(((struct SetupIntroItem*)intro_record)->item_right, ((struct SetupIntroItem*)intro_record)->item_left);
+                    } else {
+                        bondinvAddInvItem(((struct SetupIntroItem*)intro_record)->item_right);
+                    }
+                }
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroItem));
+
+                break;
+            case 2: // INTROTYPE_AMMO
+                if (check_ramrom_flags() == ((struct SetupIntroAmmo*)intro_record)->is_demo_playback) {
+                    give_cur_player_ammo(((struct SetupIntroAmmo*)intro_record)->ammo_type, ((struct SetupIntroAmmo*)intro_record)->ammo_amount);
+                }
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroAmmo));
+                break;
+            case 3: // INTROTYPE_SWIRL
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroSwirl));
+                break;
+            case 4: // INTROTYPE_ANIM
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroAnim));
+                break;
+            case 5: // INTROTYPE_CUFF
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroCuff));
+                break;
+            case 6: // INTROTYPE_CAMERA
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroCamera));
+                break;
+            default: // INTROTYPE_WATCH, INTROTYPE_CREDITS
+                intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroEmpty));
+                break;
+            }
+        }
+    }
+    g_CurrentPlayer->field_78 = 0.0f;
+    g_CurrentPlayer->field_7C = -0.0001f;
+    g_CurrentPlayer->field_80 = 0.0f;
+    currentPlayerStartChrFade(120.0f, 1.0f);
 }
 #else
 
@@ -15011,9 +15128,9 @@ GLOBAL_ASM(
 glabel D_80055284
 .word 0x40c90fdb /*6.2831855*/
 glabel D_80055288
-.word 0x3e4d35a8
+.word 0x3e4d35a8 /* 0.2004 */
 glabel D_8005528C
-.word 0x3df34d68
+.word 0x3df34d68 /* 0.118799984 */
 
 /*D:80055290*/
 glabel jpt_mpspawntype
