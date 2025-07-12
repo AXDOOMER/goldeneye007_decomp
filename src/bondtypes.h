@@ -2482,12 +2482,8 @@ typedef union
         f32 unkC4;
         f32 unkC8;
 
-        u8 unkCC;
-        u8 unkCD;
-        u8 unkCE;
-        u8 unkCF;
+        u8 unkCC[8]; // array of rooms
 
-        u32 unkD0;
         f32 unkd4; // probably struct coord3d
         u32 unkD8;
         u32 unkDC;

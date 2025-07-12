@@ -1023,11 +1023,11 @@ void projectileSetSticky(PropRecord *prop)
         projectile->flags |= PROJECTILEFLAG_STICKY;
         if (prop->stan)
         {
-            projectile->unkCC = prop->stan->room;
-            projectile->unkCD = 0xFF;
+            projectile->unkCC[0] = prop->stan->room;
+            projectile->unkCC[1] = 0xFF;
             return;
         }
-        projectile->unkCC = 0xFFU;
+        projectile->unkCC[0] = 0xFFU;
     }
 }
 
