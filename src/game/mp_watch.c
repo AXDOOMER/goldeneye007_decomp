@@ -541,7 +541,7 @@ void sub_GAME_7F0C2E80(void)
     player_count = getPlayerCount();
     x_centered = joyGetStickXInRange(player_num, -2, 1);
 
-    if (!sub_GAME_7F09B4D8(player_num) && (g_gameOverFlag >= 2))
+    if (!get_player_position_in_shuffled(player_num) && (g_gameOverFlag >= 2))
     {
         g_gameOverFlag -= speedgraphframes;
         if (g_gameOverFlag <= 0) { g_gameOverFlag = 1; }
@@ -558,7 +558,7 @@ void sub_GAME_7F0C2E80(void)
 
         if (g_gameOverFlag < 2)
         {
-            if (sub_GAME_7F09B4D8(player_num) == 0)
+            if (get_player_position_in_shuffled(player_num) == 0)
             {
                 dword_CODE_bss_8008C70C += speedgraphframes;
                 dword_CODE_bss_8008C714 += speedgraphframes;

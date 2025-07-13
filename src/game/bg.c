@@ -3100,7 +3100,7 @@ glabel bgRoomVisibilityRelated
 /* 0E93E4 7F0B48B4 2416FFFF */  li    $s6, -1
 /* 0E93E8 7F0B48B8 0FC26C54 */  jal   get_cur_playernum
 /* 0E93EC 7F0B48BC AC20C038 */   sw    $zero, %lo(num_visible_rooms_in_cur_global_vis_packet)($at)
-/* 0E93F0 7F0B48C0 0FC26D36 */  jal   sub_GAME_7F09B4D8
+/* 0E93F0 7F0B48C0 0FC26D36 */  jal   get_player_position_in_shuffled
 /* 0E93F4 7F0B48C4 00402025 */   move  $a0, $v0
 /* 0E93F8 7F0B48C8 14400003 */  bnez  $v0, .L7F0B48D8
 /* 0E93FC 7F0B48CC 00000000 */   nop

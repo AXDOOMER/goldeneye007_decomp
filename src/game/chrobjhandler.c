@@ -4779,7 +4779,7 @@ void chrobjWeaponTick(struct PropRecord* prop)
 
     obj = prop->obj;
 
-    if (sub_GAME_7F09B4D8(get_cur_playernum()) != 0)
+    if (get_player_position_in_shuffled(get_cur_playernum()) != 0)
     {
         return;
     }
@@ -6064,7 +6064,7 @@ s32 object_interaction(struct PropRecord *arg0)
     }
     else
     {
-        sp678 = sub_GAME_7F09B4D8(get_cur_playernum()) == 0;
+        sp678 = get_player_position_in_shuffled(get_cur_playernum()) == 0;
 
         if (obj->runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT)
         {
@@ -8477,7 +8477,7 @@ glabel object_interaction
 .L7F0453A8:
 /* 079ED8 7F0453A8 0FC26C54 */  jal   get_cur_playernum
 /* 079EDC 7F0453AC 00000000 */   nop
-/* 079EE0 7F0453B0 0FC26D36 */  jal   sub_GAME_7F09B4D8
+/* 079EE0 7F0453B0 0FC26D36 */  jal   get_player_position_in_shuffled
 /* 079EE4 7F0453B4 00402025 */   move  $a0, $v0
 /* 079EE8 7F0453B8 2C4E0001 */  sltiu $t6, $v0, 1
 /* 079EEC 7F0453BC AFAE0678 */  sw    $t6, 0x678($sp)
@@ -13570,7 +13570,7 @@ glabel object_interaction
 .Ljp7F04577C:
 /* 07A2EC 7F04577C 0FC26F3C */  jal   get_cur_playernum
 /* 07A2F0 7F045780 00000000 */   nop
-/* 07A2F4 7F045784 0FC2701E */  jal   sub_GAME_7F09B4D8
+/* 07A2F4 7F045784 0FC2701E */  jal   get_player_position_in_shuffled
 /* 07A2F8 7F045788 00402025 */   move  $a0, $v0
 /* 07A2FC 7F04578C 2C590001 */  sltiu $t9, $v0, 1
 /* 07A300 7F045790 AFB90680 */  sw    $t9, 0x680($sp)
@@ -18676,7 +18676,7 @@ glabel object_interaction
 .L7F04553C:
 /* 077F2C 7F04553C 0FC269A4 */  jal   get_cur_playernum
 /* 077F30 7F045540 00000000 */   nop
-/* 077F34 7F045544 0FC26A86 */  jal   sub_GAME_7F09B4D8
+/* 077F34 7F045544 0FC26A86 */  jal   get_player_position_in_shuffled
 /* 077F38 7F045548 00402025 */   move  $a0, $v0
 /* 077F3C 7F04554C 2C4E0001 */  sltiu $t6, $v0, 1
 /* 077F40 7F045550 AFAE0680 */  sw    $t6, 0x680($sp)

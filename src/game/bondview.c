@@ -4731,7 +4731,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         /**
         * CAMERAMODE_MP: Perfect Dark method playerTickMpSwirl
         */
-        if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
+        if (get_player_position_in_shuffled(get_cur_playernum()) == 0)
         {
             for (i2=0; i2<g_ClockTimer; i2++)
             {
@@ -4796,7 +4796,7 @@ void bondviewFrozenCameraTick(u16 buttons, u16 oldbuttons, struct coord3d *pos, 
         arg6->f[2] = g_CurrentPlayer->field_488.pos.f[2];
 
 #if defined(VERSION_EU)
-        if (((sub_GAME_7F09B4D8(get_cur_playernum()) + 1) == getPlayerCount()) && (g_MpSwirlDistance < 5.0f))
+        if (((get_player_position_in_shuffled(get_cur_playernum()) + 1) == getPlayerCount()) && (g_MpSwirlDistance < 5.0f))
         {
             g_CameraAfterCinema = CAMERAMODE_INTRO;
         }
@@ -18745,7 +18745,7 @@ glabel playerTickBeams
 /* 0BFC48 7F08B118 AFAF00F0 */   sw    $t7, 0xf0($sp)
 /* 0BFC4C 7F08B11C 0FC26C54 */  jal   get_cur_playernum
 /* 0BFC50 7F08B120 00000000 */   nop
-/* 0BFC54 7F08B124 0FC26D36 */  jal   sub_GAME_7F09B4D8
+/* 0BFC54 7F08B124 0FC26D36 */  jal   get_player_position_in_shuffled
 /* 0BFC58 7F08B128 00402025 */   move  $a0, $v0
 /* 0BFC5C 7F08B12C 54400006 */  bnezl $v0, .L7F08B148
 /* 0BFC60 7F08B130 8FA900F0 */   lw    $t1, 0xf0($sp)
@@ -18891,7 +18891,7 @@ glabel playerTickBeams
 /* 0BFE70 7F08B340 AFA50060 */  sw    $a1, 0x60($sp)
 /* 0BFE74 7F08B344 0FC26C54 */  jal   get_cur_playernum
 /* 0BFE78 7F08B348 E7A20094 */   swc1  $f2, 0x94($sp)
-/* 0BFE7C 7F08B34C 0FC26D36 */  jal   sub_GAME_7F09B4D8
+/* 0BFE7C 7F08B34C 0FC26D36 */  jal   get_player_position_in_shuffled
 /* 0BFE80 7F08B350 00402025 */   move  $a0, $v0
 /* 0BFE84 7F08B354 8FA3005C */  lw    $v1, 0x5c($sp)
 /* 0BFE88 7F08B358 8FA50060 */  lw    $a1, 0x60($sp)
@@ -19583,7 +19583,7 @@ glabel playerTickBeams
 /* 0BDDFC 7F08B40C AFAF00F0 */   sw    $t7, 0xf0($sp)
 /* 0BDE00 7F08B410 0FC269A4 */  jal   get_cur_playernum
 /* 0BDE04 7F08B414 00000000 */   nop
-/* 0BDE08 7F08B418 0FC26A86 */  jal   sub_GAME_7F09B4D8
+/* 0BDE08 7F08B418 0FC26A86 */  jal   get_player_position_in_shuffled
 /* 0BDE0C 7F08B41C 00402025 */   move  $a0, $v0
 /* 0BDE10 7F08B420 54400006 */  bnezl $v0, .L7F08B43C
 /* 0BDE14 7F08B424 8FA900F0 */   lw    $t1, 0xf0($sp)
@@ -19729,7 +19729,7 @@ glabel playerTickBeams
 /* 0BE024 7F08B634 AFA50060 */  sw    $a1, 0x60($sp)
 /* 0BE028 7F08B638 0FC269A4 */  jal   get_cur_playernum
 /* 0BE02C 7F08B63C E7A20094 */   swc1  $f2, 0x94($sp)
-/* 0BE030 7F08B640 0FC26A86 */  jal   sub_GAME_7F09B4D8
+/* 0BE030 7F08B640 0FC26A86 */  jal   get_player_position_in_shuffled
 /* 0BE034 7F08B644 00402025 */   move  $a0, $v0
 /* 0BE038 7F08B648 8FA3005C */  lw    $v1, 0x5c($sp)
 /* 0BE03C 7F08B64C 8FA50060 */  lw    $a1, 0x60($sp)

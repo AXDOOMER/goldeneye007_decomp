@@ -3285,7 +3285,7 @@ void determing_type_of_object_and_detection(void)
 		prop = propprev;
     }
 
-    if (sub_GAME_7F09B4D8(get_cur_playernum()) == 0)
+    if (get_player_position_in_shuffled(get_cur_playernum()) == 0)
     {
         handle_alarm_gas_timer_calldamage();
         loop_set_sound_effect_all_slots();

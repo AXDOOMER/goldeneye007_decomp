@@ -625,7 +625,7 @@ void shuffle_player_ids(void) {
     }
 }
 
-s32 sub_GAME_7F09B4D8(s32 current_player_num) {
+s32 get_player_position_in_shuffled(s32 current_player_num) {
     s32 i;
     s32 position = 0;
 

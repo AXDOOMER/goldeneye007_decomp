@@ -9,6 +9,6 @@ void set_cur_player_fovy(f32 fovy);
 s32 getPlayerPointerIndex( PropRecord* prop);
 void set_cur_player_aspect(f32 aspect);
 void initBONDdataforPlayer(s32 player_num);
-s32 sub_GAME_7F09B4D8(s32 current_player_num);
+s32 get_player_position_in_shuffled(s32 current_player_num);
 
 #endif
