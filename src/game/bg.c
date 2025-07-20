@@ -753,6 +753,10 @@ glabel sub_GAME_7F0B37EC
 
 
 #ifdef NONMATCHING
+/*
+* Unused function
+* Address: 7F0B38B4
+*/
 void sub_GAME_7F0B38B4(void) {
 
 }
@@ -1193,6 +1197,10 @@ glabel sub_GAME_7F0B39BC
 
 
 
+/*
+* Unused function
+* Address: ?
+*/
 void bgZeroPortalsToRoom(s32 roomnum)
 {
   g_BgRoomInfo[roomnum].portals_to_room_count = '\0';
@@ -1203,7 +1211,10 @@ void bgZeroPortalsToRoom(s32 roomnum)
 
 
 
-
+/*
+* Unused function
+* Address: 7F0B3B20
+*/
 s32 sub_GAME_7F0B3B20(void)
 {
     s32 i;
