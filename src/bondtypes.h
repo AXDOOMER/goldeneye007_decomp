@@ -3248,12 +3248,15 @@ typedef union
             New_PropDefHeaderRecord(19), ID1 + 0, ID2 + 0 \
         }
 
+    struct multiammocrateslot {
+        u16 modelnum;
+        u16 quantity;
+    };
     // PROPDEF_AMMO (20)
     typedef struct MultiAmmoCrateRecord
     {
         inherits ObjectRecord;
-        u16      unk80;
-        u16      quantities[AMMOTYPE_GLOBAL_MAX]; // indexed by ammotype /*0x80*/
+        struct multiammocrateslot slots[AMMOTYPE_GLOBAL_MAX];
     } MultiAmmoCrateRecord;
     #define New_MultiAmmoCrateRecord(pad)           \
         {                                           \

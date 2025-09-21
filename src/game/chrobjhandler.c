@@ -33368,71 +33368,106 @@ void display_text_for_weapon_in_lower_left_corner(ITEM_IDS weaponid)
 
 
 
-
-#ifdef NONMATCHING
-// https://decomp.me/scratch/nJWA0
-INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#50% - needs some love, but compiles and looks similar
+// Perfect Dark propobj.c: s32 propPickupByPlayer(struct prop *prop, bool showhudmsg)
+INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
 {
-    ObjectRecord *propobj;
+    ObjectRecord *obj;
     INV_ITEM_TYPE collectType;
 
-    propobj = prop->obj;
-    if ((pPlayer->bonddead) || (!gclock_timer))
+    collectType = INV_ITEM_NONE;
+    obj = prop->obj;
+    
+    if (g_CurrentPlayer->bonddead || g_ClockTimer == 0)
     {
         return INV_ITEM_NONE;
     }
 
-    switch (propobj->type)
+    switch (obj->type)
     {
         case PROPDEF_KEY:
         {
-            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
+            sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, KEYCARD_SFX, 0);
             if (showstring)
             {
-                char *text = bondinvGetActivatedTextObject(propobj);
-                if (!text)
+                char *text = bondinvGetActivatedTextObject(obj);
+                if (text == NULL)
                 {
-                    text = langGet(0xA43C);
+                    text = langGet(getStringID(LPROPOBJ, PROPOBJ_STR_3C_PICKEDUPAKEY)); // "Picked up a key.\n",
                 }
+
+#if defined(VERSION_JP) || defined(VERSION_EU)
+                jp_hudmsgBottomShow(text);
+#else
                 hudmsgBottomShow(text);
+#endif
             }
+            
             collectType = INV_ITEM_PICKUP;
+            
             break;
         }
+        
         case PROPDEF_MAGAZINE:
         {
-            AmmoCrateRecord *mag = propobj;
-            add_ammo_to_inventory(mag->type, get_ammo_in_magazine(mag), 1, showstring);
+            struct AmmoCrateRecord *crate;
+            s32 amount;
+
+            crate = (struct AmmoCrateRecord *)prop->obj;
+
+            amount = get_ammo_in_magazine(crate);
+            add_ammo_to_inventory(crate->ammoType, amount, 1, showstring);
+            
             collectType = INV_ITEM_WEAPON;
+            
             break;
         }
+
         case PROPDEF_AMMO:
         {
-            MultiAmmoCrateRecord *ammo = propobj;
-            s32                   i, ammoquantity;
-            for (i = 0; i < AMMOTYPE_GLOBAL_MAX; i++)
+            struct MultiAmmoCrateRecord *multicrate;
+            s32 i;
+            s32 ammoquantity;
+            AMMOTYPE ammotype;
+
+            multicrate = (struct MultiAmmoCrateRecord *)prop->obj;
+
+            for (i = AMMO_NONE; i < AMMOTYPE_GLOBAL_MAX; i++)
             {
-                ammoquantity = ammo->quantities[i];
+                ammotype = i + 1;
+                
+                if (ammotype == AMMO_9MM_2)
+                {
+                    ammotype = AMMO_9MM;
+                }
+
+                ammoquantity = multicrate->slots[i].quantity;
 
                 if (getPlayerCount() == 1)
                 {
-                    ammoquantity = ammoquantity * solo_ammo_multiplier;
+                    ammoquantity *= g_SoloAmmoMultiplier;
                 }
 
-                add_ammo_to_inventory(i, ammoquantity, 0, showstring);
+                add_ammo_to_inventory(ammotype, ammoquantity, 0, showstring);
             }
-            sndPlaySfx(g_musicSfxBufferPtr, 0xEA, 0);
+            
+            sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, PICKUP_AMMO_SFX, 0);
+            
             collectType = INV_ITEM_WEAPON;
+            
             break;
         }
-        case PROPDEF_COLLECTABLE:
+        
+        case PROPDEF_COLLECTABLE: // weapon
         {
-            bool             pass = 0;
-            WeaponObjRecord *wep  = propobj;
-            char *           text, *text2;
-            int              ammocollected;
-            set_sound_effect_for_weapontype_collection(wep->weaponnum);
+            WeaponObjRecord* wep;
+            bool collected;
+            s32 ammo_type;
+            
+            collected = 0;
+            wep = (WeaponObjRecord *)prop->obj;
 
+            set_sound_effect_for_weapontype_collection(wep->weaponnum);
+            
             if (wep->weaponnum == ITEM_REMOTEMINE)
             {
                 bondinvAddInvItem(ITEM_TRIGGER);
@@ -33441,1268 +33476,203 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, bool showstring) //#5
             {
                 currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
             }
-            if ((wep->runtime_bitflags & RUNTIMEBITFLAG_DESTROYED))
+            
+            if (obj->runtime_bitflags & RUNTIMEBITFLAG_DESTROYED)
             {
                 if (wep->weaponnum < ITEM_BOMBCASE)
                 {
-                    sub_GAME_7F08C764(prop);
+                    bondinvAddWeaponByProp(prop);
                 }
+                
                 if (showstring)
                 {
-                    text = bondinvGetActivatedTextObject(propobj);
+                    char *text = bondinvGetActivatedTextObject(obj);
+                    
                     if (text)
                     {
+#if defined(VERSION_JP) || defined(VERSION_EU)
+                        jp_hudmsgBottomShow(text);
+#else
                         hudmsgBottomShow(text);
+#endif
                     }
                     else
                     {
                         display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
                     }
-                    pass = 1;
+                    
+                    collected = 1;
                 }
+                
                 collectType = INV_ITEM_PICKUP;
             }
             else
             {
-                if (sub_GAME_7F08C764(prop) != 0)
+                if (bondinvAddWeaponByProp(prop) != 0)
                 {
-                    pass = 1;
+                    collected = 1;
                 }
+                
                 if (showstring)
                 {
-                    text2 = bondinvGetActivatedTextWeapon(wep->weaponnum);
+                    char *text = bondinvGetActivatedTextWeapon(wep->weaponnum);
 
-                    if (text2 != 0)
+                    if (text)
                     {
-                        pass = 1;
-                        hudmsgBottomShow(text2);
+                        collected = 1;
+                        
+#if defined(VERSION_JP) || defined(VERSION_EU)
+                        jp_hudmsgBottomShow(text);
+#else
+                        hudmsgBottomShow(text);
+#endif
                     }
-                    else if (pass != 0)
+                    else if (collected)
                     {
                         display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
                     }
                 }
+                
                 collectType = INV_ITEM_WEAPON;
             }
-            text = get_ammo_type_for_weapon(wep->weaponnum);
-            if (text != 0)
-            {
-                ammocollected = ammo_collected_from_weapon(wep);
 
-                if (ammocollected > 0)
+            ammo_type = get_ammo_type_for_weapon(wep->weaponnum);
+            if (ammo_type)
+            {
+                s32 pickupqty = ammo_collected_from_weapon(wep);
+                if (pickupqty > 0)
                 {
-                    if (check_cur_player_ammo_amount_in_inventory(text) < get_max_ammo_for_type(text))
+                    if (check_cur_player_ammo_amount_in_inventory(ammo_type) < get_max_ammo_for_type(ammo_type))
                     {
-                        give_cur_player_ammo(text, check_cur_player_ammo_amount_in_inventory(text) + ammocollected);
-                        if ((pass == 0) && showstring)
+                        s32 heldqty = check_cur_player_ammo_amount_in_inventory(ammo_type);
+                        give_cur_player_ammo(ammo_type, heldqty + pickupqty);
+                        
+                        if ((collected == 0) && showstring)
                         {
-                            display_text_when_ammo_collected(text, ammocollected);
+                            display_text_when_ammo_collected(ammo_type, pickupqty);
                         }
                     }
                 }
             }
+
             break;
         }
-        case PROPDEF_ARMOUR:
+        
+        case PROPDEF_ARMOUR: // Body armor
         {
-            BodyArmourRecord *armour = propobj;
-            char *            text;
-            //add_BONDdata_watch_armor(armour->initialamount);
-            sndPlaySfx(g_musicSfxBufferPtr, 0x51, 0);
+            bondviewAddCurrentPlayerArmor(((struct BodyArmourRecord *)prop->obj)->amount);
+            sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, ARMOUR_COLLECT_SFX, 0);
+            
             if (showstring)
             {
-                text = bondinvGetActivatedTextObject(armour);
+                char *text = bondinvGetActivatedTextObject(obj);
 
-                if (text == 0)
+                if (text == NULL)
                 {
                     if (getPlayerCount() < 3)
                     {
-                        text = langGet(0xA43D);
+                        text = langGet(getStringID(LPROPOBJ, PROPOBJ_STR_3D_PICKEDUPSOMEBODEYARMOUR)); // "Picked up some body armor.\n",
                     }
                     else
                     {
-                        text = langGet(0xA43E);
+                        text = langGet(getStringID(LPROPOBJ, PROPOBJ_STR_3E_BODYARMOUR)); // "body armor.\n",
                     }
+
                 }
+                
+#if defined(VERSION_JP) || defined(VERSION_EU)
+                jp_hudmsgBottomShow(text);
+#else
                 hudmsgBottomShow(text);
+#endif
             }
+            
             collectType = INV_ITEM_WEAPON;
+            
             break;
         }
+        
+        case PROPDEF_PROP:
+        //case PROPDEF_ALARM:
+        //case PROPDEF_CCTV:
+        //case PROPDEF_GUARD:
+        //case PROPDEF_MONITOR:
+        //case PROPDEF_MULTI_MONITOR:
+        //case PROPDEF_RACK:
+        //case PROPDEF_AUTOGUN:
+        //case PROPDEF_LINK:
+        //case PROPDEF_DEBRIS:
+        //case PROPDEF_UNK16:
+        //case PROPDEF_HAT:
+        //case PROPDEF_GUARD_ATTRIBUTE:
+        //case PROPDEF_SWITCH:
+        case PROPDEF_TAG:
+        //case PROPDEF_OBJECTIVE_START:
+        //case PROPDEF_OBJECTIVE_END:
+        //case PROPDEF_OBJECTIVE_DESTROY_OBJECT:
+        //case PROPDEF_OBJECTIVE_COMPLETE_CONDITION:
+        //case PROPDEF_OBJECTIVE_FAIL_CONDITION:
+        //case PROPDEF_OBJECTIVE_COLLECT_OBJECT:
+        //case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT:
+        //case PROPDEF_OBJECTIVE_PHOTOGRAPH:
+        //case PROPDEF_OBJECTIVE_NULL:
+        //case PROPDEF_OBJECTIVE_ENTER_ROOM:
+        //case PROPDEF_OBJECTIVE_DEPOSIT_OBJECT_IN_ROOM:
+        //case PROPDEF_OBJECTIVE_COPY_ITEM:
+        //case PROPDEF_WATCH_MENU_OBJECTIVE_TEXT:
+        //case PROPDEF_GAS_RELEASING:
+        //case PROPDEF_RENAME:
+        //case PROPDEF_LOCK_DOOR:
+        //case PROPDEF_VEHICHLE:
+        //case PROPDEF_AIRCRAFT:
+        //case PROPDEF_UNK41:
+        //case PROPDEF_GLASS:
+        //case PROPDEF_SAFE:
+        //case PROPDEF_SAFE_ITEM:
+        //case PROPDEF_TANK:
+        //case PROPDEF_CAMERAPOS:
+        case PROPDEF_TINTED_GLASS:
         default:
         {
-            char *text;
-            sndPlaySfx(g_musicSfxBufferPtr, 0xE5, 0);
+            sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, KEYCARD_SFX, 0);
+            
             if (showstring)
             {
-                text = bondinvGetActivatedTextObject(propobj);
-                if (text == 0)
+                char *text = bondinvGetActivatedTextObject(obj);
+                if (text == NULL)
                 {
-                    text = langGet(0xA43F);
+                    text = langGet(getStringID(LPROPOBJ, PROPOBJ_STR_3F_PICKEDUPSOMETHING)); // "Picked up something.\n",
                 }
+                
+#if defined(VERSION_JP) || defined(VERSION_EU)
+                jp_hudmsgBottomShow(text);
+#else
                 hudmsgBottomShow(text);
+#endif
             }
+            
             collectType = INV_ITEM_PICKUP;
+            
             break;
         }
     }
-    if ((collectType == 1) && ((propobj->runtime_bitflags & 0x10) == 0))
+    
+    if ((collectType == INV_ITEM_WEAPON) && ((obj->runtime_bitflags & RUNTIMEBITFLAG_TAGGED) == 0))
     {
-        objFree(propobj, 0, propobj->state & 4);
+        objFree(obj, 0, (obj->state & RUNTIMEBITFLAG_REMOVE));
+        
         return INV_ITEM_WEAPON;
     }
-    if (collectType != 0)
+    
+    if (collectType != INV_ITEM_NONE)
     {
         bondinvAddPropToInv(prop);
+        
         return INV_ITEM_PICKUP;
     }
-    return INV_ITEM_NONE; //inventory(4) or ammo(1) or nothing(0)
+    
+    return INV_ITEM_NONE;
 }
-#else
-#ifdef VERSION_US
-GLOBAL_ASM(
-.late_rodata
-/*D:8005322C*/
-glabel object_interaction_table
-.word interact_default_object
-.word interact_key_object
-.word interact_default_object
-.word interact_default_object
-.word interact_magazine_object
-.word interact_weapon_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_ammobox_object
-.word interact_bodyarmor_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-
-.text
-glabel collect_or_interact_object
-/* 084D80 7F050250 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 084D84 7F050254 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 084D88 7F050258 AFB00018 */  sw    $s0, 0x18($sp)
-/* 084D8C 7F05025C AFA40070 */  sw    $a0, 0x70($sp)
-/* 084D90 7F050260 AFA50074 */  sw    $a1, 0x74($sp)
-/* 084D94 7F050264 8C830004 */  lw    $v1, 4($a0)
-/* 084D98 7F050268 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
-/* 084D9C 7F05026C 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 084DA0 7F050270 AFA3006C */  sw    $v1, 0x6c($sp)
-/* 084DA4 7F050274 3C198005 */  lui   $t9, %hi(g_ClockTimer)
-/* 084DA8 7F050278 8DF800D8 */  lw    $t8, 0xd8($t7)
-/* 084DAC 7F05027C 17000005 */  bnez  $t8, .L7F050294
-/* 084DB0 7F050280 00000000 */   nop
-/* 084DB4 7F050284 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
-/* 084DB8 7F050288 8FA8006C */  lw    $t0, 0x6c($sp)
-/* 084DBC 7F05028C 57200004 */  bnezl $t9, .L7F0502A0
-/* 084DC0 7F050290 91090003 */   lbu   $t1, 3($t0)
-.L7F050294:
-/* 084DC4 7F050294 1000010C */  b     .L7F0506C8
-/* 084DC8 7F050298 00001025 */   move  $v0, $zero
-/* 084DCC 7F05029C 91090003 */  lbu   $t1, 3($t0)
-.L7F0502A0:
-/* 084DD0 7F0502A0 252AFFFD */  addiu $t2, $t1, -3
-/* 084DD4 7F0502A4 2D41002D */  sltiu $at, $t2, 0x2d
-/* 084DD8 7F0502A8 102000E0 */  beqz  $at, .L7F05062C
-/* 084DDC 7F0502AC 000A5080 */   sll   $t2, $t2, 2
-/* 084DE0 7F0502B0 3C018005 */  lui   $at, %hi(object_interaction_table)
-/* 084DE4 7F0502B4 002A0821 */  addu  $at, $at, $t2
-/* 084DE8 7F0502B8 8C2A322C */  lw    $t2, %lo(object_interaction_table)($at)
-/* 084DEC 7F0502BC 01400008 */  jr    $t2
-/* 084DF0 7F0502C0 00000000 */   nop
-interact_key_object:
-/* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
-/* 084E04 7F0502D4 00003025 */   move  $a2, $zero
-/* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
-/* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
-/* 084E10 7F0502E0 00000000 */   nop
-/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
-/* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   langGet
-/* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
-/* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
-.L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   hudmsgBottomShow
-/* 084E34 7F050304 00000000 */   nop
-.L7F050308:
-/* 084E38 7F050308 100000DA */  b     .L7F050674
-/* 084E3C 7F05030C 24030004 */   li    $v1, 4
-interact_magazine_object:
-/* 084E40 7F050310 00608025 */  move  $s0, $v1
-/* 084E44 7F050314 0FC13F0F */  jal   get_ammo_in_magazine
-/* 084E48 7F050318 00602025 */   move  $a0, $v1
-/* 084E4C 7F05031C 8E040080 */  lw    $a0, 0x80($s0)
-/* 084E50 7F050320 00402825 */  move  $a1, $v0
-/* 084E54 7F050324 24060001 */  li    $a2, 1
-/* 084E58 7F050328 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084E5C 7F05032C 8FA70074 */   lw    $a3, 0x74($sp)
-/* 084E60 7F050330 100000D0 */  b     .L7F050674
-/* 084E64 7F050334 24030001 */   li    $v1, 1
-interact_ammobox_object:
-/* 084E68 7F050338 00001025 */  move  $v0, $zero
-/* 084E6C 7F05033C 00608025 */  move  $s0, $v1
-/* 084E70 7F050340 24430001 */  addiu $v1, $v0, 1
-.L7F050344:
-/* 084E74 7F050344 24010001 */  li    $at, 1
-/* 084E78 7F050348 14410002 */  bne   $v0, $at, .L7F050354
-/* 084E7C 7F05034C 00602025 */   move  $a0, $v1
-/* 084E80 7F050350 24040001 */  li    $a0, 1
-.L7F050354:
-/* 084E84 7F050354 96050082 */  lhu   $a1, 0x82($s0)
-/* 084E88 7F050358 AFA4004C */  sw    $a0, 0x4c($sp)
-/* 084E8C 7F05035C AFA30020 */  sw    $v1, 0x20($sp)
-/* 084E90 7F050360 0FC26919 */  jal   getPlayerCount
-/* 084E94 7F050364 AFA50050 */   sw    $a1, 0x50($sp)
-/* 084E98 7F050368 24010001 */  li    $at, 1
-/* 084E9C 7F05036C 8FA30020 */  lw    $v1, 0x20($sp)
-/* 084EA0 7F050370 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
-/* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
-/* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
-/* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
-/* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
-/* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
-/* 084EC4 7F050394 44058000 */  mfc1  $a1, $f16
-/* 084EC8 7F050398 00000000 */  nop
-.L7F05039C:
-/* 084ECC 7F05039C 00003025 */  move  $a2, $zero
-/* 084ED0 7F0503A0 8FA70074 */  lw    $a3, 0x74($sp)
-/* 084ED4 7F0503A4 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084ED8 7F0503A8 AFA30020 */   sw    $v1, 0x20($sp)
-/* 084EDC 7F0503AC 8FA20020 */  lw    $v0, 0x20($sp)
-/* 084EE0 7F0503B0 2401000D */  li    $at, 13
-/* 084EE4 7F0503B4 26100004 */  addiu $s0, $s0, 4
-/* 084EE8 7F0503B8 5441FFE2 */  bnel  $v0, $at, .L7F050344
-/* 084EEC 7F0503BC 24430001 */   addiu $v1, $v0, 1
-/* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
-/* 084F00 7F0503D0 00003025 */   move  $a2, $zero
-/* 084F04 7F0503D4 100000A7 */  b     .L7F050674
-/* 084F08 7F0503D8 24030001 */   li    $v1, 1
-interact_weapon_object:
-/* 084F0C 7F0503DC AFA00044 */  sw    $zero, 0x44($sp)
-/* 084F10 7F0503E0 80640080 */  lb    $a0, 0x80($v1)
-/* 084F14 7F0503E4 0FC13E04 */  jal   set_sound_effect_for_weapontype_collection
-/* 084F18 7F0503E8 AFA30048 */   sw    $v1, 0x48($sp)
-/* 084F1C 7F0503EC 8FAD0048 */  lw    $t5, 0x48($sp)
-/* 084F20 7F0503F0 2401001D */  li    $at, 29
-/* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
-/* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
-/* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
-/* 084F34 7F050404 2404001E */   li    $a0, 30
-/* 084F38 7F050408 10000007 */  b     .L7F050428
-/* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
-/* 084F40 7F050410 24010058 */  li    $at, 88
-.L7F050414:
-/* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
-/* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 084F50 7F050420 00002025 */   move  $a0, $zero
-.L7F050424:
-/* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
-.L7F050428:
-/* 084F58 7F050428 8FB90048 */  lw    $t9, 0x48($sp)
-/* 084F5C 7F05042C 8DCF0064 */  lw    $t7, 0x64($t6)
-/* 084F60 7F050430 31F80400 */  andi  $t8, $t7, 0x400
-/* 084F64 7F050434 1300001B */  beqz  $t8, .L7F0504A4
-/* 084F68 7F050438 00000000 */   nop
-/* 084F6C 7F05043C 83280080 */  lb    $t0, 0x80($t9)
-/* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
-/* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
-/* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
-.L7F050458:
-/* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
-/* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
-/* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   hudmsgBottomShow
-/* 084FA4 7F050474 00000000 */   nop
-/* 084FA8 7F050478 10000005 */  b     .L7F050490
-/* 084FAC 7F05047C 240B0001 */   li    $t3, 1
-.L7F050480:
-/* 084FB0 7F050480 8FAA0048 */  lw    $t2, 0x48($sp)
-/* 084FB4 7F050484 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 084FB8 7F050488 81440080 */   lb    $a0, 0x80($t2)
-/* 084FBC 7F05048C 240B0001 */  li    $t3, 1
-.L7F050490:
-/* 084FC0 7F050490 AFAB0044 */  sw    $t3, 0x44($sp)
-/* 084FC4 7F050494 8FAC0048 */  lw    $t4, 0x48($sp)
-.L7F050498:
-/* 084FC8 7F050498 24030004 */  li    $v1, 4
-/* 084FCC 7F05049C 1000001C */  b     .L7F050510
-/* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
-.L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
-/* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
-/* 084FE4 7F0504B4 AFAD0044 */  sw    $t5, 0x44($sp)
-.L7F0504B8:
-/* 084FE8 7F0504B8 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
-/* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
-/* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
-/* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
-/* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
-/* 085004 7F0504D4 00402025 */   move  $a0, $v0
-/* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   hudmsgBottomShow
-/* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
-/* 085014 7F0504E4 10000008 */  b     .L7F050508
-/* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
-.L7F0504EC:
-/* 08501C 7F0504EC 8FB90044 */  lw    $t9, 0x44($sp)
-/* 085020 7F0504F0 8FA80048 */  lw    $t0, 0x48($sp)
-/* 085024 7F0504F4 53200004 */  beql  $t9, $zero, .L7F050508
-/* 085028 7F0504F8 8FA90048 */   lw    $t1, 0x48($sp)
-/* 08502C 7F0504FC 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 085030 7F050500 81040080 */   lb    $a0, 0x80($t0)
-/* 085034 7F050504 8FA90048 */  lw    $t1, 0x48($sp)
-.L7F050508:
-/* 085038 7F050508 24030001 */  li    $v1, 1
-/* 08503C 7F05050C 81240080 */  lb    $a0, 0x80($t1)
-.L7F050510:
-/* 085040 7F050510 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 085044 7F050514 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085048 7F050518 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08504C 7F05051C 10400055 */  beqz  $v0, .L7F050674
-/* 085050 7F050520 00408025 */   move  $s0, $v0
-/* 085054 7F050524 8FA40048 */  lw    $a0, 0x48($sp)
-/* 085058 7F050528 0FC13F3E */  jal   ammo_collected_from_weapon
-/* 08505C 7F05052C AFA30068 */   sw    $v1, 0x68($sp)
-/* 085060 7F050530 8FA30068 */  lw    $v1, 0x68($sp)
-/* 085064 7F050534 1840004F */  blez  $v0, .L7F050674
-/* 085068 7F050538 AFA20034 */   sw    $v0, 0x34($sp)
-/* 08506C 7F05053C 02002025 */  move  $a0, $s0
-/* 085070 7F050540 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 085074 7F050544 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085078 7F050548 AFA20024 */  sw    $v0, 0x24($sp)
-/* 08507C 7F05054C 0FC1A4B5 */  jal   get_max_ammo_for_type
-/* 085080 7F050550 02002025 */   move  $a0, $s0
-/* 085084 7F050554 8FAA0024 */  lw    $t2, 0x24($sp)
-/* 085088 7F050558 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08508C 7F05055C 02002025 */  move  $a0, $s0
-/* 085090 7F050560 0142082A */  slt   $at, $t2, $v0
-/* 085094 7F050564 50200044 */  beql  $at, $zero, .L7F050678
-/* 085098 7F050568 24010001 */   li    $at, 1
-/* 08509C 7F05056C 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 0850A0 7F050570 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850A4 7F050574 8FAB0034 */  lw    $t3, 0x34($sp)
-/* 0850A8 7F050578 02002025 */  move  $a0, $s0
-/* 0850AC 7F05057C 0FC1A44C */  jal   give_cur_player_ammo
-/* 0850B0 7F050580 004B2821 */   addu  $a1, $v0, $t3
-/* 0850B4 7F050584 8FAC0044 */  lw    $t4, 0x44($sp)
-/* 0850B8 7F050588 8FA30068 */  lw    $v1, 0x68($sp)
-/* 0850BC 7F05058C 8FAD0074 */  lw    $t5, 0x74($sp)
-/* 0850C0 7F050590 55800039 */  bnezl $t4, .L7F050678
-/* 0850C4 7F050594 24010001 */   li    $at, 1
-/* 0850C8 7F050598 11A00036 */  beqz  $t5, .L7F050674
-/* 0850CC 7F05059C 02002025 */   move  $a0, $s0
-/* 0850D0 7F0505A0 8FA50034 */  lw    $a1, 0x34($sp)
-/* 0850D4 7F0505A4 0FC13E7E */  jal   display_text_when_ammo_collected
-/* 0850D8 7F0505A8 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850DC 7F0505AC 10000031 */  b     .L7F050674
-/* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
-interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
-/* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
-/* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
-/* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
-/* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
-/* 085108 7F0505D8 00000000 */   nop
-/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
-/* 085118 7F0505E8 00402025 */   move  $a0, $v0
-/* 08511C 7F0505EC 0FC26919 */  jal   getPlayerCount
-/* 085120 7F0505F0 00000000 */   nop
-/* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
-/* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
-/* 08512C 7F0505FC 00000000 */   nop
-/* 085130 7F050600 0FC30776 */  jal   langGet
-/* 085134 7F050604 3404A43D */   li    $a0, 42045
-/* 085138 7F050608 10000004 */  b     .L7F05061C
-/* 08513C 7F05060C 00402025 */   move  $a0, $v0
-.L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   langGet
-/* 085144 7F050614 3404A43E */   li    $a0, 42046
-/* 085148 7F050618 00402025 */  move  $a0, $v0
-.L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   hudmsgBottomShow
-/* 085150 7F050620 00000000 */   nop
-.L7F050624:
-/* 085154 7F050624 10000013 */  b     .L7F050674
-/* 085158 7F050628 24030001 */   li    $v1, 1
-interact_default_object:
-.L7F05062C:
-/* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
-/* 08516C 7F05063C 00003025 */   move  $a2, $zero
-/* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
-/* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
-/* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
-/* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   langGet
-/* 085190 7F050660 3404A43F */   li    $a0, 42047
-/* 085194 7F050664 00402025 */  move  $a0, $v0
-.L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   hudmsgBottomShow
-/* 08519C 7F05066C 00000000 */   nop
-/* 0851A0 7F050670 24030004 */  li    $v1, 4
-.L7F050674:
-/* 0851A4 7F050674 24010001 */  li    $at, 1
-.L7F050678:
-/* 0851A8 7F050678 1461000D */  bne   $v1, $at, .L7F0506B0
-/* 0851AC 7F05067C 8FB8006C */   lw    $t8, 0x6c($sp)
-/* 0851B0 7F050680 8F190064 */  lw    $t9, 0x64($t8)
-/* 0851B4 7F050684 33280010 */  andi  $t0, $t9, 0x10
-/* 0851B8 7F050688 15000009 */  bnez  $t0, .L7F0506B0
-/* 0851BC 7F05068C 00000000 */   nop
-/* 0851C0 7F050690 93060002 */  lbu   $a2, 2($t8)
-/* 0851C4 7F050694 03002025 */  move  $a0, $t8
-/* 0851C8 7F050698 00002825 */  move  $a1, $zero
-/* 0851CC 7F05069C 30C90004 */  andi  $t1, $a2, 4
-/* 0851D0 7F0506A0 0FC10366 */  jal   objFree
-/* 0851D4 7F0506A4 01203025 */   move  $a2, $t1
-/* 0851D8 7F0506A8 10000007 */  b     .L7F0506C8
-/* 0851DC 7F0506AC 24020001 */   li    $v0, 1
-.L7F0506B0:
-/* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
-/* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
-/* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
-/* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
-/* 0851F4 7F0506C4 24020004 */   li    $v0, 4
-.L7F0506C8:
-/* 0851F8 7F0506C8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0851FC 7F0506CC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 085200 7F0506D0 27BD0070 */  addiu $sp, $sp, 0x70
-/* 085204 7F0506D4 03E00008 */  jr    $ra
-/* 085208 7F0506D8 00000000 */   nop
-)
-#endif
-#ifdef VERSION_JP
-GLOBAL_ASM(
-.late_rodata
-/*D:8005322C*/
-glabel object_interaction_table
-.word interact_default_object
-.word interact_key_object
-.word interact_default_object
-.word interact_default_object
-.word interact_magazine_object
-.word interact_weapon_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_ammobox_object
-.word interact_bodyarmor_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-
-.text
-glabel collect_or_interact_object
-/* 084D80 7F050250 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 084D84 7F050254 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 084D88 7F050258 AFB00018 */  sw    $s0, 0x18($sp)
-/* 084D8C 7F05025C AFA40070 */  sw    $a0, 0x70($sp)
-/* 084D90 7F050260 AFA50074 */  sw    $a1, 0x74($sp)
-/* 084D94 7F050264 8C830004 */  lw    $v1, 4($a0)
-/* 084D98 7F050268 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
-/* 084D9C 7F05026C 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 084DA0 7F050270 AFA3006C */  sw    $v1, 0x6c($sp)
-/* 084DA4 7F050274 3C198005 */  lui   $t9, %hi(g_ClockTimer)
-/* 084DA8 7F050278 8DF800D8 */  lw    $t8, 0xd8($t7)
-/* 084DAC 7F05027C 17000005 */  bnez  $t8, .L7F050294
-/* 084DB0 7F050280 00000000 */   nop
-/* 084DB4 7F050284 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
-/* 084DB8 7F050288 8FA8006C */  lw    $t0, 0x6c($sp)
-/* 084DBC 7F05028C 57200004 */  bnezl $t9, .L7F0502A0
-/* 084DC0 7F050290 91090003 */   lbu   $t1, 3($t0)
-.L7F050294:
-/* 084DC4 7F050294 1000010C */  b     .L7F0506C8
-/* 084DC8 7F050298 00001025 */   move  $v0, $zero
-/* 084DCC 7F05029C 91090003 */  lbu   $t1, 3($t0)
-.L7F0502A0:
-/* 084DD0 7F0502A0 252AFFFD */  addiu $t2, $t1, -3
-/* 084DD4 7F0502A4 2D41002D */  sltiu $at, $t2, 0x2d
-/* 084DD8 7F0502A8 102000E0 */  beqz  $at, .L7F05062C
-/* 084DDC 7F0502AC 000A5080 */   sll   $t2, $t2, 2
-/* 084DE0 7F0502B0 3C018005 */  lui   $at, %hi(object_interaction_table)
-/* 084DE4 7F0502B4 002A0821 */  addu  $at, $at, $t2
-/* 084DE8 7F0502B8 8C2A322C */  lw    $t2, %lo(object_interaction_table)($at)
-/* 084DEC 7F0502BC 01400008 */  jr    $t2
-/* 084DF0 7F0502C0 00000000 */   nop
-interact_key_object:
-/* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
-/* 084E04 7F0502D4 00003025 */   move  $a2, $zero
-/* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
-/* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
-/* 084E10 7F0502E0 00000000 */   nop
-/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
-/* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   langGet
-/* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
-/* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
-.L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084E34 7F050304 00000000 */   nop
-.L7F050308:
-/* 084E38 7F050308 100000DA */  b     .L7F050674
-/* 084E3C 7F05030C 24030004 */   li    $v1, 4
-interact_magazine_object:
-/* 084E40 7F050310 00608025 */  move  $s0, $v1
-/* 084E44 7F050314 0FC13F0F */  jal   get_ammo_in_magazine
-/* 084E48 7F050318 00602025 */   move  $a0, $v1
-/* 084E4C 7F05031C 8E040080 */  lw    $a0, 0x80($s0)
-/* 084E50 7F050320 00402825 */  move  $a1, $v0
-/* 084E54 7F050324 24060001 */  li    $a2, 1
-/* 084E58 7F050328 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084E5C 7F05032C 8FA70074 */   lw    $a3, 0x74($sp)
-/* 084E60 7F050330 100000D0 */  b     .L7F050674
-/* 084E64 7F050334 24030001 */   li    $v1, 1
-interact_ammobox_object:
-/* 084E68 7F050338 00001025 */  move  $v0, $zero
-/* 084E6C 7F05033C 00608025 */  move  $s0, $v1
-/* 084E70 7F050340 24430001 */  addiu $v1, $v0, 1
-.L7F050344:
-/* 084E74 7F050344 24010001 */  li    $at, 1
-/* 084E78 7F050348 14410002 */  bne   $v0, $at, .L7F050354
-/* 084E7C 7F05034C 00602025 */   move  $a0, $v1
-/* 084E80 7F050350 24040001 */  li    $a0, 1
-.L7F050354:
-/* 084E84 7F050354 96050082 */  lhu   $a1, 0x82($s0)
-/* 084E88 7F050358 AFA4004C */  sw    $a0, 0x4c($sp)
-/* 084E8C 7F05035C AFA30020 */  sw    $v1, 0x20($sp)
-/* 084E90 7F050360 0FC26919 */  jal   getPlayerCount
-/* 084E94 7F050364 AFA50050 */   sw    $a1, 0x50($sp)
-/* 084E98 7F050368 24010001 */  li    $at, 1
-/* 084E9C 7F05036C 8FA30020 */  lw    $v1, 0x20($sp)
-/* 084EA0 7F050370 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
-/* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
-/* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
-/* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
-/* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
-/* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
-/* 084EC4 7F050394 44058000 */  mfc1  $a1, $f16
-/* 084EC8 7F050398 00000000 */  nop
-.L7F05039C:
-/* 084ECC 7F05039C 00003025 */  move  $a2, $zero
-/* 084ED0 7F0503A0 8FA70074 */  lw    $a3, 0x74($sp)
-/* 084ED4 7F0503A4 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084ED8 7F0503A8 AFA30020 */   sw    $v1, 0x20($sp)
-/* 084EDC 7F0503AC 8FA20020 */  lw    $v0, 0x20($sp)
-/* 084EE0 7F0503B0 2401000D */  li    $at, 13
-/* 084EE4 7F0503B4 26100004 */  addiu $s0, $s0, 4
-/* 084EE8 7F0503B8 5441FFE2 */  bnel  $v0, $at, .L7F050344
-/* 084EEC 7F0503BC 24430001 */   addiu $v1, $v0, 1
-/* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
-/* 084F00 7F0503D0 00003025 */   move  $a2, $zero
-/* 084F04 7F0503D4 100000A7 */  b     .L7F050674
-/* 084F08 7F0503D8 24030001 */   li    $v1, 1
-interact_weapon_object:
-/* 084F0C 7F0503DC AFA00044 */  sw    $zero, 0x44($sp)
-/* 084F10 7F0503E0 80640080 */  lb    $a0, 0x80($v1)
-/* 084F14 7F0503E4 0FC13E04 */  jal   set_sound_effect_for_weapontype_collection
-/* 084F18 7F0503E8 AFA30048 */   sw    $v1, 0x48($sp)
-/* 084F1C 7F0503EC 8FAD0048 */  lw    $t5, 0x48($sp)
-/* 084F20 7F0503F0 2401001D */  li    $at, 29
-/* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
-/* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
-/* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
-/* 084F34 7F050404 2404001E */   li    $a0, 30
-/* 084F38 7F050408 10000007 */  b     .L7F050428
-/* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
-/* 084F40 7F050410 24010058 */  li    $at, 88
-.L7F050414:
-/* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
-/* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 084F50 7F050420 00002025 */   move  $a0, $zero
-.L7F050424:
-/* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
-.L7F050428:
-/* 084F58 7F050428 8FB90048 */  lw    $t9, 0x48($sp)
-/* 084F5C 7F05042C 8DCF0064 */  lw    $t7, 0x64($t6)
-/* 084F60 7F050430 31F80400 */  andi  $t8, $t7, 0x400
-/* 084F64 7F050434 1300001B */  beqz  $t8, .L7F0504A4
-/* 084F68 7F050438 00000000 */   nop
-/* 084F6C 7F05043C 83280080 */  lb    $t0, 0x80($t9)
-/* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
-/* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
-/* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
-.L7F050458:
-/* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
-/* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
-/* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084FA4 7F050474 00000000 */   nop
-/* 084FA8 7F050478 10000005 */  b     .L7F050490
-/* 084FAC 7F05047C 240B0001 */   li    $t3, 1
-.L7F050480:
-/* 084FB0 7F050480 8FAA0048 */  lw    $t2, 0x48($sp)
-/* 084FB4 7F050484 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 084FB8 7F050488 81440080 */   lb    $a0, 0x80($t2)
-/* 084FBC 7F05048C 240B0001 */  li    $t3, 1
-.L7F050490:
-/* 084FC0 7F050490 AFAB0044 */  sw    $t3, 0x44($sp)
-/* 084FC4 7F050494 8FAC0048 */  lw    $t4, 0x48($sp)
-.L7F050498:
-/* 084FC8 7F050498 24030004 */  li    $v1, 4
-/* 084FCC 7F05049C 1000001C */  b     .L7F050510
-/* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
-.L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
-/* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
-/* 084FE4 7F0504B4 AFAD0044 */  sw    $t5, 0x44($sp)
-.L7F0504B8:
-/* 084FE8 7F0504B8 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
-/* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
-/* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
-/* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
-/* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
-/* 085004 7F0504D4 00402025 */   move  $a0, $v0
-/* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
-/* 085014 7F0504E4 10000008 */  b     .L7F050508
-/* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
-.L7F0504EC:
-/* 08501C 7F0504EC 8FB90044 */  lw    $t9, 0x44($sp)
-/* 085020 7F0504F0 8FA80048 */  lw    $t0, 0x48($sp)
-/* 085024 7F0504F4 53200004 */  beql  $t9, $zero, .L7F050508
-/* 085028 7F0504F8 8FA90048 */   lw    $t1, 0x48($sp)
-/* 08502C 7F0504FC 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 085030 7F050500 81040080 */   lb    $a0, 0x80($t0)
-/* 085034 7F050504 8FA90048 */  lw    $t1, 0x48($sp)
-.L7F050508:
-/* 085038 7F050508 24030001 */  li    $v1, 1
-/* 08503C 7F05050C 81240080 */  lb    $a0, 0x80($t1)
-.L7F050510:
-/* 085040 7F050510 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 085044 7F050514 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085048 7F050518 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08504C 7F05051C 10400055 */  beqz  $v0, .L7F050674
-/* 085050 7F050520 00408025 */   move  $s0, $v0
-/* 085054 7F050524 8FA40048 */  lw    $a0, 0x48($sp)
-/* 085058 7F050528 0FC13F3E */  jal   ammo_collected_from_weapon
-/* 08505C 7F05052C AFA30068 */   sw    $v1, 0x68($sp)
-/* 085060 7F050530 8FA30068 */  lw    $v1, 0x68($sp)
-/* 085064 7F050534 1840004F */  blez  $v0, .L7F050674
-/* 085068 7F050538 AFA20034 */   sw    $v0, 0x34($sp)
-/* 08506C 7F05053C 02002025 */  move  $a0, $s0
-/* 085070 7F050540 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 085074 7F050544 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085078 7F050548 AFA20024 */  sw    $v0, 0x24($sp)
-/* 08507C 7F05054C 0FC1A4B5 */  jal   get_max_ammo_for_type
-/* 085080 7F050550 02002025 */   move  $a0, $s0
-/* 085084 7F050554 8FAA0024 */  lw    $t2, 0x24($sp)
-/* 085088 7F050558 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08508C 7F05055C 02002025 */  move  $a0, $s0
-/* 085090 7F050560 0142082A */  slt   $at, $t2, $v0
-/* 085094 7F050564 50200044 */  beql  $at, $zero, .L7F050678
-/* 085098 7F050568 24010001 */   li    $at, 1
-/* 08509C 7F05056C 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 0850A0 7F050570 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850A4 7F050574 8FAB0034 */  lw    $t3, 0x34($sp)
-/* 0850A8 7F050578 02002025 */  move  $a0, $s0
-/* 0850AC 7F05057C 0FC1A44C */  jal   give_cur_player_ammo
-/* 0850B0 7F050580 004B2821 */   addu  $a1, $v0, $t3
-/* 0850B4 7F050584 8FAC0044 */  lw    $t4, 0x44($sp)
-/* 0850B8 7F050588 8FA30068 */  lw    $v1, 0x68($sp)
-/* 0850BC 7F05058C 8FAD0074 */  lw    $t5, 0x74($sp)
-/* 0850C0 7F050590 55800039 */  bnezl $t4, .L7F050678
-/* 0850C4 7F050594 24010001 */   li    $at, 1
-/* 0850C8 7F050598 11A00036 */  beqz  $t5, .L7F050674
-/* 0850CC 7F05059C 02002025 */   move  $a0, $s0
-/* 0850D0 7F0505A0 8FA50034 */  lw    $a1, 0x34($sp)
-/* 0850D4 7F0505A4 0FC13E7E */  jal   display_text_when_ammo_collected
-/* 0850D8 7F0505A8 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850DC 7F0505AC 10000031 */  b     .L7F050674
-/* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
-interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
-/* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
-/* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
-/* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
-/* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
-/* 085108 7F0505D8 00000000 */   nop
-/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
-/* 085118 7F0505E8 00402025 */   move  $a0, $v0
-/* 08511C 7F0505EC 0FC26919 */  jal   getPlayerCount
-/* 085120 7F0505F0 00000000 */   nop
-/* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
-/* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
-/* 08512C 7F0505FC 00000000 */   nop
-/* 085130 7F050600 0FC30776 */  jal   langGet
-/* 085134 7F050604 3404A43D */   li    $a0, 42045
-/* 085138 7F050608 10000004 */  b     .L7F05061C
-/* 08513C 7F05060C 00402025 */   move  $a0, $v0
-.L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   langGet
-/* 085144 7F050614 3404A43E */   li    $a0, 42046
-/* 085148 7F050618 00402025 */  move  $a0, $v0
-.L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 085150 7F050620 00000000 */   nop
-.L7F050624:
-/* 085154 7F050624 10000013 */  b     .L7F050674
-/* 085158 7F050628 24030001 */   li    $v1, 1
-interact_default_object:
-.L7F05062C:
-/* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
-/* 08516C 7F05063C 00003025 */   move  $a2, $zero
-/* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
-/* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
-/* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
-/* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   langGet
-/* 085190 7F050660 3404A43F */   li    $a0, 42047
-/* 085194 7F050664 00402025 */  move  $a0, $v0
-.L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08519C 7F05066C 00000000 */   nop
-/* 0851A0 7F050670 24030004 */  li    $v1, 4
-.L7F050674:
-/* 0851A4 7F050674 24010001 */  li    $at, 1
-.L7F050678:
-/* 0851A8 7F050678 1461000D */  bne   $v1, $at, .L7F0506B0
-/* 0851AC 7F05067C 8FB8006C */   lw    $t8, 0x6c($sp)
-/* 0851B0 7F050680 8F190064 */  lw    $t9, 0x64($t8)
-/* 0851B4 7F050684 33280010 */  andi  $t0, $t9, 0x10
-/* 0851B8 7F050688 15000009 */  bnez  $t0, .L7F0506B0
-/* 0851BC 7F05068C 00000000 */   nop
-/* 0851C0 7F050690 93060002 */  lbu   $a2, 2($t8)
-/* 0851C4 7F050694 03002025 */  move  $a0, $t8
-/* 0851C8 7F050698 00002825 */  move  $a1, $zero
-/* 0851CC 7F05069C 30C90004 */  andi  $t1, $a2, 4
-/* 0851D0 7F0506A0 0FC10366 */  jal   objFree
-/* 0851D4 7F0506A4 01203025 */   move  $a2, $t1
-/* 0851D8 7F0506A8 10000007 */  b     .L7F0506C8
-/* 0851DC 7F0506AC 24020001 */   li    $v0, 1
-.L7F0506B0:
-/* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
-/* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
-/* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
-/* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
-/* 0851F4 7F0506C4 24020004 */   li    $v0, 4
-.L7F0506C8:
-/* 0851F8 7F0506C8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0851FC 7F0506CC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 085200 7F0506D0 27BD0070 */  addiu $sp, $sp, 0x70
-/* 085204 7F0506D4 03E00008 */  jr    $ra
-/* 085208 7F0506D8 00000000 */   nop
-)
-#endif
-
-#ifdef VERSION_EU
-GLOBAL_ASM(
-.late_rodata
-/*D:8005322C*/
-glabel object_interaction_table
-.word interact_default_object
-.word interact_key_object
-.word interact_default_object
-.word interact_default_object
-.word interact_magazine_object
-.word interact_weapon_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_ammobox_object
-.word interact_bodyarmor_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-.word interact_default_object
-
-.text
-glabel collect_or_interact_object
-/* 084D80 7F050250 27BDFF90 */  addiu $sp, $sp, -0x70
-/* 084D84 7F050254 AFBF001C */  sw    $ra, 0x1c($sp)
-/* 084D88 7F050258 AFB00018 */  sw    $s0, 0x18($sp)
-/* 084D8C 7F05025C AFA40070 */  sw    $a0, 0x70($sp)
-/* 084D90 7F050260 AFA50074 */  sw    $a1, 0x74($sp)
-/* 084D94 7F050264 8C830004 */  lw    $v1, 4($a0)
-/* 084D98 7F050268 3C0F8008 */  lui   $t7, %hi(g_CurrentPlayer)
-/* 084D9C 7F05026C 8DEFA0B0 */  lw    $t7, %lo(g_CurrentPlayer)($t7)
-/* 084DA0 7F050270 AFA3006C */  sw    $v1, 0x6c($sp)
-/* 084DA4 7F050274 3C198005 */  lui   $t9, %hi(g_ClockTimer)
-/* 084DA8 7F050278 8DF800D8 */  lw    $t8, 0xd8($t7)
-/* 084DAC 7F05027C 17000005 */  bnez  $t8, .L7F050294
-/* 084DB0 7F050280 00000000 */   nop
-/* 084DB4 7F050284 8F398374 */  lw    $t9, %lo(g_ClockTimer)($t9)
-/* 084DB8 7F050288 8FA8006C */  lw    $t0, 0x6c($sp)
-/* 084DBC 7F05028C 57200004 */  bnezl $t9, .L7F0502A0
-/* 084DC0 7F050290 91090003 */   lbu   $t1, 3($t0)
-.L7F050294:
-/* 084DC4 7F050294 1000010C */  b     .L7F0506C8
-/* 084DC8 7F050298 00001025 */   move  $v0, $zero
-/* 084DCC 7F05029C 91090003 */  lbu   $t1, 3($t0)
-.L7F0502A0:
-/* 084DD0 7F0502A0 252AFFFD */  addiu $t2, $t1, -3
-/* 084DD4 7F0502A4 2D41002D */  sltiu $at, $t2, 0x2d
-/* 084DD8 7F0502A8 102000E0 */  beqz  $at, .L7F05062C
-/* 084DDC 7F0502AC 000A5080 */   sll   $t2, $t2, 2
-/* 084DE0 7F0502B0 3C018005 */  lui   $at, %hi(object_interaction_table)
-/* 084DE4 7F0502B4 002A0821 */  addu  $at, $at, $t2
-/* 084DE8 7F0502B8 8C2A322C */  lw    $t2, %lo(object_interaction_table)($at)
-/* 084DEC 7F0502BC 01400008 */  jr    $t2
-/* 084DF0 7F0502C0 00000000 */   nop
-interact_key_object:
-/* 084DF4 7F0502C4 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084DF8 7F0502C8 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084DFC 7F0502CC 240500E5 */  li    $a1, 229
-/* 084E00 7F0502D0 0C002382 */  jal   sndPlaySfx
-/* 084E04 7F0502D4 00003025 */   move  $a2, $zero
-/* 084E08 7F0502D8 8FAB0074 */  lw    $t3, 0x74($sp)
-/* 084E0C 7F0502DC 1160000A */  beqz  $t3, .L7F050308
-/* 084E10 7F0502E0 00000000 */   nop
-/* 084E14 7F0502E4 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084E18 7F0502E8 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084E1C 7F0502EC 14400004 */  bnez  $v0, .L7F050300
-/* 084E20 7F0502F0 00402025 */   move  $a0, $v0
-/* 084E24 7F0502F4 0FC30776 */  jal   langGet
-/* 084E28 7F0502F8 3404A43C */   li    $a0, 42044
-/* 084E2C 7F0502FC 00402025 */  move  $a0, $v0
-.L7F050300:
-/* 084E30 7F050300 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084E34 7F050304 00000000 */   nop
-.L7F050308:
-/* 084E38 7F050308 100000DA */  b     .L7F050674
-/* 084E3C 7F05030C 24030004 */   li    $v1, 4
-interact_magazine_object:
-/* 084E40 7F050310 00608025 */  move  $s0, $v1
-/* 084E44 7F050314 0FC13F0F */  jal   get_ammo_in_magazine
-/* 084E48 7F050318 00602025 */   move  $a0, $v1
-/* 084E4C 7F05031C 8E040080 */  lw    $a0, 0x80($s0)
-/* 084E50 7F050320 00402825 */  move  $a1, $v0
-/* 084E54 7F050324 24060001 */  li    $a2, 1
-/* 084E58 7F050328 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084E5C 7F05032C 8FA70074 */   lw    $a3, 0x74($sp)
-/* 084E60 7F050330 100000D0 */  b     .L7F050674
-/* 084E64 7F050334 24030001 */   li    $v1, 1
-interact_ammobox_object:
-/* 084E68 7F050338 00001025 */  move  $v0, $zero
-/* 084E6C 7F05033C 00608025 */  move  $s0, $v1
-/* 084E70 7F050340 24430001 */  addiu $v1, $v0, 1
-.L7F050344:
-/* 084E74 7F050344 24010001 */  li    $at, 1
-/* 084E78 7F050348 14410002 */  bne   $v0, $at, .L7F050354
-/* 084E7C 7F05034C 00602025 */   move  $a0, $v1
-/* 084E80 7F050350 24040001 */  li    $a0, 1
-.L7F050354:
-/* 084E84 7F050354 96050082 */  lhu   $a1, 0x82($s0)
-/* 084E88 7F050358 AFA4004C */  sw    $a0, 0x4c($sp)
-/* 084E8C 7F05035C AFA30020 */  sw    $v1, 0x20($sp)
-/* 084E90 7F050360 0FC26919 */  jal   getPlayerCount
-/* 084E94 7F050364 AFA50050 */   sw    $a1, 0x50($sp)
-/* 084E98 7F050368 24010001 */  li    $at, 1
-/* 084E9C 7F05036C 8FA30020 */  lw    $v1, 0x20($sp)
-/* 084EA0 7F050370 8FA4004C */  lw    $a0, 0x4c($sp)
-/* 084EA4 7F050374 14410009 */  bne   $v0, $at, .L7F05039C
-/* 084EA8 7F050378 8FA50050 */   lw    $a1, 0x50($sp)
-/* 084EAC 7F05037C 44852000 */  mtc1  $a1, $f4
-/* 084EB0 7F050380 3C018003 */  lui   $at, %hi(g_SoloAmmoMultiplier)
-/* 084EB4 7F050384 C4280B28 */  lwc1  $f8, %lo(g_SoloAmmoMultiplier)($at)
-/* 084EB8 7F050388 468021A0 */  cvt.s.w $f6, $f4
-/* 084EBC 7F05038C 46083282 */  mul.s $f10, $f6, $f8
-/* 084EC0 7F050390 4600540D */  trunc.w.s $f16, $f10
-/* 084EC4 7F050394 44058000 */  mfc1  $a1, $f16
-/* 084EC8 7F050398 00000000 */  nop
-.L7F05039C:
-/* 084ECC 7F05039C 00003025 */  move  $a2, $zero
-/* 084ED0 7F0503A0 8FA70074 */  lw    $a3, 0x74($sp)
-/* 084ED4 7F0503A4 0FC13E9A */  jal   add_ammo_to_inventory
-/* 084ED8 7F0503A8 AFA30020 */   sw    $v1, 0x20($sp)
-/* 084EDC 7F0503AC 8FA20020 */  lw    $v0, 0x20($sp)
-/* 084EE0 7F0503B0 2401000D */  li    $at, 13
-/* 084EE4 7F0503B4 26100004 */  addiu $s0, $s0, 4
-/* 084EE8 7F0503B8 5441FFE2 */  bnel  $v0, $at, .L7F050344
-/* 084EEC 7F0503BC 24430001 */   addiu $v1, $v0, 1
-/* 084EF0 7F0503C0 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 084EF4 7F0503C4 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 084EF8 7F0503C8 240500EA */  li    $a1, 234
-/* 084EFC 7F0503CC 0C002382 */  jal   sndPlaySfx
-/* 084F00 7F0503D0 00003025 */   move  $a2, $zero
-/* 084F04 7F0503D4 100000A7 */  b     .L7F050674
-/* 084F08 7F0503D8 24030001 */   li    $v1, 1
-interact_weapon_object:
-/* 084F0C 7F0503DC AFA00044 */  sw    $zero, 0x44($sp)
-/* 084F10 7F0503E0 80640080 */  lb    $a0, 0x80($v1)
-/* 084F14 7F0503E4 0FC13E04 */  jal   set_sound_effect_for_weapontype_collection
-/* 084F18 7F0503E8 AFA30048 */   sw    $v1, 0x48($sp)
-/* 084F1C 7F0503EC 8FAD0048 */  lw    $t5, 0x48($sp)
-/* 084F20 7F0503F0 2401001D */  li    $at, 29
-/* 084F24 7F0503F4 81A40080 */  lb    $a0, 0x80($t5)
-/* 084F28 7F0503F8 54810006 */  bnel  $a0, $at, .L7F050414
-/* 084F2C 7F0503FC 24010058 */   li    $at, 88
-/* 084F30 7F050400 0FC23122 */  jal   bondinvAddInvItem
-/* 084F34 7F050404 2404001E */   li    $a0, 30
-/* 084F38 7F050408 10000007 */  b     .L7F050428
-/* 084F3C 7F05040C 8FAE006C */   lw    $t6, 0x6c($sp)
-/* 084F40 7F050410 24010058 */  li    $at, 88
-.L7F050414:
-/* 084F44 7F050414 14810003 */  bne   $a0, $at, .L7F050424
-/* 084F48 7F050418 24050058 */   li    $a1, 88
-/* 084F4C 7F05041C 0FC17645 */  jal   currentPlayerEquipWeaponWrapper
-/* 084F50 7F050420 00002025 */   move  $a0, $zero
-.L7F050424:
-/* 084F54 7F050424 8FAE006C */  lw    $t6, 0x6c($sp)
-.L7F050428:
-/* 084F58 7F050428 8FB90048 */  lw    $t9, 0x48($sp)
-/* 084F5C 7F05042C 8DCF0064 */  lw    $t7, 0x64($t6)
-/* 084F60 7F050430 31F80400 */  andi  $t8, $t7, 0x400
-/* 084F64 7F050434 1300001B */  beqz  $t8, .L7F0504A4
-/* 084F68 7F050438 00000000 */   nop
-/* 084F6C 7F05043C 83280080 */  lb    $t0, 0x80($t9)
-/* 084F70 7F050440 29010021 */  slti  $at, $t0, 0x21
-/* 084F74 7F050444 50200004 */  beql  $at, $zero, .L7F050458
-/* 084F78 7F050448 8FA90074 */   lw    $t1, 0x74($sp)
-/* 084F7C 7F05044C 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084F80 7F050450 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084F84 7F050454 8FA90074 */  lw    $t1, 0x74($sp)
-.L7F050458:
-/* 084F88 7F050458 5120000F */  beql  $t1, $zero, .L7F050498
-/* 084F8C 7F05045C 8FAC0048 */   lw    $t4, 0x48($sp)
-/* 084F90 7F050460 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 084F94 7F050464 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 084F98 7F050468 10400005 */  beqz  $v0, .L7F050480
-/* 084F9C 7F05046C 00402025 */   move  $a0, $v0
-/* 084FA0 7F050470 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 084FA4 7F050474 00000000 */   nop
-/* 084FA8 7F050478 10000005 */  b     .L7F050490
-/* 084FAC 7F05047C 240B0001 */   li    $t3, 1
-.L7F050480:
-/* 084FB0 7F050480 8FAA0048 */  lw    $t2, 0x48($sp)
-/* 084FB4 7F050484 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 084FB8 7F050488 81440080 */   lb    $a0, 0x80($t2)
-/* 084FBC 7F05048C 240B0001 */  li    $t3, 1
-.L7F050490:
-/* 084FC0 7F050490 AFAB0044 */  sw    $t3, 0x44($sp)
-/* 084FC4 7F050494 8FAC0048 */  lw    $t4, 0x48($sp)
-.L7F050498:
-/* 084FC8 7F050498 24030004 */  li    $v1, 4
-/* 084FCC 7F05049C 1000001C */  b     .L7F050510
-/* 084FD0 7F0504A0 81840080 */   lb    $a0, 0x80($t4)
-.L7F0504A4:
-/* 084FD4 7F0504A4 0FC231D9 */  jal   bondinvAddWeaponByProp
-/* 084FD8 7F0504A8 8FA40070 */   lw    $a0, 0x70($sp)
-/* 084FDC 7F0504AC 10400002 */  beqz  $v0, .L7F0504B8
-/* 084FE0 7F0504B0 240D0001 */   li    $t5, 1
-/* 084FE4 7F0504B4 AFAD0044 */  sw    $t5, 0x44($sp)
-.L7F0504B8:
-/* 084FE8 7F0504B8 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 084FEC 7F0504BC 8FAF0048 */  lw    $t7, 0x48($sp)
-/* 084FF0 7F0504C0 51C00011 */  beql  $t6, $zero, .L7F050508
-/* 084FF4 7F0504C4 8FA90048 */   lw    $t1, 0x48($sp)
-/* 084FF8 7F0504C8 0FC23669 */  jal   bondinvGetActivatedTextWeapon
-/* 084FFC 7F0504CC 81E40080 */   lb    $a0, 0x80($t7)
-/* 085000 7F0504D0 10400006 */  beqz  $v0, .L7F0504EC
-/* 085004 7F0504D4 00402025 */   move  $a0, $v0
-/* 085008 7F0504D8 24180001 */  li    $t8, 1
-/* 08500C 7F0504DC 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 085010 7F0504E0 AFB80044 */   sw    $t8, 0x44($sp)
-/* 085014 7F0504E4 10000008 */  b     .L7F050508
-/* 085018 7F0504E8 8FA90048 */   lw    $t1, 0x48($sp)
-.L7F0504EC:
-/* 08501C 7F0504EC 8FB90044 */  lw    $t9, 0x44($sp)
-/* 085020 7F0504F0 8FA80048 */  lw    $t0, 0x48($sp)
-/* 085024 7F0504F4 53200004 */  beql  $t9, $zero, .L7F050508
-/* 085028 7F0504F8 8FA90048 */   lw    $t1, 0x48($sp)
-/* 08502C 7F0504FC 0FC14089 */  jal   display_text_for_weapon_in_lower_left_corner
-/* 085030 7F050500 81040080 */   lb    $a0, 0x80($t0)
-/* 085034 7F050504 8FA90048 */  lw    $t1, 0x48($sp)
-.L7F050508:
-/* 085038 7F050508 24030001 */  li    $v1, 1
-/* 08503C 7F05050C 81240080 */  lb    $a0, 0x80($t1)
-.L7F050510:
-/* 085040 7F050510 0FC1A50B */  jal   get_ammo_type_for_weapon
-/* 085044 7F050514 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085048 7F050518 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08504C 7F05051C 10400055 */  beqz  $v0, .L7F050674
-/* 085050 7F050520 00408025 */   move  $s0, $v0
-/* 085054 7F050524 8FA40048 */  lw    $a0, 0x48($sp)
-/* 085058 7F050528 0FC13F3E */  jal   ammo_collected_from_weapon
-/* 08505C 7F05052C AFA30068 */   sw    $v1, 0x68($sp)
-/* 085060 7F050530 8FA30068 */  lw    $v1, 0x68($sp)
-/* 085064 7F050534 1840004F */  blez  $v0, .L7F050674
-/* 085068 7F050538 AFA20034 */   sw    $v0, 0x34($sp)
-/* 08506C 7F05053C 02002025 */  move  $a0, $s0
-/* 085070 7F050540 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 085074 7F050544 AFA30068 */   sw    $v1, 0x68($sp)
-/* 085078 7F050548 AFA20024 */  sw    $v0, 0x24($sp)
-/* 08507C 7F05054C 0FC1A4B5 */  jal   get_max_ammo_for_type
-/* 085080 7F050550 02002025 */   move  $a0, $s0
-/* 085084 7F050554 8FAA0024 */  lw    $t2, 0x24($sp)
-/* 085088 7F050558 8FA30068 */  lw    $v1, 0x68($sp)
-/* 08508C 7F05055C 02002025 */  move  $a0, $s0
-/* 085090 7F050560 0142082A */  slt   $at, $t2, $v0
-/* 085094 7F050564 50200044 */  beql  $at, $zero, .L7F050678
-/* 085098 7F050568 24010001 */   li    $at, 1
-/* 08509C 7F05056C 0FC1A490 */  jal   check_cur_player_ammo_amount_in_inventory
-/* 0850A0 7F050570 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850A4 7F050574 8FAB0034 */  lw    $t3, 0x34($sp)
-/* 0850A8 7F050578 02002025 */  move  $a0, $s0
-/* 0850AC 7F05057C 0FC1A44C */  jal   give_cur_player_ammo
-/* 0850B0 7F050580 004B2821 */   addu  $a1, $v0, $t3
-/* 0850B4 7F050584 8FAC0044 */  lw    $t4, 0x44($sp)
-/* 0850B8 7F050588 8FA30068 */  lw    $v1, 0x68($sp)
-/* 0850BC 7F05058C 8FAD0074 */  lw    $t5, 0x74($sp)
-/* 0850C0 7F050590 55800039 */  bnezl $t4, .L7F050678
-/* 0850C4 7F050594 24010001 */   li    $at, 1
-/* 0850C8 7F050598 11A00036 */  beqz  $t5, .L7F050674
-/* 0850CC 7F05059C 02002025 */   move  $a0, $s0
-/* 0850D0 7F0505A0 8FA50034 */  lw    $a1, 0x34($sp)
-/* 0850D4 7F0505A4 0FC13E7E */  jal   display_text_when_ammo_collected
-/* 0850D8 7F0505A8 AFA30068 */   sw    $v1, 0x68($sp)
-/* 0850DC 7F0505AC 10000031 */  b     .L7F050674
-/* 0850E0 7F0505B0 8FA30068 */   lw    $v1, 0x68($sp)
-interact_bodyarmor_object:
-/* 0850E4 7F0505B4 0FC228C3 */  jal   bondviewAddCurrentPlayerArmor
-/* 0850E8 7F0505B8 C46C0084 */   lwc1  $f12, 0x84($v1)
-/* 0850EC 7F0505BC 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 0850F0 7F0505C0 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 0850F4 7F0505C4 24050051 */  li    $a1, 81
-/* 0850F8 7F0505C8 0C002382 */  jal   sndPlaySfx
-/* 0850FC 7F0505CC 00003025 */   move  $a2, $zero
-/* 085100 7F0505D0 8FAE0074 */  lw    $t6, 0x74($sp)
-/* 085104 7F0505D4 11C00013 */  beqz  $t6, .L7F050624
-/* 085108 7F0505D8 00000000 */   nop
-/* 08510C 7F0505DC 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085110 7F0505E0 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085114 7F0505E4 1440000D */  bnez  $v0, .L7F05061C
-/* 085118 7F0505E8 00402025 */   move  $a0, $v0
-/* 08511C 7F0505EC 0FC26919 */  jal   getPlayerCount
-/* 085120 7F0505F0 00000000 */   nop
-/* 085124 7F0505F4 28410003 */  slti  $at, $v0, 3
-/* 085128 7F0505F8 10200005 */  beqz  $at, .L7F050610
-/* 08512C 7F0505FC 00000000 */   nop
-/* 085130 7F050600 0FC30776 */  jal   langGet
-/* 085134 7F050604 3404A43D */   li    $a0, 42045
-/* 085138 7F050608 10000004 */  b     .L7F05061C
-/* 08513C 7F05060C 00402025 */   move  $a0, $v0
-.L7F050610:
-/* 085140 7F050610 0FC30776 */  jal   langGet
-/* 085144 7F050614 3404A43E */   li    $a0, 42046
-/* 085148 7F050618 00402025 */  move  $a0, $v0
-.L7F05061C:
-/* 08514C 7F05061C 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 085150 7F050620 00000000 */   nop
-.L7F050624:
-/* 085154 7F050624 10000013 */  b     .L7F050674
-/* 085158 7F050628 24030001 */   li    $v1, 1
-interact_default_object:
-.L7F05062C:
-/* 08515C 7F05062C 3C048006 */  lui   $a0, %hi(g_musicSfxBufferPtr)
-/* 085160 7F050630 8C843720 */  lw    $a0, %lo(g_musicSfxBufferPtr)($a0)
-/* 085164 7F050634 240500E5 */  li    $a1, 229
-/* 085168 7F050638 0C002382 */  jal   sndPlaySfx
-/* 08516C 7F05063C 00003025 */   move  $a2, $zero
-/* 085170 7F050640 8FAF0074 */  lw    $t7, 0x74($sp)
-/* 085174 7F050644 51E0000B */  beql  $t7, $zero, .L7F050674
-/* 085178 7F050648 24030004 */   li    $v1, 4
-/* 08517C 7F05064C 0FC23657 */  jal   bondinvGetActivatedTextObject
-/* 085180 7F050650 8FA4006C */   lw    $a0, 0x6c($sp)
-/* 085184 7F050654 14400004 */  bnez  $v0, .L7F050668
-/* 085188 7F050658 00402025 */   move  $a0, $v0
-/* 08518C 7F05065C 0FC30776 */  jal   langGet
-/* 085190 7F050660 3404A43F */   li    $a0, 42047
-/* 085194 7F050664 00402025 */  move  $a0, $v0
-.L7F050668:
-/* 085198 7F050668 0FC228F2 */  jal   jp_hudmsgBottomShow
-/* 08519C 7F05066C 00000000 */   nop
-/* 0851A0 7F050670 24030004 */  li    $v1, 4
-.L7F050674:
-/* 0851A4 7F050674 24010001 */  li    $at, 1
-.L7F050678:
-/* 0851A8 7F050678 1461000D */  bne   $v1, $at, .L7F0506B0
-/* 0851AC 7F05067C 8FB8006C */   lw    $t8, 0x6c($sp)
-/* 0851B0 7F050680 8F190064 */  lw    $t9, 0x64($t8)
-/* 0851B4 7F050684 33280010 */  andi  $t0, $t9, 0x10
-/* 0851B8 7F050688 15000009 */  bnez  $t0, .L7F0506B0
-/* 0851BC 7F05068C 00000000 */   nop
-/* 0851C0 7F050690 93060002 */  lbu   $a2, 2($t8)
-/* 0851C4 7F050694 03002025 */  move  $a0, $t8
-/* 0851C8 7F050698 00002825 */  move  $a1, $zero
-/* 0851CC 7F05069C 30C90004 */  andi  $t1, $a2, 4
-/* 0851D0 7F0506A0 0FC10366 */  jal   objFree
-/* 0851D4 7F0506A4 01203025 */   move  $a2, $t1
-/* 0851D8 7F0506A8 10000007 */  b     .L7F0506C8
-/* 0851DC 7F0506AC 24020001 */   li    $v0, 1
-.L7F0506B0:
-/* 0851E0 7F0506B0 10600005 */  beqz  $v1, .L7F0506C8
-/* 0851E4 7F0506B4 00001025 */   move  $v0, $zero
-/* 0851E8 7F0506B8 0FC231C9 */  jal   bondinvAddPropToInv
-/* 0851EC 7F0506BC 8FA40070 */   lw    $a0, 0x70($sp)
-/* 0851F0 7F0506C0 10000001 */  b     .L7F0506C8
-/* 0851F4 7F0506C4 24020004 */   li    $v0, 4
-.L7F0506C8:
-/* 0851F8 7F0506C8 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 0851FC 7F0506CC 8FB00018 */  lw    $s0, 0x18($sp)
-/* 085200 7F0506D0 27BD0070 */  addiu $sp, $sp, 0x70
-/* 085204 7F0506D4 03E00008 */  jr    $ra
-/* 085208 7F0506D8 00000000 */   nop
-)
-#endif
-
-
-#endif
 
 
 
