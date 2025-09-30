@@ -34,7 +34,6 @@
 #include "objecthandler.h"
 #include "dyn.h"
 #include "assets/obseg/text/LtitleE.h"
-#include "textrelated.h"
 #include "matrixmath.h"
 #include "bg.h"
 #include "chrai.h"

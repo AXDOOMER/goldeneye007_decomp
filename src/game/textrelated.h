@@ -30,7 +30,7 @@ struct font {
 	struct fontchar chars[94]; // can be 135 in PAL
 };
 
-Gfx * microcode_constructor_related_to_menus(Gfx *, s32, s32, s32, s32, s32);
+Gfx * microcode_constructor_related_to_menus(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry, u32 color);
 void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight);
 
 Gfx *microcode_constructor(Gfx *gdl);
