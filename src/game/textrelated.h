@@ -16,19 +16,6 @@ extern s32 ptrFontZurichBoldChars;
 void textrelatedInit_REMOVED(void);
 void load_font_tables(void);
 
-struct fontchar {
-    u32 index;
-    s32 baseline;
-    u32 height;
-    u32 width;
-    s32 kerningindex;
-    u8 *pixeldata;
-};
-
-struct font {
-	s32 kerning[13 * 13];
-	struct fontchar chars[94]; // can be 135 in PAL
-};
 
 Gfx * microcode_constructor_related_to_menus(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry, u32 color);
 void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight);
