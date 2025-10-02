@@ -1149,8 +1149,123 @@ glabel textRender
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F0ADDAC(void) {
 
+#define M_COLOR_R(x) ((x) >> 0x18)
+#define M_COLOR_G(x) (((x) >> 0x10) & 0xff)
+#define M_COLOR_B(x) (((x) >> 0x08) & 0xff)
+#define M_COLOR_A(x) ((x) & 0xff)
+
+// 94.59% https://decomp.me/scratch/YUnKm
+Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, 
+                       /*sp70*/ struct fontchar *prevchar, struct font *font, s32 savedx, s32 savedy, 
+                       /*sp80*/u32 color, u32 color2, s32 width, s32 height, 
+                       /*sp90*/ s32 arg12)
+{
+    s32 stack;
+    s32 *stack2;
+    s32 var_s1;
+    s32 sp50;
+	s32 tmp;
+    s32 var_s0;
+
+    sp50 = *y + arg12;
+
+    tmp = font->kerning[prevchar->kerningindex * 13 + curchar->kerningindex] + text_spacing;
+    *x -= (tmp - 1);
+    
+    if (*x > 0
+        && *x <= viGetX()
+        && sp50 + curchar->baseline <= viGetY())
+    {
+        if (savedx + width >= *x
+            && savedy + height >= curchar->baseline + sp50
+            && *x >= savedx
+            && curchar->baseline + sp50 + curchar->height >= savedy)
+        {
+            if (curchar->index < 0x80)
+            {
+                // BA000E02 00000000: gDPSetTextureLUT(gdl++, G_TT_NONE);
+                gDPSetTextureLUT(gdl++, G_TT_NONE);
+                
+                // FD900000 00000000: gDPSetTextureImage(gdl++, G_IM_FMT_I, G_IM_SIZ_16b, 1, 0x00000000);
+                // F5900000 07000000: gDPSetTile...
+                // E6000000 00000000: gDPLoadSync(gdl++);
+                // F3000000 07000000: gDPLoadBlock(gdl++, G_TX_LOADTILE, 0, 0, 0, 0);
+                // ...
+                gDPLoadTextureBlock(gdl++, curchar->pixeldata, G_IM_FMT_I, G_IM_SIZ_8b, ((curchar->width + 7) & 0xF8), curchar->height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, 0, 0);
+            }
+            else
+            {
+                // E7000000 00000000: gDPPipeSync(gdl++);
+                gDPPipeSync(gdl++);
+
+                // BA000E02 0000C000: gDPSetTextureLUT(gdl++, G_TT_IA16);
+                gDPSetTextureLUT(gdl++, G_TT_IA16);
+                
+                if (D_80040EA8)
+                {
+                    D_80040EA8 = 0;
+
+                    gDPLoadTLUT_pal16(gdl++, 0, osVirtualToPhysical(&D_80040EBC));
+
+                    gDPLoadTLUT_pal16(gdl++, 1, osVirtualToPhysical(&D_80040EDC));
+                }
+
+                //gDPLoadTextureBlock(gdl++, osVirtualToPhysical((void *) curchar->pixeldata), G_IM_FMT_I, G_IM_SIZ_8b, curchar->index, curchar->height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, 0, 0);
+                
+                gDPSetTextureImage(gdl++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,  osVirtualToPhysical((void *) curchar->pixeldata));
+                gDPSetTile(gdl++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+                gDPLoadSync(gdl++);
+                gDPLoadBlock(gdl++, G_TX_LOADTILE, 0, 0, (curchar->height << 2) - 1, 0x800);
+                gDPPipeSync(gdl++);
+                gDPSetTile(gdl++, G_IM_FMT_CI, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, (curchar->index & 1), G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, 2, 0, 0);
+                gDPSetTileSize(gdl++, G_TX_RENDERTILE, 0, 0, 0x3c, (curchar->height - 1) << 2);
+            }
+
+            gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(color2), M_COLOR_G(color2), M_COLOR_B(color2), M_COLOR_A(color2));
+
+/****
+mips_to_c:
+
+    var_s1 = -1;
+    var_v1 = *x;
+    do
+    {
+        var_s0 = -1;
+loop_25:
+        if ((var_s1 != 0) || (var_s0 != 0))
+        {
+            var_s3_4 = sub_GAME_7F0AE45C(var_s3_4, var_v1 + var_s1, sp50 + var_s0, curchar, savedx, savedy, width, height);
+            var_v1 = *x;
+        }
+        var_s0 += 1;
+        if (var_s0 != 2)
+        {
+            goto loop_25;
+        }
+        var_s1 += 1;
+    } while (var_s1 != 2);
+*/
+            for (var_s1 = -1; var_s1 < 2; var_s1++)
+            {
+                for (var_s0 = -1; var_s0 < 2; var_s0++)
+                {
+                    if (var_s1 != 0 || var_s0 != 0)
+                    {
+                        gdl = sub_GAME_7F0AE45C(gdl, *x + var_s1, sp50 + var_s0, curchar, savedx, savedy, width, height);
+                    }
+                }
+            }
+            
+            gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(color), M_COLOR_G(color), M_COLOR_B(color), M_COLOR_A(color));
+
+            gdl = sub_GAME_7F0AE45C(gdl, *x, sp50, curchar, savedx, savedy, width, height);
+        }
+    }
+    
+    *x += curchar->width;
+    
+    return gdl;
 }
 #else
 GLOBAL_ASM(
