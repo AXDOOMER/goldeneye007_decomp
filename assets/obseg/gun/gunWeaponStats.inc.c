@@ -491,7 +491,7 @@ WeaponStats joypad_stats = {
 
 
 };
-//ITEM_NULL86?
+//ITEM_ROCKETROUND
 //D:800337D4
 WeaponStats null1_stats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, AMMO_ROCKETS, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 
@@ -502,7 +502,7 @@ WeaponStats null1_stats = {
 
 
 };
-//ITEM_NULL87?
+//ITEM_GRENADEROUND
 //D:80033844
 WeaponStats null2_stats = {
 	1.0, 0.0, 0.0, 0.0, 3.0, 3.0, 8.5, AMMO_GRENADEROUND, 0, 0xFF, 0x00, 1, 0, 0, NULL, 1.0, 0.0, 0.0, SCALEVAL1, 0.89999998, 1.0, 0xFF, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 4.0, 0.0, 

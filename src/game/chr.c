@@ -6891,7 +6891,7 @@ Gfx *chrRenderProp(PropRecord *prop, Gfx *gdl, s32 withalpha)
             chrShade.b = chr->shadecol.b;
             chrShade.a = chr->shadecol.a;
 
-            sub_GAME_7F040384(&chrShade, spBC, &spC0);
+            lerp_rgba_s32_with_rgba_f32(&chrShade, spBC, &spC0);
 
             mrData.envcolour.word = ((gBloodColour.rgba[0] << 0x18) | (gBloodColour.rgba[1] << 0x10)) | (gBloodColour.rgba[2] << 0x08);
             mrData.fogcolour.word = (chrShade.rgba[0] << 0x18) | (chrShade.rgba[1] << 0x10) | (chrShade.rgba[2] << 0x08) | (chrShade.rgba[3] << 0x00);

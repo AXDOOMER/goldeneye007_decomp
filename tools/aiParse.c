@@ -586,8 +586,8 @@ char *ITEM_IDS_ToString[] = {
     "ITEM_KEYBOLT",
     "ITEM_SUIT_LF_HAND",
     "ITEM_JOYPAD",
-    "ITEM_NULL86",
-    "ITEM_NULL87",
+    "ITEM_ROCKETROUND",
+    "ITEM_GRENADEROUND ",
     "ITEM_TOKEN",
     "ITEM_IDS_MAX"};
 

@@ -106,11 +106,11 @@ void reinit_between_menus(void)
     ptr_alarm_sfx = 0;
     toxic_gas_sound_timer = 0.0f;
     activate_gas_sound_timer = 0;
-    D_80030AD0.f[0] = 0.0f;
-    D_80030AD0.f[1] = 0.0f;
-    D_80030AD0.f[2] = 0.0f;
+    gasLeakSource.f[0] = 0.0f;
+    gasLeakSource.f[1] = 0.0f;
+    gasLeakSource.f[2] = 0.0f;
     D_80030ADC = 0;
-    D_80030AE0 = 0.0f;
+    gasLeakTimer = 0.0f;
     ptr_gas_sound = 0;
     clock_drawn_flag = 1;
     clock_enable = 0;

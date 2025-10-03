@@ -2041,7 +2041,7 @@ glabel sub_GAME_7F0B3C8C
 
 
 
-s32 sub_GAME_7F0B4034(s32 room)
+s32 getPriMappingBinCount(s32 room)
 {
     int i = room;
     while (ptr_bgdata_room_fileposition_list[i].pPriMappingBin == 0)
@@ -2052,7 +2052,7 @@ s32 sub_GAME_7F0B4034(s32 room)
 }
 
 
-s32 sub_GAME_7F0B4084(s32 room)
+s32 getSecMappingBinCount(s32 room)
 {
     int i = room;
     while (ptr_bgdata_room_fileposition_list[i].pSecMappingBin == 0)
@@ -2063,7 +2063,7 @@ s32 sub_GAME_7F0B4084(s32 room)
 }
 
 
-s32 sub_GAME_7F0B40D4(s32 room)
+s32 getPointTableBinCount(s32 room)
 {
     int i = room;
     while (ptr_bgdata_room_fileposition_list[i].pPointTableBin == 0)
@@ -2355,10 +2355,10 @@ glabel load_bg_file
 /* 0E9034 7F0B4504 51000020 */  beql  $t0, $zero, .L7F0B4588
 /* 0E9038 7F0B4508 AE000014 */   sw    $zero, 0x14($s0)
 /* 0E903C 7F0B450C 26320001 */  addiu $s2, $s1, 1
-/* 0E9040 7F0B4510 0FC2D00D */  jal   sub_GAME_7F0B4034
+/* 0E9040 7F0B4510 0FC2D00D */  jal   getPriMappingBinCount
 /* 0E9044 7F0B4514 02402025 */   move  $a0, $s2
 /* 0E9048 7F0B4518 02202025 */  move  $a0, $s1
-/* 0E904C 7F0B451C 0FC2D021 */  jal   sub_GAME_7F0B4084
+/* 0E904C 7F0B451C 0FC2D021 */  jal   getSecMappingBinCount
 /* 0E9050 7F0B4520 AFA20068 */   sw    $v0, 0x68($sp)
 /* 0E9054 7F0B4524 8FA50068 */  lw    $a1, 0x68($sp)
 /* 0E9058 7F0B4528 0045082A */  slt   $at, $v0, $a1
@@ -2390,10 +2390,10 @@ glabel load_bg_file
 /* 0E90B8 7F0B4588 8C890008 */  lw    $t1, 8($a0)
 /* 0E90BC 7F0B458C 5120001E */  beql  $t1, $zero, .L7F0B4608
 /* 0E90C0 7F0B4590 AE000018 */   sw    $zero, 0x18($s0)
-/* 0E90C4 7F0B4594 0FC2D00D */  jal   sub_GAME_7F0B4034
+/* 0E90C4 7F0B4594 0FC2D00D */  jal   getPriMappingBinCount
 /* 0E90C8 7F0B4598 02402025 */   move  $a0, $s2
 /* 0E90CC 7F0B459C 00408825 */  move  $s1, $v0
-/* 0E90D0 7F0B45A0 0FC2D021 */  jal   sub_GAME_7F0B4084
+/* 0E90D0 7F0B45A0 0FC2D021 */  jal   getSecMappingBinCount
 /* 0E90D4 7F0B45A4 02402025 */   move  $a0, $s2
 /* 0E90D8 7F0B45A8 0051082A */  slt   $at, $v0, $s1
 /* 0E90DC 7F0B45AC 1420000B */  bnez  $at, .L7F0B45DC
@@ -2424,7 +2424,7 @@ glabel load_bg_file
 /* 0E9138 7F0B4608 8C8A0000 */  lw    $t2, ($a0)
 /* 0E913C 7F0B460C 5140000F */  beql  $t2, $zero, .L7F0B464C
 /* 0E9140 7F0B4610 AE000010 */   sw    $zero, 0x10($s0)
-/* 0E9144 7F0B4614 0FC2D035 */  jal   sub_GAME_7F0B40D4
+/* 0E9144 7F0B4614 0FC2D035 */  jal   getPointTableBinCount
 /* 0E9148 7F0B4618 02402025 */   move  $a0, $s2
 /* 0E914C 7F0B461C 00540019 */  multu $v0, $s4
 /* 0E9150 7F0B4620 8EA30000 */  lw    $v1, ($s5)
@@ -2826,10 +2826,10 @@ glabel load_bg_file
 /* 0E6230 7F0B3840 51000020 */  beql  $t0, $zero, .L7F0B38C4
 /* 0E6234 7F0B3844 AE000014 */   sw    $zero, 0x14($s0)
 /* 0E6238 7F0B3848 26320001 */  addiu $s2, $s1, 1
-/* 0E623C 7F0B384C 0FC2CCDC */  jal   sub_GAME_7F0B4034
+/* 0E623C 7F0B384C 0FC2CCDC */  jal   getPriMappingBinCount
 /* 0E6240 7F0B3850 02402025 */   move  $a0, $s2
 /* 0E6244 7F0B3854 02202025 */  move  $a0, $s1
-/* 0E6248 7F0B3858 0FC2CCF0 */  jal   sub_GAME_7F0B4084
+/* 0E6248 7F0B3858 0FC2CCF0 */  jal   getSecMappingBinCount
 /* 0E624C 7F0B385C AFA20068 */   sw    $v0, 0x68($sp)
 /* 0E6250 7F0B3860 8FA50068 */  lw    $a1, 0x68($sp)
 /* 0E6254 7F0B3864 0045082A */  slt   $at, $v0, $a1
@@ -2861,10 +2861,10 @@ glabel load_bg_file
 /* 0E62B4 7F0B38C4 8C890008 */  lw    $t1, 8($a0)
 /* 0E62B8 7F0B38C8 5120001E */  beql  $t1, $zero, .L7F0B3944
 /* 0E62BC 7F0B38CC AE000018 */   sw    $zero, 0x18($s0)
-/* 0E62C0 7F0B38D0 0FC2CCDC */  jal   sub_GAME_7F0B4034
+/* 0E62C0 7F0B38D0 0FC2CCDC */  jal   getPriMappingBinCount
 /* 0E62C4 7F0B38D4 02402025 */   move  $a0, $s2
 /* 0E62C8 7F0B38D8 00408825 */  move  $s1, $v0
-/* 0E62CC 7F0B38DC 0FC2CCF0 */  jal   sub_GAME_7F0B4084
+/* 0E62CC 7F0B38DC 0FC2CCF0 */  jal   getSecMappingBinCount
 /* 0E62D0 7F0B38E0 02402025 */   move  $a0, $s2
 /* 0E62D4 7F0B38E4 0051082A */  slt   $at, $v0, $s1
 /* 0E62D8 7F0B38E8 1420000B */  bnez  $at, .L7F0B3918
@@ -2895,7 +2895,7 @@ glabel load_bg_file
 /* 0E6334 7F0B3944 8C8A0000 */  lw    $t2, ($a0)
 /* 0E6338 7F0B3948 5140000F */  beql  $t2, $zero, .L7F0B3988
 /* 0E633C 7F0B394C AE000010 */   sw    $zero, 0x10($s0)
-/* 0E6340 7F0B3950 0FC2CD04 */  jal   sub_GAME_7F0B40D4
+/* 0E6340 7F0B3950 0FC2CD04 */  jal   getPointTableBinCount
 /* 0E6344 7F0B3954 02402025 */   move  $a0, $s2
 /* 0E6348 7F0B3958 00540019 */  multu $v0, $s4
 /* 0E634C 7F0B395C 8EA30000 */  lw    $v1, ($s5)

@@ -2850,7 +2850,7 @@ void currentPlayerCreateRocket(GUNHAND hand)
 
     if ((hand_ptr->rocket == NULL) && (hand_ptr->weapon_ammo_in_magazine > 0))
     {
-        rocket = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_CHRROCKET, ITEM_NULL86);
+        rocket = (struct WeaponObjRecord *)create_new_item_instance_of_model(PROP_CHRROCKET, ITEM_ROCKETROUND);
         if (rocket != NULL)
         {
             hand_ptr->rocket = (ObjectRecord *)rocket;

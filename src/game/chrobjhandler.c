@@ -77,9 +77,9 @@
 /* 0x80030ACC */ s32 *ptr_alarm_sfx = 0;
 /* 0x80030AD0 */ f32 toxic_gas_sound_timer = 0.0;
 /* 0x80030AD4 */ s32 activate_gas_sound_timer = FALSE;
-/* 0x80030AD8 */ coord3d D_80030AD0 = { 0.0f, 0.0f, 0.0f };
+/* 0x80030AD8 */ coord3d gasLeakSource = { 0.0f, 0.0f, 0.0f };
 /* 0x80030ADC */ s32 D_80030ADC = 0;
-/* 0x80030AE0 */ f32 D_80030AE0 = 0.0f;
+/* 0x80030AE0 */ f32 gasLeakTimer = 0.0f;
 /* 0x80030AE4 */ ALSoundState *ptr_gas_sound = NULL;
 /* 0x80030AE8 */ s32 clock_drawn_flag = 1;
 /* 0x80030AEC */ s32 clock_enable = 0;
@@ -1329,18 +1329,18 @@ void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
 }
 
 
-void sub_GAME_7F040384(rgba_s32* arg0, s32 arg1, rgba_f32* arg2)
+void lerp_rgba_s32_with_rgba_f32(rgba_s32* dest, s32 enable, rgba_f32* src)
 {
-    if (arg1 == 1)
+    if (enable == 1)
     {
-        arg2->r *= 255.0f;
-        arg2->g *= 255.0f;
-        arg2->b *= 255.0f;
+        src->r *= 255.0f;
+        src->g *= 255.0f;
+        src->b *= 255.0f;
 
-        if (1) { arg0->r = (s32)((arg2->a * (arg2->r - arg0->r)) + arg0->r); }
-        if (1) { arg0->g = (s32)((arg2->a * (arg2->g - arg0->g)) + arg0->g); }
-        if (1) { arg0->b = (s32)((arg2->a * (arg2->b - arg0->b)) + arg0->b); }
-        arg0->a = (s32)((arg2->a * (255.0f - arg0->a)) + arg0->a);
+        if (1) { dest->r = (s32)((src->a * (src->r - dest->r)) + dest->r); }
+        if (1) { dest->g = (s32)((src->a * (src->g - dest->g)) + dest->g); }
+        if (1) { dest->b = (s32)((src->a * (src->b - dest->b)) + dest->b); }
+        dest->a = (s32)((src->a * (255.0f - dest->a)) + dest->a);
     }
 }
 
@@ -4799,7 +4799,7 @@ void chrobjWeaponTick(struct PropRecord* prop)
     {
         weapon = prop->weapon;
 
-        if (((weapon->weaponnum == ITEM_GRENADE) || (weapon->weaponnum == ITEM_NULL87)) && (weapon->timer >= 0))
+        if (((weapon->weaponnum == ITEM_GRENADE) || (weapon->weaponnum == ITEM_GRENADEROUND )) && (weapon->timer >= 0))
         {
             weapon->timer -= g_ClockTimer;
 
@@ -4809,7 +4809,7 @@ void chrobjWeaponTick(struct PropRecord* prop)
                 obj->runtime_bitflags |= RUNTIMEBITFLAG_REMOVE;
             }
         }
-        else if (weapon->weaponnum == ITEM_NULL86)
+        else if (weapon->weaponnum == ITEM_ROCKETROUND)
         {
             if (weapon->timer == 0)
             {
@@ -6097,7 +6097,7 @@ s32 object_interaction(struct PropRecord *arg0)
 
                 sp648 = (struct WeaponObjRecord *)obj;
 
-                if (obj->type == PROPDEF_COLLECTABLE && sp648->weaponnum == ITEM_NULL86)
+                if (obj->type == PROPDEF_COLLECTABLE && sp648->weaponnum == ITEM_ROCKETROUND)
                 {
                     var_s2 = 0;
                 }
@@ -6116,7 +6116,7 @@ s32 object_interaction(struct PropRecord *arg0)
                     sub_GAME_7F03D058(projectile_prop, 1);
                 }
 
-                if ((sp664 != 1) && (sp648 != NULL) && sp648->weaponnum == ITEM_NULL86)
+                if ((sp664 != 1) && (sp648 != NULL) && sp648->weaponnum == ITEM_ROCKETROUND)
                 {
                     sp648->timer = 0;
                 }
@@ -6340,7 +6340,7 @@ s32 object_interaction(struct PropRecord *arg0)
                             }
                         }
                         // mips2c line 795
-                        else if (temp_weap->weaponnum == ITEM_NULL86)
+                        else if (temp_weap->weaponnum == ITEM_ROCKETROUND)
                         {
                             if (D_80030B0C->type == PROP_TYPE_CHR)
                             {
@@ -6349,7 +6349,7 @@ s32 object_interaction(struct PropRecord *arg0)
                             }
                             else if ((D_80030B0C->type == PROP_TYPE_OBJ) || (D_80030B0C->type == PROP_TYPE_WEAPON))
                             {
-                                maybe_detonate_object(D_80030B0C->obj, 100.0f, &obj->runtime_pos, ITEM_NULL86, (s32) ((u32) (obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER));
+                                maybe_detonate_object(D_80030B0C->obj, 100.0f, &obj->runtime_pos, ITEM_ROCKETROUND, (s32) ((u32) (obj->runtime_bitflags & RUNTIMEBITFLAG_OWNER) >> RUNTIMEBITSHIFT_OWNER));
                             }
 
                             ((struct WeaponObjRecord *)obj)->timer = 0;
@@ -28039,7 +28039,7 @@ Gfx *chrobjRenderProp(PropRecord *prop, Gfx *gdl, s32 arg2)
         sp48.a = 0xFF;
     }
 
-    sub_GAME_7F040384(&sp48, spAC, &spB0);
+    lerp_rgba_s32_with_rgba_f32(&sp48, spAC, &spB0);
 
     mrData.fogcolour.word = (sp48.rgba[0] << 0x18) | (sp48.rgba[1] << 0x10) | (sp48.rgba[2] << 0x08) | (sp48.rgba[3] << 0x00);
 
@@ -32997,7 +32997,7 @@ void set_sound_effect_for_weapontype_collection(ITEM_IDS weapontype)
         }
         else
         {
-            if ((weapontype == ITEM_GRENADE) || (weapontype == ITEM_NULL87) || (weapontype == ITEM_NULL86))
+            if ((weapontype == ITEM_GRENADE) || (weapontype == ITEM_GRENADEROUND ) || (weapontype == ITEM_ROCKETROUND))
             {
                 sndPlaySfx(g_musicSfxBufferPtr,PICKUP_AMMO_SFX,0);
             }
@@ -33222,8 +33222,8 @@ void generate_language_specific_text_for_weapon(u8 *finalstring, ITEM_IDS itemty
         case ITEM_BUG:
         case ITEM_MICROCAMERA:
         case ITEM_GOLDENEYEKEY:
-        case ITEM_NULL86:
-        case ITEM_NULL87:
+        case ITEM_ROCKETROUND:
+        case ITEM_GRENADEROUND :
         case ITEM_TOKEN:
             prepare_ammo_type_collection_text(finalstring,get_ammo_type_for_weapon(itemtype),1);
             return;
@@ -39363,10 +39363,10 @@ bool alarmIsActive(void)
 void init_trigger_toxic_gas_effect(coord3d *source) //#MATCH
 {
     activate_gas_sound_timer = TRUE;
-    D_80030AE0               = 0.0f;
-    D_80030AD0.x             = source->x;
-    D_80030AD0.y             = source->y;
-    D_80030AD0.z             = source->z;
+    gasLeakTimer               = 0.0f;
+    gasLeakSource.x             = source->x;
+    gasLeakSource.y             = source->y;
+    gasLeakSource.z             = source->z;
     if (bossGetStageNum() == LEVELID_EGYPT)
     {
         gasTimeToFullOpacity = 120.0f;
@@ -39433,16 +39433,16 @@ void handle_gas_damage(void)
             }
         }
 
-        if (D_80030AE0 < gasTimeToFullOpacity)
+        if (gasLeakTimer < gasTimeToFullOpacity)
         {
-            D_80030AE0 = D_80030AE0 + g_GlobalTimerDelta;
+            gasLeakTimer = gasLeakTimer + g_GlobalTimerDelta;
             if ((ptr_gas_sound == NULL) && (lvlGetControlsLockedFlag() == 0))
             {
                 sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x66, (ALSoundState* ) &ptr_gas_sound);
             }
             if (ptr_gas_sound != NULL)
             {
-                chrobjSndCreatePostEventDefault(ptr_gas_sound, &D_80030AD0);
+                chrobjSndCreatePostEventDefault(ptr_gas_sound, &gasLeakSource);
             }
         }
         else
