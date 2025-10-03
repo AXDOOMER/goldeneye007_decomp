@@ -27,7 +27,7 @@ Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s
 Gfx *combiner_bayer_lod_perspective(Gfx *gdl);
 void setTextSpacingInverted(s32 spacing);
 void setTextWordWrap(s32 flag);
-void sub_GAME_7F0AEB64(s32 arg0, s8 *arg1, s8 *arg2, struct fontchar *arg3, struct font *arg4);
+void sub_GAME_7F0AEB64(s32 wrapwidth, char *src, char *dst, struct fontchar *chars, struct font *font);
 void setTextOverlapCorrection(s32 flag);
 
 Gfx* draw_blackbox_to_screen(Gfx *glist, s32 *ulx, s32 *uly, s32 *lrx, s32 *lry);
