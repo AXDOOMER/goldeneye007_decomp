@@ -11003,86 +11003,17 @@ glabel sub_GAME_7F0B8DF4
 
 
 
+// Copies visible rooms to a list
+// Address: 0x7F0B8E98
+s32 sub_GAME_7F0B8E98(s32 *rooms, s32 max) {
+    s32 i;
 
-#ifdef NONMATCHING
-s32 sub_GAME_7F0B8E98(s32 arg0, s32 arg1) {
-    s32 temp_v1;
-    void *temp_v0;
-    s32 temp_at;
-    void *phi_a2;
-    void *phi_v0;
-    s32 phi_v1;
-    s32 phi_v1_2;
-
-    // Node 0
-    phi_v1_2 = 0;
-    if (num_visible_rooms_in_cur_global_vis_packet > 0)
-    {
-        // Node 1
-        phi_v1_2 = 0;
-        if (arg1 > 0)
-        {
-            // Node 2
-            phi_a2 = (0 + &list_visible_rooms_in_cur_global_vis_packet);
-            phi_v0 = (arg0 + (0 * 4));
-            phi_v1 = 0;
-loop_3:
-            // Node 3
-            temp_v1 = (phi_v1 + 1);
-            temp_v0 = (phi_v0 + 4);
-            temp_v0->unk-4 = (?32) *phi_a2;
-            temp_at = (temp_v1 < arg1);
-            phi_v1_2 = temp_v1;
-            if (temp_at != 0)
-            {
-                // Node 4
-                phi_a2 = (phi_a2 + 1);
-                phi_v0 = temp_v0;
-                phi_v1 = temp_v1;
-                phi_v1_2 = temp_v1;
-                if (temp_at != 0)
-                {
-                    goto loop_3;
-                }
-            }
-        }
+    for (i = 0; (i < num_visible_rooms_in_cur_global_vis_packet) && (i < max); i++) {
+        rooms[i] = list_visible_rooms_in_cur_global_vis_packet[i];
     }
-    // Node 5
-    return phi_v1_2;
+
+    return i;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B8E98
-/* 0ED9C8 7F0B8E98 3C078008 */  lui   $a3, %hi(num_visible_rooms_in_cur_global_vis_packet)
-/* 0ED9CC 7F0B8E9C 24E7C038 */  addiu $a3, %lo(num_visible_rooms_in_cur_global_vis_packet) # addiu $a3, $a3, -0x3fc8
-/* 0ED9D0 7F0B8EA0 8CEE0000 */  lw    $t6, ($a3)
-/* 0ED9D4 7F0B8EA4 00001825 */  move  $v1, $zero
-/* 0ED9D8 7F0B8EA8 19C00012 */  blez  $t6, .L7F0B8EF4
-/* 0ED9DC 7F0B8EAC 00000000 */   nop
-/* 0ED9E0 7F0B8EB0 18A00010 */  blez  $a1, .L7F0B8EF4
-/* 0ED9E4 7F0B8EB4 00007880 */   sll   $t7, $zero, 2
-/* 0ED9E8 7F0B8EB8 3C188008 */  lui   $t8, %hi(list_visible_rooms_in_cur_global_vis_packet)
-/* 0ED9EC 7F0B8EBC 2718BFA0 */  addiu $t8, %lo(list_visible_rooms_in_cur_global_vis_packet) # addiu $t8, $t8, -0x4060
-/* 0ED9F0 7F0B8EC0 00183021 */  addu  $a2, $zero, $t8
-/* 0ED9F4 7F0B8EC4 008F1021 */  addu  $v0, $a0, $t7
-/* 0ED9F8 7F0B8EC8 90D90000 */  lbu   $t9, ($a2)
-.L7F0B8ECC:
-/* 0ED9FC 7F0B8ECC 24630001 */  addiu $v1, $v1, 1
-/* 0EDA00 7F0B8ED0 24420004 */  addiu $v0, $v0, 4
-/* 0EDA04 7F0B8ED4 AC59FFFC */  sw    $t9, -4($v0)
-/* 0EDA08 7F0B8ED8 8CE80000 */  lw    $t0, ($a3)
-/* 0EDA0C 7F0B8EDC 24C60001 */  addiu $a2, $a2, 1
-/* 0EDA10 7F0B8EE0 0068082A */  slt   $at, $v1, $t0
-/* 0EDA14 7F0B8EE4 10200003 */  beqz  $at, .L7F0B8EF4
-/* 0EDA18 7F0B8EE8 0065082A */   slt   $at, $v1, $a1
-/* 0EDA1C 7F0B8EEC 5420FFF7 */  bnezl $at, .L7F0B8ECC
-/* 0EDA20 7F0B8EF0 90D90000 */   lbu   $t9, ($a2)
-.L7F0B8EF4:
-/* 0EDA24 7F0B8EF4 03E00008 */  jr    $ra
-/* 0EDA28 7F0B8EF8 00601025 */   move  $v0, $v1
-)
-#endif
 
 
 
