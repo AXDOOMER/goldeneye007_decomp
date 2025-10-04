@@ -21,7 +21,7 @@ Gfx * microcode_constructor_related_to_menus(Gfx *gdl, s32 ulx, s32 uly, s32 lrx
 void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight);
 
 Gfx *microcode_constructor(Gfx *gdl);
-Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text, s32 second_font_table, s32 first_font_table, s32 arg6, s16 view_x, s16 view_y, s32 arg9, s32 arga);
+Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text, struct fontchar *chars, struct font *font, u32 colour, s32 width, s32 height, u32 arg9, s32 lineheight);
 Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s32 first_font_table, s32 arg6, u32 arg7, s16 view_x, s16 view_y, s32 arga, s32 argb);
 
 Gfx *combiner_bayer_lod_perspective(Gfx *gdl);
