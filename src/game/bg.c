@@ -10942,6 +10942,7 @@ Gfx *sub_GAME_7F0B8D78(Gfx *arg0)
 
 
 
+// Unused/unreferenced function
 #ifdef NONMATCHING
 void sub_GAME_7F0B8DF4(void) {
 
@@ -11062,90 +11063,32 @@ end:
 
 
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B8FD0(s32 arg0, s32 arg1) {
-    s32 temp_v0;
-    s32 temp_v1;
-    void *phi_a0;
+// Scan all portals to see if these rooms are connected
+//
+// Room data doesn't contain a list of its portals, so it goes through
+// the whole list of portals which seems naive and inefficient.
+//
+// Address: 0x7F0B8FD0
+s32 sub_GAME_7F0B8FD0(s32 room1, s32 room2) {
+    s32 i;
 
-    // Node 0
-    phi_a0 = g_BgPortals;
-    if (*g_BgPortals != 0)
+    for (i = 0; g_BgPortals[i].offset_portal != NULL; i++)
     {
-loop_1:
-        // Node 1
-        temp_v0 = phi_a0->unk4;
-        temp_v1 = phi_a0->unk5;
-        if (temp_v0 == arg0)
+        s32 v0 = g_BgPortals[i].connectedRoom1;
+        s32 v1 = g_BgPortals[i].connectedRoom2;
+
+        if (v0 == room1 && v1 == room2)
         {
-            // Node 2
-            if (temp_v1 == arg1)
-            {
-                // Node 3
-                return 1;
-            }
+            return 1;
         }
-        // Node 4
-        if (temp_v1 == arg0)
+
+        if (v1 == room1 && v0 == room2)
         {
-            // Node 5
-            if (temp_v0 == arg1)
-            {
-                // Node 6
-                return 1;
-            }
-        }
-        // Node 7
-        phi_a0 = (phi_a0 + 8);
-        if (phi_a0->unk8 != 0)
-        {
-            goto loop_1;
+            return 1;
         }
     }
-    // Node 8
     return 0;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B8FD0
-/* 0EDB00 7F0B8FD0 3C038008 */  lui   $v1, %hi(g_BgPortals)
-/* 0EDB04 7F0B8FD4 8C63FF80 */  lw    $v1, %lo(g_BgPortals)($v1)
-/* 0EDB08 7F0B8FD8 00803025 */  move  $a2, $a0
-/* 0EDB0C 7F0B8FDC 8C6E0000 */  lw    $t6, ($v1)
-/* 0EDB10 7F0B8FE0 00602025 */  move  $a0, $v1
-/* 0EDB14 7F0B8FE4 51C00014 */  beql  $t6, $zero, .L7F0B9038
-/* 0EDB18 7F0B8FE8 00001025 */   move  $v0, $zero
-/* 0EDB1C 7F0B8FEC 90820004 */  lbu   $v0, 4($a0)
-.L7F0B8FF0:
-/* 0EDB20 7F0B8FF0 90830005 */  lbu   $v1, 5($a0)
-/* 0EDB24 7F0B8FF4 14460005 */  bne   $v0, $a2, .L7F0B900C
-/* 0EDB28 7F0B8FF8 00000000 */   nop
-/* 0EDB2C 7F0B8FFC 14650003 */  bne   $v1, $a1, .L7F0B900C
-/* 0EDB30 7F0B9000 00000000 */   nop
-/* 0EDB34 7F0B9004 03E00008 */  jr    $ra
-/* 0EDB38 7F0B9008 24020001 */   li    $v0, 1
-
-.L7F0B900C:
-/* 0EDB3C 7F0B900C 54660006 */  bnel  $v1, $a2, .L7F0B9028
-/* 0EDB40 7F0B9010 8C8F0008 */   lw    $t7, 8($a0)
-/* 0EDB44 7F0B9014 54450004 */  bnel  $v0, $a1, .L7F0B9028
-/* 0EDB48 7F0B9018 8C8F0008 */   lw    $t7, 8($a0)
-/* 0EDB4C 7F0B901C 03E00008 */  jr    $ra
-/* 0EDB50 7F0B9020 24020001 */   li    $v0, 1
-
-/* 0EDB54 7F0B9024 8C8F0008 */  lw    $t7, 8($a0)
-.L7F0B9028:
-/* 0EDB58 7F0B9028 24840008 */  addiu $a0, $a0, 8
-/* 0EDB5C 7F0B902C 55E0FFF0 */  bnezl $t7, .L7F0B8FF0
-/* 0EDB60 7F0B9030 90820004 */   lbu   $v0, 4($a0)
-/* 0EDB64 7F0B9034 00001025 */  move  $v0, $zero
-.L7F0B9038:
-/* 0EDB68 7F0B9038 03E00008 */  jr    $ra
-/* 0EDB6C 7F0B903C 00000000 */   nop
-)
-#endif
-
 
 
 
