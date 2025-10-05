@@ -24,10 +24,10 @@ s32 text_y = 0;
 s32 text_s = 0;
 s32 text_t = 0;
 s32 D_80040EA8 = 0;
-s32 ptrFontBankGothic = 0;
-s32 ptrFontBankGothicChars = 0;
-s32 ptrFontZurichBold = 0;
-s32 ptrFontZurichBoldChars = 0;
+struct font * ptrFontBankGothic = NULL;
+struct fontchar * ptrFontBankGothicChars = NULL;
+struct font * ptrFontZurichBold = NULL;
+struct fontchar * ptrFontZurichBoldChars = NULL;
 
 u16 D_80040EBC[] = {
     0x0000, 0x5555, 0xaaaa, 0xffff,
@@ -89,27 +89,18 @@ void setTextOverlapCorrection(s32 flag) {
 
 
 
+extern u8 _fontbankgothicSegmentEnd;
+extern u8 _fontbankgothicSegmentRomStart;
+extern u8 _fontzurichboldSegmentEnd;
+extern u8 _fontzurichboldSegmentRomStart;
+extern u8 _fontzurichboldSegmentStart;
+extern u8 _fontbankgothicSegmentStart;
 
-
-
-#ifdef NONMATCHING
 void load_font_tables(void)
 {
-    s32 sp1C;
-    s32 MACROSIZE;
-    s32 MACROSIZE;
-    s32 temp_ret;
-    s32 temp_ret_2;
-    s32 i_next;
-    s32 temp_v1_2;
-    void *temp_v0;
-    void *temp_v0_2;
-    void *temp_v0_3;
-    void *temp_v0_4;
-    void *temp_v0_5;
-    s32 i;
-    s32 phi_v1_2;
-
+    u32 len;
+	s32 i;
+    
     text_spacing = 0;
     text_orientation = 0;
     text_wordwrap = 0;
@@ -118,175 +109,31 @@ void load_font_tables(void)
     text_x = 0;
     text_y = 0;
     text_s = 0;
-    MACROSIZE = 0x24b0 - 0;
     text_t = 0;
-    ptrFontBankGothic      = mempAllocBytesInBank(MACROSIZE, MEMPOOL_STAGE);
-    ptrFontBankGothicChars = (s32) (ptrFontBankGothic + 0x2a4);
-    romCopy(&ptrFontBankGothic, &_fontbankgothicSegmentRomStart, MACROSIZE);
-    i = 0;
-loop_1:
-    temp_v0 = ptrFontBankGothicChars + i;
-    i_next = i + 0x18;
-    temp_v0->unk14 = (s32) (temp_v0->unk14 + ptrFontBankGothic);
-    i = i_next;
-    if (i_next < 0x8d0)
-    {
-        goto loop_1;
-    }
-    MACROSIZE = 0x3540 - 0;
-    ptrFontZurichBold      = mempAllocBytesInBank(MACROSIZE, MEMPOOL_STAGE);
-    ptrFontZurichBoldChars = (s32) (ptrFontZurichBold + 0x2a4);
-    romCopy(&ptrFontZurichBold, &_fontzurichboldSegmentRomStart, MACROSIZE);
-    ptrFontZurichBoldChars->unk14 = (s32) (ptrFontZurichBoldChars->unk14 + ptrFontZurichBold);
-    ptrFontZurichBoldChars->unk2C = (s32) (ptrFontZurichBoldChars->unk2C + ptrFontZurichBold);
-    phi_v1_2 = 0x30;
-loop_3:
-    temp_v0_2 = ptrFontZurichBoldChars + phi_v1_2;
-    temp_v0_2->unk14 = (s32) (temp_v0_2->unk14 + ptrFontZurichBold);
-    temp_v0_3 = ptrFontZurichBoldChars + phi_v1_2;
-    temp_v0_3->unk2C = (s32) (temp_v0_3->unk2C + ptrFontZurichBold);
-    temp_v0_4 = ptrFontZurichBoldChars + phi_v1_2;
-    temp_v0_4->unk44 = (s32) (temp_v0_4->unk44 + ptrFontZurichBold);
-    temp_v0_5 = ptrFontZurichBoldChars + phi_v1_2;
-    temp_v1_2 = phi_v1_2 + 0x60;
-    temp_v0_5->unk5C = (s32) (temp_v0_5->unk5C + ptrFontZurichBold);
-    phi_v1_2 = temp_v1_2;
-    if (temp_v1_2 != 0x8d0)
-    {
-        goto loop_3;
-    }
+
+    len = (romptr_t)&_fontbankgothicSegmentEnd - (romptr_t)&_fontbankgothicSegmentStart;
+	ptrFontBankGothic = (struct font *)mempAllocBytesInBank(len, MEMPOOL_STAGE);
+	ptrFontBankGothicChars = ptrFontBankGothic->chars;
+
+	romCopy(ptrFontBankGothic, (void *) &_fontbankgothicSegmentRomStart, len);
+
+    // Convert pointers
+	for (i = 0; i < 94; i++) {
+		ptrFontBankGothicChars[i].pixeldata += (uintptr_t)ptrFontBankGothic;
+	}
+
+    len = (romptr_t)&_fontzurichboldSegmentEnd - (romptr_t)&_fontzurichboldSegmentStart;
+	ptrFontZurichBold = (struct font *)mempAllocBytesInBank(len, MEMPOOL_STAGE);
+	ptrFontZurichBoldChars = ptrFontZurichBold->chars;
+
+	romCopy(ptrFontZurichBold, (void *) &_fontzurichboldSegmentRomStart, len);
+
+    // Convert pointers
+	for (i = 0; i < 94; i++) {
+		ptrFontZurichBoldChars[i].pixeldata += (uintptr_t)ptrFontZurichBold;
+	}
 }
-#else
-GLOBAL_ASM(
-.text
-glabel load_font_tables
-/* 0E16DC 7F0ACBAC 3C018004 */  lui   $at, %hi(text_spacing)
-/* 0E16E0 7F0ACBB0 AC200E84 */  sw    $zero, %lo(text_spacing)($at)
-/* 0E16E4 7F0ACBB4 3C018004 */  lui   $at, %hi(text_orientation)
-/* 0E16E8 7F0ACBB8 AC200E88 */  sw    $zero, %lo(text_orientation)($at)
-/* 0E16EC 7F0ACBBC 3C018004 */  lui   $at, %hi(text_wordwrap)
-/* 0E16F0 7F0ACBC0 AC200E8C */  sw    $zero, %lo(text_wordwrap)($at)
-/* 0E16F4 7F0ACBC4 3C018004 */  lui   $at, %hi(overlap_correction)
-/* 0E16F8 7F0ACBC8 240EFFFF */  li    $t6, -1
-/* 0E16FC 7F0ACBCC AC2E0E90 */  sw    $t6, %lo(overlap_correction)($at)
-/* 0E1700 7F0ACBD0 3C018004 */  lui   $at, %hi(text_bilevel_filter)
-/* 0E1704 7F0ACBD4 AC200E94 */  sw    $zero, %lo(text_bilevel_filter)($at)
-/* 0E1708 7F0ACBD8 3C018004 */  lui   $at, %hi(text_x)
-/* 0E170C 7F0ACBDC AC200E98 */  sw    $zero, %lo(text_x)($at)
-/* 0E1710 7F0ACBE0 3C018004 */  lui   $at, %hi(text_y)
-/* 0E1714 7F0ACBE4 AC200E9C */  sw    $zero, %lo(text_y)($at)
-/* 0E1718 7F0ACBE8 3C018004 */  lui   $at, %hi(text_s)
-/* 0E171C 7F0ACBEC 3C0F0000 */  lui   $t7, %hi(0x000024B0) # $t7, 0
-/* 0E1720 7F0ACBF0 3C180000 */  lui   $t8, 0
-/* 0E1724 7F0ACBF4 27BDFFD8 */  addiu $sp, $sp, -0x28
-/* 0E1728 7F0ACBF8 AC200EA0 */  sw    $zero, %lo(text_s)($at)
-/* 0E172C 7F0ACBFC 27180000 */  addiu $t8, $t8, 0
-/* 0E1730 7F0ACC00 25EF24B0 */  addiu $t7, %lo(0x000024B0) # addiu $t7, $t7, 0x24b0
-/* 0E1734 7F0ACC04 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0E1738 7F0ACC08 3C018004 */  lui   $at, %hi(text_t)
-/* 0E173C 7F0ACC0C 01F83023 */  subu  $a2, $t7, $t8
-/* 0E1740 7F0ACC10 AC200EA4 */  sw    $zero, %lo(text_t)($at)
-/* 0E1744 7F0ACC14 00C02025 */  move  $a0, $a2
-/* 0E1748 7F0ACC18 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0E174C 7F0ACC1C 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0E1750 7F0ACC20 24050004 */   li    $a1, 4
-/* 0E1754 7F0ACC24 3C078004 */  lui   $a3, %hi(ptrFontBankGothic)
-/* 0E1758 7F0ACC28 3C088004 */  lui   $t0, %hi(ptrFontBankGothicChars)
-/* 0E175C 7F0ACC2C 25080EB0 */  addiu $t0, %lo(ptrFontBankGothicChars) # addiu $t0, $t0, 0xeb0
-/* 0E1760 7F0ACC30 24E70EAC */  addiu $a3, %lo(ptrFontBankGothic) # addiu $a3, $a3, 0xeac
-/* 0E1764 7F0ACC34 245902A4 */  addiu $t9, $v0, 0x2a4
-/* 0E1768 7F0ACC38 3C05002E */  lui   $a1, %hi(_fontbankgothicSegmentRomStart) # $a1, 0x2e
-/* 0E176C 7F0ACC3C ACE20000 */  sw    $v0, ($a3)
-/* 0E1770 7F0ACC40 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 0E1774 7F0ACC44 AD190000 */  sw    $t9, ($t0)
-/* 0E1778 7F0ACC48 00402025 */  move  $a0, $v0
-/* 0E177C 7F0ACC4C 0C001707 */  jal   romCopy
-/* 0E1780 7F0ACC50 24A563F0 */   addiu $a1, %lo(_fontbankgothicSegmentRomStart) # addiu $a1, $a1, 0x63f0
-/* 0E1784 7F0ACC54 3C078004 */  lui   $a3, %hi(ptrFontBankGothic)
-/* 0E1788 7F0ACC58 3C088004 */  lui   $t0, %hi(ptrFontBankGothicChars)
-/* 0E178C 7F0ACC5C 25080EB0 */  addiu $t0, %lo(ptrFontBankGothicChars) # addiu $t0, $t0, 0xeb0
-/* 0E1790 7F0ACC60 24E70EAC */  addiu $a3, %lo(ptrFontBankGothic) # addiu $a3, $a3, 0xeac
-/* 0E1794 7F0ACC64 00001825 */  move  $v1, $zero
-.L7F0ACC68:
-/* 0E1798 7F0ACC68 8D090000 */  lw    $t1, ($t0)
-/* 0E179C 7F0ACC6C 8CEB0000 */  lw    $t3, ($a3)
-/* 0E17A0 7F0ACC70 01231021 */  addu  $v0, $t1, $v1
-/* 0E17A4 7F0ACC74 8C4A0014 */  lw    $t2, 0x14($v0)
-/* 0E17A8 7F0ACC78 24630018 */  addiu $v1, $v1, 0x18
-/* 0E17AC 7F0ACC7C 286108D0 */  slti  $at, $v1, 0x8d0
-/* 0E17B0 7F0ACC80 014B6021 */  addu  $t4, $t2, $t3
-/* 0E17B4 7F0ACC84 1420FFF8 */  bnez  $at, .L7F0ACC68
-/* 0E17B8 7F0ACC88 AC4C0014 */   sw    $t4, 0x14($v0)
-/* 0E17BC 7F0ACC8C 3C0D0000 */  lui   $t5, %hi(0x00003540) # $t5, 0
-/* 0E17C0 7F0ACC90 3C0E0000 */  lui   $t6, 0
-/* 0E17C4 7F0ACC94 25CE0000 */  addiu $t6, $t6, 0
-/* 0E17C8 7F0ACC98 25AD3540 */  addiu $t5, %lo(0x00003540) # addiu $t5, $t5, 0x3540
-/* 0E17CC 7F0ACC9C 01AE3023 */  subu  $a2, $t5, $t6
-/* 0E17D0 7F0ACCA0 00C02025 */  move  $a0, $a2
-/* 0E17D4 7F0ACCA4 AFA6001C */  sw    $a2, 0x1c($sp)
-/* 0E17D8 7F0ACCA8 0C0025C8 */  jal   mempAllocBytesInBank
-/* 0E17DC 7F0ACCAC 24050004 */   li    $a1, 4
-/* 0E17E0 7F0ACCB0 3C078004 */  lui   $a3, %hi(ptrFontZurichBold)
-/* 0E17E4 7F0ACCB4 3C088004 */  lui   $t0, %hi(ptrFontZurichBoldChars)
-/* 0E17E8 7F0ACCB8 25080EB8 */  addiu $t0, %lo(ptrFontZurichBoldChars) # addiu $t0, $t0, 0xeb8
-/* 0E17EC 7F0ACCBC 24E70EB4 */  addiu $a3, %lo(ptrFontZurichBold) # addiu $a3, $a3, 0xeb4
-/* 0E17F0 7F0ACCC0 244F02A4 */  addiu $t7, $v0, 0x2a4
-/* 0E17F4 7F0ACCC4 3C05002F */  lui   $a1, %hi(_fontzurichboldSegmentRomStart) # $a1, 0x2f
-/* 0E17F8 7F0ACCC8 ACE20000 */  sw    $v0, ($a3)
-/* 0E17FC 7F0ACCCC 8FA6001C */  lw    $a2, 0x1c($sp)
-/* 0E1800 7F0ACCD0 AD0F0000 */  sw    $t7, ($t0)
-/* 0E1804 7F0ACCD4 00402025 */  move  $a0, $v0
-/* 0E1808 7F0ACCD8 0C001707 */  jal   romCopy
-/* 0E180C 7F0ACCDC 24A588A0 */   addiu $a1, %lo(_fontzurichboldSegmentRomStart) # addiu $a1, $a1, -0x7760
-/* 0E1810 7F0ACCE0 3C088004 */  lui   $t0, %hi(ptrFontZurichBoldChars)
-/* 0E1814 7F0ACCE4 25080EB8 */  addiu $t0, %lo(ptrFontZurichBoldChars) # addiu $t0, $t0, 0xeb8
-/* 0E1818 7F0ACCE8 8D020000 */  lw    $v0, ($t0)
-/* 0E181C 7F0ACCEC 3C078004 */  lui   $a3, %hi(ptrFontZurichBold)
-/* 0E1820 7F0ACCF0 24E70EB4 */  addiu $a3, %lo(ptrFontZurichBold) # addiu $a3, $a3, 0xeb4
-/* 0E1824 7F0ACCF4 8CF90000 */  lw    $t9, ($a3)
-/* 0E1828 7F0ACCF8 8C580014 */  lw    $t8, 0x14($v0)
-/* 0E182C 7F0ACCFC 24030030 */  li    $v1, 48
-/* 0E1830 7F0ACD00 240408D0 */  li    $a0, 2256
-/* 0E1834 7F0ACD04 03194821 */  addu  $t1, $t8, $t9
-/* 0E1838 7F0ACD08 AC490014 */  sw    $t1, 0x14($v0)
-/* 0E183C 7F0ACD0C 8D020000 */  lw    $v0, ($t0)
-/* 0E1840 7F0ACD10 8CEB0000 */  lw    $t3, ($a3)
-/* 0E1844 7F0ACD14 8C4A002C */  lw    $t2, 0x2c($v0)
-/* 0E1848 7F0ACD18 014B6021 */  addu  $t4, $t2, $t3
-/* 0E184C 7F0ACD1C AC4C002C */  sw    $t4, 0x2c($v0)
-.L7F0ACD20:
-/* 0E1850 7F0ACD20 8D0D0000 */  lw    $t5, ($t0)
-/* 0E1854 7F0ACD24 8CEF0000 */  lw    $t7, ($a3)
-/* 0E1858 7F0ACD28 01A31021 */  addu  $v0, $t5, $v1
-/* 0E185C 7F0ACD2C 8C4E0014 */  lw    $t6, 0x14($v0)
-/* 0E1860 7F0ACD30 01CFC021 */  addu  $t8, $t6, $t7
-/* 0E1864 7F0ACD34 AC580014 */  sw    $t8, 0x14($v0)
-/* 0E1868 7F0ACD38 8D190000 */  lw    $t9, ($t0)
-/* 0E186C 7F0ACD3C 8CEA0000 */  lw    $t2, ($a3)
-/* 0E1870 7F0ACD40 03231021 */  addu  $v0, $t9, $v1
-/* 0E1874 7F0ACD44 8C49002C */  lw    $t1, 0x2c($v0)
-/* 0E1878 7F0ACD48 012A5821 */  addu  $t3, $t1, $t2
-/* 0E187C 7F0ACD4C AC4B002C */  sw    $t3, 0x2c($v0)
-/* 0E1880 7F0ACD50 8D0C0000 */  lw    $t4, ($t0)
-/* 0E1884 7F0ACD54 8CEE0000 */  lw    $t6, ($a3)
-/* 0E1888 7F0ACD58 01831021 */  addu  $v0, $t4, $v1
-/* 0E188C 7F0ACD5C 8C4D0044 */  lw    $t5, 0x44($v0)
-/* 0E1890 7F0ACD60 01AE7821 */  addu  $t7, $t5, $t6
-/* 0E1894 7F0ACD64 AC4F0044 */  sw    $t7, 0x44($v0)
-/* 0E1898 7F0ACD68 8D180000 */  lw    $t8, ($t0)
-/* 0E189C 7F0ACD6C 8CE90000 */  lw    $t1, ($a3)
-/* 0E18A0 7F0ACD70 03031021 */  addu  $v0, $t8, $v1
-/* 0E18A4 7F0ACD74 8C59005C */  lw    $t9, 0x5c($v0)
-/* 0E18A8 7F0ACD78 24630060 */  addiu $v1, $v1, 0x60
-/* 0E18AC 7F0ACD7C 03295021 */  addu  $t2, $t9, $t1
-/* 0E18B0 7F0ACD80 1464FFE7 */  bne   $v1, $a0, .L7F0ACD20
-/* 0E18B4 7F0ACD84 AC4A005C */   sw    $t2, 0x5c($v0)
-/* 0E18B8 7F0ACD88 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0E18BC 7F0ACD8C 27BD0028 */  addiu $sp, $sp, 0x28
-/* 0E18C0 7F0ACD90 03E00008 */  jr    $ra
-/* 0E18C4 7F0ACD94 00000000 */   nop
-)
-#endif
+
 
 Gfx *microcode_constructor(Gfx *gdl) //fontGfxSetup
 {

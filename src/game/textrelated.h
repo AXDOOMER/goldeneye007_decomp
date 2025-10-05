@@ -8,10 +8,10 @@ enum TEXT_ORIENTATION {
     ROT_90CW
 };
 
-extern s32 ptrFontBankGothic;
-extern s32 ptrFontBankGothicChars;
-extern s32 ptrFontZurichBold;
-extern s32 ptrFontZurichBoldChars;
+extern struct font * ptrFontBankGothic;
+extern struct fontchar * ptrFontBankGothicChars;
+extern struct font * ptrFontZurichBold;
+extern struct fontchar * ptrFontZurichBoldChars;
 
 void textrelatedInit_REMOVED(void);
 void load_font_tables(void);
