@@ -122,7 +122,7 @@ extern Gfx DL_LUT_PRIMARY_ADDFOG[];
 void bgInit(void);
 
 // sub_GAME_7F033B38 requres arg be s32
-s32 sub_GAME_7F0B8FD0(s32 roomA, u8 roomB);
+s32 sub_GAME_7F0B8FD0(s32 roomA, s32 roomB);
 
 //f32 sub_GAME_7F0B4F9C(s32 room); // u8 not s32 for sub_GAME_7F0B2FE0
 u32 bgDecompress(u8* source, u8 *target);
