@@ -11018,78 +11018,45 @@ s32 bgCopyVisibleRoomsToList(s32 *rooms, s32 max) {
 
 
 
+// Seems like this function might be used to find all the neighbors to a room
+// Address: 0x7F0B8EFC
+s32 sub_GAME_7F0B8EFC(s32 roomIndex, s32* list, s32 max)
+{
+    s32 len = 0;
+    s32 i;
+    s32 p;
+    s32 connectedRoom1;
+    s32 connectedRoom2;
 
-#ifdef NONMATCHING
-void sub_GAME_7F0B8EFC(void) {
+    for (p = 0; g_BgPortals[p].offset_portal != NULL; p++) {
+        connectedRoom1 = g_BgPortals[p].connectedRoom1;
+        connectedRoom2 = g_BgPortals[p].connectedRoom2;
 
+        if (connectedRoom1 == roomIndex) {
+            connectedRoom1 = connectedRoom2;
+            connectedRoom2 = roomIndex;
+        }
+
+        if (connectedRoom2 == roomIndex) {
+            for (i = 0; i < len; i++) {
+                if (list[i] == connectedRoom1) {
+                    goto end;
+                }
+            }
+
+            list[len] = connectedRoom1;
+            len++;
+
+            if (len >= max) {
+                return len;
+            }
+end:
+            if (1);
+        }
+    }
+
+    return len;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B8EFC
-/* 0EDA2C 7F0B8EFC 27BDFFF0 */  addiu $sp, $sp, -0x10
-/* 0EDA30 7F0B8F00 3C078008 */  lui   $a3, %hi(g_BgPortals)
-/* 0EDA34 7F0B8F04 8CE7FF80 */  lw    $a3, %lo(g_BgPortals)($a3)
-/* 0EDA38 7F0B8F08 AFB2000C */  sw    $s2, 0xc($sp)
-/* 0EDA3C 7F0B8F0C AFB10008 */  sw    $s1, 8($sp)
-/* 0EDA40 7F0B8F10 AFB00004 */  sw    $s0, 4($sp)
-/* 0EDA44 7F0B8F14 8CEE0000 */  lw    $t6, ($a3)
-/* 0EDA48 7F0B8F18 00808025 */  move  $s0, $a0
-/* 0EDA4C 7F0B8F1C 00A08825 */  move  $s1, $a1
-/* 0EDA50 7F0B8F20 00C09025 */  move  $s2, $a2
-/* 0EDA54 7F0B8F24 11C00024 */  beqz  $t6, .L7F0B8FB8
-/* 0EDA58 7F0B8F28 00001825 */   move  $v1, $zero
-/* 0EDA5C 7F0B8F2C 00002025 */  move  $a0, $zero
-/* 0EDA60 7F0B8F30 00E02825 */  move  $a1, $a3
-/* 0EDA64 7F0B8F34 90A20004 */  lbu   $v0, 4($a1)
-.L7F0B8F38:
-/* 0EDA68 7F0B8F38 90A60005 */  lbu   $a2, 5($a1)
-/* 0EDA6C 7F0B8F3C 14500003 */  bne   $v0, $s0, .L7F0B8F4C
-/* 0EDA70 7F0B8F40 00000000 */   nop
-/* 0EDA74 7F0B8F44 00C01025 */  move  $v0, $a2
-/* 0EDA78 7F0B8F48 02003025 */  move  $a2, $s0
-.L7F0B8F4C:
-/* 0EDA7C 7F0B8F4C 54D00016 */  bnel  $a2, $s0, .L7F0B8FA8
-/* 0EDA80 7F0B8F50 8CA90008 */   lw    $t1, 8($a1)
-/* 0EDA84 7F0B8F54 18600008 */  blez  $v1, .L7F0B8F78
-/* 0EDA88 7F0B8F58 00003025 */   move  $a2, $zero
-/* 0EDA8C 7F0B8F5C 02203825 */  move  $a3, $s1
-.L7F0B8F60:
-/* 0EDA90 7F0B8F60 8CEF0000 */  lw    $t7, ($a3)
-/* 0EDA94 7F0B8F64 24C60001 */  addiu $a2, $a2, 1
-/* 0EDA98 7F0B8F68 504F000F */  beql  $v0, $t7, .L7F0B8FA8
-/* 0EDA9C 7F0B8F6C 8CA90008 */   lw    $t1, 8($a1)
-/* 0EDAA0 7F0B8F70 14C3FFFB */  bne   $a2, $v1, .L7F0B8F60
-/* 0EDAA4 7F0B8F74 24E70004 */   addiu $a3, $a3, 4
-.L7F0B8F78:
-/* 0EDAA8 7F0B8F78 0003C080 */  sll   $t8, $v1, 2
-/* 0EDAAC 7F0B8F7C 24630001 */  addiu $v1, $v1, 1
-/* 0EDAB0 7F0B8F80 0238C821 */  addu  $t9, $s1, $t8
-/* 0EDAB4 7F0B8F84 0072082A */  slt   $at, $v1, $s2
-/* 0EDAB8 7F0B8F88 14200003 */  bnez  $at, .L7F0B8F98
-/* 0EDABC 7F0B8F8C AF220000 */   sw    $v0, ($t9)
-/* 0EDAC0 7F0B8F90 1000000A */  b     .L7F0B8FBC
-/* 0EDAC4 7F0B8F94 00601025 */   move  $v0, $v1
-.L7F0B8F98:
-/* 0EDAC8 7F0B8F98 3C088008 */  lui   $t0, %hi(g_BgPortals)
-/* 0EDACC 7F0B8F9C 8D08FF80 */  lw    $t0, %lo(g_BgPortals)($t0)
-/* 0EDAD0 7F0B8FA0 01042821 */  addu  $a1, $t0, $a0
-/* 0EDAD4 7F0B8FA4 8CA90008 */  lw    $t1, 8($a1)
-.L7F0B8FA8:
-/* 0EDAD8 7F0B8FA8 24840008 */  addiu $a0, $a0, 8
-/* 0EDADC 7F0B8FAC 24A50008 */  addiu $a1, $a1, 8
-/* 0EDAE0 7F0B8FB0 5520FFE1 */  bnezl $t1, .L7F0B8F38
-/* 0EDAE4 7F0B8FB4 90A20004 */   lbu   $v0, 4($a1)
-.L7F0B8FB8:
-/* 0EDAE8 7F0B8FB8 00601025 */  move  $v0, $v1
-.L7F0B8FBC:
-/* 0EDAEC 7F0B8FBC 8FB00004 */  lw    $s0, 4($sp)
-/* 0EDAF0 7F0B8FC0 8FB10008 */  lw    $s1, 8($sp)
-/* 0EDAF4 7F0B8FC4 8FB2000C */  lw    $s2, 0xc($sp)
-/* 0EDAF8 7F0B8FC8 03E00008 */  jr    $ra
-/* 0EDAFC 7F0B8FCC 27BD0010 */   addiu $sp, $sp, 0x10
-)
-#endif
 
 
 
