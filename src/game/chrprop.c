@@ -718,7 +718,7 @@ glabel sub_GAME_7F03AB58
 /* 06F6C4 7F03AB94 AFA7022C */   sw    $a3, 0x22c($sp)
 /* 06F6C8 7F03AB98 46000506 */  mov.s $f20, $f0
 /* 06F6CC 7F03AB9C 27A40090 */  addiu $a0, $sp, 0x90
-/* 06F6D0 7F03ABA0 0FC2E3A6 */  jal   sub_GAME_7F0B8E98
+/* 06F6D0 7F03ABA0 0FC2E3A6 */  jal   bgCopyVisibleRoomsToList
 /* 06F6D4 7F03ABA4 24050064 */   li    $a1, 100
 /* 06F6D8 7F03ABA8 18400085 */  blez  $v0, .L7F03ADC0
 /* 06F6DC 7F03ABAC 27B00090 */   addiu $s0, $sp, 0x90
