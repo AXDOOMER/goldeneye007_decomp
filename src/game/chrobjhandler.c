@@ -2992,7 +2992,7 @@ glabel handles_projectile_motion
 /* 076E98 7F042368 00037880 */  sll   $t7, $v1, 2
 .L7F04236C:
 /* 076E9C 7F04236C 01F82021 */  addu  $a0, $t7, $t8
-/* 076EA0 7F042370 0FC2E3A6 */  jal   sub_GAME_7F0B8E98
+/* 076EA0 7F042370 0FC2E3A6 */  jal   bgCopyVisibleRoomsToList
 /* 076EA4 7F042374 AFA30260 */   sw    $v1, 0x260($sp)
 /* 076EA8 7F042378 8FA30260 */  lw    $v1, 0x260($sp)
 /* 076EAC 7F04237C 2419FFFF */  li    $t9, -1

@@ -11005,7 +11005,7 @@ glabel sub_GAME_7F0B8DF4
 
 // Copies visible rooms to a list
 // Address: 0x7F0B8E98
-s32 sub_GAME_7F0B8E98(s32 *rooms, s32 max) {
+s32 bgCopyVisibleRoomsToList(s32 *rooms, s32 max) {
     s32 i;
 
     for (i = 0; (i < num_visible_rooms_in_cur_global_vis_packet) && (i < max); i++) {
