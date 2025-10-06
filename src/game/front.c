@@ -757,7 +757,7 @@ s16 solo_target_time_array[20][3] = {
 };
 
 s32 totalunlockedcheats = 0;
-s32 D_8002B5E0 = 0;
+s32 cheathighlighted = 0;
 
 
 u32 MP_menu_selected_option = 0;
@@ -8268,7 +8268,7 @@ void interface_menu15_cheat(void)
         tab_prev_highlight = 0;
         tab_next_highlight = 0;
         tab_start_highlight = 0;
-        D_8002B5E0 = 0;
+        cheathighlighted = 0;
 
         if (frontCheckCursorOnPreviousTab())
         {
@@ -8285,14 +8285,14 @@ void interface_menu15_cheat(void)
                     {
                         if ((s32) cursor_v_pos >= (i * 0x14) + 0x35)
                         {
-                            D_8002B5E0 = i + 0xC;
+                            cheathighlighted = i + 0xC;
                             break;
                         }
                     }
                 }
             }
 
-            if (D_8002B5E0 == 0)
+            if (cheathighlighted == 0)
             {
                 i = (totalunlockedcheats >= 0xD)
                     ? 0xB
@@ -8302,7 +8302,7 @@ void interface_menu15_cheat(void)
                 {
                     if ((s32) cursor_v_pos >= (i * 0x14) + 0x35)
                     {
-                        D_8002B5E0 = i;
+                        cheathighlighted = i;
                         break;
                     }
                 }
@@ -8344,7 +8344,7 @@ void interface_menu15_cheat(void)
 
     if (MP_menu_selected_option)
     {
-    i = arrayUnlockedCheats[D_8002B5E0];
+    i = arrayUnlockedCheats[cheathighlighted];
         g_CheatActivated[i] = 1 - g_CheatActivated[i];
     }
 }
@@ -8382,7 +8382,7 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
 
         sp88 = 0x37;
         sp84 = (var_fp * 0x14) + 0x35;
-        if ((var_fp == D_8002B5E0) && (frontCheckCursorOnPreviousTab() == 0))
+        if ((var_fp == cheathighlighted) && (frontCheckCursorOnPreviousTab() == 0))
         {
             DL = microcode_constructor_related_to_menus(DL, sp88 - 2, sp84 - 1, sp88 + sp7C + 5, sp84 + 0xE, 0x32);
         }
@@ -8408,7 +8408,7 @@ Gfx * constructor_menu15_cheat(Gfx *DL)
 
             sp88 = 0xDC;
             sp84 = (var_fp * 0x14) + 0x35;
-            if ((var_fp + 0xc == D_8002B5E0) && (frontCheckCursorOnPreviousTab() == 0))
+            if ((var_fp + 0xc == cheathighlighted) && (frontCheckCursorOnPreviousTab() == 0))
             {
                 DL = microcode_constructor_related_to_menus(DL, sp88 - 2, sp84 - 1, sp88 + sp7C + 5, sp84 + 0xE, 0x32);
             }
