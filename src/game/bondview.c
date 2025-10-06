@@ -8042,7 +8042,7 @@ void bondviewMoveAnimationTick(f32 speed, f32 speedforwards, f32 speedsideways)
     bheadUpdate(percent_speed, speedsideways);
 
     matrix_4x4_set_rotation_around_x((360.0f - g_CurrentPlayer->vv_verta360) * DegToRad1Fact(1), &sp8C);
-    matrix_4x4_7F059908(&sp4C, 0.0f, 0.0f, 0.0f, -g_CurrentPlayer->headlook.f[0], -g_CurrentPlayer->headlook.f[1], -g_CurrentPlayer->headlook.f[2], g_CurrentPlayer->headup.f[0], g_CurrentPlayer->headup.f[1], g_CurrentPlayer->headup.f[2]);
+    matrix_4x4_set_basis_and_position_target(&sp4C, 0.0f, 0.0f, 0.0f, -g_CurrentPlayer->headlook.f[0], -g_CurrentPlayer->headlook.f[1], -g_CurrentPlayer->headlook.f[2], g_CurrentPlayer->headup.f[0], g_CurrentPlayer->headup.f[1], g_CurrentPlayer->headup.f[2]);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
     matrix_4x4_set_rotation_around_y((360.0f - g_CurrentPlayer->vv_theta) * DegToRad1Fact(1), &sp4C);
     matrix_4x4_multiply_in_place(&sp4C, &sp8C);
@@ -11858,7 +11858,7 @@ void sub_GAME_7F0876C4(coord3d* cam_pos, coord3d* cam_look, coord3d* cam_up)
         cam_look->x, cam_look->y, cam_look->z,
         cam_up->x, cam_up->y, cam_up->z);
 
-    matrix_4x4_7F059708((Mtxf*) g_CurrentPlayer->field_68,
+    matrix_4x4_set_basis_and_position((Mtxf*) g_CurrentPlayer->field_68,
         cam_pos->x, cam_pos->y, cam_pos->z,
         cam_look->x, cam_look->y, cam_look->z,
         cam_up->x, cam_up->y, cam_up->z);
@@ -12911,7 +12911,7 @@ glabel sub_GAME_7F087E74
 /* 0BCD0C 7F0881DC E7AA0020 */  swc1  $f10, 0x20($sp)
 /* 0BCD10 7F0881E0 C44801F4 */  lwc1  $f8, 0x1f4($v0)
 /* 0BCD14 7F0881E4 E7AE0168 */  swc1  $f14, 0x168($sp)
-/* 0BCD18 7F0881E8 0FC16642 */  jal   matrix_4x4_7F059908
+/* 0BCD18 7F0881E8 0FC16642 */  jal   matrix_4x4_set_basis_and_position_target
 /* 0BCD1C 7F0881EC E7A80024 */   swc1  $f8, 0x24($sp)
 /* 0BCD20 7F0881F0 8FA40164 */  lw    $a0, 0x164($sp)
 /* 0BCD24 7F0881F4 0FC16218 */  jal   matrix_4x4_get_rotation_around_xyz
@@ -13434,7 +13434,7 @@ glabel sub_GAME_7F087E74
 /* 0BD420 7F0888B0 E7A60020 */  swc1  $f6, 0x20($sp)
 /* 0BD424 7F0888B4 C44401F4 */  lwc1  $f4, 0x1f4($v0)
 /* 0BD428 7F0888B8 E7AE0168 */  swc1  $f14, 0x168($sp)
-/* 0BD42C 7F0888BC 0FC1678A */  jal   matrix_4x4_7F059908
+/* 0BD42C 7F0888BC 0FC1678A */  jal   matrix_4x4_set_basis_and_position_target
 /* 0BD430 7F0888C0 E7A40024 */   swc1  $f4, 0x24($sp)
 /* 0BD434 7F0888C4 8FA40164 */  lw    $a0, 0x164($sp)
 /* 0BD438 7F0888C8 0FC16360 */  jal   matrix_4x4_get_rotation_around_xyz
@@ -13957,7 +13957,7 @@ glabel sub_GAME_7F087E74
 /* 0BAD34 7F088344 E7A60020 */  swc1  $f6, 0x20($sp)
 /* 0BAD38 7F088348 C44401F4 */  lwc1  $f4, 0x1f4($v0)
 /* 0BAD3C 7F08834C E7AE0168 */  swc1  $f14, 0x168($sp)
-/* 0BAD40 7F088350 0FC1676C */  jal   matrix_4x4_7F059908
+/* 0BAD40 7F088350 0FC1676C */  jal   matrix_4x4_set_basis_and_position_target
 /* 0BAD44 7F088354 E7A40024 */   swc1  $f4, 0x24($sp)
 /* 0BAD48 7F088358 8FA40164 */  lw    $a0, 0x164($sp)
 /* 0BAD4C 7F08835C 0FC16342 */  jal   matrix_4x4_get_rotation_around_xyz

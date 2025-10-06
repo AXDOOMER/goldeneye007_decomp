@@ -2431,7 +2431,7 @@ void ai(PropDefHeaderRecord *Entityp, PROP_TYPE EntityType)
 #ifdef ENABLE_LOG
                             osSyncPrintf("aiMoveObj: moving object to pad %d\n", pad);
 #endif
-                        matrix_4x4_7F059908(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
+                        matrix_4x4_set_basis_and_position_target(&matrix, 0, 0, 0, -pad->look.x, -pad->look.y, -pad->look.z, pad->up.x, pad->up.y, pad->up.z);
                         if (obj->model)
                         {
                             matrix_scalar_multiply(obj->model->scale, &matrix);
