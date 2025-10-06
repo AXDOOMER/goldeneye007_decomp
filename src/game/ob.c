@@ -110,18 +110,25 @@ void resource_load_from_indy(u8 *ptrdata, s32 bytes,  fileentry *srcfile,  resou
 
 
 #ifdef NONMATCHING
+// 97.7% https://decomp.me/scratch/Z6nqC
 void obInit(void)
 {
+    s32 size;
     s32 i;
 
-    debTryAdd(&ob_c_debug_notice_list_entry,"ob_c_debug");
-    for (i = file_entry_max-1; i > 1 ; i--)
+    debTryAdd(&ob_c_debug_notice_list_entry, "ob_c_debug");
+    
+    for (i = 1; i < file_entry_max - 1; i++)
     {
-        s32 size = (file_resource_table[i+1].hw_address - file_resource_table[i].hw_address);
+        size = (file_resource_table[i + 1].hw_address - file_resource_table[i].hw_address);
+
+        if(1);
+        
         resource_lookup_data_array[i].rom_size = size;
         resource_lookup_data_array[i].poolRemaining = 0;
         resource_lookup_data_array[i].pc_size = 0;
         resource_lookup_data_array[i].rom_remaining = 0;
+
     }
 }
 #else
@@ -675,48 +682,21 @@ void removed_loop_filetableentries(void)
 
 
 
-
-
-#ifdef NONMATCHING
+// removed
 void sub_GAME_7F0BD410(void)
 {
-  struct resource_lookup_data_entry *entry= &resource_lookup_data_array[1];
+    s32 i;
 
-    if (file_entry_max > 1)
+    for (i = 1; i < file_entry_max; i++)
     {
-        for (;&resource_lookup_data_array[file_entry_max] > entry;entry++)
+        // unknown which property is referenced, just need to get the compiler to
+        // correctly reference the parent object.
+        if (resource_lookup_data_array[i].poolRemaining)
         {
-            ;
-        }
+            // removed
+        }    
     }
 }
-
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0BD410
-/* 0F1F40 7F0BD410 3C038005 */  lui   $v1, %hi(file_entry_max)
-/* 0F1F44 7F0BD414 8C6382D4 */  lw    $v1, %lo(file_entry_max)($v1)
-/* 0F1F48 7F0BD418 3C028009 */  lui   $v0, %hi(resource_lookup_data_array+0x14)
-/* 0F1F4C 7F0BD41C 244288C4 */  addiu $v0, %lo(resource_lookup_data_array+0x14) # addiu $v0, $v0, -0x773c
-/* 0F1F50 7F0BD420 28610002 */  slti  $at, $v1, 2
-/* 0F1F54 7F0BD424 1420000A */  bnez  $at, .L7F0BD450
-/* 0F1F58 7F0BD428 00037080 */   sll   $t6, $v1, 2
-/* 0F1F5C 7F0BD42C 01C37021 */  addu  $t6, $t6, $v1
-/* 0F1F60 7F0BD430 3C0F8009 */  lui   $t7, %hi(resource_lookup_data_array)
-/* 0F1F64 7F0BD434 25EF88B0 */  addiu $t7, %lo(resource_lookup_data_array) # addiu $t7, $t7, -0x7750
-/* 0F1F68 7F0BD438 000E7080 */  sll   $t6, $t6, 2
-/* 0F1F6C 7F0BD43C 01CF2021 */  addu  $a0, $t6, $t7
-/* 0F1F70 7F0BD440 24420014 */  addiu $v0, $v0, 0x14
-.L7F0BD444:
-/* 0F1F74 7F0BD444 0044082B */  sltu  $at, $v0, $a0
-/* 0F1F78 7F0BD448 5420FFFE */  bnezl $at, .L7F0BD444
-/* 0F1F7C 7F0BD44C 24420014 */   addiu $v0, $v0, 0x14
-.L7F0BD450:
-/* 0F1F80 7F0BD450 03E00008 */  jr    $ra
-/* 0F1F84 7F0BD454 00000000 */   nop
-)
-#endif
 
 
 
