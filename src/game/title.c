@@ -782,7 +782,7 @@ Gfx *load_display_rare_logo(Gfx *gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 extern void *_rarewarelogoSegmentRomStart;
 extern void *_rarewarelogoSegmentStart;
 extern void *_rarewarelogoSegmentEnd; 
-void sub_GAME_7F008B58(s32 address, s32 size) {
+void setupRarewareLogoData(s32 address, s32 size) {
     gunbarrel_mode = 0;
     g_TitleX = 880.0f;
     D_8002A89C = -40.0f;
@@ -995,7 +995,7 @@ void initializeGunBarrelIntro(u8 *gfxBuffer, s32 bufferSize)
 }
 
 
-void sub_GAME_7F00920C(void)
+void clearChrGunModelInstances(void)
 {
     if (chrModelInstance)
     {

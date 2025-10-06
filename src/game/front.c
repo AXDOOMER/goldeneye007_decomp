@@ -334,7 +334,7 @@ struct legal_screen_text legalpage_text_array[] = {
     { 80, 280, LEFT_ALIGN, CENTER_ALIGN, getStringID(LTITLE, TITLE_STR_18_EMI), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
-ModelRenderData       D_8002AABC = {NULL,
+ModelRenderData       legalscreen_MRD = {NULL,
                                     TRUE,
                                     0x00000003,
                                     NULL,
@@ -357,7 +357,7 @@ ModelRenderData       D_8002AABC = {NULL,
 
 struct coord3d nintendologo_pos = {0};
 
-ModelRenderData       D_8002AB08 = {NULL,
+ModelRenderData       nintendologo_MRD = {NULL,
                                     TRUE,
                                     0x00000003,
                                     NULL,
@@ -380,7 +380,7 @@ ModelRenderData       D_8002AB08 = {NULL,
 
 struct coord3d goldeneyelogo_pos = { 0 };
 
-ModelRenderData       D_8002AB54 = {NULL,
+ModelRenderData       goldeneyelogo_MRD = {NULL,
                                     TRUE,
                                     0x00000003,
                                     NULL,
@@ -401,7 +401,7 @@ ModelRenderData       D_8002AB54 = {NULL,
                                     CULLMODE_BOTH};
 
 
-struct coord3d D_8002AB94[] = {
+struct coord3d folderpositions[] = {
     {-900.0f, 800.0f, 0.0f},
     {1800.0f, 800.0f, 0.0f},
     {-1800.0f, -200.0f, 0.0f},
@@ -1502,7 +1502,7 @@ Gfx *constructor_menu00_legalscreen(Gfx *DL)
     Mtxf sp58;
     struct legal_screen_text *legal_text_ptr;
 
-    spE4 = D_8002AABC;
+    spE4 = legalscreen_MRD;
 
     DL = insert_imageDL(DL);
     matrix_4x4_7F059694(&spA0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
@@ -1550,10 +1550,10 @@ GLOBAL_ASM(
 glabel constructor_menu00_legalscreen
 /* 03F410 7F00A8E0 27BDFED8 */  addiu $sp, $sp, -0x128
 /* 03F414 7F00A8E4 AFB10034 */  sw    $s1, 0x34($sp)
-/* 03F418 7F00A8E8 3C0E8003 */  lui   $t6, %hi(D_8002AABC)
+/* 03F418 7F00A8E8 3C0E8003 */  lui   $t6, %hi(legalscreen_MRD)
 /* 03F41C 7F00A8EC 27B100E4 */  addiu $s1, $sp, 0xe4
 /* 03F420 7F00A8F0 AFB40040 */  sw    $s4, 0x40($sp)
-/* 03F424 7F00A8F4 25CEAABC */  addiu $t6, %lo(D_8002AABC) # addiu $t6, $t6, -0x5544
+/* 03F424 7F00A8F4 25CEAABC */  addiu $t6, %lo(legalscreen_MRD) # addiu $t6, $t6, -0x5544
 /* 03F428 7F00A8F8 0080A025 */  move  $s4, $a0
 /* 03F42C 7F00A8FC AFBF0044 */  sw    $ra, 0x44($sp)
 /* 03F430 7F00A900 AFB3003C */  sw    $s3, 0x3c($sp)
@@ -1648,12 +1648,12 @@ glabel constructor_menu00_legalscreen
 /* 03F588 7F00AA58 0FC2B366 */  jal   microcode_constructor
 /* 03F58C 7F00AA5C 02802025 */   move  $a0, $s4
 /* 03F590 7F00AA60 3C108003 */  lui   $s0, %hi(legalpage_text_array)
-/* 03F594 7F00AA64 3C118003 */  lui   $s1, %hi(D_8002AABC)
+/* 03F594 7F00AA64 3C118003 */  lui   $s1, %hi(legalscreen_MRD)
 /* 03F598 7F00AA68 3C138004 */  lui   $s3, %hi(ptrFontZurichBold)
 /* 03F59C 7F00AA6C 3C128004 */  lui   $s2, %hi(ptrFontZurichBoldChars)
 /* 03F5A0 7F00AA70 0040A025 */  move  $s4, $v0
 /* 03F5A4 7F00AA74 2610A9CC */  addiu $s0, %lo(legalpage_text_array) # addiu $s0, $s0, -0x5634
-/* 03F5A8 7F00AA78 2631AABC */  addiu $s1, %lo(D_8002AABC) # addiu $s1, $s1, -0x5544
+/* 03F5A8 7F00AA78 2631AABC */  addiu $s1, %lo(legalscreen_MRD) # addiu $s1, $s1, -0x5544
 /* 03F5AC 7F00AA7C 26520EB8 */  addiu $s2, %lo(ptrFontZurichBoldChars) # addiu $s2, $s2, 0xeb8
 /* 03F5B0 7F00AA80 26730EB4 */  addiu $s3, %lo(ptrFontZurichBold) # addiu $s3, $s3, 0xeb4
 .L7F00AA84:
@@ -1796,13 +1796,13 @@ void interface_menu01_nintendo(void)
 
 Gfx *constructor_menu01_nintendo(Gfx *DL)
 {
-    ModelRenderData sp128;
+    ModelRenderData ninlogo;
     s32 padding;
-    s32 var_v1;
-    Mtxf spE0;
+    s32 ambiantlight;
+    Mtxf ninlogoMtxf;
     s32 i;
 
-    sp128 = D_8002AB08;
+    ninlogo = nintendologo_MRD;
 
     DL = insert_imageDL(DL);
 
@@ -1813,26 +1813,26 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
 
 #if defined(VERSION_EU)
     // 0x100000000 ? 0xFFFECD34 = 0x132CC (78540 decimal)
-    var_v1 = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFECD34) / 83);
+    ambiantlight = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFECD34) / 83);
 #else
     // 0x100000000 ? 0xFFFE8F72 = 0x1708E (94350 decimal)
-    var_v1 = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFE8F72) / 100);
+    ambiantlight = 0xFF - ((s32) ((g_MenuTimer * 0xFF) + 0xFFFE8F72) / 100);
 #endif
-    if (var_v1 >= 0x100)
+    if (ambiantlight >= 0x100)
     {
-        var_v1 = 0xff;
+        ambiantlight = 0xff;
     }
-    if (var_v1 < 0)
+    if (ambiantlight < 0)
     {
-        var_v1 = 0;
+        ambiantlight = 0;
     }
 
-    ninlogolight.a.l.colc[2] = var_v1;
-    ninlogolight.a.l.colc[1] = var_v1;
-    ninlogolight.a.l.colc[0] = var_v1;
-    ninlogolight.a.l.col[2] = var_v1;
-    ninlogolight.a.l.col[1] = var_v1;
-    ninlogolight.a.l.col[0] = var_v1;
+    ninlogolight.a.l.colc[2] = ambiantlight;
+    ninlogolight.a.l.colc[1] = ambiantlight;
+    ninlogolight.a.l.colc[0] = ambiantlight;
+    ninlogolight.a.l.col[2] = ambiantlight;
+    ninlogolight.a.l.col[1] = ambiantlight;
+    ninlogolight.a.l.col[0] = ambiantlight;
 
 #if defined(VERSION_EU)
     ninLogoRotRate += 0.0209439527243f;
@@ -1844,10 +1844,10 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
     // needs to be declared here for the stack to match.
     if(1)
     {
-        Mtxf sp90;
+        Mtxf tmpMtx;
 
-        matrix_4x4_set_rotation_around_y(ninLogoRotRate, &sp90);
-        matrix_scalar_multiply_3(ninLogoScale, (f32*)&sp90);
+        matrix_4x4_set_rotation_around_y(ninLogoRotRate, &tmpMtx);
+        matrix_scalar_multiply_3(ninLogoScale, (f32*)&tmpMtx);
 
 #if defined(VERSION_EU)
         ninLogoScale *= 1.09647190571f;
@@ -1859,37 +1859,37 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
             ninLogoScale = 1.1f;
         }
 
-        matrix_4x4_7F059694(&spE0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-        matrix_4x4_multiply_in_place(&spE0, &sp90);
-        matrix_4x4_copy(&sp90, &spE0);
+        matrix_4x4_7F059694(&ninlogoMtxf, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        matrix_4x4_multiply_in_place(&ninlogoMtxf, &tmpMtx);
+        matrix_4x4_copy(&tmpMtx, &ninlogoMtxf);
     }
 
-    sp128.unk_matrix = &spE0;
+    ninlogo.unk_matrix = &ninlogoMtxf;
 
-    sp128.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
+    ninlogo.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
 
-    matrix_4x4_copy(&spE0, sp128.mtxlist);
+    matrix_4x4_copy(&ninlogoMtxf, ninlogo.mtxlist);
 
-    logoinst->render_pos = (union RenderPosView*)sp128.mtxlist;
+    logoinst->render_pos = (union RenderPosView*)ninlogo.mtxlist;
 
     sub_GAME_7F06EFC4(logoinst);
 
-    sp128.flags = 3;
-    sp128.zbufferenabled = FALSE;
-    sp128.gdl = DL;
+    ninlogo.flags = 3;
+    ninlogo.zbufferenabled = FALSE;
+    ninlogo.gdl = DL;
 
-    subdraw(&sp128, logoinst);
+    subdraw(&ninlogo, logoinst);
 
-    DL = sp128.gdl;
+    DL = ninlogo.gdl;
 
     for (i=0; i<logoinst->obj->numMatrices; i++)
     {
-        Mtxf sp50;
+        Mtxf tmpMtxf;
         s32 padding2;
 
         // hack: source address steps by sizeof(Mtxf), but can't get that to match
-        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &sp50);
-        matrix_4x4_f32_to_s32(&sp50, &((Mtxf*)logoinst->render_pos)[i]);
+        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &tmpMtxf);
+        matrix_4x4_f32_to_s32(&tmpMtxf, &((Mtxf*)logoinst->render_pos)[i]);
 
         if(i);
     }
@@ -1913,7 +1913,7 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
 //********************************************************************************************************
 void init_menu02_rarelogo(void)
 {
-    sub_GAME_7F008B58(ptr_logo_and_walletbond_DL, 0x78000);
+    setupRarewareLogoData(ptr_logo_and_walletbond_DL, 0x78000);
     sndPlaySfx(g_musicSfxBufferPtr, RARELOGO_SFX, 0);
 }
 
@@ -1958,14 +1958,14 @@ Gfx * constructor_menu02_rareware(Gfx * DL) {
 //********************************************************************************************************
 //GUNBARREL
 //********************************************************************************************************
-void init_menu03_eyeintro(void) {
+void init_menu03_gunbarrel(void) {
     initializeGunBarrelIntro(ptr_logo_and_walletbond_DL, 0x78000);
     musicTrack1Play(M_INTRO);
     maybe_is_in_menu = TRUE;
 }
 
-void update_menu_03_eye(void) {
-    sub_GAME_7F00920C();
+void update_menu_03_gunbarrel(void) {
+    clearChrGunModelInstances();
 }
 
 void interface_menu03_eye(void) {
@@ -2070,7 +2070,7 @@ Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
     LookAt * temp_v0;
     Mtxf spB0;
 
-    sp140 = D_8002AB54;
+    sp140 = goldeneyelogo_MRD;
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
@@ -2358,7 +2358,7 @@ s32 interface_menu05_fileselect(void)
 
     for (i1 = 0; i1 < 4; i1++)
     {
-        sp54 = &D_8002AB94[i1];
+        sp54 = &folderpositions[i1];
 
         matrix_4x4_7F059694(&spC8, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
         matrix_4x4_set_identity_and_position(sp54, &sp88);
@@ -2966,8 +2966,8 @@ Gfx *frontSetupMenuBackground(Gfx *DL)
     Mtxf sp88;
     Mtxf sp48;
 
-    temp_f0 = D_8002AB94[selected_folder_num].f[0];
-    temp_f2 = D_8002AB94[selected_folder_num].f[1];
+    temp_f0 = folderpositions[selected_folder_num].f[0];
+    temp_f2 = folderpositions[selected_folder_num].f[1];
 
     sp10C = D_8002AF84;
 
@@ -2975,7 +2975,7 @@ Gfx *frontSetupMenuBackground(Gfx *DL)
     temp_f2 += D_8002AFC8;
 
     matrix_4x4_7F059694(&spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 0.0f, 0.0f, 1.0f, 0.0f);
-    matrix_4x4_set_identity_and_position(&D_8002AB94[selected_folder_num], &sp88);
+    matrix_4x4_set_identity_and_position(&folderpositions[selected_folder_num], &sp88);
     matrix_scalar_multiply(0.25f, sp88.m[0]);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
 
@@ -12901,7 +12901,7 @@ void menu_init(void)
             case MENU_LEGAL_SCREEN:           update_menu00_legalscreen();          break;
             case MENU_NINTENDO_LOGO:          update_menu01_nintendo();             break;
             case MENU_RAREWARE_LOGO:          update_menu02_rareware();             break;
-            case MENU_EYE_INTRO:              update_menu_03_eye();                 break;
+            case MENU_EYE_INTRO:              update_menu_03_gunbarrel();                 break;
             case MENU_GOLDENEYE_LOGO:         update_menu04_goldeneye();            break;
             case MENU_FILE_SELECT:            update_menu05_filesel();              break;
             case MENU_MODE_SELECT:            update_menu06_modesel();              break;
@@ -12940,7 +12940,7 @@ void menu_init(void)
             case MENU_LEGAL_SCREEN:           init_menu00_legalscreen();            break;
             case MENU_NINTENDO_LOGO:          init_menu01_nintendo();               break;
             case MENU_RAREWARE_LOGO:          init_menu02_rarelogo();               break;
-            case MENU_EYE_INTRO:              init_menu03_eyeintro();               break;
+            case MENU_EYE_INTRO:              init_menu03_gunbarrel();               break;
             case MENU_GOLDENEYE_LOGO:         init_menu04_goldeneyelogo();          break;
             case MENU_FILE_SELECT:            init_menu05_fileselect();             break;
             case MENU_MODE_SELECT:            init_menu06_modeselect();             break;
