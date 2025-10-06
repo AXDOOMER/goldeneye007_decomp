@@ -719,7 +719,7 @@ Gfx *insert_bond_eye_intro(Gfx *gdl) {
     gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferIntroBond[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
     gSPMatrix(gdl++, osVirtualToPhysical(&matrixBufferIntroBackdrop[D_8002A7D0]), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW));
     
-    matrix_4x4_7F059694(&matrix, gunbarrelPosition1[0], gunbarrelPosition1[1], gunbarrelPosition1[2], (gunbarrelPosition1[0] + gunbarrelPosition2[0]), (gunbarrelPosition1[1] + gunbarrelPosition2[1]), (gunbarrelPosition1[2] + gunbarrelPosition2[2]), gunbarrelPosition3[0], gunbarrelPosition3[1], gunbarrelPosition3[2]);
+    matrix_4x4_set_lookat_target(&matrix, gunbarrelPosition1[0], gunbarrelPosition1[1], gunbarrelPosition1[2], (gunbarrelPosition1[0] + gunbarrelPosition2[0]), (gunbarrelPosition1[1] + gunbarrelPosition2[1]), (gunbarrelPosition1[2] + gunbarrelPosition2[2]), gunbarrelPosition3[0], gunbarrelPosition3[1], gunbarrelPosition3[2]);
 
 #if defined REFRESH_PAL
     return sub_GAME_7F007F30(gdl, 1, &matrix);

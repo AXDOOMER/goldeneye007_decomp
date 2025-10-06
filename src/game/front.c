@@ -1505,7 +1505,7 @@ Gfx *constructor_menu00_legalscreen(Gfx *DL)
     spE4 = legalscreen_MRD;
 
     DL = insert_imageDL(DL);
-    matrix_4x4_7F059694(&spA0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix_4x4_set_lookat_target(&spA0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     spE4.unk_matrix = &spA0;
     spE4.mtxlist = (Mtxf*)dynAllocate(logoinst->obj->numMatrices << 6);
     matrix_4x4_copy(&spA0, spE4.mtxlist);
@@ -1589,7 +1589,7 @@ glabel constructor_menu00_legalscreen
 /* 03F4A4 7F00A974 E7A00018 */  swc1  $f0, 0x18($sp)
 /* 03F4A8 7F00A978 E7A0001C */  swc1  $f0, 0x1c($sp)
 /* 03F4AC 7F00A97C E7A00024 */  swc1  $f0, 0x24($sp)
-/* 03F4B0 7F00A980 0FC165A5 */  jal   matrix_4x4_7F059694
+/* 03F4B0 7F00A980 0FC165A5 */  jal   matrix_4x4_set_lookat_target
 /* 03F4B4 7F00A984 E7A40020 */   swc1  $f4, 0x20($sp)
 /* 03F4B8 7F00A988 3C138003 */  lui   $s3, %hi(logoinst)
 /* 03F4BC 7F00A98C 2673A958 */  addiu $s3, %lo(logoinst) # addiu $s3, $s3, -0x56a8
@@ -1859,7 +1859,7 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
             ninLogoScale = 1.1f;
         }
 
-        matrix_4x4_7F059694(&ninlogoMtxf, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        matrix_4x4_set_lookat_target(&ninlogoMtxf, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
         matrix_4x4_multiply_in_place(&ninlogoMtxf, &tmpMtx);
         matrix_4x4_copy(&tmpMtx, &ninlogoMtxf);
     }
@@ -2086,7 +2086,7 @@ Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
     // gSPLookAt macro expands to gSPLookAtX + gSPLookAtY
     gSPLookAt(DL++, temp_v0);
 
-    matrix_4x4_7F059694(&spF8, 0.0f, 0.0f, 3000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix_4x4_set_lookat_target(&spF8, 0.0f, 0.0f, 3000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     sp140.unk_matrix = &spF8;
     sp140.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
 
@@ -2360,7 +2360,7 @@ s32 interface_menu05_fileselect(void)
     {
         sp54 = &folderpositions[i1];
 
-        matrix_4x4_7F059694(&spC8, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        matrix_4x4_set_lookat_target(&spC8, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
         matrix_4x4_set_identity_and_position(sp54, &sp88);
         matrix_scalar_multiply(0.37f, (f32*)&sp88);
         matrix_4x4_multiply_in_place(&spC8, &sp88);
@@ -2974,7 +2974,7 @@ Gfx *frontSetupMenuBackground(Gfx *DL)
     temp_f0 += D_8002AFC4;
     temp_f2 += D_8002AFC8;
 
-    matrix_4x4_7F059694(&spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 0.0f, 0.0f, 1.0f, 0.0f);
+    matrix_4x4_set_lookat_target(&spC8, temp_f0, temp_f2, 4000.0f + D_8002AFCC, temp_f0, temp_f2, 0.0f, 0.0f, 1.0f, 0.0f);
     matrix_4x4_set_identity_and_position(&folderpositions[selected_folder_num], &sp88);
     matrix_scalar_multiply(0.25f, sp88.m[0]);
     matrix_4x4_multiply_in_place(&spC8, &sp88);
@@ -10306,7 +10306,7 @@ Gfx * constructor_menu18_displaycast(Gfx *DL)
     sp134.f[0] = flt_CODE_bss_800695E8.f[0] + flt_CODE_bss_800695C8.f[0];
     sp134.f[2] = (flt_CODE_bss_800695E8.f[1] + flt_CODE_bss_800695C8.f[1]) - 10.0f;
 
-    matrix_4x4_7F059694(&sp1E8, sp244.f[0], sp244.f[1], sp244.f[2], flt_CODE_bss_800695E8.f[1], sp238.f[2], sp238.f[2], sp22C.f[0], sp22C.f[1], sp22C.f[2]);
+    matrix_4x4_set_lookat_target(&sp1E8, sp244.f[0], sp244.f[1], sp244.f[2], flt_CODE_bss_800695E8.f[1], sp238.f[2], sp238.f[2], sp22C.f[0], sp22C.f[1], sp22C.f[2]);
 
     sp1A8.unk_matrix = &sp1E8;
     sp1A8.mtxlist = dynAllocate(cast_model->obj->numMatrices << 6);
@@ -11068,7 +11068,7 @@ glabel constructor_menu18_displaycast
 /* 04E710 7F019BE0 E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 04E714 7F019BE4 E7A60018 */  swc1  $f6, 0x18($sp)
 /* 04E718 7F019BE8 E7A40024 */  swc1  $f4, 0x24($sp)
-/* 04E71C 7F019BEC 0FC165A5 */  jal   matrix_4x4_7F059694
+/* 04E71C 7F019BEC 0FC165A5 */  jal   matrix_4x4_set_lookat_target
 /* 04E720 7F019BF0 E7AA0020 */   swc1  $f10, 0x20($sp)
 /* 04E724 7F019BF4 8E8E0000 */  lw    $t6, ($s4)
 /* 04E728 7F019BF8 AFB201A8 */  sw    $s2, 0x1a8($sp)
@@ -12192,7 +12192,7 @@ glabel constructor_menu18_displaycast
 /* 04C64C 7F019C5C E7A8001C */  swc1  $f8, 0x1c($sp)
 /* 04C650 7F019C60 E7A60018 */  swc1  $f6, 0x18($sp)
 /* 04C654 7F019C64 E7A40024 */  swc1  $f4, 0x24($sp)
-/* 04C658 7F019C68 0FC166CF */  jal   matrix_4x4_7F059694
+/* 04C658 7F019C68 0FC166CF */  jal   matrix_4x4_set_lookat_target
 /* 04C65C 7F019C6C E7AA0020 */   swc1  $f10, 0x20($sp)
 /* 04C660 7F019C70 8E8E0000 */  lw    $t6, ($s4)
 /* 04C664 7F019C74 AFB201A8 */  sw    $s2, 0x1a8($sp)

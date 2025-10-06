@@ -11843,7 +11843,7 @@ void sub_GAME_7F0876C4(coord3d* cam_pos, coord3d* cam_look, coord3d* cam_up)
     clpos.f[1] = scaledpos.f[1] + cam_look->f[1];
     clpos.f[2] = scaledpos.f[2] + cam_look->f[2];
 
-    matrix_4x4_7F059424(&spC4,
+    matrix_4x4_set_lookat(&spC4,
         scaledpos.x, scaledpos.y, scaledpos.z,
         cam_look->x, cam_look->y, cam_look->z,
         cam_up->x, cam_up->y, cam_up->z);
@@ -11853,7 +11853,7 @@ void sub_GAME_7F0876C4(coord3d* cam_pos, coord3d* cam_look, coord3d* cam_up)
         clpos.x, clpos.y, clpos.z,
         cam_up->x, cam_up->y, cam_up->z);
 
-    matrix_4x4_7F059424((Mtxf*) g_CurrentPlayer->field_64,
+    matrix_4x4_set_lookat((Mtxf*) g_CurrentPlayer->field_64,
         cam_pos->x, cam_pos->y, cam_pos->z,
         cam_look->x, cam_look->y, cam_look->z,
         cam_up->x, cam_up->y, cam_up->z);
@@ -14281,7 +14281,7 @@ s32 sub_GAME_7F088618(void *arg0) {
     *arg0 = 0x1030040;
     temp_s0 = (arg0 + 8);
     arg0->unk4 = osVirtualToPhysical(spB8);
-    matrix_4x4_7F059694(&sp78, 0.0f, &0x43FA0004, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
+    matrix_4x4_set_lookat_target(&sp78, 0.0f, &0x43FA0004, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f);
     matrix_4x4_f32_to_s32(&sp78, spBC);
     *temp_s0 = 0x1020040;
     temp_s0_2 = (temp_s0 + 8);
@@ -14411,7 +14411,7 @@ glabel sub_GAME_7F088618
 /* 0BD29C 7F08876C E7A00018 */  swc1  $f0, 0x18($sp)
 /* 0BD2A0 7F088770 E7A00014 */  swc1  $f0, 0x14($sp)
 /* 0BD2A4 7F088774 E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0BD2A8 7F088778 0FC165A5 */  jal   matrix_4x4_7F059694
+/* 0BD2A8 7F088778 0FC165A5 */  jal   matrix_4x4_set_lookat_target
 /* 0BD2AC 7F08877C E7B20024 */   swc1  $f18, 0x24($sp)
 /* 0BD2B0 7F088780 27A40078 */  addiu $a0, $sp, 0x78
 /* 0BD2B4 7F088784 0FC16327 */  jal   matrix_4x4_f32_to_s32
@@ -14599,7 +14599,7 @@ glabel sub_GAME_7F088618
 /* 0BB2C4 7F0888D4 E7A00018 */  swc1  $f0, 0x18($sp)
 /* 0BB2C8 7F0888D8 E7A00014 */  swc1  $f0, 0x14($sp)
 /* 0BB2CC 7F0888DC E7A00010 */  swc1  $f0, 0x10($sp)
-/* 0BB2D0 7F0888E0 0FC166CF */  jal   matrix_4x4_7F059694
+/* 0BB2D0 7F0888E0 0FC166CF */  jal   matrix_4x4_set_lookat_target
 /* 0BB2D4 7F0888E4 E7B20024 */   swc1  $f18, 0x24($sp)
 /* 0BB2D8 7F0888E8 27A40078 */  addiu $a0, $sp, 0x78
 /* 0BB2DC 7F0888EC 0FC16451 */  jal   matrix_4x4_f32_to_s32
