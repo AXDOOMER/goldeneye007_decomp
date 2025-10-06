@@ -312,10 +312,10 @@ f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
 
-rgba_u8 D_8002A9B0 = { 160, 0, 0, 0 };
-rgba_u8 D_8002A9B4 = { 150, 0, 0, 0 };
-rgba_u8 D_8002A9B8 = { 40, 0, 0, 0 };
-rgba_u8 D_8002A9BC = { 140, 0, 0, 0 };
+rgba_u8 textglowR = { 160, 0, 0, 0 };
+rgba_u8 textglowG = { 150, 0, 0, 0 };
+rgba_u8 textglowB = { 40, 0, 0, 0 };
+rgba_u8 textglowA = { 140, 0, 0, 0 };
 
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 
@@ -954,7 +954,7 @@ Gfx *frontPrintText(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s
             second_font_table,
             first_font_table,
             arg6,
-            (D_8002A9B0.r << 0x18) | (D_8002A9B4.r << 0x10) | (D_8002A9B8.r << 8) | D_8002A9BC.r,
+            (textglowR.r << 0x18) | (textglowG.r << 0x10) | (textglowB.r << 8) | textglowA.r,
             view_x,
             view_y,
             arg9,
