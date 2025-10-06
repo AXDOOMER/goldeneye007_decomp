@@ -167,7 +167,7 @@ void instcalcmatrices(ModelRenderData *arg0, Model *arg1);
 void load_object_fill_header(struct ModelFileHeader *objheader, u8 *name, u8* dst, s32 size, struct texpool * buffer);
 void* get_obj_instance_controller_for_header(struct ModelFileHeader* arg0);
 void subdraw(ModelRenderData *arg0, struct Model *);
-void sub_GAME_7F06EFC4(struct Model *);
+void modelUpdateNodeRelations(struct Model *);
 void modelAttachPart(Model *pmodel, ModelFileHeader *pmodeldef, ModelNode *pnode, ModelFileHeader *cmodeldef);
 void modelInitRwData(Model *model, ModelNode *startnode);
 void modelApplyDistanceRelations(Model* model, ModelNode* node);

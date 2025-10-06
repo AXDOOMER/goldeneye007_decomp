@@ -1029,7 +1029,7 @@ void clearChrGunModelInstances(void)
 #endif
 
 
-Gfx *sub_GAME_7F009254(Gfx *gdl) {
+Gfx *renderGunbarrelEyeIntroSequence (Gfx *gdl) {
     D_8002A7D0 = (1 - D_8002A7D0);
     switch (gunbarrel_mode - 2)
     {

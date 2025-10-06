@@ -3034,7 +3034,7 @@ void modelUpdateRelationsQuick(Model *model, ModelNode *parent)
 }
 
 
-void sub_GAME_7F06EFC4(Model *model)
+void modelUpdateNodeRelations(Model *model)
 {
     ModelNode *node = model->obj->RootNode;
 

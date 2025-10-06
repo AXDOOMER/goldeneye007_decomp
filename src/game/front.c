@@ -1510,7 +1510,7 @@ Gfx *constructor_menu00_legalscreen(Gfx *DL)
     spE4.mtxlist = (Mtxf*)dynAllocate(logoinst->obj->numMatrices << 6);
     matrix_4x4_copy(&spA0, spE4.mtxlist);
     logoinst->render_pos = spE4.mtxlist;
-    sub_GAME_7F06EFC4(logoinst);
+    modelUpdateNodeRelations(logoinst);
     spE4.unk08 = 3;
     spE4.unk04 = 0;
     spE4.gdl = DL;
@@ -1607,7 +1607,7 @@ glabel constructor_menu00_legalscreen
 /* 03F4EC 7F00A9BC 8FAC00F4 */  lw    $t4, 0xf4($sp)
 /* 03F4F0 7F00A9C0 8E6D0000 */  lw    $t5, ($s3)
 /* 03F4F4 7F00A9C4 ADAC000C */  sw    $t4, 0xc($t5)
-/* 03F4F8 7F00A9C8 0FC1BBF1 */  jal   sub_GAME_7F06EFC4
+/* 03F4F8 7F00A9C8 0FC1BBF1 */  jal   modelUpdateNodeRelations
 /* 03F4FC 7F00A9CC 8E640000 */   lw    $a0, ($s3)
 /* 03F500 7F00A9D0 24180003 */  li    $t8, 3
 /* 03F504 7F00A9D4 AFB800EC */  sw    $t8, 0xec($sp)
@@ -1872,7 +1872,7 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
 
     logoinst->render_pos = (union RenderPosView*)ninlogo.mtxlist;
 
-    sub_GAME_7F06EFC4(logoinst);
+    modelUpdateNodeRelations(logoinst);
 
     ninlogo.flags = 3;
     ninlogo.zbufferenabled = FALSE;
@@ -1923,7 +1923,7 @@ void update_menu02_rareware(void) {
 
 void interface_menu02_rareware(void)
 {
-    viSetUseZBuf(0);
+    viSetUseZBuf(FALSE);
     if (isGunBarrelInMode2())
     {
         frontChangeMenu(MENU_EYE_INTRO, TRUE);
@@ -1969,7 +1969,7 @@ void update_menu_03_gunbarrel(void) {
 }
 
 void interface_menu03_eye(void) {
-    viSetUseZBuf(0);
+    viSetUseZBuf(FALSE);
     if (isGunBarrelInMode9()) {
         frontChangeMenu(MENU_GOLDENEYE_LOGO, TRUE);
         return;
@@ -1985,7 +1985,7 @@ void interface_menu03_eye(void) {
 }
 
 Gfx * constructor_menu03_eye(Gfx * DL) {
-    return sub_GAME_7F009254(DL);
+    return renderGunbarrelEyeIntroSequence (DL);
 }
 
 
@@ -2063,20 +2063,20 @@ void interface_menu04_goldeneyelogo(void)
 
 Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
 {
-    ModelRenderData sp140;
+    ModelRenderData gelogo;
     s32 padding[2];
-    Mtxf spF8;
+    Mtxf logoMatrix;
     s32 i;
-    LookAt * temp_v0;
-    Mtxf spB0;
+    LookAt * logoLookAt;
+    Mtxf logoReflectMtx;
 
-    sp140 = goldeneyelogo_MRD;
+    gelogo = goldeneyelogo_MRD;
 
     DL = viSetFillColor(DL, 0, 0, 0);
     DL = viFillScreen(DL);
 
-    temp_v0 = (LookAt *)dynAllocate7F0BD6F8(2);
-    guLookAtReflect(&spB0, temp_v0, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    logoLookAt = (LookAt *)dynAllocate7F0BD6F8(2);
+    guLookAtReflect(&logoReflectMtx, logoLookAt, 0.0f, 0.0f, 4000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Lights macro? These need to be on one line.
     gSPNumLights(DL++, 1); \
@@ -2084,34 +2084,34 @@ Gfx *constructor_menu04_goldeneyelogo(Gfx *DL)
     gSPLight(DL++, &gelogolight, 2);
 
     // gSPLookAt macro expands to gSPLookAtX + gSPLookAtY
-    gSPLookAt(DL++, temp_v0);
+    gSPLookAt(DL++, logoLookAt);
 
-    matrix_4x4_set_lookat_target(&spF8, 0.0f, 0.0f, 3000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    sp140.unk_matrix = &spF8;
-    sp140.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
+    matrix_4x4_set_lookat_target(&logoMatrix, 0.0f, 0.0f, 3000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    gelogo.unk_matrix = &logoMatrix;
+    gelogo.mtxlist = dynAllocate(logoinst->obj->numMatrices << 6);
 
-    matrix_scalar_multiply(1.2f, spF8.m[0]);
-    matrix_4x4_copy(&spF8, sp140.mtxlist);
-    logoinst->render_pos = (union RenderPosView*)sp140.mtxlist;
+    matrix_scalar_multiply(1.2f, logoMatrix.m[0]);
+    matrix_4x4_copy(&logoMatrix, gelogo.mtxlist);
+    logoinst->render_pos = (union RenderPosView*)gelogo.mtxlist;
 
-    sub_GAME_7F06EFC4(logoinst);
+    modelUpdateNodeRelations(logoinst);
 
-    sp140.flags = 3;
-    sp140.zbufferenabled = FALSE;
-    sp140.gdl = DL;
+    gelogo.flags = 3;
+    gelogo.zbufferenabled = FALSE;
+    gelogo.gdl = DL;
 
-    subdraw(&sp140, logoinst);
+    subdraw(&gelogo, logoinst);
 
-    DL = sp140.gdl;
+    DL = gelogo.gdl;
 
     for (i=0; i<logoinst->obj->numMatrices; i++)
     {
-        Mtxf sp50;
+        Mtxf tempMtxf;
         s32 padding2;
 
         // hack: source address steps by sizeof(Mtxf), but can't get that to match
-        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &sp50);
-        matrix_4x4_f32_to_s32(&sp50, &((Mtxf*)logoinst->render_pos)[i]);
+        matrix_4x4_copy(&((s8*)logoinst->render_pos)[i*0x40], &tempMtxf);
+        matrix_4x4_f32_to_s32(&tempMtxf, &((Mtxf*)logoinst->render_pos)[i]);
 
         if(i);
     }
@@ -2130,7 +2130,7 @@ void disable_all_switches(Model *arg0)
     {
         mnode = arg0->obj->Switches[i];
 
-        if (mnode != NULL && (mnode->Opcode & 0xff) == 0x12)
+        if (mnode != NULL && (mnode->Opcode & 0xff) == MODELNODE_OPCODE_SWITCH)
         {
             union ModelRwData *unmrd;
             struct ModelRwData_SwitchRecord *srecord;
@@ -2182,16 +2182,6 @@ void select_load_bond_picture(Model *objinstance, u32 bondID)
 
 
 
-struct unk_walletbond_struct {
-    s32 Primary;
-    s32 unk04;
-    s32 unk08;
-    s32 unk0C;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 BaseAddr;
-};
 
 
 /**
@@ -2226,14 +2216,14 @@ void load_walletbond(void)
 
         if (mnode != NULL)
         {
-            struct unk_walletbond_struct *srecord;
+            struct ModelRoData_DisplayList_CollisionRecord *srecord;
             struct ModelNode *b;
             Gfx *arg0;
 
             b = (struct ModelNode *)mnode;
             srecord = b->Data;
 
-            arg0 = (s32)srecord->BaseAddr + (srecord->Primary & 0xffffff);
+            arg0 = (s32)srecord->BaseAddr + ((s32)srecord->Primary & 0xffffff);
             bgLoadFromDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
         }
     }
