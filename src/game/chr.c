@@ -7912,7 +7912,7 @@ glabel sub_GAME_7F022980
 /* 0578E8 7F022DB8 02002025 */  move  $a0, $s0
 /* 0578EC 7F022DBC 46082402 */  mul.s $f16, $f4, $f8
 /* 0578F0 7F022DC0 46105181 */  sub.s $f6, $f10, $f16
-/* 0578F4 7F022DC4 0FC16799 */  jal   matrix_4x4_7F059E64
+/* 0578F4 7F022DC4 0FC16799 */  jal   matrix_4x4_set_inverse_rotation_and_translation
 /* 0578F8 7F022DC8 E7A60078 */   swc1  $f6, 0x78($sp)
 /* 0578FC 7F022DCC 27B00070 */  addiu $s0, $sp, 0x70
 /* 057900 7F022DD0 02002825 */  move  $a1, $s0

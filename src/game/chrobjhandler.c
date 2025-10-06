@@ -4652,7 +4652,7 @@ bool objEmbed(PropRecord *prop, PropRecord *parent, Model *model, ModelNode *nod
             matrix_4x4_copy(&obj->mtx, &mtx1);
             matrix_4x4_set_position(&obj->runtime_pos, &mtx1);
             matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), nodemtx, &mtx2);
-            sub_GAME_7F059FB8((f32 (*)[4]) &mtx2.m, (f32 (*)[4]) &mtx3.m);
+            matrix_4x4_invert_affine((f32 (*)[4]) &mtx2.m, (f32 (*)[4]) &mtx3.m);
             matrix_4x4_multiply_homogeneous((Mtxf* ) &mtx3.m, &mtx1, &obj->embedment->matrix);
 
             return TRUE;
@@ -6332,7 +6332,7 @@ s32 object_interaction(struct PropRecord *arg0)
                                         sp5CC.f[1] -= (getjointsize(objinst, dword_CODE_bss_80075B74) * 0.5f * flt_CODE_bss_80075B78.f[0]);
                                         sp5CC.f[2] -= (getjointsize(objinst, dword_CODE_bss_80075B74) * 0.5f * flt_CODE_bss_80075B88.f[0]);
 
-                                        matrix_4x4_7F059E64(temp_s2_4, sp58C);
+                                        matrix_4x4_set_inverse_rotation_and_translation(temp_s2_4, sp58C);
                                         mtx4TransformVecInPlace(sp58C, &sp5CC);
                                         sub_GAME_7F0221DC(objinst, bodypartshot, dword_CODE_bss_80075B74, &sp5CC);
                                     }
@@ -9079,7 +9079,7 @@ glabel object_interaction
 /* 07A7D0 7F045CA0 27A5058C */  addiu $a1, $sp, 0x58c
 /* 07A7D4 7F045CA4 46045182 */  mul.s $f6, $f10, $f4
 /* 07A7D8 7F045CA8 46064281 */  sub.s $f10, $f8, $f6
-/* 07A7DC 7F045CAC 0FC16799 */  jal   matrix_4x4_7F059E64
+/* 07A7DC 7F045CAC 0FC16799 */  jal   matrix_4x4_set_inverse_rotation_and_translation
 /* 07A7E0 7F045CB0 E7AA05D4 */   swc1  $f10, 0x5d4($sp)
 /* 07A7E4 7F045CB4 27A4058C */  addiu $a0, $sp, 0x58c
 /* 07A7E8 7F045CB8 0FC1611D */  jal   mtx4TransformVecInPlace
@@ -14176,7 +14176,7 @@ glabel object_interaction
 /* 07ABF4 7F046084 27A50594 */  addiu $a1, $sp, 0x594
 /* 07ABF8 7F046088 46045182 */  mul.s $f6, $f10, $f4
 /* 07ABFC 7F04608C 46064281 */  sub.s $f10, $f8, $f6
-/* 07AC00 7F046090 0FC168E1 */  jal   matrix_4x4_7F059E64
+/* 07AC00 7F046090 0FC168E1 */  jal   matrix_4x4_set_inverse_rotation_and_translation
 /* 07AC04 7F046094 E7AA05DC */   swc1  $f10, 0x5dc($sp)
 /* 07AC08 7F046098 27A40594 */  addiu $a0, $sp, 0x594
 /* 07AC0C 7F04609C 0FC16265 */  jal   mtx4TransformVecInPlace
@@ -19282,7 +19282,7 @@ glabel object_interaction
 /* 078834 7F045E44 27A50594 */  addiu $a1, $sp, 0x594
 /* 078838 7F045E48 46045182 */  mul.s $f6, $f10, $f4
 /* 07883C 7F045E4C 46064281 */  sub.s $f10, $f8, $f6
-/* 078840 7F045E50 0FC168C3 */  jal   matrix_4x4_7F059E64
+/* 078840 7F045E50 0FC168C3 */  jal   matrix_4x4_set_inverse_rotation_and_translation
 /* 078844 7F045E54 E7AA05DC */   swc1  $f10, 0x5dc($sp)
 /* 078848 7F045E58 27A40594 */  addiu $a0, $sp, 0x594
 /* 07884C 7F045E5C 0FC16247 */  jal   mtx4TransformVecInPlace
@@ -30915,7 +30915,7 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
             {
                 spd0 = mtx;
 
-                sub_GAME_7F059FB8(mtx->m, sp64.m);
+                matrix_4x4_invert_affine(mtx->m, sp64.m);
 
                 spec.x = arg2->x;
                 spec.y = arg2->y;

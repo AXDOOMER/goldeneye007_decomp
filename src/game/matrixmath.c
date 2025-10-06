@@ -1613,123 +1613,127 @@ void matrix_4x4_set_rotation_inverse(Mtxf *rotation, Mtxf *transpose) {
     transpose->m[3][3] = 1.0f;
 }
 
-void matrix_4x4_7F059DAC(Mtxf *arg0, Mtxf *arg1) {
-    f32 temp_f0 = ((arg0->m[0][0] * arg0->m[0][0]) + (arg0->m[1][0] * arg0->m[1][0]) + (arg0->m[2][0] * arg0->m[2][0]));
-    temp_f0 = 1.0f / temp_f0;
-    arg1->m[0][0] = (arg0->m[0][0] * temp_f0);
-    arg1->m[0][1] = (arg0->m[1][0] * temp_f0);
-    arg1->m[0][2] = (arg0->m[2][0] * temp_f0);
-    arg1->m[1][0] = (arg0->m[0][1] * temp_f0);
-    arg1->m[1][1] = (arg0->m[1][1] * temp_f0);
-    arg1->m[1][2] = (arg0->m[2][1] * temp_f0);
-    arg1->m[2][0] = (arg0->m[0][2] * temp_f0);
-    arg1->m[2][1] = (arg0->m[1][2] * temp_f0);
-    arg1->m[2][2] = (arg0->m[2][2] * temp_f0);
-    arg1->m[3][0] = 0.0f;
-    arg1->m[3][1] = 0.0f;
-    arg1->m[3][2] = 0.0f;
-    arg1->m[0][3] = 0.0f;
-    arg1->m[1][3] = 0.0f;
-    arg1->m[2][3] = 0.0f;
-    arg1->m[3][3] = 1.0f;
+void matrix_4x4_normalize_rotation(Mtxf *matrix, Mtxf *result) {
+    f32 norm = ((matrix->m[0][0] * matrix->m[0][0]) +
+                (matrix->m[1][0] * matrix->m[1][0]) +
+                (matrix->m[2][0] * matrix->m[2][0]));
+    norm = 1.0f / norm;
+    result->m[0][0] = (matrix->m[0][0] * norm);
+    result->m[0][1] = (matrix->m[1][0] * norm);
+    result->m[0][2] = (matrix->m[2][0] * norm);
+    result->m[1][0] = (matrix->m[0][1] * norm);
+    result->m[1][1] = (matrix->m[1][1] * norm);
+    result->m[1][2] = (matrix->m[2][1] * norm);
+    result->m[2][0] = (matrix->m[0][2] * norm);
+    result->m[2][1] = (matrix->m[1][2] * norm);
+    result->m[2][2] = (matrix->m[2][2] * norm);
+    result->m[3][0] = 0.0f;
+    result->m[3][1] = 0.0f;
+    result->m[3][2] = 0.0f;
+    result->m[0][3] = 0.0f;
+    result->m[1][3] = 0.0f;
+    result->m[2][3] = 0.0f;
+    result->m[3][3] = 1.0f;
 }
 
-void matrix_4x4_7F059E64(Mtxf *arg0, Mtxf *arg1) {
-    f32 temp_f0 = (arg0->m[0][0] * arg0->m[0][0]) + (arg0->m[1][0] * arg0->m[1][0]) + (arg0->m[2][0] * arg0->m[2][0]);
-    temp_f0 = 1.0f / temp_f0;
-    arg1->m[0][0] = (arg0->m[0][0] * temp_f0);
-    arg1->m[0][1] = (arg0->m[1][0] * temp_f0);
-    arg1->m[0][2] = (arg0->m[2][0] * temp_f0);
-    arg1->m[1][0] = (arg0->m[0][1] * temp_f0);
-    arg1->m[1][1] = (arg0->m[1][1] * temp_f0);
-    arg1->m[1][2] = (arg0->m[2][1] * temp_f0);
-    arg1->m[2][0] = (arg0->m[0][2] * temp_f0);
-    arg1->m[2][1] = (arg0->m[1][2] * temp_f0);
-    arg1->m[2][2] = (arg0->m[2][2] * temp_f0);
-    arg1->m[3][0] = -((arg1->m[0][0] * arg0->m[3][0]) + (arg1->m[1][0] * arg0->m[3][1]) + (arg1->m[2][0] * arg0->m[3][2]));
-    arg1->m[3][1] = -((arg1->m[0][1] * arg0->m[3][0]) + (arg1->m[1][1] * arg0->m[3][1]) + (arg1->m[2][1] * arg0->m[3][2]));
-    arg1->m[3][2] = -((arg1->m[0][2] * arg0->m[3][0]) + (arg1->m[1][2] * arg0->m[3][1]) + (arg1->m[2][2] * arg0->m[3][2]));
-    arg1->m[3][3] = 1.0f;
-    arg1->m[0][3] = 0.0f;
-    arg1->m[1][3] = 0.0f;
-    arg1->m[2][3] = 0.0f;
+void matrix_4x4_set_inverse_rotation_and_translation(Mtxf *matrix, Mtxf *result) {
+    f32 norm = (matrix->m[0][0] * matrix->m[0][0]) +
+               (matrix->m[1][0] * matrix->m[1][0]) +
+               (matrix->m[2][0] * matrix->m[2][0]);
+    norm = 1.0f / norm;
+    result->m[0][0] = (matrix->m[0][0] * norm);
+    result->m[0][1] = (matrix->m[1][0] * norm);
+    result->m[0][2] = (matrix->m[2][0] * norm);
+    result->m[1][0] = (matrix->m[0][1] * norm);
+    result->m[1][1] = (matrix->m[1][1] * norm);
+    result->m[1][2] = (matrix->m[2][1] * norm);
+    result->m[2][0] = (matrix->m[0][2] * norm);
+    result->m[2][1] = (matrix->m[1][2] * norm);
+    result->m[2][2] = (matrix->m[2][2] * norm);
+    result->m[3][0] = -((result->m[0][0] * matrix->m[3][0]) + (result->m[1][0] * matrix->m[3][1]) + (result->m[2][0] * matrix->m[3][2]));
+    result->m[3][1] = -((result->m[0][1] * matrix->m[3][0]) + (result->m[1][1] * matrix->m[3][1]) + (result->m[2][1] * matrix->m[3][2]));
+    result->m[3][2] = -((result->m[0][2] * matrix->m[3][0]) + (result->m[1][2] * matrix->m[3][1]) + (result->m[2][2] * matrix->m[3][2]));
+    result->m[3][3] = 1.0f;
+    result->m[0][3] = 0.0f;
+    result->m[1][3] = 0.0f;
+    result->m[2][3] = 0.0f;
 }
 
 
-void sub_GAME_7F059FB8(f32 arg0[4][4], f32 arg1[4][4])
+void matrix_4x4_invert_affine(Mtxf *matrix, Mtxf *result)
 {
     f32 f0 = 0.0f;
-    f0 += arg0[0][0] * arg0[1][1] * arg0[2][2];
-    f0 += arg0[0][1] * arg0[1][2] * arg0[2][0];
-    f0 += arg0[0][2] * arg0[1][0] * arg0[2][1];
-    f0 -= arg0[0][2] * arg0[1][1] * arg0[2][0];
-    f0 -= arg0[0][1] * arg0[1][0] * arg0[2][2];
-    f0 -= arg0[0][0] * arg0[1][2] * arg0[2][1];
+    f0 += matrix->m[0][0] * matrix->m[1][1] * matrix->m[2][2];
+    f0 += matrix->m[0][1] * matrix->m[1][2] * matrix->m[2][0];
+    f0 += matrix->m[0][2] * matrix->m[1][0] * matrix->m[2][1];
+    f0 -= matrix->m[0][2] * matrix->m[1][1] * matrix->m[2][0];
+    f0 -= matrix->m[0][1] * matrix->m[1][0] * matrix->m[2][2];
+    f0 -= matrix->m[0][0] * matrix->m[1][2] * matrix->m[2][1];
     f0 = 1.0f / f0;
 
-    arg1[0][0] = (arg0[1][1] * arg0[2][2] - arg0[1][2] * arg0[2][1]) * f0;
-    arg1[1][0] = (arg0[1][2] * arg0[2][0] - arg0[1][0] * arg0[2][2]) * f0;
-    arg1[2][0] = (arg0[1][0] * arg0[2][1] - arg0[1][1] * arg0[2][0]) * f0;
-    arg1[0][1] = (arg0[0][2] * arg0[2][1] - arg0[0][1] * arg0[2][2]) * f0;
-    arg1[1][1] = (arg0[0][0] * arg0[2][2] - arg0[0][2] * arg0[2][0]) * f0;
-    arg1[2][1] = (arg0[0][1] * arg0[2][0] - arg0[0][0] * arg0[2][1]) * f0;
-    arg1[0][2] = (arg0[0][1] * arg0[1][2] - arg0[0][2] * arg0[1][1]) * f0;
-    arg1[1][2] = (arg0[0][2] * arg0[1][0] - arg0[0][0] * arg0[1][2]) * f0;
-    arg1[2][2] = (arg0[0][0] * arg0[1][1] - arg0[0][1] * arg0[1][0]) * f0;
-    arg1[3][0] = -(arg0[3][0] * arg1[0][0] + arg0[3][1] * arg1[1][0] + arg0[3][2] * arg1[2][0]);
-    arg1[3][1] = -(arg0[3][0] * arg1[0][1] + arg0[3][1] * arg1[1][1] + arg0[3][2] * arg1[2][1]);
-    arg1[3][2] = -(arg0[3][0] * arg1[0][2] + arg0[3][1] * arg1[1][2] + arg0[3][2] * arg1[2][2]);
-    arg1[0][3] = 0.0f;
-    arg1[1][3] = 0.0f;
-    arg1[2][3] = 0.0f;
-    arg1[3][3] = 1.0f;
+    result->m[0][0] = (matrix->m[1][1] * matrix->m[2][2] - matrix->m[1][2] * matrix->m[2][1]) * f0;
+    result->m[1][0] = (matrix->m[1][2] * matrix->m[2][0] - matrix->m[1][0] * matrix->m[2][2]) * f0;
+    result->m[2][0] = (matrix->m[1][0] * matrix->m[2][1] - matrix->m[1][1] * matrix->m[2][0]) * f0;
+    result->m[0][1] = (matrix->m[0][2] * matrix->m[2][1] - matrix->m[0][1] * matrix->m[2][2]) * f0;
+    result->m[1][1] = (matrix->m[0][0] * matrix->m[2][2] - matrix->m[0][2] * matrix->m[2][0]) * f0;
+    result->m[2][1] = (matrix->m[0][1] * matrix->m[2][0] - matrix->m[0][0] * matrix->m[2][1]) * f0;
+    result->m[0][2] = (matrix->m[0][1] * matrix->m[1][2] - matrix->m[0][2] * matrix->m[1][1]) * f0;
+    result->m[1][2] = (matrix->m[0][2] * matrix->m[1][0] - matrix->m[0][0] * matrix->m[1][2]) * f0;
+    result->m[2][2] = (matrix->m[0][0] * matrix->m[1][1] - matrix->m[0][1] * matrix->m[1][0]) * f0;
+    result->m[3][0] = -(matrix->m[3][0] * result->m[0][0] + matrix->m[3][1] * result->m[1][0] + matrix->m[3][2] * result->m[2][0]);
+    result->m[3][1] = -(matrix->m[3][0] * result->m[0][1] + matrix->m[3][1] * result->m[1][1] + matrix->m[3][2] * result->m[2][1]);
+    result->m[3][2] = -(matrix->m[3][0] * result->m[0][2] + matrix->m[3][1] * result->m[1][2] + matrix->m[3][2] * result->m[2][2]);
+    result->m[0][3] = 0.0f;
+    result->m[1][3] = 0.0f;
+    result->m[2][3] = 0.0f;
+    result->m[3][3] = 1.0f;
 }
 
 
-void matrix_4x4_7F05A250(Mtxf *arg0, Mtxf *arg1) {
+void matrix_4x4_invert(Mtxf *matrix, Mtxf *result) {
     s32 i, j;
     f32 inv_det;
-    matrix_4x4_7F05A310(arg0, arg1);
-    inv_det = 1.0f / matrix_4x4_determinant(arg0);
+    matrix_4x4_calc_adjugate(matrix, result);
+    inv_det = 1.0f / matrix_4x4_determinant(matrix);
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            arg1->m[i][j] *= inv_det;
+            result->m[i][j] *= inv_det;
         }
     }
 }
 
-void matrix_4x4_7F05A310(Mtxf *arg0, Mtxf *arg1)
+void matrix_4x4_calc_adjugate(Mtxf *matrix, Mtxf *result)
 {
     f32 mtx00, mtx10, mtx20, mtx30;
-	f32 mtx04, mtx14, mtx24, mtx34;
-	f32 mtx08, mtx18, mtx28, mtx38;
-	f32 mtx0c, mtx1c, mtx2c, mtx3c;
+    f32 mtx04, mtx14, mtx24, mtx34;
+    f32 mtx08, mtx18, mtx28, mtx38;
+    f32 mtx0c, mtx1c, mtx2c, mtx3c;
 
-	mtx00 = arg0->m[0][0]; mtx04 = arg0->m[0][1];
-	mtx08 = arg0->m[0][2]; mtx0c = arg0->m[0][3];
-	mtx10 = arg0->m[1][0]; mtx14 = arg0->m[1][1];
-	mtx18 = arg0->m[1][2]; mtx1c = arg0->m[1][3];
-	mtx20 = arg0->m[2][0]; mtx24 = arg0->m[2][1];
-	mtx28 = arg0->m[2][2]; mtx2c = arg0->m[2][3];
-	mtx30 = arg0->m[3][0]; mtx34 = arg0->m[3][1];
-	mtx38 = arg0->m[3][2]; mtx3c = arg0->m[3][3];
+    mtx00 = matrix->m[0][0]; mtx04 = matrix->m[0][1];
+    mtx08 = matrix->m[0][2]; mtx0c = matrix->m[0][3];
+    mtx10 = matrix->m[1][0]; mtx14 = matrix->m[1][1];
+    mtx18 = matrix->m[1][2]; mtx1c = matrix->m[1][3];
+    mtx20 = matrix->m[2][0]; mtx24 = matrix->m[2][1];
+    mtx28 = matrix->m[2][2]; mtx2c = matrix->m[2][3];
+    mtx30 = matrix->m[3][0]; mtx34 = matrix->m[3][1];
+    mtx38 = matrix->m[3][2]; mtx3c = matrix->m[3][3];
 
-	arg1->m[0][0] =  matrix_3x3_determinant(mtx14, mtx24, mtx34, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
-	arg1->m[1][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
-	arg1->m[2][0] =  matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx1c, mtx2c, mtx3c);
-	arg1->m[3][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx18, mtx28, mtx38);
-	arg1->m[0][1] = -matrix_3x3_determinant(mtx04, mtx24, mtx34, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
-	arg1->m[1][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
-	arg1->m[2][1] = -matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx0c, mtx2c, mtx3c);
-	arg1->m[3][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx08, mtx28, mtx38);
-	arg1->m[0][2] =  matrix_3x3_determinant(mtx04, mtx14, mtx34, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
-	arg1->m[1][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
-	arg1->m[2][2] =  matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx0c, mtx1c, mtx3c);
-	arg1->m[3][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx08, mtx18, mtx38);
-	arg1->m[0][3] = -matrix_3x3_determinant(mtx04, mtx14, mtx24, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
-	arg1->m[1][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
-	arg1->m[2][3] = -matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx0c, mtx1c, mtx2c);
-	arg1->m[3][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx08, mtx18, mtx28);
+    result->m[0][0] =  matrix_3x3_determinant(mtx14, mtx24, mtx34, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
+    result->m[1][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx18, mtx28, mtx38, mtx1c, mtx2c, mtx3c);
+    result->m[2][0] =  matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx1c, mtx2c, mtx3c);
+    result->m[3][0] = -matrix_3x3_determinant(mtx10, mtx20, mtx30, mtx14, mtx24, mtx34, mtx18, mtx28, mtx38);
+    result->m[0][1] = -matrix_3x3_determinant(mtx04, mtx24, mtx34, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
+    result->m[1][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx08, mtx28, mtx38, mtx0c, mtx2c, mtx3c);
+    result->m[2][1] = -matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx0c, mtx2c, mtx3c);
+    result->m[3][1] =  matrix_3x3_determinant(mtx00, mtx20, mtx30, mtx04, mtx24, mtx34, mtx08, mtx28, mtx38);
+    result->m[0][2] =  matrix_3x3_determinant(mtx04, mtx14, mtx34, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
+    result->m[1][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx08, mtx18, mtx38, mtx0c, mtx1c, mtx3c);
+    result->m[2][2] =  matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx0c, mtx1c, mtx3c);
+    result->m[3][2] = -matrix_3x3_determinant(mtx00, mtx10, mtx30, mtx04, mtx14, mtx34, mtx08, mtx18, mtx38);
+    result->m[0][3] = -matrix_3x3_determinant(mtx04, mtx14, mtx24, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
+    result->m[1][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx08, mtx18, mtx28, mtx0c, mtx1c, mtx2c);
+    result->m[2][3] = -matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx0c, mtx1c, mtx2c);
+    result->m[3][3] =  matrix_3x3_determinant(mtx00, mtx10, mtx20, mtx04, mtx14, mtx24, mtx08, mtx18, mtx28);
 }
 
 f32 matrix_4x4_determinant(Mtxf *matrix)
