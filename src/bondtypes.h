@@ -4110,4 +4110,18 @@ struct s_display_list_something
     u8 unkF;
 };
 
+struct fontchar {
+    s32 index;
+    s32 baseline;
+    s32 height;
+    s32 width;
+    s32 kerningindex;
+    u8 *pixeldata;
+};
+
+struct font {
+	s32 kerning[13 * 13];
+	struct fontchar chars[94]; // can be 135 in PAL
+};
+
 #endif

@@ -54,7 +54,7 @@ Gfx g_DebugMenuTextureDisplayList[] = {
     gsDPLoadSync(),
     gsSPEndDisplayList()
 };
-character g_DebugMenuTextBuffer[80][35] = {0};
+character g_DebugMenuTextBuffer[80][35] = {0}; // unused in the final game (waste of space)
 Gfx g_DHudFgGbiPtrs[32] = {0};
 Gfx g_DHudBgGbiPtrs[32] = {0};
 s32 g_DebugMenuCurrentColorIndex = 0;
