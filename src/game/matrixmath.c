@@ -1520,11 +1520,12 @@ u32 matrix_4x4_calc_depth_scale(f32 near, f32 far)
     return result;
 }
 
-void matrix_4x4_7F059A48(Mtxf *matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
-    f32 temp_f12_2 = cosf(angle * 0.5f) / sinf(angle * 0.5f);
-    arg6 *= M_U16_MAX_VALUE_F;
-    matrix->m[0][0] = ((temp_f12_2 / arg3) * arg6);
-    matrix->m[1][1] = (temp_f12_2 * arg6);
+void matrix_4x4_set_projection(Mtxf *matrix, u16* depth_scale, f32 fovy, f32 aspect, f32 near, f32 far, f32 scale)
+{
+    f32 temp = cosf(fovy * 0.5f) / sinf(fovy * 0.5f);
+    scale *= M_U16_MAX_VALUE_F;
+    matrix->m[0][0] = ((temp / aspect) * scale);
+    matrix->m[1][1] = (temp * scale);
     matrix->m[1][0] = 0.0f;
     matrix->m[2][0] = 0.0f;
     matrix->m[3][0] = 0.0f;
@@ -1533,14 +1534,14 @@ void matrix_4x4_7F059A48(Mtxf *matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4,
     matrix->m[3][1] = 0.0f;
     matrix->m[0][2] = 0.0f;
     matrix->m[1][2] = 0.0f;
-    matrix->m[2][2] = (((arg4 + arg5) / (arg4 - arg5)) * arg6);
-    matrix->m[3][2] = ((((arg4 + arg4) * arg5) / (arg4 - arg5)) * arg6);
-    matrix->m[2][3] =  -arg6;
+    matrix->m[2][2] = (((near + far) / (near - far)) * scale);
+    matrix->m[3][2] = ((((near + near) * far) / (near - far)) * scale);
+    matrix->m[2][3] = -scale;
     matrix->m[0][3] = 0.0f;
     matrix->m[1][3] = 0.0f;
     matrix->m[3][3] = 0.0f;
-    if (arg1 != 0) {
-        *arg1 = matrix_4x4_calc_depth_scale(arg4, arg5);
+    if (depth_scale != 0) {
+        *depth_scale = matrix_4x4_calc_depth_scale(near, far);
     }
 }
 
