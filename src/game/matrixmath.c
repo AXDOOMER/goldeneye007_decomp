@@ -1498,9 +1498,9 @@ void matrix_4x4_set_basis_and_position_target(Mtxf *matrix, f32 pos_x, f32 pos_y
 }
 
 
-u32 sub_GAME_7F05997C(f32 arg0, f32 arg1)
+u32 matrix_4x4_calc_depth_scale(f32 near, f32 far)
 {
-    f32 sum = arg0 + arg1;
+    f32 sum = near + far;
     u16 result;
 
     if (sum <= 2)
@@ -1519,7 +1519,6 @@ u32 sub_GAME_7F05997C(f32 arg0, f32 arg1)
 
     return result;
 }
-
 
 void matrix_4x4_7F059A48(Mtxf *matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
     f32 temp_f12_2 = cosf(angle * 0.5f) / sinf(angle * 0.5f);
@@ -1541,7 +1540,7 @@ void matrix_4x4_7F059A48(Mtxf *matrix, u16* arg1, f32 angle, f32 arg3, f32 arg4,
     matrix->m[1][3] = 0.0f;
     matrix->m[3][3] = 0.0f;
     if (arg1 != 0) {
-        *arg1 = sub_GAME_7F05997C(arg4, arg5);
+        *arg1 = matrix_4x4_calc_depth_scale(arg4, arg5);
     }
 }
 
