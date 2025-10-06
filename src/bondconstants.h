@@ -2659,7 +2659,9 @@ enum CCRMLUT
         /*The following are some maybe helpfull counts (maybe GE doesnt need them, but thought Id ad while here)*/
         HEAD_COUNT        = HEAD_END - HEAD_START,         // Total number of heads
         HEAD_MALE_COUNT   = HEAD_F_START - HEAD_START,     // Total number of usable randon male heads
-        HEAD_FEMALE_COUNT = HEAD_BOND_START - HEAD_F_START // Total number of usable randon female heads
+        HEAD_FEMALE_COUNT = HEAD_BOND_START - HEAD_F_START, // Total number of usable randon female heads
+        HEAD_FIXED        = 0xFFFFFFFF,
+        HEAD_RANDOM       = 0xFFFFFF9F
     } HEADS;
 
     //Canonical name and style "ai_destroyobj 2 : (def->obj == PROP_ELVIS_SAUCER)\n"
