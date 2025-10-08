@@ -1346,43 +1346,34 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
 
 
 
-#ifdef NONMATCHING
-/**
- * Address 0x7F0B3C8C.
- *
- * decomp status:
- * - compiles: yes
- * - stack resize: ok
- * - identical instructions: fail
- * - identical registers: fail
- * 
- * Should be equivalent.
- * https://decomp.me/scratch/hw6En
- *
- * notes: can't read g_BgNumberOfRoomsDrawn the correct number of times.
-*/
+#if defined(LEFTOVERDEBUG)
+
 Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 {
     s32 i;
     s32 j;
     s32 b_max;
     s32 b_min;
+    s32 notdone;
     b_min = 99999999;
     b_max = 0;
 
-    for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
+    for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
     {
-        b_max = (b_max < dword_CODE_bss_8007FFA0[j].unk1) ? dword_CODE_bss_8007FFA0[j].unk1 : b_max;
-        b_min = (dword_CODE_bss_8007FFA0[j].unk1 < b_min) ? dword_CODE_bss_8007FFA0[j].unk1 : b_min;
+        if (b_max < dword_CODE_bss_8007FFA0[j].unk1) 
+        {
+            b_max = dword_CODE_bss_8007FFA0[j].unk1;
+        }
+        
+        if (dword_CODE_bss_8007FFA0[j].unk1 < b_min) 
+        {
+            b_min=dword_CODE_bss_8007FFA0[j].unk1;
+        }
     }
 
-    for (i=b_min; i <= b_max; i++)
+    for (i = b_min; i <= b_max; i++)
     {
-#ifdef DEBUG
-notdone = g_BgNumberOfRoomsDrawn;
-#endif
-
-        for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
+        for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
         {
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
@@ -1401,10 +1392,10 @@ notdone = g_BgNumberOfRoomsDrawn;
                 gdl = fogSetRenderFogColor(
                     bgScissorCurrentPlayerViewF(
                         gdl++,
-                        dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[0][1],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[1][0],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[1][1]),
+                        dword_CODE_bss_8007FFA0[j].bbox.min.x,
+                        dword_CODE_bss_8007FFA0[j].bbox.min.y,
+                        dword_CODE_bss_8007FFA0[j].bbox.max.x,
+                        dword_CODE_bss_8007FFA0[j].bbox.max.y),
                     0);
 
                 if (get_debug_do_draw_bg())
@@ -1425,33 +1416,27 @@ notdone = g_BgNumberOfRoomsDrawn;
                         gdl = chrpropsRenderPass(gdl, dword_CODE_bss_8007FFA0[j].roomid, 2);
                     }
                 }
-            }
-            #ifdef DEBUG
-notdone --;
-#endif
 
+                if (1);
+            }
         }
     }
-    #ifdef DEBUG
-    assert(notdone==0);
-    #endif
 
     gdl = bgScissorCurrentPlayerViewDefault(fogRenderClearFogMode(gdl));
     gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
 
     if (sub_GAME_7F0BD8F0())
     {
-        gdl = explosionCallRenderBulletImpactOnProp(explosionRenderScorchBuffer(gdl));
+        gdl = explosionRenderScorchBuffer(gdl);
+        gdl = explosionCallRenderBulletImpactOnProp(gdl);
     }
 
-    for (i=b_max; i >= b_min; i--)
+    if (g_BgNumberOfRoomsDrawn);
+    if (dword_CODE_bss_8007FFA0);
+
+    for (i = b_max; i >= b_min; i--)
     {
-   #ifdef DEBUG
-notdone = g_BgNumberOfRoomsDrawn;
-#endif
-
-
-        for (j=0; j<g_BgNumberOfRoomsDrawn; j++)
+        for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
         {
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
             {
@@ -1459,10 +1444,10 @@ notdone = g_BgNumberOfRoomsDrawn;
                 gdl = fogSetRenderFogColor(
                     bgScissorCurrentPlayerViewF(
                         gdl++,
-                        dword_CODE_bss_8007FFA0[j].bbox.f[0][0],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[0][1],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[1][0],
-                        dword_CODE_bss_8007FFA0[j].bbox.f[1][1]),
+                        dword_CODE_bss_8007FFA0[j].bbox.min.x,
+                        dword_CODE_bss_8007FFA0[j].bbox.min.y,
+                        dword_CODE_bss_8007FFA0[j].bbox.max.x,
+                        dword_CODE_bss_8007FFA0[j].bbox.max.y),
                     1);
 
                 if (get_debug_do_draw_bg())
@@ -1483,283 +1468,14 @@ notdone = g_BgNumberOfRoomsDrawn;
                         gdl = chrpropsRenderPass(gdl, dword_CODE_bss_8007FFA0[j].roomid, 1);
                     }
                 }
-            }
-            #ifdef DEBUG
-notdone --;
-#endif
 
+                if (1);
+            }
         }
     }
-        #ifdef DEBUG
-    assert(notdone==0);
-    #endif
 
     return gdl;
 }
-#else
-
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3C8C
-/* 0E87BC 7F0B3C8C 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0E87C0 7F0B3C90 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn)
-/* 0E87C4 7F0B3C94 8C42483C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
-/* 0E87C8 7F0B3C98 AFB70038 */  sw    $s7, 0x38($sp)
-/* 0E87CC 7F0B3C9C AFB60034 */  sw    $s6, 0x34($sp)
-/* 0E87D0 7F0B3CA0 AFB0001C */  sw    $s0, 0x1c($sp)
-/* 0E87D4 7F0B3CA4 3C1705F5 */  lui   $s7, (0x05F5E0FF >> 16) # lui $s7, 0x5f5
-/* 0E87D8 7F0B3CA8 00808025 */  move  $s0, $a0
-/* 0E87DC 7F0B3CAC AFBF003C */  sw    $ra, 0x3c($sp)
-/* 0E87E0 7F0B3CB0 AFB50030 */  sw    $s5, 0x30($sp)
-/* 0E87E4 7F0B3CB4 AFB4002C */  sw    $s4, 0x2c($sp)
-/* 0E87E8 7F0B3CB8 AFB30028 */  sw    $s3, 0x28($sp)
-/* 0E87EC 7F0B3CBC AFB20024 */  sw    $s2, 0x24($sp)
-/* 0E87F0 7F0B3CC0 AFB10020 */  sw    $s1, 0x20($sp)
-/* 0E87F4 7F0B3CC4 36F7E0FF */  ori   $s7, (0x05F5E0FF & 0xFFFF) # ori $s7, $s7, 0xe0ff
-/* 0E87F8 7F0B3CC8 18400014 */  blez  $v0, .L7F0B3D1C
-/* 0E87FC 7F0B3CCC 0000B025 */   move  $s6, $zero
-/* 0E8800 7F0B3CD0 000278C0 */  sll   $t7, $v0, 3
-/* 0E8804 7F0B3CD4 01E27823 */  subu  $t7, $t7, $v0
-/* 0E8808 7F0B3CD8 3C0E8008 */  lui   $t6, %hi(dword_CODE_bss_8007FFA0)
-/* 0E880C 7F0B3CDC 25D2FFA0 */  addiu $s2, $t6, %lo(dword_CODE_bss_8007FFA0)
-/* 0E8810 7F0B3CE0 000F7880 */  sll   $t7, $t7, 2
-/* 0E8814 7F0B3CE4 01F22021 */  addu  $a0, $t7, $s2
-/* 0E8818 7F0B3CE8 8E430004 */  lw    $v1, 4($s2)
-.L7F0B3CEC:
-/* 0E881C 7F0B3CEC 2652001C */  addiu $s2, $s2, 0x1c
-/* 0E8820 7F0B3CF0 02C3082A */  slt   $at, $s6, $v1
-/* 0E8824 7F0B3CF4 50200003 */  beql  $at, $zero, .L7F0B3D04
-/* 0E8828 7F0B3CF8 0077082A */   slt   $at, $v1, $s7
-/* 0E882C 7F0B3CFC 0060B025 */  move  $s6, $v1
-/* 0E8830 7F0B3D00 0077082A */  slt   $at, $v1, $s7
-.L7F0B3D04:
-/* 0E8834 7F0B3D04 50200003 */  beql  $at, $zero, .L7F0B3D14
-/* 0E8838 7F0B3D08 0244082B */   sltu  $at, $s2, $a0
-/* 0E883C 7F0B3D0C 0060B825 */  move  $s7, $v1
-/* 0E8840 7F0B3D10 0244082B */  sltu  $at, $s2, $a0
-.L7F0B3D14:
-/* 0E8844 7F0B3D14 5420FFF5 */  bnezl $at, .L7F0B3CEC
-/* 0E8848 7F0B3D18 8E430004 */   lw    $v1, 4($s2)
-.L7F0B3D1C:
-/* 0E884C 7F0B3D1C 02D7082A */  slt   $at, $s6, $s7
-/* 0E8850 7F0B3D20 1420005C */  bnez  $at, .L7F0B3E94
-/* 0E8854 7F0B3D24 02E0A825 */   move  $s5, $s7
-/* 0E8858 7F0B3D28 26D80001 */  addiu $t8, $s6, 1
-/* 0E885C 7F0B3D2C 3C140103 */  lui   $s4, (0x01030040 >> 16) # lui $s4, 0x103
-/* 0E8860 7F0B3D30 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
-/* 0E8864 7F0B3D34 AFB80044 */  sw    $t8, 0x44($sp)
-.L7F0B3D38:
-/* 0E8868 7F0B3D38 18400052 */  blez  $v0, .L7F0B3E84
-/* 0E886C 7F0B3D3C 00009825 */   move  $s3, $zero
-/* 0E8870 7F0B3D40 3C128008 */  lui   $s2, %hi(dword_CODE_bss_8007FFA0)
-/* 0E8874 7F0B3D44 2652FFA0 */  addiu $s2, %lo(dword_CODE_bss_8007FFA0) # addiu $s2, $s2, -0x60
-.L7F0B3D48:
-/* 0E8878 7F0B3D48 8E590004 */  lw    $t9, 4($s2)
-/* 0E887C 7F0B3D4C 02008825 */  move  $s1, $s0
-/* 0E8880 7F0B3D50 56B90049 */  bnel  $s5, $t9, .L7F0B3E78
-/* 0E8884 7F0B3D54 26730001 */   addiu $s3, $s3, 1
-/* 0E8888 7F0B3D58 26100008 */  addiu $s0, $s0, 8
-/* 0E888C 7F0B3D5C 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
-/* 0E8890 7F0B3D60 AE340000 */   sw    $s4, ($s1)
-/* 0E8894 7F0B3D64 0C003A2C */  jal   osVirtualToPhysical
-/* 0E8898 7F0B3D68 00402025 */   move  $a0, $v0
-/* 0E889C 7F0B3D6C AE220004 */  sw    $v0, 4($s1)
-/* 0E88A0 7F0B3D70 0FC2ECA6 */  jal   fogRenderClearFogMode
-/* 0E88A4 7F0B3D74 02002025 */   move  $a0, $s0
-/* 0E88A8 7F0B3D78 0FC243D3 */  jal   get_debug_do_draw_obj
-/* 0E88AC 7F0B3D7C 00408025 */   move  $s0, $v0
-/* 0E88B0 7F0B3D80 5040000A */  beql  $v0, $zero, .L7F0B3DAC
-/* 0E88B4 7F0B3D84 02008825 */   move  $s1, $s0
-/* 0E88B8 7F0B3D88 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E88BC 7F0B3D8C 00000000 */   nop
-/* 0E88C0 7F0B3D90 10400005 */  beqz  $v0, .L7F0B3DA8
-/* 0E88C4 7F0B3D94 02002025 */   move  $a0, $s0
-/* 0E88C8 7F0B3D98 8E450000 */  lw    $a1, ($s2)
-/* 0E88CC 7F0B3D9C 0FC0E9BD */  jal   chrpropsRenderPass
-/* 0E88D0 7F0B3DA0 00003025 */   move  $a2, $zero
-/* 0E88D4 7F0B3DA4 00408025 */  move  $s0, $v0
-.L7F0B3DA8:
-/* 0E88D8 7F0B3DA8 02008825 */  move  $s1, $s0
-.L7F0B3DAC:
-/* 0E88DC 7F0B3DAC AE340000 */  sw    $s4, ($s1)
-/* 0E88E0 7F0B3DB0 0FC1E0E5 */  jal   get_BONDdata_field_10E0
-/* 0E88E4 7F0B3DB4 26100008 */   addiu $s0, $s0, 8
-/* 0E88E8 7F0B3DB8 0C003A2C */  jal   osVirtualToPhysical
-/* 0E88EC 7F0B3DBC 00402025 */   move  $a0, $v0
-/* 0E88F0 7F0B3DC0 AE220004 */  sw    $v0, 4($s1)
-/* 0E88F4 7F0B3DC4 C6440014 */  lwc1  $f4, 0x14($s2)
-/* 0E88F8 7F0B3DC8 8E470010 */  lw    $a3, 0x10($s2)
-/* 0E88FC 7F0B3DCC 8E46000C */  lw    $a2, 0xc($s2)
-/* 0E8900 7F0B3DD0 8E450008 */  lw    $a1, 8($s2)
-/* 0E8904 7F0B3DD4 02002025 */  move  $a0, $s0
-/* 0E8908 7F0B3DD8 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
-/* 0E890C 7F0B3DDC E7A40010 */   swc1  $f4, 0x10($sp)
-/* 0E8910 7F0B3DE0 00402025 */  move  $a0, $v0
-/* 0E8914 7F0B3DE4 0FC2EC1C */  jal   fogSetRenderFogColor
-/* 0E8918 7F0B3DE8 00002825 */   move  $a1, $zero
-/* 0E891C 7F0B3DEC 0FC243D0 */  jal   get_debug_do_draw_bg
-/* 0E8920 7F0B3DF0 00408025 */   move  $s0, $v0
-/* 0E8924 7F0B3DF4 50400009 */  beql  $v0, $zero, .L7F0B3E1C
-/* 0E8928 7F0B3DF8 02008825 */   move  $s1, $s0
-/* 0E892C 7F0B3DFC 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E8930 7F0B3E00 00000000 */   nop
-/* 0E8934 7F0B3E04 10400004 */  beqz  $v0, .L7F0B3E18
-/* 0E8938 7F0B3E08 02002025 */   move  $a0, $s0
-/* 0E893C 7F0B3E0C 0FC2D9DF */  jal   sub_GAME_7F0B677C
-/* 0E8940 7F0B3E10 8E450000 */   lw    $a1, ($s2)
-/* 0E8944 7F0B3E14 00408025 */  move  $s0, $v0
-.L7F0B3E18:
-/* 0E8948 7F0B3E18 02008825 */  move  $s1, $s0
-.L7F0B3E1C:
-/* 0E894C 7F0B3E1C AE340000 */  sw    $s4, ($s1)
-/* 0E8950 7F0B3E20 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
-/* 0E8954 7F0B3E24 26100008 */   addiu $s0, $s0, 8
-/* 0E8958 7F0B3E28 0C003A2C */  jal   osVirtualToPhysical
-/* 0E895C 7F0B3E2C 00402025 */   move  $a0, $v0
-/* 0E8960 7F0B3E30 AE220004 */  sw    $v0, 4($s1)
-/* 0E8964 7F0B3E34 0FC2ECA6 */  jal   fogRenderClearFogMode
-/* 0E8968 7F0B3E38 02002025 */   move  $a0, $s0
-/* 0E896C 7F0B3E3C 0FC243D3 */  jal   get_debug_do_draw_obj
-/* 0E8970 7F0B3E40 00408025 */   move  $s0, $v0
-/* 0E8974 7F0B3E44 10400009 */  beqz  $v0, .L7F0B3E6C
-/* 0E8978 7F0B3E48 00000000 */   nop
-/* 0E897C 7F0B3E4C 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E8980 7F0B3E50 00000000 */   nop
-/* 0E8984 7F0B3E54 10400005 */  beqz  $v0, .L7F0B3E6C
-/* 0E8988 7F0B3E58 02002025 */   move  $a0, $s0
-/* 0E898C 7F0B3E5C 8E450000 */  lw    $a1, ($s2)
-/* 0E8990 7F0B3E60 0FC0E9BD */  jal   chrpropsRenderPass
-/* 0E8994 7F0B3E64 24060002 */   li    $a2, 2
-/* 0E8998 7F0B3E68 00408025 */  move  $s0, $v0
-.L7F0B3E6C:
-/* 0E899C 7F0B3E6C 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn)
-/* 0E89A0 7F0B3E70 8C42483C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
-/* 0E89A4 7F0B3E74 26730001 */  addiu $s3, $s3, 1
-.L7F0B3E78:
-/* 0E89A8 7F0B3E78 0262082A */  slt   $at, $s3, $v0
-/* 0E89AC 7F0B3E7C 1420FFB2 */  bnez  $at, .L7F0B3D48
-/* 0E89B0 7F0B3E80 2652001C */   addiu $s2, $s2, 0x1c
-.L7F0B3E84:
-/* 0E89B4 7F0B3E84 8FA80044 */  lw    $t0, 0x44($sp)
-/* 0E89B8 7F0B3E88 26B50001 */  addiu $s5, $s5, 1
-/* 0E89BC 7F0B3E8C 1515FFAA */  bne   $t0, $s5, .L7F0B3D38
-/* 0E89C0 7F0B3E90 00000000 */   nop
-.L7F0B3E94:
-/* 0E89C4 7F0B3E94 3C140103 */  lui   $s4, (0x01030040 >> 16) # lui $s4, 0x103
-/* 0E89C8 7F0B3E98 36940040 */  ori   $s4, (0x01030040 & 0xFFFF) # ori $s4, $s4, 0x40
-/* 0E89CC 7F0B3E9C 0FC2ECA6 */  jal   fogRenderClearFogMode
-/* 0E89D0 7F0B3EA0 02002025 */   move  $a0, $s0
-/* 0E89D4 7F0B3EA4 0FC2D3ED */  jal   bgScissorCurrentPlayerViewDefault
-/* 0E89D8 7F0B3EA8 00402025 */   move  $a0, $v0
-/* 0E89DC 7F0B3EAC 00408825 */  move  $s1, $v0
-/* 0E89E0 7F0B3EB0 24500008 */  addiu $s0, $v0, 8
-/* 0E89E4 7F0B3EB4 0FC1E0E5 */  jal   get_BONDdata_field_10E0
-/* 0E89E8 7F0B3EB8 AC540000 */   sw    $s4, ($v0)
-/* 0E89EC 7F0B3EBC 0C003A2C */  jal   osVirtualToPhysical
-/* 0E89F0 7F0B3EC0 00402025 */   move  $a0, $v0
-/* 0E89F4 7F0B3EC4 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E89F8 7F0B3EC8 AE220004 */   sw    $v0, 4($s1)
-/* 0E89FC 7F0B3ECC 10400006 */  beqz  $v0, .L7F0B3EE8
-/* 0E8A00 7F0B3ED0 00000000 */   nop
-/* 0E8A04 7F0B3ED4 0FC282AD */  jal   explosionRenderScorchBuffer
-/* 0E8A08 7F0B3ED8 02002025 */   move  $a0, $s0
-/* 0E8A0C 7F0B3EDC 0FC2875E */  jal   explosionCallRenderBulletImpactOnProp
-/* 0E8A10 7F0B3EE0 00402025 */   move  $a0, $v0
-/* 0E8A14 7F0B3EE4 00408025 */  move  $s0, $v0
-.L7F0B3EE8:
-/* 0E8A18 7F0B3EE8 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn)
-/* 0E8A1C 7F0B3EEC 02D7082A */  slt   $at, $s6, $s7
-/* 0E8A20 7F0B3EF0 8C42483C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
-/* 0E8A24 7F0B3EF4 14200043 */  bnez  $at, .L7F0B4004
-/* 0E8A28 7F0B3EF8 02C0A825 */   move  $s5, $s6
-/* 0E8A2C 7F0B3EFC 26F6FFFF */  addiu $s6, $s7, -1
-.L7F0B3F00:
-/* 0E8A30 7F0B3F00 1840003D */  blez  $v0, .L7F0B3FF8
-/* 0E8A34 7F0B3F04 00009825 */   move  $s3, $zero
-/* 0E8A38 7F0B3F08 3C128008 */  lui   $s2, %hi(dword_CODE_bss_8007FFA0)
-/* 0E8A3C 7F0B3F0C 2652FFA0 */  addiu $s2, %lo(dword_CODE_bss_8007FFA0) # addiu $s2, $s2, -0x60
-.L7F0B3F10:
-/* 0E8A40 7F0B3F10 8E490004 */  lw    $t1, 4($s2)
-/* 0E8A44 7F0B3F14 02008825 */  move  $s1, $s0
-/* 0E8A48 7F0B3F18 56A90034 */  bnel  $s5, $t1, .L7F0B3FEC
-/* 0E8A4C 7F0B3F1C 26730001 */   addiu $s3, $s3, 1
-/* 0E8A50 7F0B3F20 26100008 */  addiu $s0, $s0, 8
-/* 0E8A54 7F0B3F24 0FC1E0E5 */  jal   get_BONDdata_field_10E0
-/* 0E8A58 7F0B3F28 AE340000 */   sw    $s4, ($s1)
-/* 0E8A5C 7F0B3F2C 0C003A2C */  jal   osVirtualToPhysical
-/* 0E8A60 7F0B3F30 00402025 */   move  $a0, $v0
-/* 0E8A64 7F0B3F34 AE220004 */  sw    $v0, 4($s1)
-/* 0E8A68 7F0B3F38 C6460014 */  lwc1  $f6, 0x14($s2)
-/* 0E8A6C 7F0B3F3C 8E470010 */  lw    $a3, 0x10($s2)
-/* 0E8A70 7F0B3F40 8E46000C */  lw    $a2, 0xc($s2)
-/* 0E8A74 7F0B3F44 8E450008 */  lw    $a1, 8($s2)
-/* 0E8A78 7F0B3F48 02002025 */  move  $a0, $s0
-/* 0E8A7C 7F0B3F4C 0FC2D3FD */  jal   bgScissorCurrentPlayerViewF
-/* 0E8A80 7F0B3F50 E7A60010 */   swc1  $f6, 0x10($sp)
-/* 0E8A84 7F0B3F54 00402025 */  move  $a0, $v0
-/* 0E8A88 7F0B3F58 0FC2EC1C */  jal   fogSetRenderFogColor
-/* 0E8A8C 7F0B3F5C 24050001 */   li    $a1, 1
-/* 0E8A90 7F0B3F60 0FC243D0 */  jal   get_debug_do_draw_bg
-/* 0E8A94 7F0B3F64 00408025 */   move  $s0, $v0
-/* 0E8A98 7F0B3F68 50400009 */  beql  $v0, $zero, .L7F0B3F90
-/* 0E8A9C 7F0B3F6C 02008825 */   move  $s1, $s0
-/* 0E8AA0 7F0B3F70 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E8AA4 7F0B3F74 00000000 */   nop
-/* 0E8AA8 7F0B3F78 10400004 */  beqz  $v0, .L7F0B3F8C
-/* 0E8AAC 7F0B3F7C 02002025 */   move  $a0, $s0
-/* 0E8AB0 7F0B3F80 0FC2DA26 */  jal   sub_GAME_7F0B6898
-/* 0E8AB4 7F0B3F84 8E450000 */   lw    $a1, ($s2)
-/* 0E8AB8 7F0B3F88 00408025 */  move  $s0, $v0
-.L7F0B3F8C:
-/* 0E8ABC 7F0B3F8C 02008825 */  move  $s1, $s0
-.L7F0B3F90:
-/* 0E8AC0 7F0B3F90 AE340000 */  sw    $s4, ($s1)
-/* 0E8AC4 7F0B3F94 0FC1E0DD */  jal   currentPlayerGetProjectionMatrix
-/* 0E8AC8 7F0B3F98 26100008 */   addiu $s0, $s0, 8
-/* 0E8ACC 7F0B3F9C 0C003A2C */  jal   osVirtualToPhysical
-/* 0E8AD0 7F0B3FA0 00402025 */   move  $a0, $v0
-/* 0E8AD4 7F0B3FA4 AE220004 */  sw    $v0, 4($s1)
-/* 0E8AD8 7F0B3FA8 0FC2ECA6 */  jal   fogRenderClearFogMode
-/* 0E8ADC 7F0B3FAC 02002025 */   move  $a0, $s0
-/* 0E8AE0 7F0B3FB0 0FC243D3 */  jal   get_debug_do_draw_obj
-/* 0E8AE4 7F0B3FB4 00408025 */   move  $s0, $v0
-/* 0E8AE8 7F0B3FB8 10400009 */  beqz  $v0, .L7F0B3FE0
-/* 0E8AEC 7F0B3FBC 00000000 */   nop
-/* 0E8AF0 7F0B3FC0 0FC2F63C */  jal   sub_GAME_7F0BD8F0
-/* 0E8AF4 7F0B3FC4 00000000 */   nop
-/* 0E8AF8 7F0B3FC8 10400005 */  beqz  $v0, .L7F0B3FE0
-/* 0E8AFC 7F0B3FCC 02002025 */   move  $a0, $s0
-/* 0E8B00 7F0B3FD0 8E450000 */  lw    $a1, ($s2)
-/* 0E8B04 7F0B3FD4 0FC0E9BD */  jal   chrpropsRenderPass
-/* 0E8B08 7F0B3FD8 24060001 */   li    $a2, 1
-/* 0E8B0C 7F0B3FDC 00408025 */  move  $s0, $v0
-.L7F0B3FE0:
-/* 0E8B10 7F0B3FE0 3C028004 */  lui   $v0, %hi(g_BgNumberOfRoomsDrawn)
-/* 0E8B14 7F0B3FE4 8C42483C */  lw    $v0, %lo(g_BgNumberOfRoomsDrawn)($v0)
-/* 0E8B18 7F0B3FE8 26730001 */  addiu $s3, $s3, 1
-.L7F0B3FEC:
-/* 0E8B1C 7F0B3FEC 0262082A */  slt   $at, $s3, $v0
-/* 0E8B20 7F0B3FF0 1420FFC7 */  bnez  $at, .L7F0B3F10
-/* 0E8B24 7F0B3FF4 2652001C */   addiu $s2, $s2, 0x1c
-.L7F0B3FF8:
-/* 0E8B28 7F0B3FF8 26B5FFFF */  addiu $s5, $s5, -1
-/* 0E8B2C 7F0B3FFC 16B6FFC0 */  bne   $s5, $s6, .L7F0B3F00
-/* 0E8B30 7F0B4000 00000000 */   nop
-.L7F0B4004:
-/* 0E8B34 7F0B4004 8FBF003C */  lw    $ra, 0x3c($sp)
-/* 0E8B38 7F0B4008 02001025 */  move  $v0, $s0
-/* 0E8B3C 7F0B400C 8FB0001C */  lw    $s0, 0x1c($sp)
-/* 0E8B40 7F0B4010 8FB10020 */  lw    $s1, 0x20($sp)
-/* 0E8B44 7F0B4014 8FB20024 */  lw    $s2, 0x24($sp)
-/* 0E8B48 7F0B4018 8FB30028 */  lw    $s3, 0x28($sp)
-/* 0E8B4C 7F0B401C 8FB4002C */  lw    $s4, 0x2c($sp)
-/* 0E8B50 7F0B4020 8FB50030 */  lw    $s5, 0x30($sp)
-/* 0E8B54 7F0B4024 8FB60034 */  lw    $s6, 0x34($sp)
-/* 0E8B58 7F0B4028 8FB70038 */  lw    $s7, 0x38($sp)
-/* 0E8B5C 7F0B402C 03E00008 */  jr    $ra
-/* 0E8B60 7F0B4030 27BD0080 */   addiu $sp, $sp, 0x80
-)
 #endif
 
 #if !defined(LEFTOVERDEBUG)
