@@ -224,6 +224,7 @@ void setDebugCameraScale(float scale)
 */
 void initializeDebugCameraPosition(void)
 {
+    #ifndef DEBUG
     coord3d* pos; //needed to be declared but not used to match
     f32 x;
 
@@ -233,7 +234,24 @@ void initializeDebugCameraPosition(void)
     sinf(x);
     cosf(x);
     sinf(x);
-   /*osSyncPrintf("propBondIntroKey(INTROKEY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ", cosf(x),sinf(x));*/
+    #else
+    coord3d *pos = bondviewGetCurrentPlayersPosition();
+    f32 angle = M_TAU_F - get_curplay_horizontal_rotation_in_degrees(); // 2*PI - rotation
+
+    f32 dx = debugCameraPosition.x - pos->x;
+    f32 dy = debugCameraPosition.y - pos->y;
+    f32 dz = debugCameraPosition.z - pos->z;
+
+    f32 sinA = sinf(angle);
+
+    f32 relX = dx * cosf(angle) + dz * sinf(angle);
+    f32 relY = dy;
+    f32 relZ = dz * cosf(angle) - dx * sinf(angle);
+
+    printf("propBondIntroKey(INTROKEY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ",
+           relX, relY, relZ);
+    #endif
+   /*osSyncPrintf("propBondIntroKey(INTROK1EY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ", cosf(x),sinf(x));*/
 }
 
 

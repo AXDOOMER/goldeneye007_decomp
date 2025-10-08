@@ -350,6 +350,35 @@ void debmenuHandleBondView(void)
 }
 #endif
 
+/*
+//both of these called by Function_82271408 in xbla, which appears to be uncalled and is in a different file
+void Function_82271408(dword param_1)
+{
+  if (get_debug_render_raster() == 0) {
+    Function_823E7680();
+  }
+  else {
+    Function_823E7630();
+  }
+}
+
+void Function_823E7630(void)
+{
+ 
+  resetDebugCameraToPlayerPosition();
+  debug_render_raster = DEB_MOVE_VIEW;
+  debug_freeze_processing = DEB_MOVE_VIEW;
+}
+
+void Function_823E7680(void)
+{
+  debug_render_raster = DEB_BOND_VIEW;
+  debug_freeze_processing = DEB_BOND_VIEW;
+
+}
+
+*/
+
 #if defined(LEFTOVERDEBUG)
 /*
 * Address: 0x7f090590

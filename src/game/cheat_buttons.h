@@ -3,7 +3,7 @@
 #include <ultra64.h>
 
 // This shows up a lot but not quite sure what it represents.
-#define CHEAT_20    20
+#define CHEAT_INPUT_BUFFER_SIZE    20
 
 enum CHEAT_MASK {
     CHEAT_MASK_0 = 0,
@@ -28,7 +28,7 @@ enum CHEAT_MASK {
     /**
      * Text related when turning cheats on and off.
      */
-    CHEAT_MASK_16 = (1 << 4),
+    CHEAT_MASK_SHOW_TEXT = (1 << 4),
 
     /**
      * Seems to be a "applies to all players" or "global" flag.
@@ -59,7 +59,7 @@ typedef struct  {
     /**
      * Offset 0x1. //maybe timer to enter code?
      */
-    u8 count_of_something;
+    u8 requiredInputCount;
 
     /**
      * Offset 0x2.

@@ -2252,8 +2252,8 @@ void frontCleanUpWalletBond(void)
 //********************************************************************************************************
 void init_menu05_fileselect(void)
 {
-    s32 sp24 = 0x6e000;
-    Gfx* sp20 = (s32)(ptr_logo_and_walletbond_DL) + (s32)(4096*10);
+    s32 size = 0x6e000;
+    Gfx* DL = (s32)(ptr_logo_and_walletbond_DL) + (s32)(4096*10);
     int i;
 
     prev_keypresses = FALSE;
@@ -2267,7 +2267,7 @@ void init_menu05_fileselect(void)
     tab_prev_selected = FALSE;
     folder_selected_for_deletion = FOLDER_INVALID;
     folder_selected_for_deletion_choice = FOLDER2;
-    sub_GAME_7F008DE4(&sp20, &sp24);
+    sub_GAME_7F008DE4(&DL, &size);
     load_walletbond();
     if (maybe_is_in_menu){
         musicTrack1Play(M_FOLDERS);
@@ -3130,10 +3130,10 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
 
     if (mission_folder_setup_entries[pull_and_display_text_for_folder_a0(arg0)].stage_id >= 0)
     {
-        num = 2;
+        num = DIFFICULTY_00;
         if (fileIs007ModeUnlocked(selected_folder_num) || get_debug_007_unlock_flag())
         {
-            num = 3;
+            num = DIFFICULTY_007;
         }
 
         for (difficulty=num; difficulty >= 0; difficulty--)
@@ -3141,12 +3141,12 @@ s32 get_highest_unlocked_difficulty_for_level(s32 arg0)
             temp_v0 = fileIsStageUnlockedAtDifficulty(selected_folder_num, arg0, difficulty);
             if (g_AppendCheatSinglePlayer == 0)
             {
-                if (temp_v0 != 0)
+                if (temp_v0 != DIFFICULTY_AGENT)
                 {
                     return difficulty;
                 }
             }
-            else if (temp_v0 == 3)
+            else if (temp_v0 == DIFFICULTY_007)
             {
                 return difficulty;
             }
@@ -4398,15 +4398,15 @@ void update_menu0E_mpoptions(void)
 // Address 0x7F010848 NTSC
 void interface_menu0E_mpoptions(void)
 {
-    s32 sp3C = 0;
-    s32 sp38 = 0;
-    s32 sp34 = 0;
-    s32 sp30 = 0;
-    s32 sp2C = 0;
-    s32 sp28 = 0;
-    s32 sp24 = 0;
-    s32 sp20 = 0;
-    s32 sp1C = 0;
+    s32 players_selected = 0;
+    s32 scenario_selected = 0;
+    s32 gameselect_selected = 0;
+    s32 gamelength_selected = 0;
+    s32 character_selected = 0;
+    s32 weapon_selected = 0;
+    s32 health_selected = 0;
+    s32 controlstyle_selected = 0;
+    s32 aimadjust_selected = 0;
 
     viSetFovY(FOV_Y_F);
     viSetAspect(ASPECT_RATIO_SD);
@@ -4507,39 +4507,39 @@ void interface_menu0E_mpoptions(void)
         }
         else if (highlight_players)
         {
-            sp3C = 1;
+            players_selected = 1;
         }
         else if (highlight_scenario)
         {
-            sp38 = 1;
+            scenario_selected = 1;
         }
         else if (highlight_gameselect)
         {
-            sp34 = 1;
+            gameselect_selected = 1;
         }
         else if (highlight_gamelength)
         {
-            sp30 = 1;
+            gamelength_selected = 1;
         }
         else if (highlight_character)
         {
-            sp2C = 1;
+            character_selected = 1;
         }
         else if (highlight_weaponselect)
         {
-            sp28 = 1;
+            weapon_selected = 1;
         }
         else if (highlight_health)
         {
-            sp24 = 1;
+            health_selected = 1;
         }
         else if (highlight_controlstyle)
         {
-            sp20 = 1;
+            controlstyle_selected = 1;
         }
         else if (highlight_aimadjustment)
         {
-            sp1C = 1;
+            aimadjust_selected = 1;
         }
 
         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, DOOR_METAL_CLOSE2_SFX, NULL);
@@ -4586,59 +4586,59 @@ void interface_menu0E_mpoptions(void)
         return;
     }
 
-    if (sp3C)
+    if (players_selected)
     {
-        s32 temp_v1;
+        s32 tmpNumPlayers;
 
         if (joyGetControllerCount() < selected_num_players + 1)
         {
-            temp_v1 = 2;
+            tmpNumPlayers = 2;
         }
         else
         {
-            temp_v1 = selected_num_players + 1;
+            tmpNumPlayers = selected_num_players + 1;
         }
 
-        init_mp_options_for_scenario(temp_v1);
+        init_mp_options_for_scenario(tmpNumPlayers);
 
         return;
     }
-    if (sp38)
+    if (scenario_selected)
     {
         frontChangeMenu(MENU_MP_SCENARIO_SELECT, 0);
         return;
     }
-    if (sp34)
+    if (gameselect_selected)
     {
         frontChangeMenu(MENU_MP_STAGE_SELECT, 0);
         return;
     }
-    if (sp30)
+    if (gamelength_selected)
     {
         select_game_length();
         return;
     }
-    if (sp2C)
+    if (character_selected)
     {
         frontChangeMenu(MENU_MP_CHAR_SELECT, 0);
         return;
     }
-    if (sp28)
+    if (weapon_selected)
     {
         incrementMPWeaponSet();
         return;
     }
-    if (sp24)
+    if (health_selected)
     {
         frontChangeMenu(MENU_MP_HANDICAP, 0);
         return;
     }
-    if (sp20)
+    if (controlstyle_selected)
     {
         frontChangeMenu(MENU_MP_CONTROL_STYLE, 0);
         return;
     }
-    if (sp1C)
+    if (aimadjust_selected)
     {
         advance_aim_settings_selection();
     }

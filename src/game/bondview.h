@@ -1158,13 +1158,13 @@ struct player
    * Entry seems to be added only on other button presses.
    * Offset 0x128c.
    */
-  u16 cheat_display_text_related[20];
+  u16 cheatInputBuffer[20];
 
   /**
    * Offset 0x12b4.
    */
-  /* 0x12B4 */ u8 something_with_cheat_text;
-  /* 0x12B5 */ u8 can_display_cheat_text;
+  /* 0x12B4 */ u8 cheatInputBufferIndex;
+  /* 0x12B5 */ u8 cheatInputCount;
   /* 0x12B6 */ u8 bondinvincible;
   /* 0x12B7 */ u8 field_12B7;
   /* 0x12B8 */ struct damage_display_parent armor_display_values[23];

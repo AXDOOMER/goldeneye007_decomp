@@ -39323,6 +39323,12 @@ s32 propdoorInteract(PropRecord* doorprop)
         }
         door->runtime_bitflags |= RUNTIMEBITFLAG_ACTIVATED;
         door->flags2 |= PROPFLAG2_00000008;
+        #ifdef XBLA
+        //part of showing key marker
+            if ((door->keyflags) && (get_current_difficulty() == DIFFICULTY_AGENT)) {
+                Function_822881F8(door->keyflags);
+            }
+        #endif
     }
     return 0;
 }
@@ -39425,7 +39431,7 @@ void handle_gas_damage(void)
             D_80030ADC = g_GlobalTimer;
             if (toxic_gas_sound_timer >= 600.0f)
             {
-                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x62, NULL);
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, COUGH_SFX, NULL);
             }
             if (toxic_gas_sound_timer >= 1800.0f)
             {
@@ -39438,7 +39444,7 @@ void handle_gas_damage(void)
             gasLeakTimer = gasLeakTimer + g_GlobalTimerDelta;
             if ((ptr_gas_sound == NULL) && (lvlGetControlsLockedFlag() == 0))
             {
-                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x66, (ALSoundState* ) &ptr_gas_sound);
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, GAS_HISS_SFX, (ALSoundState* ) &ptr_gas_sound);
             }
             if (ptr_gas_sound != NULL)
             {
