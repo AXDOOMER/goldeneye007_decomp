@@ -157,6 +157,7 @@ MPSETUPNAMELIST := mp_setupame \
 				mp_setupcave \
 				mp_setupcrad \
 				mp_setupcryp \
+				mp_setupdam \
 				mp_setupdish \
 				mp_setupimp \
 				mp_setupoat \
