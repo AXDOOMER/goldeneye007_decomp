@@ -158,6 +158,8 @@ MPSETUPNAMELIST := mp_setupame \
 				mp_setupcrad \
 				mp_setupcryp \
 				mp_setupdam \
+				mp_setupdepot \
+				mp_setupdest \
 				mp_setupdish \
 				mp_setupimp \
 				mp_setupoat \
