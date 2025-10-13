@@ -161,6 +161,7 @@ MPSETUPNAMELIST := mp_setupame \
 				mp_setupimp \
 				mp_setupoat \
 				mp_setupref \
+				mp_setuprun \
 				mp_setupsevb \
 				mp_setupstatue
 
@@ -337,7 +338,7 @@ GUNNAMELIST = ak47 \
 				wppksil \
 				wppk \
 				wristdart
-				
+
 PROPNAMELIST = ak47mag \
 				alarm1 \
 				alarm2 \

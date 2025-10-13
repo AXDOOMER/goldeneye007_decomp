@@ -542,6 +542,7 @@ struct mp_stage_setup multi_stage_setups[] = {
   //{getStringID(LTITLE, TITLE_STR_178_STAT), getStringID(LTITLE, TITLE_STR_179_STAT2), IMG_MP_STATUE, LEVELID_STATUE, -1, 1, 2}, //stat (works)
   //{getStringID(LTITLE, TITLE_STR_180_CRAD), getStringID(LTITLE, TITLE_STR_181_CRADLE2), IMG_MP_CRADLE, LEVELID_CRADLE, -1, 1, 2}, //crad (works)
   //{getStringID(LTITLE, TITLE_STR_182_AZT), getStringID(LTITLE, TITLE_STR_183_AZT2), IMG_MP_AZTEC, LEVELID_AZTEC, -1, 1, 4}, //azt (needs setup)
+  //{getStringID(LTITLE, TITLE_STR_123_RUN), getStringID(LTITLE, TITLE_STR_123_RUN), IMG_MP_RUNWAY, LEVELID_RUNWAY, -1, 1, 4}, //dam (xbla setup)
 
 };
 
