@@ -1029,6 +1029,9 @@ void clearChrGunModelInstances(void)
 #endif
 
 
+/*
+ * Address: 0x7F009254
+*/
 Gfx *renderGunbarrelEyeIntroSequence (Gfx *gdl) {
     D_8002A7D0 = (1 - D_8002A7D0);
     switch (gunbarrel_mode - 2)

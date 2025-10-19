@@ -312,10 +312,10 @@ f32 slider_007_mode_health = 1.0f;
 f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
 
-rgba_u8 textglowR = { 160, 0, 0, 0 };
-rgba_u8 textglowG = { 150, 0, 0, 0 };
-rgba_u8 textglowB = { 40, 0, 0, 0 };
-rgba_u8 textglowA = { 140, 0, 0, 0 };
+/* 0x8002A9B0 */ rgba_u8 textglowR = { 160, 0, 0, 0 };
+/* 0x8002A9B4 */ rgba_u8 textglowG = { 150, 0, 0, 0 };
+/* 0x8002A9B8 */ rgba_u8 textglowB = { 40, 0, 0, 0 };
+/* 0x8002A9BC */ rgba_u8 textglowA = { 140, 0, 0, 0 };
 
 struct coord3d legalpage_pos = {0.0f, 0.0f, 0.0f};
 
@@ -334,7 +334,7 @@ struct legal_screen_text legalpage_text_array[] = {
     { 80, 280, LEFT_ALIGN, CENTER_ALIGN, getStringID(LTITLE, TITLE_STR_18_EMI), 0}  //"Used by permission of EMI Unart Catalog Inc.\n"
 };
 
-ModelRenderData       legalscreen_MRD = {NULL,
+/* 0x8002AABC */ ModelRenderData legalscreen_MRD = {NULL,
                                     TRUE,
                                     0x00000003,
                                     NULL,
@@ -759,7 +759,7 @@ s16 solo_target_time_array[20][3] = {
 };
 
 s32 totalunlockedcheats = 0;
-s32 cheathighlighted = 0;
+s32 cheathighlighted = 0; // 0x8002B5E0
 
 
 u32 MP_menu_selected_option = 0;
@@ -1913,6 +1913,10 @@ Gfx *constructor_menu01_nintendo(Gfx *DL)
 //********************************************************************************************************
 //RARE LOGO
 //********************************************************************************************************
+
+/*
+ * Address: 0x7F008B58
+*/
 void init_menu02_rarelogo(void)
 {
     setupRarewareLogoData(ptr_logo_and_walletbond_DL, 0x78000);
@@ -1966,6 +1970,9 @@ void init_menu03_gunbarrel(void) {
     maybe_is_in_menu = TRUE;
 }
 
+/*
+ * Address: 0x7F00920C
+*/
 void update_menu_03_gunbarrel(void) {
     clearChrGunModelInstances();
 }
