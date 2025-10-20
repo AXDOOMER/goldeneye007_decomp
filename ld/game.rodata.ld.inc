@@ -101,7 +101,7 @@
       build/OUTCODE/src/game/stan.o (.rodata);
       build/OUTCODE/src/game/unk_0B3200.o (.rodata);
       build/OUTCODE/src/game/bg.o (.rodata);
-      build/OUTCODE/src/game/bg2.o (.rodata);
+      build/OUTCODE/src/game/bgapply.o (.rodata);
       build/OUTCODE/src/game/bgfog.o (.rodata);
       build/OUTCODE/src/game/lightfixture.o (.rodata);
       build/OUTCODE/src/game/bgroomtrans.o (.rodata);

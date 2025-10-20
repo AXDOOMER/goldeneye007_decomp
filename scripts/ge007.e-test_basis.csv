@@ -208,11 +208,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/vi.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/vi.o
 70bc8f4b72a86921468bf8e8441dce51,.data,build/e/src/vi.o
 3890dff1c2a5913504508f6cf5c6760b,.rodata,build/e/src/vi.o
-a147ff55f19da8d2fed990b18129a648,.text,build/e/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/bg2.o
+a147ff55f19da8d2fed990b18129a648,.text,build/e/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/bgapply.o
 9240de9a33e878f40c644949d7de8654,.text,build/e/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/bg.o

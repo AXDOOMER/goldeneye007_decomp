@@ -101,7 +101,7 @@
       build/OUTCODE/src/game/stan.o (.text);
       build/OUTCODE/src/game/unk_0B3200.o (.text);
       build/OUTCODE/src/game/bg.o (.text);
-      build/OUTCODE/src/game/bg2.o (.text);
+      build/OUTCODE/src/game/bgapply.o (.text);
       build/OUTCODE/src/game/bgfog.o (.text);
       build/OUTCODE/src/game/lightfixture.o (.text);
       build/OUTCODE/src/game/bgroomtrans.o (.text);

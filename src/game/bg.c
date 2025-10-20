@@ -5622,12 +5622,12 @@ void sub_GAME_7F0B6368(s32 room) {
                     // Node 21
                     temp_a0 = phi_v1_3->unk8;
                     sp1C = (void *) phi_v1_3;
-                    bgLoadFromDynamicCCRMLUT(temp_a0, (phi_v1_3->unk20 + temp_a0), CCRMLUT_PRIMARY_ADDFOG);
+                    bgApplyDynamicCCRMLUT(temp_a0, (phi_v1_3->unk20 + temp_a0), CCRMLUT_PRIMARY_ADDFOG);
                     temp_v1_3 = phi_v1_3;
                     if (temp_v1_3->unkC != 0)
                     {
                         // Node 22
-                        bgLoadFromDynamicCCRMLUT(temp_v1_3->unkC, (temp_v1_3->unk24 + temp_v1_3->unkC), CCRMLUT_SECONDARY_ADDFOG);
+                        bgApplyDynamicCCRMLUT(temp_v1_3->unkC, (temp_v1_3->unk24 + temp_v1_3->unkC), CCRMLUT_SECONDARY_ADDFOG);
                     }
                 }
                 else
@@ -5635,12 +5635,12 @@ void sub_GAME_7F0B6368(s32 room) {
                     // Node 23
                     temp_a0_2 = phi_v1_3->unk8;
                     sp1C = (void *) phi_v1_3;
-                    bgLoadFromDynamicCCRMLUT(temp_a0_2, (phi_v1_3->unk20 + temp_a0_2), CCRMLUT_PRIMARY);
+                    bgApplyDynamicCCRMLUT(temp_a0_2, (phi_v1_3->unk20 + temp_a0_2), CCRMLUT_PRIMARY);
                     temp_v1_4 = phi_v1_3;
                     if (temp_v1_4->unkC != 0)
                     {
                         // Node 24
-                        bgLoadFromDynamicCCRMLUT(temp_v1_4->unkC, (temp_v1_4->unk24 + temp_v1_4->unkC), CCRMLUT_SECONDARY);
+                        bgApplyDynamicCCRMLUT(temp_v1_4->unkC, (temp_v1_4->unk24 + temp_v1_4->unkC), CCRMLUT_SECONDARY);
                     }
                 }
                 // Node 25
@@ -5783,7 +5783,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB064 7F0B6534 8C6D0020 */  lw    $t5, 0x20($v1)
 /* 0EB068 7F0B6538 24060001 */  li    $a2, 1
 /* 0EB06C 7F0B653C AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EB070 7F0B6540 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0EB070 7F0B6540 0FC2E990 */  jal   bgApplyDynamicCCRMLUT
 /* 0EB074 7F0B6544 01A42821 */   addu  $a1, $t5, $a0
 /* 0EB078 7F0B6548 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EB07C 7F0B654C 8C64000C */  lw    $a0, 0xc($v1)
@@ -5791,7 +5791,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB084 7F0B6554 00000000 */   nop
 /* 0EB088 7F0B6558 8C6E0024 */  lw    $t6, 0x24($v1)
 /* 0EB08C 7F0B655C 24060005 */  li    $a2, 5
-/* 0EB090 7F0B6560 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0EB090 7F0B6560 0FC2E990 */  jal   bgApplyDynamicCCRMLUT
 /* 0EB094 7F0B6564 01C42821 */   addu  $a1, $t6, $a0
 /* 0EB098 7F0B6568 1000000E */  b     .L7F0B65A4
 /* 0EB09C 7F0B656C 00000000 */   nop
@@ -5799,7 +5799,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B6574:
 /* 0EB0A4 7F0B6574 8C6F0020 */  lw    $t7, 0x20($v1)
 /* 0EB0A8 7F0B6578 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0EB0AC 7F0B657C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0EB0AC 7F0B657C 0FC2E990 */  jal   bgApplyDynamicCCRMLUT
 /* 0EB0B0 7F0B6580 01E42821 */   addu  $a1, $t7, $a0
 /* 0EB0B4 7F0B6584 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0EB0B8 7F0B6588 8C64000C */  lw    $a0, 0xc($v1)
@@ -5807,7 +5807,7 @@ glabel sub_GAME_7F0B6368
 /* 0EB0C0 7F0B6590 00000000 */   nop
 /* 0EB0C4 7F0B6594 8C780024 */  lw    $t8, 0x24($v1)
 /* 0EB0C8 7F0B6598 24060007 */  li    $a2, 7
-/* 0EB0CC 7F0B659C 0FC2E990 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0EB0CC 7F0B659C 0FC2E990 */  jal   bgApplyDynamicCCRMLUT
 /* 0EB0D0 7F0B65A0 03042821 */   addu  $a1, $t8, $a0
 .L7F0B65A4:
 /* 0EB0D4 7F0B65A4 0FC2DA65 */  jal   sub_GAME_7F0B6994
@@ -5953,7 +5953,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8260 7F0B5870 8C6D0020 */  lw    $t5, 0x20($v1)
 /* 0E8264 7F0B5874 24060001 */  li    $a2, 1
 /* 0E8268 7F0B5878 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E826C 7F0B587C 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0E826C 7F0B587C 0FC2E638 */  jal   bgApplyDynamicCCRMLUT
 /* 0E8270 7F0B5880 01A42821 */   addu  $a1, $t5, $a0
 /* 0E8274 7F0B5884 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E8278 7F0B5888 8C64000C */  lw    $a0, 0xc($v1)
@@ -5961,7 +5961,7 @@ glabel sub_GAME_7F0B6368
 /* 0E8280 7F0B5890 00000000 */   nop
 /* 0E8284 7F0B5894 8C6E0024 */  lw    $t6, 0x24($v1)
 /* 0E8288 7F0B5898 24060005 */  li    $a2, 5
-/* 0E828C 7F0B589C 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0E828C 7F0B589C 0FC2E638 */  jal   bgApplyDynamicCCRMLUT
 /* 0E8290 7F0B58A0 01C42821 */   addu  $a1, $t6, $a0
 /* 0E8294 7F0B58A4 1000000E */  b     .L7F0B58E0
 /* 0E8298 7F0B58A8 00000000 */   nop
@@ -5969,7 +5969,7 @@ glabel sub_GAME_7F0B6368
 .L7F0B58B0:
 /* 0E82A0 7F0B58B0 8C6F0020 */  lw    $t7, 0x20($v1)
 /* 0E82A4 7F0B58B4 AFA3001C */  sw    $v1, 0x1c($sp)
-/* 0E82A8 7F0B58B8 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0E82A8 7F0B58B8 0FC2E638 */  jal   bgApplyDynamicCCRMLUT
 /* 0E82AC 7F0B58BC 01E42821 */   addu  $a1, $t7, $a0
 /* 0E82B0 7F0B58C0 8FA3001C */  lw    $v1, 0x1c($sp)
 /* 0E82B4 7F0B58C4 8C64000C */  lw    $a0, 0xc($v1)
@@ -5977,7 +5977,7 @@ glabel sub_GAME_7F0B6368
 /* 0E82BC 7F0B58CC 00000000 */   nop
 /* 0E82C0 7F0B58D0 8C780024 */  lw    $t8, 0x24($v1)
 /* 0E82C4 7F0B58D4 24060007 */  li    $a2, 7
-/* 0E82C8 7F0B58D8 0FC2E638 */  jal   bgLoadFromDynamicCCRMLUT
+/* 0E82C8 7F0B58D8 0FC2E638 */  jal   bgApplyDynamicCCRMLUT
 /* 0E82CC 7F0B58DC 03042821 */   addu  $a1, $t8, $a0
 .L7F0B58E0:
 /* 0E82D0 7F0B58E0 0FC2D734 */  jal   sub_GAME_7F0B6994

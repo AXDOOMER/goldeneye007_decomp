@@ -2226,7 +2226,7 @@ void load_walletbond(void)
             srecord = b->Data;
 
             arg0 = (s32)srecord->BaseAddr + ((s32)srecord->Primary & 0xffffff);
-            bgLoadFromDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
+            bgApplyDynamicCCRMLUT(arg0, NULL, CCRMLUT_WALLETBOND);
         }
     }
 }

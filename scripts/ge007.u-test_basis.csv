@@ -208,11 +208,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/alloc_window_pieces.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/alloc_window_pieces.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/alloc_window_pieces.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/alloc_window_pieces.o
-a147ff55f19da8d2fed990b18129a648,.text,build/u/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/bg2.o
-4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/bg2.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/bg2.o
+a147ff55f19da8d2fed990b18129a648,.text,build/u/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/bgapply.o
+4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/bgapply.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/bgapply.o
 68a7438bd0d19d37c608750626578bdb,.text,build/u/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/bg.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/bg.o
