@@ -1,5 +1,5 @@
 #include <os_extension.h>
-#include <assets/GlobalImageTable.h>
+#include <assets/oddtextures.h>
 #include "assets/image_externs.h"
 #include <ultra64.h>
 #include <bondgame.h>

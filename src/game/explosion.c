@@ -24,7 +24,7 @@
 #include "snd.h"
 #include "stan.h"
 #include "bgroomtrans.h"
-#include <assets/GlobalImageTable.h>
+#include <assets/oddtextures.h>
 
 // bss
 //CODE.bss:8007A100
