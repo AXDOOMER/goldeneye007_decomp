@@ -10,7 +10,7 @@
 #include <snd.h>
 #include "bg.h"
 #include "bondview.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chr.h"
 #include "chrai.h"
 #include "chraidata.h"

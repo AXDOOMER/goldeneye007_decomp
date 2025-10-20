@@ -31,7 +31,7 @@
 #include "image_bank.h"
 #include "textrelated.h"
 #include "initmenus.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "bg.h"
 #include "objective.h"
 #include "mp_watch.h"

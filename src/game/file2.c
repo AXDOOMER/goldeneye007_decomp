@@ -7,7 +7,7 @@
 #include "file.h"
 #include "file2.h"
 #include "front.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 
 
 // bss

@@ -7,7 +7,7 @@
 #include <limits.h>
 #include "bg.h"
 #include "bondview.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chrai.h"
 #include "chraction.h"
 #include "propobj.h"

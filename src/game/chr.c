@@ -7,7 +7,7 @@
 #include <snd.h>
 #include <math.h>
 #include "bg.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chr.h"
 #include "chrai.h"
 #include "chraction.h"

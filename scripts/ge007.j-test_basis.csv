@@ -243,11 +243,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/bondwalk2.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/bondwalk2.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/j/src/game/bondwalk2.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/j/src/game/bondwalk2.o
-19082883303dd3426f3bacef41cf6698,.text,build/j/src/game/cheat_buttons.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/cheat_buttons.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/cheat_buttons.o
-a5d9f8135b3ee2e5c0e1594a670b2d91,.data,build/j/src/game/cheat_buttons.o
-c5b2b76e78b0ea1ec779b5a3066c8e21,.rodata,build/j/src/game/cheat_buttons.o
+19082883303dd3426f3bacef41cf6698,.text,build/j/src/game/cheat.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/cheat.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/cheat.o
+a5d9f8135b3ee2e5c0e1594a670b2d91,.data,build/j/src/game/cheat.o
+c5b2b76e78b0ea1ec779b5a3066c8e21,.rodata,build/j/src/game/cheat.o
 d41d8cd98f00b204e9800998ecf8427e,.text,build/j/src/game/chraidata.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/chraidata.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/chraidata.o

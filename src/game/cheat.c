@@ -7,7 +7,7 @@
 #include <snd.h>
 #include "bondinv.h"
 #include "bondview.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chr.h"
 #include "debugmenu_handler.h"
 #include "file2.h"
@@ -1427,6 +1427,9 @@ void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat_id)
             return;
 
         default:
+            #ifdef DEBUG
+            osSyncPrintf("Dodgy Cheat Number\n");
+            #endif
             return;
     }
 }

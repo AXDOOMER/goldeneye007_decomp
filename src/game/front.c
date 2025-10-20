@@ -15,7 +15,7 @@
 #include "chr.h"
 #include "chr_b.h"
 #include "chraction.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chrobjdata.h"
 #include "file2.h"
 #include "front.h"

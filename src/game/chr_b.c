@@ -1,6 +1,6 @@
 #include <ultra64.h>
 #include <bondtypes.h>
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "chr.h"
 #include "chr_b.h"
 #include "chrobjdata.h"

@@ -31,7 +31,7 @@
 #include "bondinv.h"
 #include <assert.h>
 #include "loadobjectmodel.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 #include "player.h"
 #include "file.h"
 #include "fog.h"

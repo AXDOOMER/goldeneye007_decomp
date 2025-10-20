@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "initcheattext.h"
 #include "player.h"
-#include "cheat_buttons.h"
+#include "cheat.h"
 
 void initCheatTextBuffer(void) {
     int i;

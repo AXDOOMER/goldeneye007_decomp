@@ -86,7 +86,7 @@
       build/OUTCODE/src/game/gobjdata.o (.data);
       build/OUTCODE/src/game/gobjdata2.o (.data);
       build/OUTCODE/src/game/cobjdata.o (.data);
-      build/OUTCODE/src/game/cheat_buttons.o (.data);
+      build/OUTCODE/src/game/cheat.o (.data);
       build/OUTCODE/src/game/unk_092890.o (.data);
       build/OUTCODE/src/game/unk_092E50.o (.data);
       build/OUTCODE/src/game/sky.o (.data);

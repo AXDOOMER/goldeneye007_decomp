@@ -903,7 +903,7 @@ typedef enum AIRCRAFT_ANIMATION
 
 
 /*
-values need to be verified against cheat_buttons.c : void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat)
+values need to be verified against cheat.c : void cheatButtonHandleCheatsTurnedOn(CHEAT_ID cheat)
 */
 typedef enum CHEAT_IDS
 {
