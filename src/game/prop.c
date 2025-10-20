@@ -184,7 +184,7 @@ void domakedefaultobj(s32 arg0, ObjectRecord *arg1, s32 cmdindex)
 
         if (sp74 != 0)
         {
-            arg1->state |= 4; // respawn enabled
+            arg1->state |= PROPSTATE_RESPAWN; // respawn enabled
         }
     }
 

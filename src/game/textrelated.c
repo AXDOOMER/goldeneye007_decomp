@@ -61,7 +61,7 @@ Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar,
 
 // -------------------------------------------------------------------------------------------------
 
-void textrelatedInit_REMOVED(void /*, char* asset */)
+void textInit(void /*, char* asset */)
 {
     #ifdef DEBUG
     if (asset == 0)

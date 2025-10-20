@@ -634,7 +634,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
                 memusage_display_flag ^= 1;
                 if (memusage_display_flag == 0)
                 {
-                    debmenuReset();
+                    debmenuResetBuffer();
                 }
                 break;
                 
@@ -902,7 +902,7 @@ s32 debug_menu_processor(s8 stick_h, s8 stick_v, u16 button_held, u16 button_pre
         {
             if (*p32 == 1)
             {
-                debmenuReset();
+                debmenuResetBuffer();
             }
             
             show_debug_menu_flag = 0;

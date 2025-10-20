@@ -13,7 +13,7 @@ extern struct fontchar * ptrFontBankGothicChars;
 extern struct font * ptrFontZurichBold;
 extern struct fontchar * ptrFontZurichBoldChars;
 
-void textrelatedInit_REMOVED(void);
+void textInit(void);
 void load_font_tables(void);
 
 

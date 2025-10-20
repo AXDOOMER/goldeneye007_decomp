@@ -152,15 +152,15 @@ void debmenu7000ADA0(void) {
 #endif
 
 /**
- * Removed
+ * Address: 0x7000ADA8
  */
-void debmenu7000ADA8(void) {
-    // Removed
+void debmenuInit(void) {
+    // Removed or just blank?
 }
 
-void debmenuInit(void) {
+void debmenuRefresh(void) {
     #ifdef LEFTOVERDEBUG
-    debmenuReset();
+    debmenuResetBuffer();
     #endif
 }
 
@@ -190,7 +190,7 @@ void debmenuResetPosition(void) {
     #endif
 }
 
-void debmenuReset(void) {
+void debmenuResetBuffer(void) {
     #ifdef LEFTOVERDEBUG
     s32 x;
     s32 y;

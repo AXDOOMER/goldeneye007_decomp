@@ -1398,7 +1398,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
         if (obj->flags & 0x100)
         {
             obj->ptr_allocated_collisiondata_block = mempAllocBytesInBank(0x50U, MEMPOOL_STAGE);
-            obj->state = (u8) (obj->state | 8);
+            obj->state = (u8) (obj->state | PROPSTATE_EXT_COLISION_BLOCK);
         }
         else
         {
@@ -35741,7 +35741,7 @@ WeaponObjRecord* weaponCreate(bool musthaveprop, bool musthavemodel, ModelFileHe
                 sp44 = i;
                 break;
             }
-        }  else if ((g_WeaponSlots[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0 && (g_WeaponSlots[i].state & 4) == 0)
+        }  else if ((g_WeaponSlots[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0 && (g_WeaponSlots[i].state & PROPSTATE_RESPAWN) == 0)
         {
             WeaponObjRecord* slot = &g_WeaponSlots[i];
             if (((slot->timer <= 0) && (slot->prop->parent == NULL))
@@ -35961,7 +35961,7 @@ AmmoCrateRecord *ammocrateAllocate(void)
     for (i = 0; i < MAX_AMMO_CRATES; i++)
     {
         if ((g_AmmoCrates[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0
-                && (g_AmmoCrates[i].state & 0x04) == 0
+                && (g_AmmoCrates[i].state & PROPSTATE_RESPAWN) == 0
                 && g_AmmoCrates[i].prop->parent == NULL
                 && (g_AmmoCrates[i].prop->flags & 0x02) == 0)
         {
@@ -35974,7 +35974,7 @@ AmmoCrateRecord *ammocrateAllocate(void)
     for (i = 0; i < MAX_AMMO_CRATES; i++)
     {
         if ((g_AmmoCrates[i].runtime_bitflags & RUNTIMEBITFLAG_DEPOSIT) == 0
-                && (g_AmmoCrates[i].state & 0x04) == 0
+                && (g_AmmoCrates[i].state & PROPSTATE_RESPAWN) == 0
                 && g_AmmoCrates[i].prop->parent == NULL)
         {
             objFreePermanently(&g_AmmoCrates[i], TRUE);
