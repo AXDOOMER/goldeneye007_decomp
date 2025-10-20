@@ -14,7 +14,7 @@
 #include "chrai.h"
 #include "propobj.h"
 #include "file.h"
-#include "fog.h"
+#include "bgfog.h"
 #include "front.h"
 #include "gun.h"
 #include "initanitable.h"

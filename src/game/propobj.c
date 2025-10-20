@@ -26,7 +26,7 @@
 #include "chrobjdata.h"
 #include "propobj.h"
 #include "explosion.h"
-#include "fog.h"
+#include "bgfog.h"
 #include "lvl.h"
 #include "lvl_text.h"
 #include "math_floor.h"

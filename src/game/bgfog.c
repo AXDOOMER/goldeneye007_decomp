@@ -5,7 +5,7 @@
 #include <fr.h>
 #include "bg.h"
 #include "bondview.h"
-#include "fog.h"
+#include "bgfog.h"
 #include <limits.h>
 
 /**

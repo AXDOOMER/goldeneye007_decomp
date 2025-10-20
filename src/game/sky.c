@@ -5,7 +5,7 @@
 #include "unk_092E50.h"
 #include "bondview.h"
 #include "lvl.h"
-#include "fog.h"
+#include "bgfog.h"
 #include "bg.h"
 #include "othermodemicrocode.h"
 #include "fr.h"

@@ -34,7 +34,7 @@
 #include "cheat.h"
 #include "player.h"
 #include "file.h"
-#include "fog.h"
+#include "bgfog.h"
 
 
 

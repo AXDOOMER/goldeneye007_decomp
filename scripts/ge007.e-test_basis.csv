@@ -363,11 +363,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/file.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/file.o
 eeec347630f5896aa34d74a8014be746,.data,build/e/src/game/file.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/file.o
-143c261f10b0b00603716758a0f6b68b,.text,build/e/src/game/fog.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/fog.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/fog.o
-30190137abb989a8a57d7162e5034896,.data,build/e/src/game/fog.o
-63a41286331e03e597726bae6bd57d73,.rodata,build/e/src/game/fog.o
+143c261f10b0b00603716758a0f6b68b,.text,build/e/src/game/bgfog.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/bgfog.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/bgfog.o
+30190137abb989a8a57d7162e5034896,.data,build/e/src/game/bgfog.o
+63a41286331e03e597726bae6bd57d73,.rodata,build/e/src/game/bgfog.o
 c86ebccb63ba06aadd701e4e406b1f6c,.text,build/e/src/game/front.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/front.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/front.o

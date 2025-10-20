@@ -102,7 +102,7 @@
       build/OUTCODE/src/game/unk_0B3200.o (.bss);
       build/OUTCODE/src/game/bg.o (.bss);
       build/OUTCODE/src/game/bg2.o (.bss);
-      build/OUTCODE/src/game/fog.o (.bss);
+      build/OUTCODE/src/game/bgfog.o (.bss);
       build/OUTCODE/src/game/lightfixture.o (.bss);
       build/OUTCODE/src/game/bgroomtrans.o (.bss);
       build/OUTCODE/src/game/ob.o (.bss);

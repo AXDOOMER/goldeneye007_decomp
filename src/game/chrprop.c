@@ -18,7 +18,7 @@
 #include "propobj.h"
 #include "explosion.h"
 #include "file.h"
-#include "fog.h"
+#include "bgfog.h"
 #include "gun.h"
 #include "initanitable.h"
 #include "loadobjectmodel.h"
