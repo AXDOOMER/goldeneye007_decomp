@@ -37,7 +37,7 @@
 #include "game/stan.h"
 #include "game/textrelated.h"
 #include "game/player.h"
-#include "game/unk_0C0A70.h"
+#include "game/frametiming.h"
 #include "PR/R4300.h"
 
 /**

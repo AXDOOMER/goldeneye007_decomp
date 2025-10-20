@@ -1,5 +1,5 @@
 #include <ultra64.h>
-#include "unk_0C0A70.h"
+#include "frametiming.h"
 
 // data
 s32 lastFrameCounter = -1;

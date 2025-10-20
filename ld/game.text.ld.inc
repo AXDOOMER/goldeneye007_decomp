@@ -99,7 +99,7 @@
       build/OUTCODE/src/game/options.o (.text);
       build/OUTCODE/src/game/textrelated.o (.text);
       build/OUTCODE/src/game/stan.o (.text);
-      build/OUTCODE/src/game/unk_0B3200.o (.text);
+      build/OUTCODE/src/game/stanintersection.o (.text);
       build/OUTCODE/src/game/bg.o (.text);
       build/OUTCODE/src/game/bgapply.o (.text);
       build/OUTCODE/src/game/bgfog.o (.text);
@@ -109,7 +109,7 @@
       build/OUTCODE/src/game/dyn.o (.text);
       build/OUTCODE/src/game/lv.o (.text);
       build/OUTCODE/src/game/ramromreplay.o (.text);
-      build/OUTCODE/src/game/unk_0C0A70.o (.text);
+      build/OUTCODE/src/game/frametiming.o (.text);
       build/OUTCODE/src/game/mp_music.o (.text);
       build/OUTCODE/src/game/language.o (.text);
       build/OUTCODE/src/game/mpmenu.o (.text);

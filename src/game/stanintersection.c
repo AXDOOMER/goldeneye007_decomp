@@ -7,7 +7,7 @@
 /*
 * Address: 0x7f0b3200
 */
-f32 calculateLineIntersectionFactor(coord2d *start1, coord2d *end1, coord2d *start2, coord2d *end2)
+f32 calculateSegmentIntersectionFraction(coord2d *start1, coord2d *end1, coord2d *start2, coord2d *end2)
 {
     f32 deltaX = start2->f[1] - end2->f[1];
     f32 deltaY = end2->f[0] - start2->f[0];
@@ -33,7 +33,7 @@ f32 calculateLineIntersectionFactor(coord2d *start1, coord2d *end1, coord2d *sta
 /*
 * Address: 0x7F0B32D8
 */
-f32 calculatePointToLineDistance(struct coord3d *point3D, coord2d *lineStart, coord2d *lineEnd)
+f32 pointLineDistanceWithRadius(struct coord3d *point3D, coord2d *lineStart, coord2d *lineEnd)
 {
     f32 projectedDistance;
     f32 perpendicularDistance;
@@ -73,7 +73,7 @@ f32 calculatePointToLineDistance(struct coord3d *point3D, coord2d *lineStart, co
 /*
 * Address: 0x7f0b33dc
 */
-f32 calculateNormalizedLineIntersection(coord3d *point3D, coord2d *lineStart, coord2d *lineEnd, coord2d *direction)
+f32 calculateRayToSegmentIntersectionNormalized(coord3d *point3D, coord2d *lineStart, coord2d *lineEnd, coord2d *direction)
 {
     f32 directionLength ;
     f32 tempCrossProduct;
@@ -158,8 +158,8 @@ f32 calculateNormalizedLineIntersection(coord3d *point3D, coord2d *lineStart, co
 
     if (crossProductEnd == crossProductStart)
     {
-        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineStart);
-        intersectionFactorLineEnd = calculatePointToLineDistance(point3D, &normalizedDir, lineEnd);
+        intersectionFactor = pointLineDistanceWithRadius(point3D, &normalizedDir, lineStart);
+        intersectionFactorLineEnd = pointLineDistanceWithRadius(point3D, &normalizedDir, lineEnd);
 
         if (intersectionFactorLineEnd < intersectionFactor)
         {
@@ -169,11 +169,11 @@ f32 calculateNormalizedLineIntersection(coord3d *point3D, coord2d *lineStart, co
     else if (crossProductEnd < crossProductPoint)
     {
 handlezero:
-        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineEnd);
+        intersectionFactor = pointLineDistanceWithRadius(point3D, &normalizedDir, lineEnd);
     }
     else if (crossProductPoint < crossProductStart)
     {
-        intersectionFactor = calculatePointToLineDistance(point3D, &normalizedDir, lineStart);
+        intersectionFactor = pointLineDistanceWithRadius(point3D, &normalizedDir, lineStart);
     }
     else
     {

@@ -7,7 +7,7 @@
 #include <joy.h>
 #include <random.h>
 #include "textrelated.h"
-#include "unk_0C0A70.h"
+#include "frametiming.h"
 #include "player.h"
 #include "mpmenu.h"
 #include "gun.h"

@@ -15,7 +15,7 @@
 #include "player.h"
 #include "textrelated.h"
 #include "glass.h"
-#include "unk_0C0A70.h"
+#include "frametiming.h"
 #include "assets/obseg/text/LoptionE.h"
 
 #define WATCH_BACKGROUND_VERTEX_COUNT 30

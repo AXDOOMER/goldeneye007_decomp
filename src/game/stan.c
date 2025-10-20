@@ -5,7 +5,7 @@
 #include "bg.h"
 #include "chrai.h"
 #include "chr.h"
-#include "unk_0B3200.h"
+#include "stanintersection.h"
 #include "assert.h"
 
 // bss
@@ -3359,7 +3359,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
         stanSavedColl_pntB.f[0] = (f32) stanSavedColl_tile->points[point_index].x * inv_level_scale;
         stanSavedColl_pntB.f[1] = (f32) stanSavedColl_tile->points[point_index].z * inv_level_scale;
 
-        sp140 = calculateLineIntersectionFactor(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
+        sp140 = calculateSegmentIntersectionFraction(&sp14C, &sp144, &stanSavedColl_pntA, &stanSavedColl_pntB);
     }
     else
     {
@@ -3394,7 +3394,7 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
                             sp12C.f[0] = polygon->points[next].f[0];
                             sp12C.f[1] = polygon->points[next].f[1];
 
-                            temp_f0 = calculateLineIntersectionFactor(&sp14C, &sp144, &sp134, &sp12C);
+                            temp_f0 = calculateSegmentIntersectionFraction(&sp14C, &sp144, &sp134, &sp12C);
 
                             if (temp_f0 < sp140)
                             {
@@ -3634,7 +3634,7 @@ glabel sub_GAME_7F0B1410
 /* 0E6150 7F0B1620 C4440000 */  lwc1  $f4, ($v0)
 /* 0E6154 7F0B1624 E7A400F8 */  swc1  $f4, 0xf8($sp)
 /* 0E6158 7F0B1628 C4460004 */  lwc1  $f6, 4($v0)
-/* 0E615C 7F0B162C 0FC2CC80 */  jal   calculateLineIntersectionFactor
+/* 0E615C 7F0B162C 0FC2CC80 */  jal   calculateSegmentIntersectionFraction
 /* 0E6160 7F0B1630 E7A600FC */   swc1  $f6, 0xfc($sp)
 /* 0E6164 7F0B1634 4614003C */  c.lt.s $f0, $f20
 /* 0E6168 7F0B1638 00000000 */  nop

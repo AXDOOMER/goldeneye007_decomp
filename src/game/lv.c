@@ -58,7 +58,7 @@
 #include "mp_music.h"
 #include "bgroomtrans.h"
 #include "unk_092E50.h"
-#include "unk_0C0A70.h"
+#include "frametiming.h"
 #include "chr.h"
 
 // bss

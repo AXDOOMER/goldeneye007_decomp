@@ -35,12 +35,12 @@
 #include "random.h"
 #include "stan.h"
 #include "textrelated.h"
-#include "unk_0C0A70.h"
+#include "frametiming.h"
 #include "bgroomtrans.h"
 #include "glass.h"
 #include "explosion.h"
 #include "os_extension.h"
-#include "unk_0B3200.h"
+#include "stanintersection.h"
 
 #ifdef VERSION_EU
 
@@ -5697,7 +5697,7 @@ s32 bondviewTrySimpleMovePlayerCollision(coord3d *next_pos, coord3d *collision_p
 /**
  * This is a fallback method used when bondviewTrySimpleMovePlayerCollision fails.
  * Instead of moving to the full coordinate specified by `next_pos`, it will
- * scale the position using `calculateNormalizedLineIntersection` and try to move to that position.
+ * scale the position using `calculateRayToSegmentIntersectionNormalized` and try to move to that position.
  *
  * @param next_pos: 3d coordinate to attempt to move to.
  * @param collision1_pt0: Prior collision point 0.
@@ -5747,7 +5747,7 @@ s32 bondviewTryFractionMovePlayerCollision(
     sp38.f[0] = delta_pos.f[0];
     sp38.f[1] = delta_pos.f[2];
 
-    temp_f0 = calculateNormalizedLineIntersection(&sp50, &sp48, &sp40, &sp38);
+    temp_f0 = calculateRayToSegmentIntersectionNormalized(&sp50, &sp48, &sp40, &sp38);
 
     try_next_pos.f[0] = g_CurrentPlayer->field_488.collision_position.f[0] + (delta_pos.f[0] * temp_f0 * 0.25f);
     try_next_pos.f[2] = g_CurrentPlayer->field_488.collision_position.f[2] + (delta_pos.f[2] * temp_f0 * 0.25f);
