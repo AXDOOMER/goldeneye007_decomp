@@ -112,7 +112,7 @@
       build/OUTCODE/src/game/unk_0C0A70.o (.bss);
       build/OUTCODE/src/game/mp_music.o (.bss);
       build/OUTCODE/src/game/lvl_text.o (.bss);
-      build/OUTCODE/src/game/mp_watch.o (.bss);
+      build/OUTCODE/src/game/mpmenu.o (.bss);
       build/OUTCODE/src/game/radar.o (.bss);
       build/OUTCODE/src/game/mp_weapon.o (.bss);
       build/OUTCODE/src/game/image.o (.bss);

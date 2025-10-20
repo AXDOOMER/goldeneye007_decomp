@@ -618,11 +618,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/mp_music.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/mp_music.o
 4ae71336e44bf9bf79d2752e234818a5,.data,build/e/src/game/mp_music.o
 da72f47e2d834ded22a4837a4ae77a74,.rodata,build/e/src/game/mp_music.o
-a2e63cd441c5064ed070edde79e47df1,.text,build/e/src/game/mp_watch.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/mp_watch.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/mp_watch.o
-73fd6c08f30314bfa70d1800c88309b3,.data,build/e/src/game/mp_watch.o
-0175f5015d4bbd3659819bea4577395c,.rodata,build/e/src/game/mp_watch.o
+a2e63cd441c5064ed070edde79e47df1,.text,build/e/src/game/mpmenu.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/mpmenu.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/mpmenu.o
+73fd6c08f30314bfa70d1800c88309b3,.data,build/e/src/game/mpmenu.o
+0175f5015d4bbd3659819bea4577395c,.rodata,build/e/src/game/mpmenu.o
 30f3bfd31d453c60e9ff7fff181ae693,.text,build/e/src/game/mp_weapon.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/mp_weapon.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/mp_weapon.o

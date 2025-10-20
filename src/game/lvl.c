@@ -34,7 +34,7 @@
 #include "cheat.h"
 #include "bg.h"
 #include "objective.h"
-#include "mp_watch.h"
+#include "mpmenu.h"
 #include "unk_09B7A0.h"
 #include "initunk_005450.h"
 #include "initobjects.h"

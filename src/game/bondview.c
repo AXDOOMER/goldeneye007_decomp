@@ -28,7 +28,7 @@
 #include "math_atan2f.h"
 #include "matrixmath.h"
 #include "mp_music.h"
-#include "mp_watch.h"
+#include "mpmenu.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "quaternion.h"
