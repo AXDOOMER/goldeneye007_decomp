@@ -56,7 +56,7 @@
 #include "gun.h"
 #include "unk_091080.h"
 #include "mp_music.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 #include "unk_092E50.h"
 #include "unk_0C0A70.h"
 #include "chr.h"

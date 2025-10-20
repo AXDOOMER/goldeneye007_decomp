@@ -14,7 +14,7 @@
 #include "matrixmath.h"
 #include "player.h"
 #include "explosion.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 
 // new file, per EU
 

@@ -15,7 +15,7 @@
 #include "matrixmath.h"
 #include "player.h"
 #include "explosion.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 
 
 #define BG_STACK_SIZE 20

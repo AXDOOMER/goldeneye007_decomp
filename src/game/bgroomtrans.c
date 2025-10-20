@@ -5,7 +5,7 @@ file bgroomtrans.c
 #include <ultra64.h>
 #include "player.h"
 #include "bg.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 #include "matrixmath.h"
 
 #ifdef VERSION_EU

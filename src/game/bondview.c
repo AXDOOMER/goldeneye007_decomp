@@ -36,7 +36,7 @@
 #include "stan.h"
 #include "textrelated.h"
 #include "unk_0C0A70.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 #include "glass.h"
 #include "explosion.h"
 #include "os_extension.h"

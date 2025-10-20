@@ -818,11 +818,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/unk_0B3200.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/unk_0B3200.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/j/src/game/unk_0B3200.o
 58beed8ba05634d9511690c0a476f146,.rodata,build/j/src/game/unk_0B3200.o
-b8e29d8a733d631a70c9776164049ab8,.text,build/j/src/game/unk_0BC530.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/unk_0BC530.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/unk_0BC530.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/j/src/game/unk_0BC530.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/j/src/game/unk_0BC530.o
+b8e29d8a733d631a70c9776164049ab8,.text,build/j/src/game/bgroomtrans.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/bgroomtrans.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/bgroomtrans.o
+d41d8cd98f00b204e9800998ecf8427e,.data,build/j/src/game/bgroomtrans.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/j/src/game/bgroomtrans.o
 e782a28e0f6b9282d7c31863df6a073b,.text,build/j/src/game/unk_0C0A70.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/unk_0C0A70.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/unk_0C0A70.o

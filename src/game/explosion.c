@@ -23,7 +23,7 @@
 #include "random.h"
 #include "snd.h"
 #include "stan.h"
-#include "unk_0BC530.h"
+#include "bgroomtrans.h"
 #include <assets/GlobalImageTable.h>
 
 // bss

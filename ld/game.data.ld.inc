@@ -104,7 +104,7 @@
       build/OUTCODE/src/game/bg2.o (.data);
       build/OUTCODE/src/game/fog.o (.data);
       build/OUTCODE/src/game/lightfixture.o (.data);
-      build/OUTCODE/src/game/unk_0BC530.o (.data);
+      build/OUTCODE/src/game/bgroomtrans.o (.data);
       build/OUTCODE/src/game/ob.o (.data);
       build/OUTCODE/src/game/dyn.o (.data);
       build/OUTCODE/src/game/lvl.o (.data);
