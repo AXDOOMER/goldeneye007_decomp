@@ -14,7 +14,7 @@
 #include "lvl_text.h"
 #include "player.h"
 #include "textrelated.h"
-#include "unk_0A1DA0.h"
+#include "glass.h"
 #include "unk_0C0A70.h"
 #include "assets/obseg/text/LoptionE.h"
 

@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <limits.h>
 #include "math_atan2f.h"
-#include "unk_0A1DA0.h"
+#include "glass.h"
 #include "random.h"
 #include "lvl.h"
 

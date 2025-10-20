@@ -95,7 +95,7 @@
       build/OUTCODE/src/game/chrObjRandom.o (.data);
       build/OUTCODE/src/game/unk_09B7A0.o (.data);
       build/OUTCODE/src/game/explosion.o (.data);
-      build/OUTCODE/src/game/unk_0A1DA0.o (.data);
+      build/OUTCODE/src/game/glass.o (.data);
       build/OUTCODE/src/game/options.o (.data);
       build/OUTCODE/src/game/textrelated.o (.data);
       build/OUTCODE/src/game/stan.o (.data);

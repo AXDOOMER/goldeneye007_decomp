@@ -37,7 +37,7 @@
 #include "textrelated.h"
 #include "unk_0C0A70.h"
 #include "unk_0BC530.h"
-#include "unk_0A1DA0.h"
+#include "glass.h"
 #include "explosion.h"
 #include "os_extension.h"
 #include "unk_0B3200.h"

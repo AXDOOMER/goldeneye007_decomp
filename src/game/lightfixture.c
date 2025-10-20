@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "lightfixture.h"
 #include "bg.h"
-#include "unk_0A1DA0.h"
+#include "glass.h"
 #include <bondconstants.h>
 #include <assets/image_externs.h>
 #include <PR/gbi.h>

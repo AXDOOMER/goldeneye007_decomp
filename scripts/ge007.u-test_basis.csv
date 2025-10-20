@@ -823,11 +823,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_09B7A0.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_09B7A0.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/unk_09B7A0.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/unk_09B7A0.o
-b41030c1904e701bcdeab30ed5c5148d,.text,build/u/src/game/unk_0A1DA0.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0A1DA0.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0A1DA0.o
-7449248de18da3f5a96c70e5dd0570e9,.data,build/u/src/game/unk_0A1DA0.o
-91e9c74a6ac093c98ffc9e1515ea270d,.rodata,build/u/src/game/unk_0A1DA0.o
+b41030c1904e701bcdeab30ed5c5148d,.text,build/u/src/game/glass.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/glass.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/glass.o
+7449248de18da3f5a96c70e5dd0570e9,.data,build/u/src/game/glass.o
+91e9c74a6ac093c98ffc9e1515ea270d,.rodata,build/u/src/game/glass.o
 d5263986657df7aac13742312709305d,.text,build/u/src/game/unk_0B3200.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0B3200.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0B3200.o

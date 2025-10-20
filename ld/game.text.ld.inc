@@ -95,7 +95,7 @@
       build/OUTCODE/src/game/chrObjRandom.o (.text);
       build/OUTCODE/src/game/unk_09B7A0.o (.text);
       build/OUTCODE/src/game/explosion.o (.text);
-      build/OUTCODE/src/game/unk_0A1DA0.o (.text);
+      build/OUTCODE/src/game/glass.o (.text);
       build/OUTCODE/src/game/options.o (.text);
       build/OUTCODE/src/game/textrelated.o (.text);
       build/OUTCODE/src/game/stan.o (.text);
