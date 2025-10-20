@@ -16,7 +16,7 @@
 #include "chraidata.h"
 #include "chraction.h"
 #include "propobj.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "file.h"
 #include "fog.h"
 #include "gun.h"

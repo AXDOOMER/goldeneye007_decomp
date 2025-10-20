@@ -14,7 +14,7 @@
 #include "math_ceil.h"
 #include "matrixmath.h"
 #include "player.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "unk_0BC530.h"
 
 

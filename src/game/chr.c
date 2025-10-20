@@ -13,7 +13,7 @@
 #include "chraction.h"
 #include "chrobjdata.h"
 #include "propobj.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "file.h"
 #include "gun.h"
 #include "initanitable.h"

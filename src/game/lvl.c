@@ -22,7 +22,7 @@
 #include "player.h"
 #include "propobj.h"
 #include "cleanup_objects.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "chrai.h"
 #include "mp_music.h"
 #include "initunk_005520.h"

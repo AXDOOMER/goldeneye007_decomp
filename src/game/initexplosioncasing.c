@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "initexplosioncasing.h"
-#include "explosions.h"
+#include "explosion.h"
 
 
 

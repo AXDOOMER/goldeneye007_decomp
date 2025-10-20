@@ -12,7 +12,7 @@
 #include "chraction.h"
 #include "propobj.h"
 #include "dyn.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "fr.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"

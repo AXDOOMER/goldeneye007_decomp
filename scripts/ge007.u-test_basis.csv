@@ -388,11 +388,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/ejectedcartridges.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/ejectedcartridges.o
-611b9b73637f8add35cf24f49abd88f7,.text,build/u/src/game/explosions.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/explosions.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/explosions.o
-fbda85eb8d9891c2efde432e0336946e,.data,build/u/src/game/explosions.o
-9b1db0ae34ae1901b30b1cb9163c1f66,.rodata,build/u/src/game/explosions.o
+611b9b73637f8add35cf24f49abd88f7,.text,build/u/src/game/explosion.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/explosion.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/explosion.o
+fbda85eb8d9891c2efde432e0336946e,.data,build/u/src/game/explosion.o
+9b1db0ae34ae1901b30b1cb9163c1f66,.rodata,build/u/src/game/explosion.o
 dc557102f98af1012104e5468e2deed8,.text,build/u/src/game/file2.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/file2.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/file2.o

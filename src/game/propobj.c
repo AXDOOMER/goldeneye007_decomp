@@ -25,7 +25,7 @@
 #include "chraction.h"
 #include "chrobjdata.h"
 #include "propobj.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "fog.h"
 #include "lvl.h"
 #include "lvl_text.h"
@@ -39,7 +39,7 @@
 #include <limits.h>
 #include "stan.h"
 #include "assets/obseg/text/LpropobjE.h"
-#include "explosions.h"
+#include "explosion.h"
 #include "image_bank.h"
 #include "random.h"
 #include "unk_0B3200.h"
