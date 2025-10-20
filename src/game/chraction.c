@@ -2,7 +2,7 @@
 #include <bondaicommands.h>
 #include <bondgame.h>
 #include <bondconstants.h>
-#include "chrlv.h"
+#include "chraction.h"
 #include <limits.h>
 #include <math.h>
 #include <music.h>

@@ -15,7 +15,7 @@
 #include "chr.h"
 #include "chrai.h"
 #include "chr_b.h"
-#include "chrlv.h"
+#include "chraction.h"
 #include "propobj.h"
 #include "debugmenu_handler.h"
 #include "file.h"

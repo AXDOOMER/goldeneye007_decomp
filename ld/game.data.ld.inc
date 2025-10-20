@@ -51,7 +51,7 @@
       build/OUTCODE/src/game/file2.o (.data);
       build/OUTCODE/src/game/chr.o (.data);
       build/OUTCODE/src/game/chr_b.o (.data);
-      build/OUTCODE/src/game/chrlv.o (.data);
+      build/OUTCODE/src/game/chraction.o (.data);
       build/OUTCODE/src/game/chrai.o (.data);
       build/OUTCODE/src/game/chrprop.o (.data);
       build/OUTCODE/src/game/propobj.o (.data);

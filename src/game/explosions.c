@@ -9,7 +9,7 @@
 #include "bondview.h"
 #include "cheat_buttons.h"
 #include "chrai.h"
-#include "chrlv.h"
+#include "chraction.h"
 #include "propobj.h"
 #include "dyn.h"
 #include "explosions.h"

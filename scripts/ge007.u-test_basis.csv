@@ -273,11 +273,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/chr_b.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/chr_b.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/chr_b.o
 54c85123dad8457678af007c7c7d4026,.rodata,build/u/src/game/chr_b.o
-89198a9e01688e7a382abfd44782e2c7,.text,build/u/src/game/chrlv.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/chrlv.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/chrlv.o
-873553fec38e500fd0459ed32ba07065,.data,build/u/src/game/chrlv.o
-365e4726f2a4e1b80043f9fbedc3657b,.rodata,build/u/src/game/chrlv.o
+89198a9e01688e7a382abfd44782e2c7,.text,build/u/src/game/chraction.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/chraction.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/chraction.o
+873553fec38e500fd0459ed32ba07065,.data,build/u/src/game/chraction.o
+365e4726f2a4e1b80043f9fbedc3657b,.rodata,build/u/src/game/chraction.o
 ab69f37ac9853c7b285e6fdbcc3c8db1,.text,build/u/src/game/chr.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/chr.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/chr.o

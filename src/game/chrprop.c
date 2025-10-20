@@ -14,7 +14,7 @@
 #include "chr.h"
 #include "chrai.h"
 #include "chraidata.h"
-#include "chrlv.h"
+#include "chraction.h"
 #include "propobj.h"
 #include "explosions.h"
 #include "file.h"

@@ -9,7 +9,7 @@
 #include "bondview.h"
 #include "chr.h"
 #include "chrai.h"
-#include "chrlv.h"
+#include "chraction.h"
 #include "propobj.h"
 #include "gun.h"
 #include "lvl_text.h"

@@ -22,7 +22,7 @@
 #include "bondinv.h"
 #include "chr.h"
 #include "chrai.h"
-#include "chrlv.h"
+#include "chraction.h"
 #include "chrobjdata.h"
 #include "propobj.h"
 #include "explosions.h"
