@@ -3,7 +3,7 @@
 #include "music_0D2720.h"
 #include "options.h"
 #include "mp_music.h"
-#include "lvl.h"
+#include "lv.h"
 
 #ifdef VERSION_EU
 #define MP_MUSIC_FRAMERATE 50

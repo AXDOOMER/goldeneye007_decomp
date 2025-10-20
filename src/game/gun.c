@@ -16,7 +16,7 @@
 #include "bondwalk2.h"
 #include "othermodemicrocode.h"
 #include "player.h"
-#include "lvl.h"
+#include "lv.h"
 #include "random.h"
 #include "math_asinfacosf.h"
 #include "loadobjectmodel.h"

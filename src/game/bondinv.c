@@ -7,7 +7,7 @@
 #include "language.h"
 #include "bondinv.h"
 #include "gun.h"
-#include "lvl.h"
+#include "lv.h"
 #include <bondtypes.h>
 
 void bondinvReinitInv(void)

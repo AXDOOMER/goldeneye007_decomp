@@ -20,7 +20,7 @@
 #include "file2.h"
 #include "front.h"
 #include "image_bank.h"
-#include "lvl.h"
+#include "lv.h"
 #include "mp_weapon.h"
 #include "math_floor.h"
 #include "objective_status.h"

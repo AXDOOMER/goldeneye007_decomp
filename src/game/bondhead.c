@@ -5,7 +5,7 @@
 #include "bondview.h"
 #include "chrai.h"
 #include "initanitable.h"
-#include "lvl.h"
+#include "lv.h"
 #include "matrixmath.h"
 #include "objecthandler.h"
 #include "player.h"

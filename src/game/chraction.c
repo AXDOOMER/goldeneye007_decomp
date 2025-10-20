@@ -19,7 +19,7 @@
 #include "gun.h"
 #include "initanitable.h"
 #include "loadobjectmodel.h"
-#include "lvl.h"
+#include "lv.h"
 #include "math_asinfacosf.h"
 #include "math_atan2f.h"
 #include "matrixmath.h"

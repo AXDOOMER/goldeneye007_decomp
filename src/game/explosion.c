@@ -16,7 +16,7 @@
 #include "fr.h"
 #include "image_bank.h"
 #include "othermodemicrocode.h"
-#include "lvl.h"
+#include "lv.h"
 #include "matrixmath.h"
 #include "music.h"
 #include "player.h"

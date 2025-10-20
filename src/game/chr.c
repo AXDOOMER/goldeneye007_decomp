@@ -17,7 +17,7 @@
 #include "file.h"
 #include "gun.h"
 #include "initanitable.h"
-#include "lvl.h"
+#include "lv.h"
 #include "language.h"
 #include "objecthandler.h"
 #include "player.h"

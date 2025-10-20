@@ -23,7 +23,7 @@
 #include "propobj.h"
 #include "initanitable.h"
 #include <random.h>
-#include "lvl.h"
+#include "lv.h"
 #include "stan.h"
 #include "chr.h"
 #include "mp_music.h"

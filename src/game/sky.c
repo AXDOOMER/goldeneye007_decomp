@@ -4,7 +4,7 @@
 #include "player.h"
 #include "unk_092E50.h"
 #include "bondview.h"
-#include "lvl.h"
+#include "lv.h"
 #include "bgfog.h"
 #include "bg.h"
 #include "othermodemicrocode.h"

@@ -27,7 +27,7 @@
 #include "propobj.h"
 #include "explosion.h"
 #include "bgfog.h"
-#include "lvl.h"
+#include "lv.h"
 #include "language.h"
 #include "math_floor.h"
 #include "math_asinfacosf.h"

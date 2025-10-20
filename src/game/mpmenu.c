@@ -12,7 +12,7 @@
 #include "mpmenu.h"
 #include "gun.h"
 #include "front.h"
-#include "lvl.h"
+#include "lv.h"
 #include "language.h"
 #include "mp_music.h"
 #include "file.h"

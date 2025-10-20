@@ -3,7 +3,7 @@
 #include "math_atan2f.h"
 #include "glass.h"
 #include "random.h"
-#include "lvl.h"
+#include "lv.h"
 
 #ifndef VERSION_EU
 #define SCALAR_1_7F0A2160 1.5f

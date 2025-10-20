@@ -553,11 +553,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/loadobjectmodel.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/loadobjectmodel.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/j/src/game/loadobjectmodel.o
 758dd27724bf2441991958a52d84b620,.rodata,build/j/src/game/loadobjectmodel.o
-95c1b1d6cbe5110e3639adaed964f09e,.text,build/j/src/game/lvl.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/lvl.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/lvl.o
-cb33046d54a9f8ed61e67f71efd83590,.data,build/j/src/game/lvl.o
-b2ee8eedf397a9d2e590f7be30ec60e0,.rodata,build/j/src/game/lvl.o
+95c1b1d6cbe5110e3639adaed964f09e,.text,build/j/src/game/lv.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/lv.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/lv.o
+cb33046d54a9f8ed61e67f71efd83590,.data,build/j/src/game/lv.o
+b2ee8eedf397a9d2e590f7be30ec60e0,.rodata,build/j/src/game/lv.o
 085bf29f55c534a4f8a303eb44f209c4,.text,build/j/src/game/language.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/language.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/language.o

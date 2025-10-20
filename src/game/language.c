@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <bondgame.h>
 #include <memp.h>
-#include "lvl_text.h"
+#include "language.h"
 #include "ob.h"
 
 // bss

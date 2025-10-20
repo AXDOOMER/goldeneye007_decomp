@@ -10,7 +10,7 @@
 #include "debugmenu_handler.h"
 #include "decompress.h"
 #include "bgfog.h"
-#include "lvl.h"
+#include "lv.h"
 #include "math_ceil.h"
 #include "matrixmath.h"
 #include "player.h"

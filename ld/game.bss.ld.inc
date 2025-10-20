@@ -107,7 +107,7 @@
       build/OUTCODE/src/game/bgroomtrans.o (.bss);
       build/OUTCODE/src/game/ob.o (.bss);
       build/OUTCODE/src/game/dyn.o (.bss);
-      build/OUTCODE/src/game/lvl.o (.bss);
+      build/OUTCODE/src/game/lv.o (.bss);
       build/OUTCODE/src/game/ramromreplay.o (.bss);
       build/OUTCODE/src/game/unk_0C0A70.o (.bss);
       build/OUTCODE/src/game/mp_music.o (.bss);

@@ -14,7 +14,7 @@
 #include <joy.h>
 #include <token.h>
 #include "debugmenu_handler.h"
-#include "lvl.h"
+#include "lv.h"
 #include "language.h"
 #include "initcheattext.h"
 #include "front.h"

@@ -1,6 +1,6 @@
 #include <ultra64.h>
 #include "gbi_extension.h"
-#include "lvl.h"
+#include "lv.h"
 #include "image.h"
 #include "tex.h"
 
