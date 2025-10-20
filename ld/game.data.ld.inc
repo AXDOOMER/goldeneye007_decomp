@@ -117,7 +117,7 @@
       build/OUTCODE/src/game/mp_weapon.o (.data);
       build/OUTCODE/src/game/image.o (.data);
       build/OUTCODE/src/game/image_bank.o (.data);
-      build/OUTCODE/src/game/unk_0CC4C0.o (.data);
+      build/OUTCODE/src/game/tex.o (.data);
       build/OUTCODE/src/game/decompress.o (.data);
       build/OUTCODE/src/game/zlib.o (.data);
       build/OUTCODE/src/game/rsp.o (.data);

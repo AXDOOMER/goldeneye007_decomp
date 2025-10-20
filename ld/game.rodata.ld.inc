@@ -117,7 +117,7 @@
       build/OUTCODE/src/game/mp_weapon.o (.rodata);
       build/OUTCODE/src/game/image.o (.rodata);
       build/OUTCODE/src/game/image_bank.o (.rodata);
-      build/OUTCODE/src/game/unk_0CC4C0.o (.rodata);
+      build/OUTCODE/src/game/tex.o (.rodata);
       build/OUTCODE/src/game/decompress.o (.rodata);
       build/OUTCODE/src/game/zlib.o (.rodata);
       build/OUTCODE/src/game/rsp.o (.rodata);

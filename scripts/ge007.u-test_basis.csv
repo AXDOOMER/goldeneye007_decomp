@@ -843,11 +843,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0C0A70.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0C0A70.o
 0245cdd8c5a57e8097d2a659cfe4e5a9,.data,build/u/src/game/unk_0C0A70.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/unk_0C0A70.o
-67dbacb3028281856d2e39a06130c582,.text,build/u/src/game/unk_0CC4C0.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0CC4C0.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0CC4C0.o
-3276b0ae12d43e34773e3e7340fd7eb7,.data,build/u/src/game/unk_0CC4C0.o
-649f505c857e9b5f6bc4b652ea1d387e,.rodata,build/u/src/game/unk_0CC4C0.o
+67dbacb3028281856d2e39a06130c582,.text,build/u/src/game/tex.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/tex.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/tex.o
+3276b0ae12d43e34773e3e7340fd7eb7,.data,build/u/src/game/tex.o
+649f505c857e9b5f6bc4b652ea1d387e,.rodata,build/u/src/game/tex.o
 16b4e13d4b5d2c2924a59aff80c5f24a,.text,build/u/src/game/unk_0D1AC0.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_0D1AC0.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_0D1AC0.o

@@ -22,7 +22,7 @@
 #include "loadobjectmodel.h"
 #include "objecthandler.h"
 #include "image.h"
-#include "unk_0CC4C0.h"
+#include "tex.h"
 #include "debugmenu_handler.h"
 #include "fr.h"
 #include "assets/obseg/text/LgunE.h"

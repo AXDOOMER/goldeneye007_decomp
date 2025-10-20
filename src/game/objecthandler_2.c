@@ -7,7 +7,7 @@
 #include "chrobjdata.h"
 #include "ob.h"
 #include "objecthandler.h"
-#include "unk_0CC4C0.h"
+#include "tex.h"
 #include "image.h"
 
 //file split per EU

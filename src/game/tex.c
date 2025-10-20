@@ -2,7 +2,7 @@
 #include "gbi_extension.h"
 #include "lvl.h"
 #include "image.h"
-#include "unk_0CC4C0.h"
+#include "tex.h"
 
 // bss
 //8008D140
