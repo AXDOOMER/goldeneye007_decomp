@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include <music.h>
 #include "music_0D2720.h"
-#include "watch.h"
+#include "options.h"
 #include "mp_music.h"
 #include "lvl.h"
 

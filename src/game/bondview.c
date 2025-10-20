@@ -7,7 +7,7 @@
 #include <music.h>
 #include <snd.h>
 #include <str.h>
-#include <watch.h>
+#include <options.h>
 #include "bg.h"
 #include "bondview.h"
 #include "bondinv.h"

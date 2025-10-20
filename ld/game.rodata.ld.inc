@@ -96,7 +96,7 @@
       build/OUTCODE/src/game/unk_09B7A0.o (.rodata);
       build/OUTCODE/src/game/explosions.o (.rodata);
       build/OUTCODE/src/game/unk_0A1DA0.o (.rodata);
-      build/OUTCODE/src/game/watch.o (.rodata);
+      build/OUTCODE/src/game/options.o (.rodata);
       build/OUTCODE/src/game/textrelated.o (.rodata);
       build/OUTCODE/src/game/stan.o (.rodata);
       build/OUTCODE/src/game/unk_0B3200.o (.rodata);

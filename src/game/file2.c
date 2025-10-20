@@ -3,7 +3,7 @@
 #include "debugmenu_handler.h"
 #include "joy.h"
 #include "player.h"
-#include "watch.h"
+#include "options.h"
 #include "file.h"
 #include "file2.h"
 #include "front.h"

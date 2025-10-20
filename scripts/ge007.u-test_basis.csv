@@ -858,11 +858,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/viewport.o
 4ae71336e44bf9bf79d2752e234818a5,.data,build/u/src/game/viewport.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/viewport.o
-e5efaca4f99364758f1e20aebf293455,.text,build/u/src/game/watch.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/watch.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/watch.o
-5761f5a56e201189104122ad0642a536,.data,build/u/src/game/watch.o
-d775c8a4c52b2462c520e410957f1280,.rodata,build/u/src/game/watch.o
+e5efaca4f99364758f1e20aebf293455,.text,build/u/src/game/options.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/options.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/options.o
+5761f5a56e201189104122ad0642a536,.data,build/u/src/game/options.o
+d775c8a4c52b2462c520e410957f1280,.rodata,build/u/src/game/options.o
 5508daba9a3b7bb3e82a637ae59a43bb,.text,build/u/src/game/zlib.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/zlib.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/zlib.o

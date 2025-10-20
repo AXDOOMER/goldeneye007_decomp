@@ -5,7 +5,7 @@
 #include <bondtypes.h>
 #include "chr.h"
 #include "matrixmath.h"
-#include "watch.h"
+#include "options.h"
 #include "image.h"
 
 typedef struct invitem_weap

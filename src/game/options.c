@@ -6,7 +6,7 @@
 #include <os_extension.h>
 #include <snd.h>
 #include <random.h>
-#include "watch.h"
+#include "options.h"
 #include "bondview.h"
 #include "dyn.h"
 #include "file.h"
@@ -19,7 +19,6 @@
 #include "assets/obseg/text/LoptionE.h"
 
 #define WATCH_BACKGROUND_VERTEX_COUNT 30
-
 
 // bss
 Mtx gfx_background_8007B0A0;

@@ -96,7 +96,7 @@
       build/OUTCODE/src/game/unk_09B7A0.o (.bss);
       build/OUTCODE/src/game/explosions.o (.bss);
       build/OUTCODE/src/game/unk_0A1DA0.o (.bss);
-      build/OUTCODE/src/game/watch.o (.bss);
+      build/OUTCODE/src/game/options.o (.bss);
       build/OUTCODE/src/game/textrelated.o (.bss);
       build/OUTCODE/src/game/stan.o (.bss);
       build/OUTCODE/src/game/unk_0B3200.o (.bss);

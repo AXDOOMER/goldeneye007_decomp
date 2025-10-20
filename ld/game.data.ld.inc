@@ -96,7 +96,7 @@
       build/OUTCODE/src/game/unk_09B7A0.o (.data);
       build/OUTCODE/src/game/explosions.o (.data);
       build/OUTCODE/src/game/unk_0A1DA0.o (.data);
-      build/OUTCODE/src/game/watch.o (.data);
+      build/OUTCODE/src/game/options.o (.data);
       build/OUTCODE/src/game/textrelated.o (.data);
       build/OUTCODE/src/game/stan.o (.data);
       build/OUTCODE/src/game/unk_0B3200.o (.data);
