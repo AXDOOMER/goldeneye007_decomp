@@ -31,7 +31,6 @@
 #include "mp_watch.h"
 #include "objecthandler.h"
 #include "player.h"
-#include "player_2.h"
 #include "quaternion.h"
 #include "random.h"
 #include "stan.h"

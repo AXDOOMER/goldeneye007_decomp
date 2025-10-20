@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "game/mp_weapon.h"
-#include "game/player_2.h"
 #include "game/bondview_r.h"
 #include "bg.h"
 #include "bondview_r.h"

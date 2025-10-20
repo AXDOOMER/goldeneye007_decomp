@@ -32,7 +32,6 @@
 #include "objecthandler.h"
 #include "objective_status.h"
 #include "player.h"
-#include "player_2.h"
 #include "stan.h"
 
 // bss

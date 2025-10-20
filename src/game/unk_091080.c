@@ -2,7 +2,7 @@
 #include <bondtypes.h>
 #include "unk_091080.h"
 #include "bondview.h"
-#include "player_2.h"
+#include "player.h"
 #include "gun.h"
 #include "math.h"
 #include "fr.h"

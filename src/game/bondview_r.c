@@ -12,7 +12,6 @@
 #include "game/gun.h"
 #include "game/lvl_text.h"
 #include "game/player.h"
-#include "game/player_2.h"
 #include "game/ramromreplay.h"
 #include "game/stan.h"
 

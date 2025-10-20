@@ -9,7 +9,6 @@
 #include "textrelated.h"
 #include "unk_0C0A70.h"
 #include "player.h"
-#include "player_2.h"
 #include "mp_watch.h"
 #include "gun.h"
 #include "front.h"

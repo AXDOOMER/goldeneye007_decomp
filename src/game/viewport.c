@@ -4,7 +4,7 @@
 #include <PR/os.h>
 #include <PR/gbi.h>
 #include <macro.h>
-#include "player_2.h"
+#include "player.h"
 #include <fr.h>
 
 // bss

@@ -25,7 +25,6 @@
 #include "matrixmath.h"
 #include "objecthandler.h"
 #include "player.h"
-#include "player_2.h"
 #include "stan.h"
 #include "bondhead.h"
 #include "unk_0A1DA0.h"

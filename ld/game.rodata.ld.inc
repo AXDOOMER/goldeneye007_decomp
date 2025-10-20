@@ -89,8 +89,8 @@
       build/OUTCODE/src/game/cheat_buttons.o (.rodata);
       build/OUTCODE/src/game/unk_092890.o (.rodata);
       build/OUTCODE/src/game/unk_092E50.o (.rodata);
+      build/OUTCODE/src/game/sky.o (.rodata);
       build/OUTCODE/src/game/player.o (.rodata);
-      build/OUTCODE/src/game/player_2.o (.rodata);
       build/OUTCODE/src/game/crc.o (.rodata);
       build/OUTCODE/src/game/chrObjRandom.o (.rodata);
       build/OUTCODE/src/game/unk_09B7A0.o (.rodata);

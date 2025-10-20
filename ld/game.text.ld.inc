@@ -89,8 +89,8 @@
       build/OUTCODE/src/game/cheat_buttons.o (.text);
       build/OUTCODE/src/game/unk_092890.o (.text);
       build/OUTCODE/src/game/unk_092E50.o (.text);
+      build/OUTCODE/src/game/sky.o (.text);
       build/OUTCODE/src/game/player.o (.text);
-      build/OUTCODE/src/game/player_2.o (.text);
       build/OUTCODE/src/game/crc.o (.text);
       build/OUTCODE/src/game/chrObjRandom.o (.text);
       build/OUTCODE/src/game/unk_09B7A0.o (.text);
