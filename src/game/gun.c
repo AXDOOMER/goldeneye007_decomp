@@ -2063,7 +2063,7 @@ void generate_player_thrown_grenade(s32 hand)
             wor->projectile->unk94 = 0.13333333f;
             wor->projectile->refreshrate = THROWN_ITEM_REFRESH_RATE;
 
-            sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, 4, NULL);
+            sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, GRENADE_THROW_SFX, NULL);
 
             if (sfx_state != NULL)
             {
@@ -2342,7 +2342,7 @@ void generate_player_thrown_object(s32 hand)
             wor->projectile->unk8C = 0.1f;
             wor->projectile->refreshrate = THROWN_ITEM_REFRESH_RATE;
 
-            sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, 4, NULL);
+            sfx_state = sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, GRENADE_THROW_SFX, NULL);
 
             if (sfx_state != NULL)
             {
@@ -12916,7 +12916,7 @@ void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop
         {
             if (item == ITEM_LASER)
             {
-                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x5B, sound_state);
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, RICO_LASER1_SFX, sound_state);
             }
             else
             {
@@ -12933,7 +12933,7 @@ void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop
         {
             if (item == ITEM_KNIFE)
             {
-                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x4A, sound_state);
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, HIT_BULLET_SNOW_SFX, sound_state);
             }
             else if (item == ITEM_FIST)
             {
@@ -12985,7 +12985,7 @@ void sub_GAME_7F064720(coord3d* pos)
 
     if (sound != NULL)
     {
-        sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x46, sound);
+        sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, HIT_BULLET_GLASS_SFX, sound);
 
         link = sound->link.next;
         if (link != NULL)
@@ -21863,7 +21863,7 @@ void analyzeGEKey(void)
     {
    	    HUDMESSAGEBOTTOM(langGet(getStringID(LGUN, GUN_STR_D8_ANALYZINGTHEGOLDENEYEKEY_LF))); //Analyzing the GoldenEye key...
     	g_CurrentPlayer->copiedgoldeneye = TRUE;
-    	sndPlaySfx(g_musicSfxBufferPtr, 0xf5, 0x0);
+    	sndPlaySfx(g_musicSfxBufferPtr, KEY_ANALYSER_SFX, 0x0);
     	currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_GOLDENEYEKEY);
     	currentPlayerEquipWeaponWrapper(GUNLEFT, ITEM_UNARMED);
   	}
@@ -23760,7 +23760,7 @@ void update_bullet_casing(CasingRecord* casing)
             if ((g_CurrentPlayer->hands[0].when_detonating_mines_is_0 != 2) && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 2))
             {
                 // Play bullet casing rolling of floor sound
-                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, 0x7A, (ALSoundState* ) &dword_CODE_bss_80075DB0);
+                sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, CART_SPENT_SFX, (ALSoundState* ) &dword_CODE_bss_80075DB0);
             }
         }
 

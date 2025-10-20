@@ -32682,7 +32682,7 @@ INV_ITEM_TYPE propobjInteract(PropRecord *prop) //#MATCH
 
     if (obj->type == PROPDEF_ALARM)
     {
-        sndPlaySfx(g_musicSfxBufferPtr, 0xBA, 0);
+        sndPlaySfx(g_musicSfxBufferPtr, ALARM_SWITCH_SFX, 0);
         if (alarmIsActive())
         {
             alarmDeactivate();

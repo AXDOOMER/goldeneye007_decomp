@@ -2606,7 +2606,7 @@ void handle_mp_respawn_and_some_things(void) {
                             temp_s0_2->unk84 = (f32) temp_s0_2->unk80; // unk80 and unk84 invalid??
                         }
                         if (var_s3 == 0) {
-                            chrobjSndCreatePostEventDefault(sndPlaySfx(g_musicSfxBufferPtr, 0x52, 0), prop_s1->pos);
+                            chrobjSndCreatePostEventDefault(sndPlaySfx(g_musicSfxBufferPtr, OBJ_REGEN_SFX, 0), prop_s1->pos);
                         }
                     }
                 }

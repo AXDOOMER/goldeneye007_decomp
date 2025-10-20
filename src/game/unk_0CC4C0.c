@@ -19,91 +19,91 @@ s32 dword_CODE_bss_8008D348;
 
 // data
 //D:8004E760
-u16 D_8004E760[] = {0xD0, 0xD1};
+u16 D_8004E760[] = {HIT_BULLET_STONE1_SFX, HIT_BULLET_STONE2_SFX};
 //D:8004E764
 u8 D_8004E764[] = {0x7, 0x0, 0x0, 0x0};
 //D:8004E768
 struct image_sound isnd_default = {&D_8004E760, &D_8004E764, 0x0, 0x1};
 
 //D:8004E774
-u16 D_8004E774[] = {0xD0, 0xD1};
+u16 D_8004E774[] = {HIT_BULLET_STONE1_SFX, HIT_BULLET_STONE2_SFX};
 //D:8004E778
 u8 D_8004E778[] = {0x1, 0x0, 0x0, 0x0};
 //D:8004E77C
 struct image_sound isnd_stone = {&D_8004E774, &D_8004E778, 0x2, 0x1};
 
 //D:8004E788
-u16 D_8004E788[] = {0x4B, 0xD9};
+u16 D_8004E788[] = {HIT_BULLET_WOOD_SFX, HIT_BULLET_WOOD2_SFX};
 //D:8004E78C
 u8 D_8004E78C[] = {0x1, 0x0, 0x0, 0x0};
 //D:8004E790
 struct image_sound isnd_wood = {&D_8004E788, &D_8004E78C, 0x2, 0x1};
 
 //D:8004E79C
-u16 D_8004E79C[] = {0x48, 0xF0, 0xEF, 0x00};
+u16 D_8004E79C[] = {HIT_BULLET_METAL_A_SFX, HIT_BULLET_METAL_A4_SFX, HIT_BULLET_METAL_A3_SFX, 0x00};
 //D:8004E7A4
 u8 D_8004E7A4[] = {0x7, 0x0, 0x0, 0x0};
 //D:8004E7A8
 struct image_sound isnd_metal = {&D_8004E79C, &D_8004E7A4, 0x3, 0x1};
 
 //D:8004E7B4
-u16 D_8004E7B4[] = {0x46, 0x00};
+u16 D_8004E7B4[] = {HIT_BULLET_GLASS_SFX, 0x00};
 //D:8004E7B8
 u8 D_8004E7B8[] = {0x4, 0x5, 0x6, 0x0};
 //D:8004E7BC
 struct image_sound isnd_glass = {&D_8004E7B4, &D_8004E7B8, 0x1, 0x3};
 
 //D:8004E7C8
-u16 D_8004E7C8[] = {0x4C, 0x00};
+u16 D_8004E7C8[] = {HIT_BULLET_WATER_SFX, 0x00};
 //D:8004E7CC
 u8 D_8004E7CC[] = {0, 0, 0, 0};
 //D:8004E7D0
 struct image_sound isnd_water = {&D_8004E7C8, &D_8004E7CC, 0x1, 0x0};
 
 //D:8004E7DC
-u16 D_8004E7DC[] = {0x4A, 0x00};
+u16 D_8004E7DC[] = {HIT_BULLET_SNOW_SFX, 0x00};
 //D:8004E7E0
 u8 D_8004E7E0[] = {0x1, 0x0, 0x0, 0x0};
 //D:8004E7E4
 struct image_sound isnd_snow = {&D_8004E7DC, &D_8004E7E0, 0x1, 0x1};
 
 //D:8004E7F0
-u16 D_8004E7F0[] = {0xDC, 0xB9};
+u16 D_8004E7F0[] = {HIT_BULLET_DIRT1_SFX, HIT_BULLET_DIRT2_SFX};
 //D:8004E7F4
 u8 D_8004E7F4[] = {0x2, 0x0, 0x0, 0x0};
 //D:8004E7F8
 struct image_sound isnd_dirt = {&D_8004E7F0, &D_8004E7F4, 0x2, 0x1};
 
 //D:8004E804
-u16 D_8004E804[] = {0xE7, 0xE6, 0xE0, 0x00};
+u16 D_8004E804[] = {HIT_BULLET_MUD1_SFX, HIT_BULLET_MUD2_SFX, HIT_BULLET_MUD3_SFX, 0x00};
 //D:8004E80C
 u8 D_8004E80C[] = {0x2, 0x0, 0x0, 0x0};
 //D:8004E810
 struct image_sound isnd_mud = {&D_8004E804, &D_8004E80C, 0x3, 0x1};
 
 //D:8004E81C
-u16 D_8004E81C[] = {0xD4, 0x00};
+u16 D_8004E81C[] = {HIT_BULLET_TILE_SFX, 0x00};
 //D:8004E820
 u8 D_8004E820[] = {0x1, 0x0, 0x0, 0x0};
 //D:8004E824
 struct image_sound isnd_tile = {&D_8004E81C, &D_8004E820, 0x1, 0x1};
 
 //D:8004E830
-u16 D_8004E830[] = {0x78, 0xDD};
+u16 D_8004E830[] = {HIT_METAL_OBJECT1_SFX, HIT_METAL_OBJECT2_SFX};
 //D:8004E834
 u8 D_8004E834[] = {0x1, 0x7, 0x0, 0x0};
 //D:8004E838
 struct image_sound isnd_metalobj = {&D_8004E830, &D_8004E834, 0x2, 0x2};
 
 //D:8004E844
-u16 D_8004E844[] = {0x45, 0x00};
+u16 D_8004E844[] = {HIT_BULLET_FLESH_SFX, 0x00};
 //D:8004E848
 u8 D_8004E848[] = {0x2, 0x0, 0x0, 0x0};
 //D:8004E84C
 struct image_sound isnd_chr = {&D_8004E844, &D_8004E848, 0x1, 0x1};
 
 //D:8004E858
-u16 D_8004E858[] = {0x46, 0x00};
+u16 D_8004E858[] = {HIT_BULLET_GLASS_SFX, 0x00};
 //D:8004E85C
 u8 D_8004E85C[] = {0x11, 0x12, 0x13, 0x0};
 //D:8004E860

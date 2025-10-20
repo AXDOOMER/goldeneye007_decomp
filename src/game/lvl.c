@@ -1346,7 +1346,7 @@ void lvlManageMpGame(void)
             // sound alarm when game is about to end (10 seconds before end)
             if ((sp180 >= (g_MpTime - 0x258)) && (g_MpSoundStateRelated == 0) && (lvlGetControlsLockedFlag() == 0))
             {
-                sndPlaySfx(g_musicSfxBufferPtr, 0xA1, &g_MpSoundStateRelated);
+                sndPlaySfx(g_musicSfxBufferPtr, ALARM1_SFX, &g_MpSoundStateRelated);
             }
 
             // stop alarm

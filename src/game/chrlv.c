@@ -2439,9 +2439,9 @@ void play_sound_for_shot_actor(ChrRecord *self)
         {
             //s16 sounds[26] = male_guard_yelps;
             s16 sounds[] = {
-                0x86,  0x87,  0x88,  0x89,  0x8A,  0x8B,  0x8C,  0x8D,  0x8E,  0x8F,
-                0x90,  0x91,  0x92,  0x93,  0x94,  0x95,  0x96,  0x97,  0x98,  0x99,
-                0x9A,  0x9B,  0x9C,  0x9D,  0x9E
+                GET_HIT_MALE0_SFX,  GET_HIT_MALE1_SFX,  GET_HIT_MALE2_SFX,  GET_HIT_MALE3_SFX,  GET_HIT_MALE4_SFX,  GET_HIT_MALE5_SFX,  GET_HIT_MALE6_SFX,  GET_HIT_MALE7_SFX,  GET_HIT_MALE8_SFX,  GET_HIT_MALE9_SFX,
+                GET_HIT_MALE10_SFX, GET_HIT_MALE11_SFX, GET_HIT_MALE12_SFX, GET_HIT_MALE13_SFX, GET_HIT_MALE14_SFX, GET_HIT_MALE15_SFX, GET_HIT_MALE16_SFX, GET_HIT_MALE17_SFX, GET_HIT_MALE18_SFX, GET_HIT_MALE19_SFX,
+                GET_HIT_MALE20_SFX, GET_HIT_MALE21_SFX, GET_HIT_MALE22_SFX, GET_HIT_MALE23_SFX, GET_HIT_MALE24_SFX
             };
 
             sndstate = sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, sounds[male_guard_yelp_counter], NULL);
@@ -2456,7 +2456,7 @@ void play_sound_for_shot_actor(ChrRecord *self)
         {
             //s16 sounds[4] = female_guard_yelps;
             s16 sounds[] = {
-                0xD,   0xE,   0xF
+                GET_HIT_GIRL1_SFX, GET_HIT_GIRL2_SFX, GET_HIT_GIRL3_SFX
             };
 
             sndstate = sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, sounds[female_guard_yelp_counter], NULL);
@@ -5521,7 +5521,7 @@ void chrlvTickAnim(ChrRecord *self)
     {
         if (((D_80048380 & 1) == 0) && (chrGetDistanceToBond(self) < 800.0f))
         {
-            chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 0x101, 0), &self->prop->pos);
+            chrobjSndCreatePostEventDefault(sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, SNEEZE_SFX, 0), &self->prop->pos);
         }
 
         self->chrflags |= CHRFLAG_02000000;
@@ -7200,11 +7200,11 @@ void chrlvFireWeaponRelated(ChrRecord *self, s32 hand)
 
                                     if (sp208->projectile->sound1 == NULL)
                                     {
-                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->projectile->sound1);
+                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, ROCKET_LAUNCH_SFX, (ALSoundState *)&sp208->projectile->sound1);
                                     }
                                     else if (sp208->projectile->sound2 == NULL)
                                     {
-                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, 1, (ALSoundState *)&sp208->projectile->sound2);
+                                        sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, ROCKET_LAUNCH_SFX, (ALSoundState *)&sp208->projectile->sound2);
                                     }
                                 }
                             }

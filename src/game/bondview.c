@@ -7193,7 +7193,7 @@ void bondviewWatchAnimationTick(void)
         {
             if ((g_CurrentPlayer->watch_pause_time == 1) && (g_CurrentPlayer->field_21C != 0))
             {
-                sndPlaySfx(g_musicSfxBufferPtr, 0xED, NULL);
+                sndPlaySfx(g_musicSfxBufferPtr, WATCH_ON_SFX, NULL);
                 g_CurrentPlayer->field_21C = 0;
             }
 
@@ -7231,7 +7231,7 @@ void bondviewWatchAnimationTick(void)
                 g_CurrentPlayer->watch_animation_state = WATCH_ANIMATION_0x6;
                 g_CurrentPlayer->watch_pause_time = 1;
                 g_CurrentPlayer->timer_1C4 = 0;
-                sndPlaySfx(g_musicSfxBufferPtr, 0xEE, NULL);
+                sndPlaySfx(g_musicSfxBufferPtr, WATCH_OFF_SFX, NULL);
             }
         }
 
@@ -16759,10 +16759,10 @@ void record_damage_kills(f32 damage_amount, f32 vectorx, f32 vectorz, s32 player
 #if defined(VERSION_EU) || defined(VERSION_JP)
                 if (!lvlGetControlsLockedFlag())
                 {
-                    sndPlaySfx(g_musicSfxBufferPtr, 0x44, 0);
+                    sndPlaySfx(g_musicSfxBufferPtr, BOND_GET_HIT1_SFX, 0);
                 }
 #else
-                sndPlaySfx(g_musicSfxBufferPtr, 0x44, 0);
+                sndPlaySfx(g_musicSfxBufferPtr, BOND_GET_HIT1_SFX, 0);
 #endif
             }
         }
