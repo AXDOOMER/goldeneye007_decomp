@@ -16,7 +16,7 @@
 #include "chrai.h"
 #include "chr_b.h"
 #include "chrlv.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "debugmenu_handler.h"
 #include "file.h"
 #include "front.h"

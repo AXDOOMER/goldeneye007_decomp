@@ -54,7 +54,7 @@
       build/OUTCODE/src/game/chrlv.o (.data);
       build/OUTCODE/src/game/chrai.o (.data);
       build/OUTCODE/src/game/chrprop.o (.data);
-      build/OUTCODE/src/game/chrobjhandler.o (.data);
+      build/OUTCODE/src/game/propobj.o (.data);
       build/OUTCODE/src/game/loadobjectmodel.o (.data);
       build/OUTCODE/src/game/objective_status.o (.data);
       build/OUTCODE/src/game/objective_status2.o (.data);

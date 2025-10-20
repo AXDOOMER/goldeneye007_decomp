@@ -9,7 +9,7 @@
 #include "bondinv.h"
 #include "gun.h"
 #include "chrobjdata.h"
-#include "game/chrobjhandler.h"
+#include "game/propobj.h"
 #include "game/objective_status.h"
 #include "quaternion.h"
 #include "image_bank.h"

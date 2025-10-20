@@ -10,7 +10,7 @@
 #include "chr.h"
 #include "chrai.h"
 #include "chrlv.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "gun.h"
 #include "lvl_text.h"
 #include "math_floor.h"
@@ -20,7 +20,7 @@
 #include "chraidata.h"
 #include <limits.h>
 #include "objecthandler.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "initanitable.h"
 #include <random.h>
 #include "lvl.h"

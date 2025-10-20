@@ -10,7 +10,7 @@
 #include "cheat_buttons.h"
 #include "chrai.h"
 #include "chrlv.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "dyn.h"
 #include "explosions.h"
 #include "fr.h"

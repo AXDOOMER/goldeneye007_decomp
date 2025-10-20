@@ -273,11 +273,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/chr.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/chr.o
 3d3dd3bc067d8f01ebfb0ee1d6c26367,.data,build/j/src/game/chr.o
 75c67eb457d560a91d450778f4899607,.rodata,build/j/src/game/chr.o
-50c4cec1013ce8d71011702384db6080,.text,build/j/src/game/chrobjhandler.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/chrobjhandler.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/chrobjhandler.o
-d6999d725ff5515f392fcd371be980b7,.data,build/j/src/game/chrobjhandler.o
-671a2a10bd7cd065b476c2fb2f5cbe45,.rodata,build/j/src/game/chrobjhandler.o
+50c4cec1013ce8d71011702384db6080,.text,build/j/src/game/propobj.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/propobj.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/propobj.o
+d6999d725ff5515f392fcd371be980b7,.data,build/j/src/game/propobj.o
+671a2a10bd7cd065b476c2fb2f5cbe45,.rodata,build/j/src/game/propobj.o
 e51cbd1536b829abf8760560fe767afb,.text,build/j/src/game/chrObjRandom.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/j/src/game/chrObjRandom.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/j/src/game/chrObjRandom.o

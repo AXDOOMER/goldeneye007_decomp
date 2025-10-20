@@ -20,7 +20,7 @@
 #include "front.h"
 #include "bondinv.h"
 #include "player.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "cleanup_objects.h"
 #include "explosions.h"
 #include "chrai.h"

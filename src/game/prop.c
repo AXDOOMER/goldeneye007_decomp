@@ -7,7 +7,7 @@
 #include "chr.h"
 #include "chrai.h"
 #include "chrlv.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "inititemslots.h"
 #include "initobjects.h"
 #include "initpathtablesomething.h"

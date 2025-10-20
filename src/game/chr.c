@@ -12,7 +12,7 @@
 #include "chrai.h"
 #include "chrlv.h"
 #include "chrobjdata.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "explosions.h"
 #include "file.h"
 #include "gun.h"

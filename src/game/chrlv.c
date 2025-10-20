@@ -12,7 +12,7 @@
 #include "chr.h"
 #include "chr_b.h"
 #include "chrai.h"
-#include "chrobjhandler.h"
+#include "propobj.h"
 #include "file.h"
 #include "fog.h"
 #include "front.h"
