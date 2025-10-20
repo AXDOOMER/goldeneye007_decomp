@@ -13,7 +13,7 @@
 #include "file2.h"
 #include "front.h"
 #include "gun.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "objecthandler.h"
 #include "player.h"
 #include "assets/obseg/text/LmiscE.h"

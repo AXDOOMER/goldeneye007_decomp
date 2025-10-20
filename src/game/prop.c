@@ -13,7 +13,7 @@
 #include "initpathtablesomething.h"
 #include "limits.h"
 #include "loadobjectmodel.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "math_atan2f.h"
 #include "matrixmath.h"
 #include "mp_weapon.h"

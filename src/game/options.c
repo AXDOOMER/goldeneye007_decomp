@@ -11,7 +11,7 @@
 #include "dyn.h"
 #include "file.h"
 #include "front.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "player.h"
 #include "textrelated.h"
 #include "glass.h"

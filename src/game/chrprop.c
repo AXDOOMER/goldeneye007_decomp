@@ -23,7 +23,7 @@
 #include "initanitable.h"
 #include "loadobjectmodel.h"
 #include "lvl.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "math_atan2f.h"
 #include "math_ceil.h"
 #include "math_floor.h"

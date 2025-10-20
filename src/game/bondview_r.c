@@ -10,7 +10,7 @@
 #include "game/chrai.h"
 #include "game/front.h"
 #include "game/gun.h"
-#include "game/lvl_text.h"
+#include "game/language.h"
 #include "game/player.h"
 #include "game/ramromreplay.h"
 #include "game/stan.h"

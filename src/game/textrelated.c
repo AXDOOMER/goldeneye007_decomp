@@ -2,7 +2,7 @@
 #include <memp.h>
 #include "textrelated.h"
 #include "bondtypes.h"
-#include "game/lvl_text.h"
+#include "game/language.h"
 
 #define SPACE_WIDTH 5
 

@@ -28,7 +28,7 @@
 #include "explosion.h"
 #include "bgfog.h"
 #include "lvl.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "math_floor.h"
 #include "math_asinfacosf.h"
 #include "math_atan2f.h"

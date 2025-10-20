@@ -15,7 +15,7 @@
 #include <token.h>
 #include "debugmenu_handler.h"
 #include "lvl.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "initcheattext.h"
 #include "front.h"
 #include "bondinv.h"

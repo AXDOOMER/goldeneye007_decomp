@@ -6,7 +6,7 @@
 #include <bondconstants.h>
 #include <boss.h>
 #include <fr.h>
-#include "lvl_text.h"
+#include "language.h"
 #include <joy.h>
 #include <music.h>
 #include <random.h>

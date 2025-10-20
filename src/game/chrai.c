@@ -12,7 +12,7 @@
 #include "chraction.h"
 #include "propobj.h"
 #include "gun.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "math_floor.h"
 #include "math_ceil.h"
 #include "math_atan2f.h"

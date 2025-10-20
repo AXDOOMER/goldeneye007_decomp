@@ -3,7 +3,7 @@
 #include <bondtypes.h>
 #include "objective_status.h"
 #include "assets/obseg/text/LmiscE.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "PR/os.h"
 #include "str.h"
 #include "bondview.h"

@@ -13,7 +13,7 @@
 #include "gun.h"
 #include "front.h"
 #include "lvl.h"
-#include "lvl_text.h"
+#include "language.h"
 #include "mp_music.h"
 #include "file.h"
 #include "assets/obseg/text/LmpmenuE.h"

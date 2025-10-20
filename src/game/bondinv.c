@@ -4,7 +4,7 @@
 #include "player.h"
 #include "textrelated.h"
 #include <bondconstants.h>
-#include "lvl_text.h"
+#include "language.h"
 #include "bondinv.h"
 #include "gun.h"
 #include "lvl.h"

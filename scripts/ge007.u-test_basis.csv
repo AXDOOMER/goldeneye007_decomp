@@ -588,11 +588,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/lvl.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/lvl.o
 778b187770df6551fc254a75c066d47a,.data,build/u/src/game/lvl.o
 43ee36987e8d9804ad1f15d27b6e0171,.rodata,build/u/src/game/lvl.o
-08a5bb8287043d4e671605f88cc077c1,.text,build/u/src/game/lvl_text.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/lvl_text.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/lvl_text.o
-b608913d417cf5898f46d451d2ee7e36,.data,build/u/src/game/lvl_text.o
-02a3f90183d88a10b9038d5ebc53aa14,.rodata,build/u/src/game/lvl_text.o
+08a5bb8287043d4e671605f88cc077c1,.text,build/u/src/game/language.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/language.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/language.o
+b608913d417cf5898f46d451d2ee7e36,.data,build/u/src/game/language.o
+02a3f90183d88a10b9038d5ebc53aa14,.rodata,build/u/src/game/language.o
 623da8353735cbacda28be429ee6d8f5,.text,build/u/src/game/math_asinacos.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/math_asinacos.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/math_asinacos.o
