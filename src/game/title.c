@@ -844,7 +844,7 @@ s32 isGunBarrelInMode2(void) {
 
 #ifdef NONMATCHING
 // Minor reordering + regalloc
-void sub_GAME_7F01B0E0(s32, s32);
+void rle_expand_8bit(s32, s32);
 extern void *unknown2;
 extern void *unknown2_end;
 void sub_GAME_7F008DE4(u8 **addr, s32 *size) {
@@ -853,7 +853,7 @@ void sub_GAME_7F008DE4(u8 **addr, s32 *size) {
     *addr += 0x40400;
     dword_CODE_bss_80069588 = *addr;
     romCopy(dword_CODE_bss_80069588, &unknown2, ALIGN64_V2(((u32)&unknown2_end - (u32)&unknown2)));
-    sub_GAME_7F01B0E0(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
+    rle_expand_8bit(dword_CODE_bss_80069588, dword_CODE_bss_8006958C);
 }
 #else
 GLOBAL_ASM(
@@ -892,7 +892,7 @@ glabel sub_GAME_7F008DE4
 /* 03D98C 7F008E5C 3C048007 */  lui   $a0, %hi(dword_CODE_bss_80069588)
 /* 03D990 7F008E60 3C058007 */  lui   $a1, %hi(dword_CODE_bss_8006958C)
 /* 03D994 7F008E64 8CA5958C */  lw    $a1, %lo(dword_CODE_bss_8006958C)($a1)
-/* 03D998 7F008E68 0FC06C38 */  jal   sub_GAME_7F01B0E0
+/* 03D998 7F008E68 0FC06C38 */  jal   rle_expand_8bit
 /* 03D99C 7F008E6C 8C849588 */   lw    $a0, %lo(dword_CODE_bss_80069588)($a0)
 /* 03D9A0 7F008E70 8FBF0014 */  lw    $ra, 0x14($sp)
 /* 03D9A4 7F008E74 27BD0018 */  addiu $sp, $sp, 0x18

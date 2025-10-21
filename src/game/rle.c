@@ -3,40 +3,39 @@
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01B0E0(void) {
-    s32 temp_a2;
-    u8 *temp_a1;
-    u8 temp_v0;
-    void *phi_a3;
-    u8 *phi_a1;
-    s32 phi_v0;
-    s32 phi_a2;
+void rle_expand_8bit(void *src, u8 *dst)
+{
+    u8 *p;
+    u16 w;
+    u16 h;
+    u32 remaining;
+    u8 *run;
+    u8 count;
+    u8 value;
+    u32 i;
 
-    phi_a3 = arg0 + 0xA;
-    phi_a2 = arg0->unk0 * arg0->unk2;
-    phi_a1 = arg1;
-    do {
-        temp_v0 = phi_a3->unk0;
-        temp_a2 = phi_a2 - temp_v0;
-        phi_a3 += 2;
-        phi_v0 = temp_v0 - 1;
-        phi_a2 = temp_a2;
-loop_2:
-        *phi_a1 = phi_a3->unk1;
-        temp_a1 = phi_a1 + 1;
-        phi_a1 = temp_a1;
-        phi_v0 += -1;
-        phi_a1 = temp_a1;
-        if (phi_v0 > 0) {
-            goto loop_2;
+    p = (u8 *)src;
+    w = *(u16 *)(p + 0);
+    h = *(u16 *)(p + 2);
+    remaining = (u32)w * (u32)h;
+    run = p + 0xA;
+
+    while (remaining > 0) {
+        count = run[0];
+        value = run[1];
+        run += 2;
+        remaining -= (u32)count;
+        i = (u32)count;
+        while (i > 0) {
+            *dst++ = value;
+            i--;
         }
-    } while (temp_a2 > 0);
-
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01B0E0
+glabel rle_expand_8bit
 /* 04FC10 7F01B0E0 94820000 */  lhu   $v0, ($a0)
 /* 04FC14 7F01B0E4 94830002 */  lhu   $v1, 2($a0)
 /* 04FC18 7F01B0E8 2487000A */  addiu $a3, $a0, 0xa
@@ -66,13 +65,49 @@ glabel sub_GAME_7F01B0E0
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01B134(void) {
+void rle_expand_rgb_to_u16_5551(void *src, u16 *dst)
+{
+    u8 *p;
+    u16 w;
+    u16 h;
+    u32 remaining;
+    u8 *run;
+    u8 count;
+    u8 c1;
+    u8 c2;
+    u8 c3;
+    u16 packed;
+    u32 i;
 
+    p = (u8 *)src;
+    w = *(u16 *)(p + 0);
+    h = *(u16 *)(p + 2);
+    remaining = (u32)w * (u32)h;
+    run = p + 0xA;
+
+    while (remaining > 0) {
+        count = run[0];
+        c1 = run[1];
+        c2 = run[2];
+        c3 = run[3];
+        run += 4;
+        remaining -= (u32)count;
+
+        packed = (u16)((((u32)(c3 >> 3)) << 11) |
+                       (((u32)(c2 >> 3)) << 6) |
+                       (((u32)(c1 >> 3)) << 1) |
+                       1u);
+        i = (u32)count;
+        while (i > 0) {
+            *dst++ = packed;
+            i--;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01B134
+glabel rle_expand_rgb_to_u16_5551
 /* 04FC64 7F01B134 27BDFFF8 */  addiu $sp, $sp, -8
 /* 04FC68 7F01B138 AFB00004 */  sw    $s0, 4($sp)
 /* 04FC6C 7F01B13C 94820000 */  lhu   $v0, ($a0)
@@ -118,13 +153,57 @@ glabel sub_GAME_7F01B134
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F01B1C8(void) {
+void rle_expand_rgb_to_rgba32(void *src, u8 *dst)
+{
+    u8 *p;
+    u16 width;
+    u16 height;
+    u8 *run;
+    u8 *out;
+    u32 remaining;
+    s32 count_signed;
+    u8 c0;
+    u8 c1;
+    u8 c2;
+    u8 alpha;
 
+    p = (u8 *)src;
+    width = *(u16 *)(p + 0);
+    height = *(u16 *)(p + 2);
+    out = dst;
+    run = p + 0xA;
+    remaining = (u32)width * (u32)height;
+    alpha = 0xFF;
+
+    while (remaining > 0) {
+        count_signed = (s32)run[0];
+        c0 = run[1];
+        c1 = run[2];
+        c2 = run[3];
+        run += 4;
+        remaining -= (u32)count_signed;
+
+        count_signed = count_signed - 1;
+
+        for (;;) {
+            out[0] = c2;
+            out[1] = c1;
+            out[2] = c0;
+            out[3] = alpha;
+            out += 4;
+
+            if (count_signed > 0) {
+                count_signed = count_signed - 1;
+                continue;
+            }
+            break;
+        }
+    }
 }
 #else
 GLOBAL_ASM(
 .text
-glabel sub_GAME_7F01B1C8
+glabel rle_expand_rgb_to_rgba32
 /* 04FCF8 7F01B1C8 94830000 */  lhu   $v1, ($a0)
 /* 04FCFC 7F01B1CC 94860002 */  lhu   $a2, 2($a0)
 /* 04FD00 7F01B1D0 00A01025 */  move  $v0, $a1

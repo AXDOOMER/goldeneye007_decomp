@@ -42,7 +42,7 @@
       build/OUTCODE/src/game/cleanplayersound.o (.data);
       build/OUTCODE/src/game/title.o (.data);
       build/OUTCODE/src/game/front.o (.data);
-      build/OUTCODE/src/game/unk_01B0E0.o (.data);
+      build/OUTCODE/src/game/rle.o (.data);
       build/OUTCODE/src/game/unk_01B240.o (.data);
       build/OUTCODE/src/game/unk_01BAE0.o (.data);
       build/OUTCODE/src/game/blood_animation.o (.data);

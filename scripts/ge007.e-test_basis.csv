@@ -768,11 +768,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/cleanplayersound.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/cleanplayersound.o
 d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/cleanplayersound.o
 d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/cleanplayersound.o
-7e46aa3c9b889a57f29a750575d15d57,.text,build/e/src/game/unk_01B0E0.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/unk_01B0E0.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/unk_01B0E0.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/unk_01B0E0.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/unk_01B0E0.o
+7e46aa3c9b889a57f29a750575d15d57,.text,build/e/src/game/rle.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/rle.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/rle.o
+d41d8cd98f00b204e9800998ecf8427e,.data,build/e/src/game/rle.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/e/src/game/rle.o
 e8b537a19dbef522cab0d218d9e0cd28,.text,build/e/src/game/unk_01B240.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/unk_01B240.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/unk_01B240.o
