@@ -54,7 +54,7 @@
 #include "viewport.h"
 #include "stan.h"
 #include "gun.h"
-#include "unk_091080.h"
+#include "debug_camera.h"
 #include "mp_music.h"
 #include "bgroomtrans.h"
 #include "unk_092E50.h"

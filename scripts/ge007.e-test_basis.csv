@@ -788,11 +788,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/bondhead.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/bondhead.o
 1f41ef4e892dded7bd385975a10cc847,.data,build/e/src/game/bondhead.o
 99f9db7514cd824a3f06abb74d0c6f50,.rodata,build/e/src/game/bondhead.o
-eba52185e5d35cafd4ae341cc5808a3f,.text,build/e/src/game/unk_091080.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/unk_091080.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/unk_091080.o
-8b28117b30ba1eb01aece3db381370ae,.data,build/e/src/game/unk_091080.o
-79936c25e933da15f6d69407363f5b1b,.rodata,build/e/src/game/unk_091080.o
+eba52185e5d35cafd4ae341cc5808a3f,.text,build/e/src/game/debug_camera.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/debug_camera.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/debug_camera.o
+8b28117b30ba1eb01aece3db381370ae,.data,build/e/src/game/debug_camera.o
+79936c25e933da15f6d69407363f5b1b,.rodata,build/e/src/game/debug_camera.o
 9edfef9597ffff8486766db887b8a448,.text,build/e/src/game/line_tri_intersect.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/e/src/game/line_tri_intersect.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/e/src/game/line_tri_intersect.o

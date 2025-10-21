@@ -80,7 +80,7 @@
       build/OUTCODE/src/game/padhalllv.o (.bss);
       build/OUTCODE/src/game/debugmenu_08FE00.o (.bss);
       build/OUTCODE/src/game/debugmenu_handler.o (.bss);
-      build/OUTCODE/src/game/unk_091080.o (.bss);
+      build/OUTCODE/src/game/debug_camera.o (.bss);
       build/OUTCODE/src/game/chraidata.o (.bss);
       build/OUTCODE/src/game/pobjdata.o (.bss);
       build/OUTCODE/src/game/gobjdata.o (.bss);

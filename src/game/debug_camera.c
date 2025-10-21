@@ -1,6 +1,6 @@
 #include <ultra64.h>
 #include <bondtypes.h>
-#include "unk_091080.h"
+#include "debug_camera.h"
 #include "bondview.h"
 #include "player.h"
 #include "gun.h"
