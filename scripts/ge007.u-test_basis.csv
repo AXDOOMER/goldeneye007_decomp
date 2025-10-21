@@ -808,11 +808,11 @@ d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_091080.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_091080.o
 8b28117b30ba1eb01aece3db381370ae,.data,build/u/src/game/unk_091080.o
 79936c25e933da15f6d69407363f5b1b,.rodata,build/u/src/game/unk_091080.o
-9edfef9597ffff8486766db887b8a448,.text,build/u/src/game/unk_092890.o
-d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_092890.o
-d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_092890.o
-d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/unk_092890.o
-d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/unk_092890.o
+9edfef9597ffff8486766db887b8a448,.text,build/u/src/game/line_tri_intersect.o
+d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/line_tri_intersect.o
+d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/line_tri_intersect.o
+d41d8cd98f00b204e9800998ecf8427e,.data,build/u/src/game/line_tri_intersect.o
+d41d8cd98f00b204e9800998ecf8427e,.rodata,build/u/src/game/line_tri_intersect.o
 8240067a2619e260e6153d7b9de421f7,.text,build/u/src/game/unk_092E50.o
 d41d8cd98f00b204e9800998ecf8427e,.code,build/u/src/game/unk_092E50.o
 d41d8cd98f00b204e9800998ecf8427e,.bss,build/u/src/game/unk_092E50.o
