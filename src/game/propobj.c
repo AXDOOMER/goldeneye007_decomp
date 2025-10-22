@@ -1302,6 +1302,9 @@ glabel set_color_shading_from_tile
 #endif
 
 
+/*
+ * Address: 0x7F0402B4
+*/
 void sub_GAME_7F0402B4(PropRecord *prop, rgba_u8 *color)
 {
     struct DoorRecord *door = prop->door;
@@ -1329,6 +1332,9 @@ void update_color_shading(rgba_u8 *dest, rgba_u8 *src)
 }
 
 
+/*
+ * Address: 0x7F040384
+*/
 void lerp_rgba_s32_with_rgba_f32(rgba_s32* dest, s32 enable, rgba_f32* src)
 {
     if (enable == 1)

@@ -1393,6 +1393,9 @@ glabel sub_GAME_7F059334
 )
 #endif
 
+/*
+ * Address: 0x7F059424
+*/
 void matrix_4x4_set_lookat(Mtxf *matrix, f32 eye_x, f32 eye_y, f32 eye_z, f32 forward_x, f32 forward_y, f32 forward_z, f32 up_x, f32 up_y, f32 up_z) {
     f32 right_x;
     f32 right_y;
@@ -1447,10 +1450,16 @@ void matrix_4x4_set_lookat(Mtxf *matrix, f32 eye_x, f32 eye_y, f32 eye_z, f32 fo
     matrix->m[3][3] = 1.0f;
 }
 
+/*
+ * Address: 0x7F059694
+*/
 void matrix_4x4_set_lookat_target(Mtxf *matrix, f32 eye_x, f32 eye_y, f32 eye_z, f32 target_x, f32 target_y, f32 target_z, f32 up_x, f32 up_y, f32 up_z) {
     matrix_4x4_set_lookat(matrix, eye_x, eye_y, eye_z, target_x - eye_x, target_y - eye_y, target_z - eye_z, up_x, up_y, up_z);
 }
 
+/*
+ * Address: 0x7F059708
+*/
 void matrix_4x4_set_basis_and_position(Mtxf *matrix, f32 pos_x, f32 pos_y, f32 pos_z, f32 basis_x, f32 basis_y, f32 basis_z, f32 up_x, f32 up_y, f32 up_z) {
     f32 right_x;
     f32 right_y;
@@ -1493,11 +1502,17 @@ void matrix_4x4_set_basis_and_position(Mtxf *matrix, f32 pos_x, f32 pos_y, f32 p
     matrix->m[3][3] = 1.0f;
 }
 
+/*
+ * Address: 0x7F059908
+*/
 void matrix_4x4_set_basis_and_position_target(Mtxf *matrix, f32 pos_x, f32 pos_y, f32 pos_z, f32 target_x, f32 target_y, f32 target_z, f32 up_x, f32 up_y, f32 up_z) {
     matrix_4x4_set_basis_and_position(matrix, pos_x, pos_y, pos_z, target_x - pos_x, target_y - pos_y, target_z - pos_z, up_x, up_y, up_z);
 }
 
 
+/*
+ * Address: 0x7F05997C
+*/
 u32 matrix_4x4_calc_depth_scale(f32 near, f32 far)
 {
     f32 sum = near + far;
@@ -1520,6 +1535,9 @@ u32 matrix_4x4_calc_depth_scale(f32 near, f32 far)
     return result;
 }
 
+/*
+ * Address: 0x7F059A48
+*/
 void matrix_4x4_set_projection(Mtxf *matrix, u16* depth_scale, f32 fovy, f32 aspect, f32 near, f32 far, f32 scale)
 {
     f32 temp = cosf(fovy * 0.5f) / sinf(fovy * 0.5f);
@@ -1545,6 +1563,9 @@ void matrix_4x4_set_projection(Mtxf *matrix, u16* depth_scale, f32 fovy, f32 asp
     }
 }
 
+/*
+ * Address: 0x7F059B58
+*/
 void matrix_4x4_set_rotation_axis_angle(Mtxf *matrix, f32 angle, f32 x, f32 y, f32 z) {
     f32 sine;
     f32 cosine;
@@ -1585,6 +1606,7 @@ void matrix_4x4_set_rotation_axis_angle(Mtxf *matrix, f32 angle, f32 x, f32 y, f
     matrix_4x4_set_identity(matrix);
 }
 
+
 void matrix_4x4_align(Mtxf *matrix, f32 angle, f32 x, f32 y, f32 z) {
     angle = RadToDeg(angle);
     guAlignF(matrix->m, angle, x, y, z);
@@ -1613,6 +1635,9 @@ void matrix_4x4_set_rotation_inverse(Mtxf *rotation, Mtxf *transpose) {
     transpose->m[3][3] = 1.0f;
 }
 
+/*
+ * Address: 0x7F059DAC
+*/
 void matrix_4x4_normalize_rotation(Mtxf *matrix, Mtxf *result) {
     f32 norm = ((matrix->m[0][0] * matrix->m[0][0]) +
                 (matrix->m[1][0] * matrix->m[1][0]) +
@@ -1636,6 +1661,9 @@ void matrix_4x4_normalize_rotation(Mtxf *matrix, Mtxf *result) {
     result->m[3][3] = 1.0f;
 }
 
+/*
+ * Address: 0x7F059E64
+*/
 void matrix_4x4_set_inverse_rotation_and_translation(Mtxf *matrix, Mtxf *result) {
     f32 norm = (matrix->m[0][0] * matrix->m[0][0]) +
                (matrix->m[1][0] * matrix->m[1][0]) +
@@ -1660,6 +1688,9 @@ void matrix_4x4_set_inverse_rotation_and_translation(Mtxf *matrix, Mtxf *result)
 }
 
 
+/*
+ * Address: 0x7F059FB8
+*/
 void matrix_4x4_invert_affine(Mtxf *matrix, Mtxf *result)
 {
     f32 f0 = 0.0f;
@@ -1690,6 +1721,9 @@ void matrix_4x4_invert_affine(Mtxf *matrix, Mtxf *result)
 }
 
 
+/*
+ * Address: 0x7F05A250
+*/
 void matrix_4x4_invert(Mtxf *matrix, Mtxf *result) {
     s32 i, j;
     f32 inv_det;
@@ -1702,6 +1736,9 @@ void matrix_4x4_invert(Mtxf *matrix, Mtxf *result) {
     }
 }
 
+/*
+ * Address: 0x7F05A310
+*/
 void matrix_4x4_calc_adjugate(Mtxf *matrix, Mtxf *result)
 {
     f32 mtx00, mtx10, mtx20, mtx30;

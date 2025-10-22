@@ -1756,7 +1756,9 @@ glabel sub_GAME_7F0B3C8C
 
 
 
-
+/*
+ * Address: 0x7F0B4034
+*/
 s32 getPriMappingBinCount(s32 room)
 {
     int i = room;
@@ -1767,7 +1769,9 @@ s32 getPriMappingBinCount(s32 room)
     return i;
 }
 
-
+/*
+ * Address: 0x7F0B4084
+*/
 s32 getSecMappingBinCount(s32 room)
 {
     int i = room;
@@ -1779,6 +1783,9 @@ s32 getSecMappingBinCount(s32 room)
 }
 
 
+/*
+ * Address: 0x7F0B40D4
+*/
 s32 getPointTableBinCount(s32 room)
 {
     int i = room;
@@ -1794,6 +1801,9 @@ s32 getPointTableBinCount(s32 room)
 
 
 
+/*
+ * Address: 0x7F0B4124
+*/
 #ifdef NONMATCHING
 void load_bg_file(LEVEL_INDEX stagenum)
 {

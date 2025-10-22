@@ -3034,6 +3034,9 @@ void modelUpdateRelationsQuick(Model *model, ModelNode *parent)
 }
 
 
+/*
+ * Address: 0x7F06EFC4
+*/
 void modelUpdateNodeRelations(Model *model)
 {
     ModelNode *node = model->obj->RootNode;
