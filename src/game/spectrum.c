@@ -1386,138 +1386,35 @@ glabel spectrum_draw_screen
 
 
 
-#ifdef NONMATCHING
-//just a quick copy paste from decomp me
-//looks like loop got partly unrolled
-u16 spectrum_input_handling(u32 arg0, u8 arg1, u8 arg2) {
-    s32 temp_v0;
-    s32 temp_v0_2;
-    u32 temp_a0;
-    u32 temp_a0_2;
-    u32 temp_a0_3;
-    u32 phi_a1;
-    s32 phi_v0;
-    u16 phi_v1;
-    u16 phi_v1_2;
-    u16 phi_v1_3;
-    u16 phi_v1_4;
-    u16 phi_v1_5;
+u8 spectrum_input_handling(s32 arg0, u8 arg1, u8 arg2)
+{
+    s32 i;
+    u8 var_v1;
 
-    temp_v0 = arg2 & 0xFF;
-    phi_a1 = arg1 & 0xFF;
-    if (temp_v0 == 0xFE) {
-        phi_v0 = 0;
-        phi_v1_5 = 0xFFU;
-        do {
-            phi_v1_4 = phi_v1_5;
-            if ((phi_a1 & 1) == 0) {
-                phi_v1_4 = phi_v1_5 & (u8) spec_keyboard_buffer[phi_v0] & 0xFF;
+    if (arg2 == 0xFE)
+    {
+        var_v1 = 0xFF;
+        
+        for (i = 0; i < 8; i++)
+        {
+            if ((arg1 & 1) == 0)
+            {
+                var_v1 &= spec_keyboard_buffer[i];
             }
-            temp_a0 = (phi_a1 >> 1) & 0xFF;
-            phi_v1_3 = phi_v1_4;
-            if ((temp_a0 & 1) == 0) {
-                phi_v1_3 = phi_v1_4 & spec_keyboard_buffer[phi_v0+1] & 0xFF;
-            }
-            temp_a0_2 = (temp_a0 >> 1) & 0xFF;
-            phi_v1_2 = phi_v1_3;
-            if ((temp_a0_2 & 1) == 0) {
-                phi_v1_2 = phi_v1_3 & spec_keyboard_buffer[phi_v0+2] & 0xFF;
-            }
-            temp_a0_3 = (temp_a0_2 >> 1) & 0xFF;
-            phi_v1 = phi_v1_2;
-            if ((temp_a0_3 & 1) == 0) {
-                phi_v1 = phi_v1_2 & spec_keyboard_buffer[phi_v0+3] & 0xFF;
-            }
-            temp_v0_2 = phi_v0 + 4;
-            phi_a1 = (temp_a0_3 >> 1) & 0xFF;
-            phi_v0 = temp_v0_2;
-            phi_v1_5 = phi_v1;
-        } while (temp_v0_2 != 8);
-        return phi_v1;
+
+            arg1 >>= 1;
+        }
+        
+        return var_v1;
     }
-    if (temp_v0 == 0x1F) {
-        return (u16) D_8004EC40;
+    
+    if (arg2 == 0x1F)
+    {
+        return D_8004EC40;
     }
+    
     return 0xFFU;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel spectrum_input_handling
-/* 108208 7F0D36D8 AFA50004 */  sw    $a1, 4($sp)
-/* 10820C 7F0D36DC 30AE00FF */  andi  $t6, $a1, 0xff
-/* 108210 7F0D36E0 30C200FF */  andi  $v0, $a2, 0xff
-/* 108214 7F0D36E4 240100FE */  li    $at, 254
-/* 108218 7F0D36E8 01C02825 */  move  $a1, $t6
-/* 10821C 7F0D36EC AFA40000 */  sw    $a0, ($sp)
-/* 108220 7F0D36F0 14410030 */  bne   $v0, $at, .L7F0D37B4
-/* 108224 7F0D36F4 AFA60008 */   sw    $a2, 8($sp)
-/* 108228 7F0D36F8 3C068005 */  lui   $a2, %hi(spec_keyboard_buffer)
-/* 10822C 7F0D36FC 240300FF */  li    $v1, 255
-/* 108230 7F0D3700 24C6EC34 */  addiu $a2, %lo(spec_keyboard_buffer) # addiu $a2, $a2, -0x13cc
-/* 108234 7F0D3704 00001025 */  move  $v0, $zero
-/* 108238 7F0D3708 24070008 */  li    $a3, 8
-.L7F0D370C:
-/* 10823C 7F0D370C 30B80001 */  andi  $t8, $a1, 1
-/* 108240 7F0D3710 17000006 */  bnez  $t8, .L7F0D372C
-/* 108244 7F0D3714 00A02025 */   move  $a0, $a1
-/* 108248 7F0D3718 00C2C821 */  addu  $t9, $a2, $v0
-/* 10824C 7F0D371C 93280000 */  lbu   $t0, ($t9)
-/* 108250 7F0D3720 00681824 */  and   $v1, $v1, $t0
-/* 108254 7F0D3724 306900FF */  andi  $t1, $v1, 0xff
-/* 108258 7F0D3728 01201825 */  move  $v1, $t1
-.L7F0D372C:
-/* 10825C 7F0D372C 00042842 */  srl   $a1, $a0, 1
-/* 108260 7F0D3730 30A400FF */  andi  $a0, $a1, 0xff
-/* 108264 7F0D3734 308B0001 */  andi  $t3, $a0, 1
-/* 108268 7F0D3738 15600006 */  bnez  $t3, .L7F0D3754
-/* 10826C 7F0D373C 00042842 */   srl   $a1, $a0, 1
-/* 108270 7F0D3740 00C26021 */  addu  $t4, $a2, $v0
-/* 108274 7F0D3744 918D0001 */  lbu   $t5, 1($t4)
-/* 108278 7F0D3748 006D1824 */  and   $v1, $v1, $t5
-/* 10827C 7F0D374C 306E00FF */  andi  $t6, $v1, 0xff
-/* 108280 7F0D3750 01C01825 */  move  $v1, $t6
-.L7F0D3754:
-/* 108284 7F0D3754 30A400FF */  andi  $a0, $a1, 0xff
-/* 108288 7F0D3758 30980001 */  andi  $t8, $a0, 1
-/* 10828C 7F0D375C 17000006 */  bnez  $t8, .L7F0D3778
-/* 108290 7F0D3760 00042842 */   srl   $a1, $a0, 1
-/* 108294 7F0D3764 00C2C821 */  addu  $t9, $a2, $v0
-/* 108298 7F0D3768 93280002 */  lbu   $t0, 2($t9)
-/* 10829C 7F0D376C 00681824 */  and   $v1, $v1, $t0
-/* 1082A0 7F0D3770 306900FF */  andi  $t1, $v1, 0xff
-/* 1082A4 7F0D3774 01201825 */  move  $v1, $t1
-.L7F0D3778:
-/* 1082A8 7F0D3778 30A400FF */  andi  $a0, $a1, 0xff
-/* 1082AC 7F0D377C 308B0001 */  andi  $t3, $a0, 1
-/* 1082B0 7F0D3780 15600006 */  bnez  $t3, .L7F0D379C
-/* 1082B4 7F0D3784 00042842 */   srl   $a1, $a0, 1
-/* 1082B8 7F0D3788 00C26021 */  addu  $t4, $a2, $v0
-/* 1082BC 7F0D378C 918D0003 */  lbu   $t5, 3($t4)
-/* 1082C0 7F0D3790 006D1824 */  and   $v1, $v1, $t5
-/* 1082C4 7F0D3794 306E00FF */  andi  $t6, $v1, 0xff
-/* 1082C8 7F0D3798 01C01825 */  move  $v1, $t6
-.L7F0D379C:
-/* 1082CC 7F0D379C 30AF00FF */  andi  $t7, $a1, 0xff
-/* 1082D0 7F0D37A0 24420004 */  addiu $v0, $v0, 4
-/* 1082D4 7F0D37A4 1447FFD9 */  bne   $v0, $a3, .L7F0D370C
-/* 1082D8 7F0D37A8 01E02825 */   move  $a1, $t7
-/* 1082DC 7F0D37AC 03E00008 */  jr    $ra
-/* 1082E0 7F0D37B0 00601025 */   move  $v0, $v1
-
-.L7F0D37B4:
-/* 1082E4 7F0D37B4 2401001F */  li    $at, 31
-/* 1082E8 7F0D37B8 14410003 */  bne   $v0, $at, .L7F0D37C8
-/* 1082EC 7F0D37BC 3C028005 */   lui   $v0, %hi(D_8004EC40)
-/* 1082F0 7F0D37C0 03E00008 */  jr    $ra
-/* 1082F4 7F0D37C4 9042EC40 */   lbu   $v0, %lo(D_8004EC40)($v0)
-
-.L7F0D37C8:
-/* 1082F8 7F0D37C8 240200FF */  li    $v0, 255
-/* 1082FC 7F0D37CC 03E00008 */  jr    $ra
-/* 108300 7F0D37D0 00000000 */   nop   
-)
-#endif
 
 
 
