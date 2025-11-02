@@ -10050,7 +10050,7 @@ void bondviewPlayerTickExplode(void)
  *
  * 10 months of off and on work to match.
  * Thanks Trevor.
- * - Bethany Burns
+ * - Ben Burns
  */
 void MoveBond(s8 stick_x, s8 stick_y, u16 buttons, u16 oldbuttons)
 {
