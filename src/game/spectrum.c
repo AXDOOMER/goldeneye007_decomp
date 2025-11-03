@@ -234,114 +234,152 @@ void sub_GAME_7F0D2A84(u8 *spec, u8 *alloc_ptr)
 
 
 #ifdef NONMATCHING
-void spectrum_p1controller_to_kempston(void) {
-    u32 goUp;
-    u32 goDown;
-    u32 goLeft;
-    u32 goRight;
-    u32 goAction;
-    u32 btns;
-    s32 stickX;
-    s32 stickY;
+https://decomp.me/scratch/bXZNh 99.95%
+void spectrum_p1controller_to_kempston(void)
+{
+    s32 sp34;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+    s32 sp1C;
+    s32 temp_v0;
+
     s32 i;
+    u8 *arr;
 
-
-    goUp = 0;
-    goDown = 0;
-    goLeft = 0;
-    goRight = 0;
-    goAction = 0;
+    sp34 = 0;
+    sp30 = 0;
+    sp2C = 0;
+    sp28 = 0;
+    sp24 = 0;
+    
     joyConsumeSamplesWrapper();
-    btns = joyGetButtons(PLAYER_1, 0xFFFF);
-    stickX = joyGetStickXInRange(PLAYER_1, -3, 3);
-    stickY = joyGetStickYInRange(PLAYER_1, -3, 3);
+    sp20 = joyGetButtons(PLAYER_1, ANY_BUTTON);
+    sp1C = joyGetStickXInRange(PLAYER_1, -3, 3);
+    temp_v0 = joyGetStickYInRange(PLAYER_1, -3, 3);
+
+    /* 
+    // It's natural to write something like this for loop, but
+    // this iterates the address each loop iteration. Need to generate
+    // 4 different `sb` at -3, -2, -1, and -4 offset.
+    for (i = 0; i < 9; i++)
+    {
+        spec_keyboard_buffer[i] = 0xff;
+    }
+    //
+    // Maybe there's a double for loop? This will generate the correct `sb`
+    // but also add a lot of other stuff.
+    // for (i = 0; i < 2; i += 4)
+    //     for (j = 1; j < 5; j ++)
+    //         spec_keyboard_buffer[i*4 + j] = 0xff;
+    //
+    // Other things to note are:
+    // 1) the address goes from spec_keyboard_buffer+1 to spec_keyboard_buffer+9.
+    // And the spec_keyboard_buffer[0] uses the `at` register.
+    // 2) spectrum_input_handling function iterates spec_keyboard_buffer from 0 to 8.
+    //
+    // very early disasm looked like the following:
+    // 10780C 7F0D2CDC 3C018005 //  lui   $at, %hi(D_8004EC34) # $at, 0x8005
+    // 107810 7F0D2CE0 3C048005 //  lui   $a0, %hi(D_8004EC34+1) # $a0, 0x8005
+    // 107814 7F0D2CE4 3C058005 //  lui   $a1, %hi(D_8004EC3C+1) # $a1, 0x8005
+    // 107818 7F0D2CE8 8FA70020 //  lw    $a3, 0x20($sp)
+    // 10781C 7F0D2CEC 8FA8001C //  lw    $t0, 0x1c($sp)
+    // 107820 7F0D2CF0 24A5EC3D //  addiu $a1, %lo(D_8004EC3C+1) # addiu $a1, $a1, -0x13c3
+    // 107824 7F0D2CF4 2484EC35 //  addiu $a0, %lo(D_8004EC34+1) # addiu $a0, $a0, -0x13cb
+    // 107828 7F0D2CF8 A02EEC34 //  sb    $t6, %lo(D_8004EC34)($at)
+    */
+
+    // Closest match.
+    // fake match? start at 1???
+    // fake match? i != 9
+    for (i = 1; i != 9; i+=4)
+    {
+        vvv[0] = 0xff; // hrmm
+
+        // this seems awkward to arrive at this by hand:
+        spec_keyboard_buffer[i+1] = 0xff;
+        spec_keyboard_buffer[i+2] = 0xff;
+        spec_keyboard_buffer[i+3] = 0xff;
+        spec_keyboard_buffer[i] = 0xff;
+    }
     
-    //im having a dumb moment here, match this and reg usage should match for rest
-    for(i=0;i!=9;++i)
-    {
-        spec_keyboard_buffer[i] = 0xFF;
+    if (sp20 & Z_TRIG) {
+        sp24 = 1;
     }
-    
-
-
-    if ((btns & Z_TRIG)) {
-        goAction = 1;
+    if ((sp20 & (L_JPAD | L_CBUTTONS)) || (sp1C < -1)) {
+        sp2C = 1;
     }
-    if ((btns & (L_CBUTTONS|L_JPAD)) || (stickX < -1)) {
-        goLeft = 1;
+    if ((sp20 & (R_JPAD | R_CBUTTONS)) || (sp1C >= 2)) {
+        sp28 = 1;
     }
-    if ((btns & (R_CBUTTONS|R_JPAD)) || (stickX >= 2)) {
-        goRight = 1;
+    if ((sp20 & (U_JPAD | U_CBUTTONS)) || (temp_v0 >= 2)) {
+        sp34 = 1;
     }
-    if ((btns & (U_CBUTTONS|U_JPAD)) || (stickY >= 2)) {
-        goUp = 1;
+    if ((sp20 & (D_JPAD | D_CBUTTONS)) || (temp_v0 < -1)) {
+        sp30 = 1;
     }
-    if ((btns & (D_CBUTTONS|D_JPAD)) || (stickY < -1)) {
-        goDown = 1;
+    if ((spec_cur_rom_id == ROM_JETPAC) && (sp20 & (A_BUTTON | B_BUTTON))) {
+        sp34 = 1;
     }
-
-    if ((spec_cur_rom_id == ROM_JETPAC) && (btns & (B_BUTTON|A_BUTTON))) {
-        goUp = 1;
+    if (((spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (sp20 & (A_BUTTON | B_BUTTON))) {
+        sp30 = 1;
     }
-
-    if (((spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (btns & (B_BUTTON|A_BUTTON)))
-    {
-        goDown = 1;
+    if (((spec_cur_rom_id == ROM_SABRE) || (spec_cur_rom_id == ROM_ATIC) || (spec_cur_rom_id == ROM_UNDER) || (spec_cur_rom_id == ROM_COOKIE) || (spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (sp20 & (A_BUTTON | B_BUTTON))) {
+        spec_keyboard_buffer[4] = (u8) (spec_keyboard_buffer[4] & 0xFE);
     }
-
-    if (((spec_cur_rom_id == ROM_SABRE) || (spec_cur_rom_id == ROM_ATIC) || (spec_cur_rom_id == ROM_UNDER) ||  (spec_cur_rom_id == ROM_COOKIE) || 
-    (spec_cur_rom_id == ROM_ALIEN8) || (spec_cur_rom_id == ROM_KNIGHTLORE)) && (btns & (B_BUTTON|A_BUTTON)))
-    {
-        spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xFE); //'0' key (sabre: A,B button)
+    if (((spec_cur_rom_id == ROM_JETPAC) || (spec_cur_rom_id == ROM_PSSST)) && (sp20 & (A_BUTTON | B_BUTTON))) {
+        spec_keyboard_buffer[3] = (u8) (spec_keyboard_buffer[3] & 0xEF);
     }
-
-    if (((spec_cur_rom_id == ROM_JETPAC) || (spec_cur_rom_id == ROM_PSSST)) && (btns & (B_BUTTON|A_BUTTON))) {
-        spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xEF);
-    }
-    if ((spec_cur_rom_id == ROM_GUNFRIGHT) && (btns & (B_BUTTON|A_BUTTON))) {
-        spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xFB);
+    if ((spec_cur_rom_id == ROM_GUNFRIGHT) && (sp20 & (A_BUTTON | B_BUTTON))) {
+        spec_keyboard_buffer[3] = (u8) (spec_keyboard_buffer[3] & 0xFB);
     }
     if (spec_cur_rom_id == ROM_JETMAN) {
-        if (btns & (B_BUTTON|A_BUTTON)) {
-            spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xEF);
+        if (sp20 & (A_BUTTON | B_BUTTON)) {
+            spec_keyboard_buffer[4] = (u8) (spec_keyboard_buffer[4] & 0xEF);
         }
-        if (btns & A_BUTTON) {
-            spec_keyboard_buffer[0x0] = (u8) spec_keyboard_buffer[0x0] & 0xFD; 
+        if (sp20 & A_BUTTON) {
+            spec_keyboard_buffer[0] = (u8) (spec_keyboard_buffer[0] & 0xFD);
         }
-        if (btns & B_BUTTON) {
-            spec_keyboard_buffer[0x7] = (u8) (spec_keyboard_buffer[0x7] & 0xFE); 
+        if (sp20 & B_BUTTON) {
+            spec_keyboard_buffer[7] = (u8) (spec_keyboard_buffer[7] & 0xFE);
         }
     }
     if (spec_cur_rom_id == ROM_UNDER) {
-        if (btns & A_BUTTON) {
-            goUp = 1;
+        if (sp20 & A_BUTTON) {
+            sp34 = 1;
         }
-        if (btns & B_BUTTON) {
-            spec_keyboard_buffer[0x7] = (u8) (spec_keyboard_buffer[0x7] & 0xFE); 
+        if (sp20 & B_BUTTON) {
+            spec_keyboard_buffer[7] = (u8) (spec_keyboard_buffer[7] & 0xFE);
         }
     }
     if (spec_cur_rom_id == ROM_ATIC) {
-        if ((btns & (B_BUTTON|A_BUTTON)) != 0) {
-            spec_keyboard_buffer[0x0] = (u8) spec_keyboard_buffer[0x0] & 0xFD; 
+        if (sp20 & (A_BUTTON | B_BUTTON)) {
+            spec_keyboard_buffer[0] = (u8) (spec_keyboard_buffer[0] & 0xFD);
         }
-        if ((btns & L_JPAD) != 0) {
-            spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xF7);
+        if (sp20 & L_JPAD) {
+            spec_keyboard_buffer[3] = (u8) (spec_keyboard_buffer[3] & 0xF7);
         }
-        if ((btns & D_JPAD) != 0) {
-            spec_keyboard_buffer[0x3] = (u8) (spec_keyboard_buffer[0x3] & 0xEF);
+        if (sp20 & D_JPAD) {
+            spec_keyboard_buffer[3] = (u8) (spec_keyboard_buffer[3] & 0xEF);
         }
-        if ((btns & R_JPAD) != 0) {
-            spec_keyboard_buffer[0x4] = (u8) (spec_keyboard_buffer[0x4] & 0xEF);
+        if (sp20 & R_JPAD) {
+            spec_keyboard_buffer[4] = (u8) (spec_keyboard_buffer[4] & 0xEF);
         }
     }
-    if (btns & L_TRIG) {
-        for(i=0; i<0x4000; i++) 
+    
+    if (sp20 & L_TRIG) {
+
+        for (i = 0; i < B_BUTTON; i++)
         {
             ptr_spectrum_roms[i] = 0;
         }
     }
-    D_8004EC40 = (goAction * 0x10) | (goUp * 8) | (goDown * 4) | (goLeft * 2) | goRight;
+    
+    D_8004EC40 = (sp24 << 4) | (sp34 << 3) | (sp30 << 2) | (sp2C << 1) | sp28;
 }
+
 #else
 GLOBAL_ASM(
 .text
