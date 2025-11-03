@@ -2,6 +2,7 @@
 #include <memp.h>
 #include "spectrum.h"
 #include <bondconstants.h>
+#include "ob.h"
 
 // bss
 u8* ptr_sectrum_monitor_data_temp_buf;
@@ -10,32 +11,32 @@ u8* ptr_spectrum_roms;
 u8* ptr_300alloc;
 u8* ptr_6000alloc;
 u8* ptr_pc_keyboard_table_alloc;
-s8 spectrum_header16_15;
-s8 byte_CODE_bss_8008E339;
-s8 byte_CODE_bss_8008E33A;
-s8 byte_CODE_bss_8008E33B;
-s8 off_CODE_bss_8008E33C;
-s8 byte_CODE_bss_8008E33D;
-s8 byte_CODE_bss_8008E33E;
-s8 byte_CODE_bss_8008E33F;
-s8 off_CODE_bss_8008E340;
-s8 byte_CODE_bss_8008E341;
-s8 byte_CODE_bss_8008E342;
-s8 byte_CODE_bss_8008E343;
-s8 off_CODE_bss_8008E344;
-s8 byte_CODE_bss_8008E345;
-s8 byte_CODE_bss_8008E346;
-s8 byte_CODE_bss_8008E347;
-s8 spec_I;
-s8 spec_R;
-s8 spec_IFF2_lower;
-s8 spec_IFF2_upper;
-s8 spec_IM;
+u8 spectrum_header16_15;
+u8 byte_CODE_bss_8008E339;
+u8 byte_CODE_bss_8008E33A;
+u8 byte_CODE_bss_8008E33B;
+u8 off_CODE_bss_8008E33C;
+u8 byte_CODE_bss_8008E33D;
+u8 byte_CODE_bss_8008E33E;
+u8 byte_CODE_bss_8008E33F;
+u8 off_CODE_bss_8008E340;
+u8 byte_CODE_bss_8008E341;
+u8 byte_CODE_bss_8008E342;
+u8 byte_CODE_bss_8008E343;
+u8 off_CODE_bss_8008E344;
+u8 byte_CODE_bss_8008E345;
+u8 byte_CODE_bss_8008E346;
+u8 byte_CODE_bss_8008E347;
+u8 spec_I;
+u8 spec_R;
+u8 spec_IFF2_lower;
+u8 spec_IFF2_upper;
+u8 spec_IM;
 u8 spec_cur_rom_id;
-s16 spec_IX;
-s16 spec_IY;
-s16 spec_SP;
-s16 spec_PC;
+u16 spec_IX;
+u16 spec_IY;
+u16 spec_SP;
+u16 spec_PC;
 
 
 // data
@@ -631,267 +632,106 @@ glabel spectrum_p1controller_to_kempston
 #endif
 
 
+void init_spectrum_game(s32 arg0)
+{
+    s32 i;
+    s32 j;
+    s32 var_v1;
+    u8 temp_t5_3;
+    
+    ptr_pc_keyboard_table_alloc = mempAllocBytesInBank(0x100, MEMPOOL_STAGE);
 
-// rodata
-//8005C114
-const char aEmDataSpec_rom_seg_rz[] = "em/data/spec_rom.seg.rz";
+    for (i = 0; i < 0x100; i++)
+    {
+        var_v1 = 0;
+        for (j = 0; j < 8; j++)
+        {
+            if ((i >> j) & 1)
+            {
+                var_v1 += 1;
+            }
+        }
 
-#ifdef NONMATCHING
-void init_spectrum_game(void) {
+        if (var_v1 & 1)
+        {
+            ptr_pc_keyboard_table_alloc[i] = 0;
+        }
+        else
+        {
+            ptr_pc_keyboard_table_alloc[i] = 4;
+        }
+    }
 
+    ptr_6000alloc = mempAllocBytesInBank(0x6000, MEMPOOL_STAGE);
+    ptr_300alloc = mempAllocBytesInBank(0x300, MEMPOOL_STAGE);
+
+    for (i = 0; i < 0x300; i++)
+    {
+        ptr_300alloc[i] = 1;
+    }
+
+    ptr_spectrum_roms = mempAllocBytesInBank(0x10000, MEMPOOL_STAGE);
+    ptr_sectrum_monitor_data_temp_buf = _fileNameLoadToBank("em/data/spec_rom.seg.rz", FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_STAGE);
+
+    for (i = 0; i < 0x4000; i++)
+    {
+        ptr_spectrum_roms[i] = ptr_sectrum_monitor_data_temp_buf[i];
+    }
+
+    spec_cur_rom_id = arg0;
+    if (spec_cur_rom_id >= 5)
+    {
+        spec_cur_rom_id = 0;
+    }
+
+    ptr_sectrum_game_data_temp_buf = _fileNameLoadToBank(romnames[spec_cur_rom_id], FILELOADMETHOD_DEFAULT, 0x100, MEMPOOL_STAGE);
+
+    for (i = 0; i < 0xC000; i++)
+    {
+        *(ptr_spectrum_roms + i + 0x4000 ) = *(i + 0x1b + ptr_sectrum_game_data_temp_buf);
+    }
+
+    spec_I = ptr_sectrum_game_data_temp_buf[0];
+    
+    byte_CODE_bss_8008E347 = ptr_sectrum_game_data_temp_buf[1];
+    byte_CODE_bss_8008E346 = ptr_sectrum_game_data_temp_buf[2];
+    byte_CODE_bss_8008E345 = ptr_sectrum_game_data_temp_buf[3];
+    off_CODE_bss_8008E344  = ptr_sectrum_game_data_temp_buf[4];
+    
+    byte_CODE_bss_8008E343 = ptr_sectrum_game_data_temp_buf[5];
+    byte_CODE_bss_8008E342 = ptr_sectrum_game_data_temp_buf[6];
+    byte_CODE_bss_8008E341 = ptr_sectrum_game_data_temp_buf[7];
+    off_CODE_bss_8008E340  = ptr_sectrum_game_data_temp_buf[8];
+    
+    byte_CODE_bss_8008E33F = ptr_sectrum_game_data_temp_buf[9];
+    byte_CODE_bss_8008E33E = ptr_sectrum_game_data_temp_buf[0xA];
+    byte_CODE_bss_8008E33D = ptr_sectrum_game_data_temp_buf[0xB];
+    off_CODE_bss_8008E33C  = ptr_sectrum_game_data_temp_buf[0xC];
+    
+    byte_CODE_bss_8008E33B = ptr_sectrum_game_data_temp_buf[0xD];
+    byte_CODE_bss_8008E33A = ptr_sectrum_game_data_temp_buf[0xE];
+    
+    spec_IY = ptr_sectrum_game_data_temp_buf[0xf] + (ptr_sectrum_game_data_temp_buf[0x10] << 8);
+    spec_IX = ptr_sectrum_game_data_temp_buf[0x11] + (ptr_sectrum_game_data_temp_buf[0x12] << 8);
+
+    spec_IFF2_lower = 
+        spec_IFF2_upper = (ptr_sectrum_game_data_temp_buf[0x13] >> 2) & 1;
+    
+    spec_R = ptr_sectrum_game_data_temp_buf[0x14];
+    byte_CODE_bss_8008E339 = ptr_sectrum_game_data_temp_buf[0x15];
+    spectrum_header16_15 = ptr_sectrum_game_data_temp_buf[0x16];
+    spec_SP = ptr_sectrum_game_data_temp_buf[0x17] + (ptr_sectrum_game_data_temp_buf[0x18] << 8);
+    
+    spec_IM = ptr_sectrum_game_data_temp_buf[0x19];
+    if (spec_IM > 0)
+    {
+        spec_IM = spec_IM + 1;
+    }
+    
+    spec_PC = ((ptr_spectrum_roms[spec_SP + 1]) << 8) | (ptr_spectrum_roms[spec_SP]);
+    
+    spec_SP += 2;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel init_spectrum_game
-/* 107AF4 7F0D2FC4 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 107AF8 7F0D2FC8 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 107AFC 7F0D2FCC AFA40018 */  sw    $a0, 0x18($sp)
-/* 107B00 7F0D2FD0 24040100 */  li    $a0, 256
-/* 107B04 7F0D2FD4 0C0025C8 */  jal   mempAllocBytesInBank
-/* 107B08 7F0D2FD8 24050004 */   li    $a1, 4
-/* 107B0C 7F0D2FDC 3C068009 */  lui   $a2, %hi(ptr_pc_keyboard_table_alloc)
-/* 107B10 7F0D2FE0 24C6E334 */  addiu $a2, %lo(ptr_pc_keyboard_table_alloc) # addiu $a2, $a2, -0x1ccc
-/* 107B14 7F0D2FE4 ACC20000 */  sw    $v0, ($a2)
-/* 107B18 7F0D2FE8 00002025 */  move  $a0, $zero
-/* 107B1C 7F0D2FEC 24070004 */  li    $a3, 4
-/* 107B20 7F0D2FF0 24050008 */  li    $a1, 8
-/* 107B24 7F0D2FF4 00001825 */  move  $v1, $zero
-.L7F0D2FF8:
-/* 107B28 7F0D2FF8 00001025 */  move  $v0, $zero
-/* 107B2C 7F0D2FFC 00447007 */  srav  $t6, $a0, $v0
-.L7F0D3000:
-/* 107B30 7F0D3000 31CF0001 */  andi  $t7, $t6, 1
-/* 107B34 7F0D3004 11E00002 */  beqz  $t7, .L7F0D3010
-/* 107B38 7F0D3008 24420001 */   addiu $v0, $v0, 1
-/* 107B3C 7F0D300C 24630001 */  addiu $v1, $v1, 1
-.L7F0D3010:
-/* 107B40 7F0D3010 5445FFFB */  bnel  $v0, $a1, .L7F0D3000
-/* 107B44 7F0D3014 00447007 */   srav  $t6, $a0, $v0
-/* 107B48 7F0D3018 30780001 */  andi  $t8, $v1, 1
-/* 107B4C 7F0D301C 53000006 */  beql  $t8, $zero, .L7F0D3038
-/* 107B50 7F0D3020 8CCA0000 */   lw    $t2, ($a2)
-/* 107B54 7F0D3024 8CD90000 */  lw    $t9, ($a2)
-/* 107B58 7F0D3028 03244821 */  addu  $t1, $t9, $a0
-/* 107B5C 7F0D302C 10000004 */  b     .L7F0D3040
-/* 107B60 7F0D3030 A1200000 */   sb    $zero, ($t1)
-/* 107B64 7F0D3034 8CCA0000 */  lw    $t2, ($a2)
-.L7F0D3038:
-/* 107B68 7F0D3038 01445821 */  addu  $t3, $t2, $a0
-/* 107B6C 7F0D303C A1670000 */  sb    $a3, ($t3)
-.L7F0D3040:
-/* 107B70 7F0D3040 24840001 */  addiu $a0, $a0, 1
-/* 107B74 7F0D3044 28810100 */  slti  $at, $a0, 0x100
-/* 107B78 7F0D3048 5420FFEB */  bnezl $at, .L7F0D2FF8
-/* 107B7C 7F0D304C 00001825 */   move  $v1, $zero
-/* 107B80 7F0D3050 24046000 */  li    $a0, 24576
-/* 107B84 7F0D3054 0C0025C8 */  jal   mempAllocBytesInBank
-/* 107B88 7F0D3058 24050004 */   li    $a1, 4
-/* 107B8C 7F0D305C 3C018009 */  lui   $at, %hi(ptr_6000alloc)
-/* 107B90 7F0D3060 AC22E330 */  sw    $v0, %lo(ptr_6000alloc)($at)
-/* 107B94 7F0D3064 24040300 */  li    $a0, 768
-/* 107B98 7F0D3068 0C0025C8 */  jal   mempAllocBytesInBank
-/* 107B9C 7F0D306C 24050004 */   li    $a1, 4
-/* 107BA0 7F0D3070 3C038009 */  lui   $v1, %hi(ptr_300alloc)
-/* 107BA4 7F0D3074 2463E32C */  addiu $v1, %lo(ptr_300alloc) # addiu $v1, $v1, -0x1cd4
-/* 107BA8 7F0D3078 AC620000 */  sw    $v0, ($v1)
-/* 107BAC 7F0D307C 24020001 */  li    $v0, 1
-/* 107BB0 7F0D3080 00002025 */  move  $a0, $zero
-.L7F0D3084:
-/* 107BB4 7F0D3084 8C6C0000 */  lw    $t4, ($v1)
-/* 107BB8 7F0D3088 01846821 */  addu  $t5, $t4, $a0
-/* 107BBC 7F0D308C 24840001 */  addiu $a0, $a0, 1
-/* 107BC0 7F0D3090 28810300 */  slti  $at, $a0, 0x300
-/* 107BC4 7F0D3094 1420FFFB */  bnez  $at, .L7F0D3084
-/* 107BC8 7F0D3098 A1A20000 */   sb    $v0, ($t5)
-/* 107BCC 7F0D309C 3C040001 */  lui   $a0, 1
-/* 107BD0 7F0D30A0 0C0025C8 */  jal   mempAllocBytesInBank
-/* 107BD4 7F0D30A4 24050004 */   li    $a1, 4
-/* 107BD8 7F0D30A8 3C088009 */  lui   $t0, %hi(ptr_spectrum_roms) 
-/* 107BDC 7F0D30AC 2508E328 */  addiu $t0, %lo(ptr_spectrum_roms) # addiu $t0, $t0, -0x1cd8
-/* 107BE0 7F0D30B0 3C048006 */  lui   $a0, %hi(aEmDataSpec_rom_seg_rz)
-/* 107BE4 7F0D30B4 AD020000 */  sw    $v0, ($t0)
-/* 107BE8 7F0D30B8 2484C114 */  addiu $a0, %lo(aEmDataSpec_rom_seg_rz) # addiu $a0, $a0, -0x3eec
-/* 107BEC 7F0D30BC 24050001 */  li    $a1, 1
-/* 107BF0 7F0D30C0 24060100 */  li    $a2, 256
-/* 107BF4 7F0D30C4 0FC2F341 */  jal   _fileNameLoadToBank
-/* 107BF8 7F0D30C8 24070004 */   li    $a3, 4
-/* 107BFC 7F0D30CC 3C038009 */  lui   $v1, %hi(ptr_sectrum_monitor_data_temp_buf)
-/* 107C00 7F0D30D0 2463E320 */  addiu $v1, %lo(ptr_sectrum_monitor_data_temp_buf) # addiu $v1, $v1, -0x1ce0
-/* 107C04 7F0D30D4 3C088009 */  lui   $t0, %hi(ptr_spectrum_roms) 
-/* 107C08 7F0D30D8 2508E328 */  addiu $t0, %lo(ptr_spectrum_roms) # addiu $t0, $t0, -0x1cd8
-/* 107C0C 7F0D30DC AC620000 */  sw    $v0, ($v1)
-/* 107C10 7F0D30E0 00002025 */  move  $a0, $zero
-.L7F0D30E4:
-/* 107C14 7F0D30E4 8C6E0000 */  lw    $t6, ($v1)
-/* 107C18 7F0D30E8 8D190000 */  lw    $t9, ($t0)
-/* 107C1C 7F0D30EC 01C47821 */  addu  $t7, $t6, $a0
-/* 107C20 7F0D30F0 03244821 */  addu  $t1, $t9, $a0
-/* 107C24 7F0D30F4 91F80000 */  lbu   $t8, ($t7)
-/* 107C28 7F0D30F8 24840001 */  addiu $a0, $a0, 1
-/* 107C2C 7F0D30FC 28814000 */  slti  $at, $a0, 0x4000
-/* 107C30 7F0D3100 1420FFF8 */  bnez  $at, .L7F0D30E4
-/* 107C34 7F0D3104 A1380000 */   sb    $t8, ($t1)
-/* 107C38 7F0D3108 8FAA0018 */  lw    $t2, 0x18($sp)
-/* 107C3C 7F0D310C 3C038009 */  lui   $v1, %hi(spec_cur_rom_id)
-/* 107C40 7F0D3110 2463E34D */  addiu $v1, %lo(spec_cur_rom_id) # addiu $v1, $v1, -0x1cb3
-/* 107C44 7F0D3114 314200FF */  andi  $v0, $t2, 0xff
-/* 107C48 7F0D3118 28410005 */  slti  $at, $v0, 5
-/* 107C4C 7F0D311C 14200003 */  bnez  $at, .L7F0D312C
-/* 107C50 7F0D3120 A06A0000 */   sb    $t2, ($v1)
-/* 107C54 7F0D3124 A0600000 */  sb    $zero, ($v1)
-/* 107C58 7F0D3128 300200FF */  andi  $v0, $zero, 0xff
-.L7F0D312C:
-/* 107C5C 7F0D312C 00025880 */  sll   $t3, $v0, 2
-/* 107C60 7F0D3130 3C048005 */  lui   $a0, %hi(romnames)
-/* 107C64 7F0D3134 008B2021 */  addu  $a0, $a0, $t3
-/* 107C68 7F0D3138 8C84ED2C */  lw    $a0, %lo(romnames)($a0)
-/* 107C6C 7F0D313C 24050001 */  li    $a1, 1
-/* 107C70 7F0D3140 24060100 */  li    $a2, 256
-/* 107C74 7F0D3144 0FC2F341 */  jal   _fileNameLoadToBank
-/* 107C78 7F0D3148 24070004 */   li    $a3, 4
-/* 107C7C 7F0D314C 3C038009 */  lui   $v1, %hi(ptr_sectrum_game_data_temp_buf)
-/* 107C80 7F0D3150 2463E324 */  addiu $v1, %lo(ptr_sectrum_game_data_temp_buf) # addiu $v1, $v1, -0x1cdc
-/* 107C84 7F0D3154 AC620000 */  sw    $v0, ($v1)
-/* 107C88 7F0D3158 3C088009 */  lui   $t0, %hi(ptr_spectrum_roms) 
-/* 107C8C 7F0D315C 2508E328 */  addiu $t0, %lo(ptr_spectrum_roms) # addiu $t0, $t0, -0x1cd8
-/* 107C90 7F0D3160 3402C000 */  li    $v0, 49152
-/* 107C94 7F0D3164 00002025 */  move  $a0, $zero
-.L7F0D3168:
-/* 107C98 7F0D3168 8C6C0000 */  lw    $t4, ($v1)
-/* 107C9C 7F0D316C 8D0F0000 */  lw    $t7, ($t0)
-/* 107CA0 7F0D3170 008C6821 */  addu  $t5, $a0, $t4
-/* 107CA4 7F0D3174 91AE001B */  lbu   $t6, 0x1b($t5)
-/* 107CA8 7F0D3178 01E4C821 */  addu  $t9, $t7, $a0
-/* 107CAC 7F0D317C A32E4000 */  sb    $t6, 0x4000($t9)
-/* 107CB0 7F0D3180 8C780000 */  lw    $t8, ($v1)
-/* 107CB4 7F0D3184 8D0B0000 */  lw    $t3, ($t0)
-/* 107CB8 7F0D3188 00984821 */  addu  $t1, $a0, $t8
-/* 107CBC 7F0D318C 912A001C */  lbu   $t2, 0x1c($t1)
-/* 107CC0 7F0D3190 01646021 */  addu  $t4, $t3, $a0
-/* 107CC4 7F0D3194 A18A4001 */  sb    $t2, 0x4001($t4)
-/* 107CC8 7F0D3198 8C6D0000 */  lw    $t5, ($v1)
-/* 107CCC 7F0D319C 8D190000 */  lw    $t9, ($t0)
-/* 107CD0 7F0D31A0 008D7821 */  addu  $t7, $a0, $t5
-/* 107CD4 7F0D31A4 91EE001D */  lbu   $t6, 0x1d($t7)
-/* 107CD8 7F0D31A8 0324C021 */  addu  $t8, $t9, $a0
-/* 107CDC 7F0D31AC A30E4002 */  sb    $t6, 0x4002($t8)
-/* 107CE0 7F0D31B0 8C690000 */  lw    $t1, ($v1)
-/* 107CE4 7F0D31B4 8D0C0000 */  lw    $t4, ($t0)
-/* 107CE8 7F0D31B8 00895821 */  addu  $t3, $a0, $t1
-/* 107CEC 7F0D31BC 916A001E */  lbu   $t2, 0x1e($t3)
-/* 107CF0 7F0D31C0 01846821 */  addu  $t5, $t4, $a0
-/* 107CF4 7F0D31C4 24840004 */  addiu $a0, $a0, 4
-/* 107CF8 7F0D31C8 1482FFE7 */  bne   $a0, $v0, .L7F0D3168
-/* 107CFC 7F0D31CC A1AA4003 */   sb    $t2, 0x4003($t5)
-/* 107D00 7F0D31D0 8C620000 */  lw    $v0, ($v1)
-/* 107D04 7F0D31D4 3C018009 */  lui   $at, %hi(spec_I)
-/* 107D08 7F0D31D8 3C058009 */  lui   $a1, %hi(spec_IFF2_upper)
-/* 107D0C 7F0D31DC 904F0000 */  lbu   $t7, ($v0)
-/* 107D10 7F0D31E0 24A5E34B */  addiu $a1, %lo(spec_IFF2_upper) # addiu $a1, $a1, -0x1cb5
-/* 107D14 7F0D31E4 3C068009 */  lui   $a2, %hi(spec_SP)
-/* 107D18 7F0D31E8 A02FE348 */  sb    $t7, %lo(spec_I)($at)
-/* 107D1C 7F0D31EC 90590001 */  lbu   $t9, 1($v0)
-/* 107D20 7F0D31F0 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E347)
-/* 107D24 7F0D31F4 24C6E352 */  addiu $a2, %lo(spec_SP) # addiu $a2, $a2, -0x1cae
-/* 107D28 7F0D31F8 A039E347 */  sb    $t9, %lo(byte_CODE_bss_8008E347)($at)
-/* 107D2C 7F0D31FC 904E0002 */  lbu   $t6, 2($v0)
-/* 107D30 7F0D3200 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E346)
-/* 107D34 7F0D3204 3C078009 */  lui   $a3, %hi(spec_IM)
-/* 107D38 7F0D3208 A02EE346 */  sb    $t6, %lo(byte_CODE_bss_8008E346)($at)
-/* 107D3C 7F0D320C 90580003 */  lbu   $t8, 3($v0)
-/* 107D40 7F0D3210 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E345)
-/* 107D44 7F0D3214 24E7E34C */  addiu $a3, %lo(spec_IM) # addiu $a3, $a3, -0x1cb4
-/* 107D48 7F0D3218 A038E345 */  sb    $t8, %lo(byte_CODE_bss_8008E345)($at)
-/* 107D4C 7F0D321C 90490004 */  lbu   $t1, 4($v0)
-/* 107D50 7F0D3220 3C018009 */  lui   $at, %hi(off_CODE_bss_8008E344)
-/* 107D54 7F0D3224 A029E344 */  sb    $t1, %lo(off_CODE_bss_8008E344)($at)
-/* 107D58 7F0D3228 904B0005 */  lbu   $t3, 5($v0)
-/* 107D5C 7F0D322C 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E343)
-/* 107D60 7F0D3230 A02BE343 */  sb    $t3, %lo(byte_CODE_bss_8008E343)($at)
-/* 107D64 7F0D3234 904C0006 */  lbu   $t4, 6($v0)
-/* 107D68 7F0D3238 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E342)
-/* 107D6C 7F0D323C A02CE342 */  sb    $t4, %lo(byte_CODE_bss_8008E342)($at)
-/* 107D70 7F0D3240 904A0007 */  lbu   $t2, 7($v0)
-/* 107D74 7F0D3244 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E341)
-/* 107D78 7F0D3248 A02AE341 */  sb    $t2, %lo(byte_CODE_bss_8008E341)($at)
-/* 107D7C 7F0D324C 904D0008 */  lbu   $t5, 8($v0)
-/* 107D80 7F0D3250 3C018009 */  lui   $at, %hi(off_CODE_bss_8008E340)
-/* 107D84 7F0D3254 A02DE340 */  sb    $t5, %lo(off_CODE_bss_8008E340)($at)
-/* 107D88 7F0D3258 904F0009 */  lbu   $t7, 9($v0)
-/* 107D8C 7F0D325C 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E33F)
-/* 107D90 7F0D3260 A02FE33F */  sb    $t7, %lo(byte_CODE_bss_8008E33F)($at)
-/* 107D94 7F0D3264 9059000A */  lbu   $t9, 0xa($v0)
-/* 107D98 7F0D3268 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E33E)
-/* 107D9C 7F0D326C A039E33E */  sb    $t9, %lo(byte_CODE_bss_8008E33E)($at)
-/* 107DA0 7F0D3270 904E000B */  lbu   $t6, 0xb($v0)
-/* 107DA4 7F0D3274 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E33D)
-/* 107DA8 7F0D3278 A02EE33D */  sb    $t6, %lo(byte_CODE_bss_8008E33D)($at)
-/* 107DAC 7F0D327C 9058000C */  lbu   $t8, 0xc($v0)
-/* 107DB0 7F0D3280 3C018009 */  lui   $at, %hi(off_CODE_bss_8008E33C)
-/* 107DB4 7F0D3284 A038E33C */  sb    $t8, %lo(off_CODE_bss_8008E33C)($at)
-/* 107DB8 7F0D3288 9049000D */  lbu   $t1, 0xd($v0)
-/* 107DBC 7F0D328C 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E33B)
-/* 107DC0 7F0D3290 A029E33B */  sb    $t1, %lo(byte_CODE_bss_8008E33B)($at)
-/* 107DC4 7F0D3294 904B000E */  lbu   $t3, 0xe($v0)
-/* 107DC8 7F0D3298 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E33A)
-/* 107DCC 7F0D329C A02BE33A */  sb    $t3, %lo(byte_CODE_bss_8008E33A)($at)
-/* 107DD0 7F0D32A0 904C0010 */  lbu   $t4, 0x10($v0)
-/* 107DD4 7F0D32A4 904D000F */  lbu   $t5, 0xf($v0)
-/* 107DD8 7F0D32A8 3C018009 */  lui   $at, %hi(spec_IY)
-/* 107DDC 7F0D32AC 000C5200 */  sll   $t2, $t4, 8
-/* 107DE0 7F0D32B0 014D7821 */  addu  $t7, $t2, $t5
-/* 107DE4 7F0D32B4 A42FE350 */  sh    $t7, %lo(spec_IY)($at)
-/* 107DE8 7F0D32B8 90590012 */  lbu   $t9, 0x12($v0)
-/* 107DEC 7F0D32BC 90580011 */  lbu   $t8, 0x11($v0)
-/* 107DF0 7F0D32C0 3C018009 */  lui   $at, %hi(spec_IX)
-/* 107DF4 7F0D32C4 00197200 */  sll   $t6, $t9, 8
-/* 107DF8 7F0D32C8 01D84821 */  addu  $t1, $t6, $t8
-/* 107DFC 7F0D32CC A429E34E */  sh    $t1, %lo(spec_IX)($at)
-/* 107E00 7F0D32D0 904B0013 */  lbu   $t3, 0x13($v0)
-/* 107E04 7F0D32D4 3C018009 */  lui   $at, %hi(spec_IFF2_lower)
-/* 107E08 7F0D32D8 000B6083 */  sra   $t4, $t3, 2
-/* 107E0C 7F0D32DC 318D0001 */  andi  $t5, $t4, 1
-/* 107E10 7F0D32E0 A0AD0000 */  sb    $t5, ($a1)
-/* 107E14 7F0D32E4 A02DE34A */  sb    $t5, %lo(spec_IFF2_lower)($at)
-/* 107E18 7F0D32E8 904F0014 */  lbu   $t7, 0x14($v0)
-/* 107E1C 7F0D32EC 3C018009 */  lui   $at, %hi(spec_R)
-/* 107E20 7F0D32F0 A02FE349 */  sb    $t7, %lo(spec_R)($at)
-/* 107E24 7F0D32F4 90590015 */  lbu   $t9, 0x15($v0)
-/* 107E28 7F0D32F8 3C018009 */  lui   $at, %hi(byte_CODE_bss_8008E339)
-/* 107E2C 7F0D32FC A039E339 */  sb    $t9, %lo(byte_CODE_bss_8008E339)($at)
-/* 107E30 7F0D3300 904E0016 */  lbu   $t6, 0x16($v0)
-/* 107E34 7F0D3304 3C018009 */  lui   $at, %hi(spectrum_header16_15)
-/* 107E38 7F0D3308 A02EE338 */  sb    $t6, %lo(spectrum_header16_15)($at)
-/* 107E3C 7F0D330C 90580018 */  lbu   $t8, 0x18($v0)
-/* 107E40 7F0D3310 904B0017 */  lbu   $t3, 0x17($v0)
-/* 107E44 7F0D3314 3C018009 */  lui   $at, %hi(spec_PC)
-/* 107E48 7F0D3318 00184A00 */  sll   $t1, $t8, 8
-/* 107E4C 7F0D331C 012B6021 */  addu  $t4, $t1, $t3
-/* 107E50 7F0D3320 A4CC0000 */  sh    $t4, ($a2)
-/* 107E54 7F0D3324 904A0019 */  lbu   $t2, 0x19($v0)
-/* 107E58 7F0D3328 314400FF */  andi  $a0, $t2, 0xff
-/* 107E5C 7F0D332C 18800003 */  blez  $a0, .L7F0D333C
-/* 107E60 7F0D3330 A0EA0000 */   sb    $t2, ($a3)
-/* 107E64 7F0D3334 248D0001 */  addiu $t5, $a0, 1
-/* 107E68 7F0D3338 A0ED0000 */  sb    $t5, ($a3)
-.L7F0D333C:
-/* 107E6C 7F0D333C 94C30000 */  lhu   $v1, ($a2)
-/* 107E70 7F0D3340 8D020000 */  lw    $v0, ($t0)
-/* 107E74 7F0D3344 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 107E78 7F0D3348 246C0002 */  addiu $t4, $v1, 2
-/* 107E7C 7F0D334C 00437021 */  addu  $t6, $v0, $v1
-/* 107E80 7F0D3350 91D80001 */  lbu   $t8, 1($t6)
-/* 107E84 7F0D3354 00627821 */  addu  $t7, $v1, $v0
-/* 107E88 7F0D3358 91F90000 */  lbu   $t9, ($t7)
-/* 107E8C 7F0D335C 00184A00 */  sll   $t1, $t8, 8
-/* 107E90 7F0D3360 27BD0018 */  addiu $sp, $sp, 0x18
-/* 107E94 7F0D3364 03295825 */  or    $t3, $t9, $t1
-/* 107E98 7F0D3368 A42BE354 */  sh    $t3, %lo(spec_PC)($at)
-/* 107E9C 7F0D336C 03E00008 */  jr    $ra
-/* 107EA0 7F0D3370 A4CC0000 */   sh    $t4, ($a2)
-)
-#endif
 
 
 
