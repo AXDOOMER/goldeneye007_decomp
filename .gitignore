@@ -36,6 +36,7 @@ assets/ge007.u.123040.efont_chardata.bin
 assets/ge007.u.29E560.Globalimagetable_commandblock.bin
 #images
 assets/images/split/*.bin*
+assets/images/combined/*.bin*
 assets/images/out/*
 assets/images/split/png/*
 #music
