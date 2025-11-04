@@ -24,6 +24,8 @@ ls -1dv image* | xargs -I {} cat {} >> combined.bin
 
 popd
 
+mkdir -p "${COMBINE_DIR}"
+
 echo "rm -f ${COMBINE_DIR}/combined.bin"
 rm -f "${COMBINE_DIR}/combined.bin"
 
