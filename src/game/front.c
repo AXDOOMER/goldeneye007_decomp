@@ -309,8 +309,8 @@ Lights1 ninlogolight = gdSPDefLights1(
 
 f32 slider_007_mode_reaction = 0.0f;
 f32 slider_007_mode_health = 1.0f;
-f32 slider_007_mode_accuracy = 1.0f;
 f32 slider_007_mode_damage = 1.0f;
+f32 slider_007_mode_accuracy = 1.0f;
 
 /* 0x8002A9B0 */ rgba_u8 textglowR = { 160, 0, 0, 0 };
 /* 0x8002A9B4 */ rgba_u8 textglowG = { 150, 0, 0, 0 };
@@ -3927,11 +3927,11 @@ void interface_menu09_007options(void)
         }
         else if (highlight_enemy_accuracy)
         {
-            slider_007_mode_accuracy = (f32) (temp_x * temp_x * 10.0f);
+            slider_007_mode_damage = (f32) (temp_x * temp_x * 10.0f);
         }
         else if (highlight_enemy_damage)
         {
-            slider_007_mode_damage = (f32) (temp_x * temp_x * 10.0f);
+            slider_007_mode_accuracy = (f32) (temp_x * temp_x * 10.0f);
         }
     }
     disable_all_switches(walletinst[0]);
@@ -4030,7 +4030,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC0C = 0xC5;
 
     DL = microcode_constructor_related_to_menus(DL, 0x37, 0xD6, 0x163, 0xE1, 0x32);
-    val = (sqrtf(slider_007_mode_accuracy / 10.0f)) * 300.0f;
+    val = (sqrtf(slider_007_mode_damage / 10.0f)) * 300.0f;
     DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C + 0x11, val + 0x37, spC0C + 0x1c, 0x64);
 
     if (highlight_enemy_accuracy != 0)
@@ -4040,7 +4040,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
 
     DL = frontPrintText(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_accuracy * 100.0f));
+    sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_damage * 100.0f));
 
     sp4C = 0;
     sp50 = 0;
@@ -4058,7 +4058,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
     spC0C = 0xE6;
 
     DL = microcode_constructor_related_to_menus(DL, 0x37, 0xF7, 0x163, 0x102, 0x32);
-    val = (sqrtf(slider_007_mode_damage / 10.0f)) * 300.0f;
+    val = (sqrtf(slider_007_mode_accuracy / 10.0f)) * 300.0f;
     DL = microcode_constructor_related_to_menus(DL, 0x37, spC0C + 0x11, val + 0x37, spC0C + 0x1c, 0x64);
 
     if (highlight_enemy_damage != 0)
@@ -4068,7 +4068,7 @@ Gfx *constructor_menu09_007options(Gfx *DL)
 
     DL = frontPrintText(DL, &spC10, &spC0C, (s8*)spC14, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
 
-    sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_damage * 10.0f));
+    sprintf((char*)&sp54, "%d%%\n", (s32) (slider_007_mode_accuracy * 10.0f));
 
     sp4C = 0;
     sp50 = 0;
