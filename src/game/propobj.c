@@ -47,6 +47,7 @@
 #include "gun.h"
 #include "fr.h"
 #include "objective_status.h"
+#include "model.h"
 
 
 #ifdef VERSION_EU

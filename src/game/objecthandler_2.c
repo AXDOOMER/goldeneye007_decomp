@@ -9,6 +9,7 @@
 #include "objecthandler.h"
 #include "tex.h"
 #include "image.h"
+#include "model.h"
 
 //file split per EU
 #ifdef NONMATCHING

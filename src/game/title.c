@@ -24,6 +24,7 @@
 #include "chr_b.h"
 #include "initanitable.h"
 #include "chrobjdata.h"
+#include "model.h"
 
 
 

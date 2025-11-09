@@ -17,6 +17,7 @@
 #include "objecthandler.h"
 #include "player.h"
 #include "assets/obseg/text/LmiscE.h"
+#include "model.h"
 
 //#include "chraicommands.h" /* needed for ai list commands, remove when moving global ai lists to chraicommands/chrai */
 // bss

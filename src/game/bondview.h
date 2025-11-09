@@ -2763,5 +2763,6 @@ int redirect_get_BONDdata_autoaim_x(void);
 int redirect_get_BONDdata_autoaim_y(void);
 void transform3Dto2DCoords(coord3d *in, coord2d *out);
 void maybe_solo_intro_camera_handler(void);
+s32 get_BONDdata_is_aiming(void);
 
 #endif

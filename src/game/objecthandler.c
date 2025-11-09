@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <memp.h>
 #include "objecthandler.h"
+#include "model.h"
 
 // bss
 //CODE.bss:80076A50

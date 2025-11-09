@@ -41,6 +41,7 @@
 #include "explosion.h"
 #include "os_extension.h"
 #include "stanintersection.h"
+#include "model.h"
 
 #ifdef VERSION_EU
 

@@ -27,6 +27,8 @@
 #include "fr.h"
 #include "assets/obseg/text/LgunE.h"
 #include "textrelated.h"
+#include "chrai.h"
+#include "model.h"
 
 // bss
 s32 dword_CODE_bss_80075DB0;

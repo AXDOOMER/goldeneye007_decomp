@@ -5,6 +5,7 @@
 #include "chr_b.h"
 #include "chrobjdata.h"
 #include "objecthandler.h"
+#include "model.h"
 
 s32 load_body_head_if_not_loaded(s32 model)
 {

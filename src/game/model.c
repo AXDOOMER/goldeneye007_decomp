@@ -12,16 +12,7 @@
 #include "bondview.h"
 #include "random.h"
 #include "gbi_extension.h"
-
-// forward declarations
-
-void sub_GAME_7F06D490(struct Model *arg0, struct ModelNode *arg1);
-void sub_GAME_7F0755B0(void);
-s32 loadAnimationFrame(struct ModelAnimation *, s32, struct ModelSkeleton*);
-
-// end forward declarations
-
-
+#include "model.h"
 
 
 
@@ -320,6 +311,7 @@ void modelSetDistanceScale(f32 param_1) {
 
 
 #ifdef NONMATCHING
+// unreferenced
 void sub_GAME_7F06C418(void) {
 
 }
@@ -472,6 +464,7 @@ Mtxf *getsubmatrix(Model *objinst)
 }
 
 
+// unreferenced
 void sub_GAME_7F06C710(Model* model, coord3d* pos)
 {
     Mtxf* mtx;
@@ -1101,7 +1094,9 @@ glabel sub_GAME_7F06D1CC
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F06D2E4(void) {
+// arg0: unknown type. arg1: unknown type. arg5: unknown type, maybe struct.
+void sub_GAME_7F06D2E4(s32, s32, ModelSkeleton*, void* anim, s32, s16*)
+{
 
 }
 #else
@@ -2133,7 +2128,6 @@ void process_02_position(ModelRenderData *arg0, Model *model, ModelNode *node) {
 
 }
 #else
-void process_02_position(ModelRenderData *arg0, Model *model, ModelNode *node);
 GLOBAL_ASM(
 .text
 glabel process_02_position
@@ -2584,7 +2578,6 @@ void process_03_unknown(ModelRenderData *arg0, Model *model, ModelNode *node) {
 
 }
 #else
-void process_03_unknown(ModelRenderData *arg0, Model *model, ModelNode *node);
 GLOBAL_ASM(
 .text
 glabel process_03_unknown
@@ -3370,6 +3363,7 @@ f32 modelGetAbsAnimSpeed(Model *model)
 
 /**
  * Unused Function
+ * Unreferenced
 */
 f32 modelGetEffectiveAnimSpeed(Model *model) {
     return modelGetAnimSpeed(model) * model->playspeed;
@@ -3418,7 +3412,6 @@ s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe)
     return frame;
 }
 #else
-s32 modelConstrainOrWrapAnimFrame(s32 frame, ModelAnimation *anim, f32 endframe);
 GLOBAL_ASM(
 .text
 glabel modelConstrainOrWrapAnimFrame
@@ -7647,6 +7640,7 @@ glabel subdraw
 #endif
 
 
+// unreferenced
 void sub_GAME_7F074790(ModelRenderData* arg0, Model* arg1)
 {
     subcalcpos(arg1);
@@ -8614,6 +8608,7 @@ def_7F0753C4:
 
 
 #ifdef NONMATCHING
+// unreferenced
 void sub_GAME_7F07549C(s32 arg0, f32 *arg1, f32 *arg2, ModelNode *arg3)
 {
     //uses sh vs sw
@@ -8918,6 +8913,7 @@ void sub_GAME_7F075A90(ModelFileHeader *header, s32 vma, u32 addr) {
 }
 
 /**
+ * unreferenced
  * Address 7F075B08.
 */
 void REMOVED_sub_GAME_7F075B08(s32 param_1,s32 param_2,s32 param_3,s32 param_4)

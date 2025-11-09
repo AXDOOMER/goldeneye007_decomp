@@ -28,6 +28,7 @@
 #include "stan.h"
 #include "bondhead.h"
 #include "glass.h"
+#include "model.h"
 
 
 

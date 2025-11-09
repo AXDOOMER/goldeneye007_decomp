@@ -33,6 +33,7 @@
 #include "objective_status.h"
 #include "player.h"
 #include "stan.h"
+#include "model.h"
 
 // bss
 

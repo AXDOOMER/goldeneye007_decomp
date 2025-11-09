@@ -22,6 +22,7 @@
 #include "objecthandler.h"
 #include "player.h"
 #include "stan.h"
+#include "model.h"
 
 // forward declarations
 

@@ -8,6 +8,7 @@
 #include "objecthandler.h"
 #include "player.h"
 #include "bondhead.h"
+#include "model.h"
 
 
 //data

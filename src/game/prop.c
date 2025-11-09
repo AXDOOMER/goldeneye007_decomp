@@ -24,6 +24,7 @@
 #include "player.h"
 #include "prop.h"
 #include "stan.h"
+#include "model.h"
 
 /**
  * EU .bss 0x80068480

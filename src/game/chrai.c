@@ -35,6 +35,7 @@
 #include "player.h"
 #include "file.h"
 #include "bgfog.h"
+#include "model.h"
 
 
 

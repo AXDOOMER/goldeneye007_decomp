@@ -42,6 +42,7 @@
 #include "image.h"
 #include "ob.h"
 #include "gbi_extension.h"
+#include "model.h"
 
 
 

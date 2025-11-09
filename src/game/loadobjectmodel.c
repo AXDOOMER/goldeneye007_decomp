@@ -5,6 +5,7 @@
 #include "propobj.h"
 #include "loadobjectmodel.h"
 #include "stan.h"
+#include "model.h"
 
 /**
  * Address 0x7F056850.
