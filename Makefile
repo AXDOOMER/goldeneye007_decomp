@@ -170,7 +170,7 @@ OBSEG_FILES := assets/obseg/ob_seg.s
 OBSEG_OBJECTS := $(BUILD_DIR)/assets/obseg/ob_seg.o
 OBSEG_RZ := $(BG_SEG_FILES) $(CHR_RZ_FILES) $(GUN_RZ_FILES) $(PROP_RZ_FILES) $(STAN_RZ_FILES) $(BRIEF_RZ_FILES) $(SETUP_RZ_FILES) $(TEXT_RZ_FILES)
 
-IMAGE_BINS := $(foreach dir,assets/images/split,$(wildcard $(dir)/*.bin))
+IMAGE_BINS := assets/images/combined/combined.bin
 IMAGE_OBJS := $(foreach file,$(IMAGE_BINS),$(BUILD_DIR)/$(file:.bin=.o))
 
 RZFILES := inflate/inflate.c
@@ -269,7 +269,10 @@ $(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Images
-$(BUILD_DIR)/assets/images/split/%.o: assets/images/split/%.bin
+assets/images/combined/combined.bin:
+	scripts/make/combine_images.sh assets/images/split assets/images/combined
+
+$(BUILD_DIR)/assets/images/combined/%.o: assets/images/combined/combined.bin
 	$(LD) -r -b binary $< -o $@
 
 
@@ -351,6 +354,8 @@ build_tools:
 	scripts/make/build_tools.sh "$(MAKE)"
 
 prerequisites: print_info create_directories build_tools extractassets
+
+combine_images: assets/images/combined/combined.bin
 
 checksum: $(APPROM)
 ifeq ($(COMPARE), 1)
