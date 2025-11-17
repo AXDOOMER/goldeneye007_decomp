@@ -30226,6 +30226,7 @@ glabel object_explosion_related
 
 
 
+// PD: bg_find_hitthing_by_gfx_tris
 #ifdef NONMATCHING
 bool bgTestHitOnObj(coord3d *arg0, coord3d *arg1, coord3d *arg2, Gfx *gdl, Gfx *gdl2, Vertex *vertices, struct HitThing *hitthing) {
 
@@ -30827,6 +30828,7 @@ glabel bgTestHitOnObj
 #endif
 
 
+// PD: obj_find_hitthing_by_gfx_tris
 bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d *arg3, struct HitThing *hitthing, s32 *dstmtxindex, ModelNode **dstnode)
 {
     coord3d spec;
@@ -32222,6 +32224,7 @@ glabel sub_GAME_7F04E720
 #endif
 
 
+// PD: obj_test_hit
 void sub_GAME_7F04E9BC(PropRecord* prop, struct ShotData* shotdata)
 {
     ObjectRecord *obj;
@@ -32245,6 +32248,7 @@ void sub_GAME_7F04E9BC(PropRecord* prop, struct ShotData* shotdata)
 }
 
 
+// PD: obj_hit
 #ifdef NONMATCHING
 void sub_GAME_7F04EA68(void) {
 

@@ -7389,7 +7389,7 @@ glabel sub_GAME_7F0221DC
 #endif
 
 
-
+// PD: chr_test_hit
 #ifdef NONMATCHING
 void sub_GAME_7F022648(void) {
     //somewhere
@@ -7492,10 +7492,10 @@ glabel sub_GAME_7F022648
 /* 0572CC 7F02279C 27A700DC */  addiu $a3, $sp, 0xdc
 /* 0572D0 7F0227A0 0FC1B004 */  jal   sub_GAME_7F06C010
 /* 0572D4 7F0227A4 AFAA0080 */   sw    $t2, 0x80($sp)
-/* 0572D8 7F0227A8 24010064 */  li    $at, 100
+/* 0572D8 7F0227A8 24010064 */  li    $at, 100 /* HITPART_GUN */
 /* 0572DC 7F0227AC 10410003 */  beq   $v0, $at, .L7F0227BC
 /* 0572E0 7F0227B0 00408825 */   move  $s1, $v0
-/* 0572E4 7F0227B4 2401006E */  li    $at, 110
+/* 0572E4 7F0227B4 2401006E */  li    $at, 110 /* HITPART_HAT */
 /* 0572E8 7F0227B8 14410019 */  bne   $v0, $at, .L7F022820
 .L7F0227BC:
 /* 0572EC 7F0227BC 27AC00A4 */   addiu $t4, $sp, 0xa4
@@ -7518,10 +7518,10 @@ glabel sub_GAME_7F022648
 /* 05732C 7F0227FC 02003025 */  move  $a2, $s0
 /* 057330 7F022800 0FC1AF80 */  jal   probably_damage_detail_blood_effect_related
 /* 057334 7F022804 27A700DC */   addiu $a3, $sp, 0xdc
-/* 057338 7F022808 24010064 */  li    $at, 100
+/* 057338 7F022808 24010064 */  li    $at, 100 /* HITPART_GUN */
 /* 05733C 7F02280C 1041FFEB */  beq   $v0, $at, .L7F0227BC
 /* 057340 7F022810 00408825 */   move  $s1, $v0
-/* 057344 7F022814 2401006E */  li    $at, 110
+/* 057344 7F022814 2401006E */  li    $at, 110 /* HITPART_HAT */
 /* 057348 7F022818 5041FFE9 */  beql  $v0, $at, .L7F0227C0
 /* 05734C 7F02281C 27AC00A4 */   addiu $t4, $sp, 0xa4
 .L7F022820:

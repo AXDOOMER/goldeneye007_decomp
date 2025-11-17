@@ -1334,6 +1334,7 @@ s32 bgGet2dBboxByRoomId(s32 room_id, struct bbox2d *result)
         }
     }
 
+    // It's pointless to set those because when this function returns false, result is unused
     result->f[0][0] = 0.0f;
     result->f[0][1] = 0.0f;
     result->f[1][0] = 0.0f;
