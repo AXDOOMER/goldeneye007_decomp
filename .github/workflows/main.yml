@@ -120,6 +120,7 @@ jobs:
           destination_repo: 'kholdfuzion/goldeneyestatus'
           user_email: $API_TOKEN_EMAIL
           user_name: $API_TOKEN_USER
+          destination_branch: 'master'
           source_file: |
             tools/report/cursor.cur
             tools/report/index.html
