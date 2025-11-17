@@ -255,7 +255,7 @@ int bondinvHasDualWeapon(ITEM_IDS right, ITEM_IDS left)
     return bondinvGetDualWeapon(right, left) != NULL;
 }
 
-int bondinvItemAvailable(ITEM_IDS weaponid)
+s32 bondinvItemAvailable(ITEM_IDS weaponid)
 {
     if (((g_CurrentPlayer->equipallguns) && (weaponid != ITEM_UNARMED) && (weaponid < ITEM_BOMBCASE)))
     {
@@ -271,7 +271,7 @@ int bondinvItemAvailable(ITEM_IDS weaponid)
     return bondinvHasInvItem(weaponid);
 }
 
-int bondinvItemAvailableForHand(ITEM_IDS right, ITEM_IDS left)
+s32 bondinvItemAvailableForHand(ITEM_IDS right, ITEM_IDS left)
 {
 #ifdef BUGFIX_R0
     if (g_CurrentPlayer->equipallguns &&

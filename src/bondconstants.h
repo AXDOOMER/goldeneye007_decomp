@@ -548,40 +548,73 @@ BITFLAG(RUNTIMEBITFLAG,
 #define RUNTIMEBITSHIFT_OWNER   0x11
 #define RUNTIMEBITFLAG_00000001   0x1
 
-BITFLAG(WEAPONSTATBITFLAG,
-        00000001,
-        SINGLE_USE_RELOAD, /* skip from fire to reload animation; item "disappears" after use, redrawn from off-screen like knives" */
-        BURST_FIRE, /* fire three round burst*/
-        HAS_AUTO_AIM, /* auto aim capable*/
-        CLICKY, /* if holding trigger, click if empty */
-        00000020,
-        00000040,
-        00000080,
-        ONLY_1_HANDED, /* requires HOLD_AS_GUN as well */
-        HOLD_AS_GUN, /* default 2 handed*/
-        MIRROR_DUAL, /* mirror double weapon, not copy */
-        SHOW_FIRST_PERSON, /* display 1st person model */
-        FIRST_SHOT_ACCURACY, /* for a single first shot, inaccuracy multiplied by 0.25 */
-        HIDE_FIRST_PERSON_HAND, /* hide first person model in hand */
-        HIDE_FIRST_PERSON_MENU, /* hide first person model in menu */
-        DISABLE_CROUCH, /* can not crouch */
-        PLAYER_STAT_HIT, /* count hits in player statistics */
-        USE_HOLD_TIME, /* increment hold time when used, to consider as weapon of choice */
-        HAS_AMMO,
-        HIDE_AMMO_DISPLAY, /* do not display ammo on screen */
-        CAN_DUAL_WIELD, /* capable of doubles */
-        AMMO_CLIP_LIMIT, /* limit ammo to assigned value on clip */
-        NO_CLIP_RELOADS, /* no ammo clip/reloads - draw straight from ammo supply (right of icon) */
-        00800000,
-        01000000,
-        02000000,
-        04000000,
-        08000000,
-        10000000,
-        20000000,
-        40000000,
-        80000000
-)
+#define WEAPONSTATBITFLAG_00000001 0x1
+/* skip from fire to reload animation; item "disappears" after use, redrawn from off-screen like knives" */
+#define WEAPONSTATBITFLAG_SINGLE_USE_RELOAD 0x2
+
+/* fire three round burst*/
+#define WEAPONSTATBITFLAG_BURST_FIRE 0x4
+
+/* auto aim capable*/
+#define WEAPONSTATBITFLAG_HAS_AUTO_AIM 0x8
+
+/* if holding trigger, click if empty */
+#define WEAPONSTATBITFLAG_CLICKY 0x10
+#define WEAPONSTATBITFLAG_00000020 0x20
+#define WEAPONSTATBITFLAG_00000040 0x40
+#define WEAPONSTATBITFLAG_00000080 0x80
+
+/* requires HOLD_AS_GUN as well */
+#define WEAPONSTATBITFLAG_ONLY_1_HANDED 0x100
+
+/* default 2 handed*/
+#define WEAPONSTATBITFLAG_HOLD_AS_GUN 0x200
+
+/* mirror double weapon, not copy */
+#define WEAPONSTATBITFLAG_MIRROR_DUAL 0x400
+
+/* display 1st person model */
+#define WEAPONSTATBITFLAG_SHOW_FIRST_PERSON 0x800
+
+/* for a single first shot, inaccuracy multiplied by 0.25 */
+#define WEAPONSTATBITFLAG_FIRST_SHOT_ACCURACY 0x1000
+
+/* hide first person model in hand */
+#define WEAPONSTATBITFLAG_HIDE_FIRST_PERSON_HAND 0x2000
+
+/* hide first person model in menu */
+#define WEAPONSTATBITFLAG_HIDE_FIRST_PERSON_MENU 0x4000
+
+/* can not crouch */
+#define WEAPONSTATBITFLAG_DISABLE_CROUCH 0x8000
+
+/* count hits in player statistics */
+#define WEAPONSTATBITFLAG_PLAYER_STAT_HIT 0x10000
+
+/* increment hold time when used, to consider as weapon of choice */
+#define WEAPONSTATBITFLAG_USE_HOLD_TIME 0x20000
+#define WEAPONSTATBITFLAG_HAS_AMMO 0x40000
+
+/* do not display ammo on screen */
+#define WEAPONSTATBITFLAG_HIDE_AMMO_DISPLAY 0x80000
+
+/* capable of doubles */
+#define WEAPONSTATBITFLAG_CAN_DUAL_WIELD 0x100000
+
+/* limit ammo to assigned value on clip */
+#define WEAPONSTATBITFLAG_AMMO_CLIP_LIMIT 0x200000
+
+/* no ammo clip/reloads - draw straight from ammo supply (right of icon) */
+#define WEAPONSTATBITFLAG_NO_CLIP_RELOADS 0x400000
+#define WEAPONSTATBITFLAG_00800000
+#define WEAPONSTATBITFLAG_01000000
+#define WEAPONSTATBITFLAG_02000000
+#define WEAPONSTATBITFLAG_04000000
+#define WEAPONSTATBITFLAG_08000000
+#define WEAPONSTATBITFLAG_10000000
+#define WEAPONSTATBITFLAG_20000000
+#define WEAPONSTATBITFLAG_40000000
+#define WEAPONSTATBITFLAG_80000000
 
 
 #define OBJECTTYPE_00 0x00

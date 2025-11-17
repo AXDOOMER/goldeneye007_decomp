@@ -123,18 +123,18 @@ struct hand
   s32 field_8B0;
   s32 weapon_animation_trigger;
   s32 field_8B8;
-  s32 field_8BC;
-  s32 field_8C0;
-  s32 field_8C4;
-  s32 field_8C8;
-  s32 field_8CC;
-  s32 field_8D0;
-  s32 field_8D4;
-  s32 field_8D8;
-  s32 field_8DC;
-  s32 field_8E0;
-  s32 field_8E4;
-  s32 field_8E8;
+  f32 field_8BC;
+  f32 field_8C0;
+  f32 field_8C4;
+  f32 field_8C8;
+  f32 field_8CC;
+  f32 field_8D0;
+  f32 field_8D4;
+  f32 field_8D8;
+  f32 field_8DC;
+  f32 field_8E0;
+  f32 field_8E4;
+  f32 field_8E8;
   Mtxf field_8EC;
   s32 field_92C;
   s32 field_930;
@@ -2764,5 +2764,6 @@ int redirect_get_BONDdata_autoaim_y(void);
 void transform3Dto2DCoords(coord3d *in, coord2d *out);
 void maybe_solo_intro_camera_handler(void);
 s32 get_BONDdata_is_aiming(void);
+void currentPlayerAdjustFade(f32 maxfadetime, s32 r, s32 g, s32 b, f32 frac);
 
 #endif

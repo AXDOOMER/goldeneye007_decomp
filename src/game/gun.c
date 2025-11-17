@@ -29,6 +29,12 @@
 #include "textrelated.h"
 #include "chrai.h"
 #include "model.h"
+#include "options.h"
+#include "mpmenu.h"
+#include "joy.h"
+#include "matrixmath.h"
+#include "bondinv.h"
+
 
 // bss
 s32 dword_CODE_bss_80075DB0;
@@ -442,9 +448,9 @@ struct EarWhistleSounds ear_whistle_sounds = {
 };
 
 //D:80035E90
-u16 D_80035E90[] = { RICO_LASER2_SFX, RICO_LASER3_SFX };
+struct sfx2 D_80035E90 = { RICO_LASER2_SFX, RICO_LASER3_SFX };
 //D:80035E94
-u16 D_80035E94[] = { KNIFE_THROW1_SFX, KNIFE_THROW2_SFX, KNIFE_THROW3_SFX, 0 };
+struct sfx3 D_80035E94 = { KNIFE_THROW1_SFX, KNIFE_THROW2_SFX, KNIFE_THROW3_SFX };
 //D:80035E9C
 struct unkown_gun_struct D_80035E9C = { 0, 0 };
 //D:80035EA0
@@ -511,6 +517,17 @@ u32 D_80036060 = 0;
 
 void bullet_path_from_screen_center(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2);
 void sub_GAME_7F05EC1C(struct WeaponObjectRecord *arg0, struct coord3d *arg1, Mtxf *arg2, struct coord3d *arg3, s32 *arg4);
+s32 sub_GAME_7F05C6FC(struct bondstruct_unk_80035904 *, f32, Mtxf *, enum GUNHAND);
+void analyzeGEKey(void);
+void give_weapon_case_items(void);
+struct ModelFileHeader * get_ptr_weapon_model_header_line(ITEM_IDS weapon);
+s32 get_ammo_in_hands_weapon(enum GUNHAND hand);
+s32 get_ammo_type_for_weapon(ITEM_IDS weapon);
+f32 sub_GAME_7F05DCE8(GUNHAND hand);
+void give_weapon_case_items(void);
+void sub_GAME_7F05DA8C(GUNHAND hand, ITEM_IDS weaponnum_watchmenu);
+void sub_GAME_7F05E808(GUNHAND hand);
+void sub_GAME_7F0649D8(enum GUNHAND hand);
 
 // end forward declarations
 
@@ -21752,6 +21769,7 @@ weapon_reload_none_sfx:
 
 
 #endif
+
 
 
 void analyzeGEKey(void)

@@ -3906,6 +3906,13 @@ struct SetupIntroCredits
         ObjectRecord *Obj;       //20
     } sfxRecord;
 
+    struct sfx2 {
+        u16 half[2];
+    };
+
+    struct sfx3 {
+        u16 half[3];
+    };
 
 
 
