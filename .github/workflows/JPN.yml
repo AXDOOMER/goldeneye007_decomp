@@ -6,7 +6,6 @@ on:
     paths-ignore: # Don't trigger on files that are updated by the CI or other non-breaking files
     - 'tools/**'
     - '*.md'
-    - '.github/**'
     - '.gitignore'
     - 'CppProperties.json'
   pull_request:
@@ -87,5 +86,3 @@ jobs:
       - name: Check upload
         if: steps.upload.outcome != 'success'
         run: echo "::Upload output files::Failed to upload output files. Report and stats were not updated."
-
-#need way of telling report that JP passed/failed
