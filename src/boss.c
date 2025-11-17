@@ -629,8 +629,8 @@ void bossMainloop(void)
                     pendingGfx--;
                     break;
 
-                case OS_SC_PRE_NMI_MSG:
-                    pendingGfx = 4U;
+                case OS_SC_PRE_NMI_MSG: // message when the console's power is being cut off
+                    pendingGfx = 4U;    // this stops any further graphics processing
                     break;
             }
         }
