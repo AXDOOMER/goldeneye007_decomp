@@ -7549,7 +7549,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
         {
             if (chrlvAttackrollAnimationRelated7F02E2E0(self) == 0)
             {
-                if ((self->act_attack.attacktype & 1) != 0)
+                if ((self->act_attack.attacktype & TARGET_BOND) != 0)
                 {
                     chrlvSetTargetToPlayer(self);
                 }
@@ -7626,12 +7626,12 @@ void chrlvTickAttackCommon(ChrRecord *self)
         phi_f20 = objecthandlerGetModelField28(self_model);
     }
 
-    if ((self->act_attack.attacktype & 0x40) == 0)
+    if ((self->act_attack.attacktype & TARGET_DONTTURN) == 0)
     {
         fn40 = self->act_attack.animfloats->anonymous_3;
         fanon1 = self->act_attack.animfloats->anonymous_1;
 
-        if ((self->act_attack.attacktype & 0x20) != 0)
+        if ((self->act_attack.attacktype & TARGET_AIM_ONLY) != 0)
         {
             if (sub_GAME_7F06F5C4(self_model) < fanon1)
             {
@@ -7804,11 +7804,11 @@ void chrlvTickAttack(ChrRecord *self)
             if (sub_GAME_7F06F5C4(self_model) <= temp_f0)
             {
 #if defined(VERSION_US)
-                self->act_attack.attacktype |= 0x20;
+                self->act_attack.attacktype |= TARGET_AIM_ONLY;
 #else
-                // don't set 0x20
+                // don't set TARGET_AIM_ONLY
 #endif
-                self->act_attack.attacktype &= ~0x40;
+                self->act_attack.attacktype &= ~TARGET_DONTTURN;
 
                 if (self->act_attack.unk54 != 0)
                 {
@@ -7826,9 +7826,9 @@ void chrlvTickAttack(ChrRecord *self)
         }
     }
 
-    if ((self->act_attack.attacktype & 0x20) != 0)
+    if ((self->act_attack.attacktype & TARGET_AIM_ONLY) != 0)
     {
-        if ((self->act_attack.attacktype & 0x40) != 0)
+        if ((self->act_attack.attacktype & TARGET_DONTTURN) != 0)
         {
             if (chrlvUpdateAimendsideback(self, self->act_attack.animfloats, (s32) self->act_attack.unk38[1], (s32) self->act_attack.unk38[0], 0.2f) == 0)
             {
@@ -7840,7 +7840,7 @@ void chrlvTickAttack(ChrRecord *self)
 
         if (sub_GAME_7F06F5C4(self_model) <= temp_f0)
         {
-            self->act_attack.attacktype |= 0x40;
+            self->act_attack.attacktype |= TARGET_DONTTURN;
             self->act_attack.unk30 = 2;
 
             return;
