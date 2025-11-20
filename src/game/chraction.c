@@ -5,6 +5,7 @@
 #include "chraction.h"
 #include <limits.h>
 #include <math.h>
+#include "include/math.h"
 #include <music.h>
 #include <random.h>
 #include "bg.h"
@@ -1094,33 +1095,33 @@ void chrlvAttackActionRelated(ChrRecord *self)
 
     if ((self->act_attack.attacktype & TARGET_AIM_ONLY) != 0)
     {
-        if ((f->anonymous_8 >= 0.0f) && (f->anonymous_8 < f->anonymous_6))
+        if ((f->recoil_start_frame >= 0.0f) && (f->recoil_start_frame < f->shoot_start_frame))
         {
-            modelSetAnimEndFrame(model, f->anonymous_8);
+            modelSetAnimEndFrame(model, f->recoil_start_frame);
         }
         else
         {
-            modelSetAnimEndFrame(model, f->anonymous_6);
+            modelSetAnimEndFrame(model, f->shoot_start_frame);
         }
     }
     else if (self->act_attack.unk36 != 0)
     {
-        if (f->anonymous_8 >= 0.0f)
+        if (f->recoil_start_frame >= 0.0f)
         {
-            modelSetAnimEndFrame(model, f->anonymous_8);
+            modelSetAnimEndFrame(model, f->recoil_start_frame);
         }
         else
         {
-            modelSetAnimEndFrame(model, f->anonymous_6);
+            modelSetAnimEndFrame(model, f->shoot_start_frame);
         }
     }
-    else if (f->anonymous_8 >= 0.0f)
+    else if (f->recoil_start_frame >= 0.0f)
     {
-        modelSetAnimEndFrame(model, f->anonymous_8);
+        modelSetAnimEndFrame(model, f->recoil_start_frame);
     }
-    else if (f->anonymous_5 >= 0.0f)
+    else if (f->end_frame >= 0.0f)
     {
-        modelSetAnimEndFrame(model, f->anonymous_5);
+        modelSetAnimEndFrame(model, f->end_frame);
     }
     else
     {
@@ -1230,7 +1231,7 @@ void chrlvInitActAttack(ChrRecord *self, struct anim_group_info **arg1, s32 arg2
         );
 
     if ((self->chrflags & CHRSTART_FORCENOBLOOD)
-        && ((s32)panim_float->anonymous_0 == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_hip]))
+        && ((s32)panim_float->anim_num == (s32)&ptr_animation_table->data[(s32)&ANIM_DATA_fire_hip]))
     {
         // should be:
         //     panim_float = &arg1[anim_index]->table[(next_anim + 1) % len]
@@ -1320,9 +1321,9 @@ void chrlvInitActAttack(ChrRecord *self, struct anim_group_info **arg1, s32 arg2
 
     modelSetAnimation(
         self_model,
-        (struct ModelAnimation *) panim_float->anonymous_0,
+        (struct ModelAnimation *) panim_float->anim_num,
         arg2,
-        panim_float->anonymous_4,
+        panim_float->start_frame,
         chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
         16.0f);
 
@@ -1650,7 +1651,7 @@ void chrlvInitActAttackWalk(ChrRecord *chr, s32 arg1)
     chr->sleep = 0;
     chr->act_attackwalk.speed = 0.0f;
 
-    modelSetAnimation(chr->model, (struct ModelAnimation *) panim_float->anonymous_0, sp78, panim_float->anonymous_4, 0.5f, 16.0f);
+    modelSetAnimation(chr->model, (struct ModelAnimation *) panim_float->anim_num, sp78, panim_float->start_frame, 0.5f, 16.0f);
 }
 
 
@@ -1831,9 +1832,9 @@ void chrlvInitActAttackRoll(ChrRecord *chr, GUNHAND side)
 
     modelSetAnimation(
         self_model,
-        (struct ModelAnimation *) panim_float->anonymous_0,
+        (struct ModelAnimation *) panim_float->anim_num,
         sp7C,
-        panim_float->anonymous_4,
+        panim_float->start_frame,
         chrlvGetGuard007SpeedRating(chr, 0.5f, 0.8f),
         16.0f);
 
@@ -1841,22 +1842,22 @@ void chrlvInitActAttackRoll(ChrRecord *chr, GUNHAND side)
     {
         if (phi_s3 != 0)
         {
-            if (panim_float->anonymous_9 >= 0.0f)
+            if (panim_float->recoil_end_frame >= 0.0f)
             {
-                modelSetAnimEndFrame(self_model, panim_float->anonymous_9);
+                modelSetAnimEndFrame(self_model, panim_float->recoil_end_frame);
             }
             else
             {
-                modelSetAnimEndFrame(self_model, panim_float->anonymous_7);
+                modelSetAnimEndFrame(self_model, panim_float->shoot_end_frame);
             }
         }
-        else if (panim_float->anonymous_8 >= 0.0f)
+        else if (panim_float->recoil_start_frame >= 0.0f)
         {
-            modelSetAnimEndFrame(self_model, panim_float->anonymous_8);
+            modelSetAnimEndFrame(self_model, panim_float->recoil_start_frame);
         }
-        else if (panim_float->anonymous_5 >= 0.0f)
+        else if (panim_float->end_frame >= 0.0f)
         {
-            modelSetAnimEndFrame(self_model, panim_float->anonymous_5);
+            modelSetAnimEndFrame(self_model, panim_float->end_frame);
         }
     }
 }
@@ -2346,11 +2347,11 @@ s32 chrlvAttackAnimationRelated7F026F30(ChrRecord *self, f32 *result)
                 || (self->act_attackroll.animfloats == &D_80030078[6])
                 || (self->act_attackroll.animfloats == &D_80030078[7]))
             {
-                out_val = self->act_attackroll.animfloats->anonymous_1 - 8.0f;
+                out_val = self->act_attackroll.animfloats->unk04 - 8.0f;
 
-                if (self->act_attackroll.animfloats->anonymous_5 < self->act_attackroll.animfloats->anonymous_1)
+                if (self->act_attackroll.animfloats->end_frame < self->act_attackroll.animfloats->unk04)
                 {
-                    out_val = self->act_attackroll.animfloats->anonymous_5;
+                    out_val = self->act_attackroll.animfloats->end_frame;
                 }
 
                 if (objecthandlerGetModelField28(self->model) < out_val)
@@ -2362,7 +2363,7 @@ s32 chrlvAttackAnimationRelated7F026F30(ChrRecord *self, f32 *result)
         }
         else
         {
-            out_val = self->act_attackroll.animfloats->anonymous_1 - 8.0f;
+            out_val = self->act_attackroll.animfloats->unk04 - 8.0f;
             if (objecthandlerGetModelField28(self->model) < out_val)
             {
                 *result = out_val;
@@ -6139,7 +6140,7 @@ f32 chrlvGetSubrotySideback(ChrRecord *self)
 
     if ((self->actiontype == ACT_ATTACK) || (self->actiontype == ACT_ATTACKROLL))
     {
-        phi_f12 = self->act_attack.animfloats->anonymous_3;
+        phi_f12 = self->act_attack.animfloats->angle_offset;
     }
     else if (self->actiontype == ACT_BONDMULTI)
     {
@@ -6563,27 +6564,27 @@ s32 chrlvUpdateAimendsideback(ChrRecord *self, struct weapon_firing_animation_ta
 
             if (self->model->gunhand != GUNRIGHT)
             {
-                if (calc_aimendsideback < -arg1->anonymous_14)
+                if (calc_aimendsideback < -arg1->max_left)
                 {
-                    calc_aimendsideback = -arg1->anonymous_14;
+                    calc_aimendsideback = -arg1->max_left;
                     ret = 0;
                 }
-                else if (-arg1->anonymous_15 < calc_aimendsideback)
+                else if (-arg1->max_right < calc_aimendsideback)
                 {
-                    calc_aimendsideback = -arg1->anonymous_15;
+                    calc_aimendsideback = -arg1->max_right;
                     ret = 0;
                 }
             }
             else
             {
-                if (arg1->anonymous_14 < calc_aimendsideback)
+                if (arg1->max_left < calc_aimendsideback)
                 {
-                    calc_aimendsideback = arg1->anonymous_14;
+                    calc_aimendsideback = arg1->max_left;
                     ret = 0;
                 }
-                else if (calc_aimendsideback < arg1->anonymous_15)
+                else if (calc_aimendsideback < arg1->max_right)
                 {
-                    calc_aimendsideback = arg1->anonymous_15;
+                    calc_aimendsideback = arg1->max_right;
                     ret = 0;
                 }
             }
@@ -7423,15 +7424,15 @@ s32 chrlvAttackrollAnimationRelated7F02E2E0(ChrRecord *self)
 
         modelSetAnimation(
             model,
-            (void *) p->anonymous_0,
+            (void *) p->anim_num,
             sp24,
-            p->anonymous_7,
+            p->shoot_end_frame,
             chrlvGetGuard007SpeedRating(self, 0.7f, 1.12f),
             22.0f);
 
-        if (D_80030078[1].anonymous_5 >= 0.0f)
+        if (D_80030078[1].end_frame >= 0.0f)
         {
-            modelSetAnimEndFrame(model, D_80030078[1].anonymous_5);
+            modelSetAnimEndFrame(model, D_80030078[1].end_frame);
         }
 
         return 1;
@@ -7453,13 +7454,13 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *self)
 
     model = self->model;
 
-    if (self->act_attackroll.animfloats->anonymous_9 > 0.0f)
+    if (self->act_attackroll.animfloats->recoil_end_frame > 0.0f)
     {
         modelSetAnimation(
             model,
             objecthandlerGetModelAnim(model),
             (s32) model->gunhand,
-            self->act_attackroll.animfloats->anonymous_9,
+            self->act_attackroll.animfloats->recoil_end_frame,
             chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
             8.0f);
     }
@@ -7469,14 +7470,14 @@ void chrlvAttackrollAnimationRelated7F02E3B8(ChrRecord *self)
             model,
             objecthandlerGetModelAnim(model),
             (s32) model->gunhand,
-            self->act_attackroll.animfloats->anonymous_7,
+            self->act_attackroll.animfloats->shoot_end_frame,
             chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
             8.0f);
     }
 
-    if (self->act_attackroll.animfloats->anonymous_5 >= 0.0f)
+    if (self->act_attackroll.animfloats->end_frame >= 0.0f)
     {
-        modelSetAnimEndFrame(model, self->act_attackroll.animfloats->anonymous_5);
+        modelSetAnimEndFrame(model, self->act_attackroll.animfloats->end_frame);
     }
 }
 
@@ -7509,10 +7510,10 @@ void chrlvTickAttackCommon(ChrRecord *self)
 #endif
         && (self_model->anim2 == NULL))
     {
-        if (((self->act_attack.animfloats->anonymous_6 + 10.0f) < phi_f20)
-            && (phi_f20 < self->act_attack.animfloats->anonymous_7))
+        if (((self->act_attack.animfloats->shoot_start_frame + 10.0f) < phi_f20)
+            && (phi_f20 < self->act_attack.animfloats->shoot_end_frame))
         {
-            if (((self->act_attack.animfloats->anonymous_9 < 0.0f)) || (phi_f20 < self->act_attack.animfloats->anonymous_9))
+            if (((self->act_attack.animfloats->recoil_end_frame < 0.0f)) || (phi_f20 < self->act_attack.animfloats->recoil_end_frame))
             {
                 if (self->act_attack.unk36 == 0)
                 {
@@ -7522,13 +7523,13 @@ void chrlvTickAttackCommon(ChrRecord *self)
                             self_model,
                             objecthandlerGetModelAnim(self_model),
                             (s32) self_model->gunhand,
-                            self->act_attack.animfloats->anonymous_7,
+                            self->act_attack.animfloats->shoot_end_frame,
                             chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
                             8.0f);
 
-                        if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
+                        if (self->act_attack.animfloats->end_frame >= 0.0f)
                         {
-                            modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
+                            modelSetAnimEndFrame(self_model, self->act_attack.animfloats->end_frame);
                         }
                     }
                 }
@@ -7570,35 +7571,35 @@ void chrlvTickAttackCommon(ChrRecord *self)
 
             if (self->act_attack.unk36 != 0)
             {
-                if (self->act_attack.animfloats->anonymous_8 > 0.0f)
+                if (self->act_attack.animfloats->recoil_start_frame > 0.0f)
                 {
-                    fp1 = self->act_attack.animfloats->anonymous_8;
+                    fp1 = self->act_attack.animfloats->recoil_start_frame;
                 }
                 else
                 {
-                    fp1 = self->act_attack.animfloats->anonymous_6;
+                    fp1 = self->act_attack.animfloats->shoot_start_frame;
                 }
 
-                if (self->act_attack.animfloats->anonymous_9 > 0.0f)
+                if (self->act_attack.animfloats->recoil_end_frame > 0.0f)
                 {
-                    fp2 = self->act_attack.animfloats->anonymous_9;
+                    fp2 = self->act_attack.animfloats->recoil_end_frame;
                 }
                 else
                 {
-                    fp2 = self->act_attack.animfloats->anonymous_7;
+                    fp2 = self->act_attack.animfloats->shoot_end_frame;
                 }
             }
             else
             {
-                fp1 = self->act_attack.animfloats->anonymous_6;
+                fp1 = self->act_attack.animfloats->shoot_start_frame;
 
-                if (self->act_attack.animfloats->anonymous_8 > 0.0f)
+                if (self->act_attack.animfloats->recoil_start_frame > 0.0f)
                 {
-                    fp2 = self->act_attack.animfloats->anonymous_8;
+                    fp2 = self->act_attack.animfloats->recoil_start_frame;
                 }
                 else
                 {
-                    fp2 = self->act_attack.animfloats->anonymous_7;
+                    fp2 = self->act_attack.animfloats->shoot_end_frame;
                 }
             }
 
@@ -7628,8 +7629,8 @@ void chrlvTickAttackCommon(ChrRecord *self)
 
     if ((self->act_attack.attacktype & TARGET_DONTTURN) == 0)
     {
-        fn40 = self->act_attack.animfloats->anonymous_3;
-        fanon1 = self->act_attack.animfloats->anonymous_1;
+        fn40 = self->act_attack.animfloats->angle_offset;
+        fanon1 = self->act_attack.animfloats->unk04;
 
         if ((self->act_attack.attacktype & TARGET_AIM_ONLY) != 0)
         {
@@ -7652,7 +7653,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
             fn40);
     }
 
-    if ((self->act_attack.animfloats->anonymous_10 < phi_f20) && (phi_f20 < self->act_attack.animfloats->anonymous_11))
+    if ((self->act_attack.animfloats->aim_start_frame < phi_f20) && (phi_f20 < self->act_attack.animfloats->aim_end_frame))
     {
         chrlvUpdateAimendsideback(self, self->act_attack.animfloats, (s32) self->act_attack.unk38[1], (s32) self->act_attack.unk38[0], 1.0f);
     }
@@ -7667,7 +7668,7 @@ void chrlvTickAttackCommon(ChrRecord *self)
         {
             if (self->act_attack.unk3a[i] == 0)
             {
-                if ((self->act_attack.animfloats->anonymous_6 <= phi_f20) && (phi_f20 < self->act_attack.animfloats->anonymous_7))
+                if ((self->act_attack.animfloats->shoot_start_frame <= phi_f20) && (phi_f20 < self->act_attack.animfloats->shoot_end_frame))
                 {
                     chrlvToggleHiddenRelated(self, i, 1);
                     self->act_attack.unk44 = g_GlobalTimer;
@@ -7675,9 +7676,9 @@ void chrlvTickAttackCommon(ChrRecord *self)
                     if (self->actiontype == ACT_ATTACKROLL)
                     {
 #ifdef REFRESH_PAL
-                        df = ((self->act_attack.animfloats->anonymous_7 - self->act_attack.animfloats->anonymous_6) * 50.0f) / 60.0f;
+                        df = ((self->act_attack.animfloats->shoot_end_frame - self->act_attack.animfloats->shoot_start_frame) * 50.0f) / 60.0f;
 #else
-                        df = self->act_attack.animfloats->anonymous_7 - self->act_attack.animfloats->anonymous_6;
+                        df = self->act_attack.animfloats->shoot_end_frame - self->act_attack.animfloats->shoot_start_frame;
 #endif
 
                         if (df < 30.0f)
@@ -7725,13 +7726,13 @@ void chrlvTickAttackCommon(ChrRecord *self)
                 && ((i == self->act_attack.unk32) || (self->act_attack.unk3a[self->act_attack.unk32] == 0))
                 && (
                     (
-                        ( self->act_attack.animfloats->anonymous_8 >= 0.0f)
-                        && (self->act_attack.animfloats->anonymous_8 <= phi_f20)
-                        && (phi_f20 <= self->act_attack.animfloats->anonymous_9))
+                        ( self->act_attack.animfloats->recoil_start_frame >= 0.0f)
+                        && (self->act_attack.animfloats->recoil_start_frame <= phi_f20)
+                        && (phi_f20 <= self->act_attack.animfloats->recoil_end_frame))
                     ||
                     (
-                        (self->act_attack.animfloats->anonymous_8 < 0.0f)
-                        && (self->act_attack.animfloats->anonymous_6 <= phi_f20)
+                        (self->act_attack.animfloats->recoil_start_frame < 0.0f)
+                        && (self->act_attack.animfloats->shoot_start_frame <= phi_f20)
                     )))
             {
                 self->act_attack.unk31 = 1;
@@ -7771,13 +7772,13 @@ void chrlvTickAttack(ChrRecord *self)
     {
         if (self->act_attack.type_of_motion == 1)
         {
-            if (self->act_attack.animfloats->anonymous_9 >= 0.0f)
+            if (self->act_attack.animfloats->recoil_end_frame >= 0.0f)
             {
-                phi_f2 = self->act_attack.animfloats->anonymous_9;
+                phi_f2 = self->act_attack.animfloats->recoil_end_frame;
             }
             else
             {
-                phi_f2 = self->act_attack.animfloats->anonymous_7;
+                phi_f2 = self->act_attack.animfloats->shoot_end_frame;
             }
 
             modelSetAnimation(
@@ -7788,9 +7789,9 @@ void chrlvTickAttack(ChrRecord *self)
                 chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
                 16.0f);
 
-            if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
+            if (self->act_attack.animfloats->end_frame >= 0.0f)
             {
-                modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
+                modelSetAnimEndFrame(self_model, self->act_attack.animfloats->end_frame);
             }
 
             self->act_attack.type_of_motion = 2;
@@ -7849,7 +7850,7 @@ void chrlvTickAttack(ChrRecord *self)
 
     if (self->act_attack.unk36 == 0)
     {
-        if ((self->act_attack.animfloats->anonymous_9 > 0.0f) && (temp_f0 <= self->act_attack.animfloats->anonymous_9))
+        if ((self->act_attack.animfloats->recoil_end_frame > 0.0f) && (temp_f0 <= self->act_attack.animfloats->recoil_end_frame))
         {
             if (sub_GAME_7F06F5C4(self_model) <= temp_f0)
             {
@@ -7857,20 +7858,20 @@ void chrlvTickAttack(ChrRecord *self)
                     self_model,
                     objecthandlerGetModelAnim(self_model),
                     (s32) self_model->gunhand,
-                    self->act_attack.animfloats->anonymous_9,
+                    self->act_attack.animfloats->recoil_end_frame,
                     chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f),
                     16.0f);
 
                 if (self->act_attack.unk37 != 0)
                 {
-                    if (self->act_attack.animfloats->anonymous_5 >= 0.0f)
+                    if (self->act_attack.animfloats->end_frame >= 0.0f)
                     {
-                        modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_5);
+                        modelSetAnimEndFrame(self_model, self->act_attack.animfloats->end_frame);
                     }
                 }
                 else
                 {
-                    modelSetAnimEndFrame(self_model, self->act_attack.animfloats->anonymous_7);
+                    modelSetAnimEndFrame(self_model, self->act_attack.animfloats->shoot_end_frame);
                 }
             }
         }
@@ -7908,7 +7909,7 @@ void chrlvTickAttackRoll(ChrRecord *self)
             || (self->act_attackroll.animfloats == &D_80030078[7])
         )
         {
-            if (self->act_attackroll.animfloats->anonymous_5 <= temp_f0)
+            if (self->act_attackroll.animfloats->end_frame <= temp_f0)
             {
                 sp38 = (s32) temp_a0->gunhand;
                 phi_v1 = &self->act_attackroll.animfloats[4];
@@ -7980,33 +7981,33 @@ void chrlvTickAttackRoll(ChrRecord *self)
                 self->act_attackroll.animfloats = phi_v1;
                 self->sleep = 0;
 
-                modelSetAnimation(temp_a0, (void *) phi_v1->anonymous_0, sp38, phi_v1->anonymous_4, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), phi_f2_2);
+                modelSetAnimation(temp_a0, (void *) phi_v1->anim_num, sp38, phi_v1->start_frame, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), phi_f2_2);
 
                 if (self->act_attackroll.unk36 != 0)
                 {
-                    if (phi_v1->anonymous_9 >= 0.0f)
+                    if (phi_v1->recoil_end_frame >= 0.0f)
                     {
-                        modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_9);
+                        modelSetAnimEndFrame(temp_a0, phi_v1->recoil_end_frame);
                     }
                     else
                     {
-                        modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_7);
+                        modelSetAnimEndFrame(temp_a0, phi_v1->shoot_end_frame);
                     }
                 }
-                else if (phi_v1->anonymous_8 >= 0.0f)
+                else if (phi_v1->recoil_start_frame >= 0.0f)
                 {
-                    modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_8);
+                    modelSetAnimEndFrame(temp_a0, phi_v1->recoil_start_frame);
                 }
-                else if (phi_v1->anonymous_5 >= 0.0f)
+                else if (phi_v1->end_frame >= 0.0f)
                 {
-                    modelSetAnimEndFrame(temp_a0, phi_v1->anonymous_5);
+                    modelSetAnimEndFrame(temp_a0, phi_v1->end_frame);
                 }
 
-                if (self->act_attackroll.animfloats->anonymous_3 != 0.0f)
+                if (self->act_attackroll.animfloats->angle_offset != 0.0f)
                 {
                     temp_v0_2 = (struct modeldata_root *)modelGetNodeRwData(temp_a0, temp_a0->obj->RootNode);
                     temp_v0_2->unk5c = phi_f2_2;
-                    temp_v0_2->unk58 = (-self->act_attackroll.animfloats->anonymous_3 / phi_f2_2);
+                    temp_v0_2->unk58 = (-self->act_attackroll.animfloats->angle_offset / phi_f2_2);
 
                     if (sp38 != GUNRIGHT)
                     {
@@ -8032,22 +8033,22 @@ void chrlvTickAttackRoll(ChrRecord *self)
             )
             && (self->act_attackroll.unk36 == 0))
         {
-            if ((self->act_attackroll.animfloats->anonymous_9 > 0.0f) && (temp_f0 <= self->act_attackroll.animfloats->anonymous_9))
+            if ((self->act_attackroll.animfloats->recoil_end_frame > 0.0f) && (temp_f0 <= self->act_attackroll.animfloats->recoil_end_frame))
             {
                 if (sub_GAME_7F06F5C4(temp_a0) <= temp_f0)
                 {
-                    modelSetAnimation(temp_a0, objecthandlerGetModelAnim(temp_a0), (s32) temp_a0->gunhand, self->act_attackroll.animfloats->anonymous_9, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
+                    modelSetAnimation(temp_a0, objecthandlerGetModelAnim(temp_a0), (s32) temp_a0->gunhand, self->act_attackroll.animfloats->recoil_end_frame, chrlvGetGuard007SpeedRating(self, 0.5f, 0.8f), 16.0f);
 
                     if (self->act_attackroll.unk37 != 0)
                     {
-                        if (self->act_attackroll.animfloats->anonymous_5 >= 0.0f)
+                        if (self->act_attackroll.animfloats->end_frame >= 0.0f)
                         {
-                            modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->anonymous_5);
+                            modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->end_frame);
                         }
                     }
                     else
                     {
-                        modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->anonymous_7);
+                        modelSetAnimEndFrame(temp_a0, self->act_attackroll.animfloats->shoot_end_frame);
                     }
                 }
             }
