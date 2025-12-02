@@ -86,11 +86,12 @@ class Vertex:
 class ModelNode:
     offset: int  # Offset in binary where this node is located
     opcode: int
-    data_offset: int
-    parent_offset: int
-    next_offset: int
-    prev_offset: int
-    child_offset: int
+    opcode_flags: int = 0  # High byte of the opcode field (UseAdditionalMatrices flag for chr models)
+    data_offset: int = 0
+    parent_offset: int = 0
+    next_offset: int = 0
+    prev_offset: int = 0
+    child_offset: int = 0
     data: Any = None  # Parsed data structure based on opcode
 
 class BinaryModelParser:
@@ -104,9 +105,9 @@ class BinaryModelParser:
         self.base_address = BASE_ADDRESS
         
     def to_file_offset(self, addr: int) -> int:
-        """Convert base-relative address to file offset"""
+        """Convert base-relative address to file offset. Returns -1 for NULL (0x00000000)"""
         if addr == 0:
-            return 0
+            return -1  # NULL pointer
         if addr < self.base_address:
             return addr  # Already a file offset
         return addr - self.base_address
@@ -173,20 +174,25 @@ class BinaryModelParser:
     
     def parse_node_tree(self, node_offset: int):
         """Recursively parse ModelNode tree structure"""
-        if node_offset == 0 or node_offset in self.nodes:
+        if node_offset in self.nodes:
             return
         
         # Parse ModelNode structure (24 bytes)
         # typedef struct ModelNode {
-        #     u16 Opcode;           /*0x00*/
+        #     u8 UseAdditionalMatrices; /*0x00 - high byte of opcode field, used in chr models*/
+        #     u8 Opcode;                /*0x01 - low byte*/
+        #     u16 padding;              /*0x02*/
         #     union ModelRoData *Data;  /*0x04*/
         #     struct ModelNode *Parent; /*0x08*/
         #     struct ModelNode *Next;   /*0x0c*/
         #     struct ModelNode *Prev;   /*0x10*/
         #     struct ModelNode *Child;  /*0x14*/
         # } ModelNode;
+        # Note: Officially it's "u16 Opcode" but chr models use both bytes separately
         
-        opcode = read_u16(self.data, node_offset)
+        opcode_u16 = read_u16(self.data, node_offset)
+        opcode_flags = (opcode_u16 >> 8) & 0xFF  # High byte
+        opcode = opcode_u16 & 0xFF  # Low byte
         data_offset = self.to_file_offset(read_u32(self.data, node_offset + 4))
         parent_offset = self.to_file_offset(read_u32(self.data, node_offset + 8))
         next_offset = self.to_file_offset(read_u32(self.data, node_offset + 12))
@@ -196,7 +202,8 @@ class BinaryModelParser:
         # Create node
         node = ModelNode(
             offset=node_offset,
-            opcode=opcode & 0xFF,
+            opcode=opcode,
+            opcode_flags=opcode_flags,
             data_offset=data_offset,
             parent_offset=parent_offset,
             next_offset=next_offset,
@@ -278,6 +285,10 @@ class BinaryModelParser:
             return self.parse_dl_record(data_offset)
         elif opcode == 8:  # LOD
             return self.parse_lod_record(data_offset)
+        elif opcode == 23:  # HEAD
+            return self.parse_head_placeholder_record(data_offset)
+        elif opcode == 13:  # SHADOW
+            return self.parse_shadow_record(data_offset)
         # Add more as needed
         else:
             return {'_raw_offset': data_offset}
@@ -439,6 +450,50 @@ class BinaryModelParser:
             'group2': read_u16(self.data, offset + 10),
             'rw_data_index': read_u16(self.data, offset + 12),
             'reserved': read_u16(self.data, offset + 14),
+        }
+    
+    def parse_head_placeholder_record(self, offset: int) -> Dict:
+        """Parse ModelRoData_HeadPlaceholderRecord (4 bytes with padding)
+        
+        Structure (from bondtypes.h):
+            u16 RwDataIndex;     // 0x0
+            u16 padding;         // 0x2 (implicit padding to 4 bytes)
+        Total: 4 bytes
+        """
+        return {
+            '_type': 'HeadPlaceholderRecord',
+            'rw_data_index': read_u16(self.data, offset),
+            'padding': read_u16(self.data, offset + 2),
+        }
+    
+    def parse_shadow_record(self, offset: int) -> Dict:
+        """Parse ModelRoData_ShadowRecord (32 bytes)
+        
+        Structure (from bondtypes.h):
+            coord2d pos;                   // 0x0 (2 floats)
+            coord2d size;                  // 0x8 (2 floats)
+            void *image;                   // 0x10
+            ModelRoData_HeaderRecord *Header;  // 0x14 (pointer to header node)
+            f32 Scale;                     // 0x18
+            void *BaseAddr;                // 0x1C
+        Total: 32 bytes (0x20)
+        """
+        image_ptr = read_u32(self.data, offset + 0x10)
+        image_offset = self.to_file_offset(image_ptr) if image_ptr != 0 else 0
+        
+        header_ptr = read_u32(self.data, offset + 0x14)
+        header_offset = self.to_file_offset(header_ptr) if header_ptr != 0 else 0
+        
+        return {
+            '_type': 'ShadowRecord',
+            'pos_x': read_float(self.data, offset + 0x0),
+            'pos_y': read_float(self.data, offset + 0x4),
+            'size_x': read_float(self.data, offset + 0x8),
+            'size_y': read_float(self.data, offset + 0xC),
+            'image_offset': image_offset,
+            'header_offset': header_offset,
+            'scale': read_float(self.data, offset + 0x18),
+            'base_addr': read_u32(self.data, offset + 0x1C),
         }
     
     def parse_gunfire_record(self, offset: int) -> Dict:
@@ -781,16 +836,26 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
     lines.append("// ModelNode tree")
     for node_offset in sorted(nodes.keys()):
         node = nodes[node_offset]
-        opcode_name = f"MODELNODE_OPCODE_{OPCODES.get(node.opcode, 'UNKNOWN')}"
+        
+        # Format the opcode field - need to include both flag byte and opcode byte
+        # In the binary it's stored as u16 big-endian: (flags << 8) | opcode
+        # We output it as a compound literal to ensure correct byte layout
+        if node.opcode_flags != 0:
+            # Need both bytes: output as hex u16 to ensure exact byte layout
+            opcode_value = f"0x{(node.opcode_flags << 8) | node.opcode:04X}"
+        else:
+            # Just the opcode for prop models (flags=0)
+            opcode_name = f"MODELNODE_OPCODE_{OPCODES.get(node.opcode, 'UNKNOWN')}"
+            opcode_value = opcode_name
         
         # Format pointers
         data_ptr = f"&{get_data_symbol_name(node)}" if node.data else "NULL"
-        parent_ptr = f"&ModelNode_0x{node.parent_offset:03x}" if node.parent_offset > 0 else "NULL"
-        next_ptr = f"&ModelNode_0x{node.next_offset:03x}" if node.next_offset > 0 else "NULL"
-        prev_ptr = f"&ModelNode_0x{node.prev_offset:03x}" if node.prev_offset > 0 else "NULL"
-        child_ptr = f"&ModelNode_0x{node.child_offset:03x}" if node.child_offset > 0 else "NULL"
+        parent_ptr = f"&ModelNode_0x{node.parent_offset:03x}" if node.parent_offset is not None and node.parent_offset >= 0 else "NULL"
+        next_ptr = f"&ModelNode_0x{node.next_offset:03x}" if node.next_offset is not None and node.next_offset >= 0 else "NULL"
+        prev_ptr = f"&ModelNode_0x{node.prev_offset:03x}" if node.prev_offset is not None and node.prev_offset >= 0 else "NULL"
+        child_ptr = f"&ModelNode_0x{node.child_offset:03x}" if node.child_offset is not None and node.child_offset >= 0 else "NULL"
         
-        lines.append(f"ModelNode ModelNode_0x{node_offset:03x} = {{{opcode_name}, {data_ptr}, {parent_ptr}, {next_ptr}, {prev_ptr}, {child_ptr}}};")
+        lines.append(f"ModelNode ModelNode_0x{node_offset:03x} = {{{opcode_value}, {data_ptr}, {parent_ptr}, {next_ptr}, {prev_ptr}, {child_ptr}}};")
     lines.append("")
     
     # CRITICAL: IDO compiler places structures in .data section in exact C file declaration order
@@ -953,6 +1018,41 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
             struct_lines.append(f"    {group_ptr}, //FirstGroup")
             struct_lines.append(f"    0x{node.data['group1']:X}, 0x{node.data['group2']:X}, //Group1, Group2")
             struct_lines.append(f"    0x{node.data['rw_data_index']:X} //RwDataIndex")
+            struct_lines.append("};")
+            all_structures.append((node.data_offset, '\n'.join(struct_lines)))
+        
+        # HeadPlaceholderRecord structures (4 bytes)
+        elif dtype == 'HeadPlaceholderRecord':
+            struct_lines = []
+            struct_lines.append(f"ModelRoData_HeadPlaceholderRecord HeadPlaceholderRecord_0x{node.data_offset:03x} = ")
+            struct_lines.append("{")
+            struct_lines.append(f"    0x{node.data['rw_data_index']:X} //RwDataIndex")
+            struct_lines.append("};")
+            all_structures.append((node.data_offset, '\n'.join(struct_lines)))
+        
+        # ShadowRecord structures (32 bytes)
+        elif dtype == 'ShadowRecord':
+            data = node.data
+            struct_lines = []
+            struct_lines.append(f"ModelRoData_ShadowRecord ShadowRecord_0x{node.data_offset:03x} = ")
+            struct_lines.append("{")
+            struct_lines.append(f"    {{{float_to_c(data['pos_x'])}, {float_to_c(data['pos_y'])}}}, //pos")
+            struct_lines.append(f"    {{{float_to_c(data['size_x'])}, {float_to_c(data['size_y'])}}}, //size")
+            
+            # Image pointer
+            if data['image_offset'] > 0:
+                struct_lines.append(f"    (void *)(0x05000000 + 0x{data['image_offset']:03x}), //image")
+            else:
+                struct_lines.append("    NULL, //image")
+            
+            # Header pointer - points to a ModelNode with HEADER opcode usually
+            if data['header_offset'] > 0:
+                struct_lines.append(f"    (struct ModelRoData_HeaderRecord *)(0x05000000 + 0x{data['header_offset']:03x}), //Header")
+            else:
+                struct_lines.append("    NULL, //Header")
+            
+            struct_lines.append(f"    {float_to_c(data['scale'])}, //Scale")
+            struct_lines.append(f"    (void *)0x{data['base_addr']:X} //BaseAddr")
             struct_lines.append("};")
             all_structures.append((node.data_offset, '\n'.join(struct_lines)))
         
@@ -1119,7 +1219,13 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
             struct_lines.append(f"    (void *)0x{base_addr:08X}, //BaseAddr")
             
             # Vertices pointer
-            vtx_ref = f"&{node_to_vtx_name[node_offset][0]}" if node_offset in node_to_vtx_name else "NULL"
+            if node_offset in node_to_vtx_name:
+                vtx_ref = f"&{node_to_vtx_name[node_offset][0]}"
+            elif data.get('vertices_offset', -1) >= 0:
+                # Vertices pointer exists but no vertices were parsed (num_vertices=0)
+                vtx_ref = f"(Vtx *)0x{BASE_ADDRESS + data['vertices_offset']:08X}"
+            else:
+                vtx_ref = "NULL"
             struct_lines.append(f"    {vtx_ref}, //Vertices")
             struct_lines.append(f"    0x{data['num_vertices']:X}, //NumVertices")
             struct_lines.append(f"    {data['model_type']} //ModelType")
@@ -1360,6 +1466,16 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                     for i in range(offset, offset + 40):
                         byte_map[i] = True
                 
+                # ShadowRecord (32 bytes)
+                if offset == node.data_offset and dtype == 'ShadowRecord':
+                    for i in range(offset, offset + 32):
+                        byte_map[i] = True
+                
+                # HeadPlaceholderRecord (4 bytes)
+                if offset == node.data_offset and dtype == 'HeadPlaceholderRecord':
+                    for i in range(offset, offset + 4):
+                        byte_map[i] = True
+                
                 # DisplayListPrimaryRecord (16 bytes)
                 if offset == node.data_offset and dtype == 'DisplayListPrimaryRecord':
                     for i in range(offset, offset + 16):
@@ -1409,8 +1525,11 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
         switch_size = len(switches) * 4 if switches else 0
         
         # Find padding gaps (up to last structure only, SKIP switch region at start)
+        # Don't scan past last_offset + 256 bytes to avoid trailing data
+        scan_limit = min(last_offset + 256, binary_size)
+        
         i = switch_size  # Start AFTER switches
-        while i <= last_offset:
+        while i < scan_limit:
             if not byte_map[i]:
                 pad_start = i
                 while i < binary_size and not byte_map[i]:
@@ -1418,9 +1537,10 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 pad_end = i
                 pad_size = pad_end - pad_start
                 
-                # ONLY add padding for 4+ byte gaps
+                # ONLY add padding for 4+ byte gaps that are BETWEEN structures (not at the end)
                 # 2-byte gaps are natural compiler alignment - don't add variables for them
-                if pad_size >= 4:
+                # Skip padding that extends to near the end of the file (trailing data)
+                if pad_size >= 4 and pad_end < scan_limit - 32:
                     # Read padding bytes
                     pad_bytes = binary_data[pad_start:pad_end]
                     
@@ -1468,6 +1588,10 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 forward_decl_lines.append(f"extern ModelRoData_GroupSimpleRecord GroupSimpleRecord_0x{node.data_offset:03x};")
             elif dtype == 'HeaderRecord':
                 forward_decl_lines.append(f"extern ModelRoData_HeaderRecord HeaderRecord_0x{node.data_offset:03x};")
+            elif dtype == 'HeadPlaceholderRecord':
+                forward_decl_lines.append(f"extern ModelRoData_HeadPlaceholderRecord HeadPlaceholderRecord_0x{node.data_offset:03x};")
+            elif dtype == 'ShadowRecord':
+                forward_decl_lines.append(f"extern ModelRoData_ShadowRecord ShadowRecord_0x{node.data_offset:03x};")
             elif dtype == 'GunfireRecord':
                 forward_decl_lines.append(f"extern ModelRoData_GunfireRecord GunfireRecord_0x{node.data_offset:03x};")
             elif dtype == 'DisplayListPrimaryRecord':
@@ -1557,6 +1681,10 @@ def get_data_symbol_name(node: ModelNode) -> str:
         return f"GroupSimpleRecord_0x{node.data_offset:03x}"
     elif dtype == 'HeaderRecord':
         return f"HeaderRecord_0x{node.data_offset:03x}"
+    elif dtype == 'HeadPlaceholderRecord':
+        return f"HeadPlaceholderRecord_0x{node.data_offset:03x}"
+    elif dtype == 'ShadowRecord':
+        return f"ShadowRecord_0x{node.data_offset:03x}"
     elif dtype == 'GunfireRecord':
         return f"GunfireRecord_0x{node.data_offset:03x}"
     elif dtype == 'DisplayListPrimaryRecord':

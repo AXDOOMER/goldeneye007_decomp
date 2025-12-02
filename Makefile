@@ -442,9 +442,9 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
-extractassets: extract_u extract_e extract_j convert_props
+extractassets: extract_u extract_e extract_j convert_props convert_chrs
 
-forceextractassets: force_extract_u force_extract_e force_extract_j convert_props
+forceextractassets: force_extract_u force_extract_e force_extract_j convert_props convert_chrs
 
 extract_u:
 	@if [ ! -f assets/obseg/ob__ob_end.seg ]; then \
@@ -530,6 +530,21 @@ convert_props:
 			echo "Props already converted ($$c_count Model.c files found)."; \
 		else \
 			echo "No prop binaries found to convert."; \
+		fi \
+	fi
+
+convert_chrs:
+	@echo "Converting chr binaries to Model.c..."
+	@bin_count=$$(ls assets/obseg/chr/C*Z.bin 2>/dev/null | wc -l); \
+	if [ $$bin_count -gt 0 ]; then \
+		echo "Found $$bin_count chr binaries to convert..."; \
+		python3 scripts/generate_chr_c.py --force --cleanup || true; \
+	else \
+		c_count=$$(find assets/obseg/chr -maxdepth 2 -name "Model.c" 2>/dev/null | wc -l); \
+		if [ $$c_count -gt 0 ]; then \
+			echo "Chrs already converted ($$c_count Model.c files found)."; \
+		else \
+			echo "No chr binaries found to convert."; \
 		fi \
 	fi
 
