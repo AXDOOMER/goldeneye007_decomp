@@ -13,7 +13,7 @@ All pointers in the binary are stored as offsets from base address 0x05000000.
 The game's load_object_fill_header() converts these to RAM pointers at runtime.
 
 Usage:
-    python3 scripts/generate_model_c_v2.py [--dry-run] [--force] [prop ...]
+    python3 scripts/generate_prop_model_c.py [--dry-run] [--force] [prop ...]
 """
 
 import struct

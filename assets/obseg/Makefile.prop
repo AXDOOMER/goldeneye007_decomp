@@ -30,7 +30,7 @@ $(BUILD_DIR)/$(OBSEG_DIR)/prop/%/Model.o: $(OBSEG_DIR)/prop/%/Model.c
 $(OBSEG_DIR)/prop/%/Model.c:
 	@if [ -f $(OBSEG_DIR)/prop/P$*Z.bin ]; then \
 		echo "Converting P$*Z.bin to Model.c..."; \
-		python3 scripts/generate_model_c_v2.py --cleanup $* || exit 1; \
+		python3 scripts/generate_prop_model_c.py --cleanup $* || exit 1; \
 	else \
 		echo "Error: Neither $(OBSEG_DIR)/prop/$*/Model.c nor $(OBSEG_DIR)/prop/P$*Z.bin exists"; \
 		exit 1; \
