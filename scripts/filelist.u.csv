@@ -340,9 +340,9 @@
 8093664,512,assets/obseg/prop/Pcard_box1Z.bin,1,1
 8094176,576,assets/obseg/prop/Pcard_box2Z.bin,1,1
 8094752,496,assets/obseg/prop/Pcard_box3Z.bin,1,1
-8095248,432,assets/obseg/prop/Pcard_box4Z.bin,1,1
-8095680,512,assets/obseg/prop/Pcard_box5Z.bin,1,1
-8096192,496,assets/obseg/prop/Pcard_box6Z.bin,1,1
+8095248,432,assets/obseg/prop/Pcard_box4_lgZ.bin,1,1
+8095680,512,assets/obseg/prop/Pcard_box5_lgZ.bin,1,1
+8096192,496,assets/obseg/prop/Pcard_box6_lgZ.bin,1,1
 8096688,3072,assets/obseg/prop/PcarescortZ.bin,1,1
 8099760,3120,assets/obseg/prop/PcargolfZ.bin,1,1
 8102880,4416,assets/obseg/prop/PcarweirdZ.bin,1,1

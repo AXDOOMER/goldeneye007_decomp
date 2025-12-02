@@ -247,7 +247,7 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 .NOTPARALLEL: print_info create_directories $(APPROM) checksum
 
 # Phony Recipes - These targets are not files, Get Make to do something
-.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets textures 
+.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets forceextractassets textures convert_props extract_u extract_e extract_j force_extract_u force_extract_e force_extract_j extract_rsp 
 
 
 # this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
@@ -442,7 +442,9 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
-extractassets: extract_u extract_e extract_j
+extractassets: extract_u extract_e extract_j convert_props
+
+forceextractassets: force_extract_u force_extract_e force_extract_j convert_props
 
 extract_u:
 	@if [ ! -f assets/obseg/ob__ob_end.seg ]; then \
@@ -454,6 +456,14 @@ extract_u:
 		fi \
 	else \
 		echo "Assets for u already extracted."; \
+	fi
+
+force_extract_u:
+	@echo "Force extracting assets for u..."; \
+	if [ -f baserom.u.z64 ]; then \
+		scripts/extract_baserom.u.sh; \
+	else \
+		echo "Error: baserom.u.z64 not found."; \
 	fi
 
 extract_e:
@@ -468,6 +478,14 @@ extract_e:
 		echo "Assets for e already extracted."; \
 	fi
 
+force_extract_e:
+	@echo "Force extracting assets for e..."; \
+	if [ -f baserom.e.z64 ]; then \
+		scripts/extract_diff.e.sh; \
+	else \
+		echo "Error: baserom.e.z64 not found."; \
+	fi
+
 extract_j:
 	@if [ ! -f assets/obseg/text/j/LstatJ.bin ]; then \
 		echo "Extracting assets for j..."; \
@@ -480,6 +498,14 @@ extract_j:
 		echo "Assets for j already extracted."; \
 	fi
 
+force_extract_j:
+	@echo "Force extracting assets for j..."; \
+	if [ -f baserom.j.z64 ]; then \
+		scripts/extract_diff.j.sh; \
+	else \
+		echo "Error: baserom.j.z64 not found."; \
+	fi
+
 extract_rsp:
 	@if [ ! -f build/u/rsp/rspboot.bin ]; then \
 		echo "Extracting rsp assets..."; \
@@ -490,6 +516,21 @@ extract_rsp:
 		fi \
 	else \
 		echo "RSP assets for already extracted."; \
+	fi
+
+convert_props:
+	@echo "Converting prop binaries to Model.c..."
+	@bin_count=$$(ls assets/obseg/prop/P*Z.bin 2>/dev/null | wc -l); \
+	if [ $$bin_count -gt 0 ]; then \
+		echo "Found $$bin_count prop binaries to convert..."; \
+		python3 generate_model_c_v2.py --force --cleanup || true; \
+	else \
+		c_count=$$(find assets/obseg/prop -maxdepth 2 -name "Model.c" 2>/dev/null | wc -l); \
+		if [ $$c_count -gt 0 ]; then \
+			echo "Props already converted ($$c_count Model.c files found)."; \
+		else \
+			echo "No prop binaries found to convert."; \
+		fi \
 	fi
 
 textures: tools/mktex/build/tex2png

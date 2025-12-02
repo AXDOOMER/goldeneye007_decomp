@@ -380,9 +380,9 @@ PROPNAMELIST = ak47mag \
 				card_box1 \
 				card_box2 \
 				card_box3 \
-				card_box4 \
-				card_box5 \
-				card_box6 \
+				card_box4_lg \
+				card_box5_lg \
+				card_box6_lg \
 				carescort \
 				cargolf \
 				carweird \

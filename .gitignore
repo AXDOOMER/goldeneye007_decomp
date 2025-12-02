@@ -53,7 +53,7 @@ assets/obseg/bg/e/*.bin
 assets/obseg/chr/*.bin
 assets/obseg/gun/*.bin
 assets/obseg/ob__ob_end.seg
-assets/obseg/prop/*.bin
+assets/obseg/prop/*/Model.c
 assets/obseg/setup/*.bin
 assets/obseg/setup/[eju]/*.bin
 assets/obseg/stan/*.bin
