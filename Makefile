@@ -523,7 +523,7 @@ convert_props:
 	@bin_count=$$(ls assets/obseg/prop/P*Z.bin 2>/dev/null | wc -l); \
 	if [ $$bin_count -gt 0 ]; then \
 		echo "Found $$bin_count prop binaries to convert..."; \
-		python3 generate_model_c_v2.py --force --cleanup || true; \
+		python3 scripts/generate_model_c_v2.py --force --cleanup || true; \
 	else \
 		c_count=$$(find assets/obseg/prop -maxdepth 2 -name "Model.c" 2>/dev/null | wc -l); \
 		if [ $$c_count -gt 0 ]; then \
