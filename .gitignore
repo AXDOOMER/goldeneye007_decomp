@@ -50,8 +50,8 @@ assets/music/*.aiff
 #obseg
 assets/obseg/bg/*.bin
 assets/obseg/bg/e/*.bin
-assets/obseg/chr/*.bin
-assets/obseg/gun/*.bin
+assets/obseg/chr/*/Model.c
+assets/obseg/gun/*/Model.c
 assets/obseg/ob__ob_end.seg
 assets/obseg/prop/*/Model.c
 assets/obseg/setup/*.bin

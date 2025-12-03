@@ -247,7 +247,7 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 .NOTPARALLEL: print_info create_directories $(APPROM) checksum
 
 # Phony Recipes - These targets are not files, Get Make to do something
-.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets forceextractassets textures convert_props extract_u extract_e extract_j force_extract_u force_extract_e force_extract_j extract_rsp 
+.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets forceextractassets textures convert_props convert_chrs convert_guns extract_u extract_e extract_j force_extract_u force_extract_e force_extract_j extract_rsp 
 
 
 # this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
@@ -442,9 +442,9 @@ endif
 	@rm build/ctx.c build/ctx2.h || exit 0
 	@echo You can find it in Build [build/ctx.h].
 
-extractassets: extract_u extract_e extract_j convert_props convert_chrs
+extractassets: extract_u extract_e extract_j convert_props convert_chrs convert_guns
 
-forceextractassets: force_extract_u force_extract_e force_extract_j convert_props convert_chrs
+forceextractassets: force_extract_u force_extract_e force_extract_j convert_props convert_chrs convert_guns
 
 extract_u:
 	@if [ ! -f assets/obseg/ob__ob_end.seg ]; then \
@@ -545,6 +545,21 @@ convert_chrs:
 			echo "Chrs already converted ($$c_count Model.c files found)."; \
 		else \
 			echo "No chr binaries found to convert."; \
+		fi \
+	fi
+
+convert_guns:
+	@echo "Converting gun binaries to Model.c..."
+	@bin_count=$$(ls assets/obseg/gun/G*Z.bin 2>/dev/null | wc -l); \
+	if [ $$bin_count -gt 0 ]; then \
+		echo "Found $$bin_count gun binaries to convert..."; \
+		python3 scripts/generate_gun_c.py --force --cleanup || true; \
+	else \
+		c_count=$$(find assets/obseg/gun -maxdepth 2 -name "Model.c" 2>/dev/null | wc -l); \
+		if [ $$c_count -gt 0 ]; then \
+			echo "Guns already converted ($$c_count Model.c files found)."; \
+		else \
+			echo "No gun binaries found to convert."; \
 		fi \
 	fi
 

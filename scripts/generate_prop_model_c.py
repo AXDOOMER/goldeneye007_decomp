@@ -289,6 +289,8 @@ class BinaryModelParser:
             return self.parse_head_placeholder_record(data_offset)
         elif opcode == 13:  # SHADOW
             return self.parse_shadow_record(data_offset)
+        elif opcode == 15:  # INTERLINK
+            return self.parse_interlink_record(data_offset)
         # Add more as needed
         else:
             return {'_raw_offset': data_offset}
@@ -426,6 +428,28 @@ class BinaryModelParser:
             'controls_offset': self.to_file_offset(read_u32(self.data, offset)),
             'rw_data_index': read_u16(self.data, offset + 4),
             'reserved': read_u16(self.data, offset + 6),
+        }
+    
+    def parse_interlink_record(self, offset: int) -> Dict:
+        """Parse ModelRoData_InterlinkageRecord (28 bytes)
+        
+        Structure (from bondtypes.h):
+            coord3d pos;      // 0x0 - position (3 floats)
+            u32     unknown1; // 0xC
+            u32     unknown2; // 0x10
+            u32     unknown3; // 0x14
+            f32     Scale;    // 0x18
+        Total: 28 bytes (0x1C)
+        """
+        return {
+            '_type': 'InterlinkageRecord',
+            'pos_x': read_float(self.data, offset + 0x0),
+            'pos_y': read_float(self.data, offset + 0x4),
+            'pos_z': read_float(self.data, offset + 0x8),
+            'unknown1': read_u32(self.data, offset + 0xC),
+            'unknown2': read_u32(self.data, offset + 0x10),
+            'unknown3': read_u32(self.data, offset + 0x14),
+            'scale': read_float(self.data, offset + 0x18),
         }
     
     def parse_groupsimple_record(self, offset: int) -> Dict:
@@ -994,6 +1018,20 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
             struct_lines.append("};")
             all_structures.append((node.data_offset, '\n'.join(struct_lines)))
         
+        # InterlinkageRecord structures (28 bytes)
+        elif dtype == 'InterlinkageRecord':
+            struct_lines = []
+            struct_lines.append(f"ModelRoData_InterlinkageRecord InterlinkageRecord_0x{node.data_offset:03x} = ")
+            struct_lines.append("{")
+            px, py, pz = node.data['pos_x'], node.data['pos_y'], node.data['pos_z']
+            struct_lines.append(f"    {{{px}, {py}, {pz}}}, //pos")
+            struct_lines.append(f"    0x{node.data['unknown1']:08X}, //unknown1")
+            struct_lines.append(f"    0x{node.data['unknown2']:08X}, //unknown2")
+            struct_lines.append(f"    0x{node.data['unknown3']:08X}, //unknown3")
+            struct_lines.append(f"    {node.data['scale']} //Scale")
+            struct_lines.append("};")
+            all_structures.append((node.data_offset, '\n'.join(struct_lines)))
+        
         # GroupSimpleRecord structures (20 bytes)
         elif dtype == 'GroupSimpleRecord':
             struct_lines = []
@@ -1476,6 +1514,11 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                     for i in range(offset, offset + 4):
                         byte_map[i] = True
                 
+                # InterlinkageRecord (28 bytes)
+                if offset == node.data_offset and dtype == 'InterlinkageRecord':
+                    for i in range(offset, offset + 28):
+                        byte_map[i] = True
+                
                 # DisplayListPrimaryRecord (16 bytes)
                 if offset == node.data_offset and dtype == 'DisplayListPrimaryRecord':
                     for i in range(offset, offset + 16):
@@ -1559,6 +1602,33 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
             else:
                 i += 1
     
+    # Step 2.5.1: Add trailing padding - find unused bytes at end of file
+    # Find the last byte that's actually used
+    last_used_byte = -1
+    for i in range(binary_size - 1, -1, -1):
+        if byte_map[i]:
+            last_used_byte = i
+            break
+    
+    # If there are unused bytes after the last used byte, add trailing padding
+    if last_used_byte >= 0 and last_used_byte + 1 < binary_size:
+        trailing_start = last_used_byte + 1
+        trailing_size = binary_size - trailing_start
+        
+        # Add trailing padding (unused data at end of binary)
+        if trailing_size >= 4:
+            trailing_bytes = binary_data[trailing_start:binary_size]
+            if trailing_size == 4:
+                val = struct.unpack('>I', trailing_bytes)[0]
+                all_structures.append((trailing_start, f"u32 PADDING_TRAILING_0x{trailing_start:03x} = 0x{val:08X};"))
+            elif trailing_size % 4 == 0:
+                values = [struct.unpack('>I', trailing_bytes[j:j+4])[0] for j in range(0, trailing_size, 4)]
+                vals_str = ', '.join(f"0x{v:08X}" for v in values)
+                all_structures.append((trailing_start, f"u32 PADDING_TRAILING_0x{trailing_start:03x}[{trailing_size // 4}] = {{{vals_str}}};"))
+            else:
+                vals_str = ', '.join(f"0x{b:02X}" for b in trailing_bytes)
+                all_structures.append((trailing_start, f"u8 PADDING_TRAILING_0x{trailing_start:03x}[{trailing_size}] = {{{vals_str}}};"))
+    
     # Step 2.6: Generate forward declarations with correct names
     forward_decl_lines = []
     
@@ -1584,6 +1654,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 forward_decl_lines.append(f"extern ModelRoData_BSPRecord BSPRecord_0x{node.data_offset:03x};")
             elif dtype == 'SwitchRecord':
                 forward_decl_lines.append(f"extern ModelRoData_SwitchRecord SwitchRecord_0x{node.data_offset:03x};")
+            elif dtype == 'InterlinkageRecord':
+                forward_decl_lines.append(f"extern ModelRoData_InterlinkageRecord InterlinkageRecord_0x{node.data_offset:03x};")
             elif dtype == 'GroupSimpleRecord':
                 forward_decl_lines.append(f"extern ModelRoData_GroupSimpleRecord GroupSimpleRecord_0x{node.data_offset:03x};")
             elif dtype == 'HeaderRecord':
@@ -1677,6 +1749,8 @@ def get_data_symbol_name(node: ModelNode) -> str:
         return f"BSPRecord_0x{node.data_offset:03x}"
     elif dtype == 'SwitchRecord':
         return f"SwitchRecord_0x{node.data_offset:03x}"
+    elif dtype == 'InterlinkageRecord':
+        return f"InterlinkageRecord_0x{node.data_offset:03x}"
     elif dtype == 'GroupSimpleRecord':
         return f"GroupSimpleRecord_0x{node.data_offset:03x}"
     elif dtype == 'HeaderRecord':
