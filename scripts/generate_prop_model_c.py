@@ -95,7 +95,7 @@ class ModelNode:
     data: Any = None  # Parsed data structure based on opcode
 
 class BinaryModelParser:
-    def __init__(self, binary_data: bytes, metadata: dict):
+    def __init__(self, binary_data: bytes, metadata: dict, image_map: dict = None):
         self.data = binary_data
         self.metadata = metadata
         self.nodes = {}  # offset -> ModelNode
@@ -103,6 +103,7 @@ class BinaryModelParser:
         self.textures = []
         self.switches = []
         self.base_address = BASE_ADDRESS
+        self.image_map = image_map or {}
         
     def to_file_offset(self, addr: int) -> int:
         """Convert base-relative address to file offset. Returns -1 for NULL (0x00000000)"""
@@ -677,8 +678,8 @@ class BinaryModelParser:
             w0 = read_u32(self.data, offset)
             w1 = read_u32(self.data, offset + 4)
             
-            # Decode command to macro format
-            decoded = decode_gfx_command(w0, w1, vtx_array_name, vertices_offset)
+            # Decode command to macro format with image_map for texture lookup
+            decoded = decode_gfx_command(w0, w1, vtx_array_name, vertices_offset, self.image_map)
             gfx_cmds.append(decoded)
             
             opcode = (w0 >> 24) & 0xFF
@@ -748,11 +749,12 @@ def parse_metadata_files(prop_name: str) -> Optional[Dict]:
     return metadata if 'num_textures' in metadata else None
 
 
-def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_array_offset: int = None) -> str:
+def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_array_offset: int = None, image_map: dict = None) -> str:
     """
     Decode a single Gfx command (w0, w1) to its GBI macro representation.
     Returns the macro call as a string (e.g., "gsDPPipeSync()").
     Falls back to raw hex format if command is unknown.
+    image_map: dict mapping texture_id -> IMAGE_NAME for G_SETTEX
     
     Reference: include/PR/gbi.h
     
@@ -806,9 +808,13 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         tex_index = extract_bits(w0, 0, 8)
         texture_id = w1
         
-        # Generate raw Gfx structure (no macro available for G_SETTEX)
-        # Double braces {{ }} in f-string become single braces { } in output
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* G_SETTEX tile=0x{tile:02X}, tex_index={tex_index}, texture_id=0x{texture_id:08X} */"
+        # Look up IMAGE enum from texture_id
+        if image_map and texture_id in image_map:
+            image_name = image_map[texture_id]
+            return f"gsSPUseTexture(0x{tile:02X}, {tex_index}, {image_name})"
+        else:
+            # Fallback to raw texture_id if not found in map
+            return f"gsSPUseTexture(0x{tile:02X}, {tex_index}, 0x{texture_id:08X})"
     
     elif opcode == 0x00:
         return "gsDPNoOp()"
@@ -891,7 +897,6 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSP1Triangle({v0}, {v1}, {v2}, {flag}) */"
     
     # gsSPTexture (0xD7 in F3DEX_GBI_2, 0xBB in classic)
-    # Output as raw bytes since BOWTIE_VAL differs between baserom and headers
     elif opcode == 0xD7 or opcode == 0xBB:
         # w0 = cmd(24-31) | bowtie(16-23) | level(11-13) | tile(8-10) | on(0-7)
         # w1 = s(16-31) | t(0-15)
@@ -901,7 +906,12 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         on = extract_bits(w0, 0, 8)
         s = extract_bits(w1, 16, 16)
         t = extract_bits(w1, 0, 16)
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPTexture({s}, {t}, {level}, {tile}, {on}) bowtie=0x{bowtie:02X} */"
+        
+        # Use gsSPTextureL if bowtie != 0, otherwise gsSPTexture
+        if bowtie != 0:
+            return f"gsSPTextureL({s}, {t}, {level}, 0x{bowtie:02X}, {tile}, {on})"
+        else:
+            return f"gsSPTexture({s}, {t}, {level}, {tile}, {on})"
     
     # gsDPSetCombineMode / gsDPSetCombineLERP (0xFC)
     elif opcode == 0xFC:
@@ -915,6 +925,32 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         sft = extract_bits(w0, 8, 8)
         length = extract_bits(w0, 0, 8)
         data = w1
+        
+        # Decode common high-level macros
+        if sft == 16 and length == 1:
+            # gsDPSetTextureLOD
+            if data == 0x00000000:
+                return "gsDPSetTextureLOD(G_TL_TILE)"
+            elif data == 0x00010000:
+                return "gsDPSetTextureLOD(G_TL_LOD)"
+        elif sft == 17 and length == 2:
+            # gsDPSetTextureDetail
+            if data == 0x00000000:
+                return "gsDPSetTextureDetail(G_TD_CLAMP)"
+            elif data == 0x00020000:
+                return "gsDPSetTextureDetail(G_TD_SHARPEN)"
+            elif data == 0x00040000:
+                return "gsDPSetTextureDetail(G_TD_DETAIL)"
+        elif sft == 12 and length == 2:
+            # gsDPSetTextureFilter
+            if data == 0x00000000:
+                return "gsDPSetTextureFilter(G_TF_POINT)"
+            elif data == 0x00002000:
+                return "gsDPSetTextureFilter(G_TF_BILERP)"
+            elif data == 0x00003000:
+                return "gsDPSetTextureFilter(G_TF_AVERAGE)"
+        
+        # Fallback to generic macro
         return f"gsSPSetOtherMode(G_SETOTHERMODE_H, {sft}, {length}, 0x{data:08X})"
     
     # gsSPSetOtherMode_L (0xE2 in F3DEX_GBI_2, 0xB9 in classic)
@@ -1089,6 +1125,7 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
     lines = []
     lines.append('#include "bondtypes.h"')
     lines.append('#include "bondconstants.h"')
+    lines.append('#include "gbi_extension.h"')
     lines.append("")
     lines.append(f"#define TEXTURECOUNT {len(textures)}")
     lines.append("")
@@ -1144,8 +1181,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
         lines.append("{")
         for switch_offset in switches:
             if switch_offset > 0:
-                # Store as absolute address (base + offset)
-                lines.append(f"    0x05000000 + 0x{switch_offset:03X},  // ModelNode at offset 0x{switch_offset:03X}")
+                # Use label reference instead of absolute address
+                lines.append(f"    (u32)&ModelNode_0x{switch_offset:03x},  // ModelNode at offset 0x{switch_offset:03X}")
             else:
                 lines.append(f"    0x00000000,  // NULL")
         lines.append("};")
@@ -2137,7 +2174,7 @@ def main():
             with open(bin_file, 'rb') as f:
                 binary_data = f.read()
             
-            parser = BinaryModelParser(binary_data, metadata)
+            parser = BinaryModelParser(binary_data, metadata, image_map)
             parsed_model = parser.parse()
             
             # Generate C code - use the directory name for output

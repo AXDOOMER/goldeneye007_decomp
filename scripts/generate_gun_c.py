@@ -227,7 +227,7 @@ def main():
             with open(bin_file, 'rb') as f:
                 binary_data = f.read()
             
-            parser = BinaryModelParser(binary_data, metadata)
+            parser = BinaryModelParser(binary_data, metadata, image_map)
             parsed_model = parser.parse()
             
             # Generate C code

@@ -214,14 +214,15 @@
  * Texturing macro Overrides
  */
 
-#define gsSPUseTexture()\
-{                                 \
-        {                             \
-            (_SHIFTL(G_SETTEX, 24, 8) | \
-             /*STUFF GOES HERE*/),    \
-            /*STUFF GOES HERE*/       \
-        }                             \
-    }
+#define gsSPUseTexture(tile, tex_index, texture_id) \
+{                                                    \
+    {                                                \
+        (_SHIFTL(G_SETTEX, 24, 8) |                  \
+         _SHIFTL((tile), 16, 8) |                    \
+         _SHIFTL((tex_index), 0, 8)),                \
+        (texture_id)                                 \
+    }                                                \
+}
 
 
 #endif
