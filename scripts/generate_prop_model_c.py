@@ -377,8 +377,8 @@ class BinaryModelParser:
         point_usage = self.parse_point_usage(point_usage_offset, num_vertices) if point_usage_offset > 0 else []
         
         # Parse GDL commands
-        primary_gfx = self.parse_gfx_list(primary_offset) if primary_offset > 0 else []
-        secondary_gfx = self.parse_gfx_list(secondary_offset) if secondary_offset > 0 else []
+        primary_gfx = self.parse_gfx_list(primary_offset, vertices_offset) if primary_offset > 0 else []
+        secondary_gfx = self.parse_gfx_list(secondary_offset, vertices_offset) if secondary_offset > 0 else []
         
         return {
             '_type': 'DisplayListCollisionRecord',
@@ -617,11 +617,11 @@ class BinaryModelParser:
         # Extract Gfx display lists if present
         primary_gfx = []
         if primary_offset > 0:
-            primary_gfx = self.parse_gfx_list(primary_offset)
+            primary_gfx = self.parse_gfx_list(primary_offset, vertices_offset)
         
         secondary_gfx = []
         if secondary_offset > 0:
-            secondary_gfx = self.parse_gfx_list(secondary_offset)
+            secondary_gfx = self.parse_gfx_list(secondary_offset, vertices_offset)
         
         return {
             '_type': 'DisplayListRecord',
@@ -660,16 +660,26 @@ class BinaryModelParser:
         """Parse point usage array (s16[])"""
         return [read_s16(self.data, offset + i * 2) for i in range(count)]
     
-    def parse_gfx_list(self, offset: int) -> List[tuple]:
-        """Parse Gfx display list commands (8 bytes each) until final end marker"""
+    def parse_gfx_list(self, offset: int, vertices_offset: int = None) -> List[str]:
+        """Parse Gfx display list commands (8 bytes each) until final end marker
+        Returns decoded command strings ready for C output
+        
+        vertices_offset: File offset where vertex array starts (for resolving vertex addresses)
+        """
         if offset <= 0 or offset >= len(self.data):
             return []
+        
+        # Prepare vertex array name for address resolution
+        vtx_array_name = f"Vertex_0x{vertices_offset:03x}" if vertices_offset else None
         
         gfx_cmds = []
         while offset + 8 <= len(self.data):
             w0 = read_u32(self.data, offset)
             w1 = read_u32(self.data, offset + 4)
-            gfx_cmds.append((w0, w1))
+            
+            # Decode command to macro format
+            decoded = decode_gfx_command(w0, w1, vtx_array_name, vertices_offset)
+            gfx_cmds.append(decoded)
             
             opcode = (w0 >> 24) & 0xFF
             
@@ -738,6 +748,304 @@ def parse_metadata_files(prop_name: str) -> Optional[Dict]:
     return metadata if 'num_textures' in metadata else None
 
 
+def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_array_offset: int = None) -> str:
+    """
+    Decode a single Gfx command (w0, w1) to its GBI macro representation.
+    Returns the macro call as a string (e.g., "gsDPPipeSync()").
+    Falls back to raw hex format if command is unknown.
+    
+    Reference: include/PR/gbi.h
+    
+    vertex_array_name: Name of the vertex array (e.g., "Vertex_0x098")
+    vertex_array_offset: File offset where vertex array starts
+    """
+    opcode = (w0 >> 24) & 0xFF
+    
+    # Helper to resolve segment addresses to symbol names
+    def resolve_address(addr):
+        # All segment addresses (0xXX000000 format) are runtime-resolved
+        # Leave them as raw hex for the game engine to resolve
+        # The segments (3, 4, 5, etc.) are set up at runtime
+        return f"0x{addr:08X}"
+    
+    # Helper to extract bit fields using _SHIFTR logic
+    def extract_bits(value, shift, width):
+        return (value >> shift) & ((1 << width) - 1)
+    
+    # G_IM_FMT_ constants from gbi.h
+    FMT_NAMES = {
+        0: "G_IM_FMT_RGBA",
+        1: "G_IM_FMT_YUV",
+        2: "G_IM_FMT_CI",
+        3: "G_IM_FMT_IA",
+        4: "G_IM_FMT_I",
+    }
+    
+    # G_IM_SIZ_ constants from gbi.h
+    SIZ_NAMES = {
+        0: "G_IM_SIZ_4b",
+        1: "G_IM_SIZ_8b",
+        2: "G_IM_SIZ_16b",
+        3: "G_IM_SIZ_32b",
+        5: "G_IM_SIZ_DD",
+    }
+    
+    # RDP Sync commands (no parameters)
+    if opcode == 0xE7:
+        return "gsDPPipeSync()"
+    elif opcode == 0xE6:
+        return "gsDPLoadSync()"
+    elif opcode == 0xE8:
+        return "gsDPTileSync()"
+    elif opcode == 0xE9:
+        return "gsDPFullSync()"
+    # G_SETTEX (0xC0) - GoldenEye custom command for texture setup
+    # Format: C0 TT 00 II TTTTTTTT where TT=tile, II=tex_index, TTTTTTTT=texture_id
+    elif opcode == 0xC0:
+        tile = extract_bits(w0, 16, 8)
+        tex_index = extract_bits(w0, 0, 8)
+        texture_id = w1
+        
+        # Generate raw Gfx structure (no macro available for G_SETTEX)
+        # Double braces {{ }} in f-string become single braces { } in output
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* G_SETTEX tile=0x{tile:02X}, tex_index={tex_index}, texture_id=0x{texture_id:08X} */"
+    
+    elif opcode == 0x00:
+        return "gsDPNoOp()"
+    
+    # gsSPEndDisplayList (0xB8 or 0xDF depending on mode)
+    elif opcode == 0xB8 or opcode == 0xDF:
+        return "gsSPEndDisplayList()"
+    
+    # gsSPVertex (0x01 in F3DEX_GBI_2, 0x04 in classic)
+    # GoldenEye headers use classic GBI, but binaries may have GBI_2 opcodes
+    # Output raw bytes to preserve exact binary
+    elif opcode == 0x01:
+        # F3DEX_GBI_2 format: w0 = cmd(24-31) | n(12-19) | (v0+n)(1-7)
+        n = extract_bits(w0, 12, 8)
+        v0_plus_n = extract_bits(w0, 1, 7)
+        v0 = v0_plus_n - n
+        addr = w1
+        addr_str = resolve_address(addr)
+        # Output raw bytes since gsSPVertex macro will compile to 0x04, not 0x01
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPVertex({addr_str}, {n}, {v0}) - F3DEX_GBI_2 */"
+    
+    elif opcode == 0x04:
+        # F3DEX classic format - output as raw bytes since macro encoding is complex
+        v0_plus_n_times_2 = extract_bits(w0, 16, 8)
+        length = extract_bits(w0, 0, 10)
+        n = (length + 1) // 16
+        v0_plus_n = v0_plus_n_times_2 // 2
+        v0 = v0_plus_n - n
+        addr = w1
+        addr_str = resolve_address(addr)
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPVertex({addr_str}, {n}, {v0}) */"
+    
+    # gsSP2Triangles (0x06 in F3DEX_GBI_2)
+    elif opcode == 0x06:
+        # Two triangles packed in one command
+        # w0: cmd | tri1_data
+        # w1: tri2_data
+        v00 = extract_bits(w0, 16, 8) // 2
+        v01 = extract_bits(w0, 8, 8) // 2
+        v02 = extract_bits(w0, 0, 8) // 2
+        flag0 = 0  # Simplified - actual flag extraction is complex
+        
+        v10 = extract_bits(w1, 16, 8) // 2
+        v11 = extract_bits(w1, 8, 8) // 2
+        v12 = extract_bits(w1, 0, 8) // 2
+        flag1 = 0
+        
+        return f"gsSP2Triangles({v00}, {v01}, {v02}, {flag0}, {v10}, {v11}, {v12}, {flag1})"
+    
+    # G_TRI4 (0xB1) - GoldenEye extension packing 4 triangles with 4-bit vertex indices
+    # Output as raw bytes because gsSP4Triangles macro causes compiler errors
+    elif opcode == 0xB1:
+        # G_TRI4 format: 12 vertices × 4 bits each = 48 bits
+        # w0 low 24 bits + w1 high 24 bits
+        combined = ((w0 & 0xFFFFFF) << 24) | (w1 >> 8)
+        
+        vertices = []
+        for i in range(12):
+            shift = 44 - (i * 4)
+            v = (combined >> shift) & 0xF
+            vertices.append(v)
+        
+        v = vertices
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSP4Triangles({v[0]}, {v[1]}, {v[2]}, {v[3]}, {v[4]}, {v[5]}, {v[6]}, {v[7]}, {v[8]}, {v[9]}, {v[10]}, {v[11]}) */"
+    
+    # gsSP1Triangle (0x05 in F3DEX_GBI_2, 0xBF in F3DEX/classic)
+    elif opcode == 0x05:
+        v0 = extract_bits(w1, 16, 8) // 2
+        v1 = extract_bits(w1, 8, 8) // 2
+        v2 = extract_bits(w1, 0, 8) // 2
+        flag = 0
+        return f"gsSP1Triangle({v0}, {v1}, {v2}, {flag})"
+    
+    # 0xBF - output as raw bytes since macro may not compile identically
+    elif opcode == 0xBF:
+        v0 = extract_bits(w1, 16, 8) // 2
+        v1 = extract_bits(w1, 8, 8) // 2
+        v2 = extract_bits(w1, 0, 8) // 2
+        flag = 0
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSP1Triangle({v0}, {v1}, {v2}, {flag}) */"
+    
+    # gsSPTexture (0xD7 in F3DEX_GBI_2, 0xBB in classic)
+    # Output as raw bytes since BOWTIE_VAL differs between baserom and headers
+    elif opcode == 0xD7 or opcode == 0xBB:
+        # w0 = cmd(24-31) | bowtie(16-23) | level(11-13) | tile(8-10) | on(0-7)
+        # w1 = s(16-31) | t(0-15)
+        bowtie = extract_bits(w0, 16, 8)
+        level = extract_bits(w0, 11, 3)
+        tile = extract_bits(w0, 8, 3)
+        on = extract_bits(w0, 0, 8)
+        s = extract_bits(w1, 16, 16)
+        t = extract_bits(w1, 0, 16)
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPTexture({s}, {t}, {level}, {tile}, {on}) bowtie=0x{bowtie:02X} */"
+    
+    # gsDPSetCombineMode / gsDPSetCombineLERP (0xFC)
+    elif opcode == 0xFC:
+        # Complex color combiner - show as raw for now
+        muxs0 = w0 & 0xFFFFFF
+        muxs1 = w1
+        return f"gsDPSetCombine(0x{muxs0:06X}, 0x{muxs1:08X})"
+    
+    # gsSPSetOtherMode_H (0xE3 in F3DEX_GBI_2, 0xBA in classic)
+    elif opcode == 0xE3 or opcode == 0xBA:
+        sft = extract_bits(w0, 8, 8)
+        length = extract_bits(w0, 0, 8)
+        data = w1
+        return f"gsSPSetOtherMode(G_SETOTHERMODE_H, {sft}, {length}, 0x{data:08X})"
+    
+    # gsSPSetOtherMode_L (0xE2 in F3DEX_GBI_2, 0xB9 in classic)
+    elif opcode == 0xE2 or opcode == 0xB9:
+        sft = extract_bits(w0, 8, 8)
+        length = extract_bits(w0, 0, 8)
+        data = w1
+        return f"gsSPSetOtherMode(G_SETOTHERMODE_L, {sft}, {length}, 0x{data:08X})"
+    
+    # gsSPGeometryMode (0xD9 in F3DEX_GBI_2)
+    elif opcode == 0xD9:
+        clearbits = (~w0) & 0xFFFFFF
+        setbits = w1
+        return f"gsSPGeometryMode(0x{clearbits:08X}, 0x{setbits:08X})"
+    
+    # gsSPSetGeometryMode (0xB7 classic, 0xD9 F3DEX2 variant)
+    elif opcode == 0xB7:
+        mode = w1
+        return f"gsSPSetGeometryMode(0x{mode:08X})"
+    
+    # gsSPClearGeometryMode (0xB6)
+    elif opcode == 0xB6:
+        mode = w1
+        return f"gsSPClearGeometryMode(0x{mode:08X})"
+    
+    # gsDPSetPrimColor (0xFA)
+    elif opcode == 0xFA:
+        m = extract_bits(w0, 8, 8)
+        l = extract_bits(w0, 0, 8)
+        r = extract_bits(w1, 24, 8)
+        g = extract_bits(w1, 16, 8)
+        b = extract_bits(w1, 8, 8)
+        a = extract_bits(w1, 0, 8)
+        return f"gsDPSetPrimColor({m}, {l}, {r}, {g}, {b}, {a})"
+    
+    # gsDPSetEnvColor (0xFB)
+    elif opcode == 0xFB:
+        r = extract_bits(w1, 24, 8)
+        g = extract_bits(w1, 16, 8)
+        b = extract_bits(w1, 8, 8)
+        a = extract_bits(w1, 0, 8)
+        return f"gsDPSetEnvColor({r}, {g}, {b}, {a})"
+    
+    # gsDPSetTextureImage (0xFD)
+    elif opcode == 0xFD:
+        fmt = extract_bits(w0, 21, 3)
+        siz = extract_bits(w0, 19, 2)
+        width = extract_bits(w0, 0, 12) + 1
+        addr = w1
+        fmt_name = FMT_NAMES.get(fmt, f"0x{fmt:X}")
+        siz_name = SIZ_NAMES.get(siz, f"0x{siz:X}")
+        return f"gsDPSetTextureImage({fmt_name}, {siz_name}, {width}, 0x{addr:08X})"
+    
+    # gsDPSetTile (0xF5) - output as raw bytes due to complex parameter encoding
+    elif opcode == 0xF5:
+        fmt = extract_bits(w0, 21, 3)
+        siz = extract_bits(w0, 19, 2)
+        line = extract_bits(w0, 9, 9)
+        tmem = extract_bits(w0, 0, 9)
+        tile = extract_bits(w1, 24, 3)
+        palette = extract_bits(w1, 20, 4)
+        ct = extract_bits(w1, 18, 2)
+        mt = extract_bits(w1, 8, 2)
+        maskt = extract_bits(w1, 14, 4)
+        shiftt = extract_bits(w1, 10, 4)
+        cs = extract_bits(w1, 2, 2)
+        ms = extract_bits(w1, 8, 2)
+        masks = extract_bits(w1, 4, 4)
+        shifts = extract_bits(w1, 0, 4)
+        fmt_name = FMT_NAMES.get(fmt, f"0x{fmt:X}")
+        siz_name = SIZ_NAMES.get(siz, f"0x{siz:X}")
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsDPSetTile({fmt_name}, {siz_name}, {line}, {tmem}, {tile}, {palette}, {ct}, {maskt}, {shiftt}, {cs}, {masks}, {shifts}) */"
+    
+    # gsDPLoadBlock (0xF3)
+    elif opcode == 0xF3:
+        uls = extract_bits(w0, 12, 12)
+        ult = extract_bits(w0, 0, 12)
+        tile = extract_bits(w1, 24, 3)
+        lrs = extract_bits(w1, 12, 12)
+        dxt = extract_bits(w1, 0, 12)
+        return f"gsDPLoadBlock({tile}, {uls}, {ult}, {lrs}, {dxt})"
+    
+    # gsDPSetTileSize (0xF2) - output as raw bytes due to precision issues
+    elif opcode == 0xF2:
+        uls = extract_bits(w0, 12, 12)
+        ult = extract_bits(w0, 0, 12)
+        tile = extract_bits(w1, 24, 3)
+        lrs = extract_bits(w1, 12, 12)
+        lrt = extract_bits(w1, 0, 12)
+        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsDPSetTileSize({tile}, {uls}, {ult}, {lrs}, {lrt}) */"
+    
+    # gsSPDisplayList (0xDE in F3DEX_GBI_2, 0x06 in classic)
+    elif opcode == 0xDE or opcode == 0x06:
+        addr = w1
+        return f"gsSPDisplayList(0x{addr:08X})"
+    
+    # gsSPBranchList (0xDE with different flags)
+    # Distinguishing from DisplayList requires looking at push/nopush flag
+    # For now, treat as DisplayList
+    
+    # gsSPMatrix (0xDA in F3DEX_GBI_2, 0x01 in classic)
+    elif opcode == 0xDA or opcode == 0x01:
+        params = extract_bits(w0, 0, 8)
+        addr = w1
+        return f"gsSPMatrix(0x{addr:08X}, {params})"
+    
+    # gsSPPopMatrix (0xD8 in F3DEX_GBI_2, 0xBD in classic)
+    elif opcode == 0xD8 or opcode == 0xBD:
+        n = w1
+        return f"gsSPPopMatrix(G_MTX_MODELVIEW, {n})"
+    
+    # gsDPLoadTLUT (0xF0)
+    elif opcode == 0xF0:
+        tile = extract_bits(w1, 24, 3)
+        count = extract_bits(w1, 14, 10)
+        return f"gsDPLoadTLUT({tile}, {count})"
+    
+    # gsDPSetScissor (0xED)
+    elif opcode == 0xED:
+        mode = extract_bits(w0, 0, 2)
+        ulx = extract_bits(w0, 12, 12)
+        uly = extract_bits(w0, 0, 12)
+        lrx = extract_bits(w1, 12, 12)
+        lry = extract_bits(w1, 0, 12)
+        return f"gsDPSetScissor(G_SC_NON_INTERLACE, {ulx}, {uly}, {lrx}, {lry})"
+    
+    # Unknown command - output as raw hex with comment
+    else:
+        return "{{0x%08X, 0x%08X}} /* unknown opcode 0x%02X */" % (w0, w1, opcode)
+
+
 def parse_gfx_array(data: bytes, offset: int, base_addr: int) -> Tuple[List[str], int]:
     """Parse Gfx display list commands until end marker (0xB8 or 0xDF)"""
     if offset == 0:
@@ -757,8 +1065,9 @@ def parse_gfx_array(data: bytes, offset: int, base_addr: int) -> Tuple[List[str]
         
         opcode = (w0 >> 24) & 0xFF
         
-        # Generic format for all commands
-        commands.append(f"{{0x{w0:08X}, 0x{w1:08X}}}")
+        # Decode command to macro format
+        decoded = decode_gfx_command(w0, w1)
+        commands.append(decoded)
         pos += 8
         
         # Stop at B8 (gsSPEndDisplayList) or DF end markers
@@ -1222,8 +1531,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 struct_lines = []
                 struct_lines.append(f"Gfx {prim_name}[] = ")
                 struct_lines.append("{")
-                for w0, w1 in data['primary_gfx']:
-                    struct_lines.append(f"    {{{{0x{w0:08X}, 0x{w1:08X}}}}},")
+                for cmd_str in data['primary_gfx']:
+                    struct_lines.append(f"    {cmd_str},")
                 struct_lines.append("};")
                 all_structures.append((primary_offset, '\n'.join(struct_lines)))
             
@@ -1236,8 +1545,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 struct_lines = []
                 struct_lines.append(f"Gfx {sec_name}[] = ")
                 struct_lines.append("{")
-                for w0, w1 in data['secondary_gfx']:
-                    struct_lines.append(f"    {{{{0x{w0:08X}, 0x{w1:08X}}}}},")
+                for cmd_str in data['secondary_gfx']:
+                    struct_lines.append(f"    {cmd_str},")
                 struct_lines.append("};")
                 all_structures.append((secondary_offset, '\n'.join(struct_lines)))
             
@@ -1350,8 +1659,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 struct_lines = []
                 struct_lines.append(f"Gfx {prim_name}[] = ")
                 struct_lines.append("{")
-                for w0, w1 in data['primary_gfx']:
-                    struct_lines.append(f"    {{{{0x{w0:08X}, 0x{w1:08X}}}}},")
+                for cmd_str in data['primary_gfx']:
+                    struct_lines.append(f"    {cmd_str},")
                 struct_lines.append("};")
                 all_structures.append((primary_offset, '\n'.join(struct_lines)))
             
@@ -1364,8 +1673,8 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
                 struct_lines = []
                 struct_lines.append(f"Gfx {sec_name}[] = ")
                 struct_lines.append("{")
-                for w0, w1 in data['secondary_gfx']:
-                    struct_lines.append(f"    {{{{0x{w0:08X}, 0x{w1:08X}}}}},")
+                for cmd_str in data['secondary_gfx']:
+                    struct_lines.append(f"    {cmd_str},")
                 struct_lines.append("};")
                 all_structures.append((secondary_offset, '\n'.join(struct_lines)))
             
@@ -1602,32 +1911,10 @@ def generate_model_c(prop_name: str, parsed_model: Dict, metadata: Dict, image_m
             else:
                 i += 1
     
-    # Step 2.5.1: Add trailing padding - find unused bytes at end of file
-    # Find the last byte that's actually used
-    last_used_byte = -1
-    for i in range(binary_size - 1, -1, -1):
-        if byte_map[i]:
-            last_used_byte = i
-            break
-    
-    # If there are unused bytes after the last used byte, add trailing padding
-    if last_used_byte >= 0 and last_used_byte + 1 < binary_size:
-        trailing_start = last_used_byte + 1
-        trailing_size = binary_size - trailing_start
-        
-        # Add trailing padding (unused data at end of binary)
-        if trailing_size >= 4:
-            trailing_bytes = binary_data[trailing_start:binary_size]
-            if trailing_size == 4:
-                val = struct.unpack('>I', trailing_bytes)[0]
-                all_structures.append((trailing_start, f"u32 PADDING_TRAILING_0x{trailing_start:03x} = 0x{val:08X};"))
-            elif trailing_size % 4 == 0:
-                values = [struct.unpack('>I', trailing_bytes[j:j+4])[0] for j in range(0, trailing_size, 4)]
-                vals_str = ', '.join(f"0x{v:08X}" for v in values)
-                all_structures.append((trailing_start, f"u32 PADDING_TRAILING_0x{trailing_start:03x}[{trailing_size // 4}] = {{{vals_str}}};"))
-            else:
-                vals_str = ', '.join(f"0x{b:02X}" for b in trailing_bytes)
-                all_structures.append((trailing_start, f"u8 PADDING_TRAILING_0x{trailing_start:03x}[{trailing_size}] = {{{vals_str}}};"))
+    # Step 2.5.1: REMOVED - Trailing padding generation
+    # Trailing padding after arrays is compiler-generated for alignment, not source data
+    # The compiler automatically adds padding between structures as needed
+    # DO NOT generate PADDING_TRAILING variables - they cause incorrect binary sizes
     
     # Step 2.6: Generate forward declarations with correct names
     forward_decl_lines = []
