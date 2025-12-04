@@ -77,24 +77,18 @@ fi
 
 if [ "$DOALL" == "1" ] || [ $1 == 'images' ]; then
     echo "Processing Images"
-    # Generate imagelist from images.def (ground truth)
-    echo "Generating imagelist from images.def..."
-    mkdir -p build/u
-    python3 scripts/make/generate_imagelist.py build/u/imagelist.csv
-    
     if [ -x tools/extractor/extractor ]; then
-        tools/extractor/extractor "$BASEROM" build/u/imagelist.csv
+        tools/extractor/extractor "$BASEROM" imagelist.u.csv
     else
         while IFS=, read -r offset size name
         do
             echo "Extracting $name, $size bytes..."
-            mkdir -p "$(dirname "$name")"
             dd bs=1 skip=$offset count=$size if="$BASEROM" of=$name status=none
             echo "Successfully Extracted $name"
-        done < build/u/imagelist.csv
+        done < imagelist.u.csv
     fi
-    #imagelist.csv is generated from images.def which is the ground truth
-    #offset,size,name,compressed,extract format
+    #imageslist.u.csv should follow pattern of:
+    #offset,size,name,compressed,extract
     #formatting matters, no comments, no extra lines, unix line endings only
     #and always end with a newline
 fi

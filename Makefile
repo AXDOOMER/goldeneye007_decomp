@@ -269,13 +269,8 @@ $(BUILD_DIR)/src/%.o: src/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 #Build Images
-# Generate imagelist from images.def (ground truth) and actual image files
-$(BUILD_DIR)/imagelist.csv: assets/images.def
-	@mkdir -p $(BUILD_DIR)
-	python3 scripts/make/generate_imagelist.py $@
-
-assets/images/combined/combined.bin: $(BUILD_DIR)/imagelist.csv
-	scripts/make/combine_images_named.sh $(BUILD_DIR)/imagelist.csv assets/images/combined
+assets/images/combined/combined.bin:
+	scripts/make/combine_images.sh assets/images/split assets/images/combined
 
 $(BUILD_DIR)/assets/images/combined/%.o: assets/images/combined/combined.bin
 	$(LD) -r -b binary $< -o $@
@@ -382,7 +377,6 @@ stanclean: commonclean
 
 dataclean: commonclean stanclean setupclean
 	rm -f $(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
-	rm -f $(BUILD_DIR)/imagelist.csv
 
 libultraclean: commonclean
 	rm -f $(ULTRAOBJECTS)
