@@ -814,13 +814,23 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         detail_id = extract_bits(w1, 12, 12)
         texture_id = extract_bits(w1, 0, 12)
         
+        # Map type value to TextureTypes enum
+        type_names = [
+            "TEXTURETYPE_LOD",
+            "TEXTURETYPE_DETAIL", 
+            "TEXTURETYPE_MIPMAP",
+            "TEXTURETYPE_TILE",
+            "TEXTURETYPE_TILE_PRESWAPPED"
+        ]
+        type_str = type_names[type_val] if type_val < len(type_names) else str(type_val)
+        
         # Look up IMAGE enum from texture_id
         if image_map and texture_id in image_map:
             image_name = image_map[texture_id]
-            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_val}, {minlevel}, {detail_id}, {image_name})"
+            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_str}, {minlevel}, {detail_id}, {image_name})"
         else:
             # Fallback to raw texture_id if not found in map
-            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_val}, {minlevel}, {detail_id}, 0x{texture_id:03X})"
+            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_str}, {minlevel}, {detail_id}, 0x{texture_id:03X})"
     
     elif opcode == 0x00:
         return "gsDPNoOp()"
