@@ -205,6 +205,40 @@ typedef enum
     }                                                \
 }
 
+/**
+ * GoldenEye Custom Vertex Commands
+ * 
+ * These commands use different encodings than standard F3DEX macros.
+ * Opcode 0x01: Custom GE format with simplified encoding
+ * Opcode 0x04: Uses (v0+n)*2 encoding instead of v0*2
+ */
+
+/* GoldenEye Matrix command (opcode 0x01) - G_MTX */
+#define G_MTX_GE 0x01
+#define G_VTX_GE 0x04
+
+#define gsSPMatrixGE(m, p) \
+{                                                        \
+    {                                                    \
+        (_SHIFTL(G_MTX_GE, 24, 8) |                     \
+         _SHIFTL((p), 16, 8) |                          \
+         _SHIFTL(sizeof(Mtx), 0, 16)),                  \
+        (unsigned int)(m)                               \
+    }                                                    \
+}
+
+/* RARE vertex load (opcode 0x04) - Custom encoding for GE/PD Tri4 support */
+/* Format: cmd(24-31) | (((v0+n)<<1)|flag)(16-23) | sizeof(Vtx)*n(0-15) */
+#define gsSPVertexGE(v, n, v0, flag) \
+{                                                        \
+    {                                                    \
+        (_SHIFTL(G_VTX_GE, 24, 8) |                         \
+         _SHIFTL((((v0) + (n)) << 1) | (flag), 16, 8) | \
+         _SHIFTL(sizeof(Vtx) * (n), 0, 16)),            \
+        (unsigned int)(v)                               \
+    }                                                    \
+}
+
 
 #endif
 

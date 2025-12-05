@@ -839,35 +839,48 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
     elif opcode == 0xB8 or opcode == 0xDF:
         return "gsSPEndDisplayList()"
     
-    # gsSPVertex (0x01 in F3DEX_GBI_2, 0x04 in classic)
-    # GoldenEye headers use classic GBI, but binaries may have GBI_2 opcodes
-    # Output raw bytes to preserve exact binary
+    # gsSPMatrixGE (0x01 G_MTX) - GoldenEye matrix command
+    # Format: w0 = cmd(24-31) | params(16-23) | sizeof(Mtx)(0-15), w1 = address
+    # params bits: projection(0) | load(1) | push(2)
     elif opcode == 0x01:
-        # F3DEX_GBI_2 format: w0 = cmd(24-31) | n(12-19) | (v0+n)(1-7)
-        n = extract_bits(w0, 12, 8)
-        v0_plus_n = extract_bits(w0, 1, 7)
-        v0 = v0_plus_n - n
+        params = extract_bits(w0, 16, 8)
+        size = extract_bits(w0, 0, 16)
         addr = w1
         addr_str = resolve_address(addr)
-        # Output raw bytes since gsSPVertex macro will compile to 0x04, not 0x01
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPVertex({addr_str}, {n}, {v0}) - F3DEX_GBI_2 */"
+        
+        # Decode matrix parameters
+        param_str = ""
+        if params & 0x01:
+            param_str = "G_MTX_PROJECTION"
+        else:
+            param_str = "G_MTX_MODELVIEW"
+        
+        if params & 0x02:
+            param_str += " | G_MTX_LOAD"
+        else:
+            param_str += " | G_MTX_MUL"
+            
+        if params & 0x04:
+            param_str += " | G_MTX_PUSH"
+        else:
+            param_str += " | G_MTX_NOPUSH"
+        
+        # Output raw bytes with decoded comment
+        return f"gsSPMatrixGE({addr_str}, {param_str})"
     
     elif opcode == 0x04:
-        # F3DEX classic format - output as raw bytes since macro encoding is complex
-        v0_plus_n_times_2 = extract_bits(w0, 16, 8)
-        length = extract_bits(w0, 0, 10)
-        n = (length + 1) // 16
-        v0_plus_n = v0_plus_n_times_2 // 2
+        # RARE vertex format: w0 = cmd(24-31) | encoded(16-23) | sizeof(Vtx)*n(0-15)
+        # encoded byte format: ((v0+n) << 1) | flag
+        # Different from standard F3DEX which uses v0*2 and ((n)<<10)|(sizeof(Vtx)*(n)-1)
+        encoded_value = extract_bits(w0, 16, 8)
+        length = extract_bits(w0, 0, 16)
+        flag = encoded_value & 1
+        v0_plus_n = encoded_value >> 1
+        n = length // 16  # sizeof(Vtx) = 16
         v0 = v0_plus_n - n
         addr = w1
         addr_str = resolve_address(addr)
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSPVertex({addr_str}, {n}, {v0}) */"
-    
-    # gsSP2Triangles (0x06 in F3DEX_GBI_2)
-    elif opcode == 0x06:
-        # Two triangles packed in one command
-        # w0: cmd | tri1_data
-        # w1: tri2_data
+        return f"gsSPVertexGE({addr_str}, {n}, {v0}, {flag})"
         v00 = extract_bits(w0, 16, 8) // 2
         v01 = extract_bits(w0, 8, 8) // 2
         v02 = extract_bits(w0, 0, 8) // 2
