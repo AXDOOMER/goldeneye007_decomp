@@ -881,20 +881,25 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         return f"gsSP2Triangles({v00}, {v01}, {v02}, {flag0}, {v10}, {v11}, {v12}, {flag1})"
     
     # G_TRI4 (0xB1) - GoldenEye extension packing 4 triangles with 4-bit vertex indices
-    # Output as raw bytes because gsSP4Triangles macro causes compiler errors
+    # gsSP4Triangles(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4)
     elif opcode == 0xB1:
-        # G_TRI4 format: 12 vertices × 4 bits each = 48 bits
-        # w0 low 24 bits + w1 high 24 bits
-        combined = ((w0 & 0xFFFFFF) << 24) | (w1 >> 8)
+        # Extract from w0: z4(12-15) | z3(8-11) | z2(4-7) | z1(0-3)
+        z1 = extract_bits(w0, 0, 4)
+        z2 = extract_bits(w0, 4, 4)
+        z3 = extract_bits(w0, 8, 4)
+        z4 = extract_bits(w0, 12, 4)
         
-        vertices = []
-        for i in range(12):
-            shift = 44 - (i * 4)
-            v = (combined >> shift) & 0xF
-            vertices.append(v)
+        # Extract from w1: y4(28-31) | x4(24-27) | y3(20-23) | x3(16-19) | y2(12-15) | x2(8-11) | y1(4-7) | x1(0-3)
+        x1 = extract_bits(w1, 0, 4)
+        y1 = extract_bits(w1, 4, 4)
+        x2 = extract_bits(w1, 8, 4)
+        y2 = extract_bits(w1, 12, 4)
+        x3 = extract_bits(w1, 16, 4)
+        y3 = extract_bits(w1, 20, 4)
+        x4 = extract_bits(w1, 24, 4)
+        y4 = extract_bits(w1, 28, 4)
         
-        v = vertices
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSP4Triangles({v[0]}, {v[1]}, {v[2]}, {v[3]}, {v[4]}, {v[5]}, {v[6]}, {v[7]}, {v[8]}, {v[9]}, {v[10]}, {v[11]}) */"
+        return f"gsSP4Triangles({x1}, {y1}, {z1}, {x2}, {y2}, {z2}, {x3}, {y3}, {z3}, {x4}, {y4}, {z4})"
     
     # gsSP1Triangle (0x05 in F3DEX_GBI_2, 0xBF in F3DEX/classic)
     elif opcode == 0x05:
