@@ -239,6 +239,17 @@ typedef enum
     }                                                    \
 }
 
+/* F3DEX gsSP1Triangle without flag rotation (GoldenEye uses simpler encoding) */
+/* Format: w0=0xBF000000, w1=(v0*2<<16)|(v1*2<<8)|(v2*2) */
+#define gsSP1TriangleGE(v0, v1, v2, flag) \
+{                                                        \
+    {                                                    \
+        0xBF000000,                                      \
+        (_SHIFTL((v0)*2, 16, 8) |                        \
+         _SHIFTL((v1)*2, 8, 8) |                         \
+         _SHIFTL((v2)*2, 0, 8))                          \
+    }                                                    \
+}
 
 #endif
 

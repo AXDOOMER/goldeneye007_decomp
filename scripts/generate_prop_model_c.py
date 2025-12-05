@@ -922,13 +922,13 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
         flag = 0
         return f"gsSP1Triangle({v0}, {v1}, {v2}, {flag})"
     
-    # 0xBF - output as raw bytes since macro may not compile identically
+    # 0xBF - F3DEX gsSP1Triangle (GoldenEye version without flag rotation)
     elif opcode == 0xBF:
         v0 = extract_bits(w1, 16, 8) // 2
         v1 = extract_bits(w1, 8, 8) // 2
         v2 = extract_bits(w1, 0, 8) // 2
         flag = 0
-        return f"{{{{ 0x{w0:08X}, 0x{w1:08X} }}}}  /* gsSP1Triangle({v0}, {v1}, {v2}, {flag}) */"
+        return f"gsSP1TriangleGE({v0}, {v1}, {v2}, {flag})"
     
     # gsSPTexture (0xD7 in F3DEX_GBI_2, 0xBB in classic)
     elif opcode == 0xD7 or opcode == 0xBB:
