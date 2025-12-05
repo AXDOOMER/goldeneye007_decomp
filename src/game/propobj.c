@@ -24205,7 +24205,7 @@ Gfx *process_monitor_animation_microcode(Model *model, ModelNode *node, MonitorR
         gSPMatrix(gdl++, osVirtualToPhysical(model->render_pos), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPSegment(gdl++, SPSEGMENT_MODEL_VTX, osVirtualToPhysical(vertices));
         gSPVertex(gdl++, 0x04000000, 4, 0);
-        gDPTri2(gdl++, 0, 1, 2, 0, 2, 3);
+        gSP2Triangles(gdl++, 0, 1, 2, 0, 0, 2, 3, 0);
         gSPEndDisplayList(gdl++);
 
         gSPBranchList(savedgdl++, gdl);

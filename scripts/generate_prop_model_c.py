@@ -802,19 +802,25 @@ def decode_gfx_command(w0: int, w1: int, vertex_array_name: str = None, vertex_a
     elif opcode == 0xE9:
         return "gsDPFullSync()"
     # G_SETTEX (0xC0) - GoldenEye custom command for texture setup
-    # Format: C0 TT 00 II TTTTTTTT where TT=tile, II=tex_index, TTTTTTTT=texture_id
+    # gsSPUseTexture(cms, cmt, tile, shifts, shiftt, type, minlevel, detail_id, texture_id)
     elif opcode == 0xC0:
-        tile = extract_bits(w0, 16, 8)
-        tex_index = extract_bits(w0, 0, 8)
-        texture_id = w1
+        cms = extract_bits(w0, 22, 2)
+        cmt = extract_bits(w0, 20, 2)
+        tile = extract_bits(w0, 18, 2)
+        shifts = extract_bits(w0, 14, 4)
+        shiftt = extract_bits(w0, 10, 4)
+        type_val = extract_bits(w0, 0, 3)
+        minlevel = extract_bits(w1, 24, 8)
+        detail_id = extract_bits(w1, 12, 12)
+        texture_id = extract_bits(w1, 0, 12)
         
         # Look up IMAGE enum from texture_id
         if image_map and texture_id in image_map:
             image_name = image_map[texture_id]
-            return f"gsSPUseTexture(0x{tile:02X}, {tex_index}, {image_name})"
+            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_val}, {minlevel}, {detail_id}, {image_name})"
         else:
             # Fallback to raw texture_id if not found in map
-            return f"gsSPUseTexture(0x{tile:02X}, {tex_index}, 0x{texture_id:08X})"
+            return f"gsSPUseTexture({cms}, {cmt}, {tile}, {shifts}, {shiftt}, {type_val}, {minlevel}, {detail_id}, 0x{texture_id:03X})"
     
     elif opcode == 0x00:
         return "gsDPNoOp()"

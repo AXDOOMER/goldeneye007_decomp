@@ -6686,7 +6686,7 @@ void dogfnegx(ModelRenderData *renderdata, Model *model, ModelNode *node)
         gSPMatrix(renderdata->gdl++, osVirtualToPhysical(mtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPVertex(renderdata->gdl++, osVirtualToPhysical(vertices), 4, 0);
         if (1);
-        gDPTri2(renderdata->gdl++, 0, 1, 2, 2, 3, 0);
+        gSP2Triangles(renderdata->gdl++, 0, 1, 2, 0, 2, 3, 0, 0);
     }
 }
 
