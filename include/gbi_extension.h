@@ -75,6 +75,36 @@ typedef enum
 
 
 #ifdef TRI4_Ext
+
+/**
+ * GoldenEye Custom Vertex Commands
+ * 
+ * These commands use different encodings than standard F3D macros.
+ * Opcode 0x04: Uses (v0+n)*2 encoding instead of v0*2
+ */
+
+#undef gsSPVertex
+
+/* 
+ * RARE vertex load (opcode 0x04) - Custom encoding for GE/PD Tri4 support
+ * almost identical to F3D except using bytes and always fill from 0
+ * the first byte of command seems redundant
+ * @param v0: pointer to Vertex Array element to start Load from eg &vtxcube[8]
+ * @param  n: Number of vertices to Load (1-16)
+ */
+#define gsSPVertexGE(v,n) \
+{                                                        \
+    {                                                    \
+        (_SHIFTL(G_VTX, 24, 8) |                         \
+         _SHIFTL((n) - 1, 20, 4) |                       \
+         _SHIFTL(sizeof(Vtx) * (n), 0, 20),              \
+        (unsigned int)(v)                                \
+    }                                                    \
+}
+
+// F3D Source Compatible if not exploiting start index
+#define gsSPVertex(v,n,v0) gsSPVertexGE(v,n)
+
 /***
  ***  4 Triangles
  ***/
@@ -205,51 +235,7 @@ typedef enum
     }                                                \
 }
 
-/**
- * GoldenEye Custom Vertex Commands
- * 
- * These commands use different encodings than standard F3DEX macros.
- * Opcode 0x01: Custom GE format with simplified encoding
- * Opcode 0x04: Uses (v0+n)*2 encoding instead of v0*2
- */
 
-/* GoldenEye Matrix command (opcode 0x01) - G_MTX */
-#define G_MTX_GE 0x01
-#define G_VTX_GE 0x04
-
-#define gsSPMatrixGE(m, p) \
-{                                                        \
-    {                                                    \
-        (_SHIFTL(G_MTX_GE, 24, 8) |                     \
-         _SHIFTL((p), 16, 8) |                          \
-         _SHIFTL(sizeof(Mtx), 0, 16)),                  \
-        (unsigned int)(m)                               \
-    }                                                    \
-}
-
-/* RARE vertex load (opcode 0x04) - Custom encoding for GE/PD Tri4 support */
-/* Format: cmd(24-31) | (((v0+n)<<1)|flag)(16-23) | sizeof(Vtx)*n(0-15) */
-#define gsSPVertexGE(v, n, v0, flag) \
-{                                                        \
-    {                                                    \
-        (_SHIFTL(G_VTX_GE, 24, 8) |                         \
-         _SHIFTL((((v0) + (n)) << 1) | (flag), 16, 8) | \
-         _SHIFTL(sizeof(Vtx) * (n), 0, 16)),            \
-        (unsigned int)(v)                               \
-    }                                                    \
-}
-
-/* F3DEX gsSP1Triangle without flag rotation (GoldenEye uses simpler encoding) */
-/* Format: w0=0xBF000000, w1=(v0*2<<16)|(v1*2<<8)|(v2*2) */
-#define gsSP1TriangleGE(v0, v1, v2, flag) \
-{                                                        \
-    {                                                    \
-        0xBF000000,                                      \
-        (_SHIFTL((v0)*2, 16, 8) |                        \
-         _SHIFTL((v1)*2, 8, 8) |                         \
-         _SHIFTL((v2)*2, 0, 8))                          \
-    }                                                    \
-}
 
 #endif
 
