@@ -17,7 +17,7 @@ COMPARE := 1
 include include/make/VT100Codes.make
 include include/make/Gui.make
 
-# set tooolchain based on current OS
+# set toolchain based on current OS
 ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
   TOOLCHAIN := mips-linux-gnu-
 else ifeq ($(shell type mips64-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
@@ -209,7 +209,7 @@ LD_SCRIPT := $(BUILD_DIR)/ge007.$(OUTCODE).ld
 LDFLAGS := -T $(LD_SCRIPT) -Map $(BUILD_DIR)/ge007.$(OUTCODE).map --no-warn-mismatch
 
 AS := $(TOOLCHAIN)as
-ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS) 
+ASFLAGS := -march=vr4300 -mabi=32 $(INCLUDE) $(ASMDEFS)
 # Use the system installed armips if available. Otherwise use the one provided with this repository.
 ifneq (,$(shell which armips 2>/dev/null))
   ARMIPS              := armips
@@ -234,20 +234,20 @@ OBJCOPY := $(TOOLCHAIN)objcopy
 
 ## Build Recipes ##
 
-# Dont delete intermediate files from these targets on make completion.
+# Don't delete intermediate files from these targets on make completion.
 .SECONDARY:
 	$(APPELF) $(APPROM) $(APPBIN) $(ULTRAOBJECTS) $(BUILD_DIR)/ge007.$(OUTCODE).map \
 	$(HEADEROBJECTS) $(BOOTOBJECTS) $(CODEOBJECTS) $(GAMEOBJECTS) $(RZOBJECTS) \
 	$(OBSEG_OBJECTS) $(OBSEG_RZ) $(ROMOBJECTS) $(RAMROM_OBJECTS) $(FONTOBJECTS) $(MUSIC_OBJECTS) $(IMAGE_OBJS) $(MUSIC_RZ_FILES)
 
-# Dont delete these intermediate targets on make cancelation.
+# Don't delete these intermediate targets on make cancellation.
 .PRECIOUS: %.bin  %.o
 
-# Run the following targets sequentialy in this order (unnamed targets will still run in parallel)
+# Run the following targets sequentially in this order (unnamed targets will still run in parallel)
 .NOTPARALLEL: print_info create_directories $(APPROM) checksum
 
 # Phony Recipes - These targets are not files, Get Make to do something
-.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets forceextractassets textures convert_props convert_chrs convert_guns extract_u extract_e extract_j force_extract_u force_extract_e force_extract_j extract_rsp 
+.PHONY: print_info create_directories build_tools prerequisites checksum all_p1 all default commonclean setupclean stanclean dataclean libultraclean codeclean clean nuke help cmdbuidler test  context extractassets forceextractassets textures convert_props convert_chrs convert_guns extract_u extract_e extract_j force_extract_u force_extract_e force_extract_j extract_rsp
 
 
 # this file references variables defined above: BUILD_DIR, CFLAGWARNING, INCLUDE, LCDEFS
