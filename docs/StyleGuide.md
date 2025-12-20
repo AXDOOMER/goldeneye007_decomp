@@ -1,9 +1,34 @@
-
 # GoldenEye C Style Guide
+
+<!-- TOC -->
+* [GoldenEye C Style Guide](#goldeneye-c-style-guide)
+  * [Background](#background)
+  * [Bracing](#bracing)
+  * [Prefix/Suffix Tables](#prefixsuffix-tables)
+  * [TYPES](#types)
+  * [INHERITANCE](#inheritance)
+  * [CONSTANTS](#constants)
+  * [INCLUDE UNITS IN NAMES](#include-units-in-names)
+  * [VARIABLE NAMES](#variable-names)
+    * [Global (Public) Variables](#global-public-variables)
+    * [Global (Private) Variables](#global-private-variables)
+  * [FUNCTION NAMES](#function-names)
+    * [Private Functions](#private-functions)
+    * [Public Functions](#public-functions)
+  * [STRUCT NAMES](#struct-names)
+  * [POINTERS](#pointers)
+  * [COMMENTS](#comments)
+  * [SCOPE](#scope)
+    * [Headers](#headers)
+  * [EXAMPLE C](#example-c)
+    * [FILE1.c](#file1c)
+    * [FILE1.h (File 1 Public Variables/Functions)](#file1h-file-1-public-variablesfunctions)
+    * [FILE2.c](#file2c)
+<!-- TOC -->
 
 ## Background
 
-GE/PD mostly uses cammelCase namespaceFunctionName()
+GE/PD mostly uses camelCase namespaceFunctionName()
 ```C
 // joy.c -> Tick Retrace
     joyTickRetrace();
@@ -32,7 +57,7 @@ GE Constant example
 ```
 
 Basically, Rare had no style guide!
-Each mamber of the team was free to do whatever - which is fine for a closed
+Each member of the team was free to do whatever - which is fine for a closed
 source game with only a few members.
 
 Nintendo had a much better handle on the situation (though not perfect either
@@ -52,14 +77,14 @@ and can read what others have done.
 
 HOWEVER
 
-Since we are going for a matching project as best we can - If an original (canonical) name is known - Use it! (unless there is a really good reason not to)
+Since we are going for a matching project as best we can - If an original (canonical) name is known - Use it! (unless there is a perfect reason not to)
 
 In all other cases follow this guide.
 
 ---
 
 ## Bracing
-Allman Style bracing should be followed - though single line If's are acceptable
+Allman Style bracing should be followed - though single line If statements are acceptable
 This keeps in line with SDK style too and maximizes readability as all "blocks" have a clear
 start and end brace.
 The only exception to this is Array Definitions, which should open on the same line as the '='.
@@ -79,7 +104,7 @@ void SomeFunctionScope()
         doSomething(i);
         if (i = 2)
         {
-            i = 4; 
+            i = 4;
         }
         else
         {
@@ -91,33 +116,30 @@ void SomeFunctionScope()
 
 ## Prefix/Suffix Tables
 
-| Prefix 	| Meaning					| Example													| Notes																	
-|--------	|----------------			|--------------------------------------						|--------------------------------------------							
-| g_	 	| global		 			| g_PrefService												| Not needed if already prefixed "Global" 								
-| s			| static member				| sPrefChecked						 						| Static Local retains value over App life, but remains local			
-| m			| private member 			| mLength													| Static mLength can only be accessed within same file. External files require Get/Set
-|			| enum constants 			| enum FOO<br>`{`<br>`	FOO_BAR,`<br>`	FOO_BAZ`<br>`}`	| Also prefix with Enum Name. 
-| _ <br>__	| Implementation Reserved 	| __osThingy												| Underscore prefix should NOT be used in game code. However, expect to find them	as Internal Identifiers but no Accessable Identifier will start with _ or __.
-| is        | Boolean Result            | isAlive                                                   | To ask a True/False question. Either a function or variable - where this should be the only non-noun variable name.
+| Prefix   | Meaning                 | Example                                            | Notes                                                                                                                                                         |
+|----------|-------------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| g_       | global                  | g_PrefService                                      | Not needed if already prefixed "Global"                                                                                                                       |
+| s        | static member           | sPrefChecked                                       | Static Local retains value over App life, but remains local                                                                                                   |
+| m        | private member          | mLength                                            | Static mLength can only be accessed within same file. External files require Get/Set                                                                          |
+|          | enum constants          | enum FOO<br>`{`<br>`FOO_BAR,`<br>`FOO_BAZ`<br>`}`  | Also prefix with Enum Name.                                                                                                                                   |
+| _ <br>__ | Implementation Reserved | __osThingy                                         | Underscore prefix should NOT be used in game code. However, expect to find them as Internal Identifiers but no Accessible Identifier will start with _ or __. |
+| is       | Boolean Result          | isAlive                                            | To ask a True/False question. Either a function or variable - where this should be the only non-noun variable name.                                           |
 
 
-| Sufix		| Meaning					| Example													| Notes											
-|--------	|----------------			|--------------------------------------						|--------------------------------------------	
-| p			| Pointer					| glistp													| Pointer to glist								
+| Suffix | Meaning  | Example | Notes            |
+|--------|----------|---------|------------------|
+| p      | Pointer  | glistp  | Pointer to glist |
 
 
 ## TYPES
-Use SDK types (`u8`, `s32` etc) rather than C Types (`unsigned char`, `int` etc)
+Use SDK types (`u8`, `s32`, etc.) rather than C Types (`unsigned char`, `int`, etc.)
 Remember to include `<ultra64.h>`
 
 Bond Types use the "typedef" keyword
 
+While typedefs are used to avoid typing "struct" and to help intellisense, they are not foolproof.
 
-While typedefs are used to avoid typing "struct" and to help intellisence
-they are not foolproof.
-
-Using structs before they are declaired need to have the struct keyword (forward declairation) or
-be re-ordered.
+Using structs before they are declared need to have the struct keyword (forward declaration) or be re-ordered.
 
 Example:
 ```C
@@ -130,7 +152,7 @@ typedef struct ARecord
 typedef struct BRecord
 {
     ARecord Parent; // This is ok because it exists.
-} BRecord; 
+} BRecord;
 ```
 
 ## INHERITANCE
@@ -150,13 +172,13 @@ typedef struct CRecord
 {
     Inherits ARecord; // Does not have to be first, but makes sense to be first
     u8 C;
-} CRecord; 
+} CRecord;
 ```
 
 
 
 ## CONSTANTS
-ALL_CAPS_SNAKE_CASE for constants and enums eg.
+ALL_CAPS_SNAKE_CASE for constants and enums e.g.
 ```c
 #define NULL 0
 enum HIT
@@ -188,7 +210,7 @@ For example:
 Should be nouns (as they represent state). The name should be camelCase
     (e.g. index, currentEnvironment or bond).
 
-Prefixes are sometimes usefull, please refer to prefix table above
+Prefixes are sometimes useful, please refer to prefix table above
 
 Suffixes are sometimes useful eg:
 *    `max` - to mean the maximum value something can have.
@@ -212,7 +234,7 @@ Examples from GE:
 Should be prefixed by `g_` eg:
 *   `g_chraiCurrentSetup` global Current Setup defined in file chrai.c
 
-Public Global Variables must be declaired (not defined) in a header file that is included by all C files
+Public Global Variables must be declared (not defined) in a header file that is included by all C files
 that use the variable, and use the `extern` keyword eg:
 *   `extern stagesetup g_chraiCurrentSetup;`
 Global Variables should only be defined once in their own C file.
@@ -221,10 +243,10 @@ Global Variables should only be defined once in their own C file.
 Should be prefixed by `m_` eg:
 *   `m_numGuards` global Number of Guards defined in file chr.c
 
-Private Global Variables must be defined (implicitly declaired) in the C file
+Private Global Variables must be defined (implicitly declared) in the C file
 that use the variable (Not in a header).
 
-Access to Private Variables from outside the C file should be done via Get/Set functions (declaired in a h file)
+Access to Private Variables from outside the C file should be done via Get/Set functions (declared in a h file)
 
 ## FUNCTION NAMES
 Should be verb phrases (as they represent actions), and command-like functions
@@ -249,7 +271,7 @@ For example: `isAlive`
     }
 ```
 
-Functions, especually Public, should be prefixed by "class" or "namespace"
+Functions, especially Public, should be prefixed by "class" or "namespace"
 ```C
     chrResetNearMiss()
     chrIsAlive()
@@ -264,28 +286,28 @@ Examples from GE:
 ```
 
 ### Private Functions
-Private functions that only serve a purpose __within__ a single C file should NOT be declaired
-in a h file, and should only be declaired ahead of definition (forward decleration) if it is to be used before
+Private functions that only serve a purpose __within__ a single C file should NOT be declared
+in a h file, and should only be declared ahead of definition (forward declaration) if it is to be used before
 it is defined.
 
 ### Public Functions
-Public Functions MUST be declaired in a h file to be included in any C that uses the function.
-the `extern` keyword has no effect on functions but it may be of use to highlight the public
+Public Functions MUST be declared in a h file to be included in any C that uses the function.
+the `extern` keyword has no effect on functions, but it may be of use to highlight the public
 nature/intention of the function.
 Public functions MUST have a namespace as the first part of the name.
 
 ## STRUCT NAMES
 Structs are often nouns and should be PascalCase
 Database like structs should not be named "data" - which should be reserved for
-the variable wich uses the struct. Instead "Record" is suggested eg:
+the variable which uses the struct. Instead, "Record" is suggested eg:
 ```C
 typedef struct PadRecord
 {
     coord3d    pos;
-    coord3d    up; 
+    coord3d    up;
     coord3d    look;
     char      *plink;
-    StandTile *stan; 
+    StandTile *stan;
 } PadRecord;
 
 PadRecord padData; //variable holding data for pad
@@ -295,7 +317,7 @@ Examples from GE:
 ```
 
 ## POINTERS
-Pointers should be declaired with the * right-aligned eg:
+Pointers should be declared with the * right-aligned eg:
 ```C
     ChrData *ChrAp, *ChrBp;
 ```
@@ -320,7 +342,7 @@ Comments should be C style / * * / for block comments and header documentation.
 Comments _can_ be C++ style / / for inline comments documenting single items.
 
 Function documentation should precede functions directly
-without extra line breaks and begin with a double asterix - Left aligned astrices are optional
+without extra line breaks and begin with a double asterisk - Left aligned asterisks are optional
 ```C
 int var; //This is an integer
 
@@ -354,7 +376,7 @@ declared static where they retain their value till program ends).
 ```
 Variables Outside functions, usually at top of file (NOT in header) have by
 default Global (Private) Scope.
-If declaired as extern they are promoted to Public Scope - provided the declairation is in a
+If declared as extern they are promoted to Public Scope - provided the declaration is in a
 h file and the h file is included by all C files that use the Global.
 Both extern and static have Static Duration - they end when the program ends.
 ```C
@@ -387,7 +409,7 @@ For any given variable, only one header file declares it (SPOT - Single Point of
 
 A source file never contains extern declarations of variables - source files always include the (sole) header that declares them.
 
-For any given variable, exactly one source file defines the variable, preferably initializing it too. 
+For any given variable, exactly one source file defines the variable, preferably initializing it too.
 
 The source file that defines the variable also includes the header to ensure that the definition and the declaration are consistent.
 
@@ -398,7 +420,7 @@ A function should never need to declare a variable using extern.
 ##  EXAMPLE C
 
 
-### FILE1.c 
+### FILE1.c
 ```C
     #include "file1.h"                        // Prove my definitions are the same as declaired to others
 
@@ -424,7 +446,7 @@ A function should never need to declare a variable using extern.
 
 
 
-### FILE1.h (File 1 Public Vars/Funcs)
+### FILE1.h (File 1 Public Variables/Functions)
 ```C
     extern int f1GetTime();                // Gets time from private mTime (Public Func, Includes "Namespace")
     extern u32 g_f2GlobalData              // Public Global Data
@@ -439,7 +461,7 @@ A function should never need to declare a variable using extern.
     s32 D_80000000;                                // Unknown label data (Private by default)
     g_f2GlobalData = 0;                            // camelCasedNaming and defined as early as possible
 
-    typedef enum ID                              
+    typedef enum ID
     {
         ID_AGENT,                                  // prefix with enum name
         ID_SECRETAGENT,
@@ -467,7 +489,7 @@ A function should never need to declare a variable using extern.
     * further documentation
     * @param parameter1: defines the number of xxx
     */
-    void functionNameSample(int Parameter1) 
+    void functionNameSample(int Parameter1)
     {                                              // newline for opening braces (ALLMAN)
         u32 tempvar;                               // Use SDK Types
 
