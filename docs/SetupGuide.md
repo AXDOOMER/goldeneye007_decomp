@@ -25,7 +25,7 @@
 
 * clone this repository to a directory of your choosing
 * place an unmodified copy of your existing NTSC (US) ROM inside the root of this repository with the name `baserom.u.z64`
-  * optionally: if you want to extract assets from PAL (JP) or PAL (EU), **additionally** place `baserom.j.z64` and `baserom.e.z64` into the root dir
+  * optionally: if you want to extract assets from NTSC (JP) or PAL (EU), **additionally** place `baserom.j.z64` and `baserom.e.z64` into the root dir
 
 ## Install dependencies
 
@@ -94,9 +94,9 @@ To extract the NTSC (US) base rom assets run the following from root directory:
 ./scripts/extract_baserom.u.sh
 ```
 
-> **Extracting NTSC (US) base rom assets is mandatory before extracting PAL (JP) or PAL (EU) assets.**
+> **Extracting NTSC (US) base rom assets is mandatory before extracting NTSC (JP) or PAL (EU) assets.**
 
-To extract the PAL (JP) base rom assets run the following from root directory:
+To extract the NTSC (JP) base rom assets run the following from root directory:
 
 ```bash
 ./scripts/extract_baserom.u.sh && ./scripts/extract_diff.j.sh
@@ -140,7 +140,7 @@ build/u/ge007.u.z64: OK
 Other examples:
 
 ```bash
-make VERSION=JP -j4       # build PAL (JP) version instead with 4 jobs
+make VERSION=JP -j4       # build NTSC (JP) version instead with 4 jobs
 make VERSION=EU COMPARE=0 # build PAL (EU) version but do not compare ROM hashes
 ```
 
