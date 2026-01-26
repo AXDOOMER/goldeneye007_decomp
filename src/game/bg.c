@@ -1232,78 +1232,19 @@ s32 sub_GAME_7F0B3B20(void)
 
 
 
-#ifdef NONMATCHING
-//unrolled sb are in reverse order
 void sub_GAME_7F0B3BC4(void)
 {
   s32 i;
 
   g_BgNumberOfRoomsDrawn = 0;
-  for (i=0;i!=MAXROOMCOUNT;i++)
+  i = 0;
+  while (i != MAXROOMCOUNT)
   {
     g_BgRoomInfo[i].portals_to_room_count = '\0';
+    i++;
   }
 }
-#else
 
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3BC4
-/* 0E86F4 7F0B3BC4 3C018004 */  lui   $at, %hi(g_BgNumberOfRoomsDrawn)
-/* 0E86F8 7F0B3BC8 AC20483C */  sw    $zero, %lo(g_BgNumberOfRoomsDrawn)($at)
-/* 0E86FC 7F0B3BCC 3C018004 */  lui   $at, %hi(g_BgRoomInfo+0x3)
-/* 0E8700 7F0B3BD0 A0201417 */  sb    $zero, %lo(g_BgRoomInfo+0x3)($at)
-/* 0E8704 7F0B3BD4 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x53)
-/* 0E8708 7F0B3BD8 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0xA0)
-/* 0E870C 7F0B3BDC 3C028004 */  lui   $v0, %hi(g_MaxNumRooms)
-/* 0E8710 7F0B3BE0 244242F4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, 0x42f4
-/* 0E8714 7F0B3BE4 246314B4 */  addiu $v1, %lo(g_BgRoomInfo + 0xA0) # addiu $v1, $v1, 0x14b4
-/* 0E8718 7F0B3BE8 A0201467 */  sb    $zero, %lo(g_BgRoomInfo + 0x53)($at)
-.L7F0B3BEC:
-/* 0E871C 7F0B3BEC 24630140 */  addiu $v1, $v1, 0x140
-/* 0E8720 7F0B3BF0 A060FEC3 */  sb    $zero, -0x13d($v1)
-/* 0E8724 7F0B3BF4 A060FF13 */  sb    $zero, -0xed($v1)
-/* 0E8728 7F0B3BF8 A060FF63 */  sb    $zero, -0x9d($v1)
-/* 0E872C 7F0B3BFC 1462FFFB */  bne   $v1, $v0, .L7F0B3BEC
-/* 0E8730 7F0B3C00 A060FFB3 */   sb    $zero, -0x4d($v1)
-/* 0E8734 7F0B3C04 03E00008 */  jr    $ra
-/* 0E8738 7F0B3C08 00000000 */   nop
-)
-#endif
-
-#if !defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B3BC4
-/* 0E58BC 7F0B2ECC 3C018004 */  lui   $at, %hi(g_BgNumberOfRoomsDrawn) # $at, 0x8004
-/* 0E58C0 7F0B2ED0 AC20DD1C */  sw    $zero, %lo(g_BgNumberOfRoomsDrawn)($at)
-/* 0E58C4 7F0B2ED4 3C018004 */  lui   $at, %hi(eu_cdata_0x1f0d0) # $at, 0x8004
-/* 0E58C8 7F0B2ED8 AC20DD20 */  sw    $zero, %lo(eu_cdata_0x1f0d0)($at)
-/* 0E58CC 7F0B2EDC 3C018004 */  lui   $at, %hi(g_BgRoomInfo+0x3) # $at, 0x8004
-/* 0E58D0 7F0B2EE0 A020AC67 */  sb    $zero, %lo(g_BgRoomInfo+0x3)($at)
-/* 0E58D4 7F0B2EE4 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0x53) # $at, 0x8004
-/* 0E58D8 7F0B2EE8 A020ACB7 */  sb    $zero, %lo(g_BgRoomInfo + 0x53)($at)
-/* 0E58DC 7F0B2EEC 3C018004 */  lui   $at, %hi(g_BgRoomInfo + 0xA3) # $at, 0x8004
-/* 0E58E0 7F0B2EF0 3C038004 */  lui   $v1, %hi(g_BgRoomInfo + 0xf0) # $v1, 0x8004
-/* 0E58E4 7F0B2EF4 3C028004 */  lui   $v0, %hi(g_MaxNumRooms) # $v0, 0x8004
-/* 0E58E8 7F0B2EF8 2442D7D4 */  addiu $v0, %lo(g_MaxNumRooms) # addiu $v0, $v0, -0x282c
-/* 0E58EC 7F0B2EFC 2463AD54 */  addiu $v1, %lo(g_BgRoomInfo + 0xf0) # addiu $v1, $v1, -0x52ac
-/* 0E58F0 7F0B2F00 A020AD07 */  sb    $zero, %lo(g_BgRoomInfo + 0xA3)($at)
-.L7F0B2F04:
-/* 0E58F4 7F0B2F04 24630140 */  addiu $v1, $v1, 0x140
-/* 0E58F8 7F0B2F08 A060FEC3 */  sb    $zero, -0x13d($v1)
-/* 0E58FC 7F0B2F0C A060FF13 */  sb    $zero, -0xed($v1)
-/* 0E5900 7F0B2F10 A060FF63 */  sb    $zero, -0x9d($v1)
-/* 0E5904 7F0B2F14 1462FFFB */  bne   $v1, $v0, .L7F0B2F04
-/* 0E5908 7F0B2F18 A060FFB3 */   sb    $zero, -0x4d($v1)
-/* 0E590C 7F0B2F1C 03E00008 */  jr    $ra
-/* 0E5910 7F0B2F20 00000000 */   nop
-)
-#endif
-
-
-#endif
 
 
 
