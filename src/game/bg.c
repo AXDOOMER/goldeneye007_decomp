@@ -1237,6 +1237,9 @@ void sub_GAME_7F0B3BC4(void)
   s32 i;
 
   g_BgNumberOfRoomsDrawn = 0;
+#ifdef VERSION_EU
+  eu_cdata_0x1f0d0 = 0;
+#endif
   i = 0;
   while (i != MAXROOMCOUNT)
   {
