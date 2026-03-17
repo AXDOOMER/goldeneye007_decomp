@@ -43,12 +43,15 @@ void skyGetWorldPosFromScreenPos(f32 offset_x, f32 offset_y, coord3d* out) {
 */
 bool skyIsScreenCornerInSky(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 {
-    coord3d *campos = bondviewGetCurrentPlayersPosition();
+    coord3d *eye = bondviewGetCurrentPlayersPosition();
     f32 f12 = 2.0f * corner3dpos->y / sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2] + 0.0001f);
     f32 sp2c;
     f32 f12_2;
     f32 sp24;
     u32 stack[2];
+#ifdef DEBUG
+    assert(eye[1] < fogGetCurrentEnvironmentp()->skyheight);
+#endif
 
     if (f12 > 1.0f)
     {
@@ -68,7 +71,7 @@ bool skyIsScreenCornerInSky(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 
     if (sp24 > 0.0f)
     {
-        sp2c = (fogGetCurrentEnvironmentp()->CloudRepeat - campos->y) / sp24;
+        sp2c = (fogGetCurrentEnvironmentp()->CloudRepeat - eye->y) / sp24;
         f12_2 = sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2]) * sp2c;
 
         if (f12_2 > 300000)
@@ -76,9 +79,9 @@ bool skyIsScreenCornerInSky(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
             sp2c *= 300000 / f12_2;
         }
 
-        dstpos->x = campos->x + sp2c * corner3dpos->f[0];
-        dstpos->y = campos->y + sp2c * sp24;
-        dstpos->z = campos->z + sp2c * corner3dpos->f[2];
+        dstpos->x = eye->x + sp2c * corner3dpos->f[0];
+        dstpos->y = eye->y + sp2c * sp24;
+        dstpos->z = eye->z + sp2c * corner3dpos->f[2];
 
         return TRUE;
     }
@@ -92,12 +95,15 @@ bool skyIsScreenCornerInSky(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 */
 bool skyIsCornerInWater(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 {
-    coord3d *campos = bondviewGetCurrentPlayersPosition();
+    coord3d *eye = bondviewGetCurrentPlayersPosition();
     f32 f12 = -2.0f * corner3dpos->y / sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2] + 0.0001f);
     f32 sp2c;
     f32 f12_2;
     f32 sp24;
     u32 stack[2];
+#ifdef DEBUG
+    assert(eye[1] < fogGetCurrentEnvironmentp()->seaheight);
+#endif
 
     if (f12 > 1.0f)
     {
@@ -117,7 +123,7 @@ bool skyIsCornerInWater(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 
     if (sp24 < 0.0f)
     {
-        sp2c = (fogGetCurrentEnvironmentp()->WaterRepeat - campos->y) / sp24;
+        sp2c = (fogGetCurrentEnvironmentp()->WaterRepeat - eye->y) / sp24;
         f12_2 = sqrtf(corner3dpos->f[0] * corner3dpos->f[0] + corner3dpos->f[2] * corner3dpos->f[2]) * sp2c;
 
         if (f12_2 > 300000)
@@ -125,9 +131,9 @@ bool skyIsCornerInWater(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
             sp2c *= 300000 / f12_2;
         }
 
-        dstpos->x = campos->x + sp2c * corner3dpos->f[0];
-        dstpos->y = campos->y + sp2c * sp24;
-        dstpos->z = campos->z + sp2c * corner3dpos->f[2];
+        dstpos->x = eye->x + sp2c * corner3dpos->f[0];
+        dstpos->y = eye->y + sp2c * sp24;
+        dstpos->z = eye->z + sp2c * corner3dpos->f[2];
 
         return TRUE;
     }
@@ -138,7 +144,7 @@ bool skyIsCornerInWater(coord3d *corner3dpos, coord3d *dstpos, f32 *dstfrac)
 /*
 * Address: 0x7F093BFC
 */
-void skyCalculateEdgeVertex(coord3d *base, coord3d* ref, coord3d* out) 
+void skyCalculateEdgeVertex(coord3d *base, coord3d* ref, coord3d* out)
 {
     f32 mult;
 

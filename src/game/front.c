@@ -1113,7 +1113,7 @@ s32 frontCheckIfCheatIsUnlocked(s32 cheat)
             return fileIsEgyptCompletedOn00ForFolder(selected_folder_num);
 
         default:
-            do {
+            do {/* WARNING: Do nothing block with infinite loop */
             } while( 1 );
         }
 }
@@ -2461,6 +2461,9 @@ s32 interface_menu05_fileselect(void)
                 && (cursor_v_pos <= sp64.up))
             {
                 fileGetHighestStageDifficultyCompletedForFolder(i2, &sp60, &sp5C);
+#ifdef DEBUG
+                osSyncPrintf("selected file %d\n", i2);
+#endif
 
                 if (joyGetButtonsPressedThisFrame(0, A_BUTTON | Z_TRIG | START_BUTTON) != 0)
                 {

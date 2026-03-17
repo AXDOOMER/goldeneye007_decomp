@@ -972,7 +972,7 @@ s32 sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize, s32 next)
             return temp;
         }
     }
-    
+
     dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].roomid = curroom;
     dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].unk1 = unk1;
     dword_CODE_bss_8007FFA0[g_BgNumberOfRoomsDrawn].bbox.min.x = screensize->min.x;
@@ -984,7 +984,7 @@ s32 sub_GAME_7F0B39BC(int curroom,int unk1, bbox2d * screensize, s32 next)
 
     // FAKE puts g_BgNumberOfRoomsDrawn in a3
     if (g_BgNumberOfRoomsDrawn) {}
-    
+
     return 0;
 }
 #else
@@ -1305,12 +1305,12 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 
     for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
     {
-        if (b_max < dword_CODE_bss_8007FFA0[j].unk1) 
+        if (b_max < dword_CODE_bss_8007FFA0[j].unk1)
         {
             b_max = dword_CODE_bss_8007FFA0[j].unk1;
         }
-        
-        if (dword_CODE_bss_8007FFA0[j].unk1 < b_min) 
+
+        if (dword_CODE_bss_8007FFA0[j].unk1 < b_min)
         {
             b_min=dword_CODE_bss_8007FFA0[j].unk1;
         }
@@ -1318,6 +1318,9 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 
     for (i = b_min; i <= b_max; i++)
     {
+    #ifdef DEBUG
+        notdone = g_BgNumberOfRoomsDrawn;
+    #endif
         for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
         {
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
@@ -1364,8 +1367,14 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 
                 if (1);
             }
+    #ifdef DEBUG
+            notdone--;
+    #endif
         }
     }
+    #ifdef DEBUG
+    assert(notdone == 0);
+    #endif
 
     gdl = bgScissorCurrentPlayerViewDefault(fogRenderClearFogMode(gdl));
     gSPMatrix(gdl++, osVirtualToPhysical((void*)get_BONDdata_field_10E0()), (G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION));
@@ -1381,6 +1390,10 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 
     for (i = b_max; i >= b_min; i--)
     {
+    #ifdef DEBUG
+        notdone = g_BgNumberOfRoomsDrawn;
+    #endif
+
         for (j = 0; j < g_BgNumberOfRoomsDrawn; j++)
         {
             if (i == dword_CODE_bss_8007FFA0[j].unk1)
@@ -1416,8 +1429,14 @@ Gfx *sub_GAME_7F0B3C8C(Gfx *gdl)
 
                 if (1);
             }
+    #ifdef DEBUG
+            notdone--;
+    #endif
         }
     }
+    #ifdef DEBUG
+    assert(notdone == 0);
+    #endif
 
     return gdl;
 }
@@ -1696,7 +1715,6 @@ glabel sub_GAME_7F0B3C8C
 )
 #endif
 
-#endif
 
 
 
@@ -4541,12 +4559,12 @@ char *bgDebPrintROOMID(s32 roomId)
     static char bgDebRoomOutBuffer[10][9];
     static s32 bgDebRoomOutLineNum;
     char* roomIdStr;
-    
+
     bgDebRoomOutLineNum = (bgDebRoomOutLineNum + 1) % 10;
     roomIdStr = bgDebRoomOutBuffer[bgDebRoomOutLineNum];
-    
+
     sprintf(roomIdStr, "ROOM%d", roomId);
-    
+
     return roomIdStr;
 }
 #else
@@ -11988,13 +12006,35 @@ glabel sub_GAME_7F0B9B94
 
 #ifdef NONMATCHING
 void sub_GAME_7F0B9CC8(void) {
-    if (something == -1) osSyncPrintf("bg: bgGetPortalBetweenRooms(): No portal joins room \'%s\' and \'%s\'\n", bgDebPrintROOMID(), bgDebPrintROOMID());
+    s32 bFoundPortal = FALSE;
+    s32 i;
+    s32 portCount = -1;
 
-    //if reach end
-    osSyncPrintf("bg: bgGetPortalBetweenRooms(): Multiple portals join room \'%s\' and \'%s\'\ n", bgDebPrintROOMID(), bgDebPrintROOMID());
-}
-#else
-GLOBAL_ASM(
+    #ifndef DEBUG
+        #define osSyncPrintf(x)
+    #endif
+
+    for (i = 0; g_BgPortals[i].offset_portal != NULL; i++)
+    {
+        if (((g_BgPortals[i].connectedRoom1 == room1) && (g_BgPortals[i].connectedRoom2 == room2)) ||
+            ((g_BgPortals[i].connectedRoom1 == room2) && (g_BgPortals[i].connectedRoom2 == room1)))
+        {
+            bFoundPortal = TRUE;
+            if (sub_GAME_7F0B9F14(i, arg2, arg3) != 0)
+            {
+                if (portCount >= 0) osSyncPrintf("bg: bgGetPortalBetweenRooms(): Multiple portals join room \'%s\' and \'%s\'\ n", bgDebPrintROOMID(room1), bgDebPrintROOMID(room2));
+                portCount = i;
+            }
+        }
+    }
+
+    // if (portCount == -1 && !bFoundPortal) osSyncPrintf("bg: bgGetPortalBetweenRooms(): No portal joins room \'%s\' and \'%s\'\n", bgDebPrintROOMID(room1), bgDebPrintROOMID(room2));
+
+    // return portCount;
+
+    // #undef osSyncPrintf }
+ #else
+ GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B9CC8
 /* 0EE7F8 7F0B9CC8 27BDFFC0 */  addiu $sp, $sp, -0x40
@@ -12100,6 +12140,24 @@ s32 bgDebugRemoved7F0B9DE4(s32 arg0, s32 arg1, s32 arg2)
 {
 #if DEBUG
     // removed
+    /*
+ if (arg2 == NULL)
+ {
+     arg2 = {0};
+ }
+ *arg0          = *arg1 + *arg2;
+ arg0[1]        = arg1[1] + arg2[1];
+ arg0[2]        = arg1[2] + arg2[2];
+ *(arg0 + 3)    = 0;
+ arg0[4]        = 0.0;
+ arg0[5]        = 0.0;
+ *(arg0 + 6)    = (param_4 & 0xcf00cf40) >> 0x18;
+ *(arg0 + 0x19) = 0;
+ *(arg0 + 0x1a) = (param_4 & 0xcf00cf40) >> 8;
+ *(arg0 + 0x1b) = 0x40;
+
+ */
+
 #endif
 
     return arg0;

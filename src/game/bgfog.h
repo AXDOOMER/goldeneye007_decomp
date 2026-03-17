@@ -120,7 +120,7 @@ typedef struct CurrentEnvironmentRecord
     u8 Green;
     u8 Blue;
     u8 Clouds;
-    f32 CloudRepeat;
+    f32 CloudRepeat; // canonically skyheight
     s16 SkyImageId;
     u16 Reserved;
     f32 CloudRed;
@@ -128,7 +128,7 @@ typedef struct CurrentEnvironmentRecord
     f32 CloudBlue;
     u8 IsWater;
     u8 Padding[3];
-    f32 WaterRepeat;
+    f32 WaterRepeat; // canonically seaheight
     s16 WaterImageId;
     u16 Reserved2;
     f32 WaterRed;

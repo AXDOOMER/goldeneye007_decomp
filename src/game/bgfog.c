@@ -58,7 +58,7 @@ EnvironmentRecord * g_EnvironmentAltp;
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x800825F4.
 */
 s32 D_800825F4;
@@ -69,7 +69,7 @@ struct NearFogRecordF eu_loadCurrentNearFog;
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x80044DC0.
 */
 s32 D_80044DC0 = 0;
@@ -88,7 +88,7 @@ f32 g_ScaledDifferenceFromFarFogIntensity = 0.0;
 /**
  * Address 0x80044DCC.
 */
-CurrentEnvironmentRecord g_CurrentEnvironment = { 
+CurrentEnvironmentRecord g_CurrentEnvironment = {
     0x384, // s32 DifferenceFromFarIntensity;
     0x3e8, // u32 FarIntensity;
         0,     // u8  Red;
@@ -243,7 +243,7 @@ void fogLoadFoglessCurrentEnvironment(EnvironmentFoglessRecord *arg0);
 
 /**
  * Unreferenced.
- * 
+ *
  * Address 0x7F0BA720.
 */
 void sub_GAME_7F0BA720(s32 a, s32 b)
@@ -253,7 +253,8 @@ void sub_GAME_7F0BA720(s32 a, s32 b)
 
 /**
 * @return Pointer to Current Environment
-*/
+ * canonically "bgFogGet"
+ */
 CurrentEnvironmentRecord *fogGetCurrentEnvironmentp(void)
 {
     return &g_CurrentEnvironment;
@@ -286,6 +287,16 @@ void fogLoadCurrentEnvironment(EnvironmentRecord *arg0)
     f32 temp_f0;
     f32 sp20; // 32
     f32 sp1C; // 28
+#ifdef DEBUG
+    f32 fmin; // hoisted to global
+    f32 fmax; // hoisted to global
+    fmin = arg0->Visibility.Nfd.NearFog / 1000;
+    assert(0.0F <= fmin);
+    assert(fmin <= 1.0F);
+    fmax = arg0->Visibility.Nfd.MaxVisRange / 1000;
+    assert(0.0F <= fmax);
+    assert(fmax <= 1.0F);
+#endif
 
     viSetZRange(arg0->Visibility.BlendMultiplier, arg0->Visibility.FarFog);
     viGetZRange(&zrange);
@@ -336,7 +347,7 @@ void fogLoadCurrentEnvironment(EnvironmentRecord *arg0)
 #else
     #define FOG_ZERO 0.0f
 #endif
-    
+
     if (arg0->Visibility.Nfd.NearFog == FOG_ZERO)
     {
         g_NearFogValuesP = NULL;
@@ -404,7 +415,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
     sp1C = NULL;
 
     num_players = getPlayerCount();
-    
+
     if (num_players == 1)
     {
         num_players = 0;
@@ -429,7 +440,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
             }
         }
     }
-    
+
     for (phi_v1 = &fog_tables[0]; phi_v1->Id != 0; phi_v1++)
     {
         if (phi_v1->Id == (level_id + (num_players * 100)))
@@ -444,7 +455,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
         }
     }
 
-    if(1)
+    if (1) // possibly if(level_id != 26) or another blanked printf
     {
         // removed
     }
@@ -494,7 +505,7 @@ void fogLoadLevelEnvironment(s32 level_id, s32 arg1)
 
 /**
  * Address 0x7F0BACA8.
- * Switch to next Environment. 
+ * Switch to next Environment.
  * @param isTransition: Usually 0 for instant switch or 1 to transition gradually
  */
 void fogSwitchToSolosky2(f32 arg0)
@@ -503,7 +514,7 @@ void fogSwitchToSolosky2(f32 arg0)
 
     static_envr = *g_EnvironmentMainp;
 
-    static_envr.Visibility.BlendMultiplier = 
+    static_envr.Visibility.BlendMultiplier =
         g_EnvironmentMainp->Visibility.BlendMultiplier
 #if defined(VERSION_EU)
         + (arg0 * ((f32)g_EnvironmentAltp->Visibility.BlendMultiplier - (f32)g_EnvironmentMainp->Visibility.BlendMultiplier));
@@ -511,7 +522,7 @@ void fogSwitchToSolosky2(f32 arg0)
         + (arg0 * (g_EnvironmentAltp->Visibility.BlendMultiplier - g_EnvironmentMainp->Visibility.BlendMultiplier));
 #endif
 
-    static_envr.Visibility.FarFog = 
+    static_envr.Visibility.FarFog =
         g_EnvironmentMainp->Visibility.FarFog
 #if defined(VERSION_EU)
         + (arg0 * ((f32)g_EnvironmentAltp->Visibility.FarFog - (f32)g_EnvironmentMainp->Visibility.FarFog));
@@ -519,23 +530,23 @@ void fogSwitchToSolosky2(f32 arg0)
         + (arg0 * (g_EnvironmentAltp->Visibility.FarFog - g_EnvironmentMainp->Visibility.FarFog));
 #endif
 
-    static_envr.Fog.DifferenceFromFarIntensity = 
+    static_envr.Fog.DifferenceFromFarIntensity =
         (f32)g_EnvironmentMainp->Fog.DifferenceFromFarIntensity
         + (arg0 * ((f32)g_EnvironmentAltp->Fog.DifferenceFromFarIntensity - (f32)g_EnvironmentMainp->Fog.DifferenceFromFarIntensity));
 
-    static_envr.Fog.FarIntensity = 
+    static_envr.Fog.FarIntensity =
         (f32)g_EnvironmentMainp->Fog.FarIntensity
         + (arg0 * ((f32)g_EnvironmentAltp->Fog.FarIntensity - (f32)g_EnvironmentMainp->Fog.FarIntensity));
-    
-    static_envr.Sky.Red = 
+
+    static_envr.Sky.Red =
         (f32)g_EnvironmentMainp->Sky.Red
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Red - (f32)g_EnvironmentMainp->Sky.Red));
 
-    static_envr.Sky.Green = 
+    static_envr.Sky.Green =
         (f32)g_EnvironmentMainp->Sky.Green
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Green - (f32)g_EnvironmentMainp->Sky.Green));
 
-    static_envr.Sky.Blue = 
+    static_envr.Sky.Blue =
         (f32)g_EnvironmentMainp->Sky.Blue
         + (arg0 * ((f32)g_EnvironmentAltp->Sky.Blue - (f32)g_EnvironmentMainp->Sky.Blue));
 
@@ -550,7 +561,7 @@ void fogSwitchToSolosky2(f32 arg0)
 /**
  * @param gdl:
  * @param arg1: not used?
- * 
+ *
  * Address 0x7F0BB070.
 */
 Gfx *fogSetRenderFogColor(Gfx *gdl, s32 arg1)

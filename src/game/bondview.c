@@ -1330,6 +1330,9 @@ s32 bondviewGetRandomSpawnPadIndex(void)
     player_num = get_cur_playernum();
     player_count = getPlayerCount();
     enemy_nearby = TRUE;
+#ifdef DEBUG
+    osSyncPrintf("choosing a start pad for player %d\n", player_num);
+#endif
 
     // loop pads until no enemy is within 1000 units
     for (attempt_num = 0; enemy_nearby && (attempt_num < startpadcount);)
@@ -1338,6 +1341,9 @@ s32 bondviewGetRandomSpawnPadIndex(void)
         enemy_nearby = FALSE;
         g_CurrentPlayer->field_29E0++;
         pad_index = ( g_CurrentPlayer->field_29E0) % (startpadcount);
+#ifdef DEBUG
+        osSyncPrintf("testing pad %d\n", pad_index);
+#endif
 
         for (player_index = 0; player_index < player_count; player_index++)
         {
@@ -1346,16 +1352,31 @@ s32 bondviewGetRandomSpawnPadIndex(void)
 
             // make sure the player prop is valid
             player_prop = g_playerPointers[player_index]->prop;
-            if (player_prop == 0) { continue; }
+            if (player_prop == 0)
+            {
+#ifdef DEBUG
+                osSyncPrintf("Player %d has no prop\n", player_index);
+#endif
+                continue;
+            }
 
             // find distance between enemy and this pad
             pad = g_Startpad[pad_index];
             diff_x = player_prop->pos.x - pad->pos.x;
             diff_z = player_prop->pos.z - pad->pos.z;
             dist = sqrtf((diff_x * diff_x) + (diff_z * diff_z));
+#ifdef DEBUG
+            osSyncPrintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n", player_index, pad->pos.x, pad->pos.z, player_prop->pos.x, player_prop->pos.z, dist);
+#endif
 
             // if pad is within 1000, don't pick it
-            if (dist < 1000) { enemy_nearby = TRUE; }
+            if (dist < 1000)
+            {
+#ifdef DEBUG
+                osSyncPrintf("Too close to player %d (closer than 10m)\n", player_index);
+#endif
+                enemy_nearby = TRUE;
+            }
         }
     }
 
@@ -1368,6 +1389,9 @@ s32 bondviewGetRandomSpawnPadIndex(void)
         enemy_nearby = FALSE;
         g_CurrentPlayer->field_29E0++;
         pad_index = ((s32) g_CurrentPlayer->field_29E0) % ((s32) startpadcount);
+#ifdef DEBUG
+        osSyncPrintf("testing pad %d (second try)\n", pad_index);
+#endif
 
         for (player_index = 0; player_index < player_count; player_index++)
         {
@@ -1376,7 +1400,13 @@ s32 bondviewGetRandomSpawnPadIndex(void)
 
             // make sure the player prop is valid
             player_prop = g_playerPointers[player_index]->prop;
-            if (player_prop == 0) { continue; }
+            if (player_prop == 0)
+            {
+#ifdef DEBUG
+                osSyncPrintf("Player %d has no prop\n", player_index);
+#endif
+                continue;
+            }
 
             // find distance between enemy and this pad
             pad = g_Startpad[pad_index];
@@ -1384,14 +1414,26 @@ s32 bondviewGetRandomSpawnPadIndex(void)
             diff_z = player_prop->pos.z - pad->pos.z;
             dist = sqrtf((diff_x * diff_x) + (diff_z * diff_z));
 
+#ifdef DEBUG
+            osSyncPrintf("Distance from player %d (%f, %f)->(%f, %f)= %f\n", player_index, pad->pos.x, pad->pos.z, player_prop->pos.x, player_prop->pos.z, dist);
+#endif
             // if pad is within 100, don't pick it
-            if (dist < 100.f) { enemy_nearby = TRUE; }
+            if (dist < 100.f)
+            {
+#ifdef DEBUG
+                osSyncPrintf("Too close to player %d (closer than 1m)\n", player_index);
+#endif
+                enemy_nearby = TRUE;
+            }
         }
     }
 
     // if we searched through all pads and failed to find a safe one, just pick one at random
     if (enemy_nearby)
     {
+#ifdef DEBUG
+        osSyncPrintf("**** No decent start pad found for player %d - picking a random one ****\n", player_index);
+#endif
         pad_index = (randomGetNext() % (startpadcount));
     }
 
@@ -1831,6 +1873,9 @@ void solo_char_load(void)
 
             p_modelEntry = p_bodyEntry;
             load_object_fill_header(p_bodyHeader, p_bodyEntry->filename, bodyBuffer, bodyBufSize, &texPool);
+    #ifdef DEBUG
+            assert(sizer <= bondmemsizer);
+    #endif
 
             p_headEntry = &c_item_entries[head];
             p_headEntryHeader = p_headEntry->header;
@@ -1859,6 +1904,9 @@ void solo_char_load(void)
             bufferSizeRemain = ALIGN64_V3(get_pc_buffer_remaining_value(p_modelEntry->filename) + totalsize + 0x3F);
             model = bodyBuffer + bufferSizeRemain;
             totalsize = ALIGN64_V3(bufferSizeRemain + 0xFB);
+    #ifdef DEBUG
+            assert(sizer <= bondmemsizer); // canonically total is sizer and bodybuff is bond
+    #endif
 
             modelCalculateRwDataLen(pBody);
             modelCalculateRwDataLen(pHead);
@@ -4306,6 +4354,10 @@ void bondviewSetCameraMode(s32 arg0)
         {
             if (camera_mode == 0)
             {
+#ifdef DEBUG
+                osSyncPrintf("mute\n");
+#endif
+
                 musicTrack1Play(M_INTROSWOOSH);
                 sndSetScalerApplyVolumeAllSfxSlot(0.5f);
             }
@@ -4356,7 +4408,41 @@ void bondviewSetCameraMode(s32 arg0)
 
 #ifdef NONMATCHING
 void sub_GAME_7F07B1A4(void) {
+    int iVar1;
 
+    iVar1                    = cameramode;
+    cameramode               = 0;
+    enable_move_after_cinema = 0;
+    if (iVar1 == 1)
+    {
+        Function_822B5150(2);
+    }
+    else if (iVar1 == 2)
+    {
+        Function_822CFF00();
+        Function_822B5150(3);
+    }
+    else if (iVar1 != 9)
+    {
+        if (iVar1 == 3)
+        {
+            maybe_solo_intro_camera_handler();
+            set_curplayer_fade(0.0, 1.0);
+            Function_822B5150(4);
+        }
+        else if (iVar1 != 4)
+        {
+            if (iVar1 == 5)
+            {
+                Function_822B5150(6);
+            }
+            else if ((iVar1 == 6) && (camera_mode = camera_mode + 1, camera_mode < 3))
+            {
+                Function_822B5150(5);
+            }
+        }
+    }
+    return;
 }
 #else
 GLOBAL_ASM(
@@ -4439,8 +4525,113 @@ glabel sub_GAME_7F07B1A4
 
 
 #ifdef NONMATCHING
-void sub_GAME_7F07B2A0(void) {
+void sub_GAME_7F07B2A0(void)
+{
+    ? sp84;
+    ? sp78;
+    ? sp6C;
+    ? sp60;
+    f32 sp58;
+    ? sp54;
+    s32 sp40;
+    ? *var_a1;
+    f32   temp_f0;
+    f32   var_f0;
+    f32   var_f2;
+    s32   temp_t4;
+    s32   var_a2;
+    u32   temp_a0;
+    u32   temp_a3;
+    u32   var_v0;
+    void *temp_t3;
+    void *temp_t3_2;
 
+    temp_t4 = arg0 << 5;
+    temp_t3 = g_IntroSwirl + temp_t4;
+    var_f2  = 0.0f;
+    temp_f0 = temp_t3->unk18;
+    var_a1  = &sp54;
+    var_a2  = -1;
+    temp_a3 = (arg0 << 5) + g_IntroSwirl;
+    if (temp_f0 > 0.0f)
+    {
+        var_f2 = arg1 / temp_f0;
+    }
+    do
+    {
+        temp_a0 = (var_a2 << 5) + temp_a3;
+        var_v0  = temp_a3;
+        if (var_a2 < 0)
+        {
+            if (temp_a0 < g_IntroSwirl)
+            {
+                var_v0 = g_IntroSwirl;
+            }
+            else
+            {
+                var_v0 = temp_a0;
+            }
+        }
+        else if (var_v0 < temp_a0)
+        {
+loop_8:
+            if (!(var_v0->unk24 & 1))
+            {
+                var_v0 += 0x20;
+                if (var_v0 < temp_a0)
+                {
+                    goto loop_8;
+                }
+            }
+        }
+        var_a2 += 1;
+        if (var_v0->unk4 & 2)
+        {
+            // pre-scaled offset eg 2812 = 646 RCP units
+            var_a1->unkC  = (g_CurrentPlayer->field_488.theta_transform.f[1] * var_v0->unk8) + (var_v0->unk10 * g_CurrentPlayer->unk498);
+            var_a1->unk10 = var_v0->unkC;
+            var_a1->unk14 = (var_v0->unk10 * g_CurrentPlayer->unk4A0) - (g_CurrentPlayer->unk498 * var_v0->unk8);
+        }
+        else
+        {
+            var_a1->unkC  = var_v0->unk8;
+            var_a1->unk10 = var_v0->unkC;
+            var_a1->unk14 = var_v0->unk10;
+        }
+        var_a1 += 0xC;
+    } while (var_a2 != 3);
+    sp58 = var_f2;
+    sp40 = temp_t4;
+    sub_GAME_7F05B024(arg1, &sp60, &sp6C, &sp78, &sp84, var_f2, temp_t3->unk14, arg2);
+    arg2->unk0 = arg2->unk0 + g_CurrentPlayer->unk3C4;
+    arg2->unk4 = arg2->unk4 + g_CurrentPlayer->unk3C8;
+    arg2->unk8 = arg2->unk8 + g_CurrentPlayer->unk3CC;
+    arg3->unk0 = g_CurrentPlayer->unk3C4;
+    arg3->unk4 = g_CurrentPlayer->unk3C8;
+    arg3->unk8 = g_CurrentPlayer->unk3CC;
+    temp_t3_2  = g_IntroSwirl + sp40;
+    if (!(temp_t3_2->unk4 & 4))
+    {
+        if (!(temp_t3_2->unk24 & 4))
+        {
+            var_f0 = 1.0f;
+        }
+        else
+        {
+            var_f0 = 1.0f - sp58;
+        }
+    }
+    else if (temp_t3_2->unk24 & 4)
+    {
+        var_f0 = 0.0f;
+    }
+    else
+    {
+        var_f0 = sp58;
+    }
+    arg3->unk0 = arg3->unk0 + (g_CurrentPlayer->unk4C0 * 40.0f * var_f0);
+    arg3->unk4 = arg3->unk4 + (g_CurrentPlayer->unk4C4 * 40.0f * var_f0);
+    arg3->unk8 = arg3->unk8 + (g_CurrentPlayer->unk4C8 * 40.0f * var_f0);
 }
 #else
 GLOBAL_ASM(
@@ -5287,8 +5478,8 @@ void bondviewGetTankCollisionBounds(struct rect4f *tank_collision_bounds, struct
     struct ModelRoData_BoundingBoxRecord *bbox;
 
     #ifdef DEBUG
-        assert(bondonprop2);
-    #endif
+    assert(bondonprop2); // canonically g_PlayerTankProp is bondonprop2 - presumably because it was also motorbike code
+#endif
 
     sp4C = g_PlayerTankProp->obj;
 
@@ -14732,11 +14923,18 @@ void mp_respawn_handler(void) {
     hudmsgsSetOn(-1);
     bondviewClearUpperTextDisplayFlag(-1);
 
-    if ((getPlayerCount() >= 2) && (startpadcount > 0)) {
+
+    if ((getPlayerCount() >= 2) && (startpadcount > 0))
+    {
         var_v1 = bondviewGetRandomSpawnPadIndex();
-    } else {
+    }
+    else
+    {
         var_v1 = 0;
     }
+    #ifdef DEBUG
+    assert(g_Startpad[var_v1]->stan);
+    #endif
 
     start_pos.x = g_Startpad[var_v1]->pos.x;
     start_pos.z = g_Startpad[var_v1]->pos.z;
@@ -14813,6 +15011,11 @@ void mp_respawn_handler(void) {
                 intro_record = (struct SetupIntroEmpty*)((s32)intro_record + sizeof(struct SetupIntroEmpty));
                 break;
             }
+    #ifdef DEBUG
+            ossyncprintf("unknown bondstart type %d!\n", var_v0_2);
+    #endif
+
+
         }
     }
     g_CurrentPlayer->field_78 = 0.0f;

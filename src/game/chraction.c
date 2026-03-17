@@ -326,6 +326,11 @@ void expand_09_characters(s32 stageid, GuardRecord *arg1, s32 arg2)
     #endif
 }
 
+/*
+* above is chrlv.c
+//#possible file break - rest of file is chraction.c
+*/
+
 /**
  * Address 0x7F023910.
  * dont think this is right, shouldnt it check for gun flags not chr?
@@ -2382,6 +2387,7 @@ s32 chrlvAttackAnimationRelated7F026F30(ChrRecord *self, f32 *result)
 
 
 
+// # This point forward is definatly chraction.c
 
 #ifdef NONMATCHING
 
@@ -10546,7 +10552,7 @@ bool sub_GAME_7F0333F8(ChrRecord *self)
     Model  *mymodel;
     coord3d zeropos;
     coord3d pos;
-    struct coord3d vec;
+    vec3d vec;
     f32     scale;
 
     if (chrlvCurrentPlayerCall7F0B0E24(self))

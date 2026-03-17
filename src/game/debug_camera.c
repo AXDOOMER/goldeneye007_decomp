@@ -7,6 +7,10 @@
 #include "math.h"
 #include "fr.h"
 
+#ifndef DEBUG
+    #define osSyncPrintf()
+#endif
+
 // bss
 //CODE.bss:80079E20
 s32 debugCameraStateCounter;
@@ -49,7 +53,7 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
     static u16 previousButtons = 0;
 
     speedModifier = 1.0f;
-    
+
     if (joyX < -3)
     {
         joyX += 3;
@@ -62,7 +66,7 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
     {
         joyX = 0;
     }
-    
+
     if (joyY < -3)
     {
         joyY += 3;
@@ -82,51 +86,51 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
         {
             speedModifier /= 5.0f;
         }
-        
+
         temp_v0 = joyBtns & ~previousButtons;
-        
+
         if (temp_v0 & A_BUTTON)
         {
             movementSpeed *= 2.0f;
         }
-        
+
         if (temp_v0 & B_BUTTON)
         {
             movementSpeed *= 0.5f;
         }
-        
+
         debugCameraPosition.f[0] += ((f32) joyY * debugCameraHorizontalSine * speedModifier * movementSpeed);
         debugCameraPosition.f[2] += (-(f32) joyY * debugCameraHorizontalCosine * speedModifier * movementSpeed);
-        
+
         if (joyBtns & (L_CBUTTONS|L_JPAD))
         {
             debugCameraPosition.f[0] -= (20.0f * debugCameraHorizontalCosine * speedModifier * movementSpeed);
             debugCameraPosition.f[2] -= (20.0f * debugCameraHorizontalSine * speedModifier * movementSpeed);
         }
-        
+
         if (joyBtns & (R_CBUTTONS|R_JPAD))
         {
             debugCameraPosition.f[0] += (20.0f * debugCameraHorizontalCosine * speedModifier * movementSpeed);
             debugCameraPosition.f[2] += (20.0f * debugCameraHorizontalSine * speedModifier * movementSpeed);
         }
-        
+
         debugCameraHorizontalAngle += (f32) joyX * speedModifier * 0.125f;
-        
+
         if (joyBtns & U_JPAD)
         {
             debugCameraVerticalAngle -= 2.0f * speedModifier;
         }
-        
+
         if (joyBtns & D_JPAD)
         {
             debugCameraVerticalAngle += 2.0f * speedModifier;
         }
-        
+
         if (joyBtns & U_CBUTTONS)
         {
             debugCameraPosition.f[1] += (20.0f * speedModifier * movementSpeed);
         }
-        
+
         if (joyBtns & D_CBUTTONS)
         {
             debugCameraPosition.f[1] -= (20.0f * speedModifier * movementSpeed);
@@ -135,7 +139,7 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
 
     while (debugCameraHorizontalAngle < 0.0f)
     {
-        debugCameraHorizontalAngle += 360.0f;            
+        debugCameraHorizontalAngle += 360.0f;
     }
 
     while (debugCameraHorizontalAngle >= 360.0f)
@@ -150,26 +154,26 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
 
     while (debugCameraVerticalAngle >= 360.0f)
     {
-        debugCameraVerticalAngle -= 360.0f;            
+        debugCameraVerticalAngle -= 360.0f;
     }
 
     debugCameraHorizontalCosine = cosf(debugCameraHorizontalAngle * DegToRad(1));
     debugCameraHorizontalSine = sinf(debugCameraHorizontalAngle * DegToRad(1));
     debugCameraVerticalCosine = cosf(debugCameraVerticalAngle * DegToRad(1));
     debugCameraVerticalSine = sinf(debugCameraVerticalAngle * DegToRad(1));
-    
+
     debugCameraForward.f[1] = (f32) debugCameraVerticalSine;
     debugCameraForward.f[0] = (f32) (debugCameraVerticalCosine * debugCameraHorizontalSine);
     debugCameraForward.f[2] = (f32) (-debugCameraVerticalCosine * debugCameraHorizontalCosine);
-    
+
     debugCameraUp.f[1] = (f32) debugCameraVerticalCosine;
     debugCameraUp.f[0] = (f32) (-debugCameraVerticalSine * debugCameraHorizontalSine);
     debugCameraUp.f[2] = (f32) (debugCameraVerticalSine * debugCameraHorizontalCosine);
-    
+
     previousButtons = joyBtns;
-    
+
     set_cur_player_fovy(FOV_Y_F);
-    
+
     debugCameraStateCounter++;
     if (debugCameraStateCounter == 1)
     {
@@ -178,7 +182,7 @@ void debugFreeCamera(s8 joyX, s8 joyY, u16 joyBtns)
 
         return;
     }
-    
+
     if (debugCameraStateCounter == 4)
     {
         solo_char_load();
@@ -209,7 +213,7 @@ Gfx * sub_GAME_7F091580(Gfx * arg0) {
 void setDebugCameraScale(float scale)
 {
   float scaleFactor;
-  
+
   scaleFactor = debugCameraScale / scale;
   debugCameraScale = scale;
   debugCameraPosition.x = debugCameraPosition.x * scaleFactor;
@@ -224,34 +228,12 @@ void setDebugCameraScale(float scale)
 */
 void initializeDebugCameraPosition(void)
 {
-    #ifndef DEBUG
-    coord3d* pos; //needed to be declared but not used to match
-    f32 x;
-
-    bondviewGetCurrentPlayersPosition();  //normally would return a coord3d pos but not here
-    x = M_TAU_F -  get_curplay_horizontal_rotation_in_degrees();
-    cosf(x);
-    sinf(x);
-    cosf(x);
-    sinf(x);
-    #else
     coord3d *pos = bondviewGetCurrentPlayersPosition();
-    f32 angle = M_TAU_F - get_curplay_horizontal_rotation_in_degrees(); // 2*PI - rotation
-
-    f32 dx = debugCameraPosition.x - pos->x;
-    f32 dy = debugCameraPosition.y - pos->y;
-    f32 dz = debugCameraPosition.z - pos->z;
-
-    f32 sinA = sinf(angle);
-
-    f32 relX = dx * cosf(angle) + dz * sinf(angle);
-    f32 relY = dy;
-    f32 relZ = dz * cosf(angle) - dx * sinf(angle);
-
-    printf("propBondIntroKey(INTROKEY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ",
-           relX, relY, relZ);
-    #endif
-   /*osSyncPrintf("propBondIntroKey(INTROK1EY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ", cosf(x),sinf(x));*/
+    f32      r   = M_TAU_F - get_curplay_horizontal_rotation_in_degrees();
+    f32      x   = ((debugCameraPosition.x - pos->x) * cosf(r)) + ((debugCameraPosition.x - pos->x) * sinf(r));
+    f32      y   = debugCameraPosition.y - pos->y;
+    f32      z   = (debugCameraPosition.z - pos->z) * cosf(r) - (debugCameraPosition.x - pos->x) * sinf(r);
+    osSyncPrintf("propBondIntroKey(INTROKEY_RELBONDDIR,%ff,%ff,%ff,0.75f,40.0f) ", x, y, z);
 }
 
 
@@ -260,17 +242,14 @@ void initializeDebugCameraPosition(void)
 */
 void updateDebugCameraWorldPosition(void)
 {
-    sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
-          (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
-          (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z));
-    #ifdef DEBUG
+    f32 dist = sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
+                     (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
+                     (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z));
+
     osSyncPrintf("world pos = %f,%f,%f\n", debugCameraPosition.x, debugCameraPosition.y, debugCameraPosition.z);
     osSyncPrintf("world theta = %f verta = %f\n", (debugCameraPreviousPosition.x * 6.283185) / 360.0, (debugCameraPreviousPosition.z * 6.283185) / 360.0);
-    osSyncPrintf("dist from prev = %f\n",
-                 sqrtf((debugCameraPosition.x - debugCameraPreviousPosition.x) * (debugCameraPosition.x - debugCameraPreviousPosition.x) +
-                       (debugCameraPosition.y - debugCameraPreviousPosition.y) * (debugCameraPosition.y - debugCameraPreviousPosition.y) +
-                       (debugCameraPosition.z - debugCameraPreviousPosition.z) * (debugCameraPosition.z - debugCameraPreviousPosition.z)));
-    #endif
+    osSyncPrintf("dist from prev = %f\n",dist);
+
     debugCameraPreviousPosition.x = debugCameraPosition.x;
     debugCameraPreviousPosition.y = debugCameraPosition.y;
     debugCameraPreviousPosition.z = debugCameraPosition.z;
@@ -281,9 +260,7 @@ void updateDebugCameraWorldPosition(void)
 */
 void resetDebugCameraToPlayerPosition(void)
 {
-    coord3d *pos;
-
-    pos = bondviewGetCurrentPlayersPosition();
+    coord3d *pos = bondviewGetCurrentPlayersPosition();
     debugCameraPosition.x = pos->x;
     debugCameraPosition.y = pos->y;
     debugCameraPosition.z = pos->z;
@@ -292,3 +269,4 @@ void resetDebugCameraToPlayerPosition(void)
 
 
 
+#undef osSyncPrintf

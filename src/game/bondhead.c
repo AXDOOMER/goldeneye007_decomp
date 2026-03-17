@@ -387,10 +387,11 @@ void bheadUpdate(f32 percent_speed, f32 speedsideways)
 
 
 
+ // 0x7F08E8BC.
 /**
  * Adjusts Bond's head animation based on movement speed.
- * 
- * @param speed The movement speed to adjust the animation to.
+ *
+ * @param f32 speed: The movement speed to adjust the animation to.
  */
 void bheadAdjustAnimation(f32 speed)
 {
@@ -439,6 +440,7 @@ void bheadAdjustAnimation(f32 speed)
 }
 
 
+// 0x7F08EA48
 /**
  * Starts a new death animation for Bond's head.
  * 
@@ -453,7 +455,7 @@ void bheadStartDeathAnimation(struct ModelAnimation *animnum, s32 flip, f32 fsta
     g_CurrentPlayer->headanim = -1;
 }
 
-
+// 0x7F08EAB8
 /**
  * Sets the speed of the current head animation.
  * 

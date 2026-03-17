@@ -603,7 +603,7 @@ glabel matrix_4x4_f32_to_s32
 /* 08D844 7F058D14 0072C824 */  and   $t9, $v1, $s2
 /* 08D848 7F058D18 0003C400 */  sll   $t8, $v1, 0x10
 /* 08D84C 7F058D1C 44067000 */  mfc1  $a2, $f14
-/* 08D850 7F058D20 00000000 */  nop   
+/* 08D850 7F058D20 00000000 */  nop
 /* 08D854 7F058D24 00067402 */  srl   $t6, $a2, 0x10
 /* 08D858 7F058D28 032E7825 */  or    $t7, $t9, $t6
 /* 08D85C 7F058D2C AD6FFFF0 */  sw    $t7, -0x10($t3)
@@ -627,7 +627,7 @@ glabel matrix_4x4_f32_to_s32
 /* 08D8A4 7F058D74 00727024 */  and   $t6, $v1, $s2
 /* 08D8A8 7F058D78 0003CC00 */  sll   $t9, $v1, 0x10
 /* 08D8AC 7F058D7C 44069000 */  mfc1  $a2, $f18
-/* 08D8B0 7F058D80 00000000 */  nop   
+/* 08D8B0 7F058D80 00000000 */  nop
 /* 08D8B4 7F058D84 00067C02 */  srl   $t7, $a2, 0x10
 /* 08D8B8 7F058D88 01CFC025 */  or    $t8, $t6, $t7
 /* 08D8BC 7F058D8C AD78FFF4 */  sw    $t8, -0xc($t3)
@@ -651,7 +651,7 @@ glabel matrix_4x4_f32_to_s32
 /* 08D904 7F058DD4 00727824 */  and   $t7, $v1, $s2
 /* 08D908 7F058DD8 00037400 */  sll   $t6, $v1, 0x10
 /* 08D90C 7F058DDC 44067000 */  mfc1  $a2, $f14
-/* 08D910 7F058DE0 00000000 */  nop   
+/* 08D910 7F058DE0 00000000 */  nop
 /* 08D914 7F058DE4 0006C402 */  srl   $t8, $a2, 0x10
 /* 08D918 7F058DE8 01F8C825 */  or    $t9, $t7, $t8
 /* 08D91C 7F058DEC 30CFFFFF */  andi  $t7, $a2, 0xffff
@@ -675,7 +675,7 @@ glabel matrix_4x4_f32_to_s32
 /* 08D964 7F058E34 0072C024 */  and   $t8, $v1, $s2
 /* 08D968 7F058E38 00037C00 */  sll   $t7, $v1, 0x10
 /* 08D96C 7F058E3C 44069000 */  mfc1  $a2, $f18
-/* 08D970 7F058E40 00000000 */  nop   
+/* 08D970 7F058E40 00000000 */  nop
 /* 08D974 7F058E44 0006CC02 */  srl   $t9, $a2, 0x10
 /* 08D978 7F058E48 03197025 */  or    $t6, $t8, $t9
 /* 08D97C 7F058E4C 30D8FFFF */  andi  $t8, $a2, 0xffff
@@ -989,7 +989,7 @@ void sub_GAME_7F059244(Mtx* a0, Mtx* a1) {
     // a1[2][3] = MTX_FRACPART_PACK(a0[1][2], a0[1][3]);
 
     // a1[1][0] = MTX_INTPART_PACK(a0[2][0], (u32)a0[2][1]);
-    // a1[3][0] = MTX_FRACPART_PACK(a0[2][0], a0[2][1]);    
+    // a1[3][0] = MTX_FRACPART_PACK(a0[2][0], a0[2][1]);
     // a1[1][1] = MTX_INTPART_PACK(a0[2][2], (u32)a0[2][3]);
     // a1[3][1] = MTX_FRACPART_PACK(a0[2][2], a0[2][3]);
     // a1[1][2] = MTX_INTPART_PACK(a0[3][0], (u32)a0[3][1]);
@@ -1085,7 +1085,7 @@ glabel sub_GAME_7F059244
 /* 08DE54 7F059324 144DFFCB */  bne   $v0, $t5, .L7F059254
 /* 08DE58 7F059328 AD19FFFC */   sw    $t9, -4($t0)
 /* 08DE5C 7F05932C 03E00008 */  jr    $ra
-/* 08DE60 7F059330 00000000 */   nop   
+/* 08DE60 7F059330 00000000 */   nop
 )
 #endif
 
@@ -1103,7 +1103,7 @@ for ($v0 = 0; $v0 < 2; $v0++) { // pointers?
 
 */
 
-/* 
+/*
 $v0 = 0
 $a3 = $a0
 loop:
@@ -1176,7 +1176,7 @@ return
 
 
 
-// sub_GAME_7F059334(s32* arg0, s32* arg1) {  
+// sub_GAME_7F059334(s32* arg0, s32* arg1) {
 //     s32* var1 = arg0;
 //     s32* var2 = arg1;
 //     for (i = 0; i < 2; i++) {
@@ -1255,7 +1255,7 @@ return
 #define MTX_INTPART_PACK(w1, w2) (((w1) & 0xFFFF0000) | (((w2) >> 16)/* & 0xFFFF*/))
 #define MTX_FRACPART_PACK(w1, w2) ((((w1) << 16) & 0xFFFF0000) | ((w2) & 0xFFFF))
 
-// void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {    
+// void sub_GAME_7F059334(s32 arg0[4][4], s32 arg1[4][4]) {
 //     s32 i;
 //     s32 j;
 //     u32 *m1 = (u32*)&arg0[0][0];
@@ -1268,8 +1268,8 @@ return
 //             m2++;
 //         }
 //     }
-    
-    
+
+
     // s32 var1;
     // u32 var2;
     // s32 i;
@@ -1389,7 +1389,7 @@ glabel sub_GAME_7F059334
 /* 08DF44 7F059414 144DFFCB */  bne   $v0, $t5, .L7F059344
 /* 08DF48 7F059418 24E70010 */   addiu $a3, $a3, 0x10
 /* 08DF4C 7F05941C 03E00008 */  jr    $ra
-/* 08DF50 7F059420 00000000 */   nop   
+/* 08DF50 7F059420 00000000 */   nop
 )
 #endif
 
@@ -1419,7 +1419,7 @@ void matrix_4x4_set_lookat(Mtxf *matrix, f32 eye_x, f32 eye_y, f32 eye_z, f32 fo
     right_x *= norm_right;
     right_y *= norm_right;
     right_z *= norm_right;
-    
+
     // Recompute up vector (cross product of forward and right)
     up_x = (forward_y * right_z) - (forward_z * right_y);
     up_y = (forward_z * right_x) - (forward_x * right_z);
@@ -1612,7 +1612,22 @@ void matrix_4x4_align(Mtxf *matrix, f32 angle, f32 x, f32 y, f32 z) {
     guAlignF(matrix->m, angle, x, y, z);
 }
 
-void matrix_4x4_7F059D30(u32 arg0) {
+// DEBUG prints a 4x4 matrix
+void matrix_4x4_7F059D30(Mtxf *matrix)
+{
+#ifdef DEBUG
+    int i, j;
+
+    for (i = 0; i < 4; i++)
+    {
+        osSyncPrintf("(");
+        for (j = 0; j < 4; j++)
+        {
+            osSyncPrintf(" %9f", matrix->m[i][j]);
+        }
+        osSyncPrintf(" )\n");
+    }
+#endif
     return;
 }
 

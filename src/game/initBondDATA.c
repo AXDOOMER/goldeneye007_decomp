@@ -52,7 +52,7 @@ struct hand hand_data_dummy = {
     0, // s32 field_8E0;
     0, // s32 field_8E4;
     0, // s32 field_8E8;
-    
+
     // Mtxf field_8EC;
     1.0f,0,0,0,
     0,1.0f,0,0,
@@ -187,7 +187,7 @@ struct hand hand_data_dummy = {
     0, // s32 field_B4C;
     0, // s32 field_B50;
     0, // s32 field_B54;
-    
+
     // coord3d field_B58;
     0,0,0,
 
@@ -246,12 +246,12 @@ void init_player_BONDdata_stats(void)
     sp24 = hand_data_dummy;
 
     g_CurrentPlayer->ptr_hand_weapon_buffer[GUNRIGHT] = mempAllocBytesInBank(size_item_buffer[0], MEMPOOL_STAGE);
-    
+
     if (getPlayerCount() == 1)
     {
         g_CurrentPlayer->ptr_hand_weapon_buffer[GUNLEFT] = mempAllocBytesInBank(size_item_buffer[1], MEMPOOL_STAGE);
     }
-    
+
     g_CurrentPlayer->hand_invisible[GUNRIGHT] = 0;
     g_CurrentPlayer->hand_invisible[GUNLEFT] = 0;
     g_CurrentPlayer->hand_item[GUNRIGHT] = ITEM_UNARMED;
@@ -263,7 +263,7 @@ void init_player_BONDdata_stats(void)
 
     g_CurrentPlayer->hands[0] = sp24;
     g_CurrentPlayer->hands[1] = sp24;
-    
+
     for (i=0; i<30; i++)
     {
         g_CurrentPlayer->ammoheldarr[i] = 0;
@@ -273,7 +273,7 @@ void init_player_BONDdata_stats(void)
     {
         g_playerPerm->shot_count[i] = 0;
     }
-    
+
     g_playerPerm->killed_civilians = 0;
     g_playerPerm->kill_count = 0;
     g_playerPerm->killed_gg_owner_count = 0;
@@ -320,7 +320,7 @@ void init_player_BONDdata_stats(void)
     bgunCalculateBlend(GUNLEFT);
     bgunCalculateBlend(GUNLEFT);
     g_CurrentPlayer->gunammooff = FALSE;
-    g_CurrentPlayer->gunsightmode = 2;
+    g_CurrentPlayer->gunsightmode = 2; //GUNSIGHTREASON_AIMING
     g_CurrentPlayer->sniper_zoom = sniperrifle_stats.Zoom;
     g_CurrentPlayer->camera_zoom = camera_stats.Zoom;
 }

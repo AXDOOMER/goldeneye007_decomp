@@ -14,6 +14,8 @@ struct levelentry
     f32 visibility;
     f32 unknownfloat;
 };
+// cannon definition
+#define MAXPORTALSPERROOM 20
 
 typedef struct s_room_info {
     // is room being rendered? boolean
@@ -47,7 +49,7 @@ typedef struct s_room_info {
     coord3d maxbounds;
 } s_room_info;
 
-typedef struct s_bound_info 
+typedef struct s_bound_info
 {
     #if defined(VERSION_EU)
     //eu is 0x18 total len
@@ -57,7 +59,7 @@ typedef struct s_bound_info
     s16 unk1;
     void* next;
     struct bbox2d bbox;
-    
+
     #else
     //us is 0x1C total len
     s32 roomid;
@@ -67,7 +69,7 @@ typedef struct s_bound_info
     void* next;
     #endif
 
-    
+
 } s_bound_info;
 
 typedef struct bg_portal_entry
@@ -94,13 +96,13 @@ typedef struct bg_room_data
     coord3d pos;
 } bg_room_data;
 
-typedef struct s_specialportal 
+typedef struct s_specialportal
 {
     u8 levelid;
     u8 portallist[];
 } s_specialportal;
 
-typedef struct unk_portalstruct 
+typedef struct unk_portalstruct
 {
     s32 unk0;
     s32 unk4;

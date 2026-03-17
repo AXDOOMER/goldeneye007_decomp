@@ -1,7 +1,15 @@
 #include <os_internal.h>
 #include "osint.h"
-struct __osThreadTail __osThreadTail = {0, -1};
-OSThread *__osRunQueue = (OSThread *)&__osThreadTail;
+
+/*
+ * A sentinel to mark the end of thread queues.
+ * It makes thread enqueuing more efficient.
+ */
+__OSThreadTail __osThreadTail = {
+    (OSThread *)NULL,
+    -1};
+
+OSThread *__osRunQueue      = (OSThread *)&__osThreadTail;
 OSThread *__osActiveQueue = (OSThread *)&__osThreadTail;
 OSThread *__osRunningThread = {0};
 OSThread *__osFaultedThread = {0};

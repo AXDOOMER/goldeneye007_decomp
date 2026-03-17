@@ -542,7 +542,16 @@ u32 get_cartridges_eject(void) {
     return cartridges_eject;
 }
 
-void nullsub_73(void) {
+void nullsub_73(void)
+{
+#ifdef DEBUG
+    osSyncPrintf("\t{");
+    osSyncPrintf("0");
+    osSyncPrintf(",{%ff,%ff,%ff}", D_80035904[D_80034CA0].unk04.x, D_80035904[D_80034CA0].unk04.y, D_80035904[D_80034CA0].unk04.z);
+    osSyncPrintf(",{%ff,%ff,%ff}", D_80035904[D_80034CA0].unk10.x, D_80035904[D_80034CA0].unk10.y, D_80035904[D_80034CA0].unk10.z);
+    osSyncPrintf(",0.5f,20.0f");
+    osSyncPrintf("},\n");
+#endif
     return;
 }
 
@@ -2179,6 +2188,11 @@ void generate_player_thrown_object(s32 hand)
         case ITEM_PLASTIQUE:
             new_prop_type = PROP_CHRPLASTIQUE;
             break;
+#ifdef DEBUG
+        default:
+            assertmsg2(current_weapon = PROP_CHRREMOTEMINE, "throwmineremote - Not a mine!");
+#endif
+
         }
 
         wor = create_new_item_instance_of_model(new_prop_type, current_weapon);
@@ -2271,7 +2285,48 @@ void generate_player_thrown_object(s32 hand)
 
 #ifdef NONMATCHING
 void sub_GAME_7F05F73C(void) {
+    struct WeaponObjRecord *wor;
+    f32                     base_velocity;
+    base_velocity = 33.333332f;
+    wor           = NULL;
 
+    player_prop = get_curplayer_positiondata();
+    bondprevpos = get_BONDdata_field408();
+
+    sub_GAME_7F057C14(&throw_speed_vec, &spFC);
+    bullet_path_from_screen_center(&sp94, &base_speed_vec, hand);
+    mtx4RotateVecInPlace(currentPlayerGetMatrix10D4(), (f32 *)&base_speed_vec);
+
+    throw_speed_vec.f[0] = (base_speed_vec.f[0] * base_velocity);
+    throw_speed_vec.f[1] = (base_speed_vec.f[1] * base_velocity);
+    throw_speed_vec.f[2] = (base_speed_vec.f[2] * base_velocity);
+
+    if (g_ClockTimer > 0)
+    {
+        throw_speed_vec.f[0] = ((player_prop->pos.f[0] - bondprevpos->f[0]) / g_GlobalTimerDelta) + throw_speed_vec.f[0];
+        throw_speed_vec.f[1] = ((player_prop->pos.f[1] - bondprevpos->f[1]) / g_GlobalTimerDelta) + throw_speed_vec.f[1];
+        throw_speed_vec.f[2] = ((player_prop->pos.f[2] - bondprevpos->f[2]) / g_GlobalTimerDelta) + throw_speed_vec.f[2];
+    }
+
+    matrix_4x4_copy(g_CurrentPlayer + sp28 + 0xAD8, &sp50);
+    sp80 = 0.0f;
+    sp84 = 0.0f;
+    sp88 = 0.0f;
+    wor  = create_new_item_instance_of_model(PROP_CHRREMOTEMINE, ITEM_REMOTEMINE);
+    if (wor != NULL)
+    {
+        wor->timer = 0x4B0;
+        wor->base.runtime_bitflags &= 0xFFF9FFFF;
+        spE4 = wor;
+        spE4->base.runtime_bitflags |= get_cur_playernum() << 0x11;
+        sub_GAME_7F05EC1C(spE4, spE0 + 0x2E8, &sp50, &sp94, &spA0);
+        if (spE4->base.runtime_bitflags & 0x80)
+        {
+            spE4->base.unk6C->unk8c       = 0.3f;
+            spE4->base.unk6C->unk94       = 0.13333333f;
+            spE4->base.unk6C->refreshrate = 0x3C;
+        }
+    }
 }
 #else
 
@@ -2562,7 +2617,40 @@ glabel sub_GAME_7F05F73C
 
 #ifdef NONMATCHING
 void sub_GAME_7F05F928(void) {
+    void       *sp7C;
+    Mtxf        sp34;
+    PropRecord *sp30;
+    void       *temp_s0;
+    void       *temp_s1;
+    void       *temp_s3;
+    void       *temp_v0;
 
+    temp_v0 = g_CurrentPlayer + (arg0 * 0x3A8);
+    temp_s0 = temp_v0->unkA90;
+    if (temp_s0 != NULL)
+    {
+        temp_s3 = temp_s0->unk10;
+        if (temp_s3 != NULL)
+        {
+            sp7C    = temp_v0 + 0x870;
+            sp30    = get_curplayer_positiondata();
+            temp_s1 = temp_s0->unk14;
+            matrix_4x4_copy(sp7C + 0x268, &sp34);
+            sp34.m[3][0] = 0.0f;
+            sp34.m[3][1] = 0.0f;
+            sp34.m[3][2] = 0.0f;
+            matrix_scalar_multiply(temp_s0->unk14->unk14, &sp34);
+            objChangeShading(temp_s0, sp7C + 0x2E8, &sp34, sp30->stan);
+            chrobjCollisionRelated(temp_s0);
+            temp_s1->unkC = dynAllocate(temp_s1->unk8->unkE << 6);
+            matrix_4x4_copy(temp_s0 + 0x18, &sp34);
+            matrix_4x4_set_position(temp_s0 + 0x58, &sp34);
+            matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &sp34, temp_s1->unkC);
+            modelUpdateRelationsQuick(temp_s1, temp_s1->unk8->unk0);
+            temp_s3->unk1  = temp_s3->unk1 | 2;
+            temp_s3->unk18 = -temp_s1->unkC->unk38;
+        }
+    }
 }
 #else
 
@@ -3419,7 +3507,690 @@ glabel gunFireTankShell
 
 #ifdef NONMATCHING
 void handles_firing_or_throwing_weapon_in_hand(void) {
+    Mtxf *sp2A4;
+    Mtxf  sp264;
+    f32   sp224;
+    Mtxf  sp1E4;
+    Mtxf  sp1A4;
+    void *sp1A0;
+    f32   sp19C;
+    f32   sp198;
+    f32   sp194;
+    Mtxf  sp154;
+    Mtxf  sp114;
+    s32  *sp10C;
+    f32  *sp108;
+    s32   sp100;
+    s32   spFC;
+    void *spF8;
+    f32   spE8;
+    f32   spE4;
+    f32   spE0;
+    f32   spD4;
+    f32   spC8;
+    ? spB8;
+    ? spAC;
+    ? spA0;
+    f32  *sp9C;
+    f32  *sp94;
+    f32   sp8C;
+    f32   sp88;
+    f32   sp84;
+    f32   sp80;
+    f32   sp7C;
+    f32  *sp70;
+    s32   sp6C;
+    void *sp68;
+    f32  *sp64;
+    s32   sp60;
+    s32   sp5C;
+    f32   sp50;
+    f32   sp4C;
+    f32   sp48;
+    Mtxf *sp44;
+    Mtxf *sp40;
+    void *sp3C;
+    void *sp38; // compiler-managed
+    Mtxf *temp_a0;
+    Mtxf *temp_a0_2;
+    Mtxf *temp_a1;
+    Mtxf *temp_t0;
+    Mtxf *temp_t1;
+    Mtxf *temp_v0_8;
+    Mtxf *var_a0;
+    Mtxf *var_a2;
+    f32  *temp_a0_4;
+    f32  *temp_a0_5;
+    f32   temp_f10;
+    f32   temp_f10_2;
+    f32   temp_f16;
+    f32   temp_f16_2;
+    f32   var_f10;
+    f32   var_f10_2;
+    f32   var_f12;
+    f32   var_f16;
+    f32   var_f4;
+    f32   var_f6;
+    f32   var_f8;
+    f32   var_f8_2;
+    s32  *temp_v0_17;
+    s32  *temp_v0_18;
+    s32   temp_a1_2;
+    s32   temp_a1_3;
+    s32   temp_v0;
+    s32   temp_v0_10;
+    s32   temp_v0_11;
+    s32   temp_v0_12;
+    s32   temp_v0_13;
+    s32   temp_v0_2;
+    s32   temp_v0_3;
+    s32   temp_v0_4;
+    s32   temp_v0_5;
+    s32   temp_v0_6;
+    s32   var_v1;
+    s32   var_v1_2;
+    s32   var_v1_3;
+    void *temp_a0_3;
+    void *temp_a0_6;
+    void *temp_a0_7;
+    void *temp_s0;
+    void *temp_t2;
+    void *temp_t3;
+    void *temp_v0_14;
+    void *temp_v0_15;
+    void *temp_v0_16;
+    void *temp_v0_7;
+    void *temp_v0_9;
+    void *temp_v1;
+    void *temp_v1_2;
+    void *temp_v1_3;
+    void *temp_v1_4;
+    void *temp_v1_5;
+    void *temp_v1_6;
+    void *var_v0;
+    void *var_v0_2;
 
+    sp194.unk0 = D_80035C40.unk0;
+    sp194.unk4 = D_80035C40.unk4;
+    sp194.unk8 = D_80035C40.unk8;
+    sp10C      = NULL;
+    sp108      = NULL;
+    temp_s0    = g_CurrentPlayer + (arg0 * 0x3A8) + 0x870;
+    temp_v0    = get_item_in_hand_or_watch_menu();
+    spFC       = temp_v0;
+    spF8       = get_ptr_item_statistics(temp_v0);
+    if (arg0 == 0)
+    {
+        if (bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(1), 0x800) != 0)
+        {
+            temp_s0->unk1C4 = temp_s0->unk1C4 + ((2.0f * g_GlobalTimerDelta) / 240.0f);
+            if (temp_s0->unk1C4 > 2.0f)
+            {
+                temp_s0->unk1C4 = 2.0f;
+            }
+        }
+        else
+        {
+            temp_s0->unk1C4 = temp_s0->unk1C4 - ((2.0f * g_GlobalTimerDelta) / 240.0f);
+            if (temp_s0->unk1C4 < 0.0f)
+            {
+                temp_s0->unk1C4 = 0.0f;
+            }
+        }
+    }
+    else if (bondwalkItemCheckBitflags(get_item_in_hand_or_watch_menu(0), 0x800) != 0)
+    {
+        temp_s0->unk1C4 = temp_s0->unk1C4 - ((2.0f * g_GlobalTimerDelta) / 240.0f);
+        if (temp_s0->unk1C4 < -2.0f)
+        {
+            temp_s0->unk1C4 = -2.0f;
+        }
+    }
+    else
+    {
+        temp_s0->unk1C4 = temp_s0->unk1C4 + ((2.0f * g_GlobalTimerDelta) / 240.0f);
+        if (temp_s0->unk1C4 > 0.0f)
+        {
+            temp_s0->unk1C4 = 0.0f;
+        }
+    }
+    spE0.unk0 = D_80035C4C.unk0;
+    spE0.unk4 = D_80035C4C.unk4;
+    spE0.unk8 = D_80035C4C.unk8;
+    spD4.unk0 = D_80035C58.unk0;
+    spD4.unk4 = D_80035C58.unk4;
+    spD4.unk8 = D_80035C58.unk8;
+    spC8.unk0 = D_80035C64.unk0;
+    spC8.unk4 = D_80035C64.unk4;
+    spC8.unk8 = D_80035C64.unk8;
+    temp_v0_2 = temp_s0->unk198;
+    temp_t0   = temp_s0 + (((temp_v0_2 + 3) % 4) * 0xC);
+    sp44      = temp_t0;
+    temp_t1   = temp_s0 + (temp_v0_2 * 0xC);
+    sp40      = temp_t1;
+    temp_t2   = temp_s0 + (((temp_v0_2 + 1) % 4) * 0xC);
+    sp3C      = temp_t2;
+    temp_t3   = temp_s0 + (((temp_v0_2 + 2) % 4) * 0xC);
+    sp38      = temp_t3;
+    sub_GAME_7F05AEFC(temp_t0 + 0x108, temp_t1 + 0x108, temp_t2 + 0x108, temp_t3 + 0x108, temp_s0->unk19C, &spE0);
+    sub_GAME_7F05AEFC(sp44 + 0x138, sp40 + 0x138, sp3C + 0x138, sp38 + 0x138, temp_s0->unk19C, &spD4);
+    sub_GAME_7F05AEFC(sp44 + 0x168, sp40 + 0x168, sp3C + 0x168, sp38 + 0x168, temp_s0->unk19C, &spC8);
+    temp_f16 = spE0 * g_CurrentPlayer->unkFC0;
+    spE0     = temp_f16;
+    temp_f10 = spE4 * g_CurrentPlayer->unkFC0;
+    spE4     = temp_f10;
+    spE8 *= g_CurrentPlayer->unkFC0;
+    spE0   = temp_f16 + temp_s0->unk1AC;
+    spE4   = temp_f10 + temp_s0->unk1B0;
+    var_v1 = 0;
+    spE0 += sub_GAME_7F05DCB8(arg0);
+    if (g_ClockTimer > 0)
+    {
+        do
+        {
+            var_v1 += 1;
+            temp_s0->unkE4  = spE0 + (0.95f * temp_s0->unkE4);
+            temp_s0->unkE8  = spE4 + (0.95f * temp_s0->unkE8);
+            temp_s0->unkEC  = spE8 + (0.95f * temp_s0->unkEC);
+            temp_s0->unkF0  = spD4 + (0.95f * temp_s0->unkF0);
+            temp_s0->unkF4  = spD8 + (0.95f * temp_s0->unkF4);
+            temp_s0->unkF8  = spDC + (0.95f * temp_s0->unkF8);
+            temp_s0->unkFC  = spC8 + (0.95f * temp_s0->unkFC);
+            temp_s0->unk100 = spCC + (0.95f * temp_s0->unk100);
+            temp_s0->unk104 = spD0 + (0.95f * temp_s0->unk104);
+        } while (var_v1 < g_ClockTimer);
+    }
+    temp_s0->unkC0 = temp_s0->unkE4 * 0.050000012f;
+    temp_s0->unkC4 = temp_s0->unkE8 * 0.050000012f;
+    temp_s0->unkC8 = temp_s0->unkEC * 0.050000012f;
+    temp_s0->unkCC = temp_s0->unkF0 * 0.050000012f;
+    temp_s0->unkD0 = temp_s0->unkF4 * 0.050000012f;
+    temp_s0->unkD4 = temp_s0->unkF8 * 0.050000012f;
+    temp_s0->unkD8 = temp_s0->unkFC * 0.050000012f;
+    temp_s0->unkDC = temp_s0->unk100 * 0.050000012f;
+    temp_s0->unkE0 = temp_s0->unk104 * 0.050000012f;
+    if (arg0 == 0)
+    {
+        sp194 = temp_s0->unk1B8 + (sub_GAME_7F05DCE8(arg0) + temp_s0->unkC0);
+    }
+    else
+    {
+        sp194 = (sub_GAME_7F05DCE8(arg0) + temp_s0->unkC0) - temp_s0->unk1B8;
+    }
+    sp198 = temp_s0->unk1BC + (spF8->unk8 + temp_s0->unkC4);
+    sp19C = temp_s0->unk1C0 + (spF8->unkC + temp_s0->unkC8);
+    if ((spFC == 0x19) || (spFC == 0x1E) || (spFC == 0x17))
+    {
+        sp198 += g_CurrentPlayer->unkA0 / -100.0f;
+        sp19C += (3.0f * g_CurrentPlayer->unkA0) / -100.0f;
+        if ((spFC == 0x19) && ((cur_player_get_screen_setting(spFC) == 1) || (cur_player_get_screen_setting() == 2) || (get_screen_ratio() == 1)))
+        {
+            sp198 -= 3.0f;
+        }
+    }
+    else
+    {
+        if (spFC == 0x1F)
+        {
+            sp198 += (2.5f * g_CurrentPlayer->unkA0) / -100.0f;
+            var_f10 = sp19C + ((7.5f * g_CurrentPlayer->unkA0) / -100.0f);
+        }
+        else
+        {
+            sp198 += (5.0f * g_CurrentPlayer->unkA0) / -100.0f;
+            var_f10 = sp19C + ((15.0f * g_CurrentPlayer->unkA0) / -100.0f);
+        }
+        sp19C = var_f10;
+    }
+    if ((temp_s0->unkC != 0) && (bondwalkItemCheckBitflags(spFC, 0x20) != 0))
+    {
+        if (bondwalkItemCheckBitflags(spFC, 0x40) != 0)
+        {
+            temp_v0_3 = randomGetNext();
+            var_f8    = temp_v0_3;
+            if (temp_v0_3 < 0)
+            {
+                var_f8 += 4294967296.0f;
+            }
+            sp194 += 0.3f - (var_f8 * 2.3283064e-10f * 0.6f);
+        }
+        temp_v0_4 = randomGetNext();
+        var_f16   = temp_v0_4;
+        if (temp_v0_4 < 0)
+        {
+            var_f16 += 4294967296.0f;
+        }
+        sp198 += 0.3f - (var_f16 * 2.3283064e-10f * 0.6f);
+        temp_v0_5 = randomGetNext();
+        var_f4    = temp_v0_5;
+        if (temp_v0_5 < 0)
+        {
+            var_f4 += 4294967296.0f;
+        }
+        sp19C += 0.3f - (var_f4 * 2.3283064e-10f * 0.6f);
+    }
+    sp48 = getPlayer_c_screenwidth();
+    sp4C = getPlayer_c_screenwidth();
+    sp194 += (((g_CurrentPlayer->unkFFC - getPlayer_c_screenleft()) - (sp4C * 0.5f)) * spF8->unk18) / (sp48 * 0.5f);
+    sp50 = getPlayer_c_screentop();
+    if ((getPlayer_c_screenheight() * 0.5f) < (g_CurrentPlayer->unk1000 - sp50))
+    {
+        sp48 = getPlayer_c_screenheight();
+        sp4C = getPlayer_c_screenheight();
+        sp198 -= (((g_CurrentPlayer->unk1000 - getPlayer_c_screentop()) - (sp4C * 0.5f)) * spF8->unk14) / (sp48 * 0.5f);
+    }
+    else
+    {
+        sp48 = getPlayer_c_screenheight();
+        sp4C = getPlayer_c_screenheight();
+        sp198 -= (((g_CurrentPlayer->unk1000 - getPlayer_c_screentop()) - (sp4C * 0.5f)) * spF8->unk10) / (sp48 * 0.5f);
+    }
+    sub_GAME_7F05C614();
+    matrix_4x4_set_identity(&sp154);
+    if ((spFC == 0x1E) || (spFC == 0x17))
+    {
+        spB8.unk0 = D_80035C70.unk0;
+        spB8.unk4 = D_80035C70.unk4;
+        spB8.unk8 = D_80035C70.unk8;
+        matrix_4x4_set_rotation_around_xyz(&spB8, &sp1A4);
+        matrix_4x4_multiply_homogeneous_in_place(&sp1A4, &sp154);
+    }
+    else if (spFC == 0x1F)
+    {
+        spAC.unk0 = D_80035C7C.unk0;
+        spAC.unk4 = D_80035C7C.unk4;
+        spAC.unk8 = D_80035C7C.unk8;
+        matrix_4x4_set_rotation_around_xyz(&spAC, &sp1A4);
+        matrix_4x4_multiply_homogeneous_in_place(&sp1A4, &sp154);
+    }
+    else if ((spFC == 1) && (g_CurrentPlayer->unk2A38 == 0x11))
+    {
+        spA0.unk0 = D_80035C88.unk0;
+        spA0.unk4 = D_80035C88.unk4;
+        spA0.unk8 = D_80035C88.unk8;
+        matrix_4x4_set_rotation_around_xyz(&spA0, &sp1A4);
+        matrix_4x4_multiply_homogeneous_in_place(&sp1A4, &sp154);
+        sp194 += -2.5f;
+        sp198 += 27.8f;
+        sp19C += 2.0f;
+    }
+    if (temp_s0->unkBC != 0)
+    {
+        sp194 += temp_s0->unkAC;
+        sp198 += temp_s0->unkB0;
+        sp19C += temp_s0->unkB4;
+        matrix_4x4_multiply_homogeneous_in_place(temp_s0 + 0x7C, &sp154);
+        sp154.m[3][0] = 0.0f;
+        sp154.m[3][1] = 0.0f;
+        sp154.m[3][2] = 0.0f;
+    }
+    else
+    {
+        temp_s0->unk78 = 0.0f;
+        temp_s0->unk6C = 0.0f;
+        temp_s0->unk70 = 0.0f;
+        temp_s0->unk74 = 0.0f;
+    }
+    matrix_4x4_7F059908(&sp1A4, 0.0f, 0.0f, 0.0f, temp_s0->unkCC, temp_s0->unkD0, temp_s0->unkD4, temp_s0->unkD8, temp_s0->unkDC, temp_s0->unkE0);
+    matrix_4x4_multiply_homogeneous_in_place(&sp1A4, &sp154);
+    matrix_4x4_align(&sp1A4, 0.0f, sp194 - temp_s0->unk1C8, sp198 - temp_s0->unk1CC, sp19C - temp_s0->unk1D0);
+    matrix_4x4_multiply_homogeneous_in_place(&sp1A4, &sp154);
+    matrix_4x4_copy(&sp154, &sp264);
+    matrix_4x4_set_position(&sp194, &sp264);
+    temp_a1 = temp_s0 + 0x228;
+    sp44    = temp_a1;
+    matrix_4x4_copy(&sp264, temp_a1);
+    temp_a0 = temp_s0 + 0x268;
+    sp40    = temp_a0;
+    matrix_4x4_copy(temp_a0, temp_s0 + 0x2A8);
+    matrix_4x4_multiply_homogeneous(currentPlayerGetMatrix10D4(), sp44, sp40);
+    temp_s0->unkF = 1;
+    if ((get_ptr_weapon_model_header_line(spFC) == 0) || (bondwalkItemCheckBitflags(spFC, 0x800) == 0) || (bondwalkItemCheckBitflags(spFC, 0x2000) != 0) || (temp_v0_6 = temp_s0->unk24, (temp_v0_6 == 6)) || (temp_v0_6 == 7) || (Gun_hand_without_item(arg0) == 0) || (get_itemtype_in_hand(arg0) == 0))
+    {
+        temp_s0->unkF = 0;
+    }
+    if ((temp_s0->unk2C <= 0) && (bondwalkItemCheckBitflags(spFC, 2) != 0))
+    {
+        temp_s0->unkF = 0;
+    }
+    if (temp_s0->unkF != 0)
+    {
+        temp_v0_7 = g_CurrentPlayer + (arg0 << 5);
+        sp1A0     = temp_v0_7 + 0x810;
+        sp100     = 0;
+        temp_v0_8 = dynAllocate(temp_v0_7->unk81E << 6);
+        sp2A4     = temp_v0_8;
+        var_v1_2  = sp100;
+        var_a0    = temp_v0_8;
+        if (sp1A0->unkE > 0)
+        {
+            do
+            {
+                sp100 = var_v1_2;
+                sp44  = var_a0;
+                matrix_4x4_set_identity(var_a0);
+                var_v1_2 += 1;
+                var_a0 += 0x40;
+            } while (var_v1_2 < sp1A0->unkE);
+        }
+        modelCalculateRwDataLen(sp1A0);
+    #ifdef DEBUG
+        if (sp1a0->unk14 >= 32) ossyncprintf("Increase GUNSAVESIZE to %d!!! ", sp1a0->unk14);
+    #endif
+        temp_a0_2 = temp_s0 + 0x2F8;
+        sp44      = temp_a0_2;
+        modelInit(temp_a0_2, sp1A0, temp_s0 + 0x318);
+        sub_GAME_7F05E978(temp_a0_2, 1);
+        sub_GAME_7F05EA94(temp_a0_2, temp_s0->unkE);
+        temp_v0_9 = sp1A0->unk8;
+        temp_a0_3 = temp_v0_9->unk4;
+        if (temp_a0_3 != NULL)
+        {
+            sp10C = temp_s0 + (temp_a0_3->unk4->unk4 * 4) + 0x318;
+        }
+        temp_v1 = temp_v0_9->unkC;
+        if (temp_v1 != NULL)
+        {
+            sp108 = temp_v1->unk4;
+        }
+        temp_s0->unk304 = sp2A4;
+        if ((bondwalkItemCheckBitflags(spFC, 0x400) != 0) && (arg0 == 1))
+        {
+            matrix_column_1_scalar_multiply(0xBF800000, &sp264);
+        }
+        matrix_scalar_multiply(0.10000001f, &sp264);
+        matrix_4x4_copy(&sp264, sp2A4);
+        if (&skeleton_gun_revolver == sp1A0->unk4)
+        {
+            var_v0    = sp1A0->unk8;
+            temp_v1_2 = var_v0->unk10;
+            if (temp_v1_2 != NULL)
+            {
+                var_f12   = 0.0f;
+                temp_a0_4 = temp_v1_2->unk4;
+                if (spFC == 0x12)
+                {
+                    if (temp_s0->unk24 == 1)
+                    {
+                        var_f12 = (((temp_s0->unk20 - (temp_s0->unk2C * 6)) + 0x1E) * 6.2831855f) / 36.0f;
+                    }
+                    else
+                    {
+                        var_f12 = ((6 - temp_s0->unk2C) * 6.2831855f) / 6.0f;
+                    }
+                }
+                else if (temp_s0->unk24 == 1)
+                {
+                    temp_v0_10 = temp_s0->unk20;
+                    if (temp_v0_10 < 6)
+                    {
+                        var_f12 = (temp_v0_10 * 6.2831855f) / 36.0f;
+                    }
+                }
+                sp9C = temp_a0_4;
+                matrix_4x4_set_rotation_around_z(var_f12, temp_a0_4, &sp1A4);
+                matrix_4x4_set_position(sp9C, &sp1A4);
+                matrix_4x4_multiply(&sp264, &sp1A4, sp2A4 + 0xC0);
+                var_v0 = sp1A0->unk8;
+            }
+            temp_v1_3 = var_v0->unk14;
+            if (temp_v1_3 != NULL)
+            {
+                temp_a0_5 = temp_v1_3->unk4;
+                if (temp_s0->unk24 == 1)
+                {
+                    temp_v0_11 = temp_s0->unk20;
+                    if (temp_v0_11 < 3)
+                    {
+                        var_f6 = 2.0f * (-temp_v0_11 * 0.5235988f);
+                    }
+                    else
+                    {
+                        var_f6 = 2.0f * (-(6 - temp_v0_11) * 0.5235988f);
+                    }
+                    sp94 = temp_a0_5;
+                    matrix_4x4_set_rotation_around_x(var_f6 / 6.0f, temp_a0_5, &sp1A4);
+                    matrix_4x4_set_position(sp94, &sp1A4);
+                }
+                else
+                {
+                    matrix_4x4_set_identity_and_position(temp_a0_5, &sp1A4);
+                }
+                matrix_4x4_multiply(&sp264, &sp1A4, sp2A4 + 0x100);
+            }
+        }
+        if (sp10C != NULL)
+        {
+            *sp10C = 0;
+        }
+        if (sp108 != NULL)
+        {
+            temp_v0_12 = randomGetNext();
+            var_f8_2   = temp_v0_12;
+            if (temp_v0_12 < 0)
+            {
+                var_f8_2 += 4294967296.0f;
+            }
+            sp80 = (var_f8_2 * 2.3283064e-10f * 0.25f) + 1.0f;
+            sp7C = spF8->unk0;
+            if (bondwalkItemCheckBitflags(spFC, 1) != 0)
+            {
+                temp_v0_13 = randomGetNext(sp108);
+                var_f10_2  = temp_v0_13;
+                if (temp_v0_13 < 0)
+                {
+                    var_f10_2 += 4294967296.0f;
+                }
+                matrix_4x4_set_rotation_around_z(var_f10_2 * 2.3283064e-10f * 6.2831855f, &sp224);
+                matrix_4x4_set_position(sp108, &sp224);
+            }
+            else
+            {
+                matrix_4x4_set_identity_and_position(sp108, &sp224);
+            }
+            matrix_scalar_multiply(sp80, &sp224);
+            matrix_column_3_scalar_multiply(sp7C, &sp224);
+            matrix_4x4_multiply_in_place(&sp264, &sp224);
+            matrix_4x4_copy(&sp224, sp2A4 + 0x40);
+            temp_s0->unk2E8 = sp254;
+            temp_s0->unk2EC = sp258;
+            temp_s0->unk2F0 = sp25C;
+            mtx4TransformVecInPlace(currentPlayerGetMatrix10D4(), temp_s0 + 0x2E8);
+            temp_s0->unk2F4 = -sp25C;
+            if (temp_s0->unkD != 0)
+            {
+                if (sp10C != NULL)
+                {
+                    *sp10C = 1;
+                }
+                temp_v1_4 = sp1A0->unk8->unk8;
+                if (temp_v1_4 != NULL)
+                {
+                    temp_v0_14 = temp_v1_4->unk4;
+                    sp84       = sp254 + ((temp_v0_14->unk0 * sp224) + (temp_v0_14->unk4 * sp234) + (temp_v0_14->unk8 * sp244));
+                    temp_f16_2 = sp258 + ((temp_v0_14->unk0 * sp228) + (temp_v0_14->unk4 * sp238) + (temp_v0_14->unk8 * sp248));
+                    sp88       = temp_f16_2;
+                    temp_f10_2 = sp25C + ((temp_v0_14->unk0 * sp22C) + (temp_v0_14->unk4 * sp23C) + (temp_v0_14->unk8 * sp24C));
+                    sp8C       = temp_f10_2;
+                    matrix_4x4_align(&sp1E4, randomGetNext() * 2.3283064e-10f * 6.2831855f, -sp84, -temp_f16_2, -temp_f10_2);
+                    matrix_scalar_multiply(0.10000001f * sp80, &sp1E4);
+                    matrix_4x4_7F059B58(&sp114, 0, sp194 - temp_s0->unk1C8, sp198 - temp_s0->unk1CC, sp19C - temp_s0->unk1D0);
+                    matrix_4x4_multiply_in_place(&sp114, sp1E4.m[0]);
+                    matrix_row_3_scalar_multiply(sp7C, &sp1E4);
+                    matrix_4x4_multiply_in_place(&sp154, sp1E4.m[0]);
+                    matrix_4x4_set_position(&sp84, &sp1E4);
+                    matrix_4x4_copy(&sp1E4, sp2A4 + 0x80);
+                }
+                if (&skeleton_gun_kf7 == sp1A0->unk4)
+                {
+                    temp_v1_5 = sp1A0->unk8->unk10;
+                    if (temp_v1_5 != NULL)
+                    {
+                        temp_v0_15 = temp_v1_5->unk4;
+                        sp84       = sp254 + ((temp_v0_15->unk0 * sp224) + (temp_v0_15->unk4 * sp234) + (temp_v0_15->unk8 * sp244));
+                        sp88       = sp258 + ((temp_v0_15->unk0 * sp228) + (temp_v0_15->unk4 * sp238) + (temp_v0_15->unk8 * sp248));
+                        sp40       = sp2A4 + 0xC0;
+                        sp8C       = sp25C + ((temp_v0_15->unk0 * sp22C) + (temp_v0_15->unk4 * sp23C) + (temp_v0_15->unk8 * sp24C));
+                        sp38       = 0.10000001f * sp80;
+                        matrix_4x4_align(&sp1E4, randomGetNext() * 2.3283064e-10f * 6.2831855f, -sp84, -sp88, -sp8C);
+                        matrix_scalar_multiply(sp38, &sp1E4);
+                        matrix_4x4_7F059B58(&sp114, 0, sp194 - temp_s0->unk1C8, sp198 - temp_s0->unk1CC, sp19C - temp_s0->unk1D0);
+                        matrix_4x4_multiply_in_place(&sp114, sp1E4.m[0]);
+                        matrix_row_3_scalar_multiply(sp7C, &sp1E4);
+                        matrix_4x4_multiply_in_place(&sp154, sp1E4.m[0]);
+                        matrix_4x4_set_position(&sp84, &sp1E4);
+                        matrix_4x4_copy(&sp1E4, sp40);
+                    }
+                }
+            }
+            var_v0_2 = sp1A0->unk8;
+        }
+        else
+        {
+            temp_s0->unk2E8 = temp_s0->unk298;
+            temp_s0->unk2F4 = -temp_s0->unk260;
+            temp_s0->unk2EC = temp_s0->unk29C;
+            temp_s0->unk2F0 = temp_s0->unk2A0;
+            var_v0_2        = sp1A0->unk8;
+        }
+        temp_a0_6 = var_v0_2->unk18;
+        if (temp_a0_6 != NULL)
+        {
+            sp70 = temp_a0_6->unk4;
+            sp6C = modelFindNodeMtxIndex(temp_a0_6, 0);
+            sub_GAME_7F05E6B4(arg0, temp_s0->unk10);
+            if ((sp1A0->unkC >= 0x1D) && (temp_v1_6 = sp1A0->unk8->unk70, (temp_v1_6 != NULL)))
+            {
+                temp_v0_16 = temp_v1_6->unk4;
+                sp68       = temp_v0_16;
+                guRotateF(&sp1A4, (((temp_s0->unk214 + 6.2831855f) - get_value_if_watch_is_on_hand_or_not(arg0)) * 360.0f) / 6.2831855f, temp_v0_16->unk0 - temp_v0_16->unkC, temp_v0_16->unk4 - temp_v0_16->unk10, temp_v0_16->unk8 - temp_v0_16->unk14);
+                matrix_4x4_set_position(sp70, &sp1A4);
+            }
+            else
+            {
+                matrix_4x4_set_position_and_rotation_around_y(sp70, temp_s0->unk214, &sp1A4);
+            }
+            matrix_4x4_multiply_homogeneous(&sp264, &sp1A4, &sp2A4[sp6C]);
+        }
+        if (sp1A0->unkC >= 0x1E)
+        {
+            seems_to_load_cuff_microcode(sp44, sp1A0, 0x1D);
+        }
+        temp_a0_7 = sp1A0->unk8->unk1C;
+        if (temp_a0_7 != NULL)
+        {
+            sp64 = temp_a0_7->unk4;
+            sp60 = modelFindNodeMtxIndex(temp_a0_7, 0);
+            sub_GAME_7F05E83C(arg0);
+            matrix_4x4_set_identity_and_position(sp64, &sp1A4);
+            sp1A4.m[3][2] -= temp_s0->unk218;
+            matrix_4x4_multiply(&sp264, &sp1A4, &sp2A4[sp60]);
+        }
+        var_v1_3 = 0;
+        var_a2   = NULL;
+        if (sp1A0->unkC >= 0x13)
+        {
+            do
+            {
+                temp_a1_2 = (sp1A0->unk8 + var_a2)->unk48;
+                if (temp_a1_2 != 0)
+                {
+                    sp5C       = var_v1_3;
+                    sp40       = var_a2;
+                    temp_v0_17 = modelGetNodeRwData(sp44, temp_a1_2, var_a2, 5);
+                    if (temp_v0_17 != NULL)
+                    {
+                        *temp_v0_17 = (temp_s0->unk34 < (5 - var_v1_3)) ^ 1;
+                    }
+                }
+                temp_a1_3 = (sp1A0->unk8 + var_a2)->unk5C;
+                if (temp_a1_3 != 0)
+                {
+                    sp5C       = var_v1_3;
+                    sp40       = var_a2;
+                    temp_v0_18 = modelGetNodeRwData(sp44, temp_a1_3, var_a2, 5);
+                    if (temp_v0_18 != NULL)
+                    {
+                        *temp_v0_18 = (temp_s0->unk34 < (5 - var_v1_3)) ^ 1;
+                    }
+                }
+                var_v1_3 += 1;
+                var_a2 += 4;
+            } while (var_v1_3 != 5);
+        }
+        sub_GAME_7F06EFC4(sp44);
+        if (temp_s0->unkC != 0)
+        {
+            switch (spFC)
+            {
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                    sub_GAME_7F061BF4(arg0);
+                    temp_s0->unk30 = temp_s0->unk30 + 1;
+                    break;
+                case 22:
+                case 23:
+                    sub_GAME_7F061BF4(arg0);
+                    break;
+            }
+        }
+    }
+    if (spFC == 0x19)
+    {
+        sub_GAME_7F05F928(arg0);
+    }
+    if (temp_s0->unkC != 0)
+    {
+        sub_GAME_7F068508(arg0, bondviewGetPlayerStanHeight(g_CurrentPlayer));
+        if (spFC == 0x18)
+        {
+            sub_GAME_7F05F73C(arg0);
+            return;
+        }
+        if (spFC == 0x1A)
+        {
+            generate_player_thrown_grenade(arg0);
+            return;
+        }
+        if (spFC == 0x19)
+        {
+            gunFireTankShell(arg0);
+            return;
+        }
+        if (spFC == 3)
+        {
+            generate_player_thrown_knife(arg0);
+            return;
+        }
+        if ((spFC == 0x1D) || (spFC == 0x1C) || (spFC == 0x1B) || (spFC == 0x21) || (spFC == 0x2F) || (spFC == 0x30) || (spFC == 0x3D) || (spFC == 0x22))
+        {
+            generate_player_thrown_object(arg0);
+            return;
+        }
+        if (spFC == 0x23)
+        {
+            sub_GAME_7F05F73C(arg0);
+            return;
+        }
+        if (spFC == 0x24)
+        {
+            sub_GAME_7F05F73C(arg0);
+        }
+    }
 }
 #else
 
@@ -12883,6 +13654,12 @@ void recall_joy2_hits_edit_detail_edit_flag(enum ITEM_IDS item, PropRecord* prop
             }
         }
     }
+#ifdef DEBUG
+    osSyncPrintf("Shot prop: hittype %d\n", g_Textures[texture_index].hitSound);
+#endif
+#ifdef ENABLE_LOG
+    osSyncPrintf("Shot prop:  %S\n", HIT_TYPE_ToString[g_Textures[texture_index].hitSound]);
+#endif
 }
 
 
@@ -13255,7 +14032,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     temp_s0 = &g_CurrentPlayer->hands[arg0];
     var_s1 = get_item_in_hand_or_watch_menu(arg0);
     sp1C4 = get_ammo_type_for_weapon(var_s1);
-    
+
     temp_s0->field_884 = temp_s0->weapon_hold_time;
     temp_s0->weapon_hold_time = arg1;
 
@@ -13266,13 +14043,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
 
     temp_s0->weapon_firing_status = 0;
     temp_s0->field_87D = 0;
-    
+
     if (g_ClockTimer > 0)
     {
         temp_s0->field_890 += g_ClockTimer;
         temp_s0->field_88C += 1;
     }
-    
+
     temp_s0->field_92C = 0;
 
     if (temp_s0->when_detonating_mines_is_0 == 0)
@@ -13306,9 +14083,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 temp_s0->field_88C = 0;
             }
         }
-        
+
         temp_s0->weapon_current_animation = 0;
-        
+
         if ((temp_s0->when_detonating_mines_is_0 == 0)
             && (temp_s0->weapon_ammo_in_magazine == 0)
             && (sp1C4 != 0))
@@ -13319,7 +14096,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 {
                     g_CurrentPlayer->ammoheldarr[sp1C4] = 1;
                 }
-                
+
                 if (get_ammo_in_hands_weapon(arg0) > 0)
                 {
                     temp_s0->when_detonating_mines_is_0 = 9;
@@ -13331,14 +14108,14 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                     if (g_CurrentPlayer->field_FC8 != 0)
                     {
                         temp_v0_3 = get_item_in_hand_or_watch_menu(1 - arg0);
-                        
+
                         sp1BC = (g_CurrentPlayer->hands - arg0) + 1;
-                        
+
                         if ((sp1BC->when_detonating_mines_is_0 == 0)
                             && (sp1BC->weapon_current_animation == 0)
                             && (
                                 (temp_v0_3 == ITEM_UNARMED)
-                                || ((sp1BC->weapon_ammo_in_magazine == 0) 
+                                || ((sp1BC->weapon_ammo_in_magazine == 0)
                                     && ((get_ammo_type_for_weapon(temp_v0_3) != 0))
                                     && ((get_ammo_in_hands_weapon(1 - arg0) <= 0)))))
                         {
@@ -13516,7 +14293,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
             break;
         }
-        
+
         temp_s0->volley = 0;
     }
 
@@ -13563,9 +14340,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                     {
                         temp_s0->field_87D = 1;
                     }
-                    
+
                     temp_s0->weapon_firing_status = (lvlGetControlsLockedFlag() == 0) && (g_CurrentPlayer->mpmenuon == 0);
-                    
+
                     sub_GAME_7F05E808(arg0);
                 }
                 else
@@ -13595,7 +14372,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                         {
                             temp_s0->field_87D = 1;
                         }
-                        
+
                         temp_s0->weapon_firing_status = (lvlGetControlsLockedFlag() == 0)
                             && (g_CurrentPlayer->mpmenuon == 0);
                     }
@@ -13624,11 +14401,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 if ((temp_s0->field_88C == 0) || (temp_s0->weapon_hold_time != 0))
                 {
                     sub_GAME_7F05C6FC(D_80035B68, 0.0f, &temp_s0->field_8EC, arg0);
-                    
+
                     temp_s0->weapon_firing_status = 0;
                     temp_s0->field_92C = 1;
                     temp_s0->field_87D = temp_s0->weapon_firing_status;
-                    
+
                     if (temp_s0->field_88C == 0)
                     {
                         temp_s0->weapon_firing_status = (lvlGetControlsLockedFlag() == 0)
@@ -13643,27 +14420,27 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 }
                 break;
             }
-            
+
             if (temp_s0->weapon_firing_status != 0)
             {
                 if (var_s1 != ITEM_CAMERA)
                 {
                     joyRumblePakStart(get_cur_playernum(), 0.1f);
-                    
+
                     if (cur_player_get_control_type() >= 4)
                     {
                         joyRumblePakStart(get_cur_playernum() + getPlayerCount(), 0.1f);
                     }
                 }
-                
+
                 temp_s0->weapon_ammo_in_magazine -= 1;
                 temp_s0->volley += 1;
             }
-            
+
             if (temp_s0->when_detonating_mines_is_0 == 2)
             {
                 sp1B4 = 0;
-                
+
                 if (bondwalkItemGetSoundTriggerRate(var_s1) > 0)
                 {
                     if ((g_CurrentPlayer->hands[1 - arg0].field_A50 != g_GlobalTimer)
@@ -13677,7 +14454,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 {
                     sp1B4 = 1;
                 }
-                
+
                 if ((getPlayerCount() == 1) || ((checkGamePaused() == 0) && (g_CurrentPlayer->mpmenuon == 0)))
                 {
                     if (sp1B4 != 0)
@@ -13686,13 +14463,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                         {
                             sndDeactivate(temp_s0->audioHandle);
                         }
-                        
+
                         if (((struct ALSoundState *)temp_s0->field_A48 != 0)
                             && (sndGetPlayingState((struct ALSoundState *) temp_s0->field_A48) != 0))
                         {
                             sndDeactivate((struct ALSoundState *) temp_s0->field_A48);
                         }
-                        
+
                         if (bondwalkItemGetSound(var_s1) != 0)
                         {
                             if (temp_s0->audioHandle == NULL)
@@ -13703,11 +14480,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                             {
                                 sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, bondwalkItemGetSound(var_s1), (struct ALSoundState *) &temp_s0->field_A48);
                             }
-                            
+
                             temp_s0->field_A50 = g_GlobalTimer;
                         }
                     }
-                    
+
                     if (var_s1 == ITEM_WATCHLASER)
                     {
                         sp1B0 = D_80035E90;
@@ -13727,7 +14504,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->when_detonating_mines_is_0 = 0xD;
             temp_s0->field_890 = 0;
             temp_s0->field_88C = 0;
-            
+
             if ((getPlayerCount() == 1)
 #if defined(VERSION_JP) || defined(VERSION_EU)
                 || ((checkGamePaused() == 0) && (g_CurrentPlayer->mpmenuon == 0))
@@ -13758,7 +14535,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             }
         }
         else
-        {            
+        {
             sp1A8 = get_ptr_item_statistics(var_s1);
 
 #if defined(VERSION_US)
@@ -13806,7 +14583,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 && (temp_s0->weapon_hold_time != 0)
 
 #if defined(VERSION_US)
-                && (temp_s0->field_890 >= sp1A8->b44[2])                    
+                && (temp_s0->field_890 >= sp1A8->b44[2])
 #endif
 #if defined(VERSION_JP) ||  defined(VERSION_EU)
                 && (temp_s0->field_890 >= stat_2)
@@ -13840,7 +14617,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 sp198 = sp1A8->RecoilBack;
                 sp19C = sp1A8->RecoilUp;
-                
+
                 if (temp_s0->field_890 == 0)
                 {
                     temp_s0->field_8C8 = temp_s0->field_8E8;
@@ -13848,7 +14625,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                     temp_s0->field_8C0 = temp_s0->field_8E0;
                     temp_s0->field_8C4 = temp_s0->field_8E4;
                 }
-                
+
                 if (temp_s0->field_890 < sp1A4)
                 {
                     temp_s0->field_8D8 = M_TAU_F - ((sp19C * M_TAU_F) / 360.0f);
@@ -13856,28 +14633,28 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                     temp_s0->field_8CC = ((sub_GAME_7F05DCE8(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
                     temp_s0->field_8D0 = 0;
                     temp_s0->field_8D4 = ((sp1A8->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
-                    
+
                     sp190 = sinf(((f32) temp_s0->field_890 * M_PI_2F) / (f32) sp1A4);
                 }
                 else
                 {
                     temp_s0->field_8D8 = M_TAU_F - ((sp19C * M_TAU_F) / 360.0f);
-                    
+
                     temp_s0->field_8CC = ((sub_GAME_7F05DCE8(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
                     temp_s0->field_8D0 = 0;
                     temp_s0->field_8D4 = ((sp1A8->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
-                    
+
                     sp190 = (cosf(((f32) (temp_s0->field_890 - sp1A4) * M_PI_F) / (f32) sp1A0) * 0.5f) + 0.5f;
                 }
 
                 temp_f0_2 = sub_GAME_7F06D0CC(temp_s0->field_8C8, temp_s0->field_8D8, sp190);
-                
+
                 temp_s0->field_8E8 = temp_f0_2;
                 temp_s0->field_92C = 1;
                 temp_s0->field_8DC = ((temp_s0->field_8CC - temp_s0->field_8BC) * sp190) + temp_s0->field_8BC;
                 temp_s0->field_8E0 = ((temp_s0->field_8D0 - temp_s0->field_8C0) * sp190) + temp_s0->field_8C0;
                 temp_s0->field_8E4 = ((temp_s0->field_8D4 - temp_s0->field_8C4) * sp190) + temp_s0->field_8C4;
-                
+
                 matrix_4x4_set_rotation_around_x(temp_f0_2, &temp_s0->field_8EC);
                 matrix_4x4_set_position((struct coord3d *)&temp_s0->field_8DC, &temp_s0->field_8EC);
             }
@@ -13903,13 +14680,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             sp18C = (cosf(((f32) (temp_s0->field_8A8 - temp_s0->field_890) * M_PI_2F) / (f32) temp_s0->field_8A8) * 0.5f) + 0.5f;
 
             temp_f0_2 = sub_GAME_7F06D0CC(temp_s0->field_8C8, temp_s0->field_8D8, sp18C);
-            
+
             temp_s0->field_8E8 = temp_f0_2;
             temp_s0->field_92C = 1;
             temp_s0->field_8DC = ((temp_s0->field_8CC - temp_s0->field_8BC) * sp18C) + temp_s0->field_8BC;
             temp_s0->field_8E0 = ((temp_s0->field_8D0 - temp_s0->field_8C0) * sp18C) + temp_s0->field_8C0;
             temp_s0->field_8E4 = ((temp_s0->field_8D4 - temp_s0->field_8C4) * sp18C) + temp_s0->field_8C4;
-            
+
             matrix_4x4_set_rotation_around_x(temp_f0_2, &temp_s0->field_8EC);
             matrix_4x4_set_position((struct coord3d *)&temp_s0->field_8DC, &temp_s0->field_8EC);
         }
@@ -13920,7 +14697,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0xD)
     {
         if (temp_s0->field_88C == 0)
@@ -13943,7 +14720,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             sp188 = WHEN_5_SP188_MULTI;
         }
-        
+
         if (temp_s0->field_88C == 0)
         {
             if (getPlayerCount() == 1)
@@ -13960,16 +14737,16 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             g_CurrentPlayer->ammoheldarr[get_ammo_type_for_weapon(var_s1)] += temp_s0->weapon_ammo_in_magazine;
             temp_s0->weapon_ammo_in_magazine = 0;
-            
+
             if (getPlayerCount() >= 2)
             {
                 sub_GAME_7F09B368(arg0);
             }
-            
+
             sub_GAME_7F05FB00(arg0);
-            
+
             temp_s0->when_detonating_mines_is_0 = 6;
-            
+
             if (bondinvItemAvailable(ITEM_SNIPERRIFLE) != 0)
             {
                 g_CurrentPlayer->cur_item_weapon_getname = ITEM_SNIPERRIFLE;
@@ -13983,9 +14760,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             sp184 = ((f32) temp_s0->field_890 * M_LN2F) / (f32) sp188;
             temp_s0->field_92C = 1;
-            
+
             matrix_4x4_set_rotation_around_x(sp184, &temp_s0->field_8EC);
-            
+
             temp_s0->field_8EC.m[3][0] = 0.0f;
             temp_s0->field_8EC.m[3][1] = (1.0f - cosf(sp184)) * -60.0f;
             temp_s0->field_8EC.m[3][2] = sinf(sp184) * 15.0f;
@@ -13999,7 +14776,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             if (temp_s0->when_detonating_mines_is_0 == 6)
             {
                 temp_v1_5 = (g_CurrentPlayer->hands - arg0) + 1;
-                
+
                 if ((temp_v1_5->when_detonating_mines_is_0 != 6) && (temp_v1_5->when_detonating_mines_is_0 != 5))
                 {
                     if (
@@ -14033,7 +14810,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 temp_s0->field_88C = 0;
             }
         }
-        
+
         if ((temp_s0->when_detonating_mines_is_0 == 6) || (temp_s0->when_detonating_mines_is_0 == 7))
         {
             temp_s0->field_92C = 1;
@@ -14047,21 +14824,21 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     if (temp_s0->when_detonating_mines_is_0 == 8)
     {
         sp178 = WHEN_8_SP178_INIT;
-        
+
         if (getPlayerCount() >= 2)
         {
             sp178 = WHEN_8_SP178_MULTI;
         }
-        
+
         if (temp_s0->field_88C == 0)
         {
             if (getPlayerCount() >= 2)
             {
                 sub_GAME_7F09B398(arg0);
             }
-            
+
             sub_GAME_7F0649D8(arg0);
-            
+
             g_CurrentPlayer->field_FC8 = 0;
 
             if ((g_ClockTimer > 0)
@@ -14078,12 +14855,12 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                     case ITEM_LASER:
                         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, PICKUP_LASER_SFX, NULL);
                         break;
-                    
+
                     case ITEM_KNIFE:
                     case ITEM_THROWKNIFE:
                         sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, PICKUP_KNIFE_SFX, NULL);
                         break;
-                    
+
                     case ITEM_TIMEDMINE:
                     case ITEM_PROXIMITYMINE:
                     case ITEM_REMOTEMINE:
@@ -14113,7 +14890,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 }
             }
         }
-        
+
         if ((temp_s0->field_890 >= sp178)
             || (get_ptr_weapon_model_header_line(var_s1) == NULL)
             || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_SHOW_FIRST_PERSON) == 0)
@@ -14163,7 +14940,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             sp128 = ((f32) temp_s0->field_890 * M_LN2F) / un_f32_div_1;
             temp_s0->field_92C = 1;
-            
+
             if (arg0 == GUNRIGHT)
             {
                 matrix_4x4_set_rotation_around_z((un_f32_num / un_f32_div_1), &temp_s0->field_8EC);
@@ -14172,7 +14949,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 matrix_4x4_set_rotation_around_z(-(un_f32_num / un_f32_div_1), &temp_s0->field_8EC);
             }
-            
+
             matrix_4x4_set_rotation_around_x(sp128, &sp12C);
             matrix_4x4_multiply_in_place(&sp12C, &temp_s0->field_8EC);
             sinf((un_f32_num / un_f32_div_1));
@@ -14267,7 +15044,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 break;
             }
         }
-        
+
         if ((temp_s0->field_890 >= temp_s0->field_8B0) && !(((temp_s0->field_88C < 2))))
         {
             temp_s0->when_detonating_mines_is_0 = 0xC;
@@ -14277,7 +15054,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         else
         {
             temp_s0->field_92C = 1;
-            
+
             if (arg0 == GUNRIGHT)
             {
                 matrix_4x4_set_rotation_around_z(un_f32_num, &temp_s0->field_8EC);
@@ -14286,7 +15063,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 matrix_4x4_set_rotation_around_z(-un_f32_num, &temp_s0->field_8EC);
             }
-            
+
             matrix_4x4_set_rotation_around_x(M_LN2F, &spE4);
             matrix_4x4_multiply_in_place(&spE4, &temp_s0->field_8EC);
             sinf(un_f32_num);
@@ -14303,7 +15080,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             sub_GAME_7F0649D8(arg0);
             g_CurrentPlayer->field_FC8 = 0;
         }
-        
+
         if ((temp_s0->field_890 >= WHEN_C_FLD890)
             || (get_ptr_weapon_model_header_line(var_s1) == NULL)
             || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_SHOW_FIRST_PERSON) == 0)
@@ -14317,7 +15094,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             sp98 = ((f32) (WHEN_C_FLD890 - temp_s0->field_890) * M_LN2F) / un_f32_div_2;
             temp_s0->field_92C = 1;
-            
+
             if (arg0 == GUNRIGHT)
             {
                 matrix_4x4_set_rotation_around_z((un_f32_num / un_f32_div_2), &temp_s0->field_8EC);
@@ -14326,7 +15103,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 matrix_4x4_set_rotation_around_z(-(un_f32_num / un_f32_div_2), &temp_s0->field_8EC);
             }
-            
+
             matrix_4x4_set_rotation_around_x(sp98, &sp9C);
             matrix_4x4_multiply_in_place(&sp9C, &temp_s0->field_8EC);
             sinf(un_f32_num / un_f32_div_2);
@@ -14363,7 +15140,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             sub_GAME_7F05DA8C(arg0, temp_s0->weapon_next_weapon);
             var_s1 = get_item_in_hand_or_watch_menu(arg0);
         }
-        
+
         if (Gun_hand_without_item(arg0) != 0)
         {
             temp_s0->when_detonating_mines_is_0 = 0x10;
@@ -14391,7 +15168,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             sub_GAME_7F0649D8(arg0);
             g_CurrentPlayer->field_FC8 = 0;
         }
-        
+
         if ((temp_s0->field_890 >= WHEN_10_FLD890)
             || (get_ptr_weapon_model_header_line(var_s1) == NULL)
             || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_SHOW_FIRST_PERSON) == 0)
@@ -14420,15 +15197,15 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         || (temp_s0->when_detonating_mines_is_0 == 0x16))
     {
         sp88 = F_7F05C6FC_ARG1(temp_s0->field_890);
-        
+
         if (((temp_s0->when_detonating_mines_is_0 == 0x11)
                 || (temp_s0->when_detonating_mines_is_0 == 0x14))
                 && (temp_s0->field_890 >= WHEN_11_FLD890_1))
         {
             sp7C = D_80035E94;
             sndPlaySfx((struct ALBankAlt_s *) g_musicSfxBufferPtr, sp7C.half[randomGetNext() % 3U], NULL);
-            
-            
+
+
             if (temp_s0->when_detonating_mines_is_0 == 0x11)
             {
                 temp_s0->when_detonating_mines_is_0 = 0x12;
@@ -14440,7 +15217,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 temp_s0->when_detonating_mines_is_0 = 0x15;
             }
         }
-        
+
         if ((temp_s0->when_detonating_mines_is_0 != 0x13)
             && (temp_s0->when_detonating_mines_is_0 != 0x16)
             && (temp_s0->field_890 >= WHEN_11_FLD890_2))
@@ -14457,7 +15234,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 temp_s0->when_detonating_mines_is_0 = 0x16;
             }
         }
-        
+
         if ((temp_s0->when_detonating_mines_is_0 == 0x11)
             || (temp_s0->when_detonating_mines_is_0 == 0x12)
             || (temp_s0->when_detonating_mines_is_0 == 0x13))
@@ -14468,7 +15245,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             var_a0_2 = D_80034E0C;
         }
-        
+
         if (sub_GAME_7F05C6FC(var_a0_2, sp88, &temp_s0->field_8EC, arg0) != 0)
         {
             temp_s0->field_92C = 1;
@@ -14487,7 +15264,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         || (temp_s0->when_detonating_mines_is_0 == 0x21))
     {
         temp_v1_9 = F_7F05C6FC_ARG1(temp_s0->field_890);
-        
+
         if ((temp_s0->when_detonating_mines_is_0 == 0x1E) || (temp_s0->when_detonating_mines_is_0 == 0x1F))
         {
             if (g_CurrentPlayer->cur_item_weapon_getname == 0x11)
@@ -14498,7 +15275,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 sp74 = D_800354A8;
             }
-            
+
             if ((temp_s0->when_detonating_mines_is_0 != 0x1F) && (temp_s0->field_890 >= WHEN_1E_FLD890))
             {
                 temp_s0->weapon_firing_status = 1;
@@ -14515,14 +15292,14 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             {
                 sp74 = D_80035610;
             }
-            
+
             if ((temp_s0->when_detonating_mines_is_0 != 0x21) && (temp_s0->field_890 >= WHEN_1E_FLD890))
             {
                 temp_s0->weapon_firing_status = 1;
                 temp_s0->when_detonating_mines_is_0 = 0x21;
             }
         }
-        
+
         if (sub_GAME_7F05C6FC(sp74, temp_v1_9, &temp_s0->field_8EC, arg0) != 0)
         {
             temp_s0->field_92C = 1;
@@ -14610,7 +15387,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0x18)
     {
         if (temp_s0->weapon_ammo_in_magazine > 0)
@@ -14637,7 +15414,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0x19)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
@@ -14653,7 +15430,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0x1C)
     {
         if ((temp_s0->weapon_ammo_in_magazine > 0) || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_CLICKY) != 0))
@@ -14680,7 +15457,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0x1D)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
@@ -14696,7 +15473,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             temp_s0->field_88C = 0;
         }
     }
-    
+
     if (temp_s0->when_detonating_mines_is_0 == 0x24)
     {
         if (var_s1 == ITEM_KEYANALYSERCASE)
@@ -14722,7 +15499,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             if (temp_s0->field_88C == 0)
             {
                 temp_v0_8 = propFindForInteract();
-                
+
                 if (temp_v0_8 != NULL)
                 {
                     temp_v0_8->obj->state |= 0x40;
@@ -14751,7 +15528,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             // removed
         }
-        
+
         if (temp_s0->field_888 != 0)
         {
             temp_s0->when_detonating_mines_is_0 = 0;

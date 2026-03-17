@@ -123,7 +123,7 @@ struct BulletImpact {
     s16 room;
     s16 impact_type;
     u32 unk04;
-    Vtx vertex_list[4];
+    Vtx vertex_list[4];//cannonically vlist
     PropRecord* prop;
     s8 model_render_pos_index;
     s8 room_clear_flag;

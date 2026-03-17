@@ -259,16 +259,16 @@ void sub_GAME_7F0AEFE0(void) {
 
 //stanChecksf
 u32 stanRemovedAnimationRoutine(s32 arg0) {
-    /*
-      if (arg0 < g_someinteger)
-      {
-        printf("checksf: ERROR line %d %08x<%08x",__LINE__,arg0,g_someInteger);
-      }
-      if (arg0 > g_someinteger2)
-      {
-        printf("checksf: ERROR line %d %08x>%08x",__LINE__,arg0,g_someinteger2);
-      }
-  */
+#ifdef DEBUG
+    if (arg0 < ptr_firstroom_0)
+    {
+        osSyncPrintf("checksf: ERROR line %d %08x<%08x", __LINE__, arg0, ptr_firstroom_0);
+    }
+    if (D_80040F60 < arg0)
+    {
+        osSyncPrintf("checksf: ERROR line %d %08x>%08x", __LINE__, arg0, D_80040F60);
+    }
+#endif
     return 0;
 }
 
@@ -2775,13 +2775,6 @@ bool sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest
     s32 trynexttile;
     u16 temp_v1;
 
-    /*
-    somewhere in here debug has
-    */
-    #ifdef DEBUG
-    ossyncPrintf("{\"%s\",0x%08x,0x%08x,0x%08x,0x%08x},\t/* %8.3f %8.3f  %8.3f %8.3f */\n", GetStanRoomID(*tilestack),start_x,start_z,dest_x,dest_z,start_x,start_z);
-    #endif
-
 
     scaled_startX = start_x * level_scale;
     scaled_startZ = start_z * level_scale;
@@ -2804,6 +2797,10 @@ bool sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest
         if (func != NULL)
         {
             func(var_s3, var_s6, funcData);
+    #ifdef DEBUG
+            ossyncPrintf("{\"%s\",0x%08x,0x%08x,0x%08x,0x%08x},\t/* %8.3f %8.3f  %8.3f %8.3f */\n", GetStanRoomID(*tilestack), start_x, start_z, dest_x, dest_z, start_x, start_z);
+    #endif
+
         }
         var_s0 = var_s3;
         pointcount = (var_s3->tail.half >> 0xC) & 0xF; //pointcount
@@ -2845,9 +2842,11 @@ bool sub_GAME_7F0B0914(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest
         var_s7 = var_s6;
         var_s6 = var_s3;
         var_s3 = trynexttile;
-        //assert(intersections!=0);
-        //assert(intersections!=3);
-        //printf("sf: stanLineDo %d   %5.1f %5.1f %5.1f %5.1f  %s %s %s\n",3,start_x, start_z,dest_x,dest_z,GetStanRoomID(*tilestack),GetStanRoomID(puVar3));
+    #ifdef DEBUG
+        assert(intersections != 0);
+        assert(intersections != 3);
+        osSyncPrintf("sf: stanLineDo %d   %5.1f %5.1f %5.1f %5.1f  %s %s %s\n", 3, start_x, start_z, dest_x, dest_z, GetStanRoomID(*tilestack), GetStanRoomID(puVar3));
+    #endif
         if ((var_s3 ^ trynexttile) == 0)
         {
             var_s4 = 0;
@@ -3341,9 +3340,13 @@ s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f3
     retval = sub_GAME_7F0B0C24(&sp154, p_x, p_z, dest_x, dest_z, &spD0[0], &sp124, 0x14);
 
 
-    if (sp124 > 0x14)
+    if (sp124 > 20)
     {
-        sp124 = 0x14;
+        #ifdef DEBUG
+            osSyncPrintf("stanLineObjType: %d rooms is more than %d\n", retval, 20);
+#endif
+
+        sp124 = 20;
     }
 
     if (retval == 0)
