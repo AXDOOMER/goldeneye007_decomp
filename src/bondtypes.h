@@ -327,10 +327,10 @@ typedef union
             };
             struct
             {
-                coord2d min;
-                coord2d max;
+                coord3d min;
+                coord3d max;
             };
-            f32 f[3][3];
+            f32 f[3][2];
             f32 AsArray[6];
         };
     } bbox;

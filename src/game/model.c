@@ -8091,6 +8091,7 @@ void sub_GAME_7F074534(ModelRenderData* data, Model* model, ModelNode* node) {
 void subdraw(ModelRenderData *mrData, Model *mdl) // Matches
 {
     ModelNode *root = mdl->obj->RootNode;
+    #if defined(LEFTOVERDEBUG)
 
     if (mrData->gdl == NULL)
     {
@@ -8106,7 +8107,7 @@ void subdraw(ModelRenderData *mrData, Model *mdl) // Matches
         osSyncPrintf("subdraw: object not initialised! (0x%X)\n", (u32)mdl->obj);
         return_null();
     }
-
+    #endif
     gSPSegment(mrData->gdl++, 3, osVirtualToPhysical(mdl->render_pos));
 
     while (root != NULL)

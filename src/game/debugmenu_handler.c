@@ -4,6 +4,9 @@
 #include <boss.h>
 #include <fr.h>
 
+#ifndef DEBUG
+    #define osSyncPrintf()
+#endif
 #if defined(LEFTOVERDEBUG)
 
 // data
