@@ -249,9 +249,9 @@ struct Weapon1PTransformKeyframe remoteMineThrowKeyframes[7] = {
 };
 
 /**
- * Unarmed attack when the hand starts at the right of the screen then chops downward and to the left.
+ * Slapper attack when the hand starts at the right of the screen then chops downward and to the left.
  */
-Weapon1PTransformKeyframe unarmedMeleeKeyframes1[10] = {
+Weapon1PTransformKeyframe fistMeleeKeyframes1[10] = {
     { 0, {   0.0f,  0.0f, 0.0f }, {      0.0f,      0.0f,      0.0f }, 0.5f, 10.0f },
     { 0, {   0.0f,  0.0f, 0.0f }, {      0.0f,      0.0f,      0.0f }, 0.5f, 10.0f },
     { 0, {   6.0f, 23.0f, 0.0f }, {  5.91572f, 0.085832f, 0.219482f }, 0.5f, 10.0f },
@@ -265,9 +265,9 @@ Weapon1PTransformKeyframe unarmedMeleeKeyframes1[10] = {
 };
 
 /**
- * Unarmed attack when the hand moves to the left of the screen then chops downward and to the right.
+ * Slapper attack when the hand moves to the left of the screen then chops downward and to the right.
  */
-Weapon1PTransformKeyframe unarmedMeleeKeyframes2[10] = {
+Weapon1PTransformKeyframe fistMeleeKeyframes2[10] = {
        { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
        { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
        { 0, { -6.0f, 23.0f, 0.0f}, { 5.08683f, 6.131295f, 5.534376f}, 0.5f, 10.0f},
@@ -565,7 +565,7 @@ void give_weapon_case_items(void);
 struct ModelFileHeader * get_ptr_weapon_model_header_line(ITEM_IDS weapon);
 s32 get_ammo_in_hands_weapon(enum GUNHAND hand);
 s32 get_ammo_type_for_weapon(ITEM_IDS weapon);
-f32 sub_GAME_7F05DCE8(GUNHAND hand);
+f32 gunSetHorizontalOffset(GUNHAND hand);
 void give_weapon_case_items(void);
 void sub_GAME_7F05DA8C(GUNHAND hand, ITEM_IDS weaponnum_watchmenu);
 void sub_GAME_7F05E808(GUNHAND hand);
@@ -866,6 +866,7 @@ s32 Gun_hand_without_item(enum GUNHAND arg0)
         || (g_CurrentPlayer->hand_item[arg0] == 0 && g_CurrentPlayer->field_2A44[arg0] < 0);
 }
 
+
 s32 get_itemtype_in_hand(GUNHAND hand)
 {
     return g_CurrentPlayer->hand_item[hand];
@@ -876,8 +877,6 @@ ModelFileHeader *get_ptr_itemheader_in_hand(GUNHAND hand)
 {
     return &g_CurrentPlayer->copy_of_body_obj_header[hand];
 }
-
-
 
 
 u8 * getPlayerWeaponBufferForHand(GUNHAND hand)
@@ -950,7 +949,7 @@ int getCurrentWeaponOrItem(void)
 }
 
 
-void used_to_load_1st_person_model_on_demand(enum GUNHAND arg0)
+void used_to_load_1st_person_model_on_demand(enum GUNHAND hand)
 {
     u32 size_buffer_weapon;
     s8* ptr_item_text;
@@ -958,51 +957,52 @@ void used_to_load_1st_person_model_on_demand(enum GUNHAND arg0)
     u8* buffer_weapon;
     enum ITEM_IDS field_2a44;
 
-    if ((g_CurrentPlayer->hand_invisible[arg0] < 0) && (g_CurrentPlayer->lock_hand_model[arg0] == 0))
+    if ((g_CurrentPlayer->hand_invisible[hand] < 0) && (g_CurrentPlayer->lock_hand_model[hand] == 0))
     {
-        if ((g_CurrentPlayer->hand_invisible[arg0] < -2) || (g_CurrentPlayer->hand_item[arg0] == ITEM_UNARMED))
+        if ((g_CurrentPlayer->hand_invisible[hand] < -2) || (g_CurrentPlayer->hand_item[hand] == ITEM_UNARMED))
         {
-            field_2a44 = g_CurrentPlayer->field_2A44[arg0];
+            field_2a44 = g_CurrentPlayer->field_2A44[hand];
             ptr_item_text = (s8*)get_ptr_item_text_call_line(field_2a44);
             ptr_weapon_model = get_ptr_weapon_model_header_line(field_2a44);
 
             if ((ptr_item_text != NULL) && (ptr_weapon_model != NULL))
             {
-                buffer_weapon = getPlayerWeaponBufferForHand(arg0);
-                size_buffer_weapon = getSizeBufferWeaponInHand(arg0);
+                buffer_weapon = getPlayerWeaponBufferForHand(hand);
+                size_buffer_weapon = getSizeBufferWeaponInHand(hand);
 
-                g_CurrentPlayer->copy_of_body_obj_header[arg0] = *ptr_weapon_model;
+                g_CurrentPlayer->copy_of_body_obj_header[hand] = *ptr_weapon_model;
 
                 if (field_2a44 == ITEM_SUIT_LF_HAND)
                 {
-                    texInitPool(&g_CurrentPlayer->item_related[arg0], buffer_weapon + 0xBD70, size_buffer_weapon + 0xFFFF4290);
-                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[arg0], (u8* ) ptr_item_text, buffer_weapon, 0xBD70, &g_CurrentPlayer->item_related[arg0]);
+                    texInitPool(&g_CurrentPlayer->item_related[hand], buffer_weapon + 0xBD70, size_buffer_weapon + 0xFFFF4290);
+                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[hand], (u8* ) ptr_item_text, buffer_weapon, 0xBD70, &g_CurrentPlayer->item_related[hand]);
                 }
                 else if ((field_2a44 == ITEM_TRIGGER) || (field_2a44 == ITEM_WATCHLASER))
                 {
-                    texInitPool(&g_CurrentPlayer->item_related[arg0], buffer_weapon + 0xAFD0, size_buffer_weapon + 0xFFFF5030);
-                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[arg0], (u8* ) ptr_item_text, buffer_weapon, 0xAFD0, &g_CurrentPlayer->item_related[arg0]);
+                    texInitPool(&g_CurrentPlayer->item_related[hand], buffer_weapon + 0xAFD0, size_buffer_weapon + 0xFFFF5030);
+                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[hand], (u8* ) ptr_item_text, buffer_weapon, 0xAFD0, &g_CurrentPlayer->item_related[hand]);
                 }
                 else
                 {
-                    texInitPool(&g_CurrentPlayer->item_related[arg0], &buffer_weapon[D_80032464[arg0]], size_buffer_weapon - D_80032464[arg0]);
-                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[arg0], (u8* ) ptr_item_text, buffer_weapon, D_80032464[arg0], &g_CurrentPlayer->item_related[arg0]);
+                    texInitPool(&g_CurrentPlayer->item_related[hand], &buffer_weapon[D_80032464[hand]], size_buffer_weapon - D_80032464[hand]);
+                    load_object_fill_header(&g_CurrentPlayer->copy_of_body_obj_header[hand], (u8* ) ptr_item_text, buffer_weapon, D_80032464[hand], &g_CurrentPlayer->item_related[hand]);
                 }
             }
 
-            g_CurrentPlayer->hand_invisible[arg0] = 1;
-            g_CurrentPlayer->hand_item[arg0] = field_2a44;
-            g_CurrentPlayer->field_2A44[arg0] = -1;
+            g_CurrentPlayer->hand_invisible[hand] = 1;
+            g_CurrentPlayer->hand_item[hand] = field_2a44;
+            g_CurrentPlayer->field_2A44[hand] = -1;
 
         }
         else
         {
-            g_CurrentPlayer->hand_invisible[arg0]--;
+            g_CurrentPlayer->hand_invisible[hand]--;
         }
     }
 }
 
 
+// Called by unused functions.
 ITEM_IDS sub_GAME_7F05D334(ITEM_IDS item, s32 arg1)
 {
     while (arg1 > 0)
@@ -1086,12 +1086,14 @@ void likely_change_weapon_in_hand(enum GUNHAND hand, s32 arg1, s32 arg2)
 }
 
 
+// Unused
 void sub_GAME_7F05D610(GUNHAND hand)
 {
     likely_change_weapon_in_hand(hand, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(hand, 0), 1), 0);
 }
 
 
+// Unused
 void sub_GAME_7F05D650(GUNHAND hand)
 {
     likely_change_weapon_in_hand(hand, sub_GAME_7F05D334(get_next_weapon_in_cycle_for_hand(hand, 0), -1), 0);
@@ -1279,20 +1281,23 @@ f32 sub_GAME_7F05DCB8(GUNHAND hand) {
 	return g_CurrentPlayer->hands[hand].field_A34;
 }
 
-f32 sub_GAME_7F05DCE8(GUNHAND hand)
+/**
+ * Positions the gun to the right or left side of the screen depending on which hand is holding it.
+ */
+f32 gunSetHorizontalOffset(GUNHAND hand)
 {
-	f32 ret;
+	f32 offset;
 
 	if (hand == GUNRIGHT)
 	{
-		ret = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->PosX;
+		offset = get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNRIGHT))->PosX;
 	}
 	else
 	{
-		ret = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNLEFT))->PosX;
+		offset = -get_ptr_item_statistics(get_item_in_hand_or_watch_menu(GUNLEFT))->PosX;
 	}
 
-	return ret;
+	return offset;
 }
 
 f32 get_item_in_hand_zoom(void) {
@@ -3753,11 +3758,11 @@ void handles_firing_or_throwing_weapon_in_hand(void) {
     temp_s0->unkE0 = temp_s0->unk104 * 0.050000012f;
     if (arg0 == 0)
     {
-        sp194 = temp_s0->unk1B8 + (sub_GAME_7F05DCE8(arg0) + temp_s0->unkC0);
+        sp194 = temp_s0->unk1B8 + (gunSetHorizontalOffset(arg0) + temp_s0->unkC0);
     }
     else
     {
-        sp194 = (sub_GAME_7F05DCE8(arg0) + temp_s0->unkC0) - temp_s0->unk1B8;
+        sp194 = (gunSetHorizontalOffset(arg0) + temp_s0->unkC0) - temp_s0->unk1B8;
     }
     sp198 = temp_s0->unk1BC + (spF8->unk8 + temp_s0->unkC4);
     sp19C = temp_s0->unk1C0 + (spF8->unkC + temp_s0->unkC8);
@@ -4649,7 +4654,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095014 7F0604E4 E61200DC */  swc1  $f18, 0xdc($s0)
 /* 095018 7F0604E8 14800009 */  bnez  $a0, .L7F060510
 /* 09501C 7F0604EC E61000E0 */   swc1  $f16, 0xe0($s0)
-/* 095020 7F0604F0 0FC1773A */  jal   sub_GAME_7F05DCE8
+/* 095020 7F0604F0 0FC1773A */  jal   gunSetHorizontalOffset
 /* 095024 7F0604F4 00000000 */   nop
 /* 095028 7F0604F8 C60800C0 */  lwc1  $f8, 0xc0($s0)
 /* 09502C 7F0604FC C60A01B8 */  lwc1  $f10, 0x1b8($s0)
@@ -4658,7 +4663,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095038 7F060508 10000008 */  b     .L7F06052C
 /* 09503C 7F06050C E7B20194 */   swc1  $f18, 0x194($sp)
 .L7F060510:
-/* 095040 7F060510 0FC1773A */  jal   sub_GAME_7F05DCE8
+/* 095040 7F060510 0FC1773A */  jal   gunSetHorizontalOffset
 /* 095044 7F060514 00000000 */   nop
 /* 095048 7F060518 C60600C0 */  lwc1  $f6, 0xc0($s0)
 /* 09504C 7F06051C C60801B8 */  lwc1  $f8, 0x1b8($s0)
@@ -6435,7 +6440,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095574 7F060A04 E61200DC */  swc1  $f18, 0xdc($s0)
 /* 095578 7F060A08 14800009 */  bnez  $a0, .Ljp7F060A30
 /* 09557C 7F060A0C E61000E0 */   swc1  $f16, 0xe0($s0)
-/* 095580 7F060A10 0FC17882 */  jal   sub_GAME_7F05DCE8
+/* 095580 7F060A10 0FC17882 */  jal   gunSetHorizontalOffset
 /* 095584 7F060A14 00000000 */   nop
 /* 095588 7F060A18 C60800C0 */  lwc1  $f8, 0xc0($s0)
 /* 09558C 7F060A1C C60A01B8 */  lwc1  $f10, 0x1b8($s0)
@@ -6444,7 +6449,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 095598 7F060A28 10000008 */  b     .Ljp7F060A4C
 /* 09559C 7F060A2C E7B20194 */   swc1  $f18, 0x194($sp)
 .Ljp7F060A30:
-/* 0955A0 7F060A30 0FC17882 */  jal   sub_GAME_7F05DCE8
+/* 0955A0 7F060A30 0FC17882 */  jal   gunSetHorizontalOffset
 /* 0955A4 7F060A34 00000000 */   nop
 /* 0955A8 7F060A38 C60600C0 */  lwc1  $f6, 0xc0($s0)
 /* 0955AC 7F060A3C C60801B8 */  lwc1  $f8, 0x1b8($s0)
@@ -8223,7 +8228,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 09338C 7F06099C E61200DC */  swc1  $f18, 0xdc($s0)
 /* 093390 7F0609A0 14800009 */  bnez  $a0, .L7F0609C8
 /* 093394 7F0609A4 E61000E0 */   swc1  $f16, 0xe0($s0)
-/* 093398 7F0609A8 0FC17868 */  jal   sub_GAME_7F05DCE8
+/* 093398 7F0609A8 0FC17868 */  jal   gunSetHorizontalOffset
 /* 09339C 7F0609AC 00000000 */   nop
 /* 0933A0 7F0609B0 C60800C0 */  lwc1  $f8, 0xc0($s0)
 /* 0933A4 7F0609B4 C60A01B8 */  lwc1  $f10, 0x1b8($s0)
@@ -8232,7 +8237,7 @@ glabel handles_firing_or_throwing_weapon_in_hand
 /* 0933B0 7F0609C0 10000008 */  b     .L7F0609E4
 /* 0933B4 7F0609C4 E7B20194 */   swc1  $f18, 0x194($sp)
 .L7F0609C8:
-/* 0933B8 7F0609C8 0FC17868 */  jal   sub_GAME_7F05DCE8
+/* 0933B8 7F0609C8 0FC17868 */  jal   gunSetHorizontalOffset
 /* 0933BC 7F0609CC 00000000 */   nop
 /* 0933C0 7F0609D0 C60600C0 */  lwc1  $f6, 0xc0($s0)
 /* 0933C4 7F0609D4 C60801B8 */  lwc1  $f8, 0x1b8($s0)
@@ -13918,7 +13923,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     s32 sp1B4;
     struct sfx2 sp1B0;
     s32 stack5;
-    struct WeaponStats *sp1A8;
+    struct WeaponStats *weapon_stats;
     s32 sp1A4;
     s32 sp1A0;
     f32 sp19C;
@@ -13970,7 +13975,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     s32 sp1B4;
     struct sfx2 sp1B0;
     s32 stack5;
-    struct WeaponStats *sp1A8;
+    struct WeaponStats *weapon_stats;
     s32 sp1A4;
     s32 sp1A0;
     f32 sp19C;
@@ -14025,7 +14030,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     s32 sp1B4;
     struct sfx2 sp1B0;
     s32 stack5;
-    struct WeaponStats *sp1A8;
+    struct WeaponStats *weapon_stats;
     s32 sp1A4;
     s32 sp1A0;
     f32 sp19C;
@@ -14581,25 +14586,25 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
         else
         {
-            sp1A8 = get_ptr_item_statistics(var_s1);
+            weapon_stats = get_ptr_item_statistics(var_s1);
 
 #if defined(VERSION_US)
-            sp1A4 = sp1A8->b44[0];
-            sp1A0 = sp1A8->b44[1];
+            sp1A4 = weapon_stats->b44[0];
+            sp1A0 = weapon_stats->b44[1];
 #endif
 #if defined(VERSION_JP)
-            sp1A4 = sp1A8->b44[0];
-            sp1A0 = sp1A8->b44[1];
-            stat_2 = sp1A8->b44[2];
-            stat_3 = sp1A8->b44[3];
-            stat_4 = sp1A8->SingleFiringRate;
+            sp1A4 = weapon_stats->b44[0];
+            sp1A0 = weapon_stats->b44[1];
+            stat_2 = weapon_stats->b44[2];
+            stat_3 = weapon_stats->b44[3];
+            stat_4 = weapon_stats->SingleFiringRate;
 #endif
 #if defined(VERSION_EU)
-            sp1A4 = ((s32)sp1A8->b44[0] * 50) / 60;
-            sp1A0 = ((s32)sp1A8->b44[1] * 50) / 60;
-            stat_2 = ((s32)sp1A8->b44[2] * 50) / 60;
-            stat_3 = ((s32)sp1A8->b44[3] * 50) / 60;
-            stat_4 = sp1A8->SingleFiringRate * 50 / 60;
+            sp1A4 = ((s32)weapon_stats->b44[0] * 50) / 60;
+            sp1A0 = ((s32)weapon_stats->b44[1] * 50) / 60;
+            stat_2 = ((s32)weapon_stats->b44[2] * 50) / 60;
+            stat_3 = ((s32)weapon_stats->b44[3] * 50) / 60;
+            stat_4 = weapon_stats->SingleFiringRate * 50 / 60;
 #endif
 
             if ((
@@ -14608,10 +14613,10 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 )
                 ||
                 (
-                    ((sp1A8->SingleFiringRate >= 0))
+                    ((weapon_stats->SingleFiringRate >= 0))
                     && (temp_s0->field_888 == 0)
 #if defined(VERSION_US)
-                    && (temp_s0->field_890 >= (sp1A4 + sp1A0 + sp1A8->SingleFiringRate))
+                    && (temp_s0->field_890 >= (sp1A4 + sp1A0 + weapon_stats->SingleFiringRate))
 #endif
 #if defined(VERSION_JP) ||  defined(VERSION_EU)
                     && (temp_s0->field_890 >= (sp1A4 + sp1A0 + stat_4))
@@ -14628,19 +14633,19 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 && (temp_s0->weapon_hold_time != 0)
 
 #if defined(VERSION_US)
-                && (temp_s0->field_890 >= sp1A8->b44[2])
+                && (temp_s0->field_890 >= weapon_stats->b44[2])
 #endif
 #if defined(VERSION_JP) ||  defined(VERSION_EU)
                 && (temp_s0->field_890 >= stat_2)
 #endif
 
-                && (sp1A8->b44[3] >= 0)
+                && (weapon_stats->b44[3] >= 0)
 
 #if defined(VERSION_US)
                 // HACK: registers are swapped
                 // addu a1, v1, a0
-                && (temp_s0->field_890 + sp1A8->b44[3] < (0,sp1A4) + sp1A0)
-                && (temp_s0->field_890 + sp1A8->b44[3] >= (s32)sp1A8->b44[2])
+                && (temp_s0->field_890 + weapon_stats->b44[3] < (0,sp1A4) + sp1A0)
+                && (temp_s0->field_890 + weapon_stats->b44[3] >= (s32)weapon_stats->b44[2])
 #endif
 #if defined(VERSION_JP) ||  defined(VERSION_EU)
                 && (temp_s0->field_890 + stat_3 < sp1A4 + sp1A0)
@@ -14652,7 +14657,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 temp_s0->field_890 = 0;
                 temp_s0->field_88C = 0;
 #if defined(VERSION_US)
-                temp_s0->field_8A8 = sp1A8->b44[3];
+                temp_s0->field_8A8 = weapon_stats->b44[3];
 #endif
 #if defined(VERSION_JP) ||  defined(VERSION_EU)
                 temp_s0->field_8A8 = stat_3;
@@ -14660,8 +14665,8 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             }
             else if (temp_s0->field_890 < sp1A4 + sp1A0)
             {
-                sp198 = sp1A8->RecoilBack;
-                sp19C = sp1A8->RecoilUp;
+                sp198 = weapon_stats->RecoilBack;
+                sp19C = weapon_stats->RecoilUp;
 
                 if (temp_s0->field_890 == 0)
                 {
@@ -14675,9 +14680,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 {
                     temp_s0->field_8D8 = M_TAU_F - ((sp19C * M_TAU_F) / 360.0f);
 
-                    temp_s0->field_8CC = ((sub_GAME_7F05DCE8(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
+                    temp_s0->field_8CC = ((gunSetHorizontalOffset(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
                     temp_s0->field_8D0 = 0;
-                    temp_s0->field_8D4 = ((sp1A8->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
+                    temp_s0->field_8D4 = ((weapon_stats->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
 
                     sp190 = sinf(((f32) temp_s0->field_890 * M_PI_2F) / (f32) sp1A4);
                 }
@@ -14685,9 +14690,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 {
                     temp_s0->field_8D8 = M_TAU_F - ((sp19C * M_TAU_F) / 360.0f);
 
-                    temp_s0->field_8CC = ((sub_GAME_7F05DCE8(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
+                    temp_s0->field_8CC = ((gunSetHorizontalOffset(arg0) - temp_s0->field_A38) * sp198) / 1000.0f;
                     temp_s0->field_8D0 = 0;
-                    temp_s0->field_8D4 = ((sp1A8->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
+                    temp_s0->field_8D4 = ((weapon_stats->PosZ - temp_s0->field_A40) * sp198) / 1000.0f;
 
                     sp190 = (cosf(((f32) (temp_s0->field_890 - sp1A4) * M_PI_F) / (f32) sp1A0) * 0.5f) + 0.5f;
                 }
@@ -15312,13 +15317,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
 
         if ((temp_s0->when_detonating_mines_is_0 == 0x1E) || (temp_s0->when_detonating_mines_is_0 == 0x1F))
         {
-            if (g_CurrentPlayer->cur_item_weapon_getname == 0x11)
+            if (g_CurrentPlayer->cur_item_weapon_getname == 0x11) // Sniper Rifle
             {
                 sp74 = sniperMeleeKeyframes1;
             }
             else
             {
-                sp74 = unarmedMeleeKeyframes1;
+                sp74 = fistMeleeKeyframes1;
             }
 
             if ((temp_s0->when_detonating_mines_is_0 != 0x1F) && (temp_s0->field_890 >= WHEN_1E_FLD890))
@@ -15329,13 +15334,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
         else if ((temp_s0->when_detonating_mines_is_0 == 0x20) || (temp_s0->when_detonating_mines_is_0 == 0x21))
         {
-            if (g_CurrentPlayer->cur_item_weapon_getname == 0x11)
+            if (g_CurrentPlayer->cur_item_weapon_getname == 0x11) // Sniper Rifle
             {
                 sp74 = sniperMeleeKeyframes2;
             }
             else
             {
-                sp74 = unarmedMeleeKeyframes2;
+                sp74 = fistMeleeKeyframes2;
             }
 
             if ((temp_s0->when_detonating_mines_is_0 != 0x21) && (temp_s0->field_890 >= WHEN_1E_FLD890))
@@ -15357,7 +15362,6 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
-    // Hand Grenade
     if (temp_s0->when_detonating_mines_is_0 == 0x1A)
     {
         if (temp_s0->weapon_ammo_in_magazine > 0)
@@ -15385,7 +15389,6 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
-    // Timed Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1B)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
@@ -15478,7 +15481,6 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
-    // Proximity Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1C)
     {
         if ((temp_s0->weapon_ammo_in_magazine > 0) || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_CLICKY) != 0))
@@ -15506,7 +15508,6 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
-    // Remote Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1D)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
@@ -15744,38 +15745,38 @@ void sub_GAME_7F0671A4(void)
     enum ITEM_IDS weapon_id_left;
     s32 unused2;
     f32 noise_reduction;
-    WeaponStats *item_right;
-    WeaponStats *item_left;
+    WeaponStats *item_right_stats;
+    WeaponStats *item_left_stats;
     f32 noise_reduction_max;
     s32 unused;
 
     weapon_id_right = getCurrentPlayerWeaponId(GUNRIGHT);
     weapon_id_left = getCurrentPlayerWeaponId(GUNLEFT);
-    item_right = get_ptr_item_statistics(weapon_id_right);
-    item_left = get_ptr_item_statistics(weapon_id_left);
+    item_right_stats = get_ptr_item_statistics(weapon_id_right);
+    item_left_stats = get_ptr_item_statistics(weapon_id_left);
 
     if (weapon_id_right != ITEM_UNARMED && get_hands_firing_status(GUNRIGHT))
     {
-        g_CurrentPlayer->hands[GUNRIGHT].noise += item_right->NoiseIncreasePerShot;
+        g_CurrentPlayer->hands[GUNRIGHT].noise += item_right_stats->NoiseIncreasePerShot;
 
-        if (item_right->LoudnessMax < g_CurrentPlayer->hands[GUNRIGHT].noise)
+        if (item_right_stats->LoudnessMax < g_CurrentPlayer->hands[GUNRIGHT].noise)
         {
-            g_CurrentPlayer->hands[GUNRIGHT].noise = item_right->LoudnessMax;
+            g_CurrentPlayer->hands[GUNRIGHT].noise = item_right_stats->LoudnessMax;
         }
     }
 
     if (weapon_id_left != ITEM_UNARMED && get_hands_firing_status(GUNLEFT))
     {
-        g_CurrentPlayer->hands[GUNLEFT].noise += item_left->NoiseIncreasePerShot;
+        g_CurrentPlayer->hands[GUNLEFT].noise += item_left_stats->NoiseIncreasePerShot;
 
-        if (item_left->LoudnessMax < g_CurrentPlayer->hands[GUNLEFT].noise)
+        if (item_left_stats->LoudnessMax < g_CurrentPlayer->hands[GUNLEFT].noise)
         {
-            g_CurrentPlayer->hands[GUNLEFT].noise = item_left->LoudnessMax;
+            g_CurrentPlayer->hands[GUNLEFT].noise = item_left_stats->LoudnessMax;
         }
     }
 
-    noise_reduction = (item_right->NoiseIncreasePerShot * g_GlobalTimerDelta) / (item_right->field_60 * 60.0f);
-    noise_reduction_max = ((g_CurrentPlayer->hands[GUNRIGHT].noise - item_right->LoudnessMin) * g_GlobalTimerDelta) / (item_right->field_64 * 60.0f);
+    noise_reduction = (item_right_stats->NoiseIncreasePerShot * g_GlobalTimerDelta) / (item_right_stats->field_60 * 60.0f);
+    noise_reduction_max = ((g_CurrentPlayer->hands[GUNRIGHT].noise - item_right_stats->LoudnessMin) * g_GlobalTimerDelta) / (item_right_stats->field_64 * 60.0f);
 
     if (noise_reduction < noise_reduction_max)
     {
@@ -15784,13 +15785,13 @@ void sub_GAME_7F0671A4(void)
 
     g_CurrentPlayer->hands[GUNRIGHT].noise -= noise_reduction;
 
-    if (g_CurrentPlayer->hands[GUNRIGHT].noise < item_right->LoudnessMin)
+    if (g_CurrentPlayer->hands[GUNRIGHT].noise < item_right_stats->LoudnessMin)
     {
-        g_CurrentPlayer->hands[GUNRIGHT].noise = item_right->LoudnessMin;
+        g_CurrentPlayer->hands[GUNRIGHT].noise = item_right_stats->LoudnessMin;
     }
 
-    noise_reduction = (item_left->NoiseIncreasePerShot * g_GlobalTimerDelta) / (item_left->field_60 * 60.0f);
-    noise_reduction_max = ((g_CurrentPlayer->hands[GUNLEFT].noise - item_left->LoudnessMin) * g_GlobalTimerDelta) / (item_left->field_64 * 60.0f);
+    noise_reduction = (item_left_stats->NoiseIncreasePerShot * g_GlobalTimerDelta) / (item_left_stats->field_60 * 60.0f);
+    noise_reduction_max = ((g_CurrentPlayer->hands[GUNLEFT].noise - item_left_stats->LoudnessMin) * g_GlobalTimerDelta) / (item_left_stats->field_64 * 60.0f);
 
     if (noise_reduction < noise_reduction_max)
     {
@@ -15799,9 +15800,9 @@ void sub_GAME_7F0671A4(void)
 
     g_CurrentPlayer->hands[GUNLEFT].noise -= noise_reduction;
 
-    if (g_CurrentPlayer->hands[GUNLEFT].noise < item_left->LoudnessMin)
+    if (g_CurrentPlayer->hands[GUNLEFT].noise < item_left_stats->LoudnessMin)
     {
-        g_CurrentPlayer->hands[GUNLEFT].noise = item_left->LoudnessMin;
+        g_CurrentPlayer->hands[GUNLEFT].noise = item_left_stats->LoudnessMin;
     }
 }
 
@@ -15822,9 +15823,9 @@ s32 sub_GAME_7F0673B4(enum GUNHAND hand)
 void gunTickGameplay(s32 triggerOn)
 {
     struct unkown_gun_struct sp48z;
-    enum ITEM_IDS sp44;
-    enum ITEM_IDS sp40;
-    enum GUNHAND sp3C = GUNLEFT;
+    enum ITEM_IDS weapon_id_right;
+    enum ITEM_IDS weapon_id_left;
+    enum GUNHAND hand = GUNLEFT;
     struct rgba_u8 sp38;
 
 
@@ -15840,18 +15841,18 @@ void gunTickGameplay(s32 triggerOn)
 
     if (g_CurrentPlayer->field_FCC != 0)
     {
-        sp44 = getCurrentPlayerWeaponId(GUNRIGHT);
-        sp40 = getCurrentPlayerWeaponId(GUNLEFT);
+        weapon_id_right = getCurrentPlayerWeaponId(GUNRIGHT);
+        weapon_id_left = getCurrentPlayerWeaponId(GUNLEFT);
 
         g_CurrentPlayer->z_trigger_timer += g_ClockTimer;
 
-        if ((sp44 != ITEM_UNARMED) && (sp40 != ITEM_UNARMED))
+        if ((weapon_id_right != ITEM_UNARMED) && (weapon_id_left != ITEM_UNARMED))
         {
-            if ((bondwalkItemCheckBitflags(sp44, 0x80U) != 0) && (bondwalkItemCheckBitflags(sp40, 0x80U) != 0))
+            if ((bondwalkItemCheckBitflags(weapon_id_right, 0x80U) != 0) && (bondwalkItemCheckBitflags(weapon_id_left, 0x80U) != 0))
             {
                 if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_TRIGGER_SWAP_TICKS)
                 {
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = sp3C;
+                    sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
 
                     if (sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time)
                     {
@@ -15870,11 +15871,11 @@ void gunTickGameplay(s32 triggerOn)
                     sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 0;
                 }
             }
-            else if ((bondwalkItemCheckBitflags(sp44, 0x80U) != 0) || (bondwalkItemCheckBitflags(sp40, 0x80U) != 0))
+            else if ((bondwalkItemCheckBitflags(weapon_id_right, 0x80U) != 0) || (bondwalkItemCheckBitflags(weapon_id_left, 0x80U) != 0))
             {
                 if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_SINGLE_TRIGGER_SWAP_TICKS)
                 {
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = sp3C;
+                    sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
 
                     if ((sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) != 0) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time != 0)
                     {
@@ -15883,17 +15884,17 @@ void gunTickGameplay(s32 triggerOn)
                 }
                 else
                 {
-                    sp3C = bondwalkItemCheckBitflags(sp44, 0x80U) ? GUNRIGHT : GUNLEFT;
+                    hand = bondwalkItemCheckBitflags(weapon_id_right, 0x80U) ? GUNRIGHT : GUNLEFT;
 
-                    if (sub_GAME_7F0673B4(sp3C) != 0 || g_CurrentPlayer->hands[sp3C].weapon_hold_time != 0)
+                    if (sub_GAME_7F0673B4(hand) != 0 || g_CurrentPlayer->hands[hand].weapon_hold_time != 0)
                     {
-                        g_CurrentPlayer->field_FD8 = sp3C;
+                        g_CurrentPlayer->field_FD8 = hand;
                     }
                     else
                     {
-                        if ((sub_GAME_7F0673B4(1 - sp3C) != 0) || g_CurrentPlayer->hands[1 - sp3C].weapon_hold_time != 0)
+                        if ((sub_GAME_7F0673B4(1 - hand) != 0) || g_CurrentPlayer->hands[1 - hand].weapon_hold_time != 0)
                         {
-                            g_CurrentPlayer->field_FD8 = 1 - sp3C;
+                            g_CurrentPlayer->field_FD8 = 1 - hand;
                         }
                         else
                         {
@@ -15907,7 +15908,7 @@ void gunTickGameplay(s32 triggerOn)
             }
             else if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_SINGLE_TRIGGER_SWAP_TICKS)
             {
-                sp48z.arr[g_CurrentPlayer->field_FD8] = sp3C;
+                sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
 
                 if (sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time)
                 {
