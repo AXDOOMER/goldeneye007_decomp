@@ -2325,13 +2325,16 @@ typedef struct HealthDamageType { // time related idk
     s32 otherEndFrame;
 } HealthDamageType;
 
-typedef struct bondstruct_unk_80035904 {
-    u32 unk00;
-    coord3d unk04;
-    coord3d unk10;
-    f32 unk1C;
-    f32 unk20;
-} bondstruct_unk_80035904;
+/**
+ * First person weapon animation keyframe. Used for special weapons like the Throwing Knife and Taser.
+ */
+typedef struct Weapon1PTransformKeyframe {
+    u32 isFinalKey;
+    coord3d pos; // local space (+right/-left, +up/-down, +backward/-forward)
+    coord3d rot;
+    f32 interpParam; // Not sure, maybe some kind of interpolation between frames.
+    f32 duration;
+} Weapon1PTransformKeyframe;
 
 // placeholder while matching
 struct move_bond_temp_struct {

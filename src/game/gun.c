@@ -81,7 +81,13 @@ s32 dword_CODE_bss_80076A48;
 //	{0xFF, 0xFF, 0xFF, 0},
 //	{0xB2, 0x4D, 0x2E, 0}
 //};
-Lights1 D_80032440 = gdSPDefLights1(0x96, 0x96, 0x96, 0xff, 0xff, 0xff, 0xb2, 0x4d, 0x2e);
+/**
+ * Controls the lighting on environment mapped weapons such as the Cougar Magnum and Golden Gun.
+ */
+Lights1 g_WeaponEnvmapLight = gdSPDefLights1(
+    0x96, 0x96, 0x96,   // ambient RGB
+    0xff, 0xff, 0xff,   // diffuse RGB
+    0xb2, 0x4d, 0x2e);  // direction
 //D:80032454
 //u32 D_80032454 = 0;
 
@@ -168,8 +174,10 @@ u32 D_80034E0C[] = {
            0x0,           0x0
 };
 
-
-struct bondstruct_unk_80035904 D_80034F74[6] = {
+/**
+ * Throwing Knife animation for when Z is pressed/held down.
+ */
+struct Weapon1PTransformKeyframe throwKnifeDrawBackKeyframes[6] = {
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 0.0f, 4.5f}, { 5.576369f, 0.0f, 0.0f}, 0.5f, 8.0f},
@@ -178,7 +186,10 @@ struct bondstruct_unk_80035904 D_80034F74[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-struct bondstruct_unk_80035904 D_8003504C[6] = {
+/**
+ * Throwing Knife animation for when Z is released.
+ */
+struct Weapon1PTransformKeyframe throwKnifeReleaseKeyframes[6] = {
     { 0, { 0.0f, 0.0f, 4.5f}, { 5.576369f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 0.0f, 20.5f}, { 5.26209f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 3.0f, 5.5f}, { 0.031375f, 0.0f, 0.0f}, 0.5f, 8.0f},
@@ -187,7 +198,10 @@ struct bondstruct_unk_80035904 D_8003504C[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-struct bondstruct_unk_80035904 D_80035124[6] = {
+/**
+ * Keyframes for the Grenade which is strange since you cannot see it on screen. Perhaps the developers once intended to have a proper first person Grenade throwing animation?
+ */
+struct Weapon1PTransformKeyframe grenadeThrowKeyframes[6] = {
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 4.0f},
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 4.0f},
     { 0, { 10.0f, 12.5f, 17.5f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 4.0f},
@@ -196,7 +210,10 @@ struct bondstruct_unk_80035904 D_80035124[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-struct bondstruct_unk_80035904 D_800351FC[6] = {
+/**
+ * Keyframes for the Timed Mine, but changing the durations has no effect.
+ */
+struct Weapon1PTransformKeyframe timedMineThrowKeyframes[6] = {
     { 0, { 10.0f, 34.5f, 25.5f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
     { 0, { 10.0f, 34.5f, 25.5f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
     { 0, { 10.0f, 12.5f, 17.5f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
@@ -205,7 +222,10 @@ struct bondstruct_unk_80035904 D_800351FC[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-struct bondstruct_unk_80035904 D_800352D4[6] = {
+/**
+ * Keyframes for the Proximity Mine. Changing the durations does effect the time it takes to throw the mine, although nothing is seen on screen.
+ */
+struct Weapon1PTransformKeyframe proxMineThrowKeyframes[6] = {
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 4.0f},
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 4.0f},
     { 0, { 0.0f, 0.0f, 4.5f}, { 5.576369f, 0.0f, 0.0f}, 0.5f, 4.0f},
@@ -214,7 +234,11 @@ struct bondstruct_unk_80035904 D_800352D4[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-struct bondstruct_unk_80035904 D_800353AC[7] = {
+/**
+ * Keyframes for the Remote Mine. Changing the durations does not effect the time it takes to throw them,
+ * but it does change the time it takes before you can throw another.
+ */
+struct Weapon1PTransformKeyframe remoteMineThrowKeyframes[7] = {
     { 0, { 0.0f, 0.0f, 4.5f}, { 5.576369f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 0.0f, 20.5f}, { 5.26209f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 3.0f, 5.5f}, { 0.031375f, 0.0f, 0.0f}, 0.5f, 8.0f},
@@ -224,7 +248,10 @@ struct bondstruct_unk_80035904 D_800353AC[7] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-bondstruct_unk_80035904 D_800354A8[10] = {
+/**
+ * Unarmed attack when the hand starts at the right of the screen then chops downward and to the left.
+ */
+Weapon1PTransformKeyframe unarmedMeleeKeyframes1[10] = {
     { 0, {   0.0f,  0.0f, 0.0f }, {      0.0f,      0.0f,      0.0f }, 0.5f, 10.0f },
     { 0, {   0.0f,  0.0f, 0.0f }, {      0.0f,      0.0f,      0.0f }, 0.5f, 10.0f },
     { 0, {   6.0f, 23.0f, 0.0f }, {  5.91572f, 0.085832f, 0.219482f }, 0.5f, 10.0f },
@@ -237,7 +264,10 @@ bondstruct_unk_80035904 D_800354A8[10] = {
     { 1, {   0.0f,  0.0f, 0.0f }, {      0.0f,      0.0f,      0.0f }, 0.0f,  0.0f }
 };
 
-bondstruct_unk_80035904 D_80035610[10] = {
+/**
+ * Unarmed attack when the hand moves to the left of the screen then chops downward and to the right.
+ */
+Weapon1PTransformKeyframe unarmedMeleeKeyframes2[10] = {
        { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
        { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 10.0f},
        { 0, { -6.0f, 23.0f, 0.0f}, { 5.08683f, 6.131295f, 5.534376f}, 0.5f, 10.0f},
@@ -250,7 +280,10 @@ bondstruct_unk_80035904 D_80035610[10] = {
        { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-bondstruct_unk_80035904 D_80035778[11] = {
+/**
+ * Sniper swing right to left.
+ */
+Weapon1PTransformKeyframe sniperMeleeKeyframes1[11] = {
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 9.0f},
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, {9.5f, -0.5f, 3.5f}, { 0.291053f, 5.584375f, 6.212358f}, 0.5f, 8.0f},
@@ -264,7 +297,10 @@ bondstruct_unk_80035904 D_80035778[11] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-bondstruct_unk_80035904 D_80035904[11] = {
+/**
+ * Sniper swing left to right.
+ */
+Weapon1PTransformKeyframe sniperMeleeKeyframes2[11] = {
     { 0, {   0.0f,  0.0f,  0.0f }, {                 0.0f,                 0.0f,                 0.0f }, 0.5f,  9.0f },
     { 0, {   0.0f,  0.0f,  0.0f }, {                 0.0f,                 0.0f,                 0.0f }, 0.5f,  8.0f },
     { 0, { -15.5f,  0.5f, 15.0f }, {  0.9344959855079651f,  0.6256099939346313f,  0.2237969934940338f }, 0.5f,  8.0f },
@@ -278,7 +314,10 @@ bondstruct_unk_80035904 D_80035904[11] = {
     { 1, {   0.0f,  0.0f,  0.0f }, {                 0.0f,                 0.0f,                 0.0f }, 0.0f,  0.0f },
 };
 
-bondstruct_unk_80035904 D_80035A90[6] = {
+/**
+ * Animation when the Taser is lowering to fire position.
+ */
+Weapon1PTransformKeyframe taserFireKeyFrames[6] = {
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.5f, 8.0f},
     { 0, { 0.5f, -6.0f, -8.0f}, { 0.439468f, 0.278829f, 0.195178f}, 0.5f, 8.0f},
@@ -287,7 +326,10 @@ bondstruct_unk_80035904 D_80035A90[6] = {
     { 1, { 0.0f, 0.0f, 0.0f}, { 0.0f, 0.0f, 0.0f}, 0.0f, 0.0f}
 };
 
-bondstruct_unk_80035904 D_80035B68[6] = {
+/**
+ * Animation once the Taser has fired and goes back to idle position.
+ */
+Weapon1PTransformKeyframe taserRaiseKeyframes[6] = {
     {0, { -2.0f, -8.0f, -10.0f}, {1.101655f, 0.460753f, 0.570961f}, 0.5f, 8.0f},
     {0, { -2.0f, -8.0f, -10.0f}, {1.101655f, 0.460753f, 0.570961f}, 0.5f, 8.0f},
     {0, { 0.5f, -6.0f, -8.0f}, {0.439468f, 0.278829f, 0.195178f}, 0.5f, 8.0f},
@@ -517,7 +559,7 @@ u32 D_80036060 = 0;
 
 void bullet_path_from_screen_center(coord3d* arg0, coord3d* arg1, enum GUNHAND arg2);
 void sub_GAME_7F05EC1C(struct WeaponObjectRecord *arg0, struct coord3d *arg1, Mtxf *arg2, struct coord3d *arg3, s32 *arg4);
-s32 sub_GAME_7F05C6FC(struct bondstruct_unk_80035904 *, f32, Mtxf *, enum GUNHAND);
+s32 sub_GAME_7F05C6FC(struct Weapon1PTransformKeyframe *, f32, Mtxf *, enum GUNHAND);
 void analyzeGEKey(void);
 void give_weapon_case_items(void);
 struct ModelFileHeader * get_ptr_weapon_model_header_line(ITEM_IDS weapon);
@@ -547,8 +589,8 @@ void nullsub_73(void)
 #ifdef DEBUG
     osSyncPrintf("\t{");
     osSyncPrintf("0");
-    osSyncPrintf(",{%ff,%ff,%ff}", D_80035904[D_80034CA0].unk04.x, D_80035904[D_80034CA0].unk04.y, D_80035904[D_80034CA0].unk04.z);
-    osSyncPrintf(",{%ff,%ff,%ff}", D_80035904[D_80034CA0].unk10.x, D_80035904[D_80034CA0].unk10.y, D_80035904[D_80034CA0].unk10.z);
+    osSyncPrintf(",{%ff,%ff,%ff}", sniperMeleeKeyframes2[D_80034CA0].pos.x, sniperMeleeKeyframes2[D_80034CA0].pos.y, sniperMeleeKeyframes2[D_80034CA0].pos.z);
+    osSyncPrintf(",{%ff,%ff,%ff}", sniperMeleeKeyframes2[D_80034CA0].rot.x, sniperMeleeKeyframes2[D_80034CA0].rot.y, sniperMeleeKeyframes2[D_80034CA0].rot.z);
     osSyncPrintf(",0.5f,20.0f");
     osSyncPrintf("},\n");
 #endif
@@ -558,21 +600,21 @@ void nullsub_73(void)
 
 void sub_GAME_7F05C540(coord3d* pos)
 {
-    bondstruct_unk_80035904* temp_v0;
+    Weapon1PTransformKeyframe* temp_v0;
 
-    temp_v0 = &D_80035904[D_80034CA0];
-    temp_v0->unk04.x += pos->x;
-    temp_v0->unk04.y += pos->y;
-    temp_v0->unk04.z += pos->z;
+    temp_v0 = &sniperMeleeKeyframes2[D_80034CA0];
+    temp_v0->pos.x += pos->x;
+    temp_v0->pos.y += pos->y;
+    temp_v0->pos.z += pos->z;
 }
 
 
 void sub_GAME_7F05C594(Mtxf* mtxf)
 {
     Mtxf sp18;
-    matrix_4x4_set_rotation_around_xyz(&D_80035904[D_80034CA0].unk10, &sp18);
+    matrix_4x4_set_rotation_around_xyz(&sniperMeleeKeyframes2[D_80034CA0].rot, &sp18);
     matrix_4x4_multiply_in_place(mtxf, &sp18);
-    matrix_4x4_get_rotation_around_xyz(&sp18, &D_80035904[D_80034CA0].unk10);
+    matrix_4x4_get_rotation_around_xyz(&sp18, &sniperMeleeKeyframes2[D_80034CA0].rot);
 }
 
 
@@ -581,8 +623,8 @@ void sub_GAME_7F05C614(void)
     if (!cartridges_eject) { return; }
 
     g_CurrentPlayer->hands[0].field_92C = 1;
-    matrix_4x4_set_rotation_around_xyz(&D_80035904[D_80034CA0].unk10, (Mtxf* ) &g_CurrentPlayer->hands[0].field_8EC);
-    matrix_4x4_set_position(&D_80035904[D_80034CA0].unk04, (Mtxf* ) &g_CurrentPlayer->hands[0].field_8EC);
+    matrix_4x4_set_rotation_around_xyz(&sniperMeleeKeyframes2[D_80034CA0].rot, (Mtxf* ) &g_CurrentPlayer->hands[0].field_8EC);
+    matrix_4x4_set_position(&sniperMeleeKeyframes2[D_80034CA0].pos, (Mtxf* ) &g_CurrentPlayer->hands[0].field_8EC);
     cartridges_eject = 0;
 }
 
@@ -590,7 +632,7 @@ void sub_GAME_7F05C614(void)
 void sub_GAME_7F05C6B8(void)
 {
     D_80034CA0++;
-    if (D_80035904[D_80034CA0].unk00 & 1)
+    if (sniperMeleeKeyframes2[D_80034CA0].isFinalKey & 1)
     {
         D_80034CA0 = 0;
     }
@@ -11624,15 +11666,15 @@ glabel sub_GAME_7F062BE4
 /* 09782C 7F062CFC AC4C0000 */  sw    $t4, ($v0)
 /* 097830 7F062D00 AC4D0004 */  sw    $t5, 4($v0)
 /* 097834 7F062D04 3C0E0386 */  lui   $t6, (0x03860010 >> 16) # lui $t6, 0x386
-/* 097838 7F062D08 3C198003 */  lui   $t9, %hi(D_80032440 + 0x8)
-/* 09783C 7F062D0C 27392448 */  addiu $t9, %lo(D_80032440 + 0x8) # addiu $t9, $t9, 0x2448
+/* 097838 7F062D08 3C198003 */  lui   $t9, %hi(g_WeaponEnvmapLight + 0x8)
+/* 09783C 7F062D0C 27392448 */  addiu $t9, %lo(g_WeaponEnvmapLight + 0x8) # addiu $t9, $t9, 0x2448
 /* 097840 7F062D10 35CE0010 */  ori   $t6, (0x03860010 & 0xFFFF) # ori $t6, $t6, 0x10
 /* 097844 7F062D14 02002025 */  move  $a0, $s0
 /* 097848 7F062D18 AC6E0000 */  sw    $t6, ($v1)
 /* 09784C 7F062D1C AC790004 */  sw    $t9, 4($v1)
 /* 097850 7F062D20 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 097854 7F062D24 3C088003 */  lui   $t0, %hi(D_80032440)
-/* 097858 7F062D28 25082440 */  addiu $t0, %lo(D_80032440) # addiu $t0, $t0, 0x2440
+/* 097854 7F062D24 3C088003 */  lui   $t0, %hi(g_WeaponEnvmapLight)
+/* 097858 7F062D28 25082440 */  addiu $t0, %lo(g_WeaponEnvmapLight) # addiu $t0, $t0, 0x2440
 /* 09785C 7F062D2C 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 097860 7F062D30 26100008 */  addiu $s0, $s0, 8
 /* 097864 7F062D34 3C0F0384 */  lui   $t7, (0x03840010 >> 16) # lui $t7, 0x384
@@ -11910,15 +11952,15 @@ glabel sub_GAME_7F062BE4
 /* 095BB0 7F0631C0 AC4C0000 */  sw    $t4, ($v0)
 /* 095BB4 7F0631C4 AC4D0004 */  sw    $t5, 4($v0)
 /* 095BB8 7F0631C8 3C0E0386 */  lui   $t6, (0x03860010 >> 16) # lui $t6, 0x386
-/* 095BBC 7F0631CC 3C198003 */  lui   $t9, %hi(D_80032440 + 0x8) # $t9, 0x8003
-/* 095BC0 7F0631D0 2739D998 */  addiu $t9, %lo(D_80032440 + 0x8) # addiu $t9, $t9, -0x2668
+/* 095BBC 7F0631CC 3C198003 */  lui   $t9, %hi(g_WeaponEnvmapLight + 0x8) # $t9, 0x8003
+/* 095BC0 7F0631D0 2739D998 */  addiu $t9, %lo(g_WeaponEnvmapLight + 0x8) # addiu $t9, $t9, -0x2668
 /* 095BC4 7F0631D4 35CE0010 */  ori   $t6, (0x03860010 & 0xFFFF) # ori $t6, $t6, 0x10
 /* 095BC8 7F0631D8 02002025 */  move  $a0, $s0
 /* 095BCC 7F0631DC AC6E0000 */  sw    $t6, ($v1)
 /* 095BD0 7F0631E0 AC790004 */  sw    $t9, 4($v1)
 /* 095BD4 7F0631E4 3C180388 */  lui   $t8, (0x03880010 >> 16) # lui $t8, 0x388
-/* 095BD8 7F0631E8 3C088003 */  lui   $t0, %hi(D_80032440) # $t0, 0x8003
-/* 095BDC 7F0631EC 2508D990 */  addiu $t0, %lo(D_80032440) # addiu $t0, $t0, -0x2670
+/* 095BD8 7F0631E8 3C088003 */  lui   $t0, %hi(g_WeaponEnvmapLight) # $t0, 0x8003
+/* 095BDC 7F0631EC 2508D990 */  addiu $t0, %lo(g_WeaponEnvmapLight) # addiu $t0, $t0, -0x2670
 /* 095BE0 7F0631F0 37180010 */  ori   $t8, (0x03880010 & 0xFFFF) # ori $t8, $t8, 0x10
 /* 095BE4 7F0631F4 26100008 */  addiu $s0, $s0, 8
 /* 095BE8 7F0631F8 3C0F0384 */  lui   $t7, (0x03840010 >> 16) # lui $t7, 0x384
@@ -12358,17 +12400,17 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 /* 097E74 7F063344 354A0040 */  ori   $t2, (0x80000040 & 0xFFFF) # ori $t2, $t2, 0x40
 /* 097E78 7F063348 24430008 */  addiu $v1, $v0, 8
 /* 097E7C 7F06334C 3C0B0386 */  lui   $t3, (0x03860010 >> 16) # lui $t3, 0x386
-/* 097E80 7F063350 3C0C8003 */  lui   $t4, %hi(D_80032440 + 0x8)
+/* 097E80 7F063350 3C0C8003 */  lui   $t4, %hi(g_WeaponEnvmapLight + 0x8)
 /* 097E84 7F063354 AC4A0004 */  sw    $t2, 4($v0)
 /* 097E88 7F063358 AC490000 */  sw    $t1, ($v0)
-/* 097E8C 7F06335C 258C2448 */  addiu $t4, %lo(D_80032440 + 0x8) # addiu $t4, $t4, 0x2448
+/* 097E8C 7F06335C 258C2448 */  addiu $t4, %lo(g_WeaponEnvmapLight + 0x8) # addiu $t4, $t4, 0x2448
 /* 097E90 7F063360 356B0010 */  ori   $t3, (0x03860010 & 0xFFFF) # ori $t3, $t3, 0x10
 /* 097E94 7F063364 24640008 */  addiu $a0, $v1, 8
 /* 097E98 7F063368 AC6B0000 */  sw    $t3, ($v1)
 /* 097E9C 7F06336C AC6C0004 */  sw    $t4, 4($v1)
 /* 097EA0 7F063370 3C0D0388 */  lui   $t5, (0x03880010 >> 16) # lui $t5, 0x388
-/* 097EA4 7F063374 3C198003 */  lui   $t9, %hi(D_80032440)
-/* 097EA8 7F063378 27392440 */  addiu $t9, %lo(D_80032440) # addiu $t9, $t9, 0x2440
+/* 097EA4 7F063374 3C198003 */  lui   $t9, %hi(g_WeaponEnvmapLight)
+/* 097EA8 7F063378 27392440 */  addiu $t9, %lo(g_WeaponEnvmapLight) # addiu $t9, $t9, 0x2440
 /* 097EAC 7F06337C 35AD0010 */  ori   $t5, (0x03880010 & 0xFFFF) # ori $t5, $t5, 0x10
 /* 097EB0 7F063380 24900008 */  addiu $s0, $a0, 8
 /* 097EB4 7F063384 3C180384 */  lui   $t8, (0x03840010 >> 16) # lui $t8, 0x384
@@ -13907,7 +13949,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     enum ITEM_IDS var_s1;
     struct sfx3 sp7C;
     struct PropRecord *temp_v0_8;
-    bondstruct_unk_80035904 *sp74;
+    Weapon1PTransformKeyframe *sp74;
     f32 temp_f0_2;
     u32 var_a0_2;
     f32 temp_v1_9;
@@ -13962,7 +14004,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     enum ITEM_IDS temp_v0_3;
     struct sfx3 sp7C;
     enum ITEM_IDS var_s1;
-    bondstruct_unk_80035904 *sp74;
+    Weapon1PTransformKeyframe *sp74;
     struct PropRecord *temp_v0_8;
     f32 temp_f0_2;
     u32 var_a0_2;
@@ -14017,7 +14059,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     enum ITEM_IDS temp_v0_3;
     struct sfx3 sp7C;
     enum ITEM_IDS var_s1;
-    bondstruct_unk_80035904 *sp74;
+    Weapon1PTransformKeyframe *sp74;
     struct PropRecord *temp_v0_8;
     f32 temp_f0_2;
     u32 var_a0_2;
@@ -14092,6 +14134,9 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             if ((lvlGetControlsLockedFlag() == 0) && (g_CurrentPlayer->mpmenuon == 0))
             {
+                /**
+                 * D_80032458 is always 0 so this branch can never execute.
+                 */
                 if ((D_80032458 != 0) && (sp1C4 == 1) && (g_CurrentPlayer->ammoheldarr[sp1C4] <= 0))
                 {
                     g_CurrentPlayer->ammoheldarr[sp1C4] = 1;
@@ -14244,7 +14289,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             break;
         case ITEM_TASER:
             tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-            if (sub_GAME_7F05C6FC(D_80035A90, tempf, &temp_s0->field_8EC, arg0) != 0)
+            if (sub_GAME_7F05C6FC(taserFireKeyFrames, tempf, &temp_s0->field_8EC, arg0) != 0)
             {
                 temp_s0->field_92C = 1;
             }
@@ -14400,7 +14445,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             case ITEM_TASER:
                 if ((temp_s0->field_88C == 0) || (temp_s0->weapon_hold_time != 0))
                 {
-                    sub_GAME_7F05C6FC(D_80035B68, 0.0f, &temp_s0->field_8EC, arg0);
+                    sub_GAME_7F05C6FC(taserRaiseKeyframes, 0.0f, &temp_s0->field_8EC, arg0);
 
                     temp_s0->weapon_firing_status = 0;
                     temp_s0->field_92C = 1;
@@ -14523,7 +14568,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         if (var_s1 == ITEM_TASER)
         {
             tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-            if (sub_GAME_7F05C6FC(D_80035B68, tempf, &temp_s0->field_8EC, arg0) != 0)
+            if (sub_GAME_7F05C6FC(taserRaiseKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
             {
                 temp_s0->field_92C = 1;
             }
@@ -15269,11 +15314,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             if (g_CurrentPlayer->cur_item_weapon_getname == 0x11)
             {
-                sp74 = D_80035778;
+                sp74 = sniperMeleeKeyframes1;
             }
             else
             {
-                sp74 = D_800354A8;
+                sp74 = unarmedMeleeKeyframes1;
             }
 
             if ((temp_s0->when_detonating_mines_is_0 != 0x1F) && (temp_s0->field_890 >= WHEN_1E_FLD890))
@@ -15286,11 +15331,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         {
             if (g_CurrentPlayer->cur_item_weapon_getname == 0x11)
             {
-                sp74 = D_80035904;
+                sp74 = sniperMeleeKeyframes2;
             }
             else
             {
-                sp74 = D_80035610;
+                sp74 = unarmedMeleeKeyframes2;
             }
 
             if ((temp_s0->when_detonating_mines_is_0 != 0x21) && (temp_s0->field_890 >= WHEN_1E_FLD890))
@@ -15312,12 +15357,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
+    // Hand Grenade
     if (temp_s0->when_detonating_mines_is_0 == 0x1A)
     {
         if (temp_s0->weapon_ammo_in_magazine > 0)
         {
             tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-            if (sub_GAME_7F05C6FC(D_80035124, tempf, &temp_s0->field_8EC, arg0) != 0)
+            if (sub_GAME_7F05C6FC(grenadeThrowKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
             {
                 temp_s0->field_92C = 1;
             }
@@ -15339,10 +15385,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
+    // Timed Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1B)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-        if (sub_GAME_7F05C6FC(D_800351FC, tempf, &temp_s0->field_8EC, arg0) != 0)
+        if (sub_GAME_7F05C6FC(timedMineThrowKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
         {
             temp_s0->field_92C = 1;
         }
@@ -15366,11 +15413,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
             else
             {
                 tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-                if (sub_GAME_7F05C6FC(D_80034F74, tempf, &temp_s0->field_8EC, arg0) != 0)
+                if (sub_GAME_7F05C6FC(throwKnifeDrawBackKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
                 {
                     temp_s0->field_92C = 1;
                 }
-                else if (sub_GAME_7F05C6FC(D_8003504C, 0.0f, &temp_s0->field_8EC, arg0) != 0)
+                else if (sub_GAME_7F05C6FC(throwKnifeReleaseKeyframes, 0.0f, &temp_s0->field_8EC, arg0) != 0)
                 {
                     temp_s0->field_92C = 1;
                 }
@@ -15393,7 +15440,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         if (temp_s0->weapon_ammo_in_magazine > 0)
         {
             tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-            if (sub_GAME_7F05C6FC(D_80034F74, tempf, &temp_s0->field_8EC, arg0) != 0)
+            if (sub_GAME_7F05C6FC(throwKnifeDrawBackKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
             {
                 temp_s0->field_92C = 1;
             }
@@ -15418,7 +15465,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
     if (temp_s0->when_detonating_mines_is_0 == 0x19)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-        if (sub_GAME_7F05C6FC(D_8003504C, tempf, &temp_s0->field_8EC, arg0) != 0)
+        if (sub_GAME_7F05C6FC(throwKnifeReleaseKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
         {
             temp_s0->field_92C = 1;
         }
@@ -15431,12 +15478,13 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
+    // Proximity Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1C)
     {
         if ((temp_s0->weapon_ammo_in_magazine > 0) || (bondwalkItemCheckBitflags(var_s1, WEAPONSTATBITFLAG_CLICKY) != 0))
         {
             tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-            if (sub_GAME_7F05C6FC(D_800352D4, tempf, &temp_s0->field_8EC, arg0) != 0)
+            if (sub_GAME_7F05C6FC(proxMineThrowKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
             {
                 temp_s0->field_92C = 1;
             }
@@ -15458,10 +15506,11 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         }
     }
 
+    // Remote Mine
     if (temp_s0->when_detonating_mines_is_0 == 0x1D)
     {
         tempf = F_7F05C6FC_ARG1(temp_s0->field_890);
-        if (sub_GAME_7F05C6FC(D_800353AC, tempf, &temp_s0->field_8EC, arg0) != 0)
+        if (sub_GAME_7F05C6FC(remoteMineThrowKeyframes, tempf, &temp_s0->field_8EC, arg0) != 0)
         {
             temp_s0->field_92C = 1;
         }
