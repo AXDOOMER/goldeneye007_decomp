@@ -363,11 +363,11 @@ void initBONDdataforPlayer(s32 player_num)
 
     g_playerPointers[player_num]->gunposamplitude = 1.0f;
     g_playerPointers[player_num]->gunxamplitude = 1.0f;
-    g_playerPointers[player_num]->field_FC8 = 0;
-    g_playerPointers[player_num]->field_FCC = 0;
-    g_playerPointers[player_num]->field_FD0 = 0;
+    g_playerPointers[player_num]->trigger_released = 0;
+    g_playerPointers[player_num]->trigger_down = 0;
+    g_playerPointers[player_num]->prev_trigger_down = 0;
     g_playerPointers[player_num]->z_trigger_timer = 0;
-    g_playerPointers[player_num]->field_FD8 = 0;
+    g_playerPointers[player_num]->current_trigger_hand = 0;
     g_playerPointers[player_num]->tileColor.rgba[0] = 0xFF;
     g_playerPointers[player_num]->tileColor.rgba[1] = 0xFF;
     g_playerPointers[player_num]->tileColor.rgba[2] = 0xFF;

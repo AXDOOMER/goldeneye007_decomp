@@ -1072,7 +1072,7 @@ Gfx* lvlRender(Gfx* DL)
                 cheatIsActive(CHEAT_INFINITE_AMMO) != 0
                 && (
                     (getCurrentPlayerWeaponId(GUNRIGHT) != ITEM_WATCHLASER)
-                    || (g_CurrentPlayer->field_FCC == 0)
+                    || (g_CurrentPlayer->trigger_down == 0)
                 )
 #else /* VERSION_US */
                 cheatIsActive(CHEAT_INFINITE_AMMO) != 0

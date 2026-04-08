@@ -4022,17 +4022,9 @@ struct MoveData {
 };
 
 
-struct unkown_gun_struct
+struct gun_trigger_state
 {
-    union
-    {
-        u32 arr[2];
-        struct
-        {
-            s32 unk00;
-            s32 unk04;
-        };
-    };
+    s32 triggerOn[2]; // 0 = weapon trigger not held, 1 = weapon trigger held
 };
 
 struct setup_objective_text {

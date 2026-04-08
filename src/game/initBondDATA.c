@@ -281,11 +281,11 @@ void init_player_BONDdata_stats(void)
     g_CurrentPlayer->num_suicides = 0;
     g_CurrentPlayer->gunposamplitude = 1.0f;
     g_CurrentPlayer->gunxamplitude = 1.0f;
-    g_CurrentPlayer->field_FC8 = 0;
-    g_CurrentPlayer->field_FCC = 0;
-    g_CurrentPlayer->field_FD0 = 0;
+    g_CurrentPlayer->trigger_released = 0;
+    g_CurrentPlayer->trigger_down = 0;
+    g_CurrentPlayer->prev_trigger_down = 0;
     g_CurrentPlayer->z_trigger_timer = 0;
-    g_CurrentPlayer->field_FD8 = 0;
+    g_CurrentPlayer->current_trigger_hand = 0;
     g_CurrentPlayer->tileColor.rgba[0] = 0xFF;
     g_CurrentPlayer->tileColor.rgba[1] = 0xFF;
     g_CurrentPlayer->tileColor.rgba[2] = 0xFF;

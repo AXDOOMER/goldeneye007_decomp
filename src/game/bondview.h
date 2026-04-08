@@ -964,20 +964,24 @@ struct player
   struct hand hands[2];
   f32 gunposamplitude;
   f32 gunxamplitude;
-  s32 field_FC8;
+
+  // Whether the trigger was released this frame.
+  s32 trigger_released;
 
   /**
-   * Used in lvlRender method, in VERSION_JP build.
-   * Set to one when holding a grenade (primed to explode).
+   * Whether player is currently holding the trigger button.
    * Offset 0xfcc.
    */
-  s32 field_FCC;
+  s32 trigger_down;
 
-  // Seems to be copy of field_FCC
-  s32 field_FD0;
+  // Whether player was holding the trigger button on the previous frame.
+  s32 prev_trigger_down;
 
   s32 z_trigger_timer;
-  s32 field_FD8;
+
+  // Which hand will fire when the Z trigger is pressed.
+  s32 current_trigger_hand;
+  
   struct rgba_u8 tileColor;
   s32 resetshadecol;
 
@@ -1144,7 +1148,10 @@ struct player
   s32 equipcuritem;
   textoverride *textoverrides;
   gunheld gunheldarr[10];
+
+  // -1 for inactive, 0 or greater for active.
   s32 magnetattracttime;
+
   f32 swaytarget;
   f32 swayoffset0;
   f32 swayoffset2;

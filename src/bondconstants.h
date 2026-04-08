@@ -562,7 +562,9 @@ BITFLAG(RUNTIMEBITFLAG,
 #define WEAPONSTATBITFLAG_CLICKY 0x10
 #define WEAPONSTATBITFLAG_00000020 0x20
 #define WEAPONSTATBITFLAG_00000040 0x40
-#define WEAPONSTATBITFLAG_00000080 0x80
+
+/* dual wield prefers to fire one hand then the other (e.g. pistols) instead of both together (e.g. automatics) */
+#define WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE 0x80
 
 /* requires HOLD_AS_GUN as well */
 #define WEAPONSTATBITFLAG_ONLY_1_HANDED 0x100

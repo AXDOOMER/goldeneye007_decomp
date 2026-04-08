@@ -494,7 +494,7 @@ struct sfx2 D_80035E90 = { RICO_LASER2_SFX, RICO_LASER3_SFX };
 //D:80035E94
 struct sfx3 D_80035E94 = { KNIFE_THROW1_SFX, KNIFE_THROW2_SFX, KNIFE_THROW3_SFX };
 //D:80035E9C
-struct unkown_gun_struct D_80035E9C = { 0, 0 };
+struct gun_trigger_state g_ZeroTriggerState = { 0, 0 };
 //D:80035EA0
 //u32 D_80035EA0 = 0;
 //D:80035EA4
@@ -14155,7 +14155,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 }
                 else
                 {
-                    if (g_CurrentPlayer->field_FC8 != 0)
+                    if (g_CurrentPlayer->trigger_released != 0)
                     {
                         temp_v0_3 = get_item_in_hand_or_watch_menu(1 - arg0);
 
@@ -14889,7 +14889,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
 
             sub_GAME_7F0649D8(arg0);
 
-            g_CurrentPlayer->field_FC8 = 0;
+            g_CurrentPlayer->trigger_released = 0;
 
             if ((g_ClockTimer > 0)
                 && (g_CurrentPlayer->unknown != 1)
@@ -15128,7 +15128,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
         if (temp_s0->field_88C == 0)
         {
             sub_GAME_7F0649D8(arg0);
-            g_CurrentPlayer->field_FC8 = 0;
+            g_CurrentPlayer->trigger_released = 0;
         }
 
         if ((temp_s0->field_890 >= WHEN_C_FLD890)
@@ -15216,7 +15216,7 @@ void handle_weapon_id_values_possibly_1st_person_animation(enum GUNHAND arg0, s3
                 sub_GAME_7F09B398(arg0);
             }
             sub_GAME_7F0649D8(arg0);
-            g_CurrentPlayer->field_FC8 = 0;
+            g_CurrentPlayer->trigger_released = 0;
         }
 
         if ((temp_s0->field_890 >= WHEN_10_FLD890)
@@ -15739,7 +15739,7 @@ f32 getCurrentPlayerNoise(GUNHAND hand)
 }
 
 
-void sub_GAME_7F0671A4(void)
+void gunTickNoise(void)
 {
     enum ITEM_IDS weapon_id_right;
     enum ITEM_IDS weapon_id_left;
@@ -15806,148 +15806,179 @@ void sub_GAME_7F0671A4(void)
     }
 }
 
-
-
-s32 sub_GAME_7F0673B4(enum GUNHAND hand)
+/**
+ * Returns true if the hand has a melee weapon or has ammo in the magazine.
+ */
+s32 gunCanUseWeapon(enum GUNHAND hand)
 {
     return (get_ammo_type_for_weapon(getCurrentPlayerWeaponId(hand)) == 0)
         || (g_CurrentPlayer->hands[hand].weapon_ammo_in_magazine > 0);
 }
 
 
-
 /**
  * US address 7F067420.
  * Perfect Dark method bgunTickGameplay.
+ * 
+ * Handles logic for single gun and dual wield trigger presses.
+ * Calls updates to first person gun animations, gun model loading, noise to AI, and updating color from collision tiles.
+ * Also handles the Watch Magnet Attract hum noise.
 */
 void gunTickGameplay(s32 triggerOn)
 {
-    struct unkown_gun_struct sp48z;
+    struct gun_trigger_state trigger_state;
     enum ITEM_IDS weapon_id_right;
     enum ITEM_IDS weapon_id_left;
     enum GUNHAND hand = GUNLEFT;
-    struct rgba_u8 sp38;
+    struct rgba_u8 weapon_color;
 
+    trigger_state = g_ZeroTriggerState;
 
-    sp48z = D_80035E9C;
+    // Save previous trigger state.
+    g_CurrentPlayer->prev_trigger_down = g_CurrentPlayer->trigger_down;
 
-    g_CurrentPlayer->field_FD0 = g_CurrentPlayer->field_FCC;
-    g_CurrentPlayer->field_FCC = triggerOn;
+    // Save raw trigger state.
+    g_CurrentPlayer->trigger_down = triggerOn;
 
-    if ((g_CurrentPlayer->field_FCC == 0) && (g_CurrentPlayer->field_FD0 != 0))
+    if ((g_CurrentPlayer->trigger_down == 0) && (g_CurrentPlayer->prev_trigger_down != 0))
     {
-        g_CurrentPlayer->field_FC8 = 1;
+        g_CurrentPlayer->trigger_released = 1;
     }
 
-    if (g_CurrentPlayer->field_FCC != 0)
+    // Z button pressed this frame.
+    if (g_CurrentPlayer->trigger_down != 0)
     {
         weapon_id_right = getCurrentPlayerWeaponId(GUNRIGHT);
         weapon_id_left = getCurrentPlayerWeaponId(GUNLEFT);
 
         g_CurrentPlayer->z_trigger_timer += g_ClockTimer;
 
+        // Dual wielding.
         if ((weapon_id_right != ITEM_UNARMED) && (weapon_id_left != ITEM_UNARMED))
         {
-            if ((bondwalkItemCheckBitflags(weapon_id_right, 0x80U) != 0) && (bondwalkItemCheckBitflags(weapon_id_left, 0x80U) != 0))
+            // Both guns prefer to take turns firing in dual wield.
+            if ((bondwalkItemCheckBitflags(weapon_id_right, WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE) != 0) && (bondwalkItemCheckBitflags(weapon_id_left, WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE) != 0))
             {
+                // Trigger has been held longer than 20 ticks on NTSC (24 on PAL).
                 if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_TRIGGER_SWAP_TICKS)
                 {
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
+                    // 'hand' still has its default value here, which behaves like trigger-on.
+                    trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = hand;
 
-                    if (sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time)
+                    // If the gun in the other hand is usable or has been held for any amount of time, depress its trigger as well.
+                    if (gunCanUseWeapon(1 - g_CurrentPlayer->current_trigger_hand) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->current_trigger_hand].weapon_hold_time)
                     {
-                        sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 1;
+                        trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 1;
                     }
                 }
+                // Z has been held for less than or equal to 20 ticks on NTSC (24 on PAL).
                 else
                 {
-                    if ((g_CurrentPlayer->field_FD0 == 0) &&
-                        ((sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) != 0) || (sub_GAME_7F0673B4(g_CurrentPlayer->field_FD8) == 0)))
+                    if ((g_CurrentPlayer->prev_trigger_down == 0) &&
+                        ((gunCanUseWeapon(1 - g_CurrentPlayer->current_trigger_hand) != 0) || (gunCanUseWeapon(g_CurrentPlayer->current_trigger_hand) == 0)))
                     {
-                        g_CurrentPlayer->field_FD8 = 1 - g_CurrentPlayer->field_FD8;
+                        g_CurrentPlayer->current_trigger_hand = 1 - g_CurrentPlayer->current_trigger_hand;
                     }
 
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = 1;
-                    sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 0;
+                    trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = 1;
+                    trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 0;
                 }
             }
-            else if ((bondwalkItemCheckBitflags(weapon_id_right, 0x80U) != 0) || (bondwalkItemCheckBitflags(weapon_id_left, 0x80U) != 0))
+            /**
+             * One gun prefers to take turns firing in dual wield.
+             * This doesn't happen much in the vanilla US version with the notable
+             * exception of equipping Xenia's RC-P90 and Grenade Launcher in Jungle
+            */
+            else if ((bondwalkItemCheckBitflags(weapon_id_right, WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE) != 0) || (bondwalkItemCheckBitflags(weapon_id_left, WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE) != 0))
             {
+                // Z has been held more than 30 ticks on NTSC (36 for PAL), depress trigger on both guns.
                 if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_SINGLE_TRIGGER_SWAP_TICKS)
                 {
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
+                    trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = hand;
 
-                    if ((sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) != 0) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time != 0)
+                    if ((gunCanUseWeapon(1 - g_CurrentPlayer->current_trigger_hand) != 0) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->current_trigger_hand].weapon_hold_time != 0)
                     {
-                        sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 1;
+                        trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 1;
                     }
                 }
+                // Before the hold threshold (30 ticks NTSC or 36 PAL), prefer the hand whose weapon uses alternating dual wield fire.
                 else
                 {
-                    hand = bondwalkItemCheckBitflags(weapon_id_right, 0x80U) ? GUNRIGHT : GUNLEFT;
+                    hand = bondwalkItemCheckBitflags(weapon_id_right, WEAPONSTATBITFLAG_DUAL_WIELD_ALTERNATING_FIRE) ? GUNRIGHT : GUNLEFT;
 
-                    if (sub_GAME_7F0673B4(hand) != 0 || g_CurrentPlayer->hands[hand].weapon_hold_time != 0)
+                    if (gunCanUseWeapon(hand) != 0 || g_CurrentPlayer->hands[hand].weapon_hold_time != 0)
                     {
-                        g_CurrentPlayer->field_FD8 = hand;
+                        g_CurrentPlayer->current_trigger_hand = hand;
                     }
                     else
                     {
-                        if ((sub_GAME_7F0673B4(1 - hand) != 0) || g_CurrentPlayer->hands[1 - hand].weapon_hold_time != 0)
+                        if ((gunCanUseWeapon(1 - hand) != 0) || g_CurrentPlayer->hands[1 - hand].weapon_hold_time != 0)
                         {
-                            g_CurrentPlayer->field_FD8 = 1 - hand;
+                            g_CurrentPlayer->current_trigger_hand = 1 - hand;
                         }
                         else
                         {
-                            g_CurrentPlayer->field_FD8 = 1 - g_CurrentPlayer->field_FD8;
+                            g_CurrentPlayer->current_trigger_hand = 1 - g_CurrentPlayer->current_trigger_hand;
                         }
                     }
 
-                    sp48z.arr[g_CurrentPlayer->field_FD8] = 1;
-                    sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 0;
+                    trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = 1;
+                    trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 0;
                 }
             }
+            /**
+             * Neither weapon uses alternating dual wield fire.
+             * Once the hold threshold is exceeded, allow the off-hand to become active too.
+             */
             else if (g_CurrentPlayer->z_trigger_timer > DUAL_WIELD_SINGLE_TRIGGER_SWAP_TICKS)
             {
-                sp48z.arr[g_CurrentPlayer->field_FD8] = hand;
+                trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = hand;
 
-                if (sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->field_FD8].weapon_hold_time)
+                if (gunCanUseWeapon(1 - g_CurrentPlayer->current_trigger_hand) || g_CurrentPlayer->hands[1 - g_CurrentPlayer->current_trigger_hand].weapon_hold_time)
                 {
-                    sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 1;
+                    trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 1;
                 }
             }
+            /**
+             * Neither weapon uses alternating dual wield fire.
+             * On a fresh Z press, switch lead hands if the other hand is usable or the current hand cannot be used.
+             * The lead hand continues being the lead hand.
+             */
             else
             {
-                if ((g_CurrentPlayer->field_FD0 == 0) &&
-                    ((sub_GAME_7F0673B4(1 - g_CurrentPlayer->field_FD8) != 0) || (sub_GAME_7F0673B4(g_CurrentPlayer->field_FD8) == 0)))
+                if ((g_CurrentPlayer->prev_trigger_down == 0) &&
+                    ((gunCanUseWeapon(1 - g_CurrentPlayer->current_trigger_hand) != 0) || (gunCanUseWeapon(g_CurrentPlayer->current_trigger_hand) == 0)))
                 {
-                    g_CurrentPlayer->field_FD8 = 1 - g_CurrentPlayer->field_FD8;
+                    g_CurrentPlayer->current_trigger_hand = 1 - g_CurrentPlayer->current_trigger_hand;
                 }
 
-                sp48z.arr[g_CurrentPlayer->field_FD8] = 1;
-                sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 0;
+                trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = 1;
+                trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 0;
             }
         }
+        // Not dual wielding.
         else
         {
-            if ((getCurrentPlayerWeaponId(g_CurrentPlayer->field_FD8) == ITEM_UNARMED) && (getCurrentPlayerWeaponId(1 - g_CurrentPlayer->field_FD8) != ITEM_UNARMED))
+            if ((getCurrentPlayerWeaponId(g_CurrentPlayer->current_trigger_hand) == ITEM_UNARMED) && (getCurrentPlayerWeaponId(1 - g_CurrentPlayer->current_trigger_hand) != ITEM_UNARMED))
             {
-                g_CurrentPlayer->field_FD8 = 1 - g_CurrentPlayer->field_FD8;
+                g_CurrentPlayer->current_trigger_hand = 1 - g_CurrentPlayer->current_trigger_hand;
             }
 
-            sp48z.arr[g_CurrentPlayer->field_FD8] = 1;
-            sp48z.arr[1 - g_CurrentPlayer->field_FD8] = 0;
+            trigger_state.triggerOn[g_CurrentPlayer->current_trigger_hand] = 1;
+            trigger_state.triggerOn[1 - g_CurrentPlayer->current_trigger_hand] = 0;
         }
     }
+    // Z button not pressed. Reset the trigger timer.
     else
     {
         g_CurrentPlayer->z_trigger_timer = 0;
     }
 
-    handle_weapon_id_values_possibly_1st_person_animation(0, sp48z.arr[0]);
-    handle_weapon_id_values_possibly_1st_person_animation(1, sp48z.arr[1]);
+    handle_weapon_id_values_possibly_1st_person_animation(0, trigger_state.triggerOn[0]); // Right hand
+    handle_weapon_id_values_possibly_1st_person_animation(1, trigger_state.triggerOn[1]); // Left hand
     used_to_load_1st_person_model_on_demand(0);
     used_to_load_1st_person_model_on_demand(1);
-    sub_GAME_7F0671A4();
+    gunTickNoise();
 
     if (g_CurrentPlayer->resetshadecol)
     {
@@ -15956,8 +15987,8 @@ void gunTickGameplay(s32 triggerOn)
     }
     else
     {
-        set_color_shading_from_tile(get_curplayer_positiondata(), &sp38);
-        update_color_shading(&g_CurrentPlayer->tileColor, &sp38);
+        set_color_shading_from_tile(get_curplayer_positiondata(), &weapon_color);
+        update_color_shading(&g_CurrentPlayer->tileColor, &weapon_color);
     }
 
     bondinvIncrementHeldTime(getCurrentPlayerWeaponId(GUNRIGHT), getCurrentPlayerWeaponId(GUNLEFT));
@@ -15966,21 +15997,22 @@ void gunTickGameplay(s32 triggerOn)
 
     if (g_CurrentPlayer->magnetattracttime >= 0)
     {
-        struct hand *sp34 = &g_CurrentPlayer->hands[0];
+        struct hand *hand_right = &g_CurrentPlayer->hands[0];
 
         g_CurrentPlayer->magnetattracttime += g_ClockTimer;
 
         if (g_CurrentPlayer->magnetattracttime < WATCH_SOUND_DURATION_TICKS)
         {
-            if (sp34->audioHandle == NULL
-                || sndGetPlayingState((struct ALSoundState *) sp34->audioHandle) == 0)
+            // Start or restart the hum sound if needed
+            if (hand_right->audioHandle == NULL
+                || sndGetPlayingState((struct ALSoundState *) hand_right->audioHandle) == 0)
             {
                 if (lvlGetControlsLockedFlag() == 0)
                 {
                     sndPlaySfx(
                         (struct ALBankAlt_s *) g_musicSfxBufferPtr,
                         MAGNETIC_HUM_SFX,
-                        (struct ALSoundState *) &sp34->audioHandle);
+                        (struct ALSoundState *) &hand_right->audioHandle);
                 }
             }
         }
@@ -15988,21 +16020,16 @@ void gunTickGameplay(s32 triggerOn)
         {
             g_CurrentPlayer->magnetattracttime = -1;
 
-            if (sp34->audioHandle != NULL)
+            if (hand_right->audioHandle != NULL)
             {
-                if (sndGetPlayingState((struct ALSoundState *) sp34->audioHandle) != 0)
+                if (sndGetPlayingState((struct ALSoundState *) hand_right->audioHandle) != 0)
                 {
-                    sndDeactivate((struct ALSoundState *) sp34->audioHandle);
+                    sndDeactivate((struct ALSoundState *) hand_right->audioHandle);
                 }
             }
         }
     }
 }
-
-
-
-
-
 
 
 void gunSetAimType(s32 param_1)
