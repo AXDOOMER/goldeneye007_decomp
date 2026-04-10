@@ -1639,7 +1639,7 @@ glabel chraiDefaultWeaponFireHandler
 /* 070384 7F03B854 10400004 */  beqz  $v0, .L7F03B868
 /* 070388 7F03B858 8FA40534 */   lw    $a0, 0x534($sp)
 /* 07038C 7F03B85C 87A50538 */  lh    $a1, 0x538($sp)
-/* 070390 7F03B860 0FC2EF83 */  jal   sub_GAME_7F0BBE0C
+/* 070390 7F03B860 0FC2EF83 */  jal   lightFixtureBreak
 /* 070394 7F03B864 8FA60544 */   lw    $a2, 0x544($sp)
 .L7F03B868:
 /* 070398 7F03B868 10000014 */  b     .L7F03B8BC
