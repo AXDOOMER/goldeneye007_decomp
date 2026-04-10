@@ -4,50 +4,48 @@
 #include <bondtypes.h>
 
 typedef struct s_shattered_window_piece {
-    s32 piece;
-    f32 x;
-    f32 y;
-    f32 z;
-    f32 field_0x10;
-    f32 field_0x14;
-    f32 field_0x18;
-    f32 field_0x1c;
-    f32 field_0x20;
-    f32 field_0x24;
-    f32 field_0x28;
-    f32 field_0x2c;
-    f32 field_0x30;
+    s32 active;
+    coord3d pos;        /* 0x04 */
+    coord3d rot;        /* 0x10 */
+    coord3d velocity;   /* 0x1c */
+    coord3d angvel;     /* 0x28 */
     u32 field_0x34;
-    s16 field_0x38;
-    s16 field_0x3a;
-    s16 field_0x3c;
-    s16 field_0x3e;
-    s16 field_0x40;
-    s16 field_0x42;
-    u8 field_0x44;
-    u8 field_0x45;
-    u8 field_0x46;
-    u8 field_0x47;
-    s16 field_0x48;
-    s16 field_0x4a;
-    s16 field_0x4c;
-    s16 field_0x4e;
-    s16 field_0x50;
-    s16 field_0x52;
-    u8 field_0x54;
-    u8 field_0x55;
-    u8 field_0x56;
-    u8 field_0x57;
-    s16 field_0x58;
-    s16 field_0x5a;
-    s16 field_0x5c;
-    s16 field_0x5e;
-    s16 field_0x60;
-    s16 field_0x62;
-    u8 field_0x64;
-    u8 field_0x65;
-    u8 field_0x66;
-    u8 field_0x67;
+
+    /**
+     * 3 inline 16-byte vertices start here 
+     */
+    s16 v1x;
+    s16 v1y;
+    s16 v1z;
+    s16 v1flag;
+    s16 v1s;
+    s16 v1t;
+    u8  v1r;
+    u8  v1g;
+    u8  v1b;
+    u8  v1a;
+
+    s16 v2x;
+    s16 v2y;
+    s16 v2z;
+    s16 v2flag;
+    s16 v2s;
+    s16 v2t;
+    u8  v2r;
+    u8  v2g;
+    u8  v2b;
+    u8  v2a;
+
+    s16 v3x;
+    s16 v3y;
+    s16 v3z;
+    s16 v3flag;
+    s16 v3s;
+    s16 v3t;
+    u8  v3r;
+    u8  v3g;
+    u8  v3b;
+    u8  v3a;
 } s_shattered_window_piece;
 
 typedef struct bondstruct_unk_8007A170 {
@@ -93,7 +91,7 @@ Gfx *sub_GAME_7F0A3B40(Gfx *gdl, s32 *arg1);
 Gfx * sub_GAME_7F0A3330(Gfx *arg0, void * arg1, s32 arg2);
 void sub_GAME_7F0A2F30(struct damage_display_parent *arg0, s32 arg1, s32 arg2, f32 arg3);
 struct WatchVertex *setup_watch_rectangles(struct WatchVertex *vtx, s32 startx, s32 startz, s32 width, s32 height, s32 horizontal_offset, s32 vertical_offset);
-void sub_GAME_7F0A2160(coord3d * arg0, f32 arg1, f32 arg2);
+void glassCreateShard(coord3d * pos, f32 rotX, f32 shard_size);
 void sub_GAME_7F0A3EA0(void);
 
 void update_bullet_sparks_and_dust_clouds(void);

@@ -389,7 +389,7 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 tri_type, s32 room_index)
             calc_coord.x = ((coord2.AsArray[0] + (diff_x_12 * dist_tween)) * get_room_data_float2()) + origin.f[0];
             calc_coord.y = ((coord2.AsArray[1] + (diff_y_12 * dist_tween)) * get_room_data_float2()) + origin.f[1];
             calc_coord.z = ((coord2.AsArray[2] + (diff_z_12 * dist_tween)) * get_room_data_float2()) + origin.f[2];
-            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+            glassCreateShard(&calc_coord, 0.0f, 10.0f);
         }
 
         for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += inv_dist_23)
@@ -397,7 +397,7 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 tri_type, s32 room_index)
             calc_coord.x = ((coord3.AsArray[0] + (diff_x_23 * dist_tween)) * get_room_data_float2()) + origin.f[0];
             calc_coord.y = ((coord3.AsArray[1] + (diff_y_23 * dist_tween)) * get_room_data_float2()) + origin.f[1];
             calc_coord.z = ((coord3.AsArray[2] + (diff_z_23 * dist_tween)) * get_room_data_float2()) + origin.f[2];
-            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+            glassCreateShard(&calc_coord, 0.0f, 10.0f);
         }
 
         for (dist_tween = 0.0f; dist_tween < 1.0f; dist_tween += inv_dist_13)
@@ -405,7 +405,7 @@ void sub_GAME_7F0BBE0C(Gfx * gfx, u32 tri_type, s32 room_index)
             calc_coord.x = ((coord3.AsArray[0] + (diff_x_13 * dist_tween)) * get_room_data_float2()) + origin.f[0];
             calc_coord.y = ((coord3.AsArray[1] + (diff_y_13 * dist_tween)) * get_room_data_float2()) + origin.f[1];
             calc_coord.z = ((coord3.AsArray[2] + (diff_z_13 * dist_tween)) * get_room_data_float2()) + origin.f[2];
-            sub_GAME_7F0A2160(&calc_coord, 0.0f, 10.0f);
+            glassCreateShard(&calc_coord, 0.0f, 10.0f);
         }
 
         for (gfx2 = light_fixture_table[i].ptr_start_pertinent_DL; gfx2 < light_fixture_table[i].ptr_end_pertinent_DL; gfx2++)

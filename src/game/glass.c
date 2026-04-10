@@ -6,13 +6,13 @@
 #include "lv.h"
 
 #ifndef VERSION_EU
-#define SCALAR_1_7F0A2160 1.5f
-#define SCALAR_2_7F0A2160 3.0f
-#define SCALAR_3_7F0A2160 0.1f
+#define SHARD_HORIZ_VEL_SCALE 1.5f
+#define SHARD_VERT_VEL_SCALE 3.0f
+#define SHARD_ANGVEL_SCALE 0.1f
 #else
-#define SCALAR_1_7F0A2160 1.8f
-#define SCALAR_2_7F0A2160 3.6f
-#define SCALAR_3_7F0A2160 0.12f
+#define SHARD_HORIZ_VEL_SCALE 1.8f
+#define SHARD_VERT_VEL_SCALE 3.6f
+#define SHARD_ANGVEL_SCALE 0.12f
 #endif
 
 #define UNK_8007A170_MAX 20
@@ -306,7 +306,7 @@ glabel sub_GAME_7F0A1DA0
 /* 0D6C24 7F0A20F4 461C5180 */  add.s $f6, $f10, $f28
 /* 0D6C28 7F0A20F8 46103482 */  mul.s $f18, $f6, $f16
 /* 0D6C2C 7F0A20FC 44069000 */  mfc1  $a2, $f18
-/* 0D6C30 7F0A2100 0FC28858 */  jal   sub_GAME_7F0A2160
+/* 0D6C30 7F0A2100 0FC28858 */  jal   glassCreateShard
 /* 0D6C34 7F0A2104 00000000 */   nop
 /* 0D6C38 7F0A2108 26100001 */  addiu $s0, $s0, 1
 /* 0D6C3C 7F0A210C 5611FFD1 */  bnel  $s0, $s1, .L7F0A2054
@@ -335,65 +335,85 @@ glabel sub_GAME_7F0A1DA0
 )
 #endif
 
-
-void sub_GAME_7F0A2160(coord3d* arg0, f32 arg1, f32 arg2)
+/**
+ * Creates a triangular shard of glass.
+ */
+void glassCreateShard(coord3d* pos, f32 rotX, f32 shard_size)
 {
-    u32 temp_v0;
-    f32 sp50;
-    f32 temp_f24;
-    u8 field67;
+    /**
+     * Horizontal X velocity component with randomness. Range: [-1.0, +1.0]
+     */
+    f32 randSymmetricX = (2.0f * (randomGetNext() * (1.0f / (f32)UINT_MAX))) - 1.0f;
 
-    temp_f24 = (2.0f * (randomGetNext() * (1.0f / (f32)UINT_MAX))) - 1.0f;
-    sp50 = (randomGetNext() * (1.0f / (f32)UINT_MAX) * 1.12f) - .12f;
-    temp_v0 = randomGetNext();
+    /**
+     * Vertical velocity component. Range: [ -0.12, +1.0]
+     * Biased so that most shards get an upward push but some have a chance of getting a small downward push.
+     */
+    f32 randBiasedY = (randomGetNext() * (1.0f / (f32)UINT_MAX) * 1.12f) - .12f;
+    
+    /**
+     * Horizontal Z velocity component with randomness. Range: [-1.0, +1.0]
+     */
+    f32 randSymmetricZ = (2.0f * (randomGetNext() * (1.0f / (f32)UINT_MAX))) - 1.0f;
 
-    ptr_shattered_window_pieces[g_NextShardNum].piece = 1;
-    ptr_shattered_window_pieces[g_NextShardNum].x = arg0->x;
-    ptr_shattered_window_pieces[g_NextShardNum].y = arg0->y;
-    ptr_shattered_window_pieces[g_NextShardNum].z = arg0->z;
+    u8 alpha; // Shard opacity
 
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x1c = temp_f24 * SCALAR_1_7F0A2160;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x20 = sp50 * SCALAR_2_7F0A2160;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x24 = ((2.0f * (temp_v0 * (1.0f / (f32)UINT_MAX))) - 1.0f) * SCALAR_1_7F0A2160;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x38 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x3a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x3c = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x48 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * arg2;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x4a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x4c = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x58 = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x5a = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -arg2;
+    ptr_shattered_window_pieces[g_NextShardNum].active = 1;
+    ptr_shattered_window_pieces[g_NextShardNum].pos.x = pos->x;
+    ptr_shattered_window_pieces[g_NextShardNum].pos.y = pos->y;
+    ptr_shattered_window_pieces[g_NextShardNum].pos.z = pos->z;
 
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x5c = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x40 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x42 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x50 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x52 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x60 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x62 = 0;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x44 = 5;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x45 = 5;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x46 = 0x7E;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x54 = 5;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x55 = 0xFB;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x56 = 0x7E;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x64 = 0xFB;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x65 = 0xFB;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x66 = 0x7E;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x67 = 0xFF;
+    ptr_shattered_window_pieces[g_NextShardNum].velocity.x= randSymmetricX * SHARD_HORIZ_VEL_SCALE;
+    ptr_shattered_window_pieces[g_NextShardNum].velocity.y = randBiasedY * SHARD_VERT_VEL_SCALE;
+    ptr_shattered_window_pieces[g_NextShardNum].velocity.z = randSymmetricZ * SHARD_HORIZ_VEL_SCALE;
 
-    field67 = ptr_shattered_window_pieces[g_NextShardNum].field_0x67;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x57 = field67;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x47 = field67;
+    ptr_shattered_window_pieces[g_NextShardNum].v1x = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v1y = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v1z = 0;
 
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x10 = arg1;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x14 = 0.0f;
+    ptr_shattered_window_pieces[g_NextShardNum].v2x = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v2y = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v2z = 0;
 
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x18 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+    ptr_shattered_window_pieces[g_NextShardNum].v3x = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v3y = ((randomGetNext() * (1.0f / (f32)UINT_MAX) * 0.5f) + 1.0f) * -shard_size;
+    ptr_shattered_window_pieces[g_NextShardNum].v3z = 0;
+    
+    ptr_shattered_window_pieces[g_NextShardNum].v1s = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].v1t = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].v2s = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].v2t = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].v3s = 0;
+    ptr_shattered_window_pieces[g_NextShardNum].v3t = 0;
 
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x28 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x2c = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
-    ptr_shattered_window_pieces[g_NextShardNum].field_0x30 = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SCALAR_3_7F0A2160;
+    /**
+     * Create a colored gradient over the verts for environment mapping.
+     */
+    ptr_shattered_window_pieces[g_NextShardNum].v1r = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].v1g = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].v1b = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].v2r = 5;
+    ptr_shattered_window_pieces[g_NextShardNum].v2g = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].v2b = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].v3r = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].v3g = 0xFB;
+    ptr_shattered_window_pieces[g_NextShardNum].v3b = 0x7E;
+    ptr_shattered_window_pieces[g_NextShardNum].v3a = 0xFF;
+
+    alpha = ptr_shattered_window_pieces[g_NextShardNum].v3a;
+    ptr_shattered_window_pieces[g_NextShardNum].v2a = alpha;
+    ptr_shattered_window_pieces[g_NextShardNum].v1a = alpha;
+
+    ptr_shattered_window_pieces[g_NextShardNum].rot.x = rotX;
+    ptr_shattered_window_pieces[g_NextShardNum].rot.y = 0.0f;
+    ptr_shattered_window_pieces[g_NextShardNum].rot.z = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * M_TAU_F;
+
+    /**
+     * Impart a random angular velocity on each shard piece.
+     */
+    ptr_shattered_window_pieces[g_NextShardNum].angvel.x = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SHARD_ANGVEL_SCALE;
+    ptr_shattered_window_pieces[g_NextShardNum].angvel.y = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SHARD_ANGVEL_SCALE;
+    ptr_shattered_window_pieces[g_NextShardNum].angvel.z = (randomGetNext() * (1.0f / (f32)UINT_MAX)) * SHARD_ANGVEL_SCALE;
 
     g_NextShardNum++;
     if (g_NextShardNum >= SHATTERED_WINDOW_PIECES_BUFFER_LEN) {

@@ -584,6 +584,8 @@ u32 get_cartridges_eject(void) {
     return cartridges_eject;
 }
 
+
+// Unreferenced
 void nullsub_73(void)
 {
 #ifdef DEBUG
@@ -598,6 +600,7 @@ void nullsub_73(void)
 }
 
 
+// Unreferenced
 void sub_GAME_7F05C540(coord3d* pos)
 {
     Weapon1PTransformKeyframe* temp_v0;
@@ -609,6 +612,7 @@ void sub_GAME_7F05C540(coord3d* pos)
 }
 
 
+// Unreferenced
 void sub_GAME_7F05C594(Mtxf* mtxf)
 {
     Mtxf sp18;
@@ -629,6 +633,7 @@ void sub_GAME_7F05C614(void)
 }
 
 
+// Unreferenced
 void sub_GAME_7F05C6B8(void)
 {
     D_80034CA0++;
@@ -17538,7 +17543,7 @@ void update_bullet_casing(CasingRecord* casing)
         {
             if ((g_CurrentPlayer->hands[0].when_detonating_mines_is_0 != 2) && (g_CurrentPlayer->hands[1].when_detonating_mines_is_0 != 2))
             {
-                // Play bullet casing rolling of floor sound
+                // Play bullet casing rolling on floor sound
                 sndPlaySfx((struct ALBankAlt_s* ) g_musicSfxBufferPtr, CART_SPENT_SFX, (ALSoundState* ) &dword_CODE_bss_80075DB0);
             }
         }
