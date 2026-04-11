@@ -427,10 +427,10 @@ void initBONDdataforPlayer(s32 player_num)
     g_playerPointers[player_num]->c_scalelod = 1.0f;
     g_playerPointers[player_num]->c_lodscalez = 1.0f;
     g_playerPointers[player_num]->c_lodscalezu32 = 0x10000;
-    g_playerPointers[player_num]->screenxminf = 0.0f;
-    g_playerPointers[player_num]->screenyminf = 0.0f;
-    g_playerPointers[player_num]->screenxmaxf = 320.0f;
-    g_playerPointers[player_num]->screenymaxf = DEFAULT_SCREENYMAXF;
+    g_playerPointers[player_num]->screensize.min.x = 0.0f;
+    g_playerPointers[player_num]->screensize.min.y = 0.0f;
+    g_playerPointers[player_num]->screensize.max.x = 320.0f;
+    g_playerPointers[player_num]->screensize.max.y = DEFAULT_SCREENYMAXF;
     g_playerPointers[player_num]->gunsightmode = 0;
     g_playerPointers[player_num]->bloodImgBufPtrArray[0] = NULL;
     g_playerPointers[player_num]->bloodImgBufPtrArray[1] = NULL;

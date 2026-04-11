@@ -375,6 +375,9 @@ Gfx *sub_GAME_7F0B6898(Gfx *arg0, s32 room_index);
 
 Gfx *bgScissorCurrentPlayerView(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
+s32 sub_GAME_7F0B5208(s32 arg0, void *arg1);
+s32 sub_GAME_7F0B39BC(s32 curroom, s32 unk1, bbox2d *screensize, s32 next);
+
 // end forward declarations
 
 
@@ -752,98 +755,63 @@ glabel sub_GAME_7F0B37EC
 
 
 
-#ifdef NONMATCHING
+#if defined(LEFTOVERDEBUG)
 /*
 * Unused function
 * Address: 7F0B38B4
 */
-void sub_GAME_7F0B38B4(void) {
+void sub_GAME_7F0B38B4(s32 arg0, u8 *arg1) {
+
+    u8 *s0;
+    u8 *entry_start;
+    s32 v0;
+    s32 v1;
+
+    s0 = arg1;
+    v0 = *arg1;
+    v1 = arg0 & 0xff;
+
+    do {
+        entry_start = s0;
+
+        do {
+            if (v1 == v0) goto found;
+            v0 = *(s0 + 1);
+            s0++;
+        } while (v0 != 0);
+
+        do { s0++; } while (*s0 != 0);
+        s0++;
+        goto next_entry;
+
+found:
+        s0 = entry_start;
+        for (v0 = *entry_start; ; ) {
+            if (sub_GAME_7F0B5208(v0 ^ 0, &g_CurrentPlayer->screensize)) {
+                sub_GAME_7F0B39BC(*s0, 0, &g_CurrentPlayer->screensize, 1);
+            }
+            v0 = *(s0 + 1);
+            s0++;
+            if (v0 == 0) break;
+        }
+        s0++;
+        v0 = *s0;
+        do {
+            if (sub_GAME_7F0B5208(v0 ^ 0, &g_CurrentPlayer->screensize)) {
+                sub_GAME_7F0B39BC(*s0, 0, &g_CurrentPlayer->screensize, 1);
+            }
+            v0 = *(s0 + 1);
+            s0++;
+        } while (v0 != 0);
+        return;
+
+next_entry:
+        v0 = *s0;
+    } while (v0 != 0);
 
 }
-#else
-#if defined(LEFTOVERDEBUG)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B38B4
-/* 0E83E4 7F0B38B4 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 0E83E8 7F0B38B8 AFB00014 */  sw    $s0, 0x14($sp)
-/* 0E83EC 7F0B38BC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 0E83F0 7F0B38C0 AFB10018 */  sw    $s1, 0x18($sp)
-/* 0E83F4 7F0B38C4 00A08025 */  move  $s0, $a1
-/* 0E83F8 7F0B38C8 90A20000 */  lbu   $v0, ($a1)
-/* 0E83FC 7F0B38CC 308300FF */  andi  $v1, $a0, 0xff
-/* 0E8400 7F0B38D0 02002025 */  move  $a0, $s0
-.L7F0B38D4:
-/* 0E8404 7F0B38D4 1062000B */  beq   $v1, $v0, .L7F0B3904
-/* 0E8408 7F0B38D8 00000000 */   nop
-/* 0E840C 7F0B38DC 92020001 */  lbu   $v0, 1($s0)
-/* 0E8410 7F0B38E0 26100001 */  addiu $s0, $s0, 1
-/* 0E8414 7F0B38E4 1440FFFB */  bnez  $v0, .L7F0B38D4
-/* 0E8418 7F0B38E8 00000000 */   nop
-/* 0E841C 7F0B38EC 920E0001 */  lbu   $t6, 1($s0)
-.L7F0B38F0:
-/* 0E8420 7F0B38F0 26100001 */  addiu $s0, $s0, 1
-/* 0E8424 7F0B38F4 55C0FFFE */  bnezl $t6, .L7F0B38F0
-/* 0E8428 7F0B38F8 920E0001 */   lbu   $t6, 1($s0)
-/* 0E842C 7F0B38FC 10000027 */  b     .L7F0B399C
-/* 0E8430 7F0B3900 26100001 */   addiu $s0, $s0, 1
-.L7F0B3904:
-/* 0E8434 7F0B3904 3C118008 */  lui   $s1, %hi(g_CurrentPlayer)
-/* 0E8438 7F0B3908 00808025 */  move  $s0, $a0
-/* 0E843C 7F0B390C 2631A0B0 */  addiu $s1, %lo(g_CurrentPlayer) # addiu $s1, $s1, -0x5f50
-/* 0E8440 7F0B3910 90820000 */  lbu   $v0, ($a0)
-/* 0E8444 7F0B3914 8E250000 */  lw    $a1, ($s1)
-.L7F0B3918:
-/* 0E8448 7F0B3918 00402025 */  move  $a0, $v0
-/* 0E844C 7F0B391C 0FC2D482 */  jal   sub_GAME_7F0B5208
-/* 0E8450 7F0B3920 24A51118 */   addiu $a1, $a1, 0x1118
-/* 0E8454 7F0B3924 10400006 */  beqz  $v0, .L7F0B3940
-/* 0E8458 7F0B3928 00002825 */   move  $a1, $zero
-/* 0E845C 7F0B392C 8E260000 */  lw    $a2, ($s1)
-/* 0E8460 7F0B3930 92040000 */  lbu   $a0, ($s0)
-/* 0E8464 7F0B3934 24070001 */  li    $a3, 1
-/* 0E8468 7F0B3938 0FC2CE6F */  jal   sub_GAME_7F0B39BC
-/* 0E846C 7F0B393C 24C61118 */   addiu $a2, $a2, 0x1118
-.L7F0B3940:
-/* 0E8470 7F0B3940 92020001 */  lbu   $v0, 1($s0)
-/* 0E8474 7F0B3944 26100001 */  addiu $s0, $s0, 1
-/* 0E8478 7F0B3948 5440FFF3 */  bnezl $v0, .L7F0B3918
-/* 0E847C 7F0B394C 8E250000 */   lw    $a1, ($s1)
-/* 0E8480 7F0B3950 26100001 */  addiu $s0, $s0, 1
-/* 0E8484 7F0B3954 92020000 */  lbu   $v0, ($s0)
-/* 0E8488 7F0B3958 8E250000 */  lw    $a1, ($s1)
-.L7F0B395C:
-/* 0E848C 7F0B395C 00402025 */  move  $a0, $v0
-/* 0E8490 7F0B3960 0FC2D482 */  jal   sub_GAME_7F0B5208
-/* 0E8494 7F0B3964 24A51118 */   addiu $a1, $a1, 0x1118
-/* 0E8498 7F0B3968 10400006 */  beqz  $v0, .L7F0B3984
-/* 0E849C 7F0B396C 00002825 */   move  $a1, $zero
-/* 0E84A0 7F0B3970 8E260000 */  lw    $a2, ($s1)
-/* 0E84A4 7F0B3974 92040000 */  lbu   $a0, ($s0)
-/* 0E84A8 7F0B3978 24070001 */  li    $a3, 1
-/* 0E84AC 7F0B397C 0FC2CE6F */  jal   sub_GAME_7F0B39BC
-/* 0E84B0 7F0B3980 24C61118 */   addiu $a2, $a2, 0x1118
-.L7F0B3984:
-/* 0E84B4 7F0B3984 92020001 */  lbu   $v0, 1($s0)
-/* 0E84B8 7F0B3988 26100001 */  addiu $s0, $s0, 1
-/* 0E84BC 7F0B398C 5440FFF3 */  bnezl $v0, .L7F0B395C
-/* 0E84C0 7F0B3990 8E250000 */   lw    $a1, ($s1)
-/* 0E84C4 7F0B3994 10000005 */  b     .L7F0B39AC
-/* 0E84C8 7F0B3998 8FBF001C */   lw    $ra, 0x1c($sp)
-.L7F0B399C:
-/* 0E84CC 7F0B399C 92020000 */  lbu   $v0, ($s0)
-/* 0E84D0 7F0B39A0 5440FFCC */  bnezl $v0, .L7F0B38D4
-/* 0E84D4 7F0B39A4 02002025 */   move  $a0, $s0
-/* 0E84D8 7F0B39A8 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F0B39AC:
-/* 0E84DC 7F0B39AC 8FB00014 */  lw    $s0, 0x14($sp)
-/* 0E84E0 7F0B39B0 8FB10018 */  lw    $s1, 0x18($sp)
-/* 0E84E4 7F0B39B4 03E00008 */  jr    $ra
-/* 0E84E8 7F0B39B8 27BD0020 */   addiu $sp, $sp, 0x20
-)
-#endif
 
-#if !defined(LEFTOVERDEBUG)
+#else
 GLOBAL_ASM(
 .text
 glabel sub_GAME_7F0B38B4
@@ -923,7 +891,6 @@ glabel sub_GAME_7F0B38B4
 /* 0E5664 7F0B2C74 03E00008 */  jr    $ra
 /* 0E5668 7F0B2C78 27BD0020 */   addiu $sp, $sp, 0x20
 )
-#endif
 #endif
 
 
@@ -10818,52 +10785,52 @@ void bgUpdateCurrentPlayerScreenMinMax(void)
     fwidth = (f32) viGetX() + (f32) bgViewRelated[2];
     fheight = (f32) viGetY() + (f32) bgViewRelated[3];
 
-    g_CurrentPlayer->screenxminf = (f32) viGetViewLeft();
+    g_CurrentPlayer->screensize.min.x = (f32) viGetViewLeft();
 
-    if (g_CurrentPlayer->screenxminf < fx)
+    if (g_CurrentPlayer->screensize.min.x < fx)
     {
-        g_CurrentPlayer->screenxminf = fx;
+        g_CurrentPlayer->screensize.min.x = fx;
     }
 
-    if (fwidth < g_CurrentPlayer->screenxminf)
+    if (fwidth < g_CurrentPlayer->screensize.min.x)
     {
-        g_CurrentPlayer->screenxminf = fwidth;
+        g_CurrentPlayer->screensize.min.x = fwidth;
     }
 
-    g_CurrentPlayer->screenyminf = (f32) viGetViewTop();
+    g_CurrentPlayer->screensize.min.y = (f32) viGetViewTop();
 
-    if (g_CurrentPlayer->screenyminf < fy)
+    if (g_CurrentPlayer->screensize.min.y < fy)
     {
-        g_CurrentPlayer->screenyminf = fy;
+        g_CurrentPlayer->screensize.min.y = fy;
     }
 
-    if (fheight < g_CurrentPlayer->screenyminf)
+    if (fheight < g_CurrentPlayer->screensize.min.y)
     {
-        g_CurrentPlayer->screenyminf = fheight;
+        g_CurrentPlayer->screensize.min.y = fheight;
     }
 
-    g_CurrentPlayer->screenxmaxf = (f32) (viGetViewLeft() + viGetViewWidth());
+    g_CurrentPlayer->screensize.max.x = (f32) (viGetViewLeft() + viGetViewWidth());
 
-    if (g_CurrentPlayer->screenxmaxf < fx)
+    if (g_CurrentPlayer->screensize.max.x < fx)
     {
-        g_CurrentPlayer->screenxmaxf = fx;
+        g_CurrentPlayer->screensize.max.x = fx;
     }
 
-    if (fwidth < g_CurrentPlayer->screenxmaxf)
+    if (fwidth < g_CurrentPlayer->screensize.max.x)
     {
-        g_CurrentPlayer->screenxmaxf = fwidth;
+        g_CurrentPlayer->screensize.max.x = fwidth;
     }
 
-    g_CurrentPlayer->screenymaxf = (f32) (viGetViewTop() + viGetViewHeight());
+    g_CurrentPlayer->screensize.max.y = (f32) (viGetViewTop() + viGetViewHeight());
 
-    if (g_CurrentPlayer->screenymaxf < fy)
+    if (g_CurrentPlayer->screensize.max.y < fy)
     {
-        g_CurrentPlayer->screenymaxf = fy;
+        g_CurrentPlayer->screensize.max.y = fy;
     }
 
-    if (fheight < g_CurrentPlayer->screenymaxf)
+    if (fheight < g_CurrentPlayer->screensize.max.y)
     {
-        g_CurrentPlayer->screenymaxf = fheight;
+        g_CurrentPlayer->screensize.max.y = fheight;
     }
 }
 

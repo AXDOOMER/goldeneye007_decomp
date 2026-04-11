@@ -1101,22 +1101,7 @@ struct player
   /**
    * Offset 0x1118.
    */
-  f32 screenxminf;
-
-  /**
-   * Offset 0x111c.
-   */
-  f32 screenyminf;
-
-  /**
-   * Offset 0x1120.
-   */
-  f32 screenxmaxf;
-
-  /**
-   * Offset 0x1124.
-   */
-  f32 screenymaxf;
+  struct bbox2d screensize;
 
   /**
    * Used during level.
