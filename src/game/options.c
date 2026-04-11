@@ -2569,7 +2569,7 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
 
         if (D_800409A4 != 0)
         {
-            gdl = textRenderGlow(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
+            gdl = textRenderOutlined(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
             gdl = textRender(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, 0xFF00B0, viGetX(), viGetY(), 0, 0);
         }
         else
@@ -2577,7 +2577,7 @@ Gfx *draw_abort_cancel_confirm(Gfx *gdl)
             if (D_800409A4 == 0)
             {
                 gdl = textRender(gdl, &sp78, &sp6C, sp50, pFontChars, pFontFile, 0xFF00B0, viGetX(), viGetY(), 0, 0);
-                gdl = textRenderGlow(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
+                gdl = textRenderOutlined(gdl, &sp74, &sp68, sp4C, pFontChars, pFontFile, -1, 0x7000A0, viGetX(), viGetY(), 0, 0);
             }
         }
     }
@@ -3609,7 +3609,7 @@ Gfx* draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
                     if (D_800409C4 == 0) {
                         gdl = textRender(gdl, &x1, &y1, invItemName, pFontChars, pFontFile, 0xA0FFA0F0, x2, 0x64, 0, LINEHEIGHT());
                     } else {
-                        gdl = textRenderGlow(gdl, &x1, &y1, invItemName, pFontChars, pFontFile, -1, 0x7000A0, x2 + 1, 0x64, 0, LINEHEIGHT());
+                        gdl = textRenderOutlined(gdl, &x1, &y1, invItemName, pFontChars, pFontFile, -1, 0x7000A0, x2 + 1, 0x64, 0, LINEHEIGHT());
                     }
         
                     sub_GAME_7F0A8378();
@@ -4090,7 +4090,7 @@ glabel draw_watch_inventory_page
 /* 0DD60C 7F0A8ADC AFB00014 */  sw    $s0, 0x14($sp)
 /* 0DD610 7F0A8AE0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0DD614 7F0A8AE4 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 0DD618 7F0A8AE8 0FC2B9BB */  jal   textRenderGlow
+/* 0DD618 7F0A8AE8 0FC2B9BB */  jal   textRenderOutlined
 /* 0DD61C 7F0A8AEC AFB80010 */   sw    $t8, 0x10($sp)
 /* 0DD620 7F0A8AF0 AFA20928 */  sw    $v0, 0x928($sp)
 .L7F0A8AF4:
@@ -4585,7 +4585,7 @@ glabel draw_watch_inventory_page
 /* 0DE20C 7F0A969C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0DE210 7F0A96A0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0DE214 7F0A96A4 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 0DE218 7F0A96A8 0FC2BCA7 */  jal   textRenderGlow
+/* 0DE218 7F0A96A8 0FC2BCA7 */  jal   textRenderOutlined
 /* 0DE21C 7F0A96AC AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0DE220 7F0A96B0 AFA20930 */  sw    $v0, 0x930($sp)
 .Ljp7F0A96B4:
@@ -5080,7 +5080,7 @@ glabel draw_watch_inventory_page
 /* 0DA80C 7F0A7E1C AFB00014 */  sw    $s0, 0x14($sp)
 /* 0DA810 7F0A7E20 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0DA814 7F0A7E24 AFA2002C */  sw    $v0, 0x2c($sp)
-/* 0DA818 7F0A7E28 0FC2B66B */  jal   textRenderGlow
+/* 0DA818 7F0A7E28 0FC2B66B */  jal   textRenderOutlined
 /* 0DA81C 7F0A7E2C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0DA820 7F0A7E30 AFA20930 */  sw    $v0, 0x930($sp)
 .L7F0A7E34:
@@ -5152,7 +5152,7 @@ Gfx *unused_draw_watch_inventory_page(Gfx *gdl, Mtx *param_2) {
             }
             else
             {
-                gdl = textRenderGlow(gdl, &sp70, &sp6C, long_name, pFontChars, pFontFile, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
+                gdl = textRenderOutlined(gdl, &sp70, &sp6C, long_name, pFontChars, pFontFile, -1, 0x7000A0, sp54 + 1, 0x64, 0, 0);
             }
         }
         else
@@ -5726,7 +5726,7 @@ glabel sub_GAME_7F0A9398
 /* 0DE0C8 7F0A9598 AFAC0014 */  sw    $t4, 0x14($sp)
 /* 0DE0CC 7F0A959C AFAD0018 */  sw    $t5, 0x18($sp)
 /* 0DE0D0 7F0A95A0 AFAE001C */  sw    $t6, 0x1c($sp)
-/* 0DE0D4 7F0A95A4 0FC2B9BB */  jal   textRenderGlow
+/* 0DE0D4 7F0A95A4 0FC2B9BB */  jal   textRenderOutlined
 /* 0DE0D8 7F0A95A8 AFB90024 */   sw    $t9, 0x24($sp)
 /* 0DE0DC 7F0A95AC 00408025 */  move  $s0, $v0
 .L7F0A95B0:
@@ -9675,7 +9675,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
 
         if ((watch_item_is_actively_selected != 0) && (controller_options_index == 0))
         {
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
         {
             gdl = textRender(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, sp54, sp50, 0, 0);
@@ -9706,7 +9706,7 @@ Gfx *draw_watch_control_options_page(Gfx *gdl, Mtx *param_2) {
 
         if ((watch_item_is_actively_selected != 0) && (controller_options_index == 1))
         {
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, 0x7000A0, sp54 + 1, sp50, 0, 0);
         } else
         {
             gdl = textRender(gdl, &sp5C, &sp58, textptr, pFontChars, pFontFile, phi_s1, sp54, sp50, 0, 0);
@@ -10206,7 +10206,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
 
         if ((watch_item_is_actively_selected != 0) && (game_options_index == 0))
         {
-            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
         else
         {
@@ -10233,7 +10233,7 @@ Gfx *draw_watch_game_options_page(Gfx *gdl, Mtx *param_2) {
 
         if ((watch_item_is_actively_selected != 0) && (game_options_index == 1))
         {
-            gdl = textRenderGlow(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp54, &sp50, textptr, pFontChars, pFontFile, sp5C, 0x7000A0, sp4C + 1, sp48, 0, 0);
         }
         else
         {
@@ -10539,7 +10539,7 @@ glabel draw_watch_mission_briefing_page
 /* 0E0F0C 7F0AC3DC 00402825 */  move  $a1, $v0
 /* 0E0F10 7F0AC3E0 27A60190 */  addiu $a2, $sp, 0x190
 /* 0E0F14 7F0AC3E4 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0E0F18 7F0AC3E8 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
+/* 0E0F18 7F0AC3E8 0FC2BAD9 */  jal   textWrap
 /* 0E0F1C 7F0AC3EC AFAE0010 */   sw    $t6, 0x10($sp)
 /* 0E0F20 7F0AC3F0 0FC29986 */  jal   mission_brief_background_navigation
 /* 0E0F24 7F0AC3F4 00000000 */   nop
@@ -10558,7 +10558,7 @@ glabel draw_watch_mission_briefing_page
 /* 0E0F54 7F0AC424 00402825 */  move  $a1, $v0
 /* 0E0F58 7F0AC428 27A60190 */  addiu $a2, $sp, 0x190
 /* 0E0F5C 7F0AC42C 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0E0F60 7F0AC430 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
+/* 0E0F60 7F0AC430 0FC2BAD9 */  jal   textWrap
 /* 0E0F64 7F0AC434 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0E0F68 7F0AC438 0FC299A8 */  jal   mission_brief_m_briefing_navigation
 /* 0E0F6C 7F0AC43C 00000000 */   nop
@@ -10577,7 +10577,7 @@ glabel draw_watch_mission_briefing_page
 /* 0E0F9C 7F0AC46C 00402825 */  move  $a1, $v0
 /* 0E0FA0 7F0AC470 27A60190 */  addiu $a2, $sp, 0x190
 /* 0E0FA4 7F0AC474 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0E0FA8 7F0AC478 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
+/* 0E0FA8 7F0AC478 0FC2BAD9 */  jal   textWrap
 /* 0E0FAC 7F0AC47C AFA90010 */   sw    $t1, 0x10($sp)
 /* 0E0FB0 7F0AC480 0FC299CB */  jal   mission_brief_q_branch_navigation
 /* 0E0FB4 7F0AC484 00000000 */   nop
@@ -10596,7 +10596,7 @@ glabel draw_watch_mission_briefing_page
 /* 0E0FE4 7F0AC4B4 00402825 */  move  $a1, $v0
 /* 0E0FE8 7F0AC4B8 27A60190 */  addiu $a2, $sp, 0x190
 /* 0E0FEC 7F0AC4BC 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0E0FF0 7F0AC4C0 0FC2BAD9 */  jal   sub_GAME_7F0AEB64
+/* 0E0FF0 7F0AC4C0 0FC2BAD9 */  jal   textWrap
 /* 0E0FF4 7F0AC4C4 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0E0FF8 7F0AC4C8 0FC299EF */  jal   mission_brief_moneypenny_navigation
 /* 0E0FFC 7F0AC4CC 00000000 */   nop
@@ -11145,7 +11145,7 @@ glabel draw_watch_mission_briefing_page
 /* 0DE0D4 7F0AB6E4 00402825 */  move  $a1, $v0
 /* 0DE0D8 7F0AB6E8 27A60190 */  addiu $a2, $sp, 0x190
 /* 0DE0DC 7F0AB6EC 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0DE0E0 7F0AB6F0 0FC2B789 */  jal   sub_GAME_7F0AEB64
+/* 0DE0E0 7F0AB6F0 0FC2B789 */  jal   textWrap
 /* 0DE0E4 7F0AB6F4 AFB80010 */   sw    $t8, 0x10($sp)
 /* 0DE0E8 7F0AB6F8 0FC2964E */  jal   mission_brief_background_navigation
 /* 0DE0EC 7F0AB6FC 00000000 */   nop
@@ -11164,7 +11164,7 @@ glabel draw_watch_mission_briefing_page
 /* 0DE11C 7F0AB72C 00402825 */  move  $a1, $v0
 /* 0DE120 7F0AB730 27A60190 */  addiu $a2, $sp, 0x190
 /* 0DE124 7F0AB734 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0DE128 7F0AB738 0FC2B789 */  jal   sub_GAME_7F0AEB64
+/* 0DE128 7F0AB738 0FC2B789 */  jal   textWrap
 /* 0DE12C 7F0AB73C AFB90010 */   sw    $t9, 0x10($sp)
 /* 0DE130 7F0AB740 0FC29670 */  jal   mission_brief_m_briefing_navigation
 /* 0DE134 7F0AB744 00000000 */   nop
@@ -11183,7 +11183,7 @@ glabel draw_watch_mission_briefing_page
 /* 0DE164 7F0AB774 00402825 */  move  $a1, $v0
 /* 0DE168 7F0AB778 27A60190 */  addiu $a2, $sp, 0x190
 /* 0DE16C 7F0AB77C 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0DE170 7F0AB780 0FC2B789 */  jal   sub_GAME_7F0AEB64
+/* 0DE170 7F0AB780 0FC2B789 */  jal   textWrap
 /* 0DE174 7F0AB784 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0DE178 7F0AB788 0FC29693 */  jal   mission_brief_q_branch_navigation
 /* 0DE17C 7F0AB78C 00000000 */   nop
@@ -11202,7 +11202,7 @@ glabel draw_watch_mission_briefing_page
 /* 0DE1AC 7F0AB7BC 00402825 */  move  $a1, $v0
 /* 0DE1B0 7F0AB7C0 27A60190 */  addiu $a2, $sp, 0x190
 /* 0DE1B4 7F0AB7C4 8FA70D48 */  lw    $a3, 0xd48($sp)
-/* 0DE1B8 7F0AB7C8 0FC2B789 */  jal   sub_GAME_7F0AEB64
+/* 0DE1B8 7F0AB7C8 0FC2B789 */  jal   textWrap
 /* 0DE1BC 7F0AB7CC AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0DE1C0 7F0AB7D0 0FC296B7 */  jal   mission_brief_moneypenny_navigation
 /* 0DE1C4 7F0AB7D4 00000000 */   nop

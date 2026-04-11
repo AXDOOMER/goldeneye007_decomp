@@ -949,7 +949,7 @@ Gfx *frontPrintText(Gfx *gdl, s32 *x, s32 *y, s8 *text, s32 second_font_table, s
 {
     if (j_text_trigger != 0)
     {
-        gdl = textRenderGlow(
+        gdl = textRenderOutlined(
             gdl,
             x,
             y,
@@ -7503,12 +7503,12 @@ Gfx *print_objectives_and_status_to_menu(Gfx *DL, s32 arg1, u8 *arg2, s32 arg3)
             if (arg3 != 0)
             {
                 setTextWordWrap(2);
-                sub_GAME_7F0AEB64(0xDC, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
+                textWrap(0xDC, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
                 setTextWordWrap(0);
             }
             else
             {
-                sub_GAME_7F0AEB64(0x140, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
+                textWrap(0x140, (s8*)text, (s8*)arg2, ptrFontZurichBoldChars, ptrFontZurichBold);
             }
 
             DL = frontPrintText(DL, &sp8C, &sp88, (s8*)arg2,  ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
@@ -7625,7 +7625,7 @@ Gfx *constructor_menu0A_briefing(Gfx *DL)
 
         spC08 = 0x37;
         spC04 = 0xA7;
-        sub_GAME_7F0AEB64(0x140, (s8*)spC0C, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold);
+        textWrap(0x140, (s8*)spC0C, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold);
         setTextOverlapCorrection(8);
         DL = frontPrintText(DL, &spC08, &spC04, (s8*)&sp4C, ptrFontZurichBoldChars, ptrFontZurichBold, 0xFF, viGetX(), viGetY(), 0, 0);
         setTextOverlapCorrection(-1);
@@ -8490,7 +8490,7 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     y = 0x99 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = textRenderGlow(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderOutlined(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif
@@ -8508,7 +8508,7 @@ Gfx *constructor_menu16_nocontrollers(Gfx *DL)
     y = 0xB1 - (y2 >> 1);
 #ifdef BUGFIX_R1
     if (j_text_trigger) {
-        DL = textRenderGlow(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
+        DL = textRenderOutlined(DL, &x, &y, text, ptrFontZurichBoldChars, ptrFontZurichBold, -1, 0x8000FF, viGetX(), viGetY(), 0, 0);
     }
     else {
 #endif

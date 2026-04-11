@@ -738,7 +738,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
         case GREEN_HIGHLIGHT:
             viX = viGetX();
             viY = viGetY();
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xA0FFA0F0, 0x7000A0, viX, viY, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xA0FFA0F0, 0x7000A0, viX, viY, 0, 0);
             break;
 
         case RED_NORMAL:
@@ -750,7 +750,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
         case RED_HIGHLIGHT:
             viX = viGetX();
             viY = viGetY();
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xFFA0A0F0, 0x700000A0, viX, viY, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xFFA0A0F0, 0x700000A0, viX, viY, 0, 0);
             break;
 
         case BLUE_NORMAL:
@@ -762,7 +762,7 @@ Gfx *display_text_for_playerdata_on_MP_menu(Gfx *gdl, s32 x, s32 y, u16* arg3, T
         case BLUE_HIGHLIGHT:
             viX = viGetX();
             viY = viGetY();
-            gdl = textRenderGlow(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xA0A0FFF0, 0x70A0, viX, viY, 0, 0);
+            gdl = textRenderOutlined(gdl, &sp5C, &sp58, &sp48, ptrFontBankGothicChars, ptrFontBankGothic, 0xA0A0FFF0, 0x70A0, viX, viY, 0, 0);
             break;
     }
 
@@ -1520,7 +1520,7 @@ def_7F0C40C0:
 /* 0F8D80 7F0C4250 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F8D84 7F0C4254 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F8D88 7F0C4258 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0F8D8C 7F0C425C 0FC2B9BB */  jal   textRenderGlow
+/* 0F8D8C 7F0C425C 0FC2B9BB */  jal   textRenderOutlined
 /* 0F8D90 7F0C4260 AFB90010 */   sw    $t9, 0x10($sp)
 /* 0F8D94 7F0C4264 1000001A */  b     .L7F0C42D0
 /* 0F8D98 7F0C4268 00408825 */   move  $s1, $v0
@@ -1640,7 +1640,7 @@ def_7F0C40C0:
 /* 0F8F4C 7F0C441C AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F8F50 7F0C4420 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F8F54 7F0C4424 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0F8F58 7F0C4428 0FC2B9BB */  jal   textRenderGlow
+/* 0F8F58 7F0C4428 0FC2B9BB */  jal   textRenderOutlined
 /* 0F8F5C 7F0C442C AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0F8F60 7F0C4430 00408825 */  move  $s1, $v0
 .L7F0C4434:
@@ -1733,7 +1733,7 @@ def_7F0C40C0:
 /* 0F90B0 7F0C4580 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F90B4 7F0C4584 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F90B8 7F0C4588 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0F90BC 7F0C458C 0FC2B9BB */  jal   textRenderGlow
+/* 0F90BC 7F0C458C 0FC2B9BB */  jal   textRenderOutlined
 /* 0F90C0 7F0C4590 AFA90010 */   sw    $t1, 0x10($sp)
 /* 0F90C4 7F0C4594 00408825 */  move  $s1, $v0
 .L7F0C4598:
@@ -3250,7 +3250,7 @@ def_7F0C40C0:
 /* 0FA760 7F0C5C30 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0FA764 7F0C5C34 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0FA768 7F0C5C38 AFAA0014 */  sw    $t2, 0x14($sp)
-/* 0FA76C 7F0C5C3C 0FC2B9BB */  jal   textRenderGlow
+/* 0FA76C 7F0C5C3C 0FC2B9BB */  jal   textRenderOutlined
 /* 0FA770 7F0C5C40 AFAB0010 */   sw    $t3, 0x10($sp)
 /* 0FA774 7F0C5C44 1000001A */  b     .L7F0C5CB0
 /* 0FA778 7F0C5C48 00408825 */   move  $s1, $v0
@@ -3340,7 +3340,7 @@ def_7F0C40C0:
 /* 0FA8C0 7F0C5D90 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0FA8C4 7F0C5D94 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0FA8C8 7F0C5D98 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0FA8CC 7F0C5D9C 0FC2B9BB */  jal   textRenderGlow
+/* 0FA8CC 7F0C5D9C 0FC2B9BB */  jal   textRenderOutlined
 /* 0FA8D0 7F0C5DA0 AFAA0010 */   sw    $t2, 0x10($sp)
 /* 0FA8D4 7F0C5DA4 1000001A */  b     .L7F0C5E10
 /* 0FA8D8 7F0C5DA8 00408825 */   move  $s1, $v0
@@ -3696,7 +3696,7 @@ def_7F0C40C0:
 /* 0F9A70 7F0C4F00 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F9A74 7F0C4F04 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F9A78 7F0C4F08 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0F9A7C 7F0C4F0C 0FC2BCA7 */  jal   textRenderGlow
+/* 0F9A7C 7F0C4F0C 0FC2BCA7 */  jal   textRenderOutlined
 /* 0F9A80 7F0C4F10 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0F9A84 7F0C4F14 1000001A */  b     .Ljp7F0C4F80
 /* 0F9A88 7F0C4F18 00408825 */   move  $s1, $v0
@@ -3816,7 +3816,7 @@ def_7F0C40C0:
 /* 0F9C3C 7F0C50CC AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F9C40 7F0C50D0 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F9C44 7F0C50D4 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0F9C48 7F0C50D8 0FC2BCA7 */  jal   textRenderGlow
+/* 0F9C48 7F0C50D8 0FC2BCA7 */  jal   textRenderOutlined
 /* 0F9C4C 7F0C50DC AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0F9C50 7F0C50E0 00408825 */  move  $s1, $v0
 .Ljp7F0C50E4:
@@ -3909,7 +3909,7 @@ def_7F0C40C0:
 /* 0F9DA0 7F0C5230 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F9DA4 7F0C5234 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F9DA8 7F0C5238 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0F9DAC 7F0C523C 0FC2BCA7 */  jal   textRenderGlow
+/* 0F9DAC 7F0C523C 0FC2BCA7 */  jal   textRenderOutlined
 /* 0F9DB0 7F0C5240 AFB90010 */   sw    $t9, 0x10($sp)
 /* 0F9DB4 7F0C5244 00408825 */  move  $s1, $v0
 .Ljp7F0C5248:
@@ -5426,7 +5426,7 @@ def_7F0C40C0:
 /* 0FB450 7F0C68E0 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0FB454 7F0C68E4 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0FB458 7F0C68E8 AFAD0014 */  sw    $t5, 0x14($sp)
-/* 0FB45C 7F0C68EC 0FC2BCA7 */  jal   textRenderGlow
+/* 0FB45C 7F0C68EC 0FC2BCA7 */  jal   textRenderOutlined
 /* 0FB460 7F0C68F0 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0FB464 7F0C68F4 1000001A */  b     .Ljp7F0C6960
 /* 0FB468 7F0C68F8 00408825 */   move  $s1, $v0
@@ -5516,7 +5516,7 @@ def_7F0C40C0:
 /* 0FB5B0 7F0C6A40 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0FB5B4 7F0C6A44 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0FB5B8 7F0C6A48 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0FB5BC 7F0C6A4C 0FC2BCA7 */  jal   textRenderGlow
+/* 0FB5BC 7F0C6A4C 0FC2BCA7 */  jal   textRenderOutlined
 /* 0FB5C0 7F0C6A50 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0FB5C4 7F0C6A54 1000001A */  b     .Ljp7F0C6AC0
 /* 0FB5C8 7F0C6A58 00408825 */   move  $s1, $v0
@@ -5883,7 +5883,7 @@ text_exit:
 /* 0F6120 7F0C3730 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F6124 7F0C3734 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F6128 7F0C3738 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0F612C 7F0C373C 0FC2B66B */  jal   textRenderGlow
+/* 0F612C 7F0C373C 0FC2B66B */  jal   textRenderOutlined
 /* 0F6130 7F0C3740 AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0F6134 7F0C3744 1000001A */  b     .L7F0C37B0
 /* 0F6138 7F0C3748 00408825 */   move  $s1, $v0
@@ -6003,7 +6003,7 @@ text_exit:
 /* 0F62EC 7F0C38FC AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F62F0 7F0C3900 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F62F4 7F0C3904 AFAF0014 */  sw    $t7, 0x14($sp)
-/* 0F62F8 7F0C3908 0FC2B66B */  jal   textRenderGlow
+/* 0F62F8 7F0C3908 0FC2B66B */  jal   textRenderOutlined
 /* 0F62FC 7F0C390C AFAD0010 */   sw    $t5, 0x10($sp)
 /* 0F6300 7F0C3910 00408825 */  move  $s1, $v0
 .L7F0C3914:
@@ -6096,7 +6096,7 @@ text_exit:
 /* 0F6450 7F0C3A60 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F6454 7F0C3A64 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F6458 7F0C3A68 AFAB0014 */  sw    $t3, 0x14($sp)
-/* 0F645C 7F0C3A6C 0FC2B66B */  jal   textRenderGlow
+/* 0F645C 7F0C3A6C 0FC2B66B */  jal   textRenderOutlined
 /* 0F6460 7F0C3A70 AFB90010 */   sw    $t9, 0x10($sp)
 /* 0F6464 7F0C3A74 00408825 */  move  $s1, $v0
 .L7F0C3A78:
@@ -7613,7 +7613,7 @@ text_exit:
 /* 0F7B00 7F0C5110 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F7B04 7F0C5114 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F7B08 7F0C5118 AFAD0014 */  sw    $t5, 0x14($sp)
-/* 0F7B0C 7F0C511C 0FC2B66B */  jal   textRenderGlow
+/* 0F7B0C 7F0C511C 0FC2B66B */  jal   textRenderOutlined
 /* 0F7B10 7F0C5120 AFAC0010 */   sw    $t4, 0x10($sp)
 /* 0F7B14 7F0C5124 1000001A */  b     .L7F0C5190
 /* 0F7B18 7F0C5128 00408825 */   move  $s1, $v0
@@ -7703,7 +7703,7 @@ text_exit:
 /* 0F7C60 7F0C5270 AFA00028 */  sw    $zero, 0x28($sp)
 /* 0F7C64 7F0C5274 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0F7C68 7F0C5278 AFAC0014 */  sw    $t4, 0x14($sp)
-/* 0F7C6C 7F0C527C 0FC2B66B */  jal   textRenderGlow
+/* 0F7C6C 7F0C527C 0FC2B66B */  jal   textRenderOutlined
 /* 0F7C70 7F0C5280 AFAF0010 */   sw    $t7, 0x10($sp)
 /* 0F7C74 7F0C5284 1000001A */  b     .L7F0C52F0
 /* 0F7C78 7F0C5288 00408825 */   move  $s1, $v0

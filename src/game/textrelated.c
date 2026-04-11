@@ -11,9 +11,8 @@
 #define M_COLOR_B(x) (u8)(x >> 0x08)
 #define M_COLOR_A(x) (u8)(x >> 0x00)
 
-
 // data
-s32 D_80040E80 = 0;
+s32 D_80040E80 = 0; // Unused
 s32 text_spacing = 0;
 s32 text_orientation = 0;
 s32 text_wordwrap = 0;
@@ -23,41 +22,41 @@ s32 text_x = 0;
 s32 text_y = 0;
 s32 text_s = 0;
 s32 text_t = 0;
-s32 D_80040EA8 = 0;
+s32 g_JpnTextTlutNeedsLoad = 0;
 struct font * ptrFontBankGothic = NULL;
 struct fontchar * ptrFontBankGothicChars = NULL;
 struct font * ptrFontZurichBold = NULL;
 struct fontchar * ptrFontZurichBoldChars = NULL;
 
-u16 D_80040EBC[] = {
+u16 g_JpnTextPalette0[16] = {
     0x0000, 0x5555, 0xaaaa, 0xffff,
     0x0000, 0x5555, 0xaaaa, 0xffff,
     0x0000, 0x5555, 0xaaaa, 0xffff,
     0x0000, 0x5555, 0xaaaa, 0xffff
 };
-u32 D_80040EDC = 0;
-u32 D_80040EE0 = 0;
 
-u32 D_80040EE4[] = {
-    0x55555555, 0x55555555,
-    0xAAAAAAAA, 0xAAAAAAAA,
-    0xFFFFFFFF, 0xFFFFFFFF
+u16 g_JpnTextPalette1[16] = {
+    0x0000, 0x0000, 0x0000, 0x0000,
+    0x5555, 0x5555, 0x5555, 0x5555,
+    0xAAAA, 0xAAAA, 0xAAAA, 0xAAAA,
+    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF
 };
 
-struct fontchar D_80040EFC = {0, 0, 12, 11};
+// D_80040EFC
+struct fontchar g_JpnGlyphDefaults = {0, 0, 12, 11};
 
-struct fontchar D_80040F14 = {0, 0, 12, 11};
-
+// D_80040F14
+struct fontchar g_JpnGlyphDefaultsOutlined = {0, 0, 12, 11};
 
 // forward declarations
 
-Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, struct fontchar *prevchar,
-		struct font *font, s32 savedx, s32 savedy, s32 width, s32 height, s32 arg10);
-Gfx *sub_GAME_7F0AE45C(Gfx *gdl, s32 x, s32 y, struct fontchar *curchar, s32 savedx, s32 savedy, s32 width, s32 height);
-Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, 
-                       struct fontchar *prevchar, struct font *font, s32 savedx, s32 savedy, 
-                       u32 color, u32 color2, s32 width, s32 height, 
-                       s32 arg12);
+Gfx *textRenderGlyph(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, struct fontchar *prevchar,
+		struct font *font, s32 clipX, s32 clipY, s32 clipWidth, s32 clipHeight, s32 yOffset);
+Gfx *textRenderGlyphOutlined(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, 
+                struct fontchar *prevchar, struct font *font, s32 clipX, s32 clipY, 
+                u32 textColour, u32 outlineColour, s32 clipWidth, s32 clipHeight, 
+                s32 yOffset);
+Gfx *textDrawGlyphQuad(Gfx *gdl, s32 x, s32 y, struct fontchar *curchar, s32 clipX, s32 clipY, s32 clipWidth, s32 clipHeight);
 
 // -------------------------------------------------------------------------------------------------
 
@@ -86,8 +85,6 @@ void setTextWordWrap(s32 flag) {
 void setTextOverlapCorrection(s32 flag) {
     overlap_correction = flag;
 }
-
-
 
 extern u8 _fontbankgothicSegmentEnd;
 extern u8 _fontbankgothicSegmentRomStart;
@@ -133,7 +130,6 @@ void load_font_tables(void)
 		ptrFontZurichBoldChars[i].pixeldata += (uintptr_t)ptrFontZurichBold;
 	}
 }
-
 
 Gfx *microcode_constructor(Gfx *gdl) //fontGfxSetup
 {
@@ -181,9 +177,6 @@ Gfx* draw_blackbox_to_screen(Gfx *glist, s32 *ulx, s32 *uly, s32 *lrx, s32 *lry)
     return glist;
 }
 
-
-
-
 Gfx * microcode_constructor_related_to_menus(Gfx *gdl, s32 ulx, s32 uly, s32 lrx, s32 lry, u32 color)
 {
     u32 r = (u8)(color >> 0x18);
@@ -198,31 +191,27 @@ Gfx * microcode_constructor_related_to_menus(Gfx *gdl, s32 ulx, s32 uly, s32 lrx
     return gdl;
 }
 
-
-
-// perfect dark: textRenderChar
-// see also perfect dark: Gfx *text0f15568c(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, struct fontchar *prevchar,
-// 		struct font *font, s32 savedx, s32 savedy, s32 width, s32 height, s32 arg10)
-// see also perfect dark: Gfx *text0f156a24
-// see also perfect dark: Gfx *textRenderChar
-Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, struct fontchar *prevchar,
-		struct font *font, s32 savedx, s32 savedy, s32 width, s32 height, s32 arg10)
+/**
+ * Render a single character with no outline.
+ */
+Gfx *textRenderGlyph(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, struct fontchar *prevchar,
+		struct font *font, s32 clipX, s32 clipY, s32 clipWidth, s32 clipHeight, s32 yOffset)
 {
     s32 stack;
     s32 stack2;
-	s32 tmp;
-    s32 sp90;
+	s32 kerningOffset;
+    s32 drawY;
 
-	sp90 = *y + arg10;
-	tmp = font->kerning[prevchar->kerningindex * 13 + curchar->kerningindex] + text_spacing;
-    *x -= (tmp - 1);
+	drawY = *y + yOffset;
+	kerningOffset = font->kerning[prevchar->kerningindex * 13 + curchar->kerningindex] + text_spacing;
+    *x -= (kerningOffset - 1);
 
-    if (text_orientation || (*x > 0 && *x <= viGetX() && sp90 + curchar->baseline <= viGetY()))
+    if (text_orientation || (*x > 0 && *x <= viGetX() && drawY + curchar->baseline <= viGetY()))
     {
-        if (savedx + width >= *x
-				&& savedy + height >= curchar->baseline + sp90
-				&& *x >= savedx
-				&& curchar->baseline + sp90 + curchar->height >= savedy)
+        if (clipX + clipWidth >= *x
+				&& clipY + clipHeight >= curchar->baseline + drawY
+				&& *x >= clipX
+				&& curchar->baseline + drawY + curchar->height >= clipY)
         {
             if (curchar->index < 0x80)
             {
@@ -244,9 +233,9 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                 gDPPipeSync(gdl++);
                 gDPSetTextureLUT(gdl++, G_TT_IA16);
 
-                if (D_80040EA8)
+                if (g_JpnTextTlutNeedsLoad)
                 {
-                    D_80040EA8 = 0;
+                    g_JpnTextTlutNeedsLoad = 0;
                     
                     // FD100000 --------: gDPSetTextureImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, osVirtualToPhysical(D_80040EBC));
                     // E8000000 00000000: gDPTileSync(gdl++);
@@ -254,9 +243,9 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                     // E6000000 00000000: gDPLoadSync(gdl++);
                     // F0000000 0703C000: gDPLoadTLUTCmd(gdl++, G_TX_LOADTILE, 15);
                     // E7000000 00000000: gDPPipeSync(gdl++);
-                    gDPLoadTLUT_pal16(gdl++, 0, osVirtualToPhysical(D_80040EBC));
+                    gDPLoadTLUT_pal16(gdl++, 0, osVirtualToPhysical(g_JpnTextPalette0));
 
-                    gDPLoadTLUT_pal16(gdl++, 1, osVirtualToPhysical(&D_80040EDC));
+                    gDPLoadTLUT_pal16(gdl++, 1, osVirtualToPhysical(&g_JpnTextPalette1));
                 }
 
                 // FD500000 00000000: gDPSetTextureImage(gdl++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, 0x00000000);
@@ -278,11 +267,11 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                 gDPSetTileSize(gdl++, G_TX_RENDERTILE, 0, 0, 0x3c, (curchar->height - 1) << 2);
             }
 
-            if ((*x + curchar->width) <= savedx + width)
+            if ((*x + curchar->width) <= clipX + clipWidth)
             {
-				if (savedy <= curchar->baseline + sp90)
+				if (clipY <= curchar->baseline + drawY)
                 {
-					if (curchar->baseline + sp90 + curchar->height <= savedy + height)
+					if (curchar->baseline + drawY + curchar->height <= clipY + clipHeight)
                     {
                         if (text_orientation)
                         {
@@ -290,9 +279,9 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                             // B4000000 --------:
                             // B3000000 0400FC00:
                             gSPTextureRectangleFlip(gdl++,
-                                /* xl */ (((sp90 - curchar->baseline) - curchar->height) * 4) + text_y,
+                                /* xl */ (((drawY - curchar->baseline) - curchar->height) * 4) + text_y,
                                 /* yl */ ((*x * 4) + text_x),
-                                /* xh */ ((sp90 - curchar->baseline) * 4) + text_y,
+                                /* xh */ ((drawY - curchar->baseline) * 4) + text_y,
                                 /* yh */ ((*x + curchar->width) * 4) + text_x ,
                                 /* tile */  G_TX_RENDERTILE,
                                 /* s */ text_t,
@@ -307,9 +296,9 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                             // B3000000 04000400:
                             gSPTextureRectangle(gdl++,
                                 /* xl */ ((*x * 4) + text_x),
-                                /* yl */ ((sp90 + curchar->baseline) * 4) + text_y,
+                                /* yl */ ((drawY + curchar->baseline) * 4) + text_y,
                                 /* xh */ ((*x + curchar->width) * 4) + text_x ,
-                                /* yh */ ((curchar->baseline + sp90 + curchar->height) * 4) + text_y,
+                                /* yh */ ((curchar->baseline + drawY + curchar->height) * 4) + text_y,
                                 /* tile */  G_TX_RENDERTILE,
                                 /* s */ text_s,
                                 /* t */ text_t,
@@ -318,16 +307,16 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                         }
 
                     }
-                    else if (curchar->baseline + sp90 <= savedy + height)
+                    else if (curchar->baseline + drawY <= clipY + clipHeight)
                     {
                         // E4000000 --------:
                         // B4000000 --------:
                         // B3000000 04000400:
                         gSPTextureRectangle(gdl++,
                             /* xl */ ((*x * 4) + text_x),
-                            /* yl */ ((sp90 + curchar->baseline) * 4) + text_y,
+                            /* yl */ ((drawY + curchar->baseline) * 4) + text_y,
                             /* xh */ ((*x + curchar->width) * 4) + text_x ,
-                            /* yh */ savedy + height + text_y,
+                            /* yh */ clipY + clipHeight + text_y,
                             /* tile */  G_TX_RENDERTILE,
                             /* s */ text_s,
                             /* t */ text_t,
@@ -337,19 +326,19 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
                 }
                 else
                 {
-                    if (curchar->baseline + sp90 + curchar->height >= savedy)
+                    if (curchar->baseline + drawY + curchar->height >= clipY)
                     {
                         // E4000000 --------:
                         // B4000000 --------:
                         // B3000000 04000400:
                         gSPTextureRectangle(gdl++,
                             /* xl */ ((*x * 4) + text_x),
-                            /* yl */ (savedy * 4) + text_y,
+                            /* yl */ (clipY * 4) + text_y,
                             /* xh */ ((*x + curchar->width) * 4) + text_x ,
-                            /* yh */ ((curchar->baseline + sp90 + curchar->height) * 4) + text_y,
+                            /* yh */ ((curchar->baseline + drawY + curchar->height) * 4) + text_y,
                             /* tile */  G_TX_RENDERTILE,
                             /* s */ text_s,
-                            /* t */ (((savedy - sp90) - curchar->baseline) << 5) + text_t,
+                            /* t */ (((clipY - drawY) - curchar->baseline) << 5) + text_t,
                             /* dsdx */ 0x400,
                             /* dsdy */ 0x400);
                     }
@@ -360,16 +349,14 @@ Gfx *construct_fontchar_microcode(Gfx *gdl, s32 *x, s32 *y, struct fontchar *cur
     
     *x += curchar->width;
     return gdl;
-
 }
 
-
-
-
-// perfect dark: textRender
+/**
+ * Render plain text with no outline e.g. briefings and watch menu text.
+ */
 Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text,
                 struct fontchar *chars, struct font *font, u32 colour,
-                s32 width, s32 height, u32 arg9, s32 lineheight)
+                s32 width, s32 height, u32 yOffset, s32 lineheight)
 {
     s32 savedx;
 	s32 savedy;
@@ -380,7 +367,7 @@ Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text,
     s32 stack4;
     //s32 stack5;
     
-    D_80040EA8 = 1;
+    g_JpnTextTlutNeedsLoad = 1;
 
     savedx = *x;
 	savedy = *y;
@@ -418,12 +405,12 @@ Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text,
 			text++;
 			*x = savedx;
 		} else if (*text < 0x80) {
-			gdl = construct_fontchar_microcode(gdl, x, y, &chars[*text - 0x21], &chars[prevchar - 0x21], font, savedx, savedy, width, height, arg9);
+			gdl = textRenderGlyph(gdl, x, y, &chars[*text - 0x21], &chars[prevchar - 0x21], font, savedx, savedy, width, height, yOffset);
 			prevchar = *text;
 			text++;
 		} else {
 			u16 codepoint = ((*text & 0x7f) << 7) | (text[1] & 0x7f);
-			struct fontchar sp74 = D_80040EFC;
+			struct fontchar sp74 = g_JpnGlyphDefaults;
 
 			if (codepoint & 0x2000) {
 				sp74.width = 15;
@@ -443,43 +430,42 @@ Gfx *textRender(Gfx *gdl, s32 *x, s32 *y, char *text,
 			sp74.index = codepoint + 0x80;
 			sp74.pixeldata = (void *)langGetJpnCharPixels(codepoint);
 
-			gdl = construct_fontchar_microcode(gdl, x, y, &sp74, &sp74, font, savedx, savedy, width, height, arg9);
+			gdl = textRenderGlyph(gdl, x, y, &sp74, &sp74, font, savedx, savedy, width, height, yOffset);
 
 			text += 2;
 		}
 	}
-
-    
     return gdl;
 }
 
-
-
-Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, 
-                       /*sp70*/ struct fontchar *prevchar, struct font *font, s32 savedx, s32 savedy, 
-                       /*sp80*/u32 color, u32 color2, s32 width, s32 height, 
-                       /*sp90*/ s32 arg12)
+/**
+ * Draw individual characters with an outline.
+ */
+Gfx *textRenderGlyphOutlined(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar, 
+                       /*sp70*/ struct fontchar *prevchar, struct font *font, s32 clipX, s32 clipY, 
+                       /*sp80*/u32 textColour, u32 outlineColour, s32 clipWidth, s32 clipHeight, 
+                       /*sp90*/ s32 yOffset)
 {
-    s32 var_s1;
-    s32 var_s0;
-    s32 tmp;
-    s32 sp50;
+    s32 offsetX;
+    s32 offsetY;
+    s32 kerningOffset;
+    s32 drawY;
     s32 tmpx;
     s32 tmpy;
-    u32 tmpcolor;
+    u32 rgba;
 
-    sp50 = *y + arg12;
+    drawY = *y + yOffset;
 
-    tmp = font->kerning[prevchar->kerningindex * 13 + curchar->kerningindex] + text_spacing;
-    *x -= (tmp - 1);
+    kerningOffset = font->kerning[prevchar->kerningindex * 13 + curchar->kerningindex] + text_spacing;
+    *x -= (kerningOffset - 1);
 
     if (*x > 0
             && *x <= viGetX()
-            && sp50 + curchar->baseline <= viGetY()
-            && *x <= savedx + width
-            && sp50 + curchar->baseline <= savedy + height
-            && *x >= savedx
-            && sp50 + curchar->baseline + curchar->height >= savedy) {
+            && drawY + curchar->baseline <= viGetY()
+            && *x <= clipX + clipWidth
+            && drawY + curchar->baseline <= clipY + clipHeight
+            && *x >= clipX
+            && drawY + curchar->baseline + curchar->height >= clipY) {
         if (curchar->index < 0x80) {
             gDPSetTextureLUT(gdl++, G_TT_NONE);
             gDPLoadTextureBlock(gdl++, curchar->pixeldata, G_IM_FMT_I, G_IM_SIZ_8b, ((curchar->width + 7) & 0xF8), curchar->height, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, 0, 0);
@@ -487,11 +473,11 @@ Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar,
             gDPPipeSync(gdl++);
             gDPSetTextureLUT(gdl++, G_TT_IA16);
 
-            if (D_80040EA8) {
-                D_80040EA8 = 0;
+            if (g_JpnTextTlutNeedsLoad) {
+                g_JpnTextTlutNeedsLoad = 0;
 
-                gDPLoadTLUT_pal16(gdl++, 0, osVirtualToPhysical(&D_80040EBC));
-                gDPLoadTLUT_pal16(gdl++, 1, osVirtualToPhysical(&D_80040EDC));
+                gDPLoadTLUT_pal16(gdl++, 0, osVirtualToPhysical(&g_JpnTextPalette0));
+                gDPLoadTLUT_pal16(gdl++, 1, osVirtualToPhysical(&g_JpnTextPalette1));
             }
 
             gDPSetTextureImage(gdl++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,  osVirtualToPhysical((void *) curchar->pixeldata));
@@ -503,25 +489,31 @@ Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar,
             gDPSetTileSize(gdl++, G_TX_RENDERTILE, 0, 0, 0x3c, (curchar->height - 1) << 2);
         }
 
-        tmpcolor = color2;
-        gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(tmpcolor), M_COLOR_G(tmpcolor), M_COLOR_B(tmpcolor), M_COLOR_A(tmpcolor));
+        /**
+         * Render outlines.
+         * This is done by rendering the character 8 times in diffent offsets around the origin:
+         * left/right/up/down and the four diagonals.
+         */
+        rgba = outlineColour;
+        gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(rgba), M_COLOR_G(rgba), M_COLOR_B(rgba), M_COLOR_A(rgba));
 
-        for (var_s1 = -1; var_s1 < 2; var_s1++) {
-            for (var_s0 = -1; var_s0 < 2; var_s0++) {
-                tmpx = *x + var_s1;
-                tmpy = sp50 + var_s0;
+        for (offsetX = -1; offsetX < 2; offsetX++) {
+            for (offsetY = -1; offsetY < 2; offsetY++) {
+                tmpx = *x + offsetX;
+                tmpy = drawY + offsetY;
 
-                if (var_s1 != 0 || var_s0 != 0) {
-                    gdl = sub_GAME_7F0AE45C(gdl, tmpx, tmpy, curchar, savedx, savedy, width, height);
+                if (offsetX != 0 || offsetY != 0) { // Skip the center since that will be covered by the main character anyway.
+                    gdl = textDrawGlyphQuad(gdl, tmpx, tmpy, curchar, clipX, clipY, clipWidth, clipHeight);
                 }
             }
         }
 
+        // Render main character.
         tmpx = *x;
-        tmpy = sp50;
-        tmpcolor = color;
-        gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(tmpcolor), M_COLOR_G(tmpcolor), M_COLOR_B(tmpcolor), M_COLOR_A(tmpcolor));
-        gdl = sub_GAME_7F0AE45C(gdl, tmpx, tmpy, curchar, savedx, savedy, width, height);
+        tmpy = drawY;
+        rgba = textColour;
+        gDPSetPrimColor(gdl++, 0, 0, M_COLOR_R(rgba), M_COLOR_G(rgba), M_COLOR_B(rgba), M_COLOR_A(rgba));
+        gdl = textDrawGlyphQuad(gdl, tmpx, tmpy, curchar, clipX, clipY, clipWidth, clipHeight);
     }
 
     *x += curchar->width;
@@ -529,46 +521,86 @@ Gfx *sub_GAME_7F0ADDAC(Gfx *gdl, s32 *x, s32 *y, struct fontchar *curchar,
     return gdl;
 }
 
-
-
-Gfx *sub_GAME_7F0AE45C(Gfx *gdl, s32 x, s32 y, struct fontchar *curchar, s32 savedx, s32 savedy, s32 width, s32 height)
+/**
+ * Draw a quad for the current glyph, clipping it inside the region defined by clipX, clipY, clipWidth, and clipHeight.
+ */
+Gfx *textDrawGlyphQuad(Gfx *gdl, s32 x, s32 y, struct fontchar *curchar, s32 clipX, s32 clipY, s32 clipWidth, s32 clipHeight)
 {
-    if (savedx + width >= curchar->width + x)
+    if (clipX + clipWidth >= curchar->width + x) // Check if the glyph's right edge is inside or touching the clipping rect's right edge.
     {
-        if (curchar->baseline + y >= savedy)
+        if (curchar->baseline + y >= clipY) // Check if the glyph's top is below the clip top.
         {
-            if (savedy + height >= curchar->baseline + y + curchar->height)
+            if (clipY + clipHeight >= curchar->baseline + y + curchar->height) // Check if the glyph's bottom is above the clip bottom.
             {
-                if (text_orientation)
+                if (text_orientation) // Check if vertical text. Not sure if ever used for outlined text?
                 {
-                    gSPTextureRectangleFlip(gdl++, ((y - curchar->baseline) - curchar->height) << 2, x << 2, (y - curchar->baseline) << 2, (x + curchar->width) << 2, G_TX_RENDERTILE, 0, (curchar->height - 1) << 5, 0x400, 0xFC00);
+                    gSPTextureRectangleFlip(gdl++, 
+                        /* xl */ ((y - curchar->baseline) - curchar->height) << 2, 
+                        /* yl */ x << 2, 
+                        /* xh */ (y - curchar->baseline) << 2, 
+                        /* yh */ (x + curchar->width) << 2, 
+                        /* tile */ G_TX_RENDERTILE, 
+                        /* s */ 0, 
+                        /* t */ (curchar->height - 1) << 5, 
+                        /* dsdx */ 0x400, 
+                        /* dsdy */ 0xFC00);
                 }
                 else
                 {
-                    gSPTextureRectangle(gdl++, x << 2, (y + curchar->baseline) << 2, (x + curchar->width << 2), (curchar->baseline + y + curchar->height) << 2, G_TX_RENDERTILE, 0, 0, 0x400, 0x400);
+                    gSPTextureRectangle(gdl++, 
+                        /* xl */ x << 2, 
+                        /* yl */ (y + curchar->baseline) << 2, 
+                        /* xh */ (x + curchar->width << 2), 
+                        /* yh */ (curchar->baseline + y + curchar->height) << 2, 
+                        /* tile */ G_TX_RENDERTILE, 
+                        /* s */ 0, 
+                        /* t */ 0, 
+                        /* dsdx */ 0x400, 
+                        /* dsdy */ 0x400);
                 }
             }
-            else if (savedy + height >= curchar->baseline + y)
+            else if (clipY + clipHeight >= curchar->baseline + y) // Glyph bottom is below the clipping rectangle.
             {
-                gSPTextureRectangle(gdl++, x << 2, (y + curchar->baseline) << 2, (x + curchar->width) << 2, (savedy + height << 2), G_TX_RENDERTILE, 0, 0, 0x400, 0x400);
+                // Bottom coordinates clipped to savedy + height.
+                gSPTextureRectangle(gdl++, 
+                    /* xl */ x << 2, 
+                    /* yl */ (y + curchar->baseline) << 2, 
+                    /* xh */ (x + curchar->width) << 2, 
+                    /* yh */ (clipY + clipHeight << 2), 
+                    /* tile */ G_TX_RENDERTILE, 
+                    /* s */ 0, 
+                    /* t */ 0, 
+                    /* dsdx */ 0x400, 
+                    /* dsdy */ 0x400); 
             }
         }
-        else if (curchar->baseline + y + curchar->height >= savedy)
+        else if (curchar->baseline + y + curchar->height >= clipY) // Glyph top is above the clipping rectangle.
         {
-            gSPTextureRectangle(gdl++, x << 2, savedy<< 2, (x + curchar->width) << 2, (curchar->baseline + y + curchar->height) << 2, G_TX_RENDERTILE, 0, ((savedy - curchar->baseline) - y) << 5, 0x400, 0x400);
+            gSPTextureRectangle(gdl++, // Top clipped to fit.
+                /* xl */ x << 2, 
+                /* yl */ clipY<< 2, 
+                /* xh */ (x + curchar->width) << 2, 
+                /* yh */ (curchar->baseline + y + curchar->height) << 2, 
+                /* tile */ G_TX_RENDERTILE, 
+                /* s */ 0, 
+                /* t */ ((clipY - curchar->baseline) - y) << 5, 
+                /* dsdx */ 0x400, 
+                /* dsdy */ 0x400);
         }
     }
 
     return gdl;
 }
 
-
-
-
-Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y, 
+/**
+ * Draw strings of text with an outline.
+ * Used for ammo counter, bottom left HUD messages, countdown timers.
+ * Also used for rendering outlines on folder menu text in JP version.
+ */
+Gfx *textRenderOutlined(Gfx *gdl, s32 *x, s32 *y, 
                     char *text, struct fontchar *chars, struct font *font, 
                     u32 colour, u32 colour2, s32 width, s32 height, 
-                    s32 arg10, s32 lineheight)
+                    s32 yOffset, s32 lineheight)
 {
     u16 codepoint;
 	s32 savedy;
@@ -576,7 +608,7 @@ Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y,
     struct fontchar sp74;
     s32 prevchar;
     
-    D_80040EA8 = 1;
+    g_JpnTextTlutNeedsLoad = 1;
 
     savedx = *x;
 	savedy = *y;
@@ -602,12 +634,13 @@ Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y,
             *y += lineheight;
 			text++;
 		} else if (*text < 0x80) {
-            gdl = sub_GAME_7F0ADDAC(gdl, x, y, &chars[*text - 0x21], &chars[prevchar - 0x21], font, savedx, savedy, colour, colour2, width, height, arg10);
+            // Render individual characters with outline.
+            gdl = textRenderGlyphOutlined(gdl, x, y, &chars[*text - 0x21], &chars[prevchar - 0x21], font, savedx, savedy, colour, colour2, width, height, yOffset);
 			prevchar = *text;
 			text++;
 		} else {
             codepoint = ((*text & 0x7f) << 7) | (text[1] & 0x7f);
-            sp74 = D_80040F14;
+            sp74 = g_JpnGlyphDefaultsOutlined;
 
 			if (codepoint & 0x2000) {
 				sp74.width = 15;
@@ -626,7 +659,8 @@ Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y,
 			sp74.index = codepoint + 0x80;
 			sp74.pixeldata = (void *)langGetJpnCharPixels(codepoint);
 
-            gdl = sub_GAME_7F0ADDAC(gdl, x, y, &sp74, &sp74, font, savedx, savedy, colour, colour2, width, height, arg10);
+            // Render Japanese characters with outline.
+            gdl = textRenderGlyphOutlined(gdl, x, y, &sp74, &sp74, font, savedx, savedy, colour, colour2, width, height, yOffset);
 
 			text += 2;
 		}
@@ -634,9 +668,6 @@ Gfx *textRenderGlow(Gfx *gdl, s32 *x, s32 *y,
 
     return gdl;
 }
-
-
-
 
 void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *font1, struct font *font2, s32 lineheight)
 {
@@ -714,10 +745,7 @@ void textMeasure(s32 *textheight, s32 *textwidth, char *text, struct fontchar *f
     }
 }
 
-
-
-// perfect dark: void textWrap
-void sub_GAME_7F0AEB64(s32 wrapwidth, char *src, char *dst, struct fontchar *chars, struct font *font)
+void textWrap(s32 wrapwidth, char *src, char *dst, struct fontchar *chars, struct font *font)
 {
 	s32 curlinewidth = 0;
 	bool itfits;
@@ -736,6 +764,7 @@ void sub_GAME_7F0AEB64(s32 wrapwidth, char *src, char *dst, struct fontchar *cha
 		wordlen = 0;
 		v1 = 0;
 
+        // Read one word into the curword buffer.
         while (*src > ' ')
         {
             curword[wordlen] = *src;
@@ -752,10 +781,12 @@ void sub_GAME_7F0AEB64(s32 wrapwidth, char *src, char *dst, struct fontchar *cha
             }
         }
         
+        // Null terminate the word
         curword[wordlen] = '\0';
 
         textMeasure(&wordheight, &wordwidth, curword, chars, font, 0);
 
+        // Track the current line's pixel length
         curlinewidth += wordwidth;
 
         if (curlinewidth <= wrapwidth) {
@@ -847,11 +878,12 @@ void sub_GAME_7F0AEB64(s32 wrapwidth, char *src, char *dst, struct fontchar *cha
     }
 }
 
-
+// Unreferenced
 void sub_GAME_7F0AEF0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    // (function likely stubbed)
+
 }
 
+// Unreferenced
 u32 sub_GAME_7F0AEF20(u32 param_1,u32 param_2){
   return param_1;
 }

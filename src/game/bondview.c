@@ -17509,7 +17509,7 @@ Gfx* sub_GAME_7F08A5FC(Gfx* arg0)
 
             view_vert = view_top - view_top_offset;
             arg0 = draw_blackbox_to_screen(arg0, (s32) &view_left, (s32) &view_vert, (s32) &view_horiz, (s32) &view_top);
-            arg0 = combiner_bayer_lod_perspective(textRenderGlow(arg0, &view_left, &view_vert, stringbuffer_lowerleft[status_bar_text_buffer_index], BONDVIEW_2ND_FONTTABLE(status_bar_text_buffer_index), BONDVIEW_1ST_FONTTABLE(status_bar_text_buffer_index), -1, 0x646464FFU, (s16) (s32) viGetX(), (s16) viGetY(), 0, 0));
+            arg0 = combiner_bayer_lod_perspective(textRenderOutlined(arg0, &view_left, &view_vert, stringbuffer_lowerleft[status_bar_text_buffer_index], BONDVIEW_2ND_FONTTABLE(status_bar_text_buffer_index), BONDVIEW_1ST_FONTTABLE(status_bar_text_buffer_index), -1, 0x646464FFU, (s16) (s32) viGetX(), (s16) viGetY(), 0, 0));
         }
     }
 
@@ -18164,7 +18164,7 @@ glabel sub_GAME_7F08AAE8
 /* 0C0064 7F08B4F4 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0C0068 7F08B4F8 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0C006C 7F08B4FC AFB80010 */  sw    $t8, 0x10($sp)
-/* 0C0070 7F08B500 0FC2BCA7 */  jal   textRenderGlow
+/* 0C0070 7F08B500 0FC2BCA7 */  jal   textRenderOutlined
 /* 0C0074 7F08B504 AFAA0020 */   sw    $t2, 0x20($sp)
 /* 0C0078 7F08B508 10000022 */  b     .Ljp7F08B594
 /* 0C007C 7F08B50C 00408025 */   move  $s0, $v0
@@ -18612,7 +18612,7 @@ glabel sub_GAME_7F08AAE8
 /* 0BD950 7F08AF60 AFA0002C */  sw    $zero, 0x2c($sp)
 /* 0BD954 7F08AF64 AFB90014 */  sw    $t9, 0x14($sp)
 /* 0BD958 7F08AF68 AFB80010 */  sw    $t8, 0x10($sp)
-/* 0BD95C 7F08AF6C 0FC2B66B */  jal   textRenderGlow
+/* 0BD95C 7F08AF6C 0FC2B66B */  jal   textRenderOutlined
 /* 0BD960 7F08AF70 AFAA0020 */   sw    $t2, 0x20($sp)
 /* 0BD964 7F08AF74 10000022 */  b     .L7F08B000
 /* 0BD968 7F08AF78 00408025 */   move  $s0, $v0
