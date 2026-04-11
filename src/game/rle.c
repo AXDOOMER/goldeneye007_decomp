@@ -150,91 +150,38 @@ glabel rle_expand_rgb_to_u16_5551
 )
 #endif
 
-
-
-#ifdef NONMATCHING
-void rle_expand_rgb_to_rgba32(void *src, u8 *dst)
+/**
+ * Decode RLE-compressed RGB data into RGBA32.
+ */
+void rle_expand_rgb_to_rgba32(u8 *src, u8 *dst)
 {
-    u8 *p;
-    u16 width;
-    u16 height;
-    u8 *run;
+    u8 *in;
     u8 *out;
-    u32 remaining;
-    s32 count_signed;
-    u8 c0;
-    u8 c1;
-    u8 c2;
-    u8 alpha;
-
-    p = (u8 *)src;
-    width = *(u16 *)(p + 0);
-    height = *(u16 *)(p + 2);
+    s32 remaining;
+    s32 count;
+    u8 r, g, b;
+    u16 w, h;
+    
     out = dst;
-    run = p + 0xA;
-    remaining = (u32)width * (u32)height;
-    alpha = 0xFF;
+    w = *(u16 *)&src[0];
+    h = *(u16 *)&src[2];
+    remaining = w * h;
+    in = &src[10]; // Start of RLE stream.
 
-    while (remaining > 0) {
-        count_signed = (s32)run[0];
-        c0 = run[1];
-        c1 = run[2];
-        c2 = run[3];
-        run += 4;
-        remaining -= (u32)count_signed;
-
-        count_signed = count_signed - 1;
-
-        for (;;) {
-            out[0] = c2;
-            out[1] = c1;
-            out[2] = c0;
-            out[3] = alpha;
+    do {
+        count = in[0];
+        r = in[1];
+        g = in[2];
+        remaining -= count;
+        b = in[3];
+        in += 4;
+        count--;
+        do {
+            out[0] = b;
+            out[1] = g;
+            out[2] = r;
+            out[3] = 0xFF; 
             out += 4;
-
-            if (count_signed > 0) {
-                count_signed = count_signed - 1;
-                continue;
-            }
-            break;
-        }
-    }
+        } while (count-- > 0);
+    } while (remaining > 0);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel rle_expand_rgb_to_rgba32
-/* 04FCF8 7F01B1C8 94830000 */  lhu   $v1, ($a0)
-/* 04FCFC 7F01B1CC 94860002 */  lhu   $a2, 2($a0)
-/* 04FD00 7F01B1D0 00A01025 */  move  $v0, $a1
-/* 04FD04 7F01B1D4 2488000A */  addiu $t0, $a0, 0xa
-/* 04FD08 7F01B1D8 00660019 */  multu $v1, $a2
-/* 04FD0C 7F01B1DC 240A00FF */  li    $t2, 255
-/* 04FD10 7F01B1E0 00003812 */  mflo  $a3
-/* 04FD14 7F01B1E4 00000000 */  nop   
-/* 04FD18 7F01B1E8 00000000 */  nop   
-/* 04FD1C 7F01B1EC 91030000 */  lbu   $v1, ($t0)
-.L7F01B1F0:
-/* 04FD20 7F01B1F0 91040001 */  lbu   $a0, 1($t0)
-/* 04FD24 7F01B1F4 91050002 */  lbu   $a1, 2($t0)
-/* 04FD28 7F01B1F8 00E33823 */  subu  $a3, $a3, $v1
-/* 04FD2C 7F01B1FC 91060003 */  lbu   $a2, 3($t0)
-/* 04FD30 7F01B200 25080004 */  addiu $t0, $t0, 4
-/* 04FD34 7F01B204 2463FFFF */  addiu $v1, $v1, -1
-.L7F01B208:
-/* 04FD38 7F01B208 0003482A */  slt   $t1, $zero, $v1
-/* 04FD3C 7F01B20C A0460000 */  sb    $a2, ($v0)
-/* 04FD40 7F01B210 A0450001 */  sb    $a1, 1($v0)
-/* 04FD44 7F01B214 A0440002 */  sb    $a0, 2($v0)
-/* 04FD48 7F01B218 A04A0003 */  sb    $t2, 3($v0)
-/* 04FD4C 7F01B21C 2463FFFF */  addiu $v1, $v1, -1
-/* 04FD50 7F01B220 1520FFF9 */  bnez  $t1, .L7F01B208
-/* 04FD54 7F01B224 24420004 */   addiu $v0, $v0, 4
-/* 04FD58 7F01B228 5CE0FFF1 */  bgtzl $a3, .L7F01B1F0
-/* 04FD5C 7F01B22C 91030000 */   lbu   $v1, ($t0)
-/* 04FD60 7F01B230 03E00008 */  jr    $ra
-/* 04FD64 7F01B234 00000000 */   nop   
-)
-#endif
-
-
