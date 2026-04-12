@@ -12519,54 +12519,15 @@ glabel set_enviro_fog_for_items_in_solo_watch_menu
 )
 #endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0634D8(void) {
-
+void sub_GAME_7F0634D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    set_enviro_fog_for_items_in_solo_watch_menu(arg0, arg1, arg2, arg3, -256);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0634D8
-/* 098008 7F0634D8 27BDFFE0 */  addiu $sp, $sp, -0x20
-/* 09800C 7F0634DC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 098010 7F0634E0 240EFF00 */  li    $t6, -256
-/* 098014 7F0634E4 0FC18C01 */  jal   set_enviro_fog_for_items_in_solo_watch_menu
-/* 098018 7F0634E8 AFAE0010 */   sw    $t6, 0x10($sp)
-/* 09801C 7F0634EC 8FBF001C */  lw    $ra, 0x1c($sp)
-/* 098020 7F0634F0 27BD0020 */  addiu $sp, $sp, 0x20
-/* 098024 7F0634F4 03E00008 */  jr    $ra
-/* 098028 7F0634F8 00000000 */   nop
-)
-#endif
 
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F0634FC(void) {
-
+// Unreferenced
+void sub_GAME_7F0634FC(s32 arg0, s32 arg1, s32 arg2) {
+    sub_GAME_7F0634D8(arg0, arg1, arg2, 0xFF);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0634FC
-/* 09802C 7F0634FC 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 098030 7F063500 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 098034 7F063504 0FC18D36 */  jal   sub_GAME_7F0634D8
-/* 098038 7F063508 240700FF */   li    $a3, 255
-/* 09803C 7F06350C 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 098040 7F063510 27BD0018 */  addiu $sp, $sp, 0x18
-/* 098044 7F063514 03E00008 */  jr    $ra
-/* 098048 7F063518 00000000 */   nop
-)
-#endif
-
-
 
 void sub_GAME_7F06351C(struct coord3d* arg0, Mtxf* arg1, Mtxf* arg2, Mtxf* arg3, struct coord3d* arg4, Mtxf* arg5, Mtxf* arg6)
 {
