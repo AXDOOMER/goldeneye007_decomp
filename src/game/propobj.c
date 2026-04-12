@@ -1387,7 +1387,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
 
     if (model == NULL)
     {
-        if (obj->type == 0x28)
+        if (obj->type == PROPDEF_AIRCRAFT)
         {
             model = get_aircraft_obj_instance_controller(model_header);
         }
@@ -1443,7 +1443,7 @@ PropRecord* objInit(ObjectRecord* obj, ModelFileHeader* model_header, PropRecord
     {
         if (model != NULL)
         {
-            if (obj->type == 0x28)
+            if (obj->type == PROPDEF_AIRCRAFT)
             {
                 clear_aircraft_model_obj(model);
             }
@@ -1662,10 +1662,10 @@ void objFreeEmbedmentOrProjectile(PropRecord *prop)
             else
             {
                 osSyncPrintf("ERROR: PROPHIDD_ATTACHED was, but move.attach was NULL\a\n");
-                osSyncPrintf("po->obj=%d\n",po->obj);
-                osSyncPrintf("p->flags=%08x\n",p->flags);
-                osSyncPrintf("po->flags2=%08x\n",po->flags2);
-                osSyncPrintf("p->timetoregen=%d\n",p->timetoregen);
+            osSyncPrintf("po->obj=%d\n", obj->obj);
+                osSyncPrintf("p->flags=%08x\n", prop->flags);
+                osSyncPrintf("po->flags2=%08x\n", obj->flags2);
+                osSyncPrintf("p->timetoregen=%d\n", prop->timetoregen);
             }
             #endif
 
@@ -2915,7 +2915,8 @@ bool projectileFindCollidingProp(PropRecord *prop, coord3d *pos1, coord3d *pos2,
 #ifdef NONMATCHING
 void handles_projectile_motion(void) {
     //this function contains
-    // osSyncPrintf("stanLineObjGfx: %d rooms is more than %d\n",arg0+0x58,20);
+    //      // sub_GAME_7F0B4AB4();
+    //  osSyncPrintf("stanLineObjGfx: %d rooms is more than %d\n",arg0+0x58,20);
 }
 #else
 GLOBAL_ASM(
@@ -5057,8 +5058,8 @@ void sub_GAME_7F0442DC(PropRecord* prop)
 
 /**
  * Address: 7F044414
- * Description: Separating Axis Theorem 
- * 
+ * Description: Separating Axis Theorem
+ *
  * Return true if both blocks are not intersecting on the X/Z plane.
  * PD: cdBlockExcludesBlockLaterally
  */
@@ -5132,17 +5133,17 @@ bool chrobjSeparatingAxisTheorem(rect4f* rect1, s32 numvertices0, rect4f* rect2,
 /**
  * Address 0x7F0446B8 (NTSC)
  * Address 0x7F0449A0 (NTSC-J)
- * 
+ *
  * Description: Does a 2D collision check between two (convex?) polygons.
- * 
+ *
  * Note: The NTSC version is 7 to 8 times faster than the others.
  *       Was this an attempt at optimization or to fix a bug?
- * 
+ *
  * Deepseek says JP/EU's new code will detect edges cases such as a polygon
  * fully contained into another. NTSC's only check is SAT, which misses when
  * the polygons have edges that don’t overlap. NTSC's code handles 95% of
  * collisions so it should be called first.
- * 
+ *
  * So they fixed a bug, but didn't do it the right way so it wouldn't affect performance.
 */
 s32 chrobjTestPolygonsTouchingOrOverlap2D(struct rect4f *arg0, s32 arg1, struct rect4f *arg2, s32 arg3)
@@ -33387,7 +33388,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
 
     collectType = INV_ITEM_NONE;
     obj = prop->obj;
-    
+
     if (g_CurrentPlayer->bonddead || g_ClockTimer == 0)
     {
         return INV_ITEM_NONE;
@@ -33412,12 +33413,12 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                 hudmsgBottomShow(text);
 #endif
             }
-            
+
             collectType = INV_ITEM_PICKUP;
-            
+
             break;
         }
-        
+
         case PROPDEF_MAGAZINE:
         {
             struct AmmoCrateRecord *crate;
@@ -33427,9 +33428,9 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
 
             amount = get_ammo_in_magazine(crate);
             add_ammo_to_inventory(crate->ammoType, amount, 1, showstring);
-            
+
             collectType = INV_ITEM_WEAPON;
-            
+
             break;
         }
 
@@ -33445,7 +33446,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
             for (i = AMMO_NONE; i < AMMOTYPE_GLOBAL_MAX; i++)
             {
                 ammotype = i + 1;
-                
+
                 if (ammotype == AMMO_9MM_2)
                 {
                     ammotype = AMMO_9MM;
@@ -33460,25 +33461,25 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
 
                 add_ammo_to_inventory(ammotype, ammoquantity, 0, showstring);
             }
-            
+
             sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, PICKUP_AMMO_SFX, 0);
-            
+
             collectType = INV_ITEM_WEAPON;
-            
+
             break;
         }
-        
+
         case PROPDEF_COLLECTABLE: // weapon
         {
             WeaponObjRecord* wep;
             bool collected;
             s32 ammo_type;
-            
+
             collected = 0;
             wep = (WeaponObjRecord *)prop->obj;
 
             set_sound_effect_for_weapontype_collection(wep->weaponnum);
-            
+
             if (wep->weaponnum == ITEM_REMOTEMINE)
             {
                 bondinvAddInvItem(ITEM_TRIGGER);
@@ -33487,18 +33488,18 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
             {
                 currentPlayerEquipWeaponWrapper(GUNRIGHT, ITEM_TOKEN);
             }
-            
+
             if (obj->runtime_bitflags & RUNTIMEBITFLAG_DESTROYED)
             {
                 if (wep->weaponnum < ITEM_BOMBCASE)
                 {
                     bondinvAddWeaponByProp(prop);
                 }
-                
+
                 if (showstring)
                 {
                     char *text = bondinvGetActivatedTextObject(obj);
-                    
+
                     if (text)
                     {
 #if defined(VERSION_JP) || defined(VERSION_EU)
@@ -33511,10 +33512,10 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                     {
                         display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
                     }
-                    
+
                     collected = 1;
                 }
-                
+
                 collectType = INV_ITEM_PICKUP;
             }
             else
@@ -33523,7 +33524,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                 {
                     collected = 1;
                 }
-                
+
                 if (showstring)
                 {
                     char *text = bondinvGetActivatedTextWeapon(wep->weaponnum);
@@ -33531,7 +33532,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                     if (text)
                     {
                         collected = 1;
-                        
+
 #if defined(VERSION_JP) || defined(VERSION_EU)
                         jp_hudmsgBottomShow(text);
 #else
@@ -33543,7 +33544,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                         display_text_for_weapon_in_lower_left_corner(wep->weaponnum);
                     }
                 }
-                
+
                 collectType = INV_ITEM_WEAPON;
             }
 
@@ -33557,7 +33558,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                     {
                         s32 heldqty = check_cur_player_ammo_amount_in_inventory(ammo_type);
                         give_cur_player_ammo(ammo_type, heldqty + pickupqty);
-                        
+
                         if ((collected == 0) && showstring)
                         {
                             display_text_when_ammo_collected(ammo_type, pickupqty);
@@ -33568,12 +33569,12 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
 
             break;
         }
-        
+
         case PROPDEF_ARMOUR: // Body armor
         {
             bondviewAddCurrentPlayerArmor(((struct BodyArmourRecord *)prop->obj)->amount);
             sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, ARMOUR_COLLECT_SFX, 0);
-            
+
             if (showstring)
             {
                 char *text = bondinvGetActivatedTextObject(obj);
@@ -33590,19 +33591,19 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                     }
 
                 }
-                
+
 #if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_hudmsgBottomShow(text);
 #else
                 hudmsgBottomShow(text);
 #endif
             }
-            
+
             collectType = INV_ITEM_WEAPON;
-            
+
             break;
         }
-        
+
         case PROPDEF_PROP:
         //case PROPDEF_ALARM:
         //case PROPDEF_CCTV:
@@ -33646,7 +33647,7 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
         default:
         {
             sndPlaySfx((struct ALBankAlt_s *)g_musicSfxBufferPtr, KEYCARD_SFX, 0);
-            
+
             if (showstring)
             {
                 char *text = bondinvGetActivatedTextObject(obj);
@@ -33654,34 +33655,34 @@ INV_ITEM_TYPE collect_or_interact_object(PropRecord *prop, s32 showstring)
                 {
                     text = langGet(getStringID(LPROPOBJ, PROPOBJ_STR_3F_PICKEDUPSOMETHING)); // "Picked up something.\n",
                 }
-                
+
 #if defined(VERSION_JP) || defined(VERSION_EU)
                 jp_hudmsgBottomShow(text);
 #else
                 hudmsgBottomShow(text);
 #endif
             }
-            
+
             collectType = INV_ITEM_PICKUP;
-            
+
             break;
         }
     }
-    
+
     if ((collectType == INV_ITEM_WEAPON) && ((obj->runtime_bitflags & RUNTIMEBITFLAG_TAGGED) == 0))
     {
         objFree(obj, 0, (obj->state & RUNTIMEBITFLAG_REMOVE));
-        
+
         return INV_ITEM_WEAPON;
     }
-    
+
     if (collectType != INV_ITEM_NONE)
     {
         bondinvAddPropToInv(prop);
-        
+
         return INV_ITEM_PICKUP;
     }
-    
+
     return INV_ITEM_NONE;
 }
 
@@ -33710,48 +33711,48 @@ s32 object_collectability_routines(struct PropRecord* arg0) {
     struct ObjectRecord* var_a0; // sp84
 
     var_a0 = arg0->obj; // arg0->unk4
-    
+
     if ((objIsCollectable(var_a0) != 0) && (var_a0->type != 0x11)) {
         if (var_a0->flags & 0x100000) {
             return 0;
         }
-    } else {  
+    } else {
 
         if (!(var_a0->flags & 0x40000)) {
             return 0;
         }
     }
-    
+
     if (var_a0->flags & 0x80000) {
         return 0;
     }
-    
+
     if (var_a0->runtime_bitflags & 0x80) {
         if (((s32)var_a0->projectile->refreshrate > 0) && (var_a0->projectile->unk90 == 0)) {
             return 0;
         }
     }
-    
+
     if (objCanPickupFromSafe(var_a0) == 0) {
         return 0;
     }
-    
+
     if (var_a0->type == 8) { // PROPDEF_COLLECTABLE
         struct WeaponObjRecord* sp80;
         s32 var_a1;
         s32 var_a0_2;
         sp80 = (WeaponObjRecord*)arg0->obj;
-        if (((sp80->weaponnum == 0x1A) || (sp80->weaponnum == 0x57)) && ((sp80->timer >= 0) 
+        if (((sp80->weaponnum == 0x1A) || (sp80->weaponnum == 0x57)) && ((sp80->timer >= 0)
                                                              || (var_a0->runtime_bitflags & 4))) {
             return 0;
         }
-        
-        if (((sp80->weaponnum == 0x1D) || (sp80->weaponnum == 0x1C) || (sp80->weaponnum == 0x1B) 
-             || (sp80->weaponnum == 0x21) || (sp80->weaponnum == 0x2F) || (sp80->weaponnum == 0x30) 
+
+        if (((sp80->weaponnum == 0x1D) || (sp80->weaponnum == 0x1C) || (sp80->weaponnum == 0x1B)
+             || (sp80->weaponnum == 0x21) || (sp80->weaponnum == 0x2F) || (sp80->weaponnum == 0x30)
              || (sp80->weaponnum == 0x22)) && ((sp80->timer >= 0) || (var_a0->runtime_bitflags & 4))) {
             return 0;
         }
-        
+
         if ((sp80->weaponnum == 0x56) && (var_a0->runtime_bitflags & 0x80)) {
             return 0;
         }
@@ -33810,7 +33811,7 @@ s32 object_collectability_routines(struct PropRecord* arg0) {
                 }
             }
         }
-        
+
         if (sp6C) {
             return 0;
         }
@@ -33820,7 +33821,7 @@ s32 object_collectability_routines(struct PropRecord* arg0) {
         s32 sp58;
         sp60 = (BodyArmourRecord* )arg0->obj;
         ignore = 0;
-        
+
         if (sp60->amount <= get_BONDdata_watch_armor()) {
             ignore = 1;
         } else if (getPlayerCount() >= 2) {
@@ -33831,7 +33832,7 @@ s32 object_collectability_routines(struct PropRecord* arg0) {
                 ignore = 1;
             }
         }
-        
+
         if (ignore != 0) {
             return 0;
         }
@@ -33848,22 +33849,22 @@ s32 object_collectability_routines(struct PropRecord* arg0) {
         s32 var_v0;
         struct PropRecord* temp_v0_5;
         s32 pickup;
-    
+
         temp_v0_5 = get_curplayer_positiondata();
 
         temp_f0 = var_a0->runtime_pos.x - temp_v0_5->pos.x;
         temp_f12 = var_a0->runtime_pos.y - temp_v0_5->pos.y;
         temp_f2 = var_a0->runtime_pos.z - temp_v0_5->pos.z;
-        
+
         if (g_CurrentPlayer->magnetattracttime >= 0x3C) {
             pickup = (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 122500.0f) && (temp_f12 >= -500.0f) && (temp_f12 <= 500.0f);
         } else {
             pickup = (((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) <= 10000.0f) && (temp_f12 >= -200.0f) && (temp_f12 <= 200.0f);
         }
-        
+
         if ((pickup != 0) && !(var_a0->flags2 & 0x1000)) {
             struct StandTile* stan = temp_v0_5->stan;
-            if ((stanTestLineUnobstructed(&stan, temp_v0_5->pos.x, temp_v0_5->pos.z, arg0->pos.x, arg0->pos.z, 
+            if ((stanTestLineUnobstructed(&stan, temp_v0_5->pos.x, temp_v0_5->pos.z, arg0->pos.x, arg0->pos.z,
                                 2, 30.0f, 30.0f, 0.0f, 1.0f) == 0) || (stan != arg0->stan)) {
                 pickup = 0;
             }

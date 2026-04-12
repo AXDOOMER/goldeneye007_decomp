@@ -2977,8 +2977,8 @@ typedef union
     typedef struct CCTVRecord
     {
         inherits ObjectRecord;
-        s32 pad;
-        Mtxf unk84;
+        s32      pad; // lookpad
+        Mtxf     unk84;
         f32 unkC4;
         f32 unkC8;
         f32 unkCC;

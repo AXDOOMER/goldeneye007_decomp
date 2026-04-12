@@ -27,9 +27,92 @@ bool modelmgrCanSlotFitRwdata(Model *modelslot, ModelFileHeader *modeldef)
 #ifdef NONMATCHING
 struct PropRecord * get_obj_instance_controller_for_header(struct ModelFileHeader* arg0)
 {
+    void *sp40;
+    s16   sp3E;
+    ? *var_a2;
+    ? *var_v1;
+    s16   temp_v0;
+    s32   temp_a0;
+    s32   temp_s2;
+    s32   var_s0;
+    s32   var_s1;
+    s32   var_v0;
+    void *temp_v0_2;
+    void *var_s6;
+
+    var_s6 = NULL;
+    sp40   = NULL;
+    sp3E   = -1;
+    if (D_80036078 != 0)
+    {
     #ifdef DEBUG
-    if (arg0 + 5 > 19) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", *(arg0 + 5));
+        if (arg0->numRecords > 19) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", (arg0->numRecords));
     #endif
+        var_v0  = 0;
+        var_a2  = &ptr_allocation_1;
+        temp_a0 = D_80036074 - 0x1E;
+        if (temp_a0 > 0)
+        {
+            var_a2 = ptr_allocation_1;
+            var_v1 = var_a2;
+loop_3:
+            if (var_v1->unk8 == 0)
+            {
+                var_s6 = (var_v0 << 5) + var_a2;
+            }
+            else
+            {
+                var_v0 += 1;
+                var_v1 += 0x20;
+                if (var_v0 < temp_a0)
+                {
+                    goto loop_3;
+                }
+            }
+        }
+        if (var_s6 == NULL)
+        {
+            var_s6 = mempAllocBytesInBank(0x20, MEMPOOL_STAGE);
+        }
+        temp_v0 = arg0->unk14;
+        if (temp_v0 > 0)
+        {
+            sp40 = mempAllocBytesInBank((((temp_v0 * 4) + 0xF) | 0xF) ^ 0xF, MEMPOOL_STAGE);
+            sp3E = arg0->unk14;
+        }
+    }
+    else
+    {
+        var_s0 = 0;
+        var_s1 = 0;
+        if (D_80036074 > 0)
+        {
+loop_12:
+            temp_s2 = var_s0 << 5;
+            if (((ptr_allocation_1 + var_s1)->unk8 == 0) && (modelmgrCanSlotFitRwdata(temp_s2 + ptr_allocation_1, arg0, ptr_allocation_1) != 0))
+            {
+                temp_v0_2 = ptr_allocation_1 + var_s1;
+                var_s6    = temp_s2 + ptr_allocation_1;
+                sp40      = temp_v0_2->unk10;
+                sp3E      = temp_v0_2->unk2;
+            }
+            else
+            {
+                var_s0 += 1;
+                var_s1 += 0x20;
+                if (var_s0 < D_80036074)
+                {
+                    goto loop_12;
+                }
+            }
+        }
+    }
+    if (var_s6 != NULL)
+    {
+        modelInit(var_s6, arg0, sp40);
+        var_s6->unk2 = sp3E;
+    }
+    return var_s6;
 }
 #else
 GLOBAL_ASM(
@@ -161,7 +244,7 @@ void clear_model_obj(Model* model)
 #ifdef NONMATCHING
 void get_aircraft_obj_instance_controller(void) {
     #ifdef DEBUG
-    if (arg0 + 0x14 > 140) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", *(arg0 + 0x14));
+    if (arg0->numRecords > 140) osSyncPrintf("WARNING: increase OISAVESIZE to %d!\n", *(arg0->numRecords));
     #endif
 }
 #else
@@ -284,7 +367,7 @@ void modelAttachHead(Model *model, ModelNode *node,  ModelFileHeader *head)
 {
     modelAttachPart(model,model->obj,node,head);
 #ifdef DEBUG
-    if (model + 0x14 > 140 && g_ModelDistanceScale == 0) osSyncPrintf("WARNING: increase OASAVESIZE to %d!\n", *(model + 0x14));
+    if (model->numRecords > 140 && g_ModelDistanceScale == 0) osSyncPrintf("WARNING: increase OASAVESIZE to %d!\n", *(model + 0x14));
 #endif
 
     modelInitRwData(model,head->RootNode);

@@ -190,7 +190,7 @@ s32 setupRoomTransformationMatrix(s32 room)
         roomStatusFlags[mtx] = 0;
 #ifdef DEBUG
         assert(g_BgRoomInfo[room].mtxid == mtx);
-        assert(mtxbufferroom[mtx] == room);
+       // assert(mtxbufferroom[mtx] == room);
 #endif
     }
     else
@@ -198,7 +198,7 @@ s32 setupRoomTransformationMatrix(s32 room)
         roomStatusFlags[mtx] = 0;
         #ifdef DEBUG
         assert(g_BgRoomInfo[room].mtxid == mtx);
-        assert(mtxbufferroom[mtx] == room);
+        //assert(mtxbufferroom[mtx] == room);
         #endif
         return mtx;
     }

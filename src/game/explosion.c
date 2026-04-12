@@ -63,6 +63,7 @@ struct Scorch *g_ScorchBuffer;
  * g_BulletImpactBuffer = mempAllocBytesInBank(0x1F40, MEMPOOL_STAGE);
  * printf("Allocating %d bytes for wallhit data\n",0x3070);
  * Address 0x8007A154.
+ * cannonically wallhitlist
 */
 struct BulletImpact *g_BulletImpactBuffer;
 
@@ -1998,7 +1999,7 @@ void explosionCreateBulletImpact(struct coord3d *pos, struct coord3d *arg1, s16 
     ObjectRecord *temp_s0;
     f32 temp_f0;
     f32 sp88;
-    s32 var_s1;
+    s32 i;
     struct coord3d sp78;
     struct coord3d sp6C;
     f32 zero = 0.0f;
@@ -2139,7 +2140,7 @@ void explosionCreateBulletImpact(struct coord3d *pos, struct coord3d *arg1, s16 
     assert(IsBadVec3d((vec3d *)g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[3].v.ob));
 #endif
 
-    for (var_s1 = 0; var_s1 < 4; var_s1++)
+    for (i = 0; i < 4; i++)
     {
         switch (sp50->apptype)
         {
@@ -2171,10 +2172,10 @@ void explosionCreateBulletImpact(struct coord3d *pos, struct coord3d *arg1, s16 
             break;
         }
 
-        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[0] = var_s0;
-        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[1] = sp62;
-        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[2] = sp61;
-        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[var_s1].v.cn[3] = 0xff; // alpha
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[i].v.cn[0] = var_s0;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[i].v.cn[1] = sp62;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[i].v.cn[2] = sp61;
+        g_BulletImpactBuffer[g_NumImpactEntries].vertex_list[i].v.cn[3] = 0xff; // alpha
     }
 
     g_NumImpactEntries++;

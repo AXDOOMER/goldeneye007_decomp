@@ -549,7 +549,7 @@ u16 D_80036058[] = { 0, 0, 0, 0, };
 
 
 //i may belong to objecthandler.c
-//D:80036060
+// D:80036060 canonically freedist
 u32 D_80036060 = 0;
 
 
@@ -647,7 +647,48 @@ void sub_GAME_7F05C6B8(void)
 
 #ifdef NONMATCHING
 void sub_GAME_7F05C6FC(void) {
-
+    fStack0000001c = param_1;
+    local_90       = 1;
+    do
+    {
+        if (fStack0000001c < *(param_2 + local_90 * 0x24 + 0x20)) break;
+        fStack0000001c = fStack0000001c - *(param_2 + local_90 * 0x24 + 0x20);
+        iVar6          = local_90 + 1;
+        iVar2          = local_90 + 3;
+        local_90       = iVar6;
+    } while ((*(param_2 + iVar2 * 0x24) & 1) == 0);
+    iStack00000014  = param_2;
+    pfStack00000024 = param_4;
+    iStack0000002c  = param_5;
+    if ((*(param_2 + (local_90 + 2) * 0x24) & 1) == 0)
+    {
+        fVar3 = fStack0000001c / *(param_2 + local_90 * 0x24 + 0x20);
+        fVar1 = *(param_2 + local_90 * 0x24 + 0x1c);
+        Function_8237C1C0(param_2 + (local_90 + -1) * 0x24 + 0x10, afStack_30);
+        Function_8237C1C0(iStack00000014 + local_90 * 0x24 + 0x10, afStack_50);
+        Function_8237C1C0(iStack00000014 + (local_90 + 1) * 0x24 + 0x10, afStack_80);
+        Function_8237C1C0(iStack00000014 + (local_90 + 2) * 0x24 + 0x10, afStack_40);
+        Function_8237D298(afStack_50, afStack_80);
+        Function_8237D298(afStack_80, afStack_40);
+        Function_8237D298(afStack_50, afStack_30);
+        lVar5 = ZEXT48(&stack0x00000000) - 0x70;
+        Function_8237DA60(fVar3, afStack_30, afStack_50, afStack_80, afStack_40, param_6, lVar5);
+        Function_82376408(fVar3, fVar1, iStack00000014 + (local_90 + -1) * 0x24 + 4, iStack00000014 + local_90 * 0x24 + 4, iStack00000014 + (local_90 + 1) * 0x24 + 4, iStack00000014 + (local_90 + 2) * 0x24 + 4, param_6, lVar5, local_18);
+        if (iStack0000002c == 1)
+        {
+            local_18[0] = -local_18[0];
+        }
+        Function_8237C548(&local_70, pfStack00000024);
+        matrix_4x4_set_position(local_18, pfStack00000024);
+        uVar4 = 1;
+    }
+    else
+    {
+        matrix_4x4_set_rotation_around_xyz(param_2 + local_90 * 0x24 + 0x10, param_4);
+        matrix_4x4_set_position(iStack00000014 + local_90 * 0x24 + 4, pfStack00000024);
+        uVar4 = 0;
+    }
+    return uVar4;
 }
 #else
 GLOBAL_ASM(

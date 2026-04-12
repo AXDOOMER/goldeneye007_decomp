@@ -1003,7 +1003,7 @@ void sub_GAME_7F0AF630(s32 arg0)
 
     if (arg0 < 0)
     {
-        if (*(stanPrefix->ptr_firstroom)[m_stanRegion - 1])
+        if (*(stan_prefix->ptr_firstroom)[m_stanRegion - 1])
         {
             m_stanRegion --;
         }
@@ -1015,7 +1015,7 @@ void sub_GAME_7F0AF630(s32 arg0)
             m_stanRegion = 1;
         }
     }
-    else if (*(stanPrefix->ptr_firstroom)[m_stanRegion + 1])
+    else if (*(stan_prefix->stanfile)[m_stanRegion + 1])
     {
         m_stanRegion ++;
     }
@@ -1145,7 +1145,7 @@ loop_5:
     return phi_s7;
 
     /*somewhere in this function a loop is checked for overflow
-    if (uStack < local_20)
+    if (i < param4)
     {
         printf("stanFillin: Stack overflow %d>%d",local_20,uStack);
     }
@@ -5411,7 +5411,7 @@ StandTile RemovedDebugFunctionOrXBLAUnique_7F0B2EFC()
     if ((*local_10 == sStack0000001e) && (cVar2 = cStack00000017, *(local_10 + 2) == cStack00000017)
         ) break;
     local_10 = Function_8238ED08(local_10,lVar1,in_r5,in_r6,in_r7,in_r8,in_r9,cVar2,
-                                    in_stack_ffffffab,in_stack_ffffffaf,in_stack_ffffffb4); 
+                                    in_stack_ffffffab,in_stack_ffffffaf,in_stack_ffffffb4);
     }
     return local_10;
 }
@@ -5434,7 +5434,7 @@ void *stanDetermineEOF(struct StanPrefixRecord *r, s32 arg1, s32 arg2)
      int iVar1;
   StandTile *local_20;
   StandTile **local_18;
-  
+
   iVar1 = param_3._4_4_ - param_2._4_4_;
   stanTileStart = r->ptr_firstroom + iVar1 + -0x80;
   ptr_firstroom_0 = r->ptr_firstroom + iVar1;
@@ -5594,7 +5594,7 @@ Gfx * sub_GAME_7F0B312C(Gfx *arg0, s32 arg1)
       dword local_20;
       qword local_10;
       dword local_8;
-  
+
       uStack00000034 = param_5;
       ppuStack0000002c = param_4;
       uVar6 = ZEXT48(param_2);

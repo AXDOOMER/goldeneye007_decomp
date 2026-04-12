@@ -1380,7 +1380,7 @@ s32 bondviewGetRandomSpawnPadIndex(void)
         }
     }
 
-    do {  } while(0); // leftover debug code?
+    do {} while (0); // leftover debug code? - Probably catch Player has no Prop
 
     // loop pads until no enemy is within 100 units
     for (; enemy_nearby && (attempt_num < startpadcount);)

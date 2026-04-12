@@ -51,7 +51,7 @@ extern void		osSyncPrintf(const char *fmt, ...);
 #if defined(RMONDEBUG)
     #define Debug rmonPrintf
 #else /* not RMONDEBUG, do nothing */
-    // #define Debug
+     #define Debug
 #endif
 
 // Test EX and print MSG and file info if fail
