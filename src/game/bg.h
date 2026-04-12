@@ -57,7 +57,8 @@ typedef struct s_bound_info
     u8 pad1;
     // could be draw order?
     s16 unk1;
-    void* next;
+    u8 next;
+    u8 pad2[3];
     struct bbox2d bbox;
 
     #else
