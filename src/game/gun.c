@@ -2704,236 +2704,66 @@ glabel sub_GAME_7F05F73C
 #endif
 #endif
 
+/**
+ * Preliminary guess is this function is responsible for attaching a Rocket to the end of the Rocket Launcher
+ * in first person view.
+ */
+void sub_GAME_7F05F928(s32 arg0)
+{
+    /**
+    * Local declaration order is required for matching 
+    */
+    u8 *entry;
+    AttachedObj *s0;
+    Model *s1;
+    Mtxf sp34;
+    PropRecord *prop;
+    AttachmentChild *s3;
 
+    #if defined(VERSION_US) || defined(VERSION_JP)
+    entry = (u8 *)g_CurrentPlayer + 0x870 + arg0 * 936;
+    #endif
 
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F05F928(void) {
-    void       *sp7C;
-    Mtxf        sp34;
-    PropRecord *sp30;
-    void       *temp_s0;
-    void       *temp_s1;
-    void       *temp_s3;
-    void       *temp_v0;
-
-    temp_v0 = g_CurrentPlayer + (arg0 * 0x3A8);
-    temp_s0 = temp_v0->unkA90;
-    if (temp_s0 != NULL)
-    {
-        temp_s3 = temp_s0->unk10;
-        if (temp_s3 != NULL)
-        {
-            sp7C    = temp_v0 + 0x870;
-            sp30    = get_curplayer_positiondata();
-            temp_s1 = temp_s0->unk14;
-            matrix_4x4_copy(sp7C + 0x268, &sp34);
-            sp34.m[3][0] = 0.0f;
-            sp34.m[3][1] = 0.0f;
-            sp34.m[3][2] = 0.0f;
-            matrix_scalar_multiply(temp_s0->unk14->unk14, &sp34);
-            objChangeShading(temp_s0, sp7C + 0x2E8, &sp34, sp30->stan);
-            chrobjCollisionRelated(temp_s0);
-            temp_s1->unkC = dynAllocate(temp_s1->unk8->unkE << 6);
-            matrix_4x4_copy(temp_s0 + 0x18, &sp34);
-            matrix_4x4_set_position(temp_s0 + 0x58, &sp34);
-            matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &sp34, temp_s1->unkC);
-            modelUpdateRelationsQuick(temp_s1, temp_s1->unk8->unk0);
-            temp_s3->unk1  = temp_s3->unk1 | 2;
-            temp_s3->unk18 = -temp_s1->unkC->unk38;
-        }
+    #if defined(VERSION_EU)
+    entry = (u8 *)g_CurrentPlayer + 0x868 + arg0 * 936;
+    #endif
+    
+    s0 = *(AttachedObj **)(entry + 0x220);
+    if (s0 == 0) {
+        return;
     }
+
+    s3 = s0->child;
+    if (s3 == 0) {
+        return;
+    }
+
+    prop = get_curplayer_positiondata();
+    s1 = s0->model;
+
+    matrix_4x4_copy((Mtxf *)(entry + 0x268), &sp34);
+
+    sp34.m[3][0] = 0.0f;
+    sp34.m[3][1] = 0.0f;
+    sp34.m[3][2] = 0.0f;
+
+    matrix_scalar_multiply(s0->model->scale, (f32 *)&sp34);
+
+    objChangeShading(s0, entry + 0x2e8, &sp34, prop->stan);
+    chrobjCollisionRelated(s0);
+
+    s1->render_pos =
+        dynAllocate((s32)(*(s16 *)((u8 *)s1->obj + 0x0e)) << 6);
+
+    matrix_4x4_copy(&s0->transform, &sp34);
+    matrix_4x4_set_position((Mtxf *)&s0->position, &sp34);
+
+    matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &sp34, s1->render_pos);
+    modelUpdateRelationsQuick(s1, *(void **)s1->obj);
+
+    s3->flags1 |= 2;
+    s3->unk18 = -*(f32 *)((u8 *)s1->render_pos + 0x38);
 }
-#else
-
-#if defined(VERSION_US) || defined(VERSION_JP)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05F928
-/* 094458 7F05F928 000478C0 */  sll   $t7, $a0, 3
-/* 09445C 7F05F92C 01E47823 */  subu  $t7, $t7, $a0
-/* 094460 7F05F930 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 094464 7F05F934 000F7880 */  sll   $t7, $t7, 2
-/* 094468 7F05F938 01E47821 */  addu  $t7, $t7, $a0
-/* 09446C 7F05F93C 3C0E8008 */  lui   $t6, %hi(g_CurrentPlayer)
-/* 094470 7F05F940 8DCEA0B0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 094474 7F05F944 000F7880 */  sll   $t7, $t7, 2
-/* 094478 7F05F948 01E47821 */  addu  $t7, $t7, $a0
-/* 09447C 7F05F94C 000F78C0 */  sll   $t7, $t7, 3
-/* 094480 7F05F950 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 094484 7F05F954 AFB30020 */  sw    $s3, 0x20($sp)
-/* 094488 7F05F958 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 09448C 7F05F95C AFB10018 */  sw    $s1, 0x18($sp)
-/* 094490 7F05F960 AFB00014 */  sw    $s0, 0x14($sp)
-/* 094494 7F05F964 01CF1021 */  addu  $v0, $t6, $t7
-/* 094498 7F05F968 8C500A90 */  lw    $s0, 0xa90($v0)
-/* 09449C 7F05F96C 24420870 */  addiu $v0, $v0, 0x870
-/* 0944A0 7F05F970 5200003C */  beql  $s0, $zero, .L7F05FA64
-/* 0944A4 7F05F974 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 0944A8 7F05F978 8E130010 */  lw    $s3, 0x10($s0)
-/* 0944AC 7F05F97C 52600039 */  beql  $s3, $zero, .L7F05FA64
-/* 0944B0 7F05F980 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 0944B4 7F05F984 0FC225E6 */  jal   get_curplayer_positiondata
-/* 0944B8 7F05F988 AFA2007C */   sw    $v0, 0x7c($sp)
-/* 0944BC 7F05F98C 8FA4007C */  lw    $a0, 0x7c($sp)
-/* 0944C0 7F05F990 27B20034 */  addiu $s2, $sp, 0x34
-/* 0944C4 7F05F994 AFA20030 */  sw    $v0, 0x30($sp)
-/* 0944C8 7F05F998 8E110014 */  lw    $s1, 0x14($s0)
-/* 0944CC 7F05F99C 02402825 */  move  $a1, $s2
-/* 0944D0 7F05F9A0 0FC16008 */  jal   matrix_4x4_copy
-/* 0944D4 7F05F9A4 24840268 */   addiu $a0, $a0, 0x268
-/* 0944D8 7F05F9A8 44800000 */  mtc1  $zero, $f0
-/* 0944DC 7F05F9AC 02402825 */  move  $a1, $s2
-/* 0944E0 7F05F9B0 E7A00064 */  swc1  $f0, 0x64($sp)
-/* 0944E4 7F05F9B4 E7A00068 */  swc1  $f0, 0x68($sp)
-/* 0944E8 7F05F9B8 E7A0006C */  swc1  $f0, 0x6c($sp)
-/* 0944EC 7F05F9BC 8E180014 */  lw    $t8, 0x14($s0)
-/* 0944F0 7F05F9C0 0FC1629F */  jal   matrix_scalar_multiply
-/* 0944F4 7F05F9C4 C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 0944F8 7F05F9C8 8FA5007C */  lw    $a1, 0x7c($sp)
-/* 0944FC 7F05F9CC 8FB90030 */  lw    $t9, 0x30($sp)
-/* 094500 7F05F9D0 02002025 */  move  $a0, $s0
-/* 094504 7F05F9D4 02403025 */  move  $a2, $s2
-/* 094508 7F05F9D8 24A502E8 */  addiu $a1, $a1, 0x2e8
-/* 09450C 7F05F9DC 0FC101D5 */  jal   objChangeShading
-/* 094510 7F05F9E0 8F270014 */   lw    $a3, 0x14($t9)
-/* 094514 7F05F9E4 0FC10121 */  jal   chrobjCollisionRelated
-/* 094518 7F05F9E8 02002025 */   move  $a0, $s0
-/* 09451C 7F05F9EC 8E280008 */  lw    $t0, 8($s1)
-/* 094520 7F05F9F0 8504000E */  lh    $a0, 0xe($t0)
-/* 094524 7F05F9F4 00044980 */  sll   $t1, $a0, 6
-/* 094528 7F05F9F8 0FC2F5C5 */  jal   dynAllocate
-/* 09452C 7F05F9FC 01202025 */   move  $a0, $t1
-/* 094530 7F05FA00 AE22000C */  sw    $v0, 0xc($s1)
-/* 094534 7F05FA04 26040018 */  addiu $a0, $s0, 0x18
-/* 094538 7F05FA08 0FC16008 */  jal   matrix_4x4_copy
-/* 09453C 7F05FA0C 02402825 */   move  $a1, $s2
-/* 094540 7F05FA10 26040058 */  addiu $a0, $s0, 0x58
-/* 094544 7F05FA14 0FC16266 */  jal   matrix_4x4_set_position
-/* 094548 7F05FA18 02402825 */   move  $a1, $s2
-/* 09454C 7F05FA1C 0FC1E0F1 */  jal   camGetWorldToScreenMtxf
-/* 094550 7F05FA20 00000000 */   nop
-/* 094554 7F05FA24 00402025 */  move  $a0, $v0
-/* 094558 7F05FA28 02402825 */  move  $a1, $s2
-/* 09455C 7F05FA2C 0FC16063 */  jal   matrix_4x4_multiply_homogeneous
-/* 094560 7F05FA30 8E26000C */   lw    $a2, 0xc($s1)
-/* 094564 7F05FA34 8E2A0008 */  lw    $t2, 8($s1)
-/* 094568 7F05FA38 02202025 */  move  $a0, $s1
-/* 09456C 7F05FA3C 0FC1BBA9 */  jal   modelUpdateRelationsQuick
-/* 094570 7F05FA40 8D450000 */   lw    $a1, ($t2)
-/* 094574 7F05FA44 926B0001 */  lbu   $t3, 1($s3)
-/* 094578 7F05FA48 356C0002 */  ori   $t4, $t3, 2
-/* 09457C 7F05FA4C A26C0001 */  sb    $t4, 1($s3)
-/* 094580 7F05FA50 8E2D000C */  lw    $t5, 0xc($s1)
-/* 094584 7F05FA54 C5A40038 */  lwc1  $f4, 0x38($t5)
-/* 094588 7F05FA58 46002187 */  neg.s $f6, $f4
-/* 09458C 7F05FA5C E6660018 */  swc1  $f6, 0x18($s3)
-/* 094590 7F05FA60 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F05FA64:
-/* 094594 7F05FA64 8FB00014 */  lw    $s0, 0x14($sp)
-/* 094598 7F05FA68 8FB10018 */  lw    $s1, 0x18($sp)
-/* 09459C 7F05FA6C 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 0945A0 7F05FA70 8FB30020 */  lw    $s3, 0x20($sp)
-/* 0945A4 7F05FA74 03E00008 */  jr    $ra
-/* 0945A8 7F05FA78 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
-
-#if defined(VERSION_EU)
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F05F928
-/* 0927D0 7F05FDE0 000478C0 */  sll   $t7, $a0, 3
-/* 0927D4 7F05FDE4 01E47823 */  subu  $t7, $t7, $a0
-/* 0927D8 7F05FDE8 27BDFF80 */  addiu $sp, $sp, -0x80
-/* 0927DC 7F05FDEC 000F7880 */  sll   $t7, $t7, 2
-/* 0927E0 7F05FDF0 01E47821 */  addu  $t7, $t7, $a0
-/* 0927E4 7F05FDF4 3C0E8007 */  lui   $t6, %hi(g_CurrentPlayer) # $t6, 0x8007
-/* 0927E8 7F05FDF8 8DCE8BC0 */  lw    $t6, %lo(g_CurrentPlayer)($t6)
-/* 0927EC 7F05FDFC 000F7880 */  sll   $t7, $t7, 2
-/* 0927F0 7F05FE00 01E47821 */  addu  $t7, $t7, $a0
-/* 0927F4 7F05FE04 000F78C0 */  sll   $t7, $t7, 3
-/* 0927F8 7F05FE08 AFBF0024 */  sw    $ra, 0x24($sp)
-/* 0927FC 7F05FE0C AFB30020 */  sw    $s3, 0x20($sp)
-/* 092800 7F05FE10 AFB2001C */  sw    $s2, 0x1c($sp)
-/* 092804 7F05FE14 AFB10018 */  sw    $s1, 0x18($sp)
-/* 092808 7F05FE18 AFB00014 */  sw    $s0, 0x14($sp)
-/* 09280C 7F05FE1C 01CF1021 */  addu  $v0, $t6, $t7
-/* 092810 7F05FE20 8C500A88 */  lw    $s0, 0xa88($v0)
-/* 092814 7F05FE24 24420868 */  addiu $v0, $v0, 0x868
-/* 092818 7F05FE28 5200003C */  beql  $s0, $zero, .L7F05FF1C
-/* 09281C 7F05FE2C 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 092820 7F05FE30 8E130010 */  lw    $s3, 0x10($s0)
-/* 092824 7F05FE34 52600039 */  beql  $s3, $zero, .L7F05FF1C
-/* 092828 7F05FE38 8FBF0024 */   lw    $ra, 0x24($sp)
-/* 09282C 7F05FE3C 0FC22640 */  jal   get_curplayer_positiondata
-/* 092830 7F05FE40 AFA2007C */   sw    $v0, 0x7c($sp)
-/* 092834 7F05FE44 8FA4007C */  lw    $a0, 0x7c($sp)
-/* 092838 7F05FE48 27B20034 */  addiu $s2, $sp, 0x34
-/* 09283C 7F05FE4C AFA20030 */  sw    $v0, 0x30($sp)
-/* 092840 7F05FE50 8E110014 */  lw    $s1, 0x14($s0)
-/* 092844 7F05FE54 02402825 */  move  $a1, $s2
-/* 092848 7F05FE58 0FC16132 */  jal   matrix_4x4_copy
-/* 09284C 7F05FE5C 24840268 */   addiu $a0, $a0, 0x268
-/* 092850 7F05FE60 44800000 */  mtc1  $zero, $f0
-/* 092854 7F05FE64 02402825 */  move  $a1, $s2
-/* 092858 7F05FE68 E7A00064 */  swc1  $f0, 0x64($sp)
-/* 09285C 7F05FE6C E7A00068 */  swc1  $f0, 0x68($sp)
-/* 092860 7F05FE70 E7A0006C */  swc1  $f0, 0x6c($sp)
-/* 092864 7F05FE74 8E180014 */  lw    $t8, 0x14($s0)
-/* 092868 7F05FE78 0FC163C9 */  jal   matrix_scalar_multiply
-/* 09286C 7F05FE7C C70C0014 */   lwc1  $f12, 0x14($t8)
-/* 092870 7F05FE80 8FA5007C */  lw    $a1, 0x7c($sp)
-/* 092874 7F05FE84 8FB90030 */  lw    $t9, 0x30($sp)
-/* 092878 7F05FE88 02002025 */  move  $a0, $s0
-/* 09287C 7F05FE8C 02403025 */  move  $a2, $s2
-/* 092880 7F05FE90 24A502E8 */  addiu $a1, $a1, 0x2e8
-/* 092884 7F05FE94 0FC10205 */  jal   objChangeShading
-/* 092888 7F05FE98 8F270014 */   lw    $a3, 0x14($t9)
-/* 09288C 7F05FE9C 0FC10151 */  jal   chrobjCollisionRelated
-/* 092890 7F05FEA0 02002025 */   move  $a0, $s0
-/* 092894 7F05FEA4 8E280008 */  lw    $t0, 8($s1)
-/* 092898 7F05FEA8 8504000E */  lh    $a0, 0xe($t0)
-/* 09289C 7F05FEAC 00044980 */  sll   $t1, $a0, 6
-/* 0928A0 7F05FEB0 0FC2F2B1 */  jal   dynAllocate
-/* 0928A4 7F05FEB4 01202025 */   move  $a0, $t1
-/* 0928A8 7F05FEB8 AE22000C */  sw    $v0, 0xc($s1)
-/* 0928AC 7F05FEBC 26040018 */  addiu $a0, $s0, 0x18
-/* 0928B0 7F05FEC0 0FC16132 */  jal   matrix_4x4_copy
-/* 0928B4 7F05FEC4 02402825 */   move  $a1, $s2
-/* 0928B8 7F05FEC8 26040058 */  addiu $a0, $s0, 0x58
-/* 0928BC 7F05FECC 0FC16390 */  jal   matrix_4x4_set_position
-/* 0928C0 7F05FED0 02402825 */   move  $a1, $s2
-/* 0928C4 7F05FED4 0FC1E111 */  jal   camGetWorldToScreenMtxf
-/* 0928C8 7F05FED8 00000000 */   nop
-/* 0928CC 7F05FEDC 00402025 */  move  $a0, $v0
-/* 0928D0 7F05FEE0 02402825 */  move  $a1, $s2
-/* 0928D4 7F05FEE4 0FC1618D */  jal   matrix_4x4_multiply_homogeneous
-/* 0928D8 7F05FEE8 8E26000C */   lw    $a2, 0xc($s1)
-/* 0928DC 7F05FEEC 8E2A0008 */  lw    $t2, 8($s1)
-/* 0928E0 7F05FEF0 02202025 */  move  $a0, $s1
-/* 0928E4 7F05FEF4 0FC1BCA4 */  jal   modelUpdateRelationsQuick
-/* 0928E8 7F05FEF8 8D450000 */   lw    $a1, ($t2)
-/* 0928EC 7F05FEFC 926B0001 */  lbu   $t3, 1($s3)
-/* 0928F0 7F05FF00 356C0002 */  ori   $t4, $t3, 2
-/* 0928F4 7F05FF04 A26C0001 */  sb    $t4, 1($s3)
-/* 0928F8 7F05FF08 8E2D000C */  lw    $t5, 0xc($s1)
-/* 0928FC 7F05FF0C C5A40038 */  lwc1  $f4, 0x38($t5)
-/* 092900 7F05FF10 46002187 */  neg.s $f6, $f4
-/* 092904 7F05FF14 E6660018 */  swc1  $f6, 0x18($s3)
-/* 092908 7F05FF18 8FBF0024 */  lw    $ra, 0x24($sp)
-.L7F05FF1C:
-/* 09290C 7F05FF1C 8FB00014 */  lw    $s0, 0x14($sp)
-/* 092910 7F05FF20 8FB10018 */  lw    $s1, 0x18($sp)
-/* 092914 7F05FF24 8FB2001C */  lw    $s2, 0x1c($sp)
-/* 092918 7F05FF28 8FB30020 */  lw    $s3, 0x20($sp)
-/* 09291C 7F05FF2C 03E00008 */  jr    $ra
-/* 092920 7F05FF30 27BD0080 */   addiu $sp, $sp, 0x80
-)
-#endif
-#endif
-
 
 
 void currentPlayerCreateRocket(GUNHAND hand)

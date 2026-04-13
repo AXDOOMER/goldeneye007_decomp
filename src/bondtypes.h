@@ -2452,6 +2452,23 @@ typedef union
         /*0x044*/ struct Projectile *projectile;
     } Embedment;
 
+    // Not exactly sure where this belongs or if it may even already have an existing struct
+    typedef struct AttachmentChild {
+        u8 pad00[0x01];
+        u8 flags1;        // 0x01
+        u8 pad02[0x16];
+        f32 unk18;        // 0x18
+    } AttachmentChild;
+
+    // Not exactly sure where this belongs or if it may even already have an existing struct
+    typedef struct AttachedObj {
+        u8 pad00[0x10];
+        AttachmentChild *child;   // 0x10
+        Model *model;             // 0x14
+        Mtxf transform;           // 0x18
+        coord3d position;         // 0x58
+    } AttachedObj;
+
     /**
      * Object (Prop Definition) Record holds common data such as pad and health.
      */
@@ -3593,6 +3610,8 @@ typedef union
     // objtype 48+
     #define EndObjectList PropDefHeaderRecord endme = New_PropDefHeaderRecord(48)
     #pragma endregion IndividualObjectTypes
+
+
 #pragma endregion //Propdefs
 
 #pragma region Intro
@@ -3907,22 +3926,6 @@ typedef struct stagesetup
     struct sfx3 {
         u16 half[3];
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 typedef struct object_standard {
     s16 scale;
