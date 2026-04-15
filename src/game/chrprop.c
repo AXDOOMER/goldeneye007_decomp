@@ -577,119 +577,59 @@ Gfx *chrpropsRenderPass(Gfx *gdl, s32 roomid, s32 renderpass)
 }
 
 
+/**
+ * Tests if a ray intersects the bounding box of the given room.
+ * @return TRUE if the ray intersects, otherwise FALSE.
+*/
+s32 chrpropRayIntersectsRoomBbox(s32 room, coord3d* start, coord3d* dir) {
+    s32 max[3];
+    s32 min[3];
+    s_room_info* roominfo;
+
+    roominfo = &g_BgRoomInfo[room];
+    if (roominfo->ptr_unique_collision_points != NULL) { // Skip check if room has no collision data
+        min[0] = roominfo->minbounds.f[0];
+        min[1] = roominfo->minbounds.f[1];
+        min[2] = roominfo->minbounds.f[2];
+        max[0] = roominfo->maxbounds.f[0];
+        max[1] = roominfo->maxbounds.f[1];
+        max[2] = roominfo->maxbounds.f[2];
+        if (bgTestLineIntersectsBbox(start, dir, min, max)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 
 /**
- * Address 0x7F03A97C.
-*/
-s32 sub_GAME_7F03A97C(s32 index, coord3d* arg1, coord3d* arg2) {
-    s32 sp2C[3];
-    s32 sp20[3];
-    s_room_info* temp_v0;
+ * Unreferenced
+ * 
+ * This creates a list of rooms that do *not* intersect a ray.
+ */
+void chrpropFlagRoomsFromRayTest(s32 arg0, coord3d *from, coord3d *to, u8 *rooms)
+{
+    coord3d start;
+    coord3d dir;
+    f32 scale;
+    s32 i;
+    
+    scale = get_room_data_float1() * bgGetLevelVisibilityScale();
 
-    temp_v0 = &g_BgRoomInfo[index];
-    if (temp_v0->ptr_unique_collision_points != NULL) {
-        sp20[0] = temp_v0->minbounds.f[0];
-        sp20[1] = temp_v0->minbounds.f[1];
-        sp20[2] = temp_v0->minbounds.f[2];
-        sp2C[0] = temp_v0->maxbounds.f[0];
-        sp2C[1] = temp_v0->maxbounds.f[1];
-        sp2C[2] = temp_v0->maxbounds.f[2];
-        if (bgTestLineIntersectsBbox(arg1, arg2, sp20, sp2C) != 0) {
-            return 1;
+    dir.x = to->x - from->x;
+    dir.y = to->y - from->y;
+    dir.z = to->z - from->z;
+
+    start.x = from->x * scale;
+    start.y = from->y * scale;
+    start.z = from->z * scale;
+
+    for (i = 1; i < getMaxNumRooms(); i++) {
+        if (!rooms[i] && chrpropRayIntersectsRoomBbox(i, &start, &dir) == 0) {
+            rooms[i] = 1;
         }
     }
-    return 0;
 }
-
-
-
-
-#ifdef NONMATCHING
-void sub_GAME_7F03AA44(void) {
-
-}
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F03AA44
-/* 06F574 7F03AA44 27BDFFA8 */  addiu $sp, $sp, -0x58
-/* 06F578 7F03AA48 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 06F57C 7F03AA4C AFB30024 */  sw    $s3, 0x24($sp)
-/* 06F580 7F03AA50 AFB20020 */  sw    $s2, 0x20($sp)
-/* 06F584 7F03AA54 AFB1001C */  sw    $s1, 0x1c($sp)
-/* 06F588 7F03AA58 00A08825 */  move  $s1, $a1
-/* 06F58C 7F03AA5C 00C09025 */  move  $s2, $a2
-/* 06F590 7F03AA60 00E09825 */  move  $s3, $a3
-/* 06F594 7F03AA64 AFB40028 */  sw    $s4, 0x28($sp)
-/* 06F598 7F03AA68 AFB00018 */  sw    $s0, 0x18($sp)
-/* 06F59C 7F03AA6C 0FC2D20F */  jal   get_room_data_float1
-/* 06F5A0 7F03AA70 AFA40058 */   sw    $a0, 0x58($sp)
-/* 06F5A4 7F03AA74 0FC2D21E */  jal   bgGetLevelVisibilityScale
-/* 06F5A8 7F03AA78 E7A00034 */   swc1  $f0, 0x34($sp)
-/* 06F5AC 7F03AA7C C6440000 */  lwc1  $f4, ($s2)
-/* 06F5B0 7F03AA80 C6260000 */  lwc1  $f6, ($s1)
-/* 06F5B4 7F03AA84 24100001 */  li    $s0, 1
-/* 06F5B8 7F03AA88 46062201 */  sub.s $f8, $f4, $f6
-/* 06F5BC 7F03AA8C E7A80040 */  swc1  $f8, 0x40($sp)
-/* 06F5C0 7F03AA90 C6300004 */  lwc1  $f16, 4($s1)
-/* 06F5C4 7F03AA94 C64A0004 */  lwc1  $f10, 4($s2)
-/* 06F5C8 7F03AA98 46105481 */  sub.s $f18, $f10, $f16
-/* 06F5CC 7F03AA9C C7AA0034 */  lwc1  $f10, 0x34($sp)
-/* 06F5D0 7F03AAA0 E7B20044 */  swc1  $f18, 0x44($sp)
-/* 06F5D4 7F03AAA4 C6260008 */  lwc1  $f6, 8($s1)
-/* 06F5D8 7F03AAA8 C6440008 */  lwc1  $f4, 8($s2)
-/* 06F5DC 7F03AAAC 460A0082 */  mul.s $f2, $f0, $f10
-/* 06F5E0 7F03AAB0 46062201 */  sub.s $f8, $f4, $f6
-/* 06F5E4 7F03AAB4 E7A80048 */  swc1  $f8, 0x48($sp)
-/* 06F5E8 7F03AAB8 C6300000 */  lwc1  $f16, ($s1)
-/* 06F5EC 7F03AABC 46028482 */  mul.s $f18, $f16, $f2
-/* 06F5F0 7F03AAC0 E7B2004C */  swc1  $f18, 0x4c($sp)
-/* 06F5F4 7F03AAC4 C6240004 */  lwc1  $f4, 4($s1)
-/* 06F5F8 7F03AAC8 46022182 */  mul.s $f6, $f4, $f2
-/* 06F5FC 7F03AACC E7A60050 */  swc1  $f6, 0x50($sp)
-/* 06F600 7F03AAD0 C6280008 */  lwc1  $f8, 8($s1)
-/* 06F604 7F03AAD4 46024282 */  mul.s $f10, $f8, $f2
-/* 06F608 7F03AAD8 0FC2D791 */  jal   getMaxNumRooms
-/* 06F60C 7F03AADC E7AA0054 */   swc1  $f10, 0x54($sp)
-/* 06F610 7F03AAE0 28410002 */  slti  $at, $v0, 2
-/* 06F614 7F03AAE4 14200014 */  bnez  $at, .L7F03AB38
-/* 06F618 7F03AAE8 02708821 */   addu  $s1, $s3, $s0
-/* 06F61C 7F03AAEC 24140001 */  li    $s4, 1
-/* 06F620 7F03AAF0 27B30040 */  addiu $s3, $sp, 0x40
-/* 06F624 7F03AAF4 27B2004C */  addiu $s2, $sp, 0x4c
-/* 06F628 7F03AAF8 922E0000 */  lbu   $t6, ($s1)
-.L7F03AAFC:
-/* 06F62C 7F03AAFC 02002025 */  move  $a0, $s0
-/* 06F630 7F03AB00 02402825 */  move  $a1, $s2
-/* 06F634 7F03AB04 55C00007 */  bnezl $t6, .L7F03AB24
-/* 06F638 7F03AB08 26100001 */   addiu $s0, $s0, 1
-/* 06F63C 7F03AB0C 0FC0EA5F */  jal   sub_GAME_7F03A97C
-/* 06F640 7F03AB10 02603025 */   move  $a2, $s3
-/* 06F644 7F03AB14 54400003 */  bnezl $v0, .L7F03AB24
-/* 06F648 7F03AB18 26100001 */   addiu $s0, $s0, 1
-/* 06F64C 7F03AB1C A2340000 */  sb    $s4, ($s1)
-/* 06F650 7F03AB20 26100001 */  addiu $s0, $s0, 1
-.L7F03AB24:
-/* 06F654 7F03AB24 0FC2D791 */  jal   getMaxNumRooms
-/* 06F658 7F03AB28 26310001 */   addiu $s1, $s1, 1
-/* 06F65C 7F03AB2C 0202082A */  slt   $at, $s0, $v0
-/* 06F660 7F03AB30 5420FFF2 */  bnezl $at, .L7F03AAFC
-/* 06F664 7F03AB34 922E0000 */   lbu   $t6, ($s1)
-.L7F03AB38:
-/* 06F668 7F03AB38 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 06F66C 7F03AB3C 8FB00018 */  lw    $s0, 0x18($sp)
-/* 06F670 7F03AB40 8FB1001C */  lw    $s1, 0x1c($sp)
-/* 06F674 7F03AB44 8FB20020 */  lw    $s2, 0x20($sp)
-/* 06F678 7F03AB48 8FB30024 */  lw    $s3, 0x24($sp)
-/* 06F67C 7F03AB4C 8FB40028 */  lw    $s4, 0x28($sp)
-/* 06F680 7F03AB50 03E00008 */  jr    $ra
-/* 06F684 7F03AB54 27BD0058 */   addiu $sp, $sp, 0x58
-)
-#endif
-
-
-
 
 
 #ifdef NONMATCHING
@@ -737,7 +677,7 @@ glabel sub_GAME_7F03AB58
 /* 06F70C 7F03ABDC A0570000 */  sb    $s7, ($v0)
 /* 06F710 7F03ABE0 8FA60228 */  lw    $a2, 0x228($sp)
 /* 06F714 7F03ABE4 8FA5022C */  lw    $a1, 0x22c($sp)
-/* 06F718 7F03ABE8 0FC0EA5F */  jal   sub_GAME_7F03A97C
+/* 06F718 7F03ABE8 0FC0EA5F */  jal   chrpropRayIntersectsRoomBbox
 /* 06F71C 7F03ABEC 8E040000 */   lw    $a0, ($s0)
 /* 06F720 7F03ABF0 1040006F */  beqz  $v0, .L7F03ADB0
 /* 06F724 7F03ABF4 02402025 */   move  $a0, $s2
@@ -903,14 +843,14 @@ s32 sub_GAME_7F03ADF4(s32 startroom, coord3d *from, coord3d *to, coord3d *dir, c
         if (visited[room] == 0) {
             visited[room] = 1;
 
-            if (sub_GAME_7F03A97C(room, scaledDir, dir) != 0) {
-                if (bgTestBulletHitBackground(from, to, room, hitpos) != 0) {
+            if (chrpropRayIntersectsRoomBbox(room, scaledDir, dir)) {
+                if (bgTestBulletHitBackground(from, to, room, hitpos)) {
                     return room;
                 }
             }
         }
 
-        numneighbours = sub_GAME_7F0B8EFC(room, neighbours, 100);
+        numneighbours = bgGetConnectedRooms(room, neighbours, 100);
 
         for (i = 0; i < numneighbours; i++) {
             for (j = 0; j < count; j++) {
@@ -981,7 +921,7 @@ glabel sub_GAME_7F03AF5C
 /* 06FB28 7F03AFF8 02802825 */  move  $a1, $s4
 /* 06FB2C 7F03AFFC 15E0003F */  bnez  $t7, .L7F03B0FC
 /* 06FB30 7F03B000 03C03025 */   move  $a2, $fp
-/* 06FB34 7F03B004 0FC0EA5F */  jal   sub_GAME_7F03A97C
+/* 06FB34 7F03B004 0FC0EA5F */  jal   chrpropRayIntersectsRoomBbox
 /* 06FB38 7F03B008 A2550000 */   sb    $s5, ($s2)
 /* 06FB3C 7F03B00C 1040003B */  beqz  $v0, .L7F03B0FC
 /* 06FB40 7F03B010 02602025 */   move  $a0, $s3

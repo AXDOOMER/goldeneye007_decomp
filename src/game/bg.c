@@ -10379,8 +10379,6 @@ glabel sub_GAME_7F0B8DF4
 #endif
 
 
-
-
 // Copies visible rooms to a list
 // Address: 0x7F0B8E98
 s32 bgCopyVisibleRoomsToList(s32 *rooms, s32 max) {
@@ -10394,11 +10392,14 @@ s32 bgCopyVisibleRoomsToList(s32 *rooms, s32 max) {
 }
 
 
-
-
-// Seems like this function might be used to find all the neighbors to a room
-// Address: 0x7F0B8EFC
-s32 sub_GAME_7F0B8EFC(s32 roomIndex, s32* list, s32 max)
+/**
+ * Create a list of rooms connected to roomIndex.
+ * @param roomIndex    Room to query.
+ * @param list         Output buffer for connected room indices.
+ * @param max          Max number of entries to write.
+ * @return             Number of rooms written to the list.
+ */
+s32 bgGetConnectedRooms(s32 roomIndex, s32* list, s32 max)
 {
     s32 len = 0;
     s32 i;
@@ -10435,9 +10436,6 @@ end:
 
     return len;
 }
-
-
-
 
 
 // Scan all portals to see if these rooms are connected
