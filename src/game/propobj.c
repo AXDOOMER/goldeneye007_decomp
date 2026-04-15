@@ -865,7 +865,6 @@ ModelRenderData D_80031FD0 = {  NULL,
                                 {0,0,0,0},
                                 CULLMODE_BOTH};
 
-
 // Forward declarations.
 
 s32 updateDoorDisplacement(DoorRecord* door);
@@ -36091,123 +36090,80 @@ PropRecord *chrGiveWeapon(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flag
     return something_with_generating_object(self, PropID, ItemID, flags, NULL, NULL);
 }
 
+/**
+ * Must remain immediately above propobjRenderHeldWeapon for matching. 
+*/
+ModelRenderData D_800322A4 = {
+    0,
+    1,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    0
+};
 
+/**
+ * Render the weapon(s) characters are holding including the muzzle flash.
+ */
+void propobjRenderHeldWeapon(void *renderContext, GUNHAND hand, Gfx **gdl)
+{
+    ChrRecord *chr;
+    PropRecord *prop;
+    Model *weaponModel;
+    Model *heldModel;
+    ModelRenderData renderData;
+    Model *chrModel;
+    u32 pad; // stack alignment for matching
+    Mtxf rotationMtx;
 
+    chr = *(ChrRecord **)((u8 *)renderContext + 4);
+    prop = chrGetEquippedWeaponProp(chr, hand);
 
+    if (prop != NULL) {
+        weaponModel = *(Model **)((u8 *)prop + 4);
 
-#ifdef NONMATCHING
-void sub_GAME_7F0523F8(void) {
+        if (!(weaponModel->unk64 & 0x800)) {
+            if ((s32)(*(u32 *)((u8 *)weaponModel + 0x0c) << 12) >= 0) {
+                heldModel = *(Model **)((u8 *)weaponModel + 0x14);
+                renderData = D_800322A4;
 
+                chrModel = chr->model;
+                prop->flags |= 2;
+                
+                renderData.unk_matrix = modelFindNodeMtx(chrModel, heldModel->attachedto_objinst, 0);
+
+                if (hand == GUNLEFT) {
+                    matrix_4x4_set_rotation_around_z(3.1415927f, &rotationMtx);
+                    matrix_4x4_multiply_in_place(renderData.unk_matrix, &rotationMtx);
+                    renderData.unk_matrix = &rotationMtx;
+                }
+
+                renderData.mtxlist = dynAllocate(heldModel->obj->numMatrices * sizeof(Mtxf));
+                instcalcmatrices(&renderData, heldModel);
+
+                if (gdl != NULL) {
+                    if (!(weaponModel->unk64 & 0x80)) {
+                        *gdl = sub_GAME_7F06B120(*gdl, heldModel);
+                    }
+                }
+
+                return;
+            }
+        }
+
+        prop->flags &= ~2;
+    }
 }
-#else
-u32 D_800322A4 = 0;
-u32 D_800322A8[] = {1, 3};
-u32 D_800322B0[] = {0, 0, 0, 0};
-u32 D_800322C0[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-GLOBAL_ASM(
-.late_rodata
-glabel D_800532F0
-.word 0x40490fdb /*3.1415927*/
-.text
-glabel sub_GAME_7F0523F8
-/* 086F28 7F0523F8 27BDFF48 */  addiu $sp, $sp, -0xb8
-/* 086F2C 7F0523FC AFBF001C */  sw    $ra, 0x1c($sp)
-/* 086F30 7F052400 AFB10018 */  sw    $s1, 0x18($sp)
-/* 086F34 7F052404 AFB00014 */  sw    $s0, 0x14($sp)
-/* 086F38 7F052408 AFA500BC */  sw    $a1, 0xbc($sp)
-/* 086F3C 7F05240C AFA600C0 */  sw    $a2, 0xc0($sp)
-/* 086F40 7F052410 8C870004 */  lw    $a3, 4($a0)
-/* 086F44 7F052414 00E02025 */  move  $a0, $a3
-/* 086F48 7F052418 0FC08C0B */  jal   chrGetEquippedWeaponProp
-/* 086F4C 7F05241C AFA700B4 */   sw    $a3, 0xb4($sp)
-/* 086F50 7F052420 8FA700B4 */  lw    $a3, 0xb4($sp)
-/* 086F54 7F052424 10400046 */  beqz  $v0, .L7F052540
-/* 086F58 7F052428 00401825 */   move  $v1, $v0
-/* 086F5C 7F05242C 8C500004 */  lw    $s0, 4($v0)
-/* 086F60 7F052430 8E0E0064 */  lw    $t6, 0x64($s0)
-/* 086F64 7F052434 31CF0800 */  andi  $t7, $t6, 0x800
-/* 086F68 7F052438 55E0003F */  bnezl $t7, .L7F052538
-/* 086F6C 7F05243C 90480001 */   lbu   $t0, 1($v0)
-/* 086F70 7F052440 8E18000C */  lw    $t8, 0xc($s0)
-/* 086F74 7F052444 3C098003 */  lui   $t1, %hi(D_800322A4)
-/* 086F78 7F052448 252922A4 */  addiu $t1, %lo(D_800322A4) # addiu $t1, $t1, 0x22a4
-/* 086F7C 7F05244C 0018CB00 */  sll   $t9, $t8, 0xc
-/* 086F80 7F052450 07200038 */  bltz  $t9, .L7F052534
-/* 086F84 7F052454 27A80068 */   addiu $t0, $sp, 0x68
-/* 086F88 7F052458 8E110014 */  lw    $s1, 0x14($s0)
-/* 086F8C 7F05245C 252B003C */  addiu $t3, $t1, 0x3c
-.L7F052460:
-/* 086F90 7F052460 8D210000 */  lw    $at, ($t1)
-/* 086F94 7F052464 2529000C */  addiu $t1, $t1, 0xc
-/* 086F98 7F052468 2508000C */  addiu $t0, $t0, 0xc
-/* 086F9C 7F05246C AD01FFF4 */  sw    $at, -0xc($t0)
-/* 086FA0 7F052470 8D21FFF8 */  lw    $at, -8($t1)
-/* 086FA4 7F052474 AD01FFF8 */  sw    $at, -8($t0)
-/* 086FA8 7F052478 8D21FFFC */  lw    $at, -4($t1)
-/* 086FAC 7F05247C 152BFFF8 */  bne   $t1, $t3, .L7F052460
-/* 086FB0 7F052480 AD01FFFC */   sw    $at, -4($t0)
-/* 086FB4 7F052484 8D210000 */  lw    $at, ($t1)
-/* 086FB8 7F052488 00003025 */  move  $a2, $zero
-/* 086FBC 7F05248C AD010000 */  sw    $at, ($t0)
-/* 086FC0 7F052490 906C0001 */  lbu   $t4, 1($v1)
-/* 086FC4 7F052494 8CE4001C */  lw    $a0, 0x1c($a3)
-/* 086FC8 7F052498 358D0002 */  ori   $t5, $t4, 2
-/* 086FCC 7F05249C A06D0001 */  sb    $t5, 1($v1)
-/* 086FD0 7F0524A0 0FC1B198 */  jal   modelFindNodeMtx
-/* 086FD4 7F0524A4 8E25001C */   lw    $a1, 0x1c($s1)
-/* 086FD8 7F0524A8 8FAE00BC */  lw    $t6, 0xbc($sp)
-/* 086FDC 7F0524AC 24010001 */  li    $at, 1
-/* 086FE0 7F0524B0 AFA20068 */  sw    $v0, 0x68($sp)
-/* 086FE4 7F0524B4 15C10009 */  bne   $t6, $at, .L7F0524DC
-/* 086FE8 7F0524B8 27A50020 */   addiu $a1, $sp, 0x20
-/* 086FEC 7F0524BC 3C018005 */  lui   $at, %hi(D_800532F0)
-/* 086FF0 7F0524C0 0FC161A2 */  jal   matrix_4x4_set_rotation_around_z
-/* 086FF4 7F0524C4 C42C32F0 */   lwc1  $f12, %lo(D_800532F0)($at)
-/* 086FF8 7F0524C8 8FA40068 */  lw    $a0, 0x68($sp)
-/* 086FFC 7F0524CC 0FC1601A */  jal   matrix_4x4_multiply_in_place
-/* 087000 7F0524D0 27A50020 */   addiu $a1, $sp, 0x20
-/* 087004 7F0524D4 27AF0020 */  addiu $t7, $sp, 0x20
-/* 087008 7F0524D8 AFAF0068 */  sw    $t7, 0x68($sp)
-.L7F0524DC:
-/* 08700C 7F0524DC 8E380008 */  lw    $t8, 8($s1)
-/* 087010 7F0524E0 8704000E */  lh    $a0, 0xe($t8)
-/* 087014 7F0524E4 0004C980 */  sll   $t9, $a0, 6
-/* 087018 7F0524E8 0FC2F5C5 */  jal   dynAllocate
-/* 08701C 7F0524EC 03202025 */   move  $a0, $t9
-/* 087020 7F0524F0 AFA20078 */  sw    $v0, 0x78($sp)
-/* 087024 7F0524F4 27A40068 */  addiu $a0, $sp, 0x68
-/* 087028 7F0524F8 0FC1BC92 */  jal   instcalcmatrices
-/* 08702C 7F0524FC 02202825 */   move  $a1, $s1
-/* 087030 7F052500 8FA200C0 */  lw    $v0, 0xc0($sp)
-/* 087034 7F052504 5040000F */  beql  $v0, $zero, .L7F052544
-/* 087038 7F052508 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 08703C 7F05250C 8E0A0064 */  lw    $t2, 0x64($s0)
-/* 087040 7F052510 02202825 */  move  $a1, $s1
-/* 087044 7F052514 314B0080 */  andi  $t3, $t2, 0x80
-/* 087048 7F052518 5560000A */  bnezl $t3, .L7F052544
-/* 08704C 7F05251C 8FBF001C */   lw    $ra, 0x1c($sp)
-/* 087050 7F052520 0FC1AC48 */  jal   sub_GAME_7F06B120
-/* 087054 7F052524 8C440000 */   lw    $a0, ($v0)
-/* 087058 7F052528 8FA900C0 */  lw    $t1, 0xc0($sp)
-/* 08705C 7F05252C 10000004 */  b     .L7F052540
-/* 087060 7F052530 AD220000 */   sw    $v0, ($t1)
-.L7F052534:
-/* 087064 7F052534 90480001 */  lbu   $t0, 1($v0)
-.L7F052538:
-/* 087068 7F052538 310CFFFD */  andi  $t4, $t0, 0xfffd
-/* 08706C 7F05253C A04C0001 */  sb    $t4, 1($v0)
-.L7F052540:
-/* 087070 7F052540 8FBF001C */  lw    $ra, 0x1c($sp)
-.L7F052544:
-/* 087074 7F052544 8FB00014 */  lw    $s0, 0x14($sp)
-/* 087078 7F052548 8FB10018 */  lw    $s1, 0x18($sp)
-/* 08707C 7F05254C 03E00008 */  jr    $ra
-/* 087080 7F052550 27BD00B8 */   addiu $sp, $sp, 0xb8
-)
-#endif
-
-
-
 
 
 void redirect_object_collectability_routines(struct PropRecord* arg0)
