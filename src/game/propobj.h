@@ -25,14 +25,14 @@ struct ShotData {
 struct HitThing {
     // the following is taken from PD
     // may need adjustments
-    coord3d unk00;
-    coord3d unk0c;
+    coord3d unk00; // hit position?
+    coord3d unk0c; // surface normal?
     Vertex *unk18;
     Vertex *unk1c;
     Vertex *unk20;
     Gfx *tricmd;
     s16 unk28;
-    s16 texturenum;
+    s16 texturenum; // offset 0x2a
     s16 unk2c;
 };
 
