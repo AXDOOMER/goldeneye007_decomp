@@ -1888,7 +1888,7 @@ glabel sub_GAME_7F041160
 /* 075D1C 7F0411EC 02203025 */  move  $a2, $s1
 /* 075D20 7F0411F0 02603825 */  move  $a3, $s3
 /* 075D24 7F0411F4 AFB40010 */  sw    $s4, 0x10($sp)
-/* 075D28 7F0411F8 0FC1366C */  jal   sub_GAME_7F04D9B0
+/* 075D28 7F0411F8 0FC1366C */  jal   propobjFindHit
 /* 075D2C 7F0411FC AFB50014 */   sw    $s5, 0x14($sp)
 /* 075D30 7F041200 1440001A */  bnez  $v0, .L7F04126C
 /* 075D34 7F041204 00000000 */   nop
@@ -1913,7 +1913,7 @@ glabel sub_GAME_7F041160
 /* 075D78 7F041248 02603825 */  move  $a3, $s3
 /* 075D7C 7F04124C AFB40010 */  sw    $s4, 0x10($sp)
 /* 075D80 7F041250 AFB50014 */  sw    $s5, 0x14($sp)
-/* 075D84 7F041254 0FC1366C */  jal   sub_GAME_7F04D9B0
+/* 075D84 7F041254 0FC1366C */  jal   propobjFindHit
 /* 075D88 7F041258 AFB60018 */   sw    $s6, 0x18($sp)
 /* 075D8C 7F04125C 14400003 */  bnez  $v0, .L7F04126C
 /* 075D90 7F041260 00000000 */   nop
@@ -30830,7 +30830,7 @@ glabel bgTestHitOnObj
 
 
 // PD: obj_find_hitthing_by_gfx_tris
-bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d *arg3, struct HitThing *hitthing, s32 *dstmtxindex, ModelNode **dstnode)
+bool propobjFindHit(Model *model, ModelNode *startNode, coord3d *rayPos, coord3d *rayDir, struct HitThing *hitthing, s32 *dstmtxindex, ModelNode **dstnode)
 {
     coord3d spec;
     coord3d spe0;
@@ -30842,7 +30842,7 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
 
     spd0 = NULL;
     done = FALSE;
-    node = nodearg;
+    node = startNode;
     vertices = NULL;
 
     while (node && !done)
@@ -30927,15 +30927,15 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
 
                 matrix_4x4_invert_affine(mtx->m, sp64.m);
 
-                spec.x = arg2->x;
-                spec.y = arg2->y;
-                spec.z = arg2->z;
+                spec.x = rayPos->x;
+                spec.y = rayPos->y;
+                spec.z = rayPos->z;
 
                 mtx4TransformVecInPlace(&sp64, &spec);
 
-                spd4.x = arg3->x;
-                spd4.y = arg3->y;
-                spd4.z = arg3->z;
+                spd4.x = rayDir->x;
+                spd4.y = rayDir->y;
+                spd4.z = rayDir->z;
 
                 mtx4RotateVecInPlace(&sp64, &spd4);
 
@@ -30958,7 +30958,7 @@ bool sub_GAME_7F04D9B0(Model *model, ModelNode *nodearg, coord3d *arg2, coord3d 
         } else {
             while (node)
             {
-                if (node == nodearg)
+                if (node == startNode)
                 {
                     node = NULL;
                     break;
@@ -32109,7 +32109,7 @@ glabel sub_GAME_7F04E720
 /* 083348 7F04E818 AFB90014 */  sw    $t9, 0x14($sp)
 /* 08334C 7F04E81C AFB80010 */  sw    $t8, 0x10($sp)
 /* 083350 7F04E820 01E02825 */  move  $a1, $t7
-/* 083354 7F04E824 0FC1366C */  jal   sub_GAME_7F04D9B0
+/* 083354 7F04E824 0FC1366C */  jal   propobjFindHit
 /* 083358 7F04E828 02003825 */   move  $a3, $s0
 /* 08335C 7F04E82C 14400019 */  bnez  $v0, .L7F04E894
 /* 083360 7F04E830 00000000 */   nop
@@ -32133,7 +32133,7 @@ glabel sub_GAME_7F04E720
 /* 0833A0 7F04E870 02802025 */  move  $a0, $s4
 /* 0833A4 7F04E874 8FA500A8 */  lw    $a1, 0xa8($sp)
 /* 0833A8 7F04E878 02603025 */  move  $a2, $s3
-/* 0833AC 7F04E87C 0FC1366C */  jal   sub_GAME_7F04D9B0
+/* 0833AC 7F04E87C 0FC1366C */  jal   propobjFindHit
 /* 0833B0 7F04E880 02003825 */   move  $a3, $s0
 /* 0833B4 7F04E884 14400003 */  bnez  $v0, .L7F04E894
 /* 0833B8 7F04E888 00000000 */   nop

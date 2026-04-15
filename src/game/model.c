@@ -9334,31 +9334,14 @@ def_7F0753C4:
 #endif
 
 
-
-
-
-#ifdef NONMATCHING
-// unreferenced
-void sub_GAME_7F07549C(s32 arg0, f32 *arg1, f32 *arg2, ModelNode *arg3)
+/**
+ * Unreferenced
+ */
+u32 *sub_GAME_7F07549C(void *arg0, f32 *arg1, f32 *arg2, ModelNode **nodeptr)
 {
-    //uses sh vs sw
-    arg3->Opcode = 0;
-    sub_GAME_7F0752FC(arg0, arg1, arg2, arg3);
+    *nodeptr = NULL;
+    return sub_GAME_7F0752FC(arg0, arg1, arg2, nodeptr);
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F07549C
-/* 0A9FCC 7F07549C 27BDFFE8 */  addiu $sp, $sp, -0x18
-/* 0A9FD0 7F0754A0 AFBF0014 */  sw    $ra, 0x14($sp)
-/* 0A9FD4 7F0754A4 0FC1D4BF */  jal   sub_GAME_7F0752FC
-/* 0A9FD8 7F0754A8 ACE00000 */   sw    $zero, ($a3)
-/* 0A9FDC 7F0754AC 8FBF0014 */  lw    $ra, 0x14($sp)
-/* 0A9FE0 7F0754B0 27BD0018 */  addiu $sp, $sp, 0x18
-/* 0A9FE4 7F0754B4 03E00008 */  jr    $ra
-/* 0A9FE8 7F0754B8 00000000 */   nop
-)
-#endif
 
 
 /**

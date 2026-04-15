@@ -605,7 +605,7 @@ s32 chrpropRayIntersectsRoomBbox(s32 room, coord3d* start, coord3d* dir) {
 /**
  * Unreferenced
  * 
- * This creates a list of rooms that do *not* intersect a ray.
+ * This takes a list of rooms and flags the ones that do *not* intersect a ray.
  */
 void chrpropFlagRoomsFromRayTest(s32 arg0, coord3d *from, coord3d *to, u8 *rooms)
 {

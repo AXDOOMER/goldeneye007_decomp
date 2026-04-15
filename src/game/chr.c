@@ -7508,7 +7508,7 @@ glabel sub_GAME_7F022648
 /* 057304 7F0227D4 8FA400DC */  lw    $a0, 0xdc($sp)
 /* 057308 7F0227D8 8FA500D8 */  lw    $a1, 0xd8($sp)
 /* 05730C 7F0227DC 02403025 */  move  $a2, $s2
-/* 057310 7F0227E0 0FC1366C */  jal   sub_GAME_7F04D9B0
+/* 057310 7F0227E0 0FC1366C */  jal   propobjFindHit
 /* 057314 7F0227E4 02003825 */   move  $a3, $s0
 /* 057318 7F0227E8 1440000D */  bnez  $v0, .L7F022820
 /* 05731C 7F0227EC 27A40080 */   addiu $a0, $sp, 0x80
