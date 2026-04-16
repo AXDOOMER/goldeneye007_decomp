@@ -2704,65 +2704,55 @@ glabel sub_GAME_7F05F73C
 #endif
 #endif
 
+
 /**
- * Preliminary guess is this function is responsible for attaching a Rocket to the end of the Rocket Launcher
- * in first person view.
+ * This function is responsible for attaching a rocket to the end of the Rocket Launcher and updating its matrices.
  */
-void sub_GAME_7F05F928(s32 arg0)
+void gunUpdateAttachedRocket(s32 handIndex)
 {
-    /**
-    * Local declaration order is required for matching 
-    */
-    u8 *entry;
-    AttachedObj *s0;
-    Model *s1;
-    Mtxf sp34;
+    struct hand *entry;
+    AttachedObj *attachedRocket;
+    Model *rocketModel;
+    Mtxf worldMtx;
     PropRecord *prop;
-    AttachmentChild *s3;
+    AttachmentChild *attachmentChild;
 
-    #if defined(VERSION_US) || defined(VERSION_JP)
-    entry = (u8 *)g_CurrentPlayer + 0x870 + arg0 * 936;
-    #endif
+    entry = &g_CurrentPlayer->hands[handIndex];
 
-    #if defined(VERSION_EU)
-    entry = (u8 *)g_CurrentPlayer + 0x868 + arg0 * 936;
-    #endif
-    
-    s0 = *(AttachedObj **)(entry + 0x220);
-    if (s0 == 0) {
+    attachedRocket = entry->rocket;
+    if (attachedRocket == 0) {
         return;
     }
 
-    s3 = s0->child;
-    if (s3 == 0) {
+    attachmentChild = attachedRocket->child;
+    if (attachmentChild == 0) {
         return;
     }
 
     prop = get_curplayer_positiondata();
-    s1 = s0->model;
+    rocketModel = attachedRocket->model;
 
-    matrix_4x4_copy((Mtxf *)(entry + 0x268), &sp34);
+    matrix_4x4_copy(&entry->throw_item_pos_related, &worldMtx);
 
-    sp34.m[3][0] = 0.0f;
-    sp34.m[3][1] = 0.0f;
-    sp34.m[3][2] = 0.0f;
+    worldMtx.m[3][0] = 0.0f;
+    worldMtx.m[3][1] = 0.0f;
+    worldMtx.m[3][2] = 0.0f;
 
-    matrix_scalar_multiply(s0->model->scale, (f32 *)&sp34);
+    matrix_scalar_multiply(attachedRocket->model->scale, (f32 *)&worldMtx);
 
-    objChangeShading(s0, entry + 0x2e8, &sp34, prop->stan);
-    chrobjCollisionRelated(s0);
+    objChangeShading(attachedRocket, &entry->field_B58, &worldMtx, prop->stan);
+    chrobjCollisionRelated(attachedRocket);
 
-    s1->render_pos =
-        dynAllocate((s32)(*(s16 *)((u8 *)s1->obj + 0x0e)) << 6);
+    rocketModel->render_pos = dynAllocate((s32)rocketModel->obj->numMatrices << 6);
 
-    matrix_4x4_copy(&s0->transform, &sp34);
-    matrix_4x4_set_position((Mtxf *)&s0->position, &sp34);
+    matrix_4x4_copy(&attachedRocket->transform, &worldMtx);
+    matrix_4x4_set_position((Mtxf *)&attachedRocket->position, &worldMtx);
 
-    matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &sp34, s1->render_pos);
-    modelUpdateRelationsQuick(s1, *(void **)s1->obj);
+    matrix_4x4_multiply_homogeneous(camGetWorldToScreenMtxf(), &worldMtx, rocketModel->render_pos);
+    modelUpdateRelationsQuick(rocketModel, rocketModel->obj->RootNode);
 
-    s3->flags1 |= 2;
-    s3->unk18 = -*(f32 *)((u8 *)s1->render_pos + 0x38);
+    attachmentChild->flags1 |= 2;
+    attachmentChild->unk18 = -rocketModel->render_pos->pos.m[3][2];
 }
 
 
@@ -4074,7 +4064,7 @@ void handles_firing_or_throwing_weapon_in_hand(void) {
     }
     if (spFC == 0x19)
     {
-        sub_GAME_7F05F928(arg0);
+        gunUpdateAttachedRocket(arg0);
     }
     if (temp_s0->unkC != 0)
     {
@@ -5812,7 +5802,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096308 7F0617D8 24010019 */  li    $at, 25
 /* 09630C 7F0617DC 55E10004 */  bnel  $t7, $at, .L7F0617F0
 /* 096310 7F0617E0 8219000C */   lb    $t9, 0xc($s0)
-/* 096314 7F0617E4 0FC17E4A */  jal   sub_GAME_7F05F928
+/* 096314 7F0617E4 0FC17E4A */  jal   gunUpdateAttachedRocket
 /* 096318 7F0617E8 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 09631C 7F0617EC 8219000C */  lb    $t9, 0xc($s0)
 .L7F0617F0:
@@ -7600,7 +7590,7 @@ weapon_bullet_type_shotgun_mine:
 /* 096874 7F061D04 24010019 */  li    $at, 25
 /* 096878 7F061D08 55C10004 */  bnel  $t6, $at, .Ljp7F061D1C
 /* 09687C 7F061D0C 8218000C */   lb    $t8, 0xc($s0)
-/* 096880 7F061D10 0FC17F92 */  jal   sub_GAME_7F05F928
+/* 096880 7F061D10 0FC17F92 */  jal   gunUpdateAttachedRocket
 /* 096884 7F061D14 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 096888 7F061D18 8218000C */  lb    $t8, 0xc($s0)
 .Ljp7F061D1C:
@@ -9389,7 +9379,7 @@ weapon_bullet_type_shotgun_mine:
 /* 09468C 7F061C9C 24010019 */  li    $at, 25
 /* 094690 7F061CA0 57010004 */  bnel  $t8, $at, .L7F061CB4
 /* 094694 7F061CA4 820F000C */   lb    $t7, 0xc($s0)
-/* 094698 7F061CA8 0FC17F78 */  jal   sub_GAME_7F05F928
+/* 094698 7F061CA8 0FC17F78 */  jal   gunUpdateAttachedRocket
 /* 09469C 7F061CAC 8FA402A8 */   lw    $a0, 0x2a8($sp)
 /* 0946A0 7F061CB0 820F000C */  lb    $t7, 0xc($s0)
 .L7F061CB4:

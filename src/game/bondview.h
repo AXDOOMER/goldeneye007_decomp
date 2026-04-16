@@ -182,7 +182,7 @@ struct hand
   f32 field_A84;
   f32 field_A88;
   s32 field_A8C;
-  ObjectRecord* rocket;
+  AttachedObj* rocket;
   s32 firedrocket;
   s32 field_A98;
   s32 field_A9C;
