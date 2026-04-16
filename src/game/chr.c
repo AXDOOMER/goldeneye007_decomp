@@ -4506,11 +4506,11 @@ glabel chrTickBeams
 /* 05606C 7F02153C 26060020 */  addiu $a2, $s0, 0x20
 /* 056070 7F021540 AFA60030 */  sw    $a2, 0x30($sp)
 /* 056074 7F021544 8FA40158 */  lw    $a0, 0x158($sp)
-/* 056078 7F021548 0FC148FE */  jal   propobjRenderHeldWeapon
+/* 056078 7F021548 0FC148FE */  jal   chrRenderHeldWeapon
 /* 05607C 7F02154C 00002825 */   move  $a1, $zero
 /* 056080 7F021550 8FA60030 */  lw    $a2, 0x30($sp)
 /* 056084 7F021554 8FA40158 */  lw    $a0, 0x158($sp)
-/* 056088 7F021558 0FC148FE */  jal   propobjRenderHeldWeapon
+/* 056088 7F021558 0FC148FE */  jal   chrRenderHeldWeapon
 /* 05608C 7F02155C 24050001 */   li    $a1, 1
 /* 056090 7F021560 8E0201D8 */  lw    $v0, 0x1d8($s0)
 /* 056094 7F021564 5040011A */  beql  $v0, $zero, .L7F0219D0
@@ -5378,11 +5378,11 @@ glabel chrTickBeams
 /* 056394 7F021824 26060020 */  addiu $a2, $s0, 0x20
 /* 056398 7F021828 AFA60030 */  sw    $a2, 0x30($sp)
 /* 05639C 7F02182C 8FA40158 */  lw    $a0, 0x158($sp)
-/* 0563A0 7F021830 0FC14A3D */  jal   propobjRenderHeldWeapon
+/* 0563A0 7F021830 0FC14A3D */  jal   chrRenderHeldWeapon
 /* 0563A4 7F021834 00002825 */   move  $a1, $zero
 /* 0563A8 7F021838 8FA60030 */  lw    $a2, 0x30($sp)
 /* 0563AC 7F02183C 8FA40158 */  lw    $a0, 0x158($sp)
-/* 0563B0 7F021840 0FC14A3D */  jal   propobjRenderHeldWeapon
+/* 0563B0 7F021840 0FC14A3D */  jal   chrRenderHeldWeapon
 /* 0563B4 7F021844 24050001 */   li    $a1, 1
 /* 0563B8 7F021848 8E0201D8 */  lw    $v0, 0x1d8($s0)
 /* 0563BC 7F02184C 5040011A */  beql  $v0, $zero, .Ljp7F021CB8
@@ -6304,11 +6304,11 @@ glabel chrTickBeams
 /* 053EF4 7F021504 26060020 */  addiu $a2, $s0, 0x20
 /* 053EF8 7F021508 AFA60030 */  sw    $a2, 0x30($sp)
 /* 053EFC 7F02150C 8FA40158 */  lw    $a0, 0x158($sp)
-/* 053F00 7F021510 0FC149B6 */  jal   propobjRenderHeldWeapon
+/* 053F00 7F021510 0FC149B6 */  jal   chrRenderHeldWeapon
 /* 053F04 7F021514 00002825 */   move  $a1, $zero
 /* 053F08 7F021518 8FA60030 */  lw    $a2, 0x30($sp)
 /* 053F0C 7F02151C 8FA40158 */  lw    $a0, 0x158($sp)
-/* 053F10 7F021520 0FC149B6 */  jal   propobjRenderHeldWeapon
+/* 053F10 7F021520 0FC149B6 */  jal   chrRenderHeldWeapon
 /* 053F14 7F021524 24050001 */   li    $a1, 1
 /* 053F18 7F021528 8E0201D8 */  lw    $v0, 0x1d8($s0)
 /* 053F1C 7F02152C 5040011A */  beql  $v0, $zero, .L7F021998

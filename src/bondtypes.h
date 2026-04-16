@@ -2375,6 +2375,11 @@ typedef union
     } ChrRecord;
     // ChrRecord *pChrData; //not Global, local to Object or function
 
+    typedef struct ChrRenderContext {
+        s32 unk00;
+        ChrRecord *chr;
+    } ChrRenderContext;
+
     #pragma region IndividualObjectTypes
 
     typedef struct collision_data

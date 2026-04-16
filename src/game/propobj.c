@@ -36078,10 +36078,6 @@ PropRecord *something_with_generating_object(ChrRecord *self, s32 propid, ITEM_I
 }
 
 
-
-
-
-
 /**
  * Add New Weapon to chr
  */
@@ -36090,8 +36086,9 @@ PropRecord *chrGiveWeapon(ChrRecord *self, s32 PropID, ITEM_IDS ItemID, s32 flag
     return something_with_generating_object(self, PropID, ItemID, flags, NULL, NULL);
 }
 
+
 /**
- * Must remain immediately above propobjRenderHeldWeapon for matching. 
+ * Must remain immediately above chrRenderHeldWeapon for matching. 
 */
 ModelRenderData D_800322A4 = {
     0,
@@ -36112,10 +36109,11 @@ ModelRenderData D_800322A4 = {
     0
 };
 
+
 /**
  * Render the weapon(s) characters are holding including the muzzle flash.
  */
-void propobjRenderHeldWeapon(void *renderContext, GUNHAND hand, Gfx **gdl)
+void chrRenderHeldWeapon(void *renderContext, GUNHAND hand, Gfx **gdl)
 {
     ChrRecord *chr;
     PropRecord *prop;
@@ -36126,14 +36124,28 @@ void propobjRenderHeldWeapon(void *renderContext, GUNHAND hand, Gfx **gdl)
     u32 pad; // stack alignment for matching
     Mtxf rotationMtx;
 
-    chr = *(ChrRecord **)((u8 *)renderContext + 4);
+    chr = ((ChrRenderContext *)renderContext)->chr;
     prop = chrGetEquippedWeaponProp(chr, hand);
 
     if (prop != NULL) {
+
         weaponModel = *(Model **)((u8 *)prop + 4);
 
         if (!(weaponModel->unk64 & 0x800)) {
-            if ((s32)(*(u32 *)((u8 *)weaponModel + 0x0c) << 12) >= 0) {
+            /**
+             * NOTE:
+             * Using render_pos here purely as a raw 32-bit value.
+             * Original code reads word at offset 0x0C and performs a bit test via << 12.
+             */
+            if ((s32)((u32)weaponModel->render_pos << 12) >= 0) {
+                /**
+                 * Treated as a Model* (likely 'attachedto'), but the Model
+                 * struct places that field at a different offset. Using the named field
+                 * would break the match, so using the raw offset for now.
+                 * 
+                 * Feel free to rewrite this if you think Model has been used incorrectly here
+                 * and we're actually supposed to be using another struct.
+                 */
                 heldModel = *(Model **)((u8 *)weaponModel + 0x14);
                 renderData = D_800322A4;
 
