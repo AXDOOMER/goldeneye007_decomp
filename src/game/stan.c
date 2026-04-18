@@ -3128,157 +3128,61 @@ void noteTileRoomIfDifferentToPrev_2(StandTile *tile, StandTile *unused, struct 
 }
 
 
-
-
-
-
-#ifdef NONMATCHING
-// Not too close
-
-s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z, StandTile **tilePtr,
-    f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize)
+/**
+ * Builds a list of room IDs between a start position and a destination position.
+ * Only used for objects on set paths e.g. patrolling guards.
+ */
+s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z, StandTile **destTile, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 maxBufSize)
 {
-    s32 roomA;
-    s32 roomB;
-    s32 bufCount;
-     StandTile* tileStack[2];   // unknown size
-     StandTile* unkTile;
+    StandTile *savedTile;
+    s32 count;
 
+    savedTile = tile;
+    count = 0;
 
-    bufCount = 0;
-    tileStack[0] = tile;
-
-    if (*tilePtr != 0x0) {
+    if (*destTile != NULL) {
+        u8 roomA; // Source tile's room
+        u8 roomB; // Destination tile's room
 
         roomA = tile->room;
-        roomB = (*tilePtr)->room;
+        roomB = (*destTile)->room;
 
-        if (roomA == roomB) {
-            *roomBuf = roomA;
+        // Fast path: start and destination tiles are in the same room, return a count of 1.
+        if (roomB == roomA) {  
+            roomBuffer[0] = roomA;
             return 1;
-         }
+        }
 
-        // function related to portals
-        // funny & 0xFFs here which we can't reproduce
-        if (FUN_7f0b8fd0(roomA & 0xFF, roomB & 0xFF) != 0) {
-            *roomBuf = (s32)tile->room;
-            roomBuf[1] = (s32)(*tilePtr)->room;
+        // Next fastest case: both rooms directly connected by a portal, write two room IDs and return a count of 2.
+        if (sub_GAME_7F0B8FD0(roomA & 0xff, roomB & 0xff)) { 
+            roomBuffer[0] = tile->room;
+            roomBuffer[1] = (*destTile)->room;
             return 2;
-         }
-
-     }
-
-    if (sub_GAME_7F0B0C24(tileStack,start_x,start_z,end_x,end_z,
-        roomBuf,&bufCount,maxBufSize) == 0 )
-     {
-        bufCount = 0;
-     }
-    else {
-        if (maxBufSize < bufCount) {
-            bufCount = maxBufSize;
         }
+    }
 
-        // Not sure what's going on here.
-        unkTile = *tilePtr;
+    /**
+     * Full path check needed. Find the rooms between the points, store them in roomBuffer, and save the number of rooms in count.
+     * If the path check fails, return 0.
+     */
+    if (!sub_GAME_7F0B0C24(&savedTile, start_x, start_z, dest_x, dest_z, roomBuffer, &count, maxBufSize)) {
+        return 0;
+    }
 
-        if (unkTile == 0) {
-            *tilePtr = tileStack[0];
-            unkTile = tileStack[0];
-        }
+    if (maxBufSize < count) {
+        count = maxBufSize;
+    }
 
-        if (tileStack[0] != unkTile) {
-            bufCount = 0;
-            #ifdef DEBUG
-            osSyncPrintf("stan %s(%d) != %s(%d) from=%s\n", GetStanRoomID(tileStack[0]), /*funcForTileNumber(tileStack[0])*/,GetStanRoomID(tile), /*funcForTileNumber(tile)*/,GetStanRoomID(roomBuf));
-            #endif
-        }
-     }
+    if (*destTile == NULL) {
+        *destTile = savedTile;
+    }
 
-    return bufCount;
+    if (savedTile != *destTile) {
+        return 0;
+    }
+
+    return count;
 }
-#else
-GLOBAL_ASM(
-.text
-glabel sub_GAME_7F0B0D0C
-/* 0E583C 7F0B0D0C 27BDFFB8 */  addiu $sp, $sp, -0x48
-/* 0E5840 7F0B0D10 AFBF002C */  sw    $ra, 0x2c($sp)
-/* 0E5844 7F0B0D14 AFB00028 */  sw    $s0, 0x28($sp)
-/* 0E5848 7F0B0D18 AFA40048 */  sw    $a0, 0x48($sp)
-/* 0E584C 7F0B0D1C AFA5004C */  sw    $a1, 0x4c($sp)
-/* 0E5850 7F0B0D20 AFA60050 */  sw    $a2, 0x50($sp)
-/* 0E5854 7F0B0D24 AFA40044 */  sw    $a0, 0x44($sp)
-/* 0E5858 7F0B0D28 AFA00040 */  sw    $zero, 0x40($sp)
-/* 0E585C 7F0B0D2C 8CE20000 */  lw    $v0, ($a3)
-/* 0E5860 7F0B0D30 00E08025 */  move  $s0, $a3
-/* 0E5864 7F0B0D34 50400016 */  beql  $v0, $zero, .L7F0B0D90
-/* 0E5868 7F0B0D38 8FA30060 */   lw    $v1, 0x60($sp)
-/* 0E586C 7F0B0D3C 90860003 */  lbu   $a2, 3($a0)
-/* 0E5870 7F0B0D40 90470003 */  lbu   $a3, 3($v0)
-/* 0E5874 7F0B0D44 8FA30060 */  lw    $v1, 0x60($sp)
-/* 0E5878 7F0B0D48 24020001 */  li    $v0, 1
-/* 0E587C 7F0B0D4C 14C70003 */  bne   $a2, $a3, .L7F0B0D5C
-/* 0E5880 7F0B0D50 30C400FF */   andi  $a0, $a2, 0xff
-/* 0E5884 7F0B0D54 1000002E */  b     .L7F0B0E10
-/* 0E5888 7F0B0D58 AC660000 */   sw    $a2, ($v1)
-.L7F0B0D5C:
-/* 0E588C 7F0B0D5C 0FC2E3F4 */  jal   sub_GAME_7F0B8FD0
-/* 0E5890 7F0B0D60 30E500FF */   andi  $a1, $a3, 0xff
-/* 0E5894 7F0B0D64 10400009 */  beqz  $v0, .L7F0B0D8C
-/* 0E5898 7F0B0D68 8FAF0048 */   lw    $t7, 0x48($sp)
-/* 0E589C 7F0B0D6C 8FA30060 */  lw    $v1, 0x60($sp)
-/* 0E58A0 7F0B0D70 91F80003 */  lbu   $t8, 3($t7)
-/* 0E58A4 7F0B0D74 24020002 */  li    $v0, 2
-/* 0E58A8 7F0B0D78 AC780000 */  sw    $t8, ($v1)
-/* 0E58AC 7F0B0D7C 8E190000 */  lw    $t9, ($s0)
-/* 0E58B0 7F0B0D80 93280003 */  lbu   $t0, 3($t9)
-/* 0E58B4 7F0B0D84 10000022 */  b     .L7F0B0E10
-/* 0E58B8 7F0B0D88 AC680004 */   sw    $t0, 4($v1)
-.L7F0B0D8C:
-/* 0E58BC 7F0B0D8C 8FA30060 */  lw    $v1, 0x60($sp)
-.L7F0B0D90:
-/* 0E58C0 7F0B0D90 C7A4005C */  lwc1  $f4, 0x5c($sp)
-/* 0E58C4 7F0B0D94 8FAA0064 */  lw    $t2, 0x64($sp)
-/* 0E58C8 7F0B0D98 27A90040 */  addiu $t1, $sp, 0x40
-/* 0E58CC 7F0B0D9C AFA90018 */  sw    $t1, 0x18($sp)
-/* 0E58D0 7F0B0DA0 27A40044 */  addiu $a0, $sp, 0x44
-/* 0E58D4 7F0B0DA4 8FA5004C */  lw    $a1, 0x4c($sp)
-/* 0E58D8 7F0B0DA8 8FA60050 */  lw    $a2, 0x50($sp)
-/* 0E58DC 7F0B0DAC 8FA70058 */  lw    $a3, 0x58($sp)
-/* 0E58E0 7F0B0DB0 AFA30014 */  sw    $v1, 0x14($sp)
-/* 0E58E4 7F0B0DB4 E7A40010 */  swc1  $f4, 0x10($sp)
-/* 0E58E8 7F0B0DB8 0FC2C309 */  jal   sub_GAME_7F0B0C24
-/* 0E58EC 7F0B0DBC AFAA001C */   sw    $t2, 0x1c($sp)
-/* 0E58F0 7F0B0DC0 14400003 */  bnez  $v0, .L7F0B0DD0
-/* 0E58F4 7F0B0DC4 8FA30064 */   lw    $v1, 0x64($sp)
-/* 0E58F8 7F0B0DC8 10000011 */  b     .L7F0B0E10
-/* 0E58FC 7F0B0DCC 00001025 */   move  $v0, $zero
-.L7F0B0DD0:
-/* 0E5900 7F0B0DD0 8FAB0040 */  lw    $t3, 0x40($sp)
-/* 0E5904 7F0B0DD4 006B082A */  slt   $at, $v1, $t3
-/* 0E5908 7F0B0DD8 50200003 */  beql  $at, $zero, .L7F0B0DE8
-/* 0E590C 7F0B0DDC 8E020000 */   lw    $v0, ($s0)
-/* 0E5910 7F0B0DE0 AFA30040 */  sw    $v1, 0x40($sp)
-/* 0E5914 7F0B0DE4 8E020000 */  lw    $v0, ($s0)
-.L7F0B0DE8:
-/* 0E5918 7F0B0DE8 54400004 */  bnezl $v0, .L7F0B0DFC
-/* 0E591C 7F0B0DEC 8FAD0044 */   lw    $t5, 0x44($sp)
-/* 0E5920 7F0B0DF0 8FA20044 */  lw    $v0, 0x44($sp)
-/* 0E5924 7F0B0DF4 AE020000 */  sw    $v0, ($s0)
-/* 0E5928 7F0B0DF8 8FAD0044 */  lw    $t5, 0x44($sp)
-.L7F0B0DFC:
-/* 0E592C 7F0B0DFC 51A20004 */  beql  $t5, $v0, .L7F0B0E10
-/* 0E5930 7F0B0E00 8FA20040 */   lw    $v0, 0x40($sp)
-/* 0E5934 7F0B0E04 10000002 */  b     .L7F0B0E10
-/* 0E5938 7F0B0E08 00001025 */   move  $v0, $zero
-/* 0E593C 7F0B0E0C 8FA20040 */  lw    $v0, 0x40($sp)
-.L7F0B0E10:
-/* 0E5940 7F0B0E10 8FBF002C */  lw    $ra, 0x2c($sp)
-/* 0E5944 7F0B0E14 8FB00028 */  lw    $s0, 0x28($sp)
-/* 0E5948 7F0B0E18 27BD0048 */  addiu $sp, $sp, 0x48
-/* 0E594C 7F0B0E1C 03E00008 */  jr    $ra
-/* 0E5950 7F0B0E20 00000000 */   nop
-)
-#endif
 
 
 /**

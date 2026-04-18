@@ -60,7 +60,7 @@ s32 sub_GAME_7F0B20D0(StandTile** tileStack, f32 target_x, f32 target_z, f32 unk
 
 s32 stanTestLineUnobstructed(StandTile **pTile, f32 p_x, f32 p_z, f32 dest_x, f32 dest_z, int cdtypes, f32 unkHeight, f32 unkA, f32 unkB, f32 unkC);
 StandTile* sub_GAME_7F0B2718(StandTile* srcTile, tilePredicate_t tilePred);
-s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z,  StandTile **tilePtr, f32 end_x, f32 end_z, s32 *roomBuf, s32 maxBufSize);
+s32 sub_GAME_7F0B0D0C(StandTile *tile, f32 start_x, f32 start_z, StandTile **destTile, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 maxBufSize);
 s32 sub_GAME_7F0B0C24(StandTile **tileStack, f32 start_x, f32 start_z, f32 dest_x, f32 dest_z, s32 *roomBuffer, s32 *rtnCountSize, s32 maxBufSize);
 s32 stanTestVolume(StandTile **, f32 posX, f32 posY, f32 radius, s32 cdtypes, f32 float1, f32 float2);
 s32 getTileRoom(StandTile* tile);
